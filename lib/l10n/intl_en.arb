@@ -1,0 +1,12 @@
+{
+  "welcome": "WELCOME!",
+  "tekpart": "TekPart",
+  "password": "Password",
+  "email": "Email",
+  "alreadyHaveAnAccount": "Already have an account?",
+  "login": "Login",
+  "register": "Register",
+  "confirmPassword": "Confirm Password",
+  "fullName": "Full Name",
+  "dontHaveAnAccount": "Don't have an account?"
+}
