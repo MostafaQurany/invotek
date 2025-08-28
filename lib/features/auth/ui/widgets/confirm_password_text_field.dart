@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
+import 'package:invotek/core/validation/validators.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
-import 'package:invotek/generated/l10n.dart';
 
 class ConfirmPasswordTextField extends StatefulWidget {
-  const ConfirmPasswordTextField({super.key});
+  final TextEditingController controller;
+  final TextEditingController passwordController;
+  const ConfirmPasswordTextField({
+    super.key,
+    required this.controller,
+    required this.passwordController,
+  });
 
   @override
   State<ConfirmPasswordTextField> createState() =>
@@ -14,7 +20,6 @@ class ConfirmPasswordTextField extends StatefulWidget {
 }
 
 class _ConfirmPasswordTextFieldState extends State<ConfirmPasswordTextField> {
-  final TextEditingController controller = TextEditingController();
   bool isFeces = false;
   bool isObscure = true;
   FocusNode focusNode = FocusNode();
@@ -24,7 +29,7 @@ class _ConfirmPasswordTextFieldState extends State<ConfirmPasswordTextField> {
     focusNode.addListener(() {
       setState(() {
         isFeces = focusNode.hasFocus;
-        print(isFeces ? 'Focused' : 'Not Focused');
+        // Focus state changed
       });
     });
   }
@@ -39,8 +44,8 @@ class _ConfirmPasswordTextFieldState extends State<ConfirmPasswordTextField> {
   Widget build(BuildContext context) {
     return AuthTextFiled(
       focusNode: focusNode,
-      controller: controller,
-      hint: S.of(context).confirmPassword,
+      controller: widget.controller,
+      hint: "*************************",
       prefixIcon: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ImageIcon(
@@ -76,6 +81,10 @@ class _ConfirmPasswordTextFieldState extends State<ConfirmPasswordTextField> {
           : null,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.done,
+      validator: (p0) => Validators.validateConfirmPassword(
+        p0,
+        widget.passwordController.text,
+      ),
     );
   }
 }

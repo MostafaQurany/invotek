@@ -1,0 +1,545 @@
+# Invotek Features - قواعد الميزات الشاملة
+
+## نظرة عامة على النظام
+
+Invotek هو نظام متكامل لإدارة الفواتير الإلكترونية مع التكامل مع نظام الفوترة الوطني الأردني (فاتورة).
+
+## Base URL
+
+```
+https://demo.invotik.com/
+```
+
+## الميزات المطلوبة (Features)
+
+### 1. 🔐 المصادقة (Authentication) ✅ **مكتمل**
+
+**المسار**: `/api/auth`
+
+- **تسجيل مستخدم جديد**: `POST /api/register` ✅
+- **تسجيل الدخول**: `POST /api/login` ✅
+- **تسجيل الخروج**: `POST /api/logout` ✅
+- **تسجيل الدخول عبر Google**: `GET /api/auth/google/redirect` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class LoginRequest with _$LoginRequest {
+  const factory LoginRequest({
+    required String email,
+    required String password,
+  }) = _LoginRequest;
+}
+
+@freezed
+class RegisterRequest with _$RegisterRequest {
+  const factory RegisterRequest({
+    required String name,
+    required String email,
+    required String password,
+    required String password_confirmation,
+  }) = _RegisterRequest;
+}
+
+@freezed
+class AuthResponse with _$AuthResponse {
+  const factory AuthResponse({
+    required User user,
+    required String token,
+  }) = _AuthResponse;
+}
+```
+
+**الملفات المكتملة**:
+
+- ✅ `lib/features/auth/data/models/login_request.dart`
+- ✅ `lib/features/auth/data/models/register_request.dart`
+- ✅ `lib/features/auth/data/data_source/auth_data_source.dart`
+- ✅ `lib/features/auth/demo/repo/auth_repo.dart`
+- ✅ `lib/features/auth/demo/cubit/auth_cubit.dart`
+- ✅ `lib/features/auth/ui/auth_screen.dart`
+
+### 2. 🏢 إدارة الشركات (Companies) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/companies`
+
+- **عرض الشركات**: `GET /api/company/companies` ⏳
+- **إنشاء شركة**: `POST /api/company/companies` ⏳
+- **عرض شركة**: `GET /api/company/companies/:id` ⏳
+- **تحديث شركة**: `PUT /api/company/companies/:id` ⏳
+- **حذف شركة**: `DELETE /api/company/companies/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class Company with _$Company {
+  const factory Company({
+    required int id,
+    required String name,
+    required String email,
+    String? phone,
+    String? address,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Company;
+}
+```
+
+### 3. 👥 إدارة المستخدمين (Users) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/users`
+
+- **عرض المستخدمين**: `GET /api/company/users` ⏳
+- **إنشاء مستخدم**: `POST /api/company/users` ⏳
+- **عرض مستخدم**: `GET /api/company/users/:id` ⏳
+- **تحديث مستخدم**: `PUT /api/company/users/:id` ⏳
+- **حذف مستخدم**: `DELETE /api/company/users/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class User with _$User {
+  const factory User({
+    required int id,
+    required String name,
+    required String email,
+    String? phone,
+    required UserStatus status,
+    required int roleId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _User;
+}
+
+enum UserStatus { active, inactive, suspended }
+```
+
+### 4. 📦 إدارة المنتجات (Products) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/products`
+
+- **عرض المنتجات**: `GET /api/company/products` ⏳
+- **إنشاء منتج**: `POST /api/company/products` ⏳
+- **عرض منتج**: `GET /api/company/products/:id` ⏳
+- **تحديث منتج**: `PUT /api/company/products/:id` ⏳
+- **حذف منتج**: `DELETE /api/company/products/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class Product with _$Product {
+  const factory Product({
+    required int id,
+    required String name,
+    required String code,
+    required int categoryId,
+    required double price,
+    double? tax,
+    int? stock,
+    required ProductStatus status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Product;
+}
+
+enum ProductStatus { active, inactive, out_of_stock }
+```
+
+### 5. 📂 فئات المنتجات (Product Categories) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/product-categories`
+
+- **عرض الفئات**: `GET /api/company/product-categories` ⏳
+- **إنشاء فئة**: `POST /api/company/product-categories` ⏳
+- **عرض فئة**: `GET /api/company/product-categories/:id` ⏳
+- **تحديث فئة**: `PUT /api/company/product-categories/:id` ⏳
+- **حذف فئة**: `DELETE /api/company/product-categories/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class ProductCategory with _$ProductCategory {
+  const factory ProductCategory({
+    required int id,
+    required String name,
+    required CategoryStatus status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _ProductCategory;
+}
+
+enum CategoryStatus { active, inactive }
+```
+
+### 6. 👤 إدارة العملاء (Customers) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/customers`
+
+- **عرض العملاء**: `GET /api/company/customers` ⏳
+- **إنشاء عميل**: `POST /api/company/customers` ⏳
+- **عرض عميل**: `GET /api/company/customers/:id` ⏳
+- **تحديث عميل**: `PUT /api/company/customers/:id` ⏳
+- **حذف عميل**: `DELETE /api/company/customers/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class Customer with _$Customer {
+  const factory Customer({
+    required int id,
+    required String name,
+    String? phone,
+    String? email,
+    String? address,
+    required CustomerStatus status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Customer;
+}
+
+enum CustomerStatus { active, inactive }
+```
+
+### 7. 🧾 إدارة الفواتير (Invoices) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/invoices`
+
+- **عرض الفواتير**: `GET /api/company/invoices` ⏳
+- **إنشاء فاتورة**: `POST /api/company/invoices` ⏳
+- **عرض فاتورة**: `GET /api/company/invoices/:id` ⏳
+- **تحديث فاتورة**: `PUT /api/company/invoices/:id` ⏳
+- **حذف فاتورة**: `DELETE /api/company/invoices/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class Invoice with _$Invoice {
+  const factory Invoice({
+    required int id,
+    required String number,
+    required DateTime date,
+    required String customerName,
+    required InvoiceType type,
+    required double total,
+    required InvoiceStatus status,
+    String? sourceDoc,
+    DateTime? sentAt,
+    required List<InvoiceLine> lines,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Invoice;
+}
+
+@freezed
+class InvoiceLine with _$InvoiceLine {
+  const factory InvoiceLine({
+    required int productId,
+    required String name,
+    required int qty,
+    required double price,
+    @Default(0.0) double tax,
+    @Default(0.0) double discount,
+  }) = _InvoiceLine;
+}
+
+enum InvoiceType { sale, purchase, return }
+enum InvoiceStatus { draft, pending, paid, cancelled }
+```
+
+### 8. 💰 إدارة المصروفات (Expenses) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/expenses`
+
+- **عرض المصروفات**: `GET /api/company/expenses` ⏳
+- **إنشاء مصروف**: `POST /api/company/expenses` ⏳
+- **عرض مصروف**: `GET /api/company/expenses/:id` ⏳
+- **تحديث مصروف**: `PUT /api/company/expenses/:id` ⏳
+- **حذف مصروف**: `DELETE /api/company/expenses/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class Expense with _$Expense {
+  const factory Expense({
+    required int id,
+    required DateTime expenseDate,
+    required double amount,
+    required String description,
+    required int categoryId,
+    required ExpenseStatus status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Expense;
+}
+
+enum ExpenseStatus { active, inactive }
+```
+
+### 9. 📊 فئات المصروفات (Expense Categories) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/expense-categories`
+
+- **عرض الفئات**: `GET /api/company/expense-categories` ⏳
+- **إنشاء فئة**: `POST /api/company/expense-categories` ⏳
+- **عرض فئة**: `GET /api/company/expense-categories/:id` ⏳
+- **تحديث فئة**: `PUT /api/company/expense-categories/:id` ⏳
+- **حذف فئة**: `DELETE /api/company/expense-categories/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class ExpenseCategory with _$ExpenseCategory {
+  const factory ExpenseCategory({
+    required int id,
+    required String name,
+    required CategoryStatus status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _ExpenseCategory;
+}
+```
+
+### 10. ⚙️ الإعدادات (Settings) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/settings`
+
+- **عرض الإعدادات**: `GET /api/company/settings` ⏳
+- **تحديث الإعدادات**: `PUT /api/company/settings` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class CompanySettings with _$CompanySettings {
+  const factory CompanySettings({
+    required String companyName,
+    required String companyEmail,
+    String? companyPhone,
+    String? companyAddress,
+    String? taxNumber,
+    String? logo,
+    required DateTime updatedAt,
+  }) = _CompanySettings;
+}
+```
+
+### 11. 📋 الاشتراكات (Subscriptions) ⏳ **قيد التطوير**
+
+**المسار**: `/api/company/subscriptions`
+
+- **عرض الاشتراكات**: `GET /api/company/subscriptions` ⏳
+- **إنشاء اشتراك**: `POST /api/company/subscriptions` ⏳
+- **عرض اشتراك**: `GET /api/company/subscriptions/:id` ⏳
+- **تحديث اشتراك**: `PUT /api/company/subscriptions/:id` ⏳
+- **حذف اشتراك**: `DELETE /api/company/subscriptions/:id` ⏳
+
+**النماذج المطلوبة**:
+
+```dart
+@freezed
+class Subscription with _$Subscription {
+  const factory Subscription({
+    required int id,
+    required int packageId,
+    required DateTime startDate,
+    required DateTime endDate,
+    required double price,
+    required SubscriptionStatus status,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+  }) = _Subscription;
+}
+
+enum SubscriptionStatus { active, expired, cancelled }
+```
+
+## خطة التنفيذ المرحلية
+
+### المرحلة الأولى: الأساسيات ✅ **مكتمل**
+
+1. **المصادقة** - تسجيل الدخول والخروج ✅
+2. **إدارة الشركات** - عرض وإنشاء الشركات ⏳
+3. **الإعدادات الأساسية** ⏳
+
+### المرحلة الثانية: إدارة البيانات ⏳ **قيد التطوير**
+
+1. **إدارة المستخدمين** - CRUD للمستخدمين ⏳
+2. **إدارة العملاء** - CRUD للعملاء ⏳
+3. **فئات المنتجات** - إدارة الفئات ⏳
+
+### المرحلة الثالثة: المنتجات والمخزون ⏳ **قيد التطوير**
+
+1. **إدارة المنتجات** - CRUD للمنتجات ⏳
+2. **إدارة المخزون** - تتبع الكميات ⏳
+
+### المرحلة الرابعة: الفواتير ⏳ **قيد التطوير**
+
+1. **إنشاء الفواتير** - واجهة إنشاء الفواتير ⏳
+2. **إدارة الفواتير** - عرض وتعديل الفواتير ⏳
+3. **طباعة الفواتير** - طباعة Bluetooth ⏳
+
+### المرحلة الخامسة: المصروفات والتقارير ⏳ **قيد التطوير**
+
+1. **إدارة المصروفات** - CRUD للمصروفات ⏳
+2. **فئات المصروفات** - إدارة فئات المصروفات ⏳
+3. **التقارير المالية** - لوحة التحكم ⏳
+
+### المرحلة السادسة: الاشتراكات والميزات المتقدمة ⏳ **قيد التطوير**
+
+1. **إدارة الاشتراكات** - CRUD للاشتراكات ⏳
+2. **التكامل مع فاتورة** - الربط مع النظام الوطني ⏳
+3. **الميزات المتقدمة** - التقارير المتقدمة ⏳
+
+## الميزات المكتملة ✅
+
+### 1. البنية الأساسية ✅
+
+- ✅ نظام المصادقة الكامل
+- ✅ إدارة الحالة (BLoC/Cubit)
+- ✅ حقن التبعيات (GetIt)
+- ✅ التخزين المحلي (SharedPreferences)
+- ✅ إدارة المسارات
+- ✅ الثيمات والتصميم المتجاوب
+- ✅ دعم اللغات (العربية والإنجليزية)
+- ✅ واجهة المستخدم الأساسية
+
+### 2. الشاشات المكتملة ✅
+
+- ✅ شاشة تسجيل الدخول
+- ✅ شاشة إنشاء حساب جديد
+- ✅ شاشة التحميل
+- ✅ الشاشة الرئيسية (Dashboard)
+- ✅ نظام التنقل
+
+## الميزات المطلوبة في المرحلة التالية ⏳
+
+### 1. شاشة Onboarding ✅ **مكتمل**
+
+- ✅ صفحات تعريفية بالتطبيق
+- ✅ شرح الميزات الرئيسية
+- ✅ إعدادات أولية للمستخدم
+- ✅ دعم اللغتين العربية والإنجليزية
+- ✅ منطق أول مرة للمستخدم
+- ✅ حفظ حالة إكمال Onboarding
+
+### 2. إدارة الشركات ⏳
+
+- ⏳ عرض الشركات
+- ⏳ إنشاء شركة جديدة
+- ⏳ تعديل بيانات الشركة
+
+### 3. إدارة المستخدمين والصلاحيات ⏳
+
+- ⏳ قائمة المستخدمين
+- ⏳ إضافة مستخدم جديد
+- ⏳ تعديل صلاحيات المستخدمين
+
+## تصميم القوائم الجانبية 🎨
+
+### الخيار الأول: Dropdown Menu (المفضل حالياً)
+
+- عند الضغط على "إدارة المستخدمين والصلاحيات" في القائمة الجانبية
+- يظهر dropdown menu مع الخيارات الفرعية:
+  - 👥 المستخدمين
+  - 🔐 الصلاحيات
+  - 📊 التقارير
+
+### الخيار الثاني: شاشة منفصلة مع تبويبات
+
+- شاشة منفصلة لإدارة المستخدمين
+- تبويبات للتنقل بين:
+  - 👥 المستخدمين
+  - 🔐 الصلاحيات
+  - 📊 التقارير
+
+## قواعد التطوير
+
+### 1. هيكل الملفات
+
+```
+lib/features/<feature_name>/
+├─ data/
+│  ├─ models/
+│  ├─ data_source/
+│  └─ repository/
+├─ ui/
+│  ├─ screens/
+│  ├─ widgets/
+│  └─ cubit/
+└─ demo/ (للتراجع التدريجي)
+```
+
+### 2. تسمية الملفات
+
+- **النماذج**: `user_model.dart`, `invoice_model.dart`
+- **Data Sources**: `user_data_source.dart`, `invoice_data_source.dart`
+- **Repositories**: `user_repository.dart`, `invoice_repository.dart`
+- **Cubits**: `user_cubit.dart`, `invoice_cubit.dart`
+- **الشاشات**: `user_screen.dart`, `invoice_screen.dart`
+
+### 3. قواعد API
+
+- استخدام `Bearer Token` للمصادقة
+- جميع الطلبات تتطلب `Accept: application/json`
+- جميع الطلبات تتطلب `Content-Type: application/json`
+- معالجة الأخطاء بشكل موحد
+
+### 4. قواعد UI
+
+- استخدام Sliver widgets للقوائم الكبيرة
+- تطبيق التصميم المتجاوب
+- دعم RTL للغة العربية
+- استخدام الألوان والثيم المحدد
+
+### 5. قواعد البيانات
+
+- استخدام `hive` للتخزين المحلي
+- استخدام `flutter_secure_storage` للبيانات الحساسة
+- تطبيق استراتيجية SWR للبيانات المتكررة
+
+## الميزات الإضافية المطلوبة
+
+### 1. لوحة التحكم (Dashboard)
+
+- مؤشرات الأداء (KPIs)
+- رسم بياني للمبيعات
+- أفضل المنتجات
+- آخر الفواتير
+
+### 2. الطباعة
+
+- طباعة Bluetooth
+- طباعة PDF
+- مشاركة الفواتير
+
+### 3. التقارير
+
+- تقارير المبيعات
+- تقارير المصروفات
+- تقارير العملاء
+- تقارير المنتجات
+
+### 4. التكامل
+
+- التكامل مع نظام فاتورة الوطني
+- تصدير البيانات
+- استيراد البيانات
+
+## ملاحظات مهمة
+
+- جميع النصوص باللغة العربية
+- دعم كامل للغة الإنجليزية
+- تطبيق أفضل ممارسات الأمان
+- اختبار شامل لكل ميزة
+- توثيق شامل للكود
+
+---

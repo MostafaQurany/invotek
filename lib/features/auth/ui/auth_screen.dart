@@ -1,161 +1,246 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/utils/app_images.dart';
-import 'package:invotek/features/auth/ui/widgets/auth_screen_header.dart';
-import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
-import 'package:invotek/features/auth/ui/widgets/confirm_password_text_field.dart';
-import 'package:invotek/features/auth/ui/widgets/email_auth_text_field.dart';
-import 'package:invotek/features/auth/ui/widgets/name_auth_text_field.dart';
-import 'package:invotek/features/auth/ui/widgets/password_auth_text_field.dart';
-import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/ui/auth_loading_screen.dart';
+import 'package:invotek/features/auth/ui/auth_login_screen_body.dart';
+import 'package:invotek/features/auth/ui/auth_register_screen_body.dart';
 
-class AuthScreen extends StatefulWidget {
+import '../../../core/theme/app_colors.dart';
+import '../../../core/utils/app_images.dart';
+import '../../../generated/l10n.dart';
+
+class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-
-  bool isLoginScreen = true;
-  bool animateOut = false;
-
-  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const AuthScreenHeader(),
-                const SizedBox(height: 48),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    children: [
-                      // Name Field (Always in tree, slide in/out)
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        switchInCurve: Curves.fastEaseInToSlowEaseOut,
-                        switchOutCurve: Curves.easeInExpo,
-                        transitionBuilder: (child, animation) {
-                          final offsetAnimation = Tween<Offset>(
-                            begin: const Offset(1, 0),
-                            end: Offset.zero,
-                          ).animate(animation);
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                        child: isLoginScreen
-                            ? const SizedBox.shrink(key: ValueKey('empty_name'))
-                            : const NameAuthTextField(
-                                key: ValueKey('name_field'),
-                              ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      const EmailAuthTextField(),
-                      const SizedBox(height: 16),
-                      const PasswordAuthTextField(),
-                      const SizedBox(height: 16),
-
-                      // Confirm Password Field (Always in tree, slide in/out)
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        switchInCurve: Curves.fastEaseInToSlowEaseOut,
-                        switchOutCurve: Curves.easeInExpo,
-                        transitionBuilder: (child, animation) {
-                          final offsetAnimation = Tween<Offset>(
-                            begin: const Offset(1, 0),
-                            end: Offset.zero,
-                          ).animate(animation);
-                          return SlideTransition(
-                            position: offsetAnimation,
-                            child: child,
-                          );
-                        },
-                        child: isLoginScreen
-                            ? const SizedBox.shrink(key: ValueKey('empty_name'))
-                            : const ConfirmPasswordTextField(
-                                key: ValueKey('ConfirmPasswordTextField'),
-                              ),
-                      ),
-
-                      const SizedBox(height: 32),
-
-                      SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.secondary,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(32),
-                            ),
-                          ),
-                          child: Text(
-                            isLoginScreen
-                                ? S.of(context).login
-                                : S.of(context).register,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-                  ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+          child: BlocConsumer<AuthCubit, AuthState>(
+            listener: (context, state) {
+              state.maybeWhen(
+                successLogin: (data) => Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.homeRoute,
+                  (route) => false,
                 ),
-              ],
-            ),
+                successRegister: (data) => Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.homeRoute,
+                  (route) => false,
+                ),
+                orElse: () => false,
+              );
+            },
+            builder: (context, state) {
+              return state.maybeWhen(
+                loadingAuth: () => const AuthLoadingScreen(),
+                orElse: () => BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    if (context.read<AuthCubit>().isLoginScreen) {
+                      return const AuthLoginScreenBody();
+                    } else {
+                      return const AuthRegisterScreenBody();
+                    }
+                  },
+                ),
+              );
+            },
           ),
         ),
       ),
+    );
+  }
+}
 
-      // Switch between login/register
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              isLoginScreen
-                  ? S.of(context).dontHaveAnAccount
-                  : S.of(context).alreadyHaveAnAccount,
-              style: theme.textTheme.bodyLarge,
-            ),
-            TextButton(
-              onPressed: () async {
-                setState(() => animateOut = true);
-                await Future.delayed(const Duration(milliseconds: 400));
-                setState(() {
-                  isLoginScreen = !isLoginScreen;
-                  animateOut = false;
-                });
-              },
-              child: Text(
-                isLoginScreen ? S.of(context).register : S.of(context).login,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+class AuthScreenHeader extends StatelessWidget {
+  const AuthScreenHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image(image: AssetImage(AppImages.logoGreen), width: 0.45.sw);
+  }
+}
+
+// class AuthRegisterScreenBody extends StatelessWidget {
+//   const AuthRegisterScreenBody({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final textTeme = Theme.of(context).textTheme;
+//     return SingleChildScrollView(
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           SizedBox(height: 20.h),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Image(image: AssetImage(AppImages.logoGreen), width: 0.45.sw),
+//               Align(
+//                 alignment: AlignmentDirectional.centerEnd,
+//                 child: BlocBuilder<LanguageBloc, LanguageState>(
+//                   builder: (context, state) {
+//                     if (state is LanguageLoaded) {
+//                       final currentLanguage =
+//                           AppLocalizationService.currentLanguageName;
+//                       final nextLanguage = state.locale.languageCode == 'ar'
+//                           ? 'English'
+//                           : 'العربية';
+//
+//                       return TransitionUtils.animatedLanguageButton(
+//                         currentLanguage: currentLanguage,
+//                         newLanguage: nextLanguage,
+//                         onPressed: () {
+//                           context.read<LanguageBloc>().toggleLanguage();
+//                         },
+//                       );
+//                       // } else if (state is LanguageChanging) {
+//                       //   return TransitionUtils.languageChangeLoader(
+//                       //     message: 'Changing language...',
+//                       //   );
+//                     } else {
+//                       return SizedBox.shrink();
+//                     }
+//                   },
+//                 ),
+//               ),
+//             ],
+//           ),
+//
+//           SizedBox(height: 40.h),
+//           Text(S.of(context).signIn, style: textTeme.headlineMedium),
+//           SizedBox(height: 20),
+//           Text(
+//             S.of(context).fullName,
+//             style: textTeme.titleSmall!.copyWith(color: AppColors.greyDark),
+//           ),
+//           SizedBox(height: 5),
+//
+//           NameAuthTextField(controller: TextEditingController()),
+//           SizedBox(height: 20),
+//           Text(
+//             S.of(context).email,
+//             style: textTeme.titleSmall!.copyWith(color: AppColors.greyDark),
+//           ),
+//           SizedBox(height: 5),
+//
+//           EmailAuthTextField(controller: TextEditingController()),
+//
+//           SizedBox(height: 20),
+//           Text(
+//             S.of(context).password,
+//             style: textTeme.titleSmall!.copyWith(color: AppColors.greyDark),
+//           ),
+//           SizedBox(height: 5),
+//
+//           PasswordAuthTextField(controller: TextEditingController()),
+//
+//           SizedBox(height: 20),
+//           Text(
+//             S.of(context).confirmPassword,
+//             style: textTeme.titleSmall!.copyWith(color: AppColors.greyDark),
+//           ),
+//           SizedBox(height: 5),
+//
+//           ConfirmPasswordTextField(
+//             controller: TextEditingController(),
+//             passwordController: TextEditingController(),
+//           ),
+//
+//           SizedBox(height: 35.h),
+//           // Sign in
+//           SizedBox(
+//             width: 1.sw,
+//             child: ElevatedButton(
+//               onPressed: () {},
+//               child: Text(S.of(context).signIn),
+//             ),
+//           ),
+//           SizedBox(height: 10),
+//           OrDivider(),
+//           SizedBox(height: 10),
+//
+//           // google Sign in
+//           SignInWithGoogle(),
+//
+//           SizedBox(height: 10),
+//
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//
+//             children: [
+//               Text(
+//                 S.of(context).notAMember,
+//                 style: Theme.of(
+//                   context,
+//                 ).textTheme.titleMedium!.copyWith(color: AppColors.grey),
+//               ),
+//               TextButton(
+//                 style: TextButton.styleFrom(foregroundColor: AppColors.black),
+//                 onPressed: () {},
+//                 child: Text(
+//                   S.of(context).createAnAccount,
+//                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+//                     decoration: TextDecoration.underline,
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+class OrDivider extends StatelessWidget {
+  const OrDivider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        SizedBox(width: 20.w),
+        Text("Or"),
+        SizedBox(width: 20.w),
+        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+      ],
+    );
+  }
+}
+
+class SignInWithGoogle extends StatelessWidget {
+  const SignInWithGoogle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.greyDark,
+      ),
+      onPressed: () {},
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image(image: AssetImage(AppImages.googleIcon), width: 20.w),
+          SizedBox(width: 10.w),
+          Text(
+            S.of(context).signInWithGoogle,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge!.copyWith(color: AppColors.grey),
+          ),
+        ],
       ),
     );
   }

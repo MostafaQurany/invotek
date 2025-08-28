@@ -8,4 +8,10 @@ class AppImages {
   static const String personalIcon = '$_iconPath/personal_icon.png';
   static const String logoWhite = '$_imagePath/logo_white.png';
   static const String logoGreen = '$_imagePath/logo_green.png';
+  static const String logoGreenSold = '$_imagePath/logo_green_sold.png';
+  static const String addIcon = '$_iconPath/add_icon.png';
+  static const String googleIcon = '$_iconPath/googleIcon.png';
+  static const String invoiceWithCheckedIcon =
+      '$_iconPath/invoice_with_checked_icon.png';
+  static const String invoiceMoneyIcon = '$_iconPath/invoice_money_icon.png';
 }

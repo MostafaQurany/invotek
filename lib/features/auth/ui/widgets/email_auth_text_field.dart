@@ -3,15 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
-import 'package:invotek/generated/l10n.dart';
+
+import '../../../../core/validation/validators.dart';
 
 class EmailAuthTextField extends StatelessWidget {
-  const EmailAuthTextField({super.key});
+  final TextEditingController controller;
+  const EmailAuthTextField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return AuthTextFiled(
-      hint: S.of(context).email,
+      hint: "example@example.com",
       prefixIcon: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ImageIcon(
@@ -21,9 +23,10 @@ class EmailAuthTextField extends StatelessWidget {
         ),
       ),
       obscureText: false,
-      controller: TextEditingController(),
+      controller: controller,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
+      validator: Validators.validateEmail,
     );
   }
 }

@@ -1,0 +1,656 @@
+# Sliver Usage Rules for Invotek
+
+## Sliver Overview
+
+Use Sliver widgets when displaying large amounts of data from API to provide smooth scrolling and better performance.
+
+## When to Use Slivers
+
+- Displaying lists with 50+ items
+- Showing data from API with pagination
+- Complex scrollable layouts
+- Custom scroll behaviors
+- Performance-critical lists
+
+## Sliver Widget Structure
+
+### Basic Sliver List Pattern
+
+```dart
+class DataListScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          // App bar
+          SliverAppBar(
+            title: Text(S.of(context).dataList),
+            floating: true,
+            snap: true,
+          ),
+
+          // Search bar
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _SearchBarDelegate(),
+          ),
+
+          // Data list
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return DataListItem(
+                  data: dataList[index],
+                  onTap: () => _handleItemTap(dataList[index]),
+                );
+              },
+              childCount: dataList.length,
+            ),
+          ),
+
+          // Loading indicator
+          if (isLoading)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+### Sliver with Pagination Pattern
+
+```dart
+class PaginatedDataScreen extends StatefulWidget {
+  @override
+  _PaginatedDataScreenState createState() => _PaginatedDataScreenState();
+}
+
+class _PaginatedDataScreenState extends State<PaginatedDataScreen> {
+  final List<DataModel> dataList = [];
+  bool isLoading = false;
+  bool hasMoreData = true;
+  int currentPage = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(S.of(context).dataList),
+            floating: true,
+            snap: true,
+          ),
+
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index >= dataList.length) {
+                  if (hasMoreData && !isLoading) {
+                    _loadMoreData();
+                  }
+                  return null;
+                }
+
+                return DataListItem(
+                  data: dataList[index],
+                  onTap: () => _handleItemTap(dataList[index]),
+                );
+              },
+              childCount: dataList.length + (hasMoreData ? 1 : 0),
+            ),
+          ),
+
+          if (isLoading)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _loadMoreData() async {
+    if (isLoading || !hasMoreData) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final newData = await dataRepository.getData(page: currentPage);
+
+      setState(() {
+        dataList.addAll(newData);
+        currentPage++;
+        hasMoreData = newData.isNotEmpty;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(S.of(context).errorLoadingData)),
+      );
+    }
+  }
+}
+```
+
+### Sliver with Search Pattern
+
+```dart
+class SearchableDataScreen extends StatefulWidget {
+  @override
+  _SearchableDataScreenState createState() => _SearchableDataScreenState();
+}
+
+class _SearchableDataScreenState extends State<SearchableDataScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  List<DataModel> filteredData = [];
+  List<DataModel> allData = [];
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(S.of(context).searchData),
+            floating: true,
+            snap: true,
+          ),
+
+          // Search bar
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: _SearchBarDelegate(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: S.of(context).searchHint,
+                    prefixIcon: Icon(Icons.search),
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: _filterData,
+                ),
+              ),
+            ),
+          ),
+
+          // Filtered data list
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return DataListItem(
+                  data: filteredData[index],
+                  onTap: () => _handleItemTap(filteredData[index]),
+                );
+              },
+              childCount: filteredData.length,
+            ),
+          ),
+
+          if (filteredData.isEmpty && !isLoading)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(32.0),
+                child: Center(
+                  child: Text(
+                    S.of(context).noDataFound,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  void _filterData(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredData = allData;
+      } else {
+        filteredData = allData.where((data) {
+          return data.title.toLowerCase().contains(query.toLowerCase()) ||
+                 data.description.toLowerCase().contains(query.toLowerCase());
+        }).toList();
+      }
+    });
+  }
+}
+
+class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+
+  _SearchBarDelegate({required this.child});
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: child,
+    );
+  }
+
+  @override
+  double get maxExtent => 80.0;
+
+  @override
+  double get minExtent => 80.0;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
+}
+```
+
+### Sliver with Categories Pattern
+
+```dart
+class CategorizedDataScreen extends StatelessWidget {
+  final Map<String, List<DataModel>> categorizedData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(S.of(context).categorizedData),
+            floating: true,
+            snap: true,
+          ),
+
+          ...categorizedData.entries.map((entry) {
+            return SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == 0) {
+                    // Category header
+                    return Container(
+                      padding: EdgeInsets.all(16.0),
+                      color: Theme.of(context).primaryColor.withOpacity(0.1),
+                      child: Text(
+                        entry.key,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    );
+                  } else {
+                    // Data item
+                    final data = entry.value[index - 1];
+                    return DataListItem(
+                      data: data,
+                      onTap: () => _handleItemTap(data),
+                    );
+                  }
+                },
+                childCount: entry.value.length + 1, // +1 for header
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+    );
+  }
+}
+```
+
+## Sliver Widget Components
+
+### Data List Item Widget
+
+```dart
+class DataListItem extends StatelessWidget {
+  final DataModel data;
+  final VoidCallback onTap;
+
+  const DataListItem({
+    Key? key,
+    required this.data,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(data.title[0].toUpperCase()),
+        ),
+        title: Text(data.title),
+        subtitle: Text(data.description),
+        trailing: Icon(Icons.arrow_forward_ios),
+        onTap: onTap,
+      ),
+    );
+  }
+}
+```
+
+### Loading Sliver Widget
+
+```dart
+class LoadingSliver extends StatelessWidget {
+  final String message;
+
+  const LoadingSliver({Key? key, this.message = 'جاري التحميل...'}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        height: 100.0,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 8.0),
+              Text(message),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+### Empty State Sliver Widget
+
+```dart
+class EmptyStateSliver extends StatelessWidget {
+  final String message;
+  final IconData icon;
+
+  const EmptyStateSliver({
+    Key? key,
+    required this.message,
+    this.icon = Icons.inbox_outlined,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverToBoxAdapter(
+      child: Container(
+        height: 200.0,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 64.0,
+                color: Colors.grey,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                message,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+```
+
+## Sliver with Cubit Integration
+
+### Sliver with State Management
+
+```dart
+class DataListScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DataCubit, DataState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                title: Text(S.of(context).dataList),
+                floating: true,
+                snap: true,
+              ),
+
+              state.when(
+                initial: () => SliverToBoxAdapter(child: SizedBox()),
+                loading: () => LoadingSliver(),
+                success: (dataList) => dataList.isEmpty
+                    ? EmptyStateSliver(message: S.of(context).noDataAvailable)
+                    : SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return DataListItem(
+                              data: dataList[index],
+                              onTap: () => context.read<DataCubit>().selectItem(dataList[index]),
+                            );
+                          },
+                          childCount: dataList.length,
+                        ),
+                      ),
+                error: (message) => SliverToBoxAdapter(
+                  child: ErrorWidget(message: message),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+```
+
+## Performance Optimizations
+
+### Sliver Performance Tips
+
+1. **Use SliverChildBuilderDelegate**: Only build visible items
+2. **Implement proper item keys**: Use unique keys for list items
+3. **Limit item height**: Use fixed height when possible
+4. **Avoid complex widgets**: Keep list items simple
+5. **Use const constructors**: For static widgets
+
+### Optimized Sliver List
+
+```dart
+SliverList(
+  delegate: SliverChildBuilderDelegate(
+    (context, index) {
+      return Container(
+        height: 80.0, // Fixed height for better performance
+        child: DataListItem(
+          key: ValueKey(dataList[index].id), // Unique key
+          data: dataList[index],
+          onTap: () => _handleItemTap(dataList[index]),
+        ),
+      );
+    },
+    childCount: dataList.length,
+    findChildIndexCallback: (Key key) {
+      final ValueKey valueKey = key as ValueKey;
+      return dataList.indexWhere((data) => data.id == valueKey.value);
+    },
+  ),
+)
+```
+
+## Common Sliver Patterns
+
+### Sliver with Pull to Refresh
+
+```dart
+class RefreshableDataScreen extends StatefulWidget {
+  @override
+  _RefreshableDataScreenState createState() => _RefreshableDataScreenState();
+}
+
+class _RefreshableDataScreenState extends State<RefreshableDataScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await context.read<DataCubit>().refreshData();
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              title: Text(S.of(context).dataList),
+              floating: true,
+              snap: true,
+            ),
+
+            BlocBuilder<DataCubit, DataState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => SliverToBoxAdapter(child: SizedBox()),
+                  loading: () => LoadingSliver(),
+                  success: (dataList) => SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return DataListItem(
+                          data: dataList[index],
+                          onTap: () => _handleItemTap(dataList[index]),
+                        );
+                      },
+                      childCount: dataList.length,
+                    ),
+                  ),
+                  error: (message) => SliverToBoxAdapter(
+                    child: ErrorWidget(message: message),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+### Sliver with Sticky Headers
+
+```dart
+class StickyHeaderDataScreen extends StatelessWidget {
+  final List<DataModel> dataList;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(S.of(context).dataList),
+            floating: true,
+            snap: true,
+          ),
+
+          SliverStickyHeader(
+            header: Container(
+              color: Theme.of(context).primaryColor,
+              padding: EdgeInsets.all(16.0),
+              child: Text(
+                S.of(context).dataHeader,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return DataListItem(
+                    data: dataList[index],
+                    onTap: () => _handleItemTap(dataList[index]),
+                  );
+                },
+                childCount: dataList.length,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+```
+
+## Implementation Checklist
+
+### Basic Sliver Setup
+
+- [ ] Use CustomScrollView for main container
+- [ ] Implement SliverAppBar for navigation
+- [ ] Use SliverList for data display
+- [ ] Add loading and empty states
+- [ ] Test scrolling performance
+
+### Advanced Sliver Features
+
+- [ ] Implement pagination
+- [ ] Add search functionality
+- [ ] Use sticky headers
+- [ ] Add pull-to-refresh
+- [ ] Implement error handling
+
+### Performance Optimization
+
+- [ ] Use SliverChildBuilderDelegate
+- [ ] Implement proper item keys
+- [ ] Limit item complexity
+- [ ] Use const constructors
+- [ ] Test with large datasets
+
+### State Management Integration
+
+- [ ] Integrate with Cubit
+- [ ] Handle loading states
+- [ ] Handle error states
+- [ ] Handle empty states
+- [ ] Implement data refresh
+
+### User Experience
+
+- [ ] Add smooth scrolling
+- [ ] Implement proper loading indicators
+- [ ] Add empty state messages
+- [ ] Handle error scenarios
+- [ ] Test on different devices
+      description:
+      globs:
+      alwaysApply: true
+
+---

@@ -1,0 +1,423 @@
+# Localization Rules for Invotek
+
+## Localization Overview
+
+Invotek supports Arabic and English languages with RTL support for Arabic.
+
+## Localization Structure
+
+```
+lib/
+├── l10n/
+│   ├── intl_ar.arb (Arabic translations)
+│   ├── intl_en.arb (English translations)
+│   ├── l10n.dart (Localization setup)
+│   ├── l10n_ar.dart (Arabic setup)
+│   └── l10n_en.dart (English setup)
+└── generated/
+    ├── l10n.dart (Generated localization)
+    └── intl/
+        ├── messages_all.dart
+        ├── messages_ar.dart
+        └── messages_en.dart
+```
+
+## Translation Guidelines
+
+### Using Translations in Code
+
+- Always use `S.of(context)` for text strings
+- Never hardcode text strings
+- Use proper context for translations
+
+```dart
+// Correct usage
+Text(S.of(context).welcome)
+
+// Incorrect usage
+Text('مرحباً!')
+```
+
+### Adding New Translations
+
+1. Add translation key to `lib/l10n/intl_ar.arb`
+2. Add translation key to `lib/l10n/intl_en.arb`
+3. Run `flutter gen-l10n` to generate files
+4. Use `S.of(context).yourKey` in code
+
+### Translation Key Naming
+
+- Use descriptive, hierarchical names
+- Use camelCase for key names
+- Group related translations
+
+```json
+{
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور"
+  },
+  "validation": {
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "passwordRequired": "كلمة المرور مطلوبة"
+  }
+}
+```
+
+## RTL Support
+
+### Layout Guidelines
+
+- Use `Directionality` widget for RTL support
+- Implement proper text alignment
+- Handle image and icon directions
+- Use proper padding and margin for RTL
+
+### RTL Implementation
+
+```dart
+// Example RTL-aware widget
+class RTLWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final isRTL = S.of(context).localeName == 'ar';
+
+    return Directionality(
+      textDirection: isRTL ? TextDirection.rtl : TextDirection.ltr,
+      child: Row(
+        children: [
+          Icon(Icons.arrow_back),
+          Text(S.of(context).back),
+        ],
+      ),
+    );
+  }
+}
+```
+
+## Language Switching
+
+### Language Management
+
+- Use `LocalizationCubit` for language switching
+- Store language preference in SharedPreferences
+- Implement proper language initialization
+- Handle language change events
+
+### Language Switching Implementation
+
+```dart
+class LocalizationCubit extends Cubit<LocalizationState> {
+  Future<void> changeLanguage(String languageCode) async {
+    await StorageService.saveLanguage(languageCode);
+    final locale = Locale(languageCode);
+    emit(LocalizationState(locale: locale));
+  }
+
+  void changeLanguageToArabic() {
+    changeLanguage('ar');
+  }
+
+  void changeLanguageToEnglish() {
+    changeLanguage('en');
+  }
+}
+```
+
+## Date and Number Formatting
+
+### Date Formatting
+
+- Use proper date formats for each locale
+- Handle different calendar systems
+- Format dates according to locale preferences
+
+```dart
+// Date formatting example
+String formatDate(DateTime date, BuildContext context) {
+  final locale = S.of(context).localeName;
+  return DateFormat.yMMMd(locale).format(date);
+}
+```
+
+### Number Formatting
+
+- Use proper number formats for each locale
+- Handle different number systems
+- Format currency according to locale
+
+```dart
+// Number formatting example
+String formatNumber(int number, BuildContext context) {
+  final locale = S.of(context).localeName;
+  return NumberFormat.decimalPattern(locale).format(number);
+}
+```
+
+## Cultural Considerations
+
+### Text Direction
+
+- Arabic text flows right-to-left
+- English text flows left-to-right
+- Handle mixed text properly
+
+### Typography
+
+- Use appropriate fonts for each language
+- Almarai for Arabic text
+- MontserratAlternates for English text
+- Ensure proper font loading
+
+### Cultural Sensitivity
+
+- Avoid culturally inappropriate content
+- Use appropriate colors and symbols
+- Consider cultural holidays and events
+- Handle cultural differences in UI design
+
+## Error Messages
+
+### Localized Error Messages
+
+- Provide error messages in both languages
+- Use appropriate error tone for each culture
+- Handle technical errors gracefully
+
+```json
+{
+  "errors": {
+    "networkError": "خطأ في الاتصال بالإنترنت",
+    "serverError": "خطأ في الخادم",
+    "validationError": "يرجى التحقق من صحة البيانات",
+    "authError": "فشل في تسجيل الدخول"
+  }
+}
+```
+
+## Testing Localization
+
+### Localization Testing
+
+- Test both Arabic and English
+- Test RTL layout
+- Test date and number formatting
+- Test error messages
+- Test language switching
+
+### Testing Checklist
+
+- [ ] All text is translated
+- [ ] RTL layout works correctly
+- [ ] Date formatting is correct
+- [ ] Number formatting is correct
+- [ ] Language switching works
+- [ ] Error messages are translated
+- [ ] UI elements are properly aligned
+
+## Common Patterns
+
+### Localized Widget
+
+```dart
+class LocalizedWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(S.of(context).welcome),
+        Text(S.of(context).description),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text(S.of(context).continue),
+        ),
+      ],
+    );
+  }
+}
+```
+
+### RTL-Aware Layout
+
+```dart
+class RTLAwareLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final isRTL = S.of(context).localeName == 'ar';
+
+    return Row(
+      children: [
+        if (!isRTL) Icon(Icons.arrow_back),
+        Expanded(child: Text(S.of(context).title)),
+        if (isRTL) Icon(Icons.arrow_back),
+      ],
+    );
+  }
+}
+```
+
+### Language Selector
+
+```dart
+class LanguageSelector extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        TextButton(
+          onPressed: () => context.read<LocalizationCubit>().changeLanguageToArabic(),
+          child: Text('العربية'),
+        ),
+        TextButton(
+          onPressed: () => context.read<LocalizationCubit>().changeLanguageToEnglish(),
+          child: Text('English'),
+        ),
+      ],
+    );
+  }
+}
+```
+
+## Best Practices
+
+### Translation Management
+
+- Keep translations organized and grouped
+- Use consistent terminology
+- Review translations for accuracy
+- Maintain translation context
+
+### Performance
+
+- Lazy load translation files
+- Cache translations appropriately
+- Minimize translation lookups
+- Use efficient string interpolation
+
+### Accessibility
+
+- Provide translations for screen readers
+- Use semantic labels in both languages
+- Ensure proper text scaling
+- Handle different text sizes
+
+### Maintenance
+
+- Keep translation files up to date
+- Document translation changes
+- Review translations regularly
+- Test translations thoroughly
+
+## Common Commands
+
+### Localization Commands
+
+```bash
+# Generate localization files
+flutter gen-l10n
+
+# Extract strings for translation
+flutter pub run intl_utils:extract
+
+# Generate ARB files
+flutter pub run intl_utils:generate
+
+# Validate ARB files
+flutter pub run intl_utils:validate
+```
+
+## File Organization
+
+### Translation Files
+
+- Keep ARB files organized by feature
+- Use consistent naming conventions
+- Group related translations
+- Maintain translation hierarchy
+
+### Generated Files
+
+- Don't edit generated files manually
+- Regenerate files after changes
+- Keep generated files in version control
+- Document generation process
+
+## Quality Assurance
+
+### Translation Quality
+
+- Review translations for accuracy
+- Check for cultural appropriateness
+- Ensure consistent terminology
+- Test translations in context
+
+### Technical Quality
+
+- Validate ARB file syntax
+- Check for missing translations
+- Test language switching
+- Verify RTL support
+
+### User Experience
+
+- Test with native speakers
+- Gather user feedback
+- Monitor translation usage
+- Improve based on feedback
+
+## Implementation Checklist
+
+### Basic Localization
+
+- [ ] Set up flutter_localizations
+- [ ] Create ARB files for both languages
+- [ ] Generate localization files
+- [ ] Implement language switching
+- [ ] Test both languages
+
+### RTL Support
+
+- [ ] Implement RTL layout
+- [ ] Test text direction
+- [ ] Handle mixed text
+- [ ] Test UI alignment
+- [ ] Verify icon directions
+
+### Date and Number Formatting
+
+- [ ] Implement date formatting
+- [ ] Implement number formatting
+- [ ] Test different locales
+- [ ] Handle edge cases
+- [ ] Verify formatting accuracy
+
+### Error Handling
+
+- [ ] Translate error messages
+- [ ] Handle translation errors
+- [ ] Provide fallback messages
+- [ ] Test error scenarios
+- [ ] Verify error display
+
+### Testing
+
+- [ ] Test both languages
+- [ ] Test RTL layout
+- [ ] Test language switching
+- [ ] Test date/number formatting
+- [ ] Test error messages
+
+### Documentation
+
+- [ ] Document translation process
+- [ ] Document RTL implementation
+- [ ] Document testing procedures
+- [ ] Document maintenance tasks
+- [ ] Keep documentation updated
+      description:
+      globs:
+      alwaysApply: true
+
+---

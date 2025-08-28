@@ -34,17 +34,7 @@ class _AuthTextFiledState extends State<AuthTextFiled> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       child: TextFormField(
         focusNode: widget.focusNode,
         controller: widget.controller,
@@ -52,7 +42,6 @@ class _AuthTextFiledState extends State<AuthTextFiled> {
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
         validator: widget.validator,
-
         decoration: InputDecoration(
           hintText: widget.hint,
           prefixIcon: widget.prefixIcon,

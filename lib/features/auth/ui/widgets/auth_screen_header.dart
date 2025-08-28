@@ -1,52 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class AuthScreenHeader extends StatelessWidget {
-  const AuthScreenHeader({super.key});
+  final bool isExpanded;
+  const AuthScreenHeader({super.key, required this.isExpanded});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 500),
+      height: isExpanded ? 1.sh : 0.3.sh,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 48),
+      curve: Curves.easeInToLinear,
       decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
+        color: isExpanded ? AppColors.primary : null,
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(32.r),
+          bottomLeft: Radius.circular(32.r),
         ),
-        gradient: LinearGradient(
-          colors: [
-            AppColors.primary.withOpacity(0.6),
-            AppColors.primary.withOpacity(0.8),
-            AppColors.primary,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          stops: [0.1, 0.6, 1],
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 10,
-            spreadRadius: 2,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            S.of(context).welcome,
-            style: theme.textTheme.headlineMedium?.copyWith(
-              color: Colors.white,
+          if (!isExpanded)
+            Text(
+              S.of(context).welcome,
+              style: Theme.of(
+                context,
+              ).textTheme.displayMedium!.copyWith(color: AppColors.primary),
+              textAlign: TextAlign.center,
+            ),
+          AnimatedAlign(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.linearToEaseOut,
+            alignment: isExpanded
+                ? AlignmentDirectional.center
+                : AlignmentDirectional.centerEnd,
+            child: AnimatedScale(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.linearToEaseOut,
+              scale: isExpanded ? 1.3 : 1.0,
+              child: Container(
+                width: 0.6.sw,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadiusDirectional.horizontal(
+                    start: Radius.circular(32.r),
+                  ),
+                ),
+                child: Image.asset(AppImages.logoWhite),
+              ),
             ),
           ),
-          const SizedBox(height: 16),
-          Image.asset(AppImages.logoWhite, height: 100),
         ],
       ),
     );

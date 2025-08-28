@@ -2,7 +2,7 @@ name: invotek
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -35,7 +35,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  # The intl package provides internationalization and localization facilities.
+  # Localization
   intl: ^0.20.2
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
@@ -44,8 +44,13 @@ dependencies:
   json_annotation: ^4.9.0
   freezed_annotation: ^3.1.0
   pretty_dio_logger: ^1.4.0
-
-
+  get_it: ^7.6.0
+  flutter_bloc:
+  shared_preferences: ^2.2.2
+  dio_cache_interceptor: ^3.5.1
+  dio_cache_interceptor_hive_store: ^3.2.2
+  path_provider: ^2.1.4
+  flutter_zoom_drawer: ^3.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -61,12 +66,12 @@ dev_dependencies:
   retrofit_generator: ^10.0.0
   freezed: ^3.2.0
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -97,7 +102,6 @@ flutter:
           weight: 300
         - asset: assets/fonts/MontserratAlternates/MontserratAlternates-ExtraBold.ttf
           weight: 800
-
 
 # flutter_intl configuration
 flutter_intl:

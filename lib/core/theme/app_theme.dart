@@ -1,58 +1,116 @@
 import 'package:flutter/material.dart';
-import 'package:invotek/core/theme/text_form_field_theme.dart';
-import 'app_colors.dart';
-import 'app_text_theme.dart';
+import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/theme/app_text_theme.dart';
+import 'package:invotek/core/utils/screen_utils.dart';
 
 class AppTheme {
-  static ThemeData lightTheme = ThemeData(
-    fontFamily: 'Almarai',
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: Colors.white,
-    primaryColor: AppColors.primary,
-    colorScheme: const ColorScheme.light(
-      primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      surface: Colors.white,
-      error: AppColors.error,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
-      onSurface: Colors.black,
-      onError: Colors.white,
-    ),
-    textTheme: AppTextTheme.textTheme,
-    inputDecorationTheme: TextFormFieldTheme.inputDecorationThemeLight,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.button,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.primary,
+        brightness: Brightness.light,
       ),
-    ),
-  );
+      textTheme: AppTextTheme.lightTextTheme,
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: AppTextTheme.lightTextTheme.titleLarge?.copyWith(
+          color: AppColors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          elevation: ScreenUtils.cardElevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(ScreenUtils.radiusMedium),
+          ),
+          textStyle: AppTextTheme.buttonText,
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.inputFieldRadius),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.inputFieldRadius),
+          borderSide: BorderSide(color: AppColors.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.inputFieldRadius),
+          borderSide: BorderSide(color: AppColors.error),
+        ),
+        labelStyle: AppTextTheme.inputLabel,
+        hintStyle: AppTextTheme.lightTextTheme.bodyMedium?.copyWith(
+          color: AppColors.grey,
+        ),
+      ),
+      cardTheme: CardThemeData(
+        elevation: ScreenUtils.cardElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.cardRadius),
+        ),
+      ),
+    );
+  }
 
-  static ThemeData darkTheme = ThemeData(
-    fontFamily: 'Almarai',
-    brightness: Brightness.dark,
-    scaffoldBackgroundColor: AppColors.background,
-    primaryColor: AppColors.primary,
-    colorScheme: const ColorScheme.dark(
-      primary: AppColors.primary,
-      secondary: AppColors.secondary,
-      surface: AppColors.surface,
-      error: AppColors.error,
-      onPrimary: Colors.white,
-      onSecondary: Colors.white,
-      onSurface: Colors.white,
-      onError: Colors.black,
-    ),
-    textTheme: AppTextTheme.textTheme,
-    inputDecorationTheme: TextFormFieldTheme.inputDecorationThemeDark,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.button,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  static ThemeData get darkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.primary,
+        brightness: Brightness.dark,
       ),
-    ),
-  );
+      textTheme: AppTextTheme.darkTextTheme,
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: AppTextTheme.darkTextTheme.titleLarge?.copyWith(
+          color: AppColors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          elevation: ScreenUtils.cardElevation,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(ScreenUtils.radiusMedium),
+          ),
+          textStyle: AppTextTheme.buttonText,
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.inputFieldRadius),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.inputFieldRadius),
+          borderSide: BorderSide(color: AppColors.primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.inputFieldRadius),
+          borderSide: BorderSide(color: AppColors.error),
+        ),
+        labelStyle: AppTextTheme.inputLabelDark,
+        hintStyle: AppTextTheme.darkTextTheme.bodyMedium?.copyWith(
+          color: AppColors.grey,
+        ),
+      ),
+      cardTheme: CardThemeData(
+        elevation: ScreenUtils.cardElevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(ScreenUtils.cardRadius),
+        ),
+      ),
+    );
+  }
 }

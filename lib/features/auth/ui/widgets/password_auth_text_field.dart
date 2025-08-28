@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
+import 'package:invotek/core/validation/validators.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
-import 'package:invotek/generated/l10n.dart';
 
 class PasswordAuthTextField extends StatefulWidget {
-  const PasswordAuthTextField({super.key});
+  final TextEditingController controller;
+  const PasswordAuthTextField({super.key, required this.controller});
 
   @override
   State<PasswordAuthTextField> createState() => _PasswordAuthTextFieldState();
 }
 
 class _PasswordAuthTextFieldState extends State<PasswordAuthTextField> {
-  final TextEditingController controller = TextEditingController();
   bool isFeces = false;
   bool isObscure = true;
   FocusNode focusNode = FocusNode();
@@ -23,7 +23,7 @@ class _PasswordAuthTextFieldState extends State<PasswordAuthTextField> {
     focusNode.addListener(() {
       setState(() {
         isFeces = focusNode.hasFocus;
-        print(isFeces ? 'Focused' : 'Not Focused');
+        // Focus state changed
       });
     });
   }
@@ -62,7 +62,7 @@ class _PasswordAuthTextFieldState extends State<PasswordAuthTextField> {
               },
             )
           : null,
-      hint: S.of(context).password,
+      hint: "*************************",
       prefixIcon: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ImageIcon(
@@ -72,9 +72,10 @@ class _PasswordAuthTextFieldState extends State<PasswordAuthTextField> {
         ),
       ),
       obscureText: isObscure,
-      controller: controller,
+      controller: widget.controller,
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.done,
+      validator: Validators.validatePassword,
     );
   }
 }

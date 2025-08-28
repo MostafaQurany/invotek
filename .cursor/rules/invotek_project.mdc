@@ -1,0 +1,394 @@
+# Invotek Flutter Project Rules
+
+## Project Overview
+
+Invotek is a Flutter invoice management system with Arabic/English localization support using Clean Architecture with BLoC pattern.
+
+## Project Structure
+
+```
+lib/
+├── app/info_tek_app.dart (Main app entry point)
+├── core/ (Core functionality)
+│   ├── di/ (Dependency Injection)
+│   ├── services/ (Core services)
+│   ├── server/ (API and network layer)
+│   ├── theme/ (App theming)
+│   ├── routes/ (Navigation)
+│   ├── utils/ (Utilities)
+│   ├── widgets/ (Shared widgets)
+│   ├── validation/ (Form validation)
+│   ├── error/ (Error handling)
+│   └── cubits/ (Global state management)
+├── features/ (App features)
+│   ├── auth/ (Authentication)
+│   ├── home/ (Home screen)
+│   └── users/ (User management)
+├── generated/ (Generated files)
+├── l10n/ (Localization source)
+└── main.dart (App initialization)
+```
+
+## Architecture Pattern
+
+**Clean Architecture with BLoC Pattern:**
+
+- **UI Layer**: Screens and Widgets
+- **Business Logic Layer**: Cubits and Repositories
+- **Data Layer**: DataSources and API Services
+- **Network Layer**: Dio with Retrofit
+
+**Data Flow:**
+
+```
+UI → Action → Cubit → Repository → DataSource → ApiClient → Dio → API
+API → Dio → ApiClient → DataSource → Repository → Cubit → Reload → UI
+```
+
+## Key Technologies
+
+- **State Management**: flutter_bloc with Cubit
+- **Dependency Injection**: get_it
+- **API**: Dio with Retrofit
+- **Localization**: flutter_localizations with S.of(context)
+- **Storage**: shared_preferences
+- **Code Generation**: freezed + json_serializable
+- **Logging**: pretty_dio_logger
+- **Responsive Design**: flutter_screenutil
+
+## Coding Standards
+
+### Language & Communication
+
+- **Primary Language**: Always respond in Arabic
+- **Comments**: Write comments in Arabic
+- **Error Messages**: Use Arabic for user-facing messages
+- **Logging**: Use English for technical logs
+
+### Naming Conventions
+
+- **Files**: snake_case (e.g., `auth_screen.dart`)
+- **Classes**: PascalCase (e.g., `AuthCubit`)
+- **Variables**: camelCase (e.g., `userData`)
+- **Constants**: UPPER_SNAKE_CASE (e.g., `API_BASE_URL`)
+- **Directories**: snake_case (e.g., `data_source`)
+
+### Feature Structure
+
+Each feature should follow:
+
+```
+features/feature_name/
+├── data/
+│   ├── models/ (Data models with freezed)
+│   ├── data_source/ (API data sources)
+│   └── repository/ (Repository implementations)
+├── demo/ (Current structure - to be refactored)
+│   ├── cubit/ (State management)
+│   ├── repo/ (Repository)
+│   └── entit/ (Entities)
+└── ui/ (Screens and widgets)
+```
+
+## API Guidelines
+
+- Use Retrofit for API service definitions in `core/server/`
+- Use ApiResult<T> for consistent response handling
+- Implement proper error handling with ErrorHandler
+- Log all API requests/responses with pretty_dio_logger
+- Use ApiClient for all API calls
+
+## State Management
+
+- Use Cubit for state management (not Bloc)
+- Keep business logic in Cubit classes
+- Use Repository pattern for data access
+- Implement proper loading and error states
+- Use freezed for immutable state classes
+
+## Localization
+
+- Use `S.of(context)` for all text strings
+- Keep translation keys in `lib/l10n/intl_ar.arb` and `lib/l10n/intl_en.arb`
+- Run `flutter gen-l10n` to generate localization files
+- Support both Arabic and English with RTL
+
+## Error Handling
+
+- Use ErrorHandler for consistent error management
+- Implement proper error models with ErrorModel
+- Handle different error types (network, validation, server)
+- Provide user-friendly error messages in Arabic
+- Use DataSource enum for error types
+
+## Validation
+
+- Use Validators class for form validation
+- Implement client-side validation before API calls
+- Provide Arabic error messages
+- Validate email, password, name, phone, etc.
+
+## UI Guidelines
+
+- Use flutter_screenutil for responsive design
+- Follow Material Design principles
+- Use AppColors and AppTheme for consistent styling
+- Implement proper loading states and error handling
+- Support RTL layout for Arabic
+- Use shared widgets from core/widgets
+
+## Dependency Injection
+
+- Use get_it for dependency injection
+- Follow the pattern in `core/di/injection.dart`
+- Register services as singletons when appropriate
+- Use factories for state management objects
+
+## Code Generation
+
+- Use `flutter pub run build_runner build` to generate code
+- Keep generated files in lib/generated/ directory
+- Use freezed for data classes
+- Use json_serializable for JSON serialization
+- Use retrofit_generator for API services
+
+## Storage Guidelines
+
+- Use StorageService for shared preferences
+- Implement proper data serialization with jsonEncode/jsonDecode
+- Handle storage errors gracefully
+- Store user data, tokens, and preferences
+
+## Common Patterns
+
+### Repository Pattern
+
+```dart
+class AuthRepo {
+  final AuthDataSource dataSource;
+
+  Future<ApiResult<UserModel>> login(LoginRequest request) async {
+    // Implementation with proper error handling
+  }
+}
+```
+
+### Cubit Pattern
+
+```dart
+class AuthCubit extends Cubit<AuthState> {
+  final AuthRepo repo;
+
+  Future<void> login(LoginRequest request, BuildContext context) async {
+    // Implementation with validation and error handling
+  }
+}
+```
+
+### API Service Pattern
+
+```dart
+@RestApi(baseUrl: ApiConstants.baserUrl)
+abstract class ApiClient {
+  @POST(ApiConstants.login)
+  Future<ApiResult<UserModel>> login(@Body() LoginRequest request);
+}
+```
+
+## Error Messages (Arabic)
+
+- Network errors: "خطأ في الاتصال بالإنترنت"
+- Server errors: "خطأ في الخادم"
+- Validation errors: "يرجى التحقق من صحة البيانات"
+- Authentication errors: "فشل في تسجيل الدخول"
+- Unknown errors: "حدث خطأ غير متوقع"
+
+## Development Workflow
+
+1. Follow existing architecture patterns
+2. Add proper error handling and loading states
+3. Update localization files if needed
+4. Run code generation commands
+5. Test thoroughly
+6. Use proper logging with AppLogger
+
+## Common Commands
+
+```bash
+# Install dependencies
+flutter pub get
+
+# Generate code
+flutter pub run build_runner build
+
+# Generate localization
+flutter gen-l10n
+
+# Run tests
+flutter test
+```
+
+## File Naming Examples
+
+- `auth_cubit.dart` - State management
+- `auth_repo.dart` - Repository
+- `auth_data_source.dart` - API layer
+- `auth_screen.dart` - UI screen
+- `user_model.dart` - Data model
+- `login_request.dart` - API request model
+
+## Import Organization
+
+1. Flutter imports
+2. Third-party package imports
+3. Local imports (core, features)
+4. Generated imports
+
+## Theme Guidelines
+
+- Use AppColors for consistent colors
+- Use AppTheme for theme configuration
+- Support light/dark themes
+- Use Almarai and MontserratAlternates fonts
+- Implement proper contrast ratios
+
+## Logging Guidelines
+
+- Use AppLogger for consistent logging
+- Log API requests and responses
+- Log user actions for analytics
+- Log errors with stack traces
+- Use appropriate log levels
+
+## Testing Guidelines
+
+- Write unit tests for Cubit classes
+- Write widget tests for UI components
+- Mock API calls in tests
+- Test error scenarios
+- Test validation logic
+
+## Performance Guidelines
+
+- Use lazy loading where appropriate
+- Optimize image loading and caching
+- Monitor app performance
+- Use proper caching strategies
+- Minimize widget rebuilds
+
+## Security Guidelines
+
+- Never hardcode API keys or sensitive data
+- Use environment variables for configuration
+- Implement proper input validation
+- Handle sensitive data securely
+- Use secure storage for tokens
+
+## Git Guidelines
+
+- Use meaningful commit messages in Arabic
+- Follow conventional commit format
+- Keep commits atomic and focused
+- Review code before committing
+- Use feature branches
+
+## Accessibility
+
+- Use semantic labels for screen readers
+- Provide alternative text for images
+- Ensure proper color contrast
+- Support different text sizes
+- Implement proper focus management
+
+## Internationalization
+
+- Support both Arabic and English
+- Use proper RTL layout for Arabic
+- Handle date and number formatting
+- Consider cultural differences in UI design
+- Use proper text direction
+
+## Code Quality
+
+- Follow Flutter linting rules
+- Use proper code formatting
+- Implement proper code documentation
+- Use proper code organization
+- Follow SOLID principles
+
+## Debugging Guidelines
+
+- Use proper logging for debugging
+- Implement proper error tracking
+- Use Flutter DevTools
+- Implement proper crash reporting
+- Use proper debugging tools
+
+## Monitoring Guidelines
+
+- Implement proper analytics
+- Monitor app performance
+- Track user behavior
+- Monitor error rates
+- Implement proper crash reporting
+
+## Documentation Guidelines
+
+- Document complex business logic
+- Document API endpoints
+- Document state management
+- Document UI components
+- Keep documentation up to date
+
+## Code Review Guidelines
+
+- Review for architecture compliance
+- Review for security issues
+- Review for performance issues
+- Review for accessibility
+- Review for internationalization
+
+## Testing Strategy
+
+- Unit tests for business logic
+- Widget tests for UI components
+- Integration tests for features
+- End-to-end tests for critical flows
+- Performance tests for optimization
+
+## Security Checklist
+
+- Input validation
+- Data encryption
+- Secure storage
+- Network security
+- Authentication security
+
+## Performance Checklist
+
+- Image optimization
+- Widget optimization
+- Memory management
+- Network optimization
+- Cache management
+
+## Accessibility Checklist
+
+- Screen reader support
+- Keyboard navigation
+- Color contrast
+- Text scaling
+- Focus management
+
+## Internationalization Checklist
+
+- Text externalization
+- RTL support
+- Date formatting
+- Number formatting
+- Cultural considerations
+  description:
+  globs:
+  alwaysApply: true
+
+---

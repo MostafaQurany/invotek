@@ -1,37 +1,52 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'api_interceptors.dart';
+import '../network/cache_module.dart';
 
 class DioFactory {
   DioFactory._();
 
-  static Dio? dio;
+  static Dio? _dio;
 
-  static Dio getDio() {
-    Duration timeOut = const Duration(seconds: 30);
+  /// You must call this once at app start (after CacheModule.init).
+  static Dio create(CacheModule cache, {String? baseUrl}) {
+    if (_dio != null) return _dio!;
 
-    if (dio == null) {
-      dio = Dio();
-      dio!
-        ..options.connectTimeout = timeOut
-        ..options.receiveTimeout = timeOut;
-      dio!.interceptors.add(DioInterceptor());
+    final timeOut = const Duration(seconds: 30);
 
+    _dio = Dio(BaseOptions(
+      baseUrl: baseUrl ?? '',
+      connectTimeout: timeOut,
+      receiveTimeout: timeOut,
+      // headers: {'Accept': 'application/json'}, // as needed
+    ));
 
-      addDioInterceptor();
-      return dio!;
-    } else {
-      return dio!;
-    }
+    // Order matters:
+    // request → [AuthInterceptor] → [Cache] → [Logger] → network
+    _dio!
+      ..interceptors.add(DioInterceptor())                        // auth, localization, etc.
+      ..interceptors.add(DioCacheInterceptor(options: cache.options))
+      ..interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+          enabled: true,
+        ),
+      );
+
+    return _dio!;
   }
 
-  static void addDioInterceptor() {
-    dio?.interceptors.add(
-      PrettyDioLogger(
-        requestBody: true,
-        requestHeader: true,
-        responseHeader: true,
-      ),
-    );
+  static Dio get instance {
+    if (_dio == null) {
+      throw StateError('Call DioFactory.create(cacheModule) before using instance');
+    }
+    return _dio!;
   }
 }

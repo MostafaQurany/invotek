@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 
 class TextFormFieldTheme {
-  static const double borderRadius = 32.0;
+  static const double borderRadius = 10.0;
 
   static InputDecorationTheme inputDecorationThemeLight = InputDecorationTheme(
     filled: true,

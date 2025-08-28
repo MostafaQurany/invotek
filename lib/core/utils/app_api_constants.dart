@@ -1,7 +1,8 @@
 class ApiConstants {
-  static const String baserUrl = "http://192.168.1.32:8000/";
-  static const String login = "api/login";
-  static const String register = "api/logout";
+  static const String baserUrl = "https://demo.invotik.com/api/";
+  static const String login = "login";
+  static const String register = "register";
+  static const String logOut = "logout";
 
   static bool valid = false;
 }

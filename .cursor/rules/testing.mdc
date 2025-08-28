@@ -1,0 +1,742 @@
+# Testing Rules for Invotek
+
+## Testing Overview
+
+Invotek follows comprehensive testing strategies including unit tests, widget tests, and integration tests with proper mocking and test coverage.
+
+## Testing Structure
+
+```
+test/
+├── unit/ (Unit tests)
+├── widget/ (Widget tests)
+├── integration/ (Integration tests)
+└── helpers/ (Test helpers and mocks)
+```
+
+## Testing Types
+
+### Unit Tests
+
+- Test business logic in Cubits
+- Test repository methods
+- Test data models
+- Test utility functions
+- Test validation logic
+
+### Widget Tests
+
+- Test UI components
+- Test user interactions
+- Test state changes
+- Test error states
+- Test loading states
+
+### Integration Tests
+
+- Test complete user flows
+- Test API integration
+- Test navigation
+- Test data persistence
+- Test error scenarios
+
+## Testing Dependencies
+
+### Required Packages
+
+```yaml
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.4.4
+  build_runner: ^2.6.0
+  integration_test:
+    sdk: flutter
+```
+
+### Mock Generation
+
+```bash
+# Generate mocks
+flutter pub run build_runner build
+
+# Watch for changes
+flutter pub run build_runner watch
+```
+
+## Unit Testing
+
+### Cubit Testing Pattern
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+
+import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/demo/repo/auth_repo.dart';
+
+@GenerateMocks([AuthRepo])
+import 'auth_cubit_test.mocks.dart';
+
+void main() {
+  group('AuthCubit Tests', () {
+    late AuthCubit cubit;
+    late MockAuthRepo mockRepo;
+
+    setUp(() {
+      mockRepo = MockAuthRepo();
+      cubit = AuthCubit(mockRepo);
+    });
+
+    tearDown(() {
+      cubit.close();
+    });
+
+    test('initial state should be AuthState.initial', () {
+      expect(cubit.state, AuthState.initial());
+    });
+
+    test('login should emit loading then success state', () async {
+      // Arrange
+      final request = LoginRequest(email: 'test@example.com', password: 'password');
+      final userModel = UserModel(user: User(name: 'Test User'), token: 'token');
+
+      when(mockRepo.login(request)).thenAnswer(
+        (_) async => ApiResult.success(userModel),
+      );
+
+      // Act
+      await cubit.login(request, null);
+
+      // Assert
+      expect(cubit.state, AuthState.successLogin(userModel));
+    });
+
+    test('login should emit loading then error state on failure', () async {
+      // Arrange
+      final request = LoginRequest(email: 'test@example.com', password: 'password');
+      final error = ErrorHandler.handle(Exception('Login failed'));
+
+      when(mockRepo.login(request)).thenAnswer(
+        (_) async => ApiResult.failure(error),
+      );
+
+      // Act
+      await cubit.login(request, null);
+
+      // Assert
+      expect(cubit.state, isA<AuthState>());
+      expect(cubit.state, AuthState.errorAuth(any));
+    });
+  });
+}
+```
+
+### Repository Testing Pattern
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+
+import 'package:invotek/features/auth/demo/repo/auth_repo.dart';
+import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
+
+@GenerateMocks([AuthDataSource])
+import 'auth_repo_test.mocks.dart';
+
+void main() {
+  group('AuthRepo Tests', () {
+    late AuthRepo repo;
+    late MockAuthDataSource mockDataSource;
+
+    setUp(() {
+      mockDataSource = MockAuthDataSource();
+      repo = AuthRepo(mockDataSource);
+    });
+
+    test('login should return success result', () async {
+      // Arrange
+      final request = LoginRequest(email: 'test@example.com', password: 'password');
+      final userModel = UserModel(user: User(name: 'Test User'), token: 'token');
+
+      when(mockDataSource.login(request)).thenAnswer(
+        (_) async => ApiResult.success(userModel),
+      );
+
+      // Act
+      final result = await repo.login(request);
+
+      // Assert
+      expect(result, isA<ApiResult<UserModel>>());
+      result.when(
+        success: (data) => expect(data, userModel),
+        failure: (error) => fail('Should not fail'),
+      );
+    });
+
+    test('login should return failure result on error', () async {
+      // Arrange
+      final request = LoginRequest(email: 'test@example.com', password: 'password');
+      final error = ErrorHandler.handle(Exception('API Error'));
+
+      when(mockDataSource.login(request)).thenAnswer(
+        (_) async => ApiResult.failure(error),
+      );
+
+      // Act
+      final result = await repo.login(request);
+
+      // Assert
+      expect(result, isA<ApiResult<UserModel>>());
+      result.when(
+        success: (data) => fail('Should not succeed'),
+        failure: (error) => expect(error, isA<ErrorHandler>()),
+      );
+    });
+  });
+}
+```
+
+### Model Testing Pattern
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:invotek/features/auth/data/models/login_request.dart';
+
+void main() {
+  group('LoginRequest Tests', () {
+    test('should create LoginRequest from JSON', () {
+      // Arrange
+      final json = {
+        'email': 'test@example.com',
+        'password': 'password123',
+      };
+
+      // Act
+      final request = LoginRequest.fromJson(json);
+
+      // Assert
+      expect(request.email, 'test@example.com');
+      expect(request.password, 'password123');
+    });
+
+    test('should convert LoginRequest to JSON', () {
+      // Arrange
+      final request = LoginRequest(
+        email: 'test@example.com',
+        password: 'password123',
+      );
+
+      // Act
+      final json = request.toJson();
+
+      // Assert
+      expect(json['email'], 'test@example.com');
+      expect(json['password'], 'password123');
+    });
+
+    test('should handle empty values', () {
+      // Arrange
+      final json = {
+        'email': '',
+        'password': '',
+      };
+
+      // Act
+      final request = LoginRequest.fromJson(json);
+
+      // Assert
+      expect(request.email, '');
+      expect(request.password, '');
+    });
+  });
+}
+```
+
+## Widget Testing
+
+### Widget Testing Pattern
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mockito/mockito.dart';
+
+import 'package:invotek/features/auth/ui/auth_screen.dart';
+import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+
+class MockAuthCubit extends Mock implements AuthCubit {}
+
+void main() {
+  group('AuthScreen Tests', () {
+    late MockAuthCubit mockCubit;
+
+    setUp(() {
+      mockCubit = MockAuthCubit();
+    });
+
+    testWidgets('should show login form initially', (WidgetTester tester) async {
+      // Arrange
+      when(mockCubit.state).thenReturn(AuthState.initial());
+
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<AuthCubit>.value(
+            value: mockCubit,
+            child: AuthScreen(),
+          ),
+        ),
+      );
+
+      // Assert
+      expect(find.text('تسجيل الدخول'), findsOneWidget);
+      expect(find.byType(TextFormField), findsNWidgets(2));
+    });
+
+    testWidgets('should show loading indicator when loading', (WidgetTester tester) async {
+      // Arrange
+      when(mockCubit.state).thenReturn(AuthState.loadingAuth());
+
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<AuthCubit>.value(
+            value: mockCubit,
+            child: AuthScreen(),
+          ),
+        ),
+      );
+
+      // Assert
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('should show error message when error occurs', (WidgetTester tester) async {
+      // Arrange
+      when(mockCubit.state).thenReturn(AuthState.errorAuth('خطأ في تسجيل الدخول'));
+
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<AuthCubit>.value(
+            value: mockCubit,
+            child: AuthScreen(),
+          ),
+        ),
+      );
+
+      // Assert
+      expect(find.text('خطأ في تسجيل الدخول'), findsOneWidget);
+    });
+
+    testWidgets('should call login when form is submitted', (WidgetTester tester) async {
+      // Arrange
+      when(mockCubit.state).thenReturn(AuthState.initial());
+
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: BlocProvider<AuthCubit>.value(
+            value: mockCubit,
+            child: AuthScreen(),
+          ),
+        ),
+      );
+
+      await tester.enterText(find.byKey(Key('email_field')), 'test@example.com');
+      await tester.enterText(find.byKey(Key('password_field')), 'password');
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pump();
+
+      // Assert
+      verify(mockCubit.login(any, any)).called(1);
+    });
+  });
+}
+```
+
+### Custom Widget Testing Pattern
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:invotek/core/widgets/loading_widget.dart';
+
+void main() {
+  group('LoadingWidget Tests', () {
+    testWidgets('should display loading indicator', (WidgetTester tester) async {
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: LoadingWidget(),
+          ),
+        ),
+      );
+
+      // Assert
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('should display custom message', (WidgetTester tester) async {
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: LoadingWidget(message: 'جاري التحميل...'),
+          ),
+        ),
+      );
+
+      // Assert
+      expect(find.text('جاري التحميل...'), findsOneWidget);
+    });
+
+    testWidgets('should be centered on screen', (WidgetTester tester) async {
+      // Act
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: LoadingWidget(),
+          ),
+        ),
+      );
+
+      // Assert
+      final centerFinder = find.byType(Center);
+      expect(centerFinder, findsOneWidget);
+    });
+  });
+}
+```
+
+## Integration Testing
+
+### Integration Testing Pattern
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+
+import 'package:invotek/main.dart' as app;
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  group('App Integration Tests', () {
+    testWidgets('complete login flow', (WidgetTester tester) async {
+      // Start the app
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Verify we're on the auth screen
+      expect(find.text('تسجيل الدخول'), findsOneWidget);
+
+      // Enter credentials
+      await tester.enterText(find.byKey(Key('email_field')), 'test@example.com');
+      await tester.enterText(find.byKey(Key('password_field')), 'password');
+
+      // Submit form
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+
+      // Verify navigation to home screen
+      expect(find.text('الصفحة الرئيسية'), findsOneWidget);
+    });
+
+    testWidgets('error handling flow', (WidgetTester tester) async {
+      // Start the app
+      app.main();
+      await tester.pumpAndSettle();
+
+      // Enter invalid credentials
+      await tester.enterText(find.byKey(Key('email_field')), 'invalid@email');
+      await tester.enterText(find.byKey(Key('password_field')), '123');
+
+      // Submit form
+      await tester.tap(find.byType(ElevatedButton));
+      await tester.pumpAndSettle();
+
+      // Verify error message is shown
+      expect(find.text('البريد الإلكتروني غير صحيح'), findsOneWidget);
+    });
+  });
+}
+```
+
+## Test Helpers
+
+### Test Utilities
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+class TestHelpers {
+  static Widget createTestApp(Widget child) {
+    return MaterialApp(
+      home: child,
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('en'), Locale('ar')],
+    );
+  }
+
+  static Future<void> pumpWidgetWithBloc<T extends BlocBase>(
+    WidgetTester tester,
+    Widget widget,
+    T bloc,
+  ) async {
+    await tester.pumpWidget(
+      BlocProvider<T>.value(
+        value: bloc,
+        child: createTestApp(widget),
+      ),
+    );
+  }
+
+  static Future<void> enterTextAndSubmit(
+    WidgetTester tester,
+    String email,
+    String password,
+  ) async {
+    await tester.enterText(find.byKey(Key('email_field')), email);
+    await tester.enterText(find.byKey(Key('password_field')), password);
+    await tester.tap(find.byType(ElevatedButton));
+    await tester.pumpAndSettle();
+  }
+}
+```
+
+### Mock Data Factories
+
+```dart
+class MockDataFactory {
+  static LoginRequest createLoginRequest({
+    String email = 'test@example.com',
+    String password = 'password123',
+  }) {
+    return LoginRequest(email: email, password: password);
+  }
+
+  static UserModel createUserModel({
+    String name = 'Test User',
+    String email = 'test@example.com',
+    String token = 'test_token',
+  }) {
+    return UserModel(
+      user: User(name: name, email: email),
+      token: token,
+    );
+  }
+
+  static ErrorHandler createErrorHandler({
+    String message = 'Test error',
+    int status = 400,
+  }) {
+    final errorModel = ErrorModel(
+      status: status,
+      message: message,
+    );
+    return ErrorHandler.handle(errorModel);
+  }
+}
+```
+
+## Testing Best Practices
+
+### Test Organization
+
+1. **Group related tests**: Use `group()` to organize related tests
+2. **Clear test names**: Use descriptive test names
+3. **Arrange-Act-Assert**: Follow AAA pattern
+4. **One assertion per test**: Keep tests focused
+5. **Proper setup/teardown**: Use `setUp()` and `tearDown()`
+
+### Test Coverage
+
+- Aim for 80%+ code coverage
+- Test all error paths
+- Test edge cases
+- Test boundary conditions
+- Test performance scenarios
+
+### Mocking Guidelines
+
+- Mock external dependencies
+- Mock network calls
+- Mock file system operations
+- Mock time-dependent operations
+- Use realistic mock data
+
+### Performance Testing
+
+```dart
+test('should load data within acceptable time', () async {
+  final stopwatch = Stopwatch()..start();
+
+  await cubit.loadData();
+
+  stopwatch.stop();
+  expect(stopwatch.elapsedMilliseconds, lessThan(1000));
+});
+```
+
+## Testing Commands
+
+### Running Tests
+
+```bash
+# Run all tests
+flutter test
+
+# Run specific test file
+flutter test test/unit/auth_cubit_test.dart
+
+# Run tests with coverage
+flutter test --coverage
+
+# Run integration tests
+flutter test integration_test/
+
+# Run tests in watch mode
+flutter test --watch
+```
+
+### Test Generation
+
+```bash
+# Generate mocks
+flutter pub run build_runner build
+
+# Generate mocks in watch mode
+flutter pub run build_runner watch
+
+# Clean generated files
+flutter pub run build_runner clean
+```
+
+## Implementation Checklist
+
+### Unit Testing Setup
+
+- [ ] Set up test dependencies
+- [ ] Create test directory structure
+- [ ] Generate mocks for dependencies
+- [ ] Create test utilities
+- [ ] Set up test data factories
+
+### Cubit Testing
+
+- [ ] Test initial state
+- [ ] Test loading states
+- [ ] Test success states
+- [ ] Test error states
+- [ ] Test state transitions
+
+### Repository Testing
+
+- [ ] Test successful operations
+- [ ] Test error handling
+- [ ] Test data transformation
+- [ ] Test caching logic
+- [ ] Test offline scenarios
+
+### Widget Testing
+
+- [ ] Test widget rendering
+- [ ] Test user interactions
+- [ ] Test state changes
+- [ ] Test navigation
+- [ ] Test error display
+
+### Integration Testing
+
+- [ ] Test complete user flows
+- [ ] Test API integration
+- [ ] Test data persistence
+- [ ] Test error scenarios
+- [ ] Test performance
+
+### Test Coverage
+
+- [ ] Achieve 80%+ coverage
+- [ ] Test all error paths
+- [ ] Test edge cases
+- [ ] Test boundary conditions
+- [ ] Test performance scenarios
+
+### Continuous Integration
+
+- [ ] Set up CI pipeline
+- [ ] Configure test automation
+- [ ] Set up coverage reporting
+- [ ] Configure test notifications
+- [ ] Set up test environments
+
+## Common Test Patterns
+
+### Async Testing Pattern
+
+```dart
+test('should handle async operation', () async {
+  // Arrange
+  when(mockRepo.getData()).thenAnswer((_) async => testData);
+
+  // Act
+  await cubit.loadData();
+
+  // Assert
+  expect(cubit.state, isA<SuccessState>());
+});
+```
+
+### Stream Testing Pattern
+
+```dart
+test('should emit states in correct order', () async {
+  // Arrange
+  when(mockRepo.getData()).thenAnswer((_) async => testData);
+
+  // Act & Assert
+  expectLater(
+    cubit.stream,
+    emitsInOrder([
+      isA<LoadingState>(),
+      isA<SuccessState>(),
+    ]),
+  );
+
+  await cubit.loadData();
+});
+```
+
+### Exception Testing Pattern
+
+```dart
+test('should handle exceptions', () async {
+  // Arrange
+  when(mockRepo.getData()).thenThrow(Exception('Test error'));
+
+  // Act & Assert
+  expect(
+    () => cubit.loadData(),
+    throwsA(isA<Exception>()),
+  );
+});
+```
+
+description:
+globs:
+alwaysApply: true
+
+---
