@@ -34,6 +34,7 @@ class User {
     this.createdAt,
     this.updatedAt,
     this.profilePhotoUrl,
+    this.company,
   });
 
   int? id;
@@ -61,8 +62,55 @@ class User {
   String? updatedAt;
   @JsonKey(name: 'profile_photo_url')
   String? profilePhotoUrl;
+  Company? company;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
+}
+
+@JsonSerializable()
+class Company {
+  Company({
+    this.id,
+    this.name,
+    this.email,
+    this.phone,
+    this.address,
+    this.taxMerchantCode,
+    this.taxInvoiceType,
+    this.taxIntegrationActive,
+    this.logo,
+    this.status,
+    this.adminId,
+    this.createdAt,
+    this.updatedAt,
+    this.admin,
+  });
+
+  int? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? address;
+  @JsonKey(name: 'tax_merchant_code')
+  dynamic taxMerchantCode;
+  @JsonKey(name: 'tax_invoice_type')
+  dynamic taxInvoiceType;
+  @JsonKey(name: 'tax_integration_active')
+  bool? taxIntegrationActive;
+  dynamic logo;
+  String? status;
+  @JsonKey(name: 'admin_id')
+  int? adminId;
+  @JsonKey(name: 'created_at')
+  String? createdAt;
+  @JsonKey(name: 'updated_at')
+  String? updatedAt;
+  User? admin;
+
+  factory Company.fromJson(Map<String, dynamic> json) =>
+      _$CompanyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CompanyToJson(this);
 }

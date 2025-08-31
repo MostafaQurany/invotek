@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/features/home/ui/widgets/invoice_home_animated_card.dart';
@@ -37,6 +38,24 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+
+        leading: IconButton(
+          onPressed: () {
+            ZoomDrawer.of(context)!.toggle();
+          },
+          icon: Icon(Icons.menu, color: AppColors.primary, size: 24.sp),
+        ),
+        title: Image(image: AssetImage(AppImages.logoGreen), height: 40.h),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_outlined),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [

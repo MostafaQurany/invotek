@@ -1,15 +1,24 @@
-import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
-import 'package:invotek/features/auth/demo/repo/auth_repo.dart';
-import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
-import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
-import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
-import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/core/network/cache_module.dart';
 import 'package:invotek/core/network/cache_policies.dart';
+import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/core/server/api_factory.dart';
+import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
+import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/demo/repo/auth_repo.dart';
+import 'package:invotek/features/clients/data/data_source/clients_data_source.dart';
+import 'package:invotek/features/clients/data/repository/clients_repository.dart';
+import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
+import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
+import 'package:invotek/features/products/data/data_source/products_data_source.dart';
+import 'package:invotek/features/products/data/repository/products_repository.dart';
+import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
+import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
+import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
+import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
+import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -39,17 +48,45 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<AuthDataSource>(
     () => AuthDataSource(getIt<ApiClient>()),
   );
+  getIt.registerLazySingleton<UsersPermissionsDataSource>(
+    () => UsersPermissionsDataSource(getIt<Dio>()),
+  );
+  getIt.registerLazySingleton<ClientsDataSource>(
+    () => ClientsDataSource(getIt<Dio>()),
+  );
+  getIt.registerLazySingleton<ProductsDataSource>(
+    () => ProductsDataSource(getIt<Dio>()),
+  );
 
   // Register repositories
   getIt.registerLazySingleton<AuthRepo>(
     () => AuthRepo(getIt<AuthDataSource>()),
+  );
+  getIt.registerLazySingleton<UsersRepository>(
+    () => UsersRepository(getIt<UsersPermissionsDataSource>()),
+  );
+  getIt.registerLazySingleton<ClientsRepository>(
+    () => ClientsRepository(getIt<ClientsDataSource>()),
+  );
+  getIt.registerLazySingleton<ProductsRepository>(
+    () => ProductsRepository(getIt<ProductsDataSource>()),
   );
 
   // Register cubits
   getIt.registerLazySingleton<LocalizationCubit>(() => LocalizationCubit());
   getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
   getIt.registerLazySingleton<OnboardingCubit>(() => OnboardingCubit());
-  getIt.registerLazySingleton<MenuCubit>(() => MenuCubit());
+  // MenuCubit removed from DI to prevent closing issues - created locally in screens
+  getIt.registerLazySingleton<UsersCubit>(
+    () => UsersCubit(getIt<UsersRepository>()),
+  );
+  getIt.registerLazySingleton<PermissionsCubit>(() => PermissionsCubit());
+  getIt.registerLazySingleton<ClientsCubit>(
+    () => ClientsCubit(getIt<ClientsRepository>()),
+  );
+  getIt.registerLazySingleton<ProductsCubit>(
+    () => ProductsCubit(getIt<ProductsRepository>()),
+  );
 
   // Add more dependencies here as needed
 }

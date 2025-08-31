@@ -91,59 +91,165 @@ class MenuScreen extends StatelessWidget {
       itemCount: state.menuItems.length,
       itemBuilder: (context, index) {
         final item = state.menuItems[index];
-        return _buildMenuItem(context, item, index);
+        return _buildMenuItem(context, item, index, state);
       },
     );
   }
 
-  Widget _buildMenuItem(BuildContext context, MenuItem item, int index) {
+  Widget _buildMenuItem(
+    BuildContext context,
+    MenuItem item,
+    int index,
+    MenuState state,
+  ) {
+    final isExpanded = state.expandedItemIndex == index;
+
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: 8.h),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () {
+                if (item.hasSubItems) {
+                  context.read<MenuCubit>().toggleExpandedItem(index);
+                } else {
+                  context.read<MenuCubit>().selectMenuItem(index);
+                  ZoomDrawer.of(context)!.close();
+                }
+              },
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                decoration: BoxDecoration(
+                  color: item.isSelected
+                      ? Colors.white.withOpacity(0.2)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                  border: item.isSelected
+                      ? Border.all(color: Colors.white.withOpacity(0.3))
+                      : null,
+                ),
+                child: Row(
+                  children: [
+                    // Icon
+                    Icon(item.icon, color: Colors.white, size: 20.sp),
+
+                    SizedBox(width: 16.w),
+
+                    // Title
+                    Expanded(
+                      child: Text(
+                        item.getLocalizedTitle(S.of(context)),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.white,
+                          fontWeight: item.isSelected
+                              ? FontWeight.bold
+                              : FontWeight.normal,
+                        ),
+                      ),
+                    ),
+
+                    // Dropdown Arrow or Selected Indicator
+                    if (item.hasSubItems)
+                      Icon(
+                        isExpanded
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                        color: Colors.white,
+                        size: 20.sp,
+                      )
+                    else if (item.isSelected)
+                      Container(
+                        width: 8.w,
+                        height: 8.h,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // Sub Items
+        if (item.hasSubItems && isExpanded)
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            child: Column(
+              children: item.subItems.asMap().entries.map((entry) {
+                final subIndex = entry.key;
+                final subItem = entry.value;
+                return _buildSubMenuItem(context, subItem, index, subIndex);
+              }).toList(),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildSubMenuItem(
+    BuildContext context,
+    MenuItem subItem,
+    int parentIndex,
+    int subIndex,
+  ) {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.h),
+      margin: EdgeInsets.only(bottom: 4.h, left: 20.w),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            context.read<MenuCubit>().selectMenuItem(index);
+            context.read<MenuCubit>().selectSubMenuItem(parentIndex, subIndex);
             ZoomDrawer.of(context)!.close();
           },
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
             decoration: BoxDecoration(
-              color: item.isSelected
-                  ? Colors.white.withOpacity(0.2)
+              color: subItem.isSelected
+                  ? Colors.white.withOpacity(0.15)
                   : Colors.transparent,
-              borderRadius: BorderRadius.circular(12),
-              border: item.isSelected
-                  ? Border.all(color: Colors.white.withOpacity(0.3))
+              borderRadius: BorderRadius.circular(8),
+              border: subItem.isSelected
+                  ? Border.all(color: Colors.white.withOpacity(0.2))
                   : null,
             ),
             child: Row(
               children: [
                 // Icon
-                Icon(item.icon, color: Colors.white, size: 20.sp),
+                Icon(
+                  subItem.icon,
+                  color: Colors.white.withOpacity(0.8),
+                  size: 18.sp,
+                ),
 
-                SizedBox(width: 16.w),
+                SizedBox(width: 12.w),
 
                 // Title
                 Expanded(
                   child: Text(
-                    item.getLocalizedTitle(S.of(context)),
+                    subItem.getLocalizedTitle(S.of(context)),
                     style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.white,
-                      fontWeight: item.isSelected
-                          ? FontWeight.bold
+                      fontSize: 14.sp,
+                      color: Colors.white.withOpacity(0.9),
+                      fontWeight: subItem.isSelected
+                          ? FontWeight.w600
                           : FontWeight.normal,
                     ),
                   ),
                 ),
 
                 // Selected Indicator
-                if (item.isSelected)
+                if (subItem.isSelected)
                   Container(
-                    width: 8.w,
-                    height: 8.h,
+                    width: 6.w,
+                    height: 6.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,

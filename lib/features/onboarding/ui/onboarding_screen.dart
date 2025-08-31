@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/routes/app_routes.dart';
-import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/onboarding/data/models/onboarding_page.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 import 'package:invotek/features/onboarding/ui/widgets/onboarding_page_widget.dart';
 import 'package:invotek/features/onboarding/ui/widgets/onboarding_indicators.dart';

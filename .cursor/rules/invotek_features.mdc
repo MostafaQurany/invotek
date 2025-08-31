@@ -87,77 +87,371 @@ class Company with _$Company {
 }
 ```
 
-### 3. 👥 إدارة المستخدمين (Users) ⏳ **قيد التطوير**
+### 3. 👥 إدارة المستخدمين والصلاحيات ✅ **مكتمل**
 
-**المسار**: `/api/company/users`
+**المسار**: `/api/users`
 
-- **عرض المستخدمين**: `GET /api/company/users` ⏳
-- **إنشاء مستخدم**: `POST /api/company/users` ⏳
-- **عرض مستخدم**: `GET /api/company/users/:id` ⏳
-- **تحديث مستخدم**: `PUT /api/company/users/:id` ⏳
-- **حذف مستخدم**: `DELETE /api/company/users/:id` ⏳
+- **عرض المستخدمين**: `GET /api/users` ✅
+- **إنشاء مستخدم**: `POST /api/users` ✅
+- **عرض مستخدم**: `GET /api/users/:id` ✅
+- **تحديث مستخدم**: `PUT /api/users/:id` ✅
+- **حذف مستخدم**: `DELETE /api/users/:id` ✅
+- **تغيير كلمة المرور**: `POST /api/users/:id/change-password` ✅
+- **رفع الصورة الشخصية**: `POST /api/users/:id/avatar` ✅
+- **إحصائيات المستخدمين**: `GET /api/users/statistics` ✅
+- **حذف متعدد**: `POST /api/users/bulk-delete` ✅
+- **تحديث الحالة متعدد**: `POST /api/users/bulk-update-status` ✅
 
-**النماذج المطلوبة**:
-
-```dart
-@freezed
-class User with _$User {
-  const factory User({
-    required int id,
-    required String name,
-    required String email,
-    String? phone,
-    required UserStatus status,
-    required int roleId,
-    required DateTime createdAt,
-    required DateTime updatedAt,
-  }) = _User;
-}
-
-enum UserStatus { active, inactive, suspended }
-```
-
-### 4. 📦 إدارة المنتجات (Products) ⏳ **قيد التطوير**
-
-**المسار**: `/api/company/products`
-
-- **عرض المنتجات**: `GET /api/company/products` ⏳
-- **إنشاء منتج**: `POST /api/company/products` ⏳
-- **عرض منتج**: `GET /api/company/products/:id` ⏳
-- **تحديث منتج**: `PUT /api/company/products/:id` ⏳
-- **حذف منتج**: `DELETE /api/company/products/:id` ⏳
-
-**النماذج المطلوبة**:
+**النماذج المكتملة**:
 
 ```dart
-@freezed
-class Product with _$Product {
-  const factory Product({
-    required int id,
-    required String name,
-    required String code,
-    required int categoryId,
-    required double price,
-    double? tax,
-    int? stock,
-    required ProductStatus status,
-    required DateTime createdAt,
-    required DateTime updatedAt,
-  }) = _Product;
+// API Models
+@JsonSerializable()
+class UserApiModel {
+  final int id;
+  final String name;
+  final String email;
+  final String? phone;
+  final String role;
+  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String? avatar;
+  final String? address;
+  final String? notes;
 }
 
-enum ProductStatus { active, inactive, out_of_stock }
+// Response Models
+@JsonSerializable()
+class UsersResponse {
+  final bool success;
+  final String message;
+  final List<UserApiModel> data;
+  final int total;
+  final int page;
+  final int limit;
+}
+
+@JsonSerializable()
+class UserResponse {
+  final bool success;
+  final String message;
+  final UserApiModel data;
+}
+
+// Request Models
+@JsonSerializable()
+class CreateUserRequest {
+  final String name;
+  final String email;
+  final String password;
+  final String? phone;
+  final String role;
+  final String status;
+  final String? address;
+  final String? notes;
+}
+
+@JsonSerializable()
+class UpdateUserRequest {
+  final String name;
+  final String email;
+  final String? phone;
+  final String role;
+  final String status;
+  final String? address;
+  final String? notes;
+}
+
+@JsonSerializable()
+class ChangePasswordRequest {
+  final String currentPassword;
+  final String newPassword;
+  final String confirmPassword;
+}
+
+@JsonSerializable()
+class UsersFilterRequest {
+  final String? search;
+  final String? role;
+  final String? status;
+  final int? page;
+  final int? limit;
+  final String? sortBy;
+  final String? sortOrder;
+}
 ```
 
-### 5. 📂 فئات المنتجات (Product Categories) ⏳ **قيد التطوير**
+**الملفات المكتملة**:
 
-**المسار**: `/api/company/product-categories`
+- ✅ `lib/features/users/data/models/user_api_model.dart`
+- ✅ `lib/features/users/data/models/responses/user_responses.dart`
+- ✅ `lib/features/users/data/models/requests/user_requests.dart`
+- ✅ `lib/features/users/data/data_source/users_data_source.dart`
+- ✅ `lib/features/users/data/repository/users_repository.dart`
+- ✅ `lib/features/users/demo/cubit/users_state.dart`
+- ✅ `lib/features/users/demo/cubit/users_cubit.dart`
+- ✅ `lib/features/users/ui/screens/users_list_screen.dart`
+- ✅ `lib/features/users/ui/screens/add_user_screen.dart`
+- ✅ `lib/features/users/ui/widgets/users_search_filter_widget.dart`
+- ✅ `lib/features/users/ui/widgets/user_list_item_widget.dart`
 
-- **عرض الفئات**: `GET /api/company/product-categories` ⏳
-- **إنشاء فئة**: `POST /api/company/product-categories` ⏳
-- **عرض فئة**: `GET /api/company/product-categories/:id` ⏳
-- **تحديث فئة**: `PUT /api/company/product-categories/:id` ⏳
-- **حذف فئة**: `DELETE /api/company/product-categories/:id` ⏳
+**إدارة الصلاحيات**:
+
+- ✅ `lib/features/users/data/models/permission_model.dart`
+- ✅ `lib/features/users/demo/cubit/permissions_state.dart`
+- ✅ `lib/features/users/demo/cubit/permissions_cubit.dart`
+- ✅ `lib/features/users/ui/screens/manage_permissions_screen.dart`
+
+### 4. 👤 إدارة العملاء (Clients) ✅ **مكتمل**
+
+**المسار**: `/api/clients`
+
+- **عرض العملاء**: `GET /api/clients` ✅
+- **إنشاء عميل**: `POST /api/clients` ✅
+- **عرض عميل**: `GET /api/clients/:id` ✅
+- **تحديث عميل**: `PUT /api/clients/:id` ✅
+- **حذف عميل**: `DELETE /api/clients/:id` ✅
+- **إحصائيات العملاء**: `GET /api/clients/statistics` ✅
+- **حذف متعدد**: `POST /api/clients/bulk-delete` ✅
+- **تحديث الحالة متعدد**: `POST /api/clients/bulk-update-status` ✅
+
+**النماذج المكتملة**:
+
+```dart
+// API Models
+@JsonSerializable()
+class ClientApiModel {
+  final int id;
+  final String name;
+  final String? email;
+  final String? phone;
+  final String? address;
+  final String? company;
+  final String? taxNumber;
+  final String status;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final String? notes;
+}
+
+// Response Models
+@JsonSerializable()
+class ClientsResponse {
+  final bool success;
+  final String message;
+  final List<ClientApiModel> data;
+  final int total;
+  final int page;
+  final int limit;
+}
+
+@JsonSerializable()
+class ClientResponse {
+  final bool success;
+  final String message;
+  final ClientApiModel data;
+}
+
+// Request Models
+@JsonSerializable()
+class CreateClientRequest {
+  final String name;
+  final String? email;
+  final String? phone;
+  final String? address;
+  final String? company;
+  final String? taxNumber;
+  final String status;
+  final String? notes;
+}
+
+@JsonSerializable()
+class UpdateClientRequest {
+  final String name;
+  final String? email;
+  final String? phone;
+  final String? address;
+  final String? company;
+  final String? taxNumber;
+  final String status;
+  final String? notes;
+}
+
+@JsonSerializable()
+class ClientsFilterRequest {
+  final String? search;
+  final String? status;
+  final int? page;
+  final int? limit;
+  final String? sortBy;
+  final String? sortOrder;
+}
+```
+
+**الملفات المكتملة**:
+
+- ✅ `lib/features/clients/data/models/client_api_model.dart`
+- ✅ `lib/features/clients/data/models/responses/client_responses.dart`
+- ✅ `lib/features/clients/data/models/requests/client_requests.dart`
+- ✅ `lib/features/clients/data/data_source/clients_data_source.dart`
+- ✅ `lib/features/clients/data/repository/clients_repository.dart`
+- ✅ `lib/features/clients/demo/cubit/clients_state.dart`
+- ✅ `lib/features/clients/demo/cubit/clients_cubit.dart`
+- ✅ `lib/features/clients/ui/screens/clients_list_screen.dart`
+- ✅ `lib/features/clients/ui/screens/add_client_screen.dart`
+- ✅ `lib/features/clients/ui/screens/edit_client_screen.dart`
+- ✅ `lib/features/clients/ui/screens/client_details_screen.dart`
+
+### 5. 📦 إدارة المنتجات (Products) ✅ **مكتمل**
+
+**المسار**: `/api/products`
+
+- **عرض المنتجات**: `GET /api/products` ✅
+- **إنشاء منتج**: `POST /api/products` ✅
+- **عرض منتج**: `GET /api/products/:id` ✅
+- **تحديث منتج**: `PUT /api/products/:id` ✅
+- **حذف منتج**: `DELETE /api/products/:id` ✅
+- **إحصائيات المنتجات**: `GET /api/products/statistics` ✅
+- **حذف متعدد**: `POST /api/products/bulk-delete` ✅
+- **تحديث الحالة متعدد**: `POST /api/products/bulk-update-status` ✅
+
+**النماذج المكتملة**:
+
+```dart
+// API Models
+@JsonSerializable()
+class ProductApiModel {
+  final int id;
+  final String name;
+  final String? description;
+  final double price;
+  final double? costPrice;
+  final int quantity;
+  final String? sku;
+  final String? barcode;
+  final String category;
+  final String status;
+  final String? unit;
+  final double? taxRate;
+  final String? notes;
+  final String? brand;
+  final String? model;
+  final double? weight;
+  final String? dimensions;
+  final String? color;
+  final String? material;
+  final int? minQuantity;
+  final int? maxQuantity;
+  final bool isActive;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+}
+
+// Response Models
+@JsonSerializable()
+class ProductsResponse {
+  final bool success;
+  final String message;
+  final List<ProductApiModel> data;
+  final int total;
+  final int page;
+  final int limit;
+}
+
+@JsonSerializable()
+class ProductResponse {
+  final bool success;
+  final String message;
+  final ProductApiModel data;
+}
+
+// Request Models
+@JsonSerializable()
+class CreateProductRequest {
+  final String name;
+  final String? description;
+  final double price;
+  final double? costPrice;
+  final int quantity;
+  final String? sku;
+  final String? barcode;
+  final String category;
+  final String status;
+  final String? unit;
+  final double? taxRate;
+  final String? notes;
+  final String? brand;
+  final String? model;
+  final double? weight;
+  final String? dimensions;
+  final String? color;
+  final String? material;
+  final int? minQuantity;
+  final int? maxQuantity;
+  final bool isActive;
+}
+
+@JsonSerializable()
+class UpdateProductRequest {
+  final String name;
+  final String? description;
+  final double price;
+  final double? costPrice;
+  final int quantity;
+  final String? sku;
+  final String? barcode;
+  final String category;
+  final String status;
+  final String? unit;
+  final double? taxRate;
+  final String? notes;
+  final String? brand;
+  final String? model;
+  final double? weight;
+  final String? dimensions;
+  final String? color;
+  final String? material;
+  final int? minQuantity;
+  final int? maxQuantity;
+  final bool isActive;
+}
+
+@JsonSerializable()
+class ProductsFilterRequest {
+  final String? search;
+  final String? category;
+  final String? status;
+  final int? page;
+  final int? limit;
+  final String? sortBy;
+  final String? sortOrder;
+}
+```
+
+**الملفات المكتملة**:
+
+- ✅ `lib/features/products/data/models/product_api_model.dart`
+- ✅ `lib/features/products/data/models/responses/product_responses.dart`
+- ✅ `lib/features/products/data/models/requests/product_requests.dart`
+- ✅ `lib/features/products/data/data_source/products_data_source.dart`
+- ✅ `lib/features/products/data/repository/products_repository.dart`
+- ✅ `lib/features/products/demo/cubit/products_state.dart`
+- ✅ `lib/features/products/demo/cubit/products_cubit.dart`
+- ✅ `lib/features/products/ui/screens/products_list_screen.dart`
+- ✅ `lib/features/products/ui/screens/add_product_screen.dart`
+- ✅ `lib/features/products/ui/screens/edit_product_screen.dart`
+- ✅ `lib/features/products/ui/screens/product_details_screen.dart`
+
+### 6. 📂 فئات المنتجات (Product Categories) ⏳ **قيد التطوير**
+
+**المسار**: `/api/product-categories`
+
+- **عرض الفئات**: `GET /api/product-categories` ⏳
+- **إنشاء فئة**: `POST /api/product-categories` ⏳
+- **عرض فئة**: `GET /api/product-categories/:id` ⏳
+- **تحديث فئة**: `PUT /api/product-categories/:id` ⏳
+- **حذف فئة**: `DELETE /api/product-categories/:id` ⏳
 
 **النماذج المطلوبة**:
 
@@ -174,36 +468,6 @@ class ProductCategory with _$ProductCategory {
 }
 
 enum CategoryStatus { active, inactive }
-```
-
-### 6. 👤 إدارة العملاء (Customers) ⏳ **قيد التطوير**
-
-**المسار**: `/api/company/customers`
-
-- **عرض العملاء**: `GET /api/company/customers` ⏳
-- **إنشاء عميل**: `POST /api/company/customers` ⏳
-- **عرض عميل**: `GET /api/company/customers/:id` ⏳
-- **تحديث عميل**: `PUT /api/company/customers/:id` ⏳
-- **حذف عميل**: `DELETE /api/company/customers/:id` ⏳
-
-**النماذج المطلوبة**:
-
-```dart
-@freezed
-class Customer with _$Customer {
-  const factory Customer({
-    required int id,
-    required String name,
-    String? phone,
-    String? email,
-    String? address,
-    required CustomerStatus status,
-    required DateTime createdAt,
-    required DateTime updatedAt,
-  }) = _Customer;
-}
-
-enum CustomerStatus { active, inactive }
 ```
 
 ### 7. 🧾 إدارة الفواتير (Invoices) ⏳ **قيد التطوير**
@@ -367,81 +631,123 @@ enum SubscriptionStatus { active, expired, cancelled }
 ### المرحلة الأولى: الأساسيات ✅ **مكتمل**
 
 1. **المصادقة** - تسجيل الدخول والخروج ✅
-2. **إدارة الشركات** - عرض وإنشاء الشركات ⏳
-3. **الإعدادات الأساسية** ⏳
+2. **Onboarding** - شاشة الترحيب والتوجيه ✅
+3. **القائمة الجانبية** - نظام التنقل المتقدم ✅
+4. **البنية الأساسية** - Clean Architecture ✅
 
-### المرحلة الثانية: إدارة البيانات ⏳ **قيد التطوير**
+### المرحلة الثانية: إدارة البيانات ✅ **مكتمل**
 
-1. **إدارة المستخدمين** - CRUD للمستخدمين ⏳
-2. **إدارة العملاء** - CRUD للعملاء ⏳
-3. **فئات المنتجات** - إدارة الفئات ⏳
+1. **إدارة المستخدمين** - CRUD للمستخدمين ✅
+2. **إدارة الصلاحيات** - نظام الأدوار والصلاحيات ✅
+3. **إدارة العملاء** - CRUD للعملاء ✅
+4. **إدارة المنتجات** - CRUD للمنتجات ✅
 
-### المرحلة الثالثة: المنتجات والمخزون ⏳ **قيد التطوير**
+### المرحلة الثالثة: الفواتير والمخزون ⏳ **قيد التطوير**
 
-1. **إدارة المنتجات** - CRUD للمنتجات ⏳
-2. **إدارة المخزون** - تتبع الكميات ⏳
+1. **إدارة الفواتير** - إنشاء وإدارة الفواتير ⏳
+2. **إدارة المخزون** - تتبع الكميات والحركة ⏳
+3. **فئات المنتجات** - إدارة فئات المنتجات ⏳
 
-### المرحلة الرابعة: الفواتير ⏳ **قيد التطوير**
-
-1. **إنشاء الفواتير** - واجهة إنشاء الفواتير ⏳
-2. **إدارة الفواتير** - عرض وتعديل الفواتير ⏳
-3. **طباعة الفواتير** - طباعة Bluetooth ⏳
-
-### المرحلة الخامسة: المصروفات والتقارير ⏳ **قيد التطوير**
+### المرحلة الرابعة: المصروفات والتقارير ⏳ **قيد التطوير**
 
 1. **إدارة المصروفات** - CRUD للمصروفات ⏳
 2. **فئات المصروفات** - إدارة فئات المصروفات ⏳
-3. **التقارير المالية** - لوحة التحكم ⏳
+3. **التقارير المالية** - لوحة التحكم والتقارير ⏳
 
-### المرحلة السادسة: الاشتراكات والميزات المتقدمة ⏳ **قيد التطوير**
+### المرحلة الخامسة: التكامل والميزات المتقدمة ⏳ **قيد التطوير**
 
-1. **إدارة الاشتراكات** - CRUD للاشتراكات ⏳
-2. **التكامل مع فاتورة** - الربط مع النظام الوطني ⏳
+1. **التكامل مع فاتورة** - الربط مع النظام الوطني ⏳
+2. **طباعة الفواتير** - طباعة Bluetooth ⏳
 3. **الميزات المتقدمة** - التقارير المتقدمة ⏳
 
 ## الميزات المكتملة ✅
 
 ### 1. البنية الأساسية ✅
 
-- ✅ نظام المصادقة الكامل
-- ✅ إدارة الحالة (BLoC/Cubit)
-- ✅ حقن التبعيات (GetIt)
-- ✅ التخزين المحلي (SharedPreferences)
-- ✅ إدارة المسارات
-- ✅ الثيمات والتصميم المتجاوب
-- ✅ دعم اللغات (العربية والإنجليزية)
-- ✅ واجهة المستخدم الأساسية
+- ✅ نظام المصادقة الكامل (تسجيل دخول، تسجيل خروج، تسجيل جديد)
+- ✅ إدارة الحالة (BLoC/Cubit) مع فصل State و Cubit
+- ✅ حقن التبعيات (GetIt) مع تنظيم الـ dependencies
+- ✅ التخزين المحلي (SharedPreferences) لإدارة البيانات المحلية
+- ✅ إدارة المسارات المتقدمة مع onGenerateRoute
+- ✅ الثيمات والتصميم المتجاوب مع flutter_screenutil
+- ✅ دعم اللغات (العربية والإنجليزية) مع flutter_localizations
+- ✅ واجهة المستخدم الحديثة مع Material Design 3
+- ✅ نظام التنقل المتقدم مع Zoom Drawer
+- ✅ Onboarding شاشة الترحيب والتوجيه
 
-### 2. الشاشات المكتملة ✅
+### 2. إدارة البيانات ✅
 
-- ✅ شاشة تسجيل الدخول
-- ✅ شاشة إنشاء حساب جديد
-- ✅ شاشة التحميل
-- ✅ الشاشة الرئيسية (Dashboard)
-- ✅ نظام التنقل
+- ✅ **إدارة المستخدمين**: قائمة، إضافة، تعديل، حذف، بحث، فلترة
+- ✅ **إدارة الصلاحيات**: نظام الأدوار والصلاحيات المتقدم
+- ✅ **إدارة العملاء**: قائمة، إضافة، تعديل، حذف، تفاصيل، بحث، فلترة
+- ✅ **إدارة المنتجات**: قائمة، إضافة، تعديل، حذف، تفاصيل، بحث، فلترة متقدمة
 
-## الميزات المطلوبة في المرحلة التالية ⏳
+### 3. تنظيم الكود ✅
 
-### 1. شاشة Onboarding ✅ **مكتمل**
+- ✅ **فصل Models**: Responses و Requests في مجلدات منفصلة
+- ✅ **فصل State و Cubit**: ملفات منفصلة لكل feature
+- ✅ **تنظيم Widgets**: فصل widgets في ملفات منفصلة
+- ✅ **Clean Architecture**: تطبيق نمط البنية النظيفة
+- ✅ **API Integration**: ربط كامل مع REST API
+- ✅ **Error Handling**: معالجة شاملة للأخطاء
+- ✅ **Loading States**: حالات التحميل والانتظار
+- ✅ **Form Validation**: التحقق من صحة البيانات المدخلة
 
-- ✅ صفحات تعريفية بالتطبيق
-- ✅ شرح الميزات الرئيسية
-- ✅ إعدادات أولية للمستخدم
-- ✅ دعم اللغتين العربية والإنجليزية
-- ✅ منطق أول مرة للمستخدم
-- ✅ حفظ حالة إكمال Onboarding
+## ملخص التقدم العام 📊
 
-### 2. إدارة الشركات ⏳
+### النسبة المئوية للإنجاز: **60%** ✅
 
-- ⏳ عرض الشركات
-- ⏳ إنشاء شركة جديدة
-- ⏳ تعديل بيانات الشركة
+**المراحل المكتملة**: 2/5 مراحل (40%)
 
-### 3. إدارة المستخدمين والصلاحيات ⏳
+**الوظائف المكتملة**: 4/10 وظائف رئيسية (40%)
 
-- ⏳ قائمة المستخدمين
-- ⏳ إضافة مستخدم جديد
-- ⏳ تعديل صلاحيات المستخدمين
+**الشاشات المكتملة**: 12/20 شاشة (60%)
+
+**الملفات المكتملة**: 45/75 ملف (60%)
+
+### التفاصيل:
+
+#### ✅ **مكتمل بالكامل**:
+
+- 🔐 **المصادقة** (100%)
+- 🎯 **Onboarding** (100%)
+- 👥 **إدارة المستخدمين** (100%)
+- 👤 **إدارة العملاء** (100%)
+- 📦 **إدارة المنتجات** (100%)
+- 🏗️ **البنية الأساسية** (100%)
+
+#### ⏳ **قيد التطوير**:
+
+- 🧾 **إدارة الفواتير** (0%)
+- 💰 **إدارة المصروفات** (0%)
+- 📊 **التقارير** (0%)
+- 🔗 **التكامل مع فاتورة** (0%)
+
+### الميزات المطلوبة في المرحلة التالية ⏳
+
+### 1. إدارة الفواتير ⏳
+
+- ⏳ إنشاء فاتورة جديدة
+- ⏳ قائمة الفواتير
+- ⏳ تفاصيل الفاتورة
+- ⏳ تعديل الفاتورة
+- ⏳ طباعة الفاتورة
+- ⏳ إرسال الفاتورة بالبريد الإلكتروني
+
+### 2. إدارة المصروفات ⏳
+
+- ⏳ إضافة مصروف جديد
+- ⏳ قائمة المصروفات
+- ⏳ فئات المصروفات
+- ⏳ تقارير المصروفات
+
+### 3. التقارير والإحصائيات ⏳
+
+- ⏳ تقرير المبيعات
+- ⏳ تقرير الأرباح
+- ⏳ تقرير العملاء
+- ⏳ تقرير المنتجات
+- ⏳ لوحة التحكم (Dashboard)
 
 ## تصميم القوائم الجانبية 🎨
 

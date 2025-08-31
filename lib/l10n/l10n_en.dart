@@ -83,7 +83,7 @@ class SEn extends S {
   String get authError => 'Login failed. Please check your email and password.';
 
   @override
-  String get unknownError => 'An unexpected error occurred. Please try again.';
+  String get unknownError => 'Unknown error occurred';
 
   @override
   String get loading => 'Loading...';
@@ -229,4 +229,195 @@ class SEn extends S {
 
   @override
   String get logout => 'Logout';
+
+  @override
+  String get usersList => 'Users List';
+
+  @override
+  String get addUser => 'Add New User';
+
+  @override
+  String get managePermissions => 'Manage Permissions';
+
+  @override
+  String get clientsList => 'Clients List';
+
+  @override
+  String get addClient => 'Add New Client';
+
+  @override
+  String get manageProducts => 'Manage Products';
+
+  @override
+  String get productCategories => 'Product Categories';
+
+  @override
+  String get expensesList => 'Expenses List';
+
+  @override
+  String get addExpense => 'Add New Expense';
+
+  @override
+  String get expenseCategories => 'Expense Categories';
+
+  @override
+  String get invoicesList => 'Invoices List';
+
+  @override
+  String get createInvoice => 'Create New Invoice';
+
+  @override
+  String get postedInvoices => 'Posted Invoices';
+
+  @override
+  String get returnedInvoices => 'Returned Invoices';
+
+  @override
+  String get salesReport => 'Sales Report';
+
+  @override
+  String get expensesReport => 'Expenses Report';
+
+  @override
+  String get customersReport => 'Customers Report';
+
+  @override
+  String get productsReport => 'Products Report';
+
+  @override
+  String get companySettings => 'Company Settings';
+
+  @override
+  String get systemSettings => 'System Settings';
+
+  @override
+  String get backup => 'Backup';
+
+  @override
+  String get userAddedSuccessfully => 'User added successfully';
+
+  @override
+  String get errorCreatingUser => 'Error creating user: \$e';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get usersAndPermissionsManagement =>
+      'Users and Permissions Management';
+
+  @override
+  String get usersAndPermissionsDescription =>
+      'View and manage users and their permissions';
+
+  @override
+  String get searchForUser => 'Search for user...';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get role => 'Role';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get inactive => 'Inactive';
+
+  @override
+  String get admin => 'Admin';
+
+  @override
+  String get user => 'User';
+
+  @override
+  String get manager => 'Manager';
+
+  @override
+  String get noUsersFound => 'No users found';
+
+  @override
+  String get addNewUserMessage => 'Press the add button to create a new user';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get deleteConfirmation => 'Delete Confirmation';
+
+  @override
+  String deleteUserConfirmation(Object name) {
+    return 'Are you sure you want to delete user $name?';
+  }
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get fillTheFormBelowToAddANewUserTo =>
+      'Fill the form below to add a new user to the system';
+
+  @override
+  String get addANewUser => 'Add a new user';
+
+  @override
+  String get state => 'Status';
+
+  @override
+  String get rule => 'Role';
+
+  @override
+  String get userSettings => 'User settings';
+
+  @override
+  String get personalInformation => 'Personal Information';
+
+  @override
+  String get securityInformation => 'Security Information';
+
+  @override
+  String get enterFullName => 'Enter full name';
+
+  @override
+  String get enterEmail => 'Enter email';
+
+  @override
+  String get enterPhoneNumber => 'Enter phone number';
+
+  @override
+  String get enterPassword => 'Enter password';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get noDataReceived => 'No data received from server';
+
+  @override
+  String get errorLoadingUsers => 'Error loading users';
+
+  @override
+  String get userNotFound => 'User not found';
+
+  @override
+  String get failedToUpdateUser => 'Failed to update user';
+
+  @override
+  String get errorDeletingUser => 'Error deleting user';
+
+  @override
+  String get errorParsingUserData => 'Error parsing user data';
+
+  @override
+  String get userCreatedSuccessfully => 'User created successfully';
+
+  @override
+  String get userUpdatedSuccessfully => 'User updated successfully';
+
+  @override
+  String get userDeletedSuccessfully => 'User deleted successfully';
 }

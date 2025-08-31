@@ -1,28 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
-import 'package:invotek/features/home/ui/home_screen.dart';
+import 'package:invotek/features/clients/ui/screens/add_client_screen.dart';
+import 'package:invotek/features/clients/ui/screens/client_details_screen.dart';
+import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
+import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
+import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
+import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/ui/screens/add_product_screen.dart';
+import 'package:invotek/features/products/ui/screens/edit_product_screen.dart';
+import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
+import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
 
 class AppRoutes {
   static const String authRoute = '/auth';
   static const String homeRoute = '/home';
   static const String onboardingRoute = '/onboarding';
+  static const String usersListRoute = '/users/list';
+  static const String addUserRoute = '/users/add';
+  static const String managePermissionsRoute = '/users/permissions';
+  static const String clientsListRoute = '/clients/list';
+  static const String addClientRoute = '/clients/add';
+  static const String editClientRoute = '/clients/edit';
+  static const String clientDetailsRoute = '/clients/details';
+
+  // Users & Permissions routes
+  static const String usersPermissionsRoute = '/users-permissions';
+  // Products routes
+  static const String productsListRoute = '/products/list';
+  static const String addProductRoute = '/products/add';
+  static const String editProductRoute = '/products/edit';
+  static const String productDetailsRoute = '/products/details';
 
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
-    homeRoute: (context) => const HomeScreen(),
+    homeRoute: (context) => const HomeScreenWithDrawer(),
     onboardingRoute: (context) => const OnboardingScreen(),
+    usersListRoute: (context) => const UsersPermissionsScreenWithProvider(),
+    addUserRoute: (context) => const AddUserScreenWithProvider(),
+    managePermissionsRoute: (context) =>
+        const ManagePermissionsScreenWithProvider(),
+    clientsListRoute: (context) => const ClientsListScreenWithProvider(),
+    addClientRoute: (context) => const AddClientScreenWithProvider(),
+    productsListRoute: (context) => const ProductsListScreenWithProvider(),
+    addProductRoute: (context) => const AddProductScreenWithProvider(),
+    usersPermissionsRoute: (context) =>
+        const UsersPermissionsScreenWithProvider(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case authRoute:
-        return MaterialPageRoute(builder: (context) => const AuthScreen());
-      case homeRoute:
-        return MaterialPageRoute(builder: (context) => const HomeScreen());
-      case onboardingRoute:
+      case editClientRoute:
+        final client = settings.arguments as dynamic;
         return MaterialPageRoute(
-          builder: (context) => const OnboardingScreen(),
+          builder: (context) => EditClientScreenWithProvider(client: client),
+        );
+      case clientDetailsRoute:
+        final client = settings.arguments as dynamic;
+        return MaterialPageRoute(
+          builder: (context) => ClientDetailsScreen(client: client),
+        );
+      case editProductRoute:
+        final product = settings.arguments as Product;
+        return MaterialPageRoute(
+          builder: (context) => EditProductScreenWithProvider(product: product),
+        );
+      case productDetailsRoute:
+        final product = settings.arguments as Product;
+        return MaterialPageRoute(
+          builder: (context) => ProductDetailsScreen(product: product),
         );
       default:
         return null;

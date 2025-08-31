@@ -1,0 +1,506 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/validation/validation.dart';
+import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
+import 'package:invotek/features/clients/demo/entit/client_model.dart';
+import 'package:invotek/core/di/injection.dart';
+
+class EditClientScreen extends StatefulWidget {
+  final Client client;
+
+  const EditClientScreen({super.key, required this.client});
+
+  @override
+  State<EditClientScreen> createState() => _EditClientScreenState();
+}
+
+class EditClientScreenWithProvider extends StatelessWidget {
+  final Client client;
+
+  const EditClientScreenWithProvider({super.key, required this.client});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<ClientsCubit>(),
+      child: EditClientScreen(client: client),
+    );
+  }
+}
+
+class _EditClientScreenState extends State<EditClientScreen> {
+  final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _phoneController;
+  late final TextEditingController _addressController;
+  late final TextEditingController _companyController;
+  late final TextEditingController _taxNumberController;
+  late final TextEditingController _websiteController;
+  late final TextEditingController _contactPersonController;
+  late final TextEditingController _contactPhoneController;
+  late final TextEditingController _contactEmailController;
+  late final TextEditingController _notesController;
+
+  late String _selectedStatus;
+  bool _isLoading = false;
+
+  final List<String> _statuses = ['نشط', 'غير نشط'];
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeControllers();
+  }
+
+  void _initializeControllers() {
+    _nameController = TextEditingController(text: widget.client.name);
+    _emailController = TextEditingController(text: widget.client.email);
+    _phoneController = TextEditingController(text: widget.client.phone ?? '');
+    _addressController = TextEditingController(
+      text: widget.client.address ?? '',
+    );
+    _companyController = TextEditingController(
+      text: widget.client.company ?? '',
+    );
+    _taxNumberController = TextEditingController(
+      text: widget.client.taxNumber ?? '',
+    );
+    _websiteController = TextEditingController(
+      text: widget.client.website ?? '',
+    );
+    _contactPersonController = TextEditingController(
+      text: widget.client.contactPerson ?? '',
+    );
+    _contactPhoneController = TextEditingController(
+      text: widget.client.contactPhone ?? '',
+    );
+    _contactEmailController = TextEditingController(
+      text: widget.client.contactEmail ?? '',
+    );
+    _notesController = TextEditingController(text: widget.client.notes ?? '');
+
+    _selectedStatus = widget.client.status == 'active' ? 'نشط' : 'غير نشط';
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
+    _companyController.dispose();
+    _taxNumberController.dispose();
+    _websiteController.dispose();
+    _contactPersonController.dispose();
+    _contactPhoneController.dispose();
+    _contactEmailController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('تعديل العميل'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
+      body: BlocListener<ClientsCubit, ClientsState>(
+        listener: (context, state) {
+          if (state.isLoading) {
+            setState(() => _isLoading = true);
+          } else {
+            setState(() => _isLoading = false);
+
+            if (state.error != null) {
+              _showErrorSnackBar(state.error!);
+              context.read<ClientsCubit>().clearError();
+            } else if (!state.isLoading && state.clients.isNotEmpty) {
+              // التحقق من أن العميل تم تحديثه
+              final updatedClient = state.clients.firstWhere(
+                (client) => client.id == widget.client.id,
+                orElse: () => widget.client,
+              );
+
+              if (updatedClient.name == _nameController.text.trim() &&
+                  updatedClient.email == _emailController.text.trim()) {
+                _showSuccessSnackBar();
+                Navigator.pop(context);
+              }
+            }
+          }
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.w),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header
+                _buildHeader(),
+                SizedBox(height: 24.h),
+
+                // Basic Information Section
+                _buildSectionTitle('المعلومات الأساسية'),
+                SizedBox(height: 16.h),
+
+                // Name Field
+                _buildTextField(
+                  controller: _nameController,
+                  label: 'اسم العميل',
+                  hint: 'أدخل اسم العميل',
+                  icon: Icons.person,
+                  validator: (value) => Validation.validateName(value),
+                ),
+                SizedBox(height: 16.h),
+
+                // Email Field
+                _buildTextField(
+                  controller: _emailController,
+                  label: 'البريد الإلكتروني',
+                  hint: 'أدخل البريد الإلكتروني',
+                  icon: Icons.email,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) => Validation.validateEmail(value),
+                ),
+                SizedBox(height: 16.h),
+
+                // Phone Field
+                _buildTextField(
+                  controller: _phoneController,
+                  label: 'رقم الهاتف',
+                  hint: 'أدخل رقم الهاتف',
+                  icon: Icons.phone,
+                  keyboardType: TextInputType.phone,
+                  validator: (value) => Validation.validatePhone(value),
+                ),
+                SizedBox(height: 16.h),
+
+                // Address Field
+                _buildTextField(
+                  controller: _addressController,
+                  label: 'العنوان',
+                  hint: 'أدخل عنوان العميل',
+                  icon: Icons.location_on,
+                  maxLines: 3,
+                ),
+                SizedBox(height: 24.h),
+
+                // Company Information Section
+                _buildSectionTitle('معلومات الشركة'),
+                SizedBox(height: 16.h),
+
+                // Company Field
+                _buildTextField(
+                  controller: _companyController,
+                  label: 'اسم الشركة',
+                  hint: 'أدخل اسم الشركة',
+                  icon: Icons.business,
+                ),
+                SizedBox(height: 16.h),
+
+                // Tax Number Field
+                _buildTextField(
+                  controller: _taxNumberController,
+                  label: 'الرقم الضريبي',
+                  hint: 'أدخل الرقم الضريبي',
+                  icon: Icons.receipt,
+                ),
+                SizedBox(height: 16.h),
+
+                // Website Field
+                _buildTextField(
+                  controller: _websiteController,
+                  label: 'الموقع الإلكتروني',
+                  hint: 'أدخل الموقع الإلكتروني',
+                  icon: Icons.web,
+                  keyboardType: TextInputType.url,
+                ),
+                SizedBox(height: 24.h),
+
+                // Contact Person Section
+                _buildSectionTitle('معلومات شخص الاتصال'),
+                SizedBox(height: 16.h),
+
+                // Contact Person Field
+                _buildTextField(
+                  controller: _contactPersonController,
+                  label: 'اسم شخص الاتصال',
+                  hint: 'أدخل اسم شخص الاتصال',
+                  icon: Icons.contact_phone,
+                ),
+                SizedBox(height: 16.h),
+
+                // Contact Phone Field
+                _buildTextField(
+                  controller: _contactPhoneController,
+                  label: 'هاتف شخص الاتصال',
+                  hint: 'أدخل هاتف شخص الاتصال',
+                  icon: Icons.phone_android,
+                  keyboardType: TextInputType.phone,
+                ),
+                SizedBox(height: 16.h),
+
+                // Contact Email Field
+                _buildTextField(
+                  controller: _contactEmailController,
+                  label: 'بريد شخص الاتصال',
+                  hint: 'أدخل بريد شخص الاتصال',
+                  icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(height: 24.h),
+
+                // Additional Information Section
+                _buildSectionTitle('معلومات إضافية'),
+                SizedBox(height: 16.h),
+
+                // Status Dropdown
+                _buildDropdown(
+                  label: 'الحالة',
+                  value: _selectedStatus,
+                  items: _statuses,
+                  onChanged: (value) {
+                    setState(() => _selectedStatus = value!);
+                  },
+                ),
+                SizedBox(height: 16.h),
+
+                // Notes Field
+                _buildTextField(
+                  controller: _notesController,
+                  label: 'ملاحظات',
+                  hint: 'أدخل ملاحظات إضافية',
+                  icon: Icons.note,
+                  maxLines: 4,
+                ),
+                SizedBox(height: 32.h),
+
+                // Submit Button
+                _buildSubmitButton(),
+                SizedBox(height: 16.h),
+
+                // Cancel Button
+                _buildCancelButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.edit, color: AppColors.primary, size: 24.sp),
+          SizedBox(width: 12.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'تعديل العميل',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  'قم بتعديل بيانات العميل "${widget.client.name}"',
+                  style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.bold,
+        color: AppColors.primary,
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    required String hint,
+    required IconData icon,
+    TextInputType? keyboardType,
+    int? maxLines,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      maxLines: maxLines ?? 1,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        prefixIcon: Icon(icon, color: AppColors.primary),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: AppColors.primary, width: 2),
+        ),
+        filled: true,
+        fillColor: Colors.grey[50],
+      ),
+    );
+  }
+
+  Widget _buildDropdown({
+    required String label,
+    required String value,
+    required List<String> items,
+    required ValueChanged<String?> onChanged,
+  }) {
+    return DropdownButtonFormField<String>(
+      value: value,
+      items: items.map((String item) {
+        return DropdownMenuItem<String>(value: item, child: Text(item));
+      }).toList(),
+      onChanged: onChanged,
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(Icons.settings, color: AppColors.primary),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: AppColors.primary, width: 2),
+        ),
+        filled: true,
+        fillColor: Colors.grey[50],
+      ),
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    return ElevatedButton(
+      onPressed: _isLoading ? null : _submitForm,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: _isLoading
+          ? SizedBox(
+              height: 20.h,
+              width: 20.w,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+          : Text(
+              'حفظ التعديلات',
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+            ),
+    );
+  }
+
+  Widget _buildCancelButton() {
+    return OutlinedButton(
+      onPressed: _isLoading ? null : () => Navigator.pop(context),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: AppColors.primary,
+        side: BorderSide(color: AppColors.primary),
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: Text(
+        'إلغاء',
+        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      try {
+        context.read<ClientsCubit>().updateClient(
+          id: widget.client.id,
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          phone: _phoneController.text.trim().isEmpty
+              ? null
+              : _phoneController.text.trim(),
+          address: _addressController.text.trim().isEmpty
+              ? null
+              : _addressController.text.trim(),
+          company: _companyController.text.trim().isEmpty
+              ? null
+              : _companyController.text.trim(),
+          taxNumber: _taxNumberController.text.trim().isEmpty
+              ? null
+              : _taxNumberController.text.trim(),
+          website: _websiteController.text.trim().isEmpty
+              ? null
+              : _websiteController.text.trim(),
+          contactPerson: _contactPersonController.text.trim().isEmpty
+              ? null
+              : _contactPersonController.text.trim(),
+          contactPhone: _contactPhoneController.text.trim().isEmpty
+              ? null
+              : _contactPhoneController.text.trim(),
+          contactEmail: _contactEmailController.text.trim().isEmpty
+              ? null
+              : _contactEmailController.text.trim(),
+          notes: _notesController.text.trim().isEmpty
+              ? null
+              : _notesController.text.trim(),
+          status: _selectedStatus == 'نشط' ? 'active' : 'inactive',
+        );
+      } catch (e) {
+        _showErrorSnackBar('حدث خطأ أثناء تحديث العميل: $e');
+      }
+    }
+  }
+
+  void _showErrorSnackBar(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(error),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
+  }
+
+  void _showSuccessSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('تم تحديث العميل بنجاح'),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
+  }
+}

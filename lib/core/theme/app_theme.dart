@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/theme/app_text_theme.dart';
 import 'package:invotek/core/utils/screen_utils.dart';
@@ -16,11 +17,13 @@ class AppTheme {
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
         elevation: 0,
-        centerTitle: true,
         titleTextStyle: AppTextTheme.lightTextTheme.titleLarge?.copyWith(
           color: AppColors.white,
           fontWeight: FontWeight.bold,
+          fontSize: 18.sp,
         ),
+        toolbarHeight: 70.h,
+        iconTheme: IconThemeData(color: AppColors.white, size: 24.sp),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(

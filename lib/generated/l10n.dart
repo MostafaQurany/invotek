@@ -290,10 +290,10 @@ class S {
     );
   }
 
-  /// `An unexpected error occurred. Please try again.`
+  /// `Unknown error occurred`
   String get unknownError {
     return Intl.message(
-      'An unexpected error occurred. Please try again.',
+      'Unknown error occurred',
       name: 'unknownError',
       desc: '',
       args: [],
@@ -755,6 +755,626 @@ class S {
     return Intl.message(
       'Logout',
       name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users List`
+  String get usersList {
+    return Intl.message(
+      'Users List',
+      name: 'usersList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New User`
+  String get addUser {
+    return Intl.message(
+      'Add New User',
+      name: 'addUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage Permissions`
+  String get managePermissions {
+    return Intl.message(
+      'Manage Permissions',
+      name: 'managePermissions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clients List`
+  String get clientsList {
+    return Intl.message(
+      'Clients List',
+      name: 'clientsList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Client`
+  String get addClient {
+    return Intl.message(
+      'Add New Client',
+      name: 'addClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage Products`
+  String get manageProducts {
+    return Intl.message(
+      'Manage Products',
+      name: 'manageProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Categories`
+  String get productCategories {
+    return Intl.message(
+      'Product Categories',
+      name: 'productCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expenses List`
+  String get expensesList {
+    return Intl.message(
+      'Expenses List',
+      name: 'expensesList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Expense`
+  String get addExpense {
+    return Intl.message(
+      'Add New Expense',
+      name: 'addExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense Categories`
+  String get expenseCategories {
+    return Intl.message(
+      'Expense Categories',
+      name: 'expenseCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoices List`
+  String get invoicesList {
+    return Intl.message(
+      'Invoices List',
+      name: 'invoicesList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create New Invoice`
+  String get createInvoice {
+    return Intl.message(
+      'Create New Invoice',
+      name: 'createInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Posted Invoices`
+  String get postedInvoices {
+    return Intl.message(
+      'Posted Invoices',
+      name: 'postedInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Returned Invoices`
+  String get returnedInvoices {
+    return Intl.message(
+      'Returned Invoices',
+      name: 'returnedInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Report`
+  String get salesReport {
+    return Intl.message(
+      'Sales Report',
+      name: 'salesReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expenses Report`
+  String get expensesReport {
+    return Intl.message(
+      'Expenses Report',
+      name: 'expensesReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customers Report`
+  String get customersReport {
+    return Intl.message(
+      'Customers Report',
+      name: 'customersReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products Report`
+  String get productsReport {
+    return Intl.message(
+      'Products Report',
+      name: 'productsReport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Settings`
+  String get companySettings {
+    return Intl.message(
+      'Company Settings',
+      name: 'companySettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System Settings`
+  String get systemSettings {
+    return Intl.message(
+      'System Settings',
+      name: 'systemSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Backup`
+  String get backup {
+    return Intl.message(
+      'Backup',
+      name: 'backup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User added successfully`
+  String get userAddedSuccessfully {
+    return Intl.message(
+      'User added successfully',
+      name: 'userAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error creating user: $e`
+  String get errorCreatingUser {
+    return Intl.message(
+      'Error creating user: \$e',
+      name: 'errorCreatingUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users and Permissions Management`
+  String get usersAndPermissionsManagement {
+    return Intl.message(
+      'Users and Permissions Management',
+      name: 'usersAndPermissionsManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View and manage users and their permissions`
+  String get usersAndPermissionsDescription {
+    return Intl.message(
+      'View and manage users and their permissions',
+      name: 'usersAndPermissionsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for user...`
+  String get searchForUser {
+    return Intl.message(
+      'Search for user...',
+      name: 'searchForUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message(
+      'Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Role`
+  String get role {
+    return Intl.message(
+      'Role',
+      name: 'role',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All`
+  String get all {
+    return Intl.message(
+      'All',
+      name: 'all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message(
+      'Active',
+      name: 'active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive`
+  String get inactive {
+    return Intl.message(
+      'Inactive',
+      name: 'inactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Admin`
+  String get admin {
+    return Intl.message(
+      'Admin',
+      name: 'admin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User`
+  String get user {
+    return Intl.message(
+      'User',
+      name: 'user',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manager`
+  String get manager {
+    return Intl.message(
+      'Manager',
+      name: 'manager',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No users found`
+  String get noUsersFound {
+    return Intl.message(
+      'No users found',
+      name: 'noUsersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press the add button to create a new user`
+  String get addNewUserMessage {
+    return Intl.message(
+      'Press the add button to create a new user',
+      name: 'addNewUserMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Confirmation`
+  String get deleteConfirmation {
+    return Intl.message(
+      'Delete Confirmation',
+      name: 'deleteConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete user {name}?`
+  String deleteUserConfirmation(Object name) {
+    return Intl.message(
+      'Are you sure you want to delete user $name?',
+      name: 'deleteUserConfirmation',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fill the form below to add a new user to the system`
+  String get fillTheFormBelowToAddANewUserTo {
+    return Intl.message(
+      'Fill the form below to add a new user to the system',
+      name: 'fillTheFormBelowToAddANewUserTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a new user`
+  String get addANewUser {
+    return Intl.message(
+      'Add a new user',
+      name: 'addANewUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get state {
+    return Intl.message(
+      'Status',
+      name: 'state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Role`
+  String get rule {
+    return Intl.message(
+      'Role',
+      name: 'rule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User settings`
+  String get userSettings {
+    return Intl.message(
+      'User settings',
+      name: 'userSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal Information`
+  String get personalInformation {
+    return Intl.message(
+      'Personal Information',
+      name: 'personalInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Security Information`
+  String get securityInformation {
+    return Intl.message(
+      'Security Information',
+      name: 'securityInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter full name`
+  String get enterFullName {
+    return Intl.message(
+      'Enter full name',
+      name: 'enterFullName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter email`
+  String get enterEmail {
+    return Intl.message(
+      'Enter email',
+      name: 'enterEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone number`
+  String get enterPhoneNumber {
+    return Intl.message(
+      'Enter phone number',
+      name: 'enterPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter password`
+  String get enterPassword {
+    return Intl.message(
+      'Enter password',
+      name: 'enterPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get phoneNumber {
+    return Intl.message(
+      'Phone Number',
+      name: 'phoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data received from server`
+  String get noDataReceived {
+    return Intl.message(
+      'No data received from server',
+      name: 'noDataReceived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading users`
+  String get errorLoadingUsers {
+    return Intl.message(
+      'Error loading users',
+      name: 'errorLoadingUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User not found`
+  String get userNotFound {
+    return Intl.message(
+      'User not found',
+      name: 'userNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to update user`
+  String get failedToUpdateUser {
+    return Intl.message(
+      'Failed to update user',
+      name: 'failedToUpdateUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error deleting user`
+  String get errorDeletingUser {
+    return Intl.message(
+      'Error deleting user',
+      name: 'errorDeletingUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error parsing user data`
+  String get errorParsingUserData {
+    return Intl.message(
+      'Error parsing user data',
+      name: 'errorParsingUserData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User created successfully`
+  String get userCreatedSuccessfully {
+    return Intl.message(
+      'User created successfully',
+      name: 'userCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User updated successfully`
+  String get userUpdatedSuccessfully {
+    return Intl.message(
+      'User updated successfully',
+      name: 'userUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User deleted successfully`
+  String get userDeletedSuccessfully {
+    return Intl.message(
+      'User deleted successfully',
+      name: 'userDeletedSuccessfully',
       desc: '',
       args: [],
     );

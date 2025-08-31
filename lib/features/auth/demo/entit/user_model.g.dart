@@ -35,6 +35,9 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
   createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,
   profilePhotoUrl: json['profile_photo_url'] as String?,
+  company: json['company'] == null
+      ? null
+      : Company.fromJson(json['company'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -54,4 +57,41 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
   'created_at': instance.createdAt,
   'updated_at': instance.updatedAt,
   'profile_photo_url': instance.profilePhotoUrl,
+  'company': instance.company,
+};
+
+Company _$CompanyFromJson(Map<String, dynamic> json) => Company(
+  id: (json['id'] as num?)?.toInt(),
+  name: json['name'] as String?,
+  email: json['email'] as String?,
+  phone: json['phone'] as String?,
+  address: json['address'] as String?,
+  taxMerchantCode: json['tax_merchant_code'],
+  taxInvoiceType: json['tax_invoice_type'],
+  taxIntegrationActive: json['tax_integration_active'] as bool?,
+  logo: json['logo'],
+  status: json['status'] as String?,
+  adminId: (json['admin_id'] as num?)?.toInt(),
+  createdAt: json['created_at'] as String?,
+  updatedAt: json['updated_at'] as String?,
+  admin: json['admin'] == null
+      ? null
+      : User.fromJson(json['admin'] as Map<String, dynamic>),
+);
+
+Map<String, dynamic> _$CompanyToJson(Company instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'email': instance.email,
+  'phone': instance.phone,
+  'address': instance.address,
+  'tax_merchant_code': instance.taxMerchantCode,
+  'tax_invoice_type': instance.taxInvoiceType,
+  'tax_integration_active': instance.taxIntegrationActive,
+  'logo': instance.logo,
+  'status': instance.status,
+  'admin_id': instance.adminId,
+  'created_at': instance.createdAt,
+  'updated_at': instance.updatedAt,
+  'admin': instance.admin,
 };

@@ -84,7 +84,7 @@ class SAr extends S {
       'فشل في تسجيل الدخول. يرجى التحقق من البريد الإلكتروني وكلمة المرور.';
 
   @override
-  String get unknownError => 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.';
+  String get unknownError => 'حدث خطأ غير معروف';
 
   @override
   String get loading => 'جاري التحميل...';
@@ -229,4 +229,194 @@ class SAr extends S {
 
   @override
   String get logout => 'تسجيل الخروج';
+
+  @override
+  String get usersList => 'قائمة المستخدمين';
+
+  @override
+  String get addUser => 'إضافة مستخدم جديد';
+
+  @override
+  String get managePermissions => 'إدارة الصلاحيات';
+
+  @override
+  String get clientsList => 'قائمة العملاء';
+
+  @override
+  String get addClient => 'إضافة عميل جديد';
+
+  @override
+  String get manageProducts => 'إدارة المنتجات';
+
+  @override
+  String get productCategories => 'فئات المنتجات';
+
+  @override
+  String get expensesList => 'قائمة المصروفات';
+
+  @override
+  String get addExpense => 'إضافة مصروف جديد';
+
+  @override
+  String get expenseCategories => 'فئات المصروفات';
+
+  @override
+  String get invoicesList => 'قائمة الفواتير';
+
+  @override
+  String get createInvoice => 'إنشاء فاتورة جديدة';
+
+  @override
+  String get postedInvoices => 'الفواتير المعلنة';
+
+  @override
+  String get returnedInvoices => 'الفواتير المرتجعة';
+
+  @override
+  String get salesReport => 'تقرير المبيعات';
+
+  @override
+  String get expensesReport => 'تقرير المصروفات';
+
+  @override
+  String get customersReport => 'تقرير العملاء';
+
+  @override
+  String get productsReport => 'تقرير المنتجات';
+
+  @override
+  String get companySettings => 'إعدادات الشركة';
+
+  @override
+  String get systemSettings => 'إعدادات النظام';
+
+  @override
+  String get backup => 'النسخ الاحتياطي';
+
+  @override
+  String get userAddedSuccessfully => 'تم إضافة المستخدم بنجاح';
+
+  @override
+  String get errorCreatingUser => 'حدث خطأ أثناء إنشاء المستخدم: \$e';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get usersAndPermissionsManagement => 'إدارة المستخدمين والصلاحيات';
+
+  @override
+  String get usersAndPermissionsDescription =>
+      'عرض وإدارة المستخدمين وصلاحياتهم';
+
+  @override
+  String get searchForUser => 'البحث عن مستخدم...';
+
+  @override
+  String get status => 'الحالة';
+
+  @override
+  String get role => 'الدور';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get active => 'نشط';
+
+  @override
+  String get inactive => 'غير نشط';
+
+  @override
+  String get admin => 'مدير';
+
+  @override
+  String get user => 'مستخدم';
+
+  @override
+  String get manager => 'مشرف';
+
+  @override
+  String get noUsersFound => 'لا يوجد مستخدمين';
+
+  @override
+  String get addNewUserMessage => 'اضغط على زر الإضافة لإنشاء مستخدم جديد';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get deleteConfirmation => 'تأكيد الحذف';
+
+  @override
+  String deleteUserConfirmation(Object name) {
+    return 'هل أنت متأكد من حذف المستخدم $name؟';
+  }
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get fillTheFormBelowToAddANewUserTo =>
+      'املأ النموذج أدناه لإضافة مستخدم جديد للنظام';
+
+  @override
+  String get addANewUser => 'إضافة مستخدم جديد';
+
+  @override
+  String get state => 'الحالة';
+
+  @override
+  String get rule => 'الدور';
+
+  @override
+  String get userSettings => 'إعدادات المستخدم';
+
+  @override
+  String get personalInformation => 'المعلومات الشخصية';
+
+  @override
+  String get securityInformation => 'معلومات الأمان';
+
+  @override
+  String get enterFullName => 'أدخل الاسم الكامل';
+
+  @override
+  String get enterEmail => 'أدخل البريد الإلكتروني';
+
+  @override
+  String get enterPhoneNumber => 'أدخل رقم الهاتف';
+
+  @override
+  String get enterPassword => 'أدخل كلمة المرور';
+
+  @override
+  String get phoneNumber => 'رقم الهاتف';
+
+  @override
+  String get noDataReceived => 'لم يتم استلام بيانات من الخادم';
+
+  @override
+  String get errorLoadingUsers => 'خطأ في تحميل المستخدمين';
+
+  @override
+  String get userNotFound => 'المستخدم غير موجود';
+
+  @override
+  String get failedToUpdateUser => 'فشل في تحديث المستخدم';
+
+  @override
+  String get errorDeletingUser => 'خطأ في حذف المستخدم';
+
+  @override
+  String get errorParsingUserData => 'خطأ في معالجة بيانات المستخدم';
+
+  @override
+  String get userCreatedSuccessfully => 'تم إنشاء المستخدم بنجاح';
+
+  @override
+  String get userUpdatedSuccessfully => 'تم تحديث المستخدم بنجاح';
+
+  @override
+  String get userDeletedSuccessfully => 'تم حذف المستخدم بنجاح';
 }
