@@ -10,12 +10,10 @@ import 'package:invotek/core/services/storage_service.dart';
 import 'package:invotek/core/theme/app_theme.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
-
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
-
 import 'package:invotek/generated/l10n.dart';
 
 class InfoTekApp extends StatelessWidget {
@@ -80,6 +78,7 @@ class InfoTekApp extends StatelessWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Invotek',
                 theme: AppTheme.lightTheme,
+
                 locale: localizationState.locale,
                 supportedLocales: const [Locale('en'), Locale('ar')],
                 localizationsDelegates: [

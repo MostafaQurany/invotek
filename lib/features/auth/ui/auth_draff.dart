@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/init_dependencies_map.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/loading_widgets.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
@@ -97,13 +96,14 @@ class _AuthDraffScreenState extends State<AuthDraffScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocProvider(
       create: (_) => getIt<AuthCubit>(),
       child: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           state.maybeWhen(
             successLogin: (response) {
-             
               Navigator.pushReplacement(
                 context,
                 PageRouteBuilder(
@@ -131,7 +131,6 @@ class _AuthDraffScreenState extends State<AuthDraffScreen> {
               );
             },
             successRegister: (response) {
-             
               setState(() {
                 _isLoginScreen = true;
                 _isExpanded = false;
@@ -139,7 +138,6 @@ class _AuthDraffScreenState extends State<AuthDraffScreen> {
             },
             errorAuth: (error) {
               setState(() => _isExpanded = false);
-             
             },
             orElse: () {},
           );
@@ -153,6 +151,7 @@ class _AuthDraffScreenState extends State<AuthDraffScreen> {
               ),
               message: S.of(context).loading,
               child: Scaffold(
+                backgroundColor: colorScheme.surface,
                 body: SafeArea(
                   child: SingleChildScrollView(
                     child: Column(
@@ -218,15 +217,13 @@ class _AuthDraffScreenState extends State<AuthDraffScreen> {
                                   // زر الدخول/التسجيل
                                   SizedBox(
                                     width: double.infinity,
-                                    child: ElevatedButton(
+                                    child: FilledButton(
                                       onPressed: state.maybeWhen(
                                         loadingAuth: () => null,
                                         orElse: () =>
                                             () => _handleAuth(context),
                                       ),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColors.primary,
-                                        foregroundColor: Colors.white,
+                                      style: FilledButton.styleFrom(
                                         padding: const EdgeInsets.symmetric(
                                           vertical: 16,
                                         ),
@@ -278,7 +275,7 @@ class _AuthDraffScreenState extends State<AuthDraffScreen> {
                                           ? S.of(context).noHaveAccountRejester
                                           : S.of(context).haveAccountLogin,
                                       style: TextStyle(
-                                        color: AppColors.primary,
+                                        color: colorScheme.primary,
                                       ),
                                     ),
                                   ),

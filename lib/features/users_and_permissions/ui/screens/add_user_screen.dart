@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/users_and_permissions/constants/user_constants.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
@@ -54,7 +53,10 @@ class _AddUserScreenState extends State<AddUserScreen> with SnackbarMixin {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: _buildAppBar(),
       body: BlocProvider.value(
         value: context.read<UsersCubit>(),
@@ -106,17 +108,20 @@ class _AddUserScreenState extends State<AddUserScreen> with SnackbarMixin {
   }
 
   PreferredSizeWidget _buildAppBar() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return AppBar(
       title: Text(
         S.of(context).addUser,
         style: TextStyle(
-          color: Colors.white,
+          color: colorScheme.onSurface,
           fontSize: 18.sp,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
         ),
       ),
-      backgroundColor: AppColors.primary,
-      foregroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
+      foregroundColor: colorScheme.onSurface,
+      scrolledUnderElevation: 1,
       elevation: 0,
     );
   }

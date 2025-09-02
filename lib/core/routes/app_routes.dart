@@ -14,6 +14,7 @@ import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
+import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
 
 class AppRoutes {
   static const String authRoute = '/auth';
@@ -34,6 +35,10 @@ class AppRoutes {
   static const String addProductRoute = '/products/add';
   static const String editProductRoute = '/products/edit';
   static const String productDetailsRoute = '/products/details';
+  // Categories routes
+  static const String categoriesListRoute = '/products/categories';
+  static const String addCategoryRoute = '/products/categories/add';
+  static const String editCategoryRoute = '/products/categories/edit';
 
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
@@ -49,6 +54,7 @@ class AppRoutes {
     addProductRoute: (context) => const AddProductScreenWithProvider(),
     usersPermissionsRoute: (context) =>
         const UsersPermissionsScreenWithProvider(),
+    categoriesListRoute: (context) => const CategoriesListScreenWithProvider(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -64,12 +70,12 @@ class AppRoutes {
           builder: (context) => ClientDetailsScreen(client: client),
         );
       case editProductRoute:
-        final product = settings.arguments as Product;
+        final product = settings.arguments as ProductModel;
         return MaterialPageRoute(
           builder: (context) => EditProductScreenWithProvider(product: product),
         );
       case productDetailsRoute:
-        final product = settings.arguments as Product;
+        final product = settings.arguments as ProductModel;
         return MaterialPageRoute(
           builder: (context) => ProductDetailsScreen(product: product),
         );

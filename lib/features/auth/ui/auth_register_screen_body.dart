@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
@@ -52,21 +51,30 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         state.maybeWhen(
           successRegister: (userModel) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(S.of(context).registerSuccess)),
+              SnackBar(
+                content: Text(S.of(context).registerSuccess),
+                backgroundColor: colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
+              ),
             );
             // Navigate back to login
             Navigator.pop(context);
           },
           errorRegister: (error) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(error)));
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(error),
+                backgroundColor: colorScheme.error,
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
           },
           orElse: () {},
         );
@@ -98,46 +106,46 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
 
               SizedBox(height: 40.h),
               Text(S.of(context).register, style: textTheme.headlineMedium),
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Text(
                 S.of(context).fullName,
                 style: textTheme.titleSmall!.copyWith(
-                  color: AppColors.greyDark,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
 
               NameAuthTextField(controller: _nameController),
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Text(
                 S.of(context).email,
                 style: textTheme.titleSmall!.copyWith(
-                  color: AppColors.greyDark,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
 
               EmailAuthTextField(controller: _emailController),
 
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Text(
                 S.of(context).password,
                 style: textTheme.titleSmall!.copyWith(
-                  color: AppColors.greyDark,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
 
               PasswordAuthTextField(controller: _passwordController),
 
-              SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Text(
                 S.of(context).confirmPassword,
                 style: textTheme.titleSmall!.copyWith(
-                  color: AppColors.greyDark,
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 5.h),
 
               ConfirmPasswordTextField(
                 controller: _confirmPasswordController,
@@ -157,21 +165,21 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
                         loadingAuth: () => true,
                         orElse: () => false,
                       ),
-                      backgroundColor: Colors.green,
-                      textColor: Colors.white,
-                      indicatorColor: Colors.white,
+                      backgroundColor: colorScheme.primary,
+                      textColor: colorScheme.onPrimary,
+                      indicatorColor: colorScheme.onPrimary,
                     );
                   },
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 10.h),
               OrDivider(),
-              SizedBox(height: 10),
+              SizedBox(height: 10.h),
 
               // google Sign in
               SignInWithGoogle(),
 
-              SizedBox(height: 10),
+              SizedBox(height: 10.h),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -179,13 +187,13 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
                 children: [
                   Text(
                     S.of(context).alreadyHaveAnAccount,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.titleMedium!.copyWith(color: AppColors.grey),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      foregroundColor: AppColors.black,
+                      foregroundColor: colorScheme.primary,
                     ),
                     onPressed: () {
                       context.read<AuthCubit>().navigateTo();
@@ -212,13 +220,15 @@ class OrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
-        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
         SizedBox(width: 20.w),
         Text("Or"),
         SizedBox(width: 20.w),
-        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
       ],
     );
   }
@@ -229,10 +239,12 @@ class SignInWithGoogle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.white,
-        foregroundColor: AppColors.greyDark,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
       ),
       onPressed: () {},
       child: Row(
@@ -241,12 +253,12 @@ class SignInWithGoogle extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image(image: AssetImage(AppImages.googleIcon), width: 20.w),
-          SizedBox(width: 10.w),
+          SizedBox(width: 20.w),
           Text(
             S.of(context).signInWithGoogle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge!.copyWith(color: AppColors.grey),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),

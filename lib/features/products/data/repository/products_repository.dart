@@ -1,15 +1,18 @@
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/server/api_error_handler.dart';
+import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/products/data/data_source/products_data_source.dart';
 import 'package:invotek/features/products/data/models/product_api_model.dart';
+import 'package:invotek/features/products/data/models/request/product_requests.dart';
+import 'package:invotek/features/products/data/models/product_category_models.dart';
 
 class ProductsRepository {
-  final ProductsDataSource _dataSource;
+  final ApiClient _apiClient;
 
-  ProductsRepository(this._dataSource);
+  ProductsRepository(this._apiClient);
 
   // Get all products with pagination and filters
-  Future<ApiResult<List<Product>>> getProducts({
+  Future<ApiResult<List<ProductModel>>> getProducts({
     String? search,
     String? category,
     String? status,
@@ -24,7 +27,7 @@ class ProductsRepository {
     String? sortOrder,
   }) async {
     try {
-      final response = await _dataSource.getProducts(
+      final response = await _apiClient.getProducts(
         search: search,
         category: category,
         status: status,
@@ -39,70 +42,70 @@ class ProductsRepository {
         sortOrder: sortOrder,
       );
 
-      if (response.success) {
-        final products = response.data
-            .map((apiProduct) => _convertToProduct(apiProduct))
+      if (response.data != null) {
+        final products = response.data!
+            .map((apiProduct) => _convertToProductModel(apiProduct))
             .toList();
         return ApiResult.success(products);
-      } else {
-        return ApiResult.failure(response.message);
       }
+      return ApiResult.failure(
+        response.message ?? 'حدث خطأ أثناء تحميل المنتجات',
+      );
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحميل المنتجات: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Get product by ID
-  Future<ApiResult<Product>> getProductById(int id) async {
+  Future<ApiResult<ProductModel>> getProductById(int id) async {
     try {
-      final response = await _dataSource.getProductById(id);
+      final response = await _apiClient.getProductById(id);
 
-      if (response.success) {
-        final product = _convertToProduct(response.data);
+      if (response.data != null) {
+        final product = _convertToProductModel(response.data!);
         return ApiResult.success(product);
-      } else {
-        return ApiResult.failure(response.message);
       }
+      return ApiResult.failure('حدث خطأ أثناء تحميل بيانات المنتج');
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحميل بيانات المنتج: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Create new product
-  Future<ApiResult<Product>> createProduct({
+  Future<ApiResult<ProductModel>> createProduct({
     required String name,
     String? description,
-    required double price,
-    double? costPrice,
+    required String price,
+    String? cost,
     required int quantity,
     String? sku,
     String? barcode,
-    required String category,
-    required String status,
     String? unit,
-    double? taxRate,
+    String? taxRate,
     String? notes,
     String? brand,
     String? model,
-    double? weight,
+    String? weight,
     String? dimensions,
     String? color,
     String? material,
     int? minQuantity,
     int? maxQuantity,
-    required bool isActive,
+    bool isActive = true,
+    bool hasTax = false,
+    bool trackInventory = false,
+    String status = 'active',
+    int? categoryId,
   }) async {
     try {
       final request = CreateProductRequest(
         name: name,
         description: description,
         price: price,
-        costPrice: costPrice,
+        cost: cost,
         quantity: quantity,
         sku: sku,
         barcode: barcode,
-        category: category,
-        status: status,
         unit: unit,
         taxRate: taxRate,
         notes: notes,
@@ -115,57 +118,69 @@ class ProductsRepository {
         minQuantity: minQuantity,
         maxQuantity: maxQuantity,
         isActive: isActive,
+        hasTax: hasTax,
+        trackInventory: trackInventory,
+        status: status,
+        categoryId: categoryId,
       );
 
-      final response = await _dataSource.createProduct(request);
+      final response = await _apiClient.createProduct(request);
 
-      if (response.success) {
-        final product = _convertToProduct(response.data);
+      if (response.id != null) {
+        final product = ProductModel(
+          id: response.id,
+          companyId: response.companyId,
+          name: response.name,
+          price: response.price,
+          quantity: response.quantity,
+          createdAt: response.createdAt,
+          updatedAt: response.updatedAt,
+        );
         return ApiResult.success(product);
-      } else {
-        return ApiResult.failure(response.message);
       }
+
+      return ApiResult.failure('حدث خطأ أثناء إنشاء المنتج');
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء إنشاء المنتج: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Update product
-  Future<ApiResult<Product>> updateProduct({
+  Future<ApiResult<ProductModel>> updateProduct({
     required int id,
     required String name,
     String? description,
-    required double price,
-    double? costPrice,
+    required String price,
+    String? cost,
     required int quantity,
     String? sku,
     String? barcode,
-    required String category,
-    required String status,
     String? unit,
-    double? taxRate,
+    String? taxRate,
     String? notes,
     String? brand,
     String? model,
-    double? weight,
+    String? weight,
     String? dimensions,
     String? color,
     String? material,
     int? minQuantity,
     int? maxQuantity,
-    required bool isActive,
+    bool isActive = true,
+    bool hasTax = false,
+    bool trackInventory = false,
+    String status = 'active',
+    int? categoryId,
   }) async {
     try {
       final request = UpdateProductRequest(
         name: name,
         description: description,
         price: price,
-        costPrice: costPrice,
+        cost: cost,
         quantity: quantity,
         sku: sku,
         barcode: barcode,
-        category: category,
-        status: status,
         unit: unit,
         taxRate: taxRate,
         notes: notes,
@@ -178,109 +193,117 @@ class ProductsRepository {
         minQuantity: minQuantity,
         maxQuantity: maxQuantity,
         isActive: isActive,
+        hasTax: hasTax,
+        trackInventory: trackInventory,
+        status: status,
+        categoryId: categoryId,
       );
 
-      final response = await _dataSource.updateProduct(id, request);
+      final response = await _apiClient.updateProduct(id, request);
 
-      if (response.success) {
-        final product = _convertToProduct(response.data);
+      if (response.data != null) {
+        final product = _convertToProductModel(response.data!);
         return ApiResult.success(product);
-      } else {
-        return ApiResult.failure(response.message);
       }
+      return ApiResult.failure('حدث خطأ أثناء تحديث المنتج');
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحديث المنتج: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Delete product
-  Future<ApiResult<void>> deleteProduct(int id) async {
+  Future<ApiResult<bool>> deleteProduct(int id) async {
     try {
-      final response = await _dataSource.deleteProduct(id);
-
-      if (response.success) {
-        return const ApiResult.success(null);
-      } else {
-        return ApiResult.failure(response.message);
-      }
+      await _apiClient.deleteProduct(id);
+      return ApiResult.success(true);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء حذف المنتج: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
-  // Get product statistics
-  Future<ApiResult<Map<String, dynamic>>> getProductStatistics() async {
+  // Categories
+  Future<ApiResult<List<ProductCategoryApiModel>>>
+  listProductCategories() async {
     try {
-      final statistics = await _dataSource.getProductStatistics();
-      return ApiResult.success(statistics);
+      final response = await _apiClient.listProductCategories();
+      return ApiResult.success(response.data ?? []);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحميل إحصائيات المنتجات: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
-  // Bulk delete products
-  Future<ApiResult<void>> bulkDeleteProducts(List<int> productIds) async {
-    try {
-      final response = await _dataSource.bulkDeleteProducts(productIds);
-
-      if (response.success) {
-        return const ApiResult.success(null);
-      } else {
-        return ApiResult.failure(response.message);
-      }
-    } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء حذف المنتجات: $e');
-    }
-  }
-
-  // Bulk update product status
-  Future<ApiResult<void>> bulkUpdateStatus({
-    required List<int> productIds,
-    required String status,
+  Future<ApiResult<ProductCategoryApiModel>> createProductCategory({
+    required String name,
+    String? status,
   }) async {
     try {
-      final request = {'productIds': productIds, 'status': status};
-
-      final response = await _dataSource.bulkUpdateStatus(request);
-
-      if (response.success) {
-        return const ApiResult.success(null);
-      } else {
-        return ApiResult.failure(response.message);
-      }
+      final created = await _apiClient.createProductCategory(
+        CreateProductCategoryRequest(name: name, status: status),
+      );
+      return ApiResult.success(
+        ProductCategoryApiModel(
+          id: created.id ?? 0,
+          companyId: created.companyId,
+          name: created.name,
+          status: created.status,
+          createdAt: created.createdAt,
+          updatedAt: created.updatedAt,
+        ),
+      );
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحديث حالة المنتجات: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
-  // Convert API model to domain model
-  Product _convertToProduct(ProductApiModel apiProduct) {
-    return Product(
+  Future<ApiResult<ProductCategoryApiModel>> updateProductCategory({
+    required int id,
+    required String name,
+    String? status,
+  }) async {
+    try {
+      final updated = await _apiClient.updateProductCategory(
+        id,
+        UpdateProductCategoryRequest(name: name, status: status),
+      );
+      return ApiResult.success(updated);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  Future<ApiResult<void>> deleteProductCategory(int id) async {
+    try {
+      final resp = await _apiClient.deleteProductCategory(id);
+      return const ApiResult.success(null);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  // Convert API model to ProductModel
+  ProductModel _convertToProductModel(ProductApiModel apiProduct) {
+    return ProductModel(
       id: apiProduct.id,
+      companyId: apiProduct.companyId,
+      productCategoryId: apiProduct.productCategoryId,
       name: apiProduct.name,
+      sku: apiProduct.sku,
       description: apiProduct.description,
       price: apiProduct.price,
-      costPrice: apiProduct.costPrice,
-      quantity: apiProduct.quantity,
-      sku: apiProduct.sku,
-      barcode: apiProduct.barcode,
-      category: apiProduct.category,
-      status: apiProduct.status,
-      image: apiProduct.image,
-      unit: apiProduct.unit,
+      cost: apiProduct.cost,
       taxRate: apiProduct.taxRate,
-      notes: apiProduct.notes,
-      createdAt: apiProduct.createdAt.toIso8601String(),
-      updatedAt: apiProduct.updatedAt.toIso8601String(),
-      brand: apiProduct.brand,
-      model: apiProduct.model,
-      weight: apiProduct.weight,
-      dimensions: apiProduct.dimensions,
-      color: apiProduct.color,
-      material: apiProduct.material,
-      minQuantity: apiProduct.minQuantity,
-      maxQuantity: apiProduct.maxQuantity,
+      taxRateBackup: apiProduct.taxRateBackup,
+      quantity: apiProduct.quantity,
+      quantityBackup: apiProduct.quantityBackup,
+      barcode: apiProduct.barcode,
+      unit: apiProduct.unit,
+      hasTax: apiProduct.hasTax,
       isActive: apiProduct.isActive,
+      trackInventory: apiProduct.trackInventory,
+      status: apiProduct.status,
+      createdAt: apiProduct.createdAt,
+      updatedAt: apiProduct.updatedAt,
+      image: apiProduct.image,
     );
   }
 }

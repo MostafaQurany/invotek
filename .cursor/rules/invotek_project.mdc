@@ -55,6 +55,7 @@ API → Dio → ApiClient → DataSource → Repository → Cubit → Reload →
 - **Code Generation**: freezed + json_serializable
 - **Logging**: pretty_dio_logger
 - **Responsive Design**: flutter_screenutil
+- **Design System**: Material 3 (ThemeData.useMaterial3 = true)
 
 ## Coding Standards
 
@@ -131,26 +132,38 @@ features/feature_name/
 ## UI Guidelines
 
 - Use flutter_screenutil for responsive design
-- Follow Material Design principles
-- Use AppColors and AppTheme for consistent styling
-- Implement proper loading states and error handling
+- Follow Material 3 design principles
+- Use `Theme.of(context).colorScheme` for colors (avoid hardcoded colors)
+- Prefer Material 3 buttons: `FilledButton`, `OutlinedButton`, `TextButton`
+- Inputs use `fillColor: colorScheme.surfaceContainer` and 12.r radius
+- Cards use elevation 0 with `side: BorderSide(colorScheme.outline.withOpacity(0.1))`
 - Support RTL layout for Arabic
-- Use shared widgets from core/widgets
+- Use shared widgets from `core/widgets`
 
 ## Dependency Injection
 
 - Use get_it for dependency injection
 - Follow the pattern in `core/di/injection.dart`
 - Register services as singletons when appropriate
-- Use factories for state management objects
+- Use factories for state management objects (Cubits) to avoid reusing closed instances
+- Register `ThemeProvider` as a lazy singleton for theme control
 
 ## Code Generation
 
-- Use `flutter pub run build_runner build` to generate code
-- Keep generated files in lib/generated/ directory
-- Use freezed for data classes
-- Use json_serializable for JSON serialization
-- Use retrofit_generator for API services
+- Preferred command during development:
+
+```bash
+dart run build_runner watch --delete-conflicting-outputs
+```
+
+- One-off build (CI or rare cases):
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+- Keep generated files committed as appropriate
+- Use freezed for data classes and json_serializable for serialization
 
 ## Storage Guidelines
 
@@ -218,8 +231,8 @@ abstract class ApiClient {
 # Install dependencies
 flutter pub get
 
-# Generate code
-flutter pub run build_runner build
+# Generate code (watcher)
+dart run build_runner watch --delete-conflicting-outputs
 
 # Generate localization
 flutter gen-l10n
@@ -246,9 +259,9 @@ flutter test
 
 ## Theme Guidelines
 
-- Use AppColors for consistent colors
-- Use AppTheme for theme configuration
-- Support light/dark themes
+- Use Material 3 theme (`useMaterial3: true`)
+- Access colors via `Theme.of(context).colorScheme`
+- Support light/dark themes via `ThemeProvider`
 - Use Almarai and MontserratAlternates fonts
 - Implement proper contrast ratios
 

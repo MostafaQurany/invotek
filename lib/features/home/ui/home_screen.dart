@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/features/home/ui/widgets/invoice_home_animated_card.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -37,22 +36,28 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+    final colorScheme = Theme.of(context).colorScheme;
 
+    return Scaffold(
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(
+        backgroundColor: colorScheme.surface,
+        elevation: 0,
+        scrolledUnderElevation: 1,
         leading: IconButton(
           onPressed: () {
             ZoomDrawer.of(context)!.toggle();
           },
-          icon: Icon(Icons.menu, color: AppColors.primary, size: 24.sp),
+          icon: Icon(Icons.menu, color: colorScheme.onSurface, size: 24.sp),
         ),
         title: Image(image: AssetImage(AppImages.logoGreen), height: 40.h),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.notifications_outlined),
+            icon: Icon(
+              Icons.notifications_outlined,
+              color: colorScheme.onSurface,
+            ),
           ),
         ],
       ),
@@ -70,8 +75,8 @@ class _HomeScreenState extends State<HomeScreen>
                       S.of(context).welcome,
                       style: TextStyle(
                         fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.primary,
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -79,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen>
                       S.of(context).chooseFeature,
                       style: TextStyle(
                         fontSize: 16.sp,
-                        color: Colors.grey[600],
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                     SizedBox(height: 20.h),
@@ -89,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.w),
                 child: Row(
                   children: [
                     Expanded(
@@ -102,12 +107,12 @@ class _HomeScreenState extends State<HomeScreen>
                           title: S.of(context).usersPermissionsTitle,
                           description: S.of(context).usersPermissionsDesc,
                           image: AppImages.emailIcon,
-                          color: AppColors.primary,
-                          textColor: AppColors.white,
+                          color: colorScheme.primary,
+                          textColor: colorScheme.onPrimary,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
+                            topLeft: Radius.circular(12.r),
+                            bottomLeft: Radius.circular(12.r),
+                            topRight: Radius.circular(12.r),
                           ),
                         ),
                       ),
@@ -123,12 +128,12 @@ class _HomeScreenState extends State<HomeScreen>
                           title: S.of(context).clientsProductsTitle,
                           description: S.of(context).clientsProductsDesc,
                           image: AppImages.invoiceMoneyIcon,
-                          color: Colors.lightBlue,
-                          textColor: AppColors.white,
+                          color: colorScheme.secondary,
+                          textColor: colorScheme.onSecondary,
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(12.r),
+                            bottomRight: Radius.circular(12.r),
+                            topLeft: Radius.circular(12.r),
                           ),
                         ),
                       ),
@@ -137,28 +142,9 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
-            // SliverToBoxAdapter(
-            //   child: Center(
-            //     child: AnimatedOpacity(
-            //       opacity: _opacity,
-            //       duration: const Duration(milliseconds: 800),
-            //       curve: Curves.easeInOut,
-            //       child: InvoiceHomeCards(
-            //         title: "Invoice",
-            //         description: "Create and manage invoices",
-            //         onTap: () {},
-            //         color: AppColors.primary,
-            //         textColor: AppColors.white,
-            //         borderColor: AppColors.primary,
-            //         borderRadius: BorderRadius.circular(10),
-            //         width: 0.5.sw,
-            //       ),
-            //     ),
-            //   ),
-            // ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.w),
                 child: Row(
                   children: [
                     Expanded(
@@ -173,12 +159,12 @@ class _HomeScreenState extends State<HomeScreen>
                           title: S.of(context).expensesTitle,
                           description: S.of(context).expensesDesc,
                           image: AppImages.invoiceMoneyIcon,
-                          color: Colors.orange,
-                          textColor: AppColors.white,
+                          color: colorScheme.tertiary,
+                          textColor: colorScheme.onTertiary,
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
+                            topLeft: Radius.circular(12.r),
+                            bottomLeft: Radius.circular(12.r),
+                            bottomRight: Radius.circular(12.r),
                           ),
                         ),
                       ),
@@ -197,12 +183,12 @@ class _HomeScreenState extends State<HomeScreen>
                           title: S.of(context).taxInvoicesTitle,
                           description: S.of(context).taxInvoicesDesc,
                           image: AppImages.invoiceMoneyIcon,
-                          color: Colors.deepOrange,
-                          textColor: AppColors.white,
+                          color: colorScheme.error,
+                          textColor: colorScheme.onError,
                           borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(10),
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
+                            topRight: Radius.circular(12.r),
+                            bottomRight: Radius.circular(12.r),
+                            bottomLeft: Radius.circular(12.r),
                           ),
                         ),
                       ),
@@ -214,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen>
 
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(8.w),
                 child: Row(children: []),
               ),
             ),

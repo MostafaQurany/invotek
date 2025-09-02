@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/demo/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
@@ -189,13 +188,15 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocListener<UsersCubit, UsersState>(
       listener: (context, state) {
         if (state is UsersListError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -203,7 +204,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -211,7 +212,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -219,7 +220,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -227,7 +228,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -235,7 +236,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -243,7 +244,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -251,7 +252,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('User created successfully'),
-              backgroundColor: Colors.green,
+              backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -261,7 +262,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('User updated successfully'),
-              backgroundColor: Colors.green,
+              backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -269,7 +270,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('User deleted successfully'),
-              backgroundColor: Colors.green,
+              backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -277,7 +278,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Password changed successfully'),
-              backgroundColor: Colors.green,
+              backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -285,7 +286,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('${state.operation} completed successfully'),
-              backgroundColor: Colors.green,
+              backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
@@ -305,11 +306,11 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           }
 
           return Scaffold(
-            backgroundColor: Colors.grey[50],
+            backgroundColor: colorScheme.surface,
             appBar: UsersAppBarWidget(
               onMenuPressed: _toggleMenu,
               onNotificationPressed: () {
-                // TODO: إضافة الإشعارات
+                // TODO: Add notifications
               },
             ),
             body: RefreshIndicator(
@@ -336,8 +337,9 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: _onAddUserPressed,
-              backgroundColor: AppColors.primary,
-              child: const Icon(Icons.add, color: Colors.white),
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
+              child: const Icon(Icons.add),
             ),
           );
         },

@@ -1,14 +1,15 @@
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/server/api_error_handler.dart';
+import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
-import 'package:invotek/features/clients/data/data_source/clients_data_source.dart';
 import 'package:invotek/features/clients/data/models/client_api_model.dart';
 import 'package:invotek/features/clients/demo/data/mock_clients_data.dart';
 
 class ClientsRepository {
-  final ClientsDataSource _dataSource;
+  final ApiClient _apiClient;
   final List<Client> _mockClients = MockClientsData.getMockClients();
 
-  ClientsRepository(this._dataSource);
+  ClientsRepository(this._apiClient);
 
   // Get all clients with pagination and filters
   Future<ApiResult<List<Client>>> getClients({
@@ -53,14 +54,14 @@ class ClientsRepository {
 
       return ApiResult.success(clients);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحميل العملاء: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Get client by ID
   Future<ApiResult<Client>> getClientById(int id) async {
     try {
-      final response = await _dataSource.getClientById(id);
+      final response = await _apiClient.getClientById(id);
 
       if (response.success) {
         final client = _convertToClient(response.data);
@@ -69,7 +70,7 @@ class ClientsRepository {
         return ApiResult.failure(response.message);
       }
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحميل بيانات العميل: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -117,7 +118,7 @@ class ClientsRepository {
 
       return ApiResult.success(newClient);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء إنشاء العميل: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -169,7 +170,7 @@ class ClientsRepository {
 
       return ApiResult.success(updatedClient);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحديث العميل: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -186,27 +187,28 @@ class ClientsRepository {
 
       return const ApiResult.success(null);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء حذف العميل: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Get client statistics
   Future<ApiResult<Map<String, dynamic>>> getClientStatistics() async {
     try {
-      final statistics = await _dataSource.getClientStatistics();
+      final statistics =
+          await _apiClient.getClientStatistics() as Map<String, dynamic>;
       return ApiResult.success(statistics);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحميل إحصائيات العملاء: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   // Bulk delete clients
   Future<ApiResult<void>> bulkDeleteClients(List<int> clientIds) async {
     try {
-      await _dataSource.bulkDeleteClients(clientIds);
+      await _apiClient.bulkDeleteClients(clientIds);
       return const ApiResult.success(null);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء حذف العملاء: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -218,10 +220,10 @@ class ClientsRepository {
     try {
       final request = {'clientIds': clientIds, 'status': status};
 
-      await _dataSource.bulkUpdateStatus(request);
+      await _apiClient.bulkUpdateStatus(request);
       return const ApiResult.success(null);
     } catch (e) {
-      return ApiResult.failure('حدث خطأ أثناء تحديث حالة العملاء: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 

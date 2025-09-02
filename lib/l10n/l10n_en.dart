@@ -420,4 +420,263 @@ class SEn extends S {
 
   @override
   String get userDeletedSuccessfully => 'User deleted successfully';
+
+  @override
+  String get products => 'Products';
+
+  @override
+  String get onboardingOne => 'Follow all your bills in one place';
+
+  @override
+  String get onboardingTwo => 'You don\'t forget and no bill';
+
+  @override
+  String get onboardingThree => 'Pay and follow every need in seconds';
+
+  @override
+  String get onboardingOneDec =>
+      'Organ your monthly bills, and follow the payment dates, without paper or headache.';
+
+  @override
+  String get onboardingTwoDec =>
+      'You receive an alert before the payment date, in order to avoid any delay or fines.';
+
+  @override
+  String get onboardingThreeDec =>
+      'Pay electronically, and save your records automatically to review them at any time.';
+
+  @override
+  String get onboardingStartNow => 'Start now';
+
+  @override
+  String get productsCategories => 'Manage Products And Categories';
+
+  @override
+  String get productsList => 'Products List';
+
+  @override
+  String get categoriesAppbar => 'Product Categories';
+
+  @override
+  String get searchProducts => 'Search products...';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get allCategories => 'All Categories';
+
+  @override
+  String get allStatuses => 'All Statuses';
+
+  @override
+  String get outOfStock => 'Out of Stock';
+
+  @override
+  String get noProductsFound => 'No products found';
+
+  @override
+  String get viewDetails => 'View Details';
+
+  @override
+  String get editProduct => 'Edit Product';
+
+  @override
+  String get deleteProduct => 'Delete Product';
+
+  @override
+  String deleteProductConfirmation(Object name) {
+    return 'Are you sure you want to delete product \"$name\"?';
+  }
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get noName => 'No Name';
+
+  @override
+  String get undefined => 'Undefined';
+
+  @override
+  String get editCategory => 'Edit Category';
+
+  @override
+  String get addCategory => 'Add Category';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get categoryAddedSuccessfully => 'Category added successfully';
+
+  @override
+  String get categoryUpdatedSuccessfully => 'Category updated successfully';
+
+  @override
+  String get categoryDeletedSuccessfully => 'Category deleted successfully';
+
+  @override
+  String get errorAddingCategory => 'Error adding category';
+
+  @override
+  String get errorUpdatingCategory => 'Error updating category';
+
+  @override
+  String get errorDeletingCategory => 'Error deleting category';
+
+  @override
+  String get basicInformation => 'Basic Information';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get sku => 'SKU';
+
+  @override
+  String get barcode => 'Barcode';
+
+  @override
+  String get weight => 'Weight';
+
+  @override
+  String get dimensions => 'Dimensions';
+
+  @override
+  String get inventorySettings => 'Inventory Settings';
+
+  @override
+  String get trackInventory => 'Track Inventory';
+
+  @override
+  String get lowStockAlert => 'Low Stock Alert';
+
+  @override
+  String get minimumQuantity => 'Minimum Quantity';
+
+  @override
+  String get taxSettings => 'Tax Settings';
+
+  @override
+  String get hasTax => 'Has Tax';
+
+  @override
+  String get taxRate => 'Tax Rate';
+
+  @override
+  String get additionalSettings => 'Additional Settings';
+
+  @override
+  String get isActive => 'Is Active';
+
+  @override
+  String get productAddedSuccessfully => 'Product added successfully';
+
+  @override
+  String get productUpdatedSuccessfully => 'Product updated successfully';
+
+  @override
+  String get productDeletedSuccessfully => 'Product deleted successfully';
+
+  @override
+  String get errorAddingProduct => 'Error adding product';
+
+  @override
+  String get errorUpdatingProduct => 'Error updating product';
+
+  @override
+  String get errorDeletingProduct => 'Error deleting product';
+
+  @override
+  String get addProduct => 'Add New Product';
+
+  @override
+  String get pricing => 'Pricing';
+
+  @override
+  String get sellingPrice => 'Selling Price';
+
+  @override
+  String get costPrice => 'Cost Price';
+
+  @override
+  String get inventory => 'Inventory';
+
+  @override
+  String get thisFieldIsRequired => 'This field is required';
+
+  @override
+  String get quantityMustBeAPositiveInteger =>
+      'Quantity must be a positive integer';
+
+  @override
+  String get unit => 'Unit';
+
+  @override
+  String get piece => 'Piece';
+
+  @override
+  String get kilogram => 'kg';
+
+  @override
+  String get meter => 'm';
+
+  @override
+  String get invalidNumber => 'Invalid number';
+
+  @override
+  String get maximumQuantity => 'Maximum Quantity';
+
+  @override
+  String get productDetails => 'Product Details';
+
+  @override
+  String get productSku => 'Product SKU';
+
+  @override
+  String get brand => 'Brand';
+
+  @override
+  String get model => 'Model';
+
+  @override
+  String get color => 'Color';
+
+  @override
+  String get material => 'Material';
+
+  @override
+  String get centimeters => 'cm';
+
+  @override
+  String get additionalInformation => 'Additional Information';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get productIsActive => 'Product is Active';
+
+  @override
+  String get enableDisableProduct => 'Enable/Disable Product';
+
+  @override
+  String get productIsTaxable => 'Product is Taxable';
+
+  @override
+  String get applyTaxToProduct => 'Apply Tax to Product';
+
+  @override
+  String get trackAvailableProductQuantity =>
+      'Track Available Product Quantity';
+
+  @override
+  String get selectCategory => 'Select Category';
 }

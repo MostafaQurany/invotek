@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/core/utils/screen_utils.dart';
 import 'package:invotek/core/widgets/loading_widget.dart';
@@ -45,23 +44,33 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 15.h),
           child: BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {
               state.maybeWhen(
                 successLogin: (userModel) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(S.of(context).loginSuccess)),
+                    SnackBar(
+                      content: Text(S.of(context).loginSuccess),
+                      backgroundColor: colorScheme.primary,
+                      behavior: SnackBarBehavior.floating,
+                    ),
                   );
                 },
                 errorAuth: (error) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(error)));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(error),
+                      backgroundColor: colorScheme.error,
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
                 },
                 orElse: () {},
               );
@@ -129,7 +138,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                     Text(
                       S.of(context).email,
                       style: textTheme.titleSmall!.copyWith(
-                        color: AppColors.greyDark,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ),
                     SizedBox(height: ScreenUtils.paddingSmall),
@@ -140,7 +149,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                     Text(
                       S.of(context).password,
                       style: textTheme.titleSmall!.copyWith(
-                        color: AppColors.greyDark,
+                        color: colorScheme.onSurfaceVariant,
                         fontSize: ScreenUtils.fontSizeMedium,
                       ),
                     ),
@@ -161,9 +170,9 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                               loadingAuth: () => true,
                               orElse: () => false,
                             ),
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            indicatorColor: Colors.white,
+                            backgroundColor: colorScheme.primary,
+                            textColor: colorScheme.onPrimary,
+                            indicatorColor: colorScheme.onPrimary,
                           );
                         },
                       ),
@@ -185,13 +194,13 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                           S.of(context).notAMember,
                           style: Theme.of(context).textTheme.titleMedium!
                               .copyWith(
-                                color: AppColors.grey,
+                                color: colorScheme.onSurfaceVariant,
                                 fontSize: ScreenUtils.fontSizeMedium,
                               ),
                         ),
                         TextButton(
                           style: TextButton.styleFrom(
-                            foregroundColor: AppColors.black,
+                            foregroundColor: colorScheme.primary,
                           ),
                           onPressed: () {
                             // Navigate to register screen
@@ -224,13 +233,15 @@ class OrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
-        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
         SizedBox(width: 20.w),
         Text("Or"),
         SizedBox(width: 20.w),
-        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
       ],
     );
   }
@@ -241,10 +252,12 @@ class SignInWithGoogle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.white,
-        foregroundColor: AppColors.greyDark,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
       ),
       onPressed: () {},
       child: Row(
@@ -253,12 +266,12 @@ class SignInWithGoogle extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image(image: AssetImage(AppImages.googleIcon), width: 20.w),
-          SizedBox(width: 10.w),
+          SizedBox(width: 20.w),
           Text(
             S.of(context).signInWithGoogle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge!.copyWith(color: AppColors.grey),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),

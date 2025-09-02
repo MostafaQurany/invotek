@@ -5,16 +5,18 @@ import 'package:invotek/core/network/cache_module.dart';
 import 'package:invotek/core/network/cache_policies.dart';
 import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/core/server/api_factory.dart';
+import 'package:invotek/core/theme/theme_provider.dart';
 import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/demo/repo/auth_repo.dart';
-import 'package:invotek/features/clients/data/data_source/clients_data_source.dart';
+// Removed: old ClientsDataSource (now centralized in ApiClient)
 import 'package:invotek/features/clients/data/repository/clients_repository.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
-import 'package:invotek/features/products/data/data_source/products_data_source.dart';
+// Removed: old ProductsDataSource (now centralized in ApiClient)
 import 'package:invotek/features/products/data/repository/products_repository.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
+import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
 import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
@@ -51,12 +53,6 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<UsersPermissionsDataSource>(
     () => UsersPermissionsDataSource(getIt<Dio>()),
   );
-  getIt.registerLazySingleton<ClientsDataSource>(
-    () => ClientsDataSource(getIt<Dio>()),
-  );
-  getIt.registerLazySingleton<ProductsDataSource>(
-    () => ProductsDataSource(getIt<Dio>()),
-  );
 
   // Register repositories
   getIt.registerLazySingleton<AuthRepo>(
@@ -66,27 +62,31 @@ Future<void> configureDependencies() async {
     () => UsersRepository(getIt<UsersPermissionsDataSource>()),
   );
   getIt.registerLazySingleton<ClientsRepository>(
-    () => ClientsRepository(getIt<ClientsDataSource>()),
+    () => ClientsRepository(getIt<ApiClient>()),
   );
   getIt.registerLazySingleton<ProductsRepository>(
-    () => ProductsRepository(getIt<ProductsDataSource>()),
+    () => ProductsRepository(getIt<ApiClient>()),
   );
 
-  // Register cubits
-  getIt.registerLazySingleton<LocalizationCubit>(() => LocalizationCubit());
-  getIt.registerLazySingleton<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
-  getIt.registerLazySingleton<OnboardingCubit>(() => OnboardingCubit());
+  // Register cubits (use factory so each screen gets a fresh instance)
+  getIt.registerFactory<LocalizationCubit>(() => LocalizationCubit());
+  getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
+  getIt.registerFactory<OnboardingCubit>(() => OnboardingCubit());
   // MenuCubit removed from DI to prevent closing issues - created locally in screens
-  getIt.registerLazySingleton<UsersCubit>(
-    () => UsersCubit(getIt<UsersRepository>()),
-  );
-  getIt.registerLazySingleton<PermissionsCubit>(() => PermissionsCubit());
-  getIt.registerLazySingleton<ClientsCubit>(
+  getIt.registerFactory<UsersCubit>(() => UsersCubit(getIt<UsersRepository>()));
+  getIt.registerFactory<PermissionsCubit>(() => PermissionsCubit());
+  getIt.registerFactory<ClientsCubit>(
     () => ClientsCubit(getIt<ClientsRepository>()),
   );
-  getIt.registerLazySingleton<ProductsCubit>(
+  getIt.registerFactory<ProductsCubit>(
     () => ProductsCubit(getIt<ProductsRepository>()),
   );
+  getIt.registerFactory<CategoriesCubit>(
+    () => CategoriesCubit(getIt<ProductsRepository>()),
+  );
+
+  // Register theme provider
+  getIt.registerLazySingleton<ThemeProvider>(() => ThemeProvider());
 
   // Add more dependencies here as needed
 }

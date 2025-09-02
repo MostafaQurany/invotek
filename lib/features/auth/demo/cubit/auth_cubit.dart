@@ -105,7 +105,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     try {
       await repo.logout();
-      emit(AuthState.initial());
+      emit(AuthState.successLogout());
     } catch (e) {
       final errorMessage = e.toString();
       emit(AuthState.errorAuth(errorMessage));

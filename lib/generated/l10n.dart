@@ -1379,6 +1379,846 @@ class S {
       args: [],
     );
   }
+
+  /// `Products`
+  String get products {
+    return Intl.message(
+      'Products',
+      name: 'products',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow all your bills in one place`
+  String get onboardingOne {
+    return Intl.message(
+      'Follow all your bills in one place',
+      name: 'onboardingOne',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You don't forget and no bill`
+  String get onboardingTwo {
+    return Intl.message(
+      'You don\'t forget and no bill',
+      name: 'onboardingTwo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay and follow every need in seconds`
+  String get onboardingThree {
+    return Intl.message(
+      'Pay and follow every need in seconds',
+      name: 'onboardingThree',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Organ your monthly bills, and follow the payment dates, without paper or headache.`
+  String get onboardingOneDec {
+    return Intl.message(
+      'Organ your monthly bills, and follow the payment dates, without paper or headache.',
+      name: 'onboardingOneDec',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You receive an alert before the payment date, in order to avoid any delay or fines.`
+  String get onboardingTwoDec {
+    return Intl.message(
+      'You receive an alert before the payment date, in order to avoid any delay or fines.',
+      name: 'onboardingTwoDec',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pay electronically, and save your records automatically to review them at any time.`
+  String get onboardingThreeDec {
+    return Intl.message(
+      'Pay electronically, and save your records automatically to review them at any time.',
+      name: 'onboardingThreeDec',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start now`
+  String get onboardingStartNow {
+    return Intl.message(
+      'Start now',
+      name: 'onboardingStartNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage Products And Categories`
+  String get productsCategories {
+    return Intl.message(
+      'Manage Products And Categories',
+      name: 'productsCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products List`
+  String get productsList {
+    return Intl.message(
+      'Products List',
+      name: 'productsList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Categories`
+  String get categoriesAppbar {
+    return Intl.message(
+      'Product Categories',
+      name: 'categoriesAppbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search products...`
+  String get searchProducts {
+    return Intl.message(
+      'Search products...',
+      name: 'searchProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get category {
+    return Intl.message(
+      'Category',
+      name: 'category',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Categories`
+  String get allCategories {
+    return Intl.message(
+      'All Categories',
+      name: 'allCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Statuses`
+  String get allStatuses {
+    return Intl.message(
+      'All Statuses',
+      name: 'allStatuses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Out of Stock`
+  String get outOfStock {
+    return Intl.message(
+      'Out of Stock',
+      name: 'outOfStock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No products found`
+  String get noProductsFound {
+    return Intl.message(
+      'No products found',
+      name: 'noProductsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Details`
+  String get viewDetails {
+    return Intl.message(
+      'View Details',
+      name: 'viewDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Product`
+  String get editProduct {
+    return Intl.message(
+      'Edit Product',
+      name: 'editProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Product`
+  String get deleteProduct {
+    return Intl.message(
+      'Delete Product',
+      name: 'deleteProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete product "{name}"?`
+  String deleteProductConfirmation(Object name) {
+    return Intl.message(
+      'Are you sure you want to delete product "$name"?',
+      name: 'deleteProductConfirmation',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Quantity`
+  String get quantity {
+    return Intl.message(
+      'Quantity',
+      name: 'quantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Name`
+  String get noName {
+    return Intl.message(
+      'No Name',
+      name: 'noName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Undefined`
+  String get undefined {
+    return Intl.message(
+      'Undefined',
+      name: 'undefined',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Category`
+  String get editCategory {
+    return Intl.message(
+      'Edit Category',
+      name: 'editCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Category`
+  String get addCategory {
+    return Intl.message(
+      'Add Category',
+      name: 'addCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category added successfully`
+  String get categoryAddedSuccessfully {
+    return Intl.message(
+      'Category added successfully',
+      name: 'categoryAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category updated successfully`
+  String get categoryUpdatedSuccessfully {
+    return Intl.message(
+      'Category updated successfully',
+      name: 'categoryUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category deleted successfully`
+  String get categoryDeletedSuccessfully {
+    return Intl.message(
+      'Category deleted successfully',
+      name: 'categoryDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error adding category`
+  String get errorAddingCategory {
+    return Intl.message(
+      'Error adding category',
+      name: 'errorAddingCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error updating category`
+  String get errorUpdatingCategory {
+    return Intl.message(
+      'Error updating category',
+      name: 'errorUpdatingCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error deleting category`
+  String get errorDeletingCategory {
+    return Intl.message(
+      'Error deleting category',
+      name: 'errorDeletingCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Basic Information`
+  String get basicInformation {
+    return Intl.message(
+      'Basic Information',
+      name: 'basicInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get price {
+    return Intl.message(
+      'Price',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SKU`
+  String get sku {
+    return Intl.message(
+      'SKU',
+      name: 'sku',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Barcode`
+  String get barcode {
+    return Intl.message(
+      'Barcode',
+      name: 'barcode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weight`
+  String get weight {
+    return Intl.message(
+      'Weight',
+      name: 'weight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dimensions`
+  String get dimensions {
+    return Intl.message(
+      'Dimensions',
+      name: 'dimensions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inventory Settings`
+  String get inventorySettings {
+    return Intl.message(
+      'Inventory Settings',
+      name: 'inventorySettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track Inventory`
+  String get trackInventory {
+    return Intl.message(
+      'Track Inventory',
+      name: 'trackInventory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low Stock Alert`
+  String get lowStockAlert {
+    return Intl.message(
+      'Low Stock Alert',
+      name: 'lowStockAlert',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum Quantity`
+  String get minimumQuantity {
+    return Intl.message(
+      'Minimum Quantity',
+      name: 'minimumQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Settings`
+  String get taxSettings {
+    return Intl.message(
+      'Tax Settings',
+      name: 'taxSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has Tax`
+  String get hasTax {
+    return Intl.message(
+      'Has Tax',
+      name: 'hasTax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Rate`
+  String get taxRate {
+    return Intl.message(
+      'Tax Rate',
+      name: 'taxRate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional Settings`
+  String get additionalSettings {
+    return Intl.message(
+      'Additional Settings',
+      name: 'additionalSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Is Active`
+  String get isActive {
+    return Intl.message(
+      'Is Active',
+      name: 'isActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product added successfully`
+  String get productAddedSuccessfully {
+    return Intl.message(
+      'Product added successfully',
+      name: 'productAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product updated successfully`
+  String get productUpdatedSuccessfully {
+    return Intl.message(
+      'Product updated successfully',
+      name: 'productUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product deleted successfully`
+  String get productDeletedSuccessfully {
+    return Intl.message(
+      'Product deleted successfully',
+      name: 'productDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error adding product`
+  String get errorAddingProduct {
+    return Intl.message(
+      'Error adding product',
+      name: 'errorAddingProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error updating product`
+  String get errorUpdatingProduct {
+    return Intl.message(
+      'Error updating product',
+      name: 'errorUpdatingProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error deleting product`
+  String get errorDeletingProduct {
+    return Intl.message(
+      'Error deleting product',
+      name: 'errorDeletingProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Product`
+  String get addProduct {
+    return Intl.message(
+      'Add New Product',
+      name: 'addProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pricing`
+  String get pricing {
+    return Intl.message(
+      'Pricing',
+      name: 'pricing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selling Price`
+  String get sellingPrice {
+    return Intl.message(
+      'Selling Price',
+      name: 'sellingPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost Price`
+  String get costPrice {
+    return Intl.message(
+      'Cost Price',
+      name: 'costPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inventory`
+  String get inventory {
+    return Intl.message(
+      'Inventory',
+      name: 'inventory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field is required`
+  String get thisFieldIsRequired {
+    return Intl.message(
+      'This field is required',
+      name: 'thisFieldIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity must be a positive integer`
+  String get quantityMustBeAPositiveInteger {
+    return Intl.message(
+      'Quantity must be a positive integer',
+      name: 'quantityMustBeAPositiveInteger',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unit`
+  String get unit {
+    return Intl.message(
+      'Unit',
+      name: 'unit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Piece`
+  String get piece {
+    return Intl.message(
+      'Piece',
+      name: 'piece',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `kg`
+  String get kilogram {
+    return Intl.message(
+      'kg',
+      name: 'kilogram',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `m`
+  String get meter {
+    return Intl.message(
+      'm',
+      name: 'meter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid number`
+  String get invalidNumber {
+    return Intl.message(
+      'Invalid number',
+      name: 'invalidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum Quantity`
+  String get maximumQuantity {
+    return Intl.message(
+      'Maximum Quantity',
+      name: 'maximumQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Details`
+  String get productDetails {
+    return Intl.message(
+      'Product Details',
+      name: 'productDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product SKU`
+  String get productSku {
+    return Intl.message(
+      'Product SKU',
+      name: 'productSku',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Brand`
+  String get brand {
+    return Intl.message(
+      'Brand',
+      name: 'brand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Model`
+  String get model {
+    return Intl.message(
+      'Model',
+      name: 'model',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Color`
+  String get color {
+    return Intl.message(
+      'Color',
+      name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Material`
+  String get material {
+    return Intl.message(
+      'Material',
+      name: 'material',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cm`
+  String get centimeters {
+    return Intl.message(
+      'cm',
+      name: 'centimeters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional Information`
+  String get additionalInformation {
+    return Intl.message(
+      'Additional Information',
+      name: 'additionalInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message(
+      'Notes',
+      name: 'notes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product is Active`
+  String get productIsActive {
+    return Intl.message(
+      'Product is Active',
+      name: 'productIsActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable/Disable Product`
+  String get enableDisableProduct {
+    return Intl.message(
+      'Enable/Disable Product',
+      name: 'enableDisableProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product is Taxable`
+  String get productIsTaxable {
+    return Intl.message(
+      'Product is Taxable',
+      name: 'productIsTaxable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply Tax to Product`
+  String get applyTaxToProduct {
+    return Intl.message(
+      'Apply Tax to Product',
+      name: 'applyTaxToProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track Available Product Quantity`
+  String get trackAvailableProductQuantity {
+    return Intl.message(
+      'Track Available Product Quantity',
+      name: 'trackAvailableProductQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Category`
+  String get selectCategory {
+    return Intl.message(
+      'Select Category',
+      name: 'selectCategory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

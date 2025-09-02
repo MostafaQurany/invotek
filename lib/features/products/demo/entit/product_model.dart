@@ -3,133 +3,114 @@ import 'package:json_annotation/json_annotation.dart';
 part 'product_model.g.dart';
 
 @JsonSerializable()
-class Product {
-  final int id;
-  final String name;
-  final String? description;
-  final double price;
-  final double? costPrice;
-  final int quantity;
+class ProductModel {
+  final int? id;
+  @JsonKey(name: 'company_id')
+  final int? companyId;
+  @JsonKey(name: 'product_category_id')
+  final int? productCategoryId;
+  final String? name;
   final String? sku;
+  final String? description;
+  final String? price;
+  final String? cost;
+  @JsonKey(name: 'tax_rate')
+  final String? taxRate;
+  @JsonKey(name: 'tax_rate_backup')
+  final String? taxRateBackup;
+  final int? quantity;
+  @JsonKey(name: 'quantity_backup')
+  final int? quantityBackup;
   final String? barcode;
-  final String category;
-  final String status;
-  final String? image;
   final String? unit;
-  final double? taxRate;
-  final String? notes;
-  final String createdAt;
-  final String updatedAt;
-  final String? brand;
-  final String? model;
-  final double? weight;
-  final String? dimensions;
-  final String? color;
-  final String? material;
-  final int? minQuantity;
-  final int? maxQuantity;
-  final bool isActive;
+  @JsonKey(name: 'has_tax')
+  final bool? hasTax;
+  @JsonKey(name: 'is_active')
+  final bool? isActive;
+  @JsonKey(name: 'track_inventory')
+  final bool? trackInventory;
+  final String? status;
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  final String? image;
 
-  const Product({
-    required this.id,
-    required this.name,
-    this.description,
-    required this.price,
-    this.costPrice,
-    required this.quantity,
+  ProductModel({
+    this.id,
+    this.companyId,
+    this.productCategoryId,
+    this.name,
     this.sku,
-    this.barcode,
-    required this.category,
-    required this.status,
-    this.image,
-    this.unit,
+    this.description,
+    this.price,
+    this.cost,
     this.taxRate,
-    this.notes,
-    required this.createdAt,
-    required this.updatedAt,
-    this.brand,
-    this.model,
-    this.weight,
-    this.dimensions,
-    this.color,
-    this.material,
-    this.minQuantity,
-    this.maxQuantity,
-    required this.isActive,
+    this.taxRateBackup,
+    this.quantity,
+    this.quantityBackup,
+    this.barcode,
+    this.unit,
+    this.hasTax,
+    this.isActive,
+    this.trackInventory,
+    this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.image,
   });
 
-  Product copyWith({
+  factory ProductModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductModelToJson(this);
+
+  // Copy with method for easy updates
+  ProductModel copyWith({
     int? id,
+    int? companyId,
+    int? productCategoryId,
     String? name,
-    String? description,
-    double? price,
-    double? costPrice,
-    int? quantity,
     String? sku,
+    String? description,
+    String? price,
+    String? cost,
+    String? taxRate,
+    String? taxRateBackup,
+    int? quantity,
+    int? quantityBackup,
     String? barcode,
-    String? category,
-    String? status,
-    String? image,
     String? unit,
-    double? taxRate,
-    String? notes,
-    String? createdAt,
-    String? updatedAt,
-    String? brand,
-    String? model,
-    double? weight,
-    String? dimensions,
-    String? color,
-    String? material,
-    int? minQuantity,
-    int? maxQuantity,
+    bool? hasTax,
     bool? isActive,
+    bool? trackInventory,
+    String? status,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    String? image,
   }) {
-    return Product(
+    return ProductModel(
       id: id ?? this.id,
+      companyId: companyId ?? this.companyId,
+      productCategoryId: productCategoryId ?? this.productCategoryId,
       name: name ?? this.name,
+      sku: sku ?? this.sku,
       description: description ?? this.description,
       price: price ?? this.price,
-      costPrice: costPrice ?? this.costPrice,
-      quantity: quantity ?? this.quantity,
-      sku: sku ?? this.sku,
-      barcode: barcode ?? this.barcode,
-      category: category ?? this.category,
-      status: status ?? this.status,
-      image: image ?? this.image,
-      unit: unit ?? this.unit,
+      cost: cost ?? this.cost,
       taxRate: taxRate ?? this.taxRate,
-      notes: notes ?? this.notes,
+      taxRateBackup: taxRateBackup ?? this.taxRateBackup,
+      quantity: quantity ?? this.quantity,
+      quantityBackup: quantityBackup ?? this.quantityBackup,
+      barcode: barcode ?? this.barcode,
+      unit: unit ?? this.unit,
+      hasTax: hasTax ?? this.hasTax,
+      isActive: isActive ?? this.isActive,
+      trackInventory: trackInventory ?? this.trackInventory,
+      status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      brand: brand ?? this.brand,
-      model: model ?? this.model,
-      weight: weight ?? this.weight,
-      dimensions: dimensions ?? this.dimensions,
-      color: color ?? this.color,
-      material: material ?? this.material,
-      minQuantity: minQuantity ?? this.minQuantity,
-      maxQuantity: maxQuantity ?? this.maxQuantity,
-      isActive: isActive ?? this.isActive,
+      image: image ?? this.image,
     );
   }
-
-  Map<String, dynamic> toJson() => _$ProductToJson(this);
-
-  factory Product.fromJson(Map<String, dynamic> json) =>
-      _$ProductFromJson(json);
-
-  @override
-  String toString() {
-    return 'Product(id: $id, name: $name, price: $price, quantity: $quantity, category: $category, status: $status)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is Product && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
 }

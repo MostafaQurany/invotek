@@ -6,9 +6,11 @@ class AuthLoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppLoadingScreen(
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return AppLoadingScreen(
       message: 'Loading...',
-      indicatorColor: Colors.green,
+      indicatorColor: colorScheme.primary,
     );
   }
 }

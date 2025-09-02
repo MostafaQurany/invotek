@@ -55,7 +55,7 @@ extension AuthStatePatterns on AuthState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _LoadingAuth value)?  loadingAuth,TResult Function( _SuccessLogin value)?  successLogin,TResult Function( _ErrorAuth value)?  errorAuth,TResult Function( _SuccessRegister value)?  successRegister,TResult Function( _ErrorRegister value)?  errorRegister,TResult Function( _ChangeAuthScreenBody value)?  changeAuthScreenBody,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _LoadingAuth value)?  loadingAuth,TResult Function( _SuccessLogin value)?  successLogin,TResult Function( _ErrorAuth value)?  errorAuth,TResult Function( _SuccessRegister value)?  successRegister,TResult Function( _ErrorRegister value)?  errorRegister,TResult Function( _ChangeAuthScreenBody value)?  changeAuthScreenBody,TResult Function( _SuccessLogout value)?  successLogout,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -65,7 +65,8 @@ return successLogin(_that);case _ErrorAuth() when errorAuth != null:
 return errorAuth(_that);case _SuccessRegister() when successRegister != null:
 return successRegister(_that);case _ErrorRegister() when errorRegister != null:
 return errorRegister(_that);case _ChangeAuthScreenBody() when changeAuthScreenBody != null:
-return changeAuthScreenBody(_that);case _:
+return changeAuthScreenBody(_that);case _SuccessLogout() when successLogout != null:
+return successLogout(_that);case _:
   return orElse();
 
 }
@@ -83,7 +84,7 @@ return changeAuthScreenBody(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _LoadingAuth value)  loadingAuth,required TResult Function( _SuccessLogin value)  successLogin,required TResult Function( _ErrorAuth value)  errorAuth,required TResult Function( _SuccessRegister value)  successRegister,required TResult Function( _ErrorRegister value)  errorRegister,required TResult Function( _ChangeAuthScreenBody value)  changeAuthScreenBody,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _LoadingAuth value)  loadingAuth,required TResult Function( _SuccessLogin value)  successLogin,required TResult Function( _ErrorAuth value)  errorAuth,required TResult Function( _SuccessRegister value)  successRegister,required TResult Function( _ErrorRegister value)  errorRegister,required TResult Function( _ChangeAuthScreenBody value)  changeAuthScreenBody,required TResult Function( _SuccessLogout value)  successLogout,}){
 final _that = this;
 switch (_that) {
 case _Initial():
@@ -93,7 +94,8 @@ return successLogin(_that);case _ErrorAuth():
 return errorAuth(_that);case _SuccessRegister():
 return successRegister(_that);case _ErrorRegister():
 return errorRegister(_that);case _ChangeAuthScreenBody():
-return changeAuthScreenBody(_that);case _:
+return changeAuthScreenBody(_that);case _SuccessLogout():
+return successLogout(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -110,7 +112,7 @@ return changeAuthScreenBody(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _LoadingAuth value)?  loadingAuth,TResult? Function( _SuccessLogin value)?  successLogin,TResult? Function( _ErrorAuth value)?  errorAuth,TResult? Function( _SuccessRegister value)?  successRegister,TResult? Function( _ErrorRegister value)?  errorRegister,TResult? Function( _ChangeAuthScreenBody value)?  changeAuthScreenBody,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _LoadingAuth value)?  loadingAuth,TResult? Function( _SuccessLogin value)?  successLogin,TResult? Function( _ErrorAuth value)?  errorAuth,TResult? Function( _SuccessRegister value)?  successRegister,TResult? Function( _ErrorRegister value)?  errorRegister,TResult? Function( _ChangeAuthScreenBody value)?  changeAuthScreenBody,TResult? Function( _SuccessLogout value)?  successLogout,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
@@ -120,7 +122,8 @@ return successLogin(_that);case _ErrorAuth() when errorAuth != null:
 return errorAuth(_that);case _SuccessRegister() when successRegister != null:
 return successRegister(_that);case _ErrorRegister() when errorRegister != null:
 return errorRegister(_that);case _ChangeAuthScreenBody() when changeAuthScreenBody != null:
-return changeAuthScreenBody(_that);case _:
+return changeAuthScreenBody(_that);case _SuccessLogout() when successLogout != null:
+return successLogout(_that);case _:
   return null;
 
 }
@@ -137,7 +140,7 @@ return changeAuthScreenBody(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loadingAuth,TResult Function( UserModel userModel)?  successLogin,TResult Function( String error)?  errorAuth,TResult Function( UserModel userModel)?  successRegister,TResult Function( String error)?  errorRegister,TResult Function()?  changeAuthScreenBody,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loadingAuth,TResult Function( UserModel userModel)?  successLogin,TResult Function( String error)?  errorAuth,TResult Function( UserModel userModel)?  successRegister,TResult Function( String error)?  errorRegister,TResult Function()?  changeAuthScreenBody,TResult Function()?  successLogout,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _LoadingAuth() when loadingAuth != null:
@@ -146,7 +149,8 @@ return successLogin(_that.userModel);case _ErrorAuth() when errorAuth != null:
 return errorAuth(_that.error);case _SuccessRegister() when successRegister != null:
 return successRegister(_that.userModel);case _ErrorRegister() when errorRegister != null:
 return errorRegister(_that.error);case _ChangeAuthScreenBody() when changeAuthScreenBody != null:
-return changeAuthScreenBody();case _:
+return changeAuthScreenBody();case _SuccessLogout() when successLogout != null:
+return successLogout();case _:
   return orElse();
 
 }
@@ -164,7 +168,7 @@ return changeAuthScreenBody();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loadingAuth,required TResult Function( UserModel userModel)  successLogin,required TResult Function( String error)  errorAuth,required TResult Function( UserModel userModel)  successRegister,required TResult Function( String error)  errorRegister,required TResult Function()  changeAuthScreenBody,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loadingAuth,required TResult Function( UserModel userModel)  successLogin,required TResult Function( String error)  errorAuth,required TResult Function( UserModel userModel)  successRegister,required TResult Function( String error)  errorRegister,required TResult Function()  changeAuthScreenBody,required TResult Function()  successLogout,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _LoadingAuth():
@@ -173,7 +177,8 @@ return successLogin(_that.userModel);case _ErrorAuth():
 return errorAuth(_that.error);case _SuccessRegister():
 return successRegister(_that.userModel);case _ErrorRegister():
 return errorRegister(_that.error);case _ChangeAuthScreenBody():
-return changeAuthScreenBody();case _:
+return changeAuthScreenBody();case _SuccessLogout():
+return successLogout();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -190,7 +195,7 @@ return changeAuthScreenBody();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loadingAuth,TResult? Function( UserModel userModel)?  successLogin,TResult? Function( String error)?  errorAuth,TResult? Function( UserModel userModel)?  successRegister,TResult? Function( String error)?  errorRegister,TResult? Function()?  changeAuthScreenBody,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loadingAuth,TResult? Function( UserModel userModel)?  successLogin,TResult? Function( String error)?  errorAuth,TResult? Function( UserModel userModel)?  successRegister,TResult? Function( String error)?  errorRegister,TResult? Function()?  changeAuthScreenBody,TResult? Function()?  successLogout,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _LoadingAuth() when loadingAuth != null:
@@ -199,7 +204,8 @@ return successLogin(_that.userModel);case _ErrorAuth() when errorAuth != null:
 return errorAuth(_that.error);case _SuccessRegister() when successRegister != null:
 return successRegister(_that.userModel);case _ErrorRegister() when errorRegister != null:
 return errorRegister(_that.error);case _ChangeAuthScreenBody() when changeAuthScreenBody != null:
-return changeAuthScreenBody();case _:
+return changeAuthScreenBody();case _SuccessLogout() when successLogout != null:
+return successLogout();case _:
   return null;
 
 }
@@ -559,6 +565,38 @@ int get hashCode => runtimeType.hashCode;
 @override
 String toString() {
   return 'AuthState.changeAuthScreenBody()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _SuccessLogout implements AuthState {
+  const _SuccessLogout();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SuccessLogout);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthState.successLogout()';
 }
 
 

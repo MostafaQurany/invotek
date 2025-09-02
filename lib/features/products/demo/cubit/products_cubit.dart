@@ -1,99 +1,265 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
+import 'package:invotek/features/products/demo/entit/product_model.dart';
 
-part 'products_state.dart';
+part 'products_cubit.freezed.dart';
+
+@freezed
+sealed class ProductsState with _$ProductsState {
+  const factory ProductsState.initial({
+    @Default([]) List<ProductModel> products,
+    ProductModel? selectedProduct,
+    @Default(1) int currentPage,
+    @Default(1) int totalPages,
+    String? error,
+  }) = _Initial;
+
+  const factory ProductsState.loading({
+    @Default([]) List<ProductModel> products,
+    ProductModel? selectedProduct,
+    @Default(1) int currentPage,
+    @Default(1) int totalPages,
+    String? message,
+  }) = _LoadingProducts;
+
+  const factory ProductsState.loaded({
+    required List<ProductModel> products,
+    ProductModel? selectedProduct,
+    required int currentPage,
+    required int totalPages,
+  }) = _LoadedProducts;
+
+  const factory ProductsState.createSuccess({
+    required List<ProductModel> products,
+    required ProductModel created,
+    ProductModel? selectedProduct,
+    @Default(1) int currentPage,
+    @Default(1) int totalPages,
+  }) = _CreateSuccessProducts;
+
+  const factory ProductsState.updateSuccess({
+    required List<ProductModel> products,
+    required ProductModel updated,
+    ProductModel? selectedProduct,
+    @Default(1) int currentPage,
+    @Default(1) int totalPages,
+  }) = _UpdateSuccessProducts;
+
+  const factory ProductsState.deleteSuccess({
+    required List<ProductModel> products,
+    required int deletedId,
+    ProductModel? selectedProduct,
+    @Default(1) int currentPage,
+    @Default(1) int totalPages,
+  }) = _DeleteSuccessProducts;
+
+  const factory ProductsState.failure({
+    @Default([]) List<ProductModel> products,
+    ProductModel? selectedProduct,
+    @Default(1) int currentPage,
+    @Default(1) int totalPages,
+    required String error,
+  }) = _FailureProducts;
+}
 
 class ProductsCubit extends Cubit<ProductsState> {
   final ProductsRepository _repository;
 
-  ProductsCubit(this._repository) : super(const ProductsState());
+  // persistent products cache used across states
+  final List<ProductModel> _products = <ProductModel>[];
+  int _currentPage = 1;
+  int _totalPages = 1;
+  String? _lastSearch;
+  String? _lastCategory;
+  String? _lastStatus;
+  int _pageSize = 20;
+  bool _isLoadingPage = false;
 
-  // Load products
-  Future<void> loadProducts({
+  ProductsCubit(this._repository) : super(const ProductsState.initial());
+
+  List<ProductModel> get products => List.unmodifiable(_products);
+  int get currentPage => _currentPage;
+  int get totalPages => _totalPages;
+  bool get hasMore => _currentPage < _totalPages;
+
+  Future<void> loadFirstPage({
+    bool refresh = false,
     String? search,
     String? category,
     String? status,
-    String? brand,
-    double? minPrice,
-    double? maxPrice,
-    int? minQuantity,
-    int? maxQuantity,
-    int? page,
     int? limit,
-    String? sortBy,
-    String? sortOrder,
   }) async {
-    if (isClosed) return;
+    if (_isLoadingPage) return;
+    if (_products.isNotEmpty && !refresh) return;
+    _isLoadingPage = true;
 
-    emit(state.copyWith(isLoading: true, error: null));
+    _lastSearch = search;
+    _lastCategory = category;
+    _lastStatus = status;
+    _pageSize = limit ?? _pageSize;
 
-    final result = await _repository.getProducts(
-      search: search,
-      category: category,
-      status: status,
-      brand: brand,
-      minPrice: minPrice,
-      maxPrice: maxPrice,
-      minQuantity: minQuantity,
-      maxQuantity: maxQuantity,
-      page: page,
-      limit: limit,
-      sortBy: sortBy,
-      sortOrder: sortOrder,
+    _products.clear();
+    _currentPage = 1;
+    _totalPages = 1;
+
+    emit(
+      ProductsState.loading(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'loading',
+      ),
     );
 
-    if (isClosed) return;
+    final result = await _repository.getProducts(
+      search: _lastSearch,
+      category: _lastCategory,
+      status: _lastStatus,
+      page: _currentPage,
+      limit: _pageSize,
+    );
 
     result.when(
-      success: (products) {
-        emit(state.copyWith(isLoading: false, products: products, error: null));
+      success: (pageProducts) {
+        _products.addAll(pageProducts);
+        // If repository can return pagination meta, wire it; otherwise estimate
+        // For now, keep totalPages as current when page not full
+        if (pageProducts.length < _pageSize) {
+          _totalPages = _currentPage; // no more pages
+        } else {
+          _totalPages = _currentPage + 1; // optimistic next
+        }
+        emit(
+          ProductsState.loaded(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+          ),
+        );
       },
       failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
+        emit(
+          ProductsState.failure(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
       },
+    );
+
+    _isLoadingPage = false;
+  }
+
+  Future<void> loadNextPage() async {
+    if (_isLoadingPage || !hasMore) return;
+    _isLoadingPage = true;
+    final nextPage = _currentPage + 1;
+
+    emit(
+      ProductsState.loading(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'loading_next',
+      ),
+    );
+
+    final result = await _repository.getProducts(
+      search: _lastSearch,
+      category: _lastCategory,
+      status: _lastStatus,
+      page: nextPage,
+      limit: _pageSize,
+    );
+
+    result.when(
+      success: (pageProducts) {
+        _currentPage = nextPage;
+        _products.addAll(pageProducts);
+        if (pageProducts.length < _pageSize) {
+          _totalPages = _currentPage; // reached last page
+        } else {
+          _totalPages = _currentPage + 1; // optimistic next
+        }
+        emit(
+          ProductsState.loaded(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(
+          ProductsState.failure(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
+      },
+    );
+
+    _isLoadingPage = false;
+  }
+
+  Future<void> refreshCurrentFilters() async {
+    await loadFirstPage(
+      search: _lastSearch,
+      category: _lastCategory,
+      status: _lastStatus,
+      limit: _pageSize,
     );
   }
 
-  // Create product
+  // Create product preserves cache
   Future<void> createProduct({
     required String name,
     String? description,
-    required double price,
-    double? costPrice,
+    required String price,
+    String? cost,
     required int quantity,
     String? sku,
     String? barcode,
-    required String category,
-    required String status,
     String? unit,
-    double? taxRate,
+    String? taxRate,
     String? notes,
     String? brand,
     String? model,
-    double? weight,
+    String? weight,
     String? dimensions,
     String? color,
     String? material,
     int? minQuantity,
     int? maxQuantity,
-    required bool isActive,
+    bool isActive = true,
+    bool hasTax = false,
+    bool trackInventory = false,
+    String status = 'active',
+    int? categoryId,
   }) async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(
+      ProductsState.loading(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'creating',
+      ),
+    );
 
     final result = await _repository.createProduct(
       name: name,
       description: description,
       price: price,
-      costPrice: costPrice,
+      cost: cost,
       quantity: quantity,
       sku: sku,
       barcode: barcode,
-      category: category,
-      status: status,
       unit: unit,
       taxRate: taxRate,
       notes: notes,
@@ -106,68 +272,81 @@ class ProductsCubit extends Cubit<ProductsState> {
       minQuantity: minQuantity,
       maxQuantity: maxQuantity,
       isActive: isActive,
+      hasTax: hasTax,
+      trackInventory: trackInventory,
+      status: status,
+      categoryId: categoryId,
     );
-
-    if (isClosed) return;
 
     result.when(
       success: (product) {
-        final updatedProducts = List<Product>.from(state.products)
-          ..add(product);
+        _products.add(product);
         emit(
-          state.copyWith(
-            isLoading: false,
-            products: updatedProducts,
-            error: null,
+          ProductsState.createSuccess(
+            products: _products,
+            created: product,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
           ),
         );
       },
       failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
+        emit(
+          ProductsState.failure(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
       },
     );
   }
 
-  // Update product
   Future<void> updateProduct({
     required int id,
     required String name,
     String? description,
-    required double price,
-    double? costPrice,
+    required String price,
+    String? cost,
     required int quantity,
     String? sku,
     String? barcode,
-    required String category,
-    required String status,
     String? unit,
-    double? taxRate,
+    String? taxRate,
     String? notes,
     String? brand,
     String? model,
-    double? weight,
+    String? weight,
     String? dimensions,
     String? color,
     String? material,
     int? minQuantity,
     int? maxQuantity,
-    required bool isActive,
+    bool isActive = true,
+    bool hasTax = false,
+    bool trackInventory = false,
+    String status = 'active',
+    int? categoryId,
   }) async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(
+      ProductsState.loading(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'updating',
+      ),
+    );
 
     final result = await _repository.updateProduct(
       id: id,
       name: name,
       description: description,
       price: price,
-      costPrice: costPrice,
+      cost: cost,
       quantity: quantity,
       sku: sku,
       barcode: barcode,
-      category: category,
-      status: status,
       unit: unit,
       taxRate: taxRate,
       notes: notes,
@@ -180,214 +359,144 @@ class ProductsCubit extends Cubit<ProductsState> {
       minQuantity: minQuantity,
       maxQuantity: maxQuantity,
       isActive: isActive,
+      hasTax: hasTax,
+      trackInventory: trackInventory,
+      status: status,
+      categoryId: categoryId,
     );
-
-    if (isClosed) return;
 
     result.when(
       success: (updatedProduct) {
-        final updatedProducts = state.products.map((product) {
-          return product.id == id ? updatedProduct : product;
-        }).toList();
+        for (var i = 0; i < _products.length; i++) {
+          final p = _products[i];
+          if ((p.id ?? 0) == id) {
+            _products[i] = updatedProduct;
+            break;
+          }
+        }
         emit(
-          state.copyWith(
-            isLoading: false,
-            products: updatedProducts,
-            error: null,
+          ProductsState.updateSuccess(
+            products: _products,
+            updated: updatedProduct,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
           ),
         );
       },
       failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
+        emit(
+          ProductsState.failure(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
       },
     );
   }
 
-  // Delete product
   Future<void> deleteProduct(int id) async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(
+      ProductsState.loading(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'deleting',
+      ),
+    );
 
     final result = await _repository.deleteProduct(id);
 
-    if (isClosed) return;
-
     result.when(
       success: (_) {
-        final updatedProducts = state.products
-            .where((product) => product.id != id)
-            .toList();
+        _products.removeWhere((p) => (p.id ?? 0) == id);
         emit(
-          state.copyWith(
-            isLoading: false,
-            products: updatedProducts,
-            error: null,
+          ProductsState.deleteSuccess(
+            products: _products,
+            deletedId: id,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
           ),
         );
       },
       failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
-      },
-    );
-  }
-
-  // Load product statistics
-  Future<void> loadProductStatistics() async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
-
-    final result = await _repository.getProductStatistics();
-
-    if (isClosed) return;
-
-    result.when(
-      success: (statistics) {
         emit(
-          state.copyWith(isLoading: false, statistics: statistics, error: null),
-        );
-      },
-      failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
-      },
-    );
-  }
-
-  // Bulk delete products
-  Future<void> bulkDeleteProducts(List<int> productIds) async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
-
-    final result = await _repository.bulkDeleteProducts(productIds);
-
-    if (isClosed) return;
-
-    result.when(
-      success: (_) {
-        final updatedProducts = state.products
-            .where((product) => !productIds.contains(product.id))
-            .toList();
-        emit(
-          state.copyWith(
-            isLoading: false,
-            products: updatedProducts,
-            error: null,
+          ProductsState.failure(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
           ),
         );
       },
-      failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
-      },
     );
   }
 
-  // Bulk update product status
-  Future<void> bulkUpdateStatus({
-    required List<int> productIds,
-    required String status,
-  }) async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
-
-    final result = await _repository.bulkUpdateStatus(
-      productIds: productIds,
-      status: status,
-    );
-
-    if (isClosed) return;
-
-    result.when(
-      success: (_) {
-        final updatedProducts = state.products.map((product) {
-          if (productIds.contains(product.id)) {
-            return product.copyWith(status: status);
-          }
-          return product;
-        }).toList();
-        emit(
-          state.copyWith(
-            isLoading: false,
-            products: updatedProducts,
-            error: null,
-          ),
-        );
-      },
-      failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
-      },
-    );
-  }
-
-  // Clear error
-  void clearError() {
-    if (isClosed) return;
-    emit(state.copyWith(error: null));
-  }
-
-  // Get product by ID
   Future<void> getProductById(int id) async {
-    if (isClosed) return;
-
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(
+      ProductsState.loading(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'loading_product',
+      ),
+    );
 
     final result = await _repository.getProductById(id);
 
-    if (isClosed) return;
-
     result.when(
       success: (product) {
-        // For now, we'll just update the products list with the single product
-        // In a real app, you might want to have a separate selectedProduct state
-        emit(state.copyWith(isLoading: false, error: null));
+        emit(
+          ProductsState.loaded(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            selectedProduct: product,
+          ),
+        );
       },
       failure: (error) {
-        emit(state.copyWith(isLoading: false, error: error));
+        emit(
+          ProductsState.failure(
+            products: _products,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
       },
     );
   }
 
-  // Get products by category
-  List<Product> getProductsByCategory(String category) {
-    return state.products
-        .where((product) => product.category == category)
-        .toList();
+  void clearError() {
+    state.maybeWhen(
+      orElse: () => emit(
+        ProductsState.loaded(
+          products: _products,
+          currentPage: _currentPage,
+          totalPages: _totalPages,
+        ),
+      ),
+      failure: (products, selectedProduct, currentPage, totalPages, error) =>
+          emit(
+            ProductsState.loaded(
+              products: _products,
+              currentPage: _currentPage,
+              totalPages: _totalPages,
+            ),
+          ),
+    );
   }
 
-  // Get products by status
-  List<Product> getProductsByStatus(String status) {
-    return state.products.where((product) => product.status == status).toList();
-  }
-
-  // Get products by brand
-  List<Product> getProductsByBrand(String brand) {
-    return state.products.where((product) => product.brand == brand).toList();
-  }
-
-  // Search products
-  List<Product> searchProducts(String query) {
-    return state.products.where((product) {
-      return product.name.toLowerCase().contains(query.toLowerCase()) ||
-          (product.description?.toLowerCase().contains(query.toLowerCase()) ??
-              false) ||
-          (product.sku?.toLowerCase().contains(query.toLowerCase()) ?? false) ||
-          (product.barcode?.toLowerCase().contains(query.toLowerCase()) ??
-              false);
-    }).toList();
-  }
-
-  // Get low stock products
-  List<Product> getLowStockProducts() {
-    return state.products.where((product) {
-      return product.minQuantity != null &&
-          product.quantity <= product.minQuantity!;
-    }).toList();
-  }
-
-  // Get out of stock products
-  List<Product> getOutOfStockProducts() {
-    return state.products.where((product) => product.quantity == 0).toList();
+  void clearSelectedProduct() {
+    emit(
+      ProductsState.loaded(
+        products: _products,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        selectedProduct: null,
+      ),
+    );
   }
 }

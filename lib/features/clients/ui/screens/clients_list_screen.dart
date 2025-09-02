@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
 import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
@@ -37,7 +36,7 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
   @override
   void initState() {
     super.initState();
-    // تحميل العملاء عند فتح الشاشة
+    // Load clients when screen opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (context.read<ClientsCubit>().state.clients.isEmpty) {
         context.read<ClientsCubit>().loadClients();
@@ -53,15 +52,19 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: Text('قائمة العملاء'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
         elevation: 0,
+        scrolledUnderElevation: 1,
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
+            icon: Icon(Icons.add, color: colorScheme.onSurface),
             onPressed: () {
               context.read<MenuCubit>().selectMenuItemByRoute('/clients/add');
             },
@@ -74,7 +77,7 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.error!),
-                backgroundColor: Colors.red,
+                backgroundColor: colorScheme.error,
                 behavior: SnackBarBehavior.floating,
               ),
             );
@@ -91,7 +94,11 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
               child: BlocBuilder<ClientsCubit, ClientsState>(
                 builder: (context, state) {
                   if (state.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: colorScheme.primary,
+                      ),
+                    );
                   }
 
                   if (state.clients.isEmpty) {
@@ -109,13 +116,15 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
   }
 
   Widget _buildSearchAndFilterSection() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: colorScheme.outline.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 3,
             offset: const Offset(0, 1),
@@ -129,12 +138,15 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
             controller: _searchController,
             decoration: InputDecoration(
               hintText: 'البحث في العملاء...',
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon: Icon(
+                Icons.search,
+                color: colorScheme.onSurfaceVariant,
+              ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               filled: true,
-              fillColor: Colors.grey[50],
+              fillColor: colorScheme.surfaceContainer,
             ),
             onChanged: (value) {
               if (value.isNotEmpty) {
@@ -156,10 +168,10 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
                   decoration: InputDecoration(
                     labelText: 'الحالة',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     filled: true,
-                    fillColor: Colors.grey[50],
+                    fillColor: colorScheme.surfaceContainer,
                   ),
                   items: ['الكل', 'نشط', 'غير نشط'].map((status) {
                     return DropdownMenuItem(value: status, child: Text(status));
@@ -185,10 +197,10 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
                   decoration: InputDecoration(
                     labelText: 'الشركة',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     filled: true,
-                    fillColor: Colors.grey[50],
+                    fillColor: colorScheme.surfaceContainer,
                   ),
                   items:
                       [
@@ -227,24 +239,33 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
   }
 
   Widget _buildEmptyState() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.people_outline, size: 80.sp, color: Colors.grey[400]),
+          Icon(
+            Icons.people_outline,
+            size: 80.sp,
+            color: colorScheme.onSurfaceVariant,
+          ),
           SizedBox(height: 16.h),
           Text(
             'لا توجد عملاء',
             style: TextStyle(
               fontSize: 18.sp,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[600],
+              fontWeight: FontWeight.w600,
+              color: colorScheme.onSurface,
             ),
           ),
           SizedBox(height: 8.h),
           Text(
             'اضغط على زر الإضافة لإنشاء عميل جديد',
-            style: TextStyle(fontSize: 14.sp, color: Colors.grey[500]),
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -263,25 +284,34 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
   }
 
   Widget _buildClientCard(Client client) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Card(
       margin: EdgeInsets.only(bottom: 12.h),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.r),
+        side: BorderSide(color: colorScheme.outline.withOpacity(0.1), width: 1),
+      ),
       child: ListTile(
         contentPadding: EdgeInsets.all(16.w),
         leading: CircleAvatar(
-          backgroundColor: AppColors.primary,
+          backgroundColor: colorScheme.primary,
           child: Text(
             client.name.substring(0, 1).toUpperCase(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+            style: TextStyle(
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
         title: Text(
           client.name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 16.sp,
+            color: colorScheme.onSurface,
+          ),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,35 +319,46 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
             SizedBox(height: 4.h),
             Text(
               client.email,
-              style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
+              style: TextStyle(
+                color: colorScheme.onSurfaceVariant,
+                fontSize: 14.sp,
+              ),
             ),
             if (client.phone != null) ...[
               SizedBox(height: 2.h),
               Text(
                 client.phone!,
-                style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
+                style: TextStyle(
+                  color: colorScheme.onSurfaceVariant,
+                  fontSize: 14.sp,
+                ),
               ),
             ],
             if (client.company != null) ...[
               SizedBox(height: 2.h),
               Text(
                 client.company!,
-                style: TextStyle(color: Colors.grey[600], fontSize: 14.sp),
+                style: TextStyle(
+                  color: colorScheme.onSurfaceVariant,
+                  fontSize: 14.sp,
+                ),
               ),
             ],
             SizedBox(height: 8.h),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
               decoration: BoxDecoration(
-                color: client.status == 'active' ? Colors.green : Colors.red,
-                borderRadius: BorderRadius.circular(12),
+                color: client.status == 'active'
+                    ? colorScheme.primary
+                    : colorScheme.error,
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
                 client.status == 'active' ? 'نشط' : 'غير نشط',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: colorScheme.onPrimary,
                   fontSize: 12.sp,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -326,29 +367,33 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
         trailing: PopupMenuButton<String>(
           onSelected: (value) => _handleClientAction(value, client),
           itemBuilder: (context) => [
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'view',
               child: Row(
                 children: [
-                  Icon(Icons.visibility),
-                  SizedBox(width: 8),
+                  Icon(Icons.visibility, color: colorScheme.onSurfaceVariant),
+                  SizedBox(width: 8.w),
                   Text('عرض'),
                 ],
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'edit',
               child: Row(
-                children: [Icon(Icons.edit), SizedBox(width: 8), Text('تعديل')],
+                children: [
+                  Icon(Icons.edit, color: colorScheme.onSurfaceVariant),
+                  SizedBox(width: 8.w),
+                  Text('تعديل'),
+                ],
               ),
             ),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'delete',
               child: Row(
                 children: [
-                  Icon(Icons.delete, color: Colors.red),
-                  SizedBox(width: 8),
-                  Text('حذف', style: TextStyle(color: Colors.red)),
+                  Icon(Icons.delete, color: colorScheme.error),
+                  SizedBox(width: 8.w),
+                  Text('حذف', style: TextStyle(color: colorScheme.error)),
                 ],
               ),
             ),
@@ -383,23 +428,25 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
   }
 
   void _showDeleteConfirmation(Client client) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تأكيد الحذف'),
+        title: Text('تأكيد الحذف'),
         content: Text('هل أنت متأكد من حذف العميل "${client.name}"؟'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: Text('إلغاء'),
           ),
           TextButton(
             onPressed: () {
               context.read<ClientsCubit>().deleteClient(client.id);
               Navigator.pop(context);
             },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: const Text('حذف'),
+            style: TextButton.styleFrom(foregroundColor: colorScheme.error),
+            child: Text('حذف'),
           ),
         ],
       ),

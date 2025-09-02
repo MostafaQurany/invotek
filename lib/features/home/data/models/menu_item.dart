@@ -57,8 +57,10 @@ class MenuItem {
         return s.addUser;
       case 'manage_permissions':
         return s.managePermissions;
-      case 'clients_products':
+      case 'clients':
         return s.clientsProductsTitle;
+      case 'products_categories':
+        return s.productsCategories;
       case 'clients_list':
         return s.clientsList;
       case 'add_client':
@@ -67,6 +69,8 @@ class MenuItem {
         return s.manageProducts;
       case 'product_categories':
         return s.productCategories;
+      case 'products_list':
+        return s.productsList;
       case 'expenses':
         return s.expensesTitle;
       case 'expenses_list':
@@ -147,8 +151,8 @@ class MenuData {
         // ],
       ),
       MenuItem(
-        title: 'العملاء والمنتجات',
-        titleKey: 'clients_products',
+        title: 'العملاء',
+        titleKey: 'clients',
         icon: Icons.inventory,
         route: '/clients',
         hasSubItems: true,
@@ -186,6 +190,28 @@ class MenuData {
               ),
             ],
           ),
+          MenuItem(
+            title: 'فئات المنتجات',
+            titleKey: 'product_categories',
+            icon: Icons.category,
+            route: '/products/categories',
+          ),
+        ],
+      ),
+      MenuItem(
+        title: 'إدارة المنتجات وفئاتها',
+        titleKey: 'products_categories',
+        icon: Icons.inventory,
+        route: '/products',
+        hasSubItems: true,
+        subItems: [
+          MenuItem(
+            title: 'قائمة المنتجات',
+            titleKey: 'products_list',
+            icon: Icons.list,
+            route: '/products/list',
+          ),
+          // categories
           MenuItem(
             title: 'فئات المنتجات',
             titleKey: 'product_categories',

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/di/injection.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
+import 'package:invotek/features/products/ui/widgets/widgets.dart';
+
+import '../../../../generated/l10n.dart';
 
 class ProductsListScreenWithProvider extends StatelessWidget {
   const ProductsListScreenWithProvider({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ProductsCubit>(
-      create: (context) => getIt<ProductsCubit>(),
-      child: const ProductsListScreen(),
-    );
+    return const ProductsListScreen();
   }
 }
 
@@ -35,13 +35,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   void initState() {
     super.initState();
-    // Load products if the list is empty
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final cubit = context.read<ProductsCubit>();
-      if (cubit.state.products.isEmpty) {
-        cubit.loadProducts();
-      }
-    });
+    // Products are now loaded at the app level
   }
 
   @override
@@ -56,410 +50,247 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         _selectedCategory == 'all' &&
         _selectedStatus == 'all' &&
         _selectedBrand == 'all') {
-      cubit.loadProducts();
+      cubit.loadFirstPage();
     } else {
-      cubit.loadProducts(
+      cubit.loadFirstPage(
         search: query.isEmpty ? null : query,
         category: _selectedCategory == 'all' ? null : _selectedCategory,
         status: _selectedStatus == 'all' ? null : _selectedStatus,
-        brand: _selectedBrand == 'all' ? null : _selectedBrand,
       );
     }
   }
 
-  void _showProductOptions(BuildContext context, Product product) {
+  void _onCategoryChanged(String category) {
+    setState(() {
+      _selectedCategory = category;
+    });
+    _onSearch(_searchController.text);
+  }
+
+  void _onStatusChanged(String status) {
+    setState(() {
+      _selectedStatus = status;
+    });
+    _onSearch(_searchController.text);
+  }
+
+  void _showProductOptions(BuildContext context, ProductModel product) {
     showModalBottomSheet(
       context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
       ),
-      builder: (context) => Container(
-        padding: EdgeInsets.all(20.w),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: Icon(Icons.visibility, color: AppColors.primary),
-              title: const Text('عرض التفاصيل'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(
-                  context,
-                  '/products/details',
-                  arguments: product,
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.edit, color: AppColors.secondary),
-              title: const Text('تعديل المنتج'),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(
-                  context,
-                  '/products/edit',
-                  arguments: product,
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.delete, color: AppColors.error),
-              title: const Text('حذف المنتج'),
-              onTap: () {
-                Navigator.pop(context);
-                _confirmDeleteProduct(context, product);
-              },
-            ),
-          ],
-        ),
+      builder: (context) => ProductOptionsBottomSheet(
+        product: product,
+        onViewDetails: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/products/details', arguments: product);
+        },
+        onEdit: () {
+          Navigator.pop(context);
+          Navigator.pushNamed(context, '/products/edit', arguments: product);
+        },
+        onDelete: () {
+          Navigator.pop(context);
+          _confirmDeleteProduct(
+            context,
+            product,
+            context.read<ProductsCubit>(),
+          );
+        },
       ),
     );
   }
 
-  void _confirmDeleteProduct(BuildContext context, Product product) {
+  void _confirmDeleteProduct(
+    BuildContext context,
+    ProductModel product,
+    ProductsCubit cubit,
+  ) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تأكيد الحذف'),
-        content: Text('هل أنت متأكد من حذف المنتج "${product.name}"؟'),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        title: Text(S.of(context).deleteConfirmation),
+        content: Text(
+          S
+              .of(context)
+              .deleteProductConfirmation(product.name ?? S.of(context).noName),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: Text(S.of(context).cancel),
           ),
-          TextButton(
+          FilledButton.tonal(
             onPressed: () {
               Navigator.pop(context);
-              context.read<ProductsCubit>().deleteProduct(product.id);
+              cubit.deleteProduct(product.id ?? 0);
             },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('حذف'),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.error.withOpacity(0.1),
+              foregroundColor: AppColors.error,
+            ),
+            child: Text(S.of(context).delete),
           ),
         ],
       ),
     );
   }
 
+  Widget _buildContent(
+    BuildContext context,
+    List<ProductModel> products,
+    bool isLoading,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Column(
+      children: [
+        // Search and filters
+        ProductsSearchAndFilters(
+          searchController: _searchController,
+          selectedCategory: _selectedCategory,
+          selectedStatus: _selectedStatus,
+          onSearch: _onSearch,
+          onCategoryChanged: _onCategoryChanged,
+          onStatusChanged: _onStatusChanged,
+          colorScheme: colorScheme,
+        ),
+        // Products list
+        Expanded(
+          child: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(color: colorScheme.primary),
+                )
+              : products.isEmpty
+              ? ProductsEmptyState(colorScheme: colorScheme)
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<ProductsCubit>().loadFirstPage(refresh: true);
+                  },
+                  child: ListView.builder(
+                    padding: EdgeInsets.all(16.w),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      return ProductCard(
+                        product: product,
+                        colorScheme: colorScheme,
+                        onTap: () => _showProductOptions(context, product),
+                      );
+                    },
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: const Text('قائمة المنتجات'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: colorScheme.surface,
+        elevation: 0,
+        scrolledUnderElevation: 1,
+        title: Text(
+          S.of(context).products,
+          style: TextStyle(
+            color: colorScheme.onSurface,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.menu, color: colorScheme.onSurface),
+          onPressed: () {
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                zoomDrawer.toggle();
+              } else {
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context).pushReplacementNamed('/home');
+                }
+              }
+            } catch (e) {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pushReplacementNamed('/home');
+              }
+            }
+          },
+        ),
       ),
       body: BlocConsumer<ProductsCubit, ProductsState>(
         listener: (context, state) {
-          if (state.error != null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.error!),
-                backgroundColor: AppColors.error,
-              ),
-            );
-            context.read<ProductsCubit>().clearError();
-          }
+          final messenger = ScaffoldMessenger.of(context);
+          state.maybeWhen(
+            failure:
+                (products, selectedProduct, currentPage, totalPages, error) {
+                  messenger.hideCurrentSnackBar();
+                  messenger.showSnackBar(
+                    SnackBar(
+                      content: Text(error),
+                      backgroundColor: AppColors.error,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                    ),
+                  );
+                  context.read<ProductsCubit>().clearError();
+                },
+            orElse: () {},
+          );
         },
         builder: (context, state) {
-          return Column(
-            children: [
-              // Search and filters
-              Container(
-                padding: EdgeInsets.all(16.w),
-                color: Colors.grey[100],
-                child: Column(
-                  children: [
-                    // Search bar
-                    TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'البحث في المنتجات...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      onChanged: _onSearch,
-                    ),
-                    SizedBox(height: 12.h),
-                    // Filters
-                    Row(
-                      children: [
-                        Expanded(
-                          child: DropdownButtonFormField<String>(
-                            value: _selectedCategory,
-                            decoration: InputDecoration(
-                              labelText: 'الفئة',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                            items: [
-                              const DropdownMenuItem(
-                                value: 'all',
-                                child: Text('جميع الفئات'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'electronics',
-                                child: Text('إلكترونيات'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'clothing',
-                                child: Text('ملابس'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'food',
-                                child: Text('طعام'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'books',
-                                child: Text('كتب'),
-                              ),
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedCategory = value!;
-                              });
-                              _onSearch(_searchController.text);
-                            },
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Expanded(
-                          child: DropdownButtonFormField<String>(
-                            value: _selectedStatus,
-                            decoration: InputDecoration(
-                              labelText: 'الحالة',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                            ),
-                            items: [
-                              const DropdownMenuItem(
-                                value: 'all',
-                                child: Text('جميع الحالات'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'active',
-                                child: Text('نشط'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'inactive',
-                                child: Text('غير نشط'),
-                              ),
-                              const DropdownMenuItem(
-                                value: 'out_of_stock',
-                                child: Text('نفدت الكمية'),
-                              ),
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedStatus = value!;
-                              });
-                              _onSearch(_searchController.text);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              // Products list
-              Expanded(
-                child: state.isLoading
-                    ? const Center(child: CircularProgressIndicator())
-                    : state.products.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'لا توجد منتجات',
-                          style: TextStyle(fontSize: 16, color: Colors.grey),
-                        ),
-                      )
-                    : RefreshIndicator(
-                        onRefresh: () async {
-                          context.read<ProductsCubit>().loadProducts();
-                        },
-                        child: ListView.builder(
-                          padding: EdgeInsets.all(16.w),
-                          itemCount: state.products.length,
-                          itemBuilder: (context, index) {
-                            final product = state.products[index];
-                            return _buildProductCard(product);
-                          },
-                        ),
-                      ),
-              ),
-            ],
+          return state.when(
+            initial:
+                (products, selectedProduct, currentPage, totalPages, error) =>
+                    _buildContent(context, products, false),
+            loading:
+                (products, selectedProduct, currentPage, totalPages, message) =>
+                    _buildContent(context, products, true),
+            loaded: (products, selectedProduct, currentPage, totalPages) =>
+                _buildContent(context, products, false),
+            createSuccess:
+                (products, created, selectedProduct, currentPage, totalPages) =>
+                    _buildContent(context, products, false),
+            updateSuccess:
+                (products, updated, selectedProduct, currentPage, totalPages) =>
+                    _buildContent(context, products, false),
+            deleteSuccess:
+                (
+                  products,
+                  deletedId,
+                  selectedProduct,
+                  currentPage,
+                  totalPages,
+                ) => _buildContent(context, products, false),
+            failure:
+                (products, selectedProduct, currentPage, totalPages, error) =>
+                    _buildContent(context, products, false),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          context.read<MenuCubit>().selectMenuItemByRoute('/products/add');
+          Navigator.pushNamed(context, AppRoutes.addProductRoute);
         },
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
+        icon: const Icon(Icons.add),
+        label: Text(S.of(context).addProduct),
       ),
     );
-  }
-
-  Widget _buildProductCard(Product product) {
-    return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      child: InkWell(
-        onTap: () => _showProductOptions(context, product),
-        borderRadius: BorderRadius.circular(12.r),
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 50.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    child: Icon(
-                      Icons.inventory_2,
-                      color: AppColors.primary,
-                      size: 24.sp,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.name,
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          product.category,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '${product.price.toStringAsFixed(2)} ر.س',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      SizedBox(height: 4.h),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8.w,
-                          vertical: 4.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(
-                            product.status,
-                          ).withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Text(
-                          _getStatusText(product.status),
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: _getStatusColor(product.status),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 12.h),
-              Row(
-                children: [
-                  Icon(Icons.inventory, size: 16.sp, color: Colors.grey[600]),
-                  SizedBox(width: 4.w),
-                  Text(
-                    'الكمية: ${product.quantity}',
-                    style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
-                  ),
-                  SizedBox(width: 16.w),
-                  if (product.sku != null) ...[
-                    Icon(Icons.qr_code, size: 16.sp, color: Colors.grey[600]),
-                    SizedBox(width: 4.w),
-                    Text(
-                      'SKU: ${product.sku}',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-              if (product.description != null) ...[
-                SizedBox(height: 8.h),
-                Text(
-                  product.description!,
-                  style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'active':
-        return Colors.green;
-      case 'inactive':
-        return Colors.orange;
-      case 'out_of_stock':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  String _getStatusText(String status) {
-    switch (status.toLowerCase()) {
-      case 'active':
-        return 'نشط';
-      case 'inactive':
-        return 'غير نشط';
-      case 'out_of_stock':
-        return 'نفدت الكمية';
-      default:
-        return status;
-    }
   }
 }

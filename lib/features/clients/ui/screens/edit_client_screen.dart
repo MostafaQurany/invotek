@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/validation/validation.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
@@ -103,11 +102,15 @@ class _EditClientScreenState extends State<EditClientScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: const Text('تعديل العميل'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        scrolledUnderElevation: 1,
         elevation: 0,
       ),
       body: BlocListener<ClientsCubit, ClientsState>(
@@ -297,16 +300,18 @@ class _EditClientScreenState extends State<EditClientScreen> {
   }
 
   Widget _buildHeader() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+        color: colorScheme.primary.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
       ),
       child: Row(
         children: [
-          Icon(Icons.edit, color: AppColors.primary, size: 24.sp),
+          Icon(Icons.edit, color: colorScheme.primary, size: 24.sp),
           SizedBox(width: 12.w),
           Expanded(
             child: Column(
@@ -316,14 +321,17 @@ class _EditClientScreenState extends State<EditClientScreen> {
                   'تعديل العميل',
                   style: TextStyle(
                     fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.primary,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   'قم بتعديل بيانات العميل "${widget.client.name}"',
-                  style: TextStyle(fontSize: 14.sp, color: Colors.grey[600]),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
@@ -334,12 +342,14 @@ class _EditClientScreenState extends State<EditClientScreen> {
   }
 
   Widget _buildSectionTitle(String title) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Text(
       title,
       style: TextStyle(
         fontSize: 16.sp,
-        fontWeight: FontWeight.bold,
-        color: AppColors.primary,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.primary,
       ),
     );
   }
@@ -353,6 +363,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
     int? maxLines,
     String? Function(String?)? validator,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
@@ -361,14 +373,14 @@ class _EditClientScreenState extends State<EditClientScreen> {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        prefixIcon: Icon(icon, color: AppColors.primary),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        prefixIcon: Icon(icon, color: colorScheme.primary),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primary, width: 2),
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(color: colorScheme.primary, width: 2),
         ),
         filled: true,
-        fillColor: Colors.grey[50],
+        fillColor: colorScheme.surfaceContainer,
       ),
     );
   }
@@ -379,6 +391,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
     required List<String> items,
     required ValueChanged<String?> onChanged,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return DropdownButtonFormField<String>(
       value: value,
       items: items.map((String item) {
@@ -387,26 +401,28 @@ class _EditClientScreenState extends State<EditClientScreen> {
       onChanged: onChanged,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.settings, color: AppColors.primary),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        prefixIcon: Icon(Icons.settings, color: colorScheme.primary),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.primary, width: 2),
+          borderRadius: BorderRadius.circular(12.r),
+          borderSide: BorderSide(color: colorScheme.primary, width: 2),
         ),
         filled: true,
-        fillColor: Colors.grey[50],
+        fillColor: colorScheme.surfaceContainer,
       ),
     );
   }
 
   Widget _buildSubmitButton() {
-    return ElevatedButton(
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return FilledButton(
       onPressed: _isLoading ? null : _submitForm,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+      style: FilledButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 16.h),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
       child: _isLoading
           ? SizedBox(
@@ -414,28 +430,34 @@ class _EditClientScreenState extends State<EditClientScreen> {
               width: 20.w,
               child: CircularProgressIndicator(
                 strokeWidth: 2,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  colorScheme.onPrimary,
+                ),
               ),
             )
           : Text(
               'حفظ التعديلات',
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
             ),
     );
   }
 
   Widget _buildCancelButton() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return OutlinedButton(
       onPressed: _isLoading ? null : () => Navigator.pop(context),
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primary,
-        side: BorderSide(color: AppColors.primary),
+        foregroundColor: colorScheme.primary,
+        side: BorderSide(color: colorScheme.primary),
         padding: EdgeInsets.symmetric(vertical: 16.h),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
       child: Text(
         'إلغاء',
-        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -483,23 +505,27 @@ class _EditClientScreenState extends State<EditClientScreen> {
   }
 
   void _showErrorSnackBar(String error) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(error),
-        backgroundColor: Colors.red,
+        backgroundColor: colorScheme.error,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
     );
   }
 
   void _showSuccessSnackBar() {
+    final colorScheme = Theme.of(context).colorScheme;
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('تم تحديث العميل بنجاح'),
-        backgroundColor: Colors.green,
+        backgroundColor: colorScheme.primary,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       ),
     );
   }

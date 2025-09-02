@@ -10,4 +10,5 @@ class AuthState with _$AuthState {
       _SuccessRegister;
   const factory AuthState.errorRegister(String error) = _ErrorRegister;
   const factory AuthState.changeAuthScreenBody() = _ChangeAuthScreenBody;
+  const factory AuthState.successLogout() = _SuccessLogout;
 }

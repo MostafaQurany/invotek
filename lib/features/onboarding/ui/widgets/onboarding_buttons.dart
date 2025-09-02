@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class OnboardingButtons extends StatelessWidget {
@@ -21,39 +20,33 @@ class OnboardingButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // زر السابق
+          // Previous button
           if (currentPage > 0)
             TextButton(
               onPressed: onPrevious,
               child: Text(
                 S.of(context).previous,
-                style: TextStyle(fontSize: 16.sp, color: AppColors.primary),
+                style: TextStyle(fontSize: 16.sp, color: colorScheme.primary),
               ),
             )
           else
             SizedBox(width: 80.w),
 
-          // زر التالي أو إنهاء
-          ElevatedButton(
+          // Next or complete button
+          FilledButton(
             onPressed: currentPage == totalPages - 1 ? onComplete : onNext,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 12.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25),
-              ),
-            ),
             child: Text(
               currentPage == totalPages - 1
                   ? S.of(context).startNow
                   : S.of(context).next,
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
             ),
           ),
         ],

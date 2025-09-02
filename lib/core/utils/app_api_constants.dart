@@ -4,6 +4,36 @@ class ApiConstants {
   static const String register = "register";
   static const String logOut = "logout";
 
+  // products
+  static const String products = "company/products";
+  static const String productById = "company/products/{id}";
+  static const String createProduct = "company/products";
+  static const String updateProduct = "company/products/{id}";
+  static const String deleteProduct = "company/products/{id}";
+
+  // product categories
+  static const String productCategories = "company/product-categories";
+  static const String productCategoryById = "company/product-categories/{id}";
+
+  // clients
+  static const String clients = "clients";
+  static const String clientById = "clients/{id}";
+  static const String createClient = "clients";
+  static const String updateClient = "clients/{id}";
+  static const String deleteClient = "clients/{id}";
+  static const String clientAvatar = "clients/{id}/avatar";
+  static const String clientsStatistics = "clients/statistics";
+  static const String clientsBulkDelete = "clients/bulk-delete";
+  static const String clientsBulkUpdateStatus = "clients/bulk-update-status";
+
+  // users
+  static const String users = "users";
+  static const String userById = "users/{id}";
+  static const String createUser = "users";
+  static const String updateUser = "users/{id}";
+  static const String deleteUser = "users/{id}";
+  static const String changePassword = "users/{id}/change-password";
+  static const String uploadAvatar = "users/{id}/avatar";
   static bool valid = false;
 }
 

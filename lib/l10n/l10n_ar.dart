@@ -419,4 +419,262 @@ class SAr extends S {
 
   @override
   String get userDeletedSuccessfully => 'تم حذف المستخدم بنجاح';
+
+  @override
+  String get products => 'المنتجات';
+
+  @override
+  String get onboardingOne => 'تابع فواتيرك كلها في مكان واحد';
+
+  @override
+  String get onboardingTwo => 'ما تنساش ولا فاتورة تاني';
+
+  @override
+  String get onboardingThree => 'ادفع وتابع كل حاجة في ثواني';
+
+  @override
+  String get onboardingOneDec =>
+      'نظم فواتيرك الشهرية، وتابع مواعيد الدفع، من غير ورق ولا صداع.';
+
+  @override
+  String get onboardingTwoDec =>
+      'يوصلك تنبيه قبل ميعاد الدفع، علشان تتجنب أي تأخير أو غرامات.';
+
+  @override
+  String get onboardingThreeDec =>
+      'ادفع إلكترونيًا، واحفظ سجلاتك تلقائيًا لمراجعتها في أي وقت.';
+
+  @override
+  String get onboardingStartNow => 'ابدا الان';
+
+  @override
+  String get productsCategories => 'إدارة المنتجات وفئاتها';
+
+  @override
+  String get productsList => 'قائمة المنتجات';
+
+  @override
+  String get categoriesAppbar => 'فئات المنتجات';
+
+  @override
+  String get searchProducts => 'البحث في المنتجات...';
+
+  @override
+  String get category => 'الفئة';
+
+  @override
+  String get allCategories => 'جميع الفئات';
+
+  @override
+  String get allStatuses => 'جميع الحالات';
+
+  @override
+  String get outOfStock => 'نفدت الكمية';
+
+  @override
+  String get noProductsFound => 'لا توجد منتجات';
+
+  @override
+  String get viewDetails => 'عرض التفاصيل';
+
+  @override
+  String get editProduct => 'تعديل المنتج';
+
+  @override
+  String get deleteProduct => 'حذف المنتج';
+
+  @override
+  String deleteProductConfirmation(Object name) {
+    return 'هل أنت متأكد من حذف المنتج \"$name\"؟';
+  }
+
+  @override
+  String get quantity => 'الكمية';
+
+  @override
+  String get noName => 'بدون اسم';
+
+  @override
+  String get undefined => 'غير محدد';
+
+  @override
+  String get editCategory => 'تعديل الفئة';
+
+  @override
+  String get addCategory => 'إضافة فئة';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get categoryAddedSuccessfully => 'تم إضافة الفئة بنجاح';
+
+  @override
+  String get categoryUpdatedSuccessfully => 'تم تحديث الفئة بنجاح';
+
+  @override
+  String get categoryDeletedSuccessfully => 'تم حذف الفئة بنجاح';
+
+  @override
+  String get errorAddingCategory => 'خطأ في إضافة الفئة';
+
+  @override
+  String get errorUpdatingCategory => 'خطأ في تحديث الفئة';
+
+  @override
+  String get errorDeletingCategory => 'خطأ في حذف الفئة';
+
+  @override
+  String get basicInformation => 'معلومات أساسية';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get sku => 'رمز المنتج';
+
+  @override
+  String get barcode => 'الباركود';
+
+  @override
+  String get weight => 'الوزن';
+
+  @override
+  String get dimensions => 'الأبعاد';
+
+  @override
+  String get inventorySettings => 'إعدادات المخزون';
+
+  @override
+  String get trackInventory => 'تتبع المخزون';
+
+  @override
+  String get lowStockAlert => 'تنبيه المخزون المنخفض';
+
+  @override
+  String get minimumQuantity => 'الكمية الدنيا';
+
+  @override
+  String get taxSettings => 'إعدادات الضريبة';
+
+  @override
+  String get hasTax => 'يخضع للضريبة';
+
+  @override
+  String get taxRate => 'نسبة الضريبة';
+
+  @override
+  String get additionalSettings => 'إعدادات إضافية';
+
+  @override
+  String get isActive => 'نشط';
+
+  @override
+  String get productAddedSuccessfully => 'تم إضافة المنتج بنجاح';
+
+  @override
+  String get productUpdatedSuccessfully => 'تم تحديث المنتج بنجاح';
+
+  @override
+  String get productDeletedSuccessfully => 'تم حذف المنتج بنجاح';
+
+  @override
+  String get errorAddingProduct => 'خطأ في إضافة المنتج';
+
+  @override
+  String get errorUpdatingProduct => 'خطأ في تحديث المنتج';
+
+  @override
+  String get errorDeletingProduct => 'خطأ في حذف المنتج';
+
+  @override
+  String get addProduct => 'إضافة منتج جديد';
+
+  @override
+  String get pricing => 'التسعير';
+
+  @override
+  String get sellingPrice => 'سعر البيع';
+
+  @override
+  String get costPrice => 'سعر التكلفة';
+
+  @override
+  String get inventory => 'المخزون';
+
+  @override
+  String get thisFieldIsRequired => 'هذا الحقل مطلوب';
+
+  @override
+  String get quantityMustBeAPositiveInteger =>
+      'يجب أن تكون الكمية رقم صحيح غير سالب';
+
+  @override
+  String get unit => 'الوحدة';
+
+  @override
+  String get piece => 'قطعة';
+
+  @override
+  String get kilogram => 'كجم';
+
+  @override
+  String get meter => 'متر';
+
+  @override
+  String get invalidNumber => 'رقم غير صحيح';
+
+  @override
+  String get maximumQuantity => 'الحد الأقصى للكمية';
+
+  @override
+  String get productDetails => 'تفاصيل المنتج';
+
+  @override
+  String get productSku => 'رمز المنتج (SKU)';
+
+  @override
+  String get brand => 'العلامة التجارية';
+
+  @override
+  String get model => 'الموديل';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get material => 'المادة';
+
+  @override
+  String get centimeters => 'سم';
+
+  @override
+  String get additionalInformation => 'معلومات إضافية';
+
+  @override
+  String get notes => 'ملاحظات';
+
+  @override
+  String get productIsActive => 'المنتج نشط';
+
+  @override
+  String get enableDisableProduct => 'تفعيل/إلغاء تفعيل المنتج';
+
+  @override
+  String get productIsTaxable => 'يخضع للضريبة';
+
+  @override
+  String get applyTaxToProduct => 'تطبيق الضريبة على هذا المنتج';
+
+  @override
+  String get trackAvailableProductQuantity => 'تتبع الكمية المتوفرة من المنتج';
+
+  @override
+  String get selectCategory => 'إختار الفئة';
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 
 class OnboardingIndicators extends StatelessWidget {
   final int currentPage;
@@ -14,6 +13,8 @@ class OnboardingIndicators extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
@@ -24,9 +25,9 @@ class OnboardingIndicators extends StatelessWidget {
           height: 8.h,
           decoration: BoxDecoration(
             color: currentPage == index
-                ? AppColors.primary
-                : Colors.grey.withOpacity(0.3),
-            borderRadius: BorderRadius.circular(4),
+                ? colorScheme.primary
+                : colorScheme.outline.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(4.r),
           ),
         ),
       ),

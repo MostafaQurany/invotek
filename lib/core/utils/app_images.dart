@@ -14,4 +14,8 @@ class AppImages {
   static const String invoiceWithCheckedIcon =
       '$_iconPath/invoice_with_checked_icon.png';
   static const String invoiceMoneyIcon = '$_iconPath/invoice_money_icon.png';
+
+  static const String onboardingOne = '$_imagePath/onboarding_image_1.png';
+  static const String onboardingTwo = '$_imagePath/onboarding_image_2.png';
+  static const String onboardingThree = '$_imagePath/onboarding_image_3.png';
 }

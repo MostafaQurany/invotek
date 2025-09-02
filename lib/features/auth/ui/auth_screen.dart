@@ -7,7 +7,6 @@ import 'package:invotek/features/auth/ui/auth_loading_screen.dart';
 import 'package:invotek/features/auth/ui/auth_login_screen_body.dart';
 import 'package:invotek/features/auth/ui/auth_register_screen_body.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/app_images.dart';
 import '../../../generated/l10n.dart';
 
@@ -16,10 +15,13 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 15.h),
           child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               state.maybeWhen(
@@ -204,13 +206,15 @@ class OrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
-        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
         SizedBox(width: 20.w),
         Text("Or"),
         SizedBox(width: 20.w),
-        Expanded(child: Divider(thickness: 0.5, color: AppColors.grey)),
+        Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
       ],
     );
   }
@@ -221,10 +225,12 @@ class SignInWithGoogle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.white,
-        foregroundColor: AppColors.greyDark,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
       ),
       onPressed: () {},
       child: Row(
@@ -233,12 +239,12 @@ class SignInWithGoogle extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image(image: AssetImage(AppImages.googleIcon), width: 20.w),
-          SizedBox(width: 10.w),
+          SizedBox(width: 20.w),
           Text(
             S.of(context).signInWithGoogle,
-            style: Theme.of(
-              context,
-            ).textTheme.bodyLarge!.copyWith(color: AppColors.grey),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),

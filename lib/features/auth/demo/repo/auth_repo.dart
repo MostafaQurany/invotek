@@ -87,9 +87,14 @@ class AuthRepo {
 
   Future<void> logout() async {
     try {
+      // Inform server (ignore failures, still clear local state)
+      await dataSource.apiClient.logout();
+    } catch (_) {}
+
+    try {
       StorageService.removeUserData();
       StorageService.removeToken();
       StorageService.removeString('is_logged_in');
-    } catch (e, stackTrace) {}
+    } catch (_) {}
   }
 }

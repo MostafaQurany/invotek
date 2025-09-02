@@ -10,47 +10,37 @@ class OnboardingPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [page.backgroundColor, page.backgroundColor.withOpacity(0.8)],
-        ),
-      ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 40.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // الصورة
+            // Image
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Container(
-                width: 200.w,
-                height: 200.h,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(20),
+                  color: colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(20.r),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.all(20.w),
-                  child: Image.asset(page.imagePath, fit: BoxFit.contain),
-                ),
+                child: Image.asset(page.imagePath, fit: BoxFit.contain),
               ),
             ),
 
             SizedBox(height: 40.h),
 
-            // العنوان
+            // Title
             Expanded(
               flex: 1,
               child: Text(
                 page.getTitle(S.of(context)),
                 style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
-                  color: page.textColor,
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.w600,
+                  color: colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -58,14 +48,14 @@ class OnboardingPageWidget extends StatelessWidget {
 
             SizedBox(height: 20.h),
 
-            // الوصف
+            // Description
             Expanded(
               flex: 2,
               child: Text(
                 page.getDescription(S.of(context)),
                 style: TextStyle(
-                  fontSize: 16.sp,
-                  color: page.textColor.withOpacity(0.9),
+                  fontSize: 14.sp,
+                  color: colorScheme.onSurfaceVariant,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,

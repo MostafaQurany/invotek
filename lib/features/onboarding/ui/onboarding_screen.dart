@@ -17,6 +17,8 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return BlocProvider(
       create: (context) => OnboardingCubit(),
       child: BlocConsumer<OnboardingCubit, OnboardingState>(
@@ -33,10 +35,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           final cubit = context.read<OnboardingCubit>();
 
           return Scaffold(
+            backgroundColor: colorScheme.surface,
             body: SafeArea(
               child: Column(
                 children: [
-                  // PageView للصفحات
+                  // PageView for pages
                   Expanded(
                     child: PageView.builder(
                       controller: cubit.pageController,
@@ -51,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
 
-                  // مؤشرات الصفحات
+                  // Page indicators
                   OnboardingIndicators(
                     currentPage: state.currentPage,
                     totalPages: cubit.pages.length,
@@ -59,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                   SizedBox(height: 20.h),
 
-                  // أزرار التنقل
+                  // Navigation buttons
                   OnboardingButtons(
                     currentPage: state.currentPage,
                     totalPages: cubit.pages.length,

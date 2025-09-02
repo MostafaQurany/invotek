@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/home/data/models/menu_item.dart';
@@ -17,7 +16,7 @@ class MenuScreen extends StatelessWidget {
     return BlocBuilder<MenuCubit, MenuState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: AppColors.primary,
+          backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Column(
               children: [
@@ -67,17 +66,6 @@ class MenuScreen extends StatelessWidget {
               fontSize: 24.sp,
               fontWeight: FontWeight.bold,
               color: Colors.white,
-            ),
-          ),
-
-          SizedBox(height: 5.h),
-
-          // Subtitle
-          Text(
-            'نظام إدارة الفواتير',
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: Colors.white.withOpacity(0.8),
             ),
           ),
         ],

@@ -2,31 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/products/ui/screens/edit_product_screen.dart';
+import '../../../../generated/l10n.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  final Product product;
+  final ProductModel product;
 
   const ProductDetailsScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: const Text('تفاصيل المنتج'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        title: Text(S.of(context).productDetails),
+        backgroundColor: colorScheme.surface,
         elevation: 0,
+        scrolledUnderElevation: 1,
+        foregroundColor: colorScheme.onSurface,
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit),
+            icon: Icon(Icons.edit, color: colorScheme.onSurface),
             onPressed: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditProductScreenWithProvider(product: product),
-                ),
+                '/products/edit',
+                arguments: product,
               );
             },
           ),
@@ -37,175 +39,40 @@ class ProductDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Card
-            _buildHeaderCard(),
+            _buildProductHeader(colorScheme),
             SizedBox(height: 24.h),
-
-            // Basic Information Section
-            _buildSectionCard(
-              title: 'المعلومات الأساسية',
-              children: [
-                _buildInfoRow('اسم المنتج', product.name),
-                if (product.description != null)
-                  _buildInfoRow('الوصف', product.description!),
-                _buildInfoRow(
-                  'السعر',
-                  '${product.price.toStringAsFixed(2)} د.ك',
-                ),
-                if (product.costPrice != null)
-                  _buildInfoRow(
-                    'سعر التكلفة',
-                    '${product.costPrice!.toStringAsFixed(2)} د.ك',
-                  ),
-                _buildInfoRow(
-                  'الكمية',
-                  '${product.quantity} ${product.unit ?? 'قطعة'}',
-                ),
-                _buildInfoRow('الفئة', product.category),
-                _buildInfoRow('الحالة', product.status),
-                _buildInfoRow('نشط', product.isActive ? 'نعم' : 'لا'),
-              ],
-            ),
-
-            SizedBox(height: 16.h),
-
-            // Product Details Section
-            _buildSectionCard(
-              title: 'تفاصيل المنتج',
-              children: [
-                if (product.sku != null)
-                  _buildInfoRow('رمز المنتج (SKU)', product.sku!),
-                if (product.barcode != null)
-                  _buildInfoRow('الباركود', product.barcode!),
-                if (product.brand != null)
-                  _buildInfoRow('العلامة التجارية', product.brand!),
-                if (product.model != null)
-                  _buildInfoRow('الموديل', product.model!),
-                if (product.weight != null)
-                  _buildInfoRow('الوزن', '${product.weight} كجم'),
-                if (product.dimensions != null)
-                  _buildInfoRow('الأبعاد', product.dimensions!),
-                if (product.color != null)
-                  _buildInfoRow('اللون', product.color!),
-                if (product.material != null)
-                  _buildInfoRow('المادة', product.material!),
-              ],
-            ),
-
-            SizedBox(height: 16.h),
-
-            // Additional Information Section
-            _buildSectionCard(
-              title: 'معلومات إضافية',
-              children: [
-                if (product.minQuantity != null)
-                  _buildInfoRow(
-                    'الحد الأدنى للكمية',
-                    product.minQuantity.toString(),
-                  ),
-                if (product.maxQuantity != null)
-                  _buildInfoRow(
-                    'الحد الأقصى للكمية',
-                    product.maxQuantity.toString(),
-                  ),
-                if (product.taxRate != null)
-                  _buildInfoRow('نسبة الضريبة', '${product.taxRate}%'),
-                if (product.notes != null)
-                  _buildInfoRow('ملاحظات', product.notes!),
-              ],
-            ),
-
-            SizedBox(height: 16.h),
-
-            // Timestamps Section
-            _buildSectionCard(
-              title: 'معلومات النظام',
-              children: [
-                _buildInfoRow('تاريخ الإنشاء', _formatDate(product.createdAt)),
-                _buildInfoRow('آخر تحديث', _formatDate(product.updatedAt)),
-                _buildInfoRow('معرف المنتج', product.id.toString()),
-              ],
-            ),
-
-            SizedBox(height: 32.h),
-
-            // Action Buttons
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EditProductScreenWithProvider(product: product),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.edit),
-                    label: const Text('تعديل المنتج'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.secondary,
-                      foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      _showDeleteConfirmation(context);
-                    },
-                    icon: const Icon(Icons.delete),
-                    label: const Text('حذف المنتج'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.error,
-                      foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildProductInfo(colorScheme),
+            SizedBox(height: 24.h),
+            _buildProductActions(context, colorScheme),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeaderCard() {
+  Widget _buildProductHeader(ColorScheme colorScheme) {
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-      child: Container(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(color: colorScheme.outline.withOpacity(0.1), width: 1),
+      ),
+      child: Padding(
         padding: EdgeInsets.all(20.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          gradient: LinearGradient(
-            colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
         child: Row(
           children: [
-            // Product Image Placeholder
             Container(
               width: 80.w,
-              height: 80.w,
+              height: 80.h,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(12.r),
+                color: colorScheme.primaryContainer,
+                borderRadius: BorderRadius.circular(16.r),
               ),
-              child: Icon(Icons.inventory_2, size: 40.sp, color: Colors.white),
+              child: Icon(
+                Icons.inventory_2,
+                color: colorScheme.onPrimaryContainer,
+                size: 40.sp,
+              ),
             ),
             SizedBox(width: 16.w),
             Expanded(
@@ -213,67 +80,41 @@ class ProductDetailsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.name,
+                    product.name ?? 'No name',
                     style: TextStyle(
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    product.category,
+                    product.sku ?? 'SKU: N/A',
                     style: TextStyle(
                       fontSize: 14.sp,
-                      color: Colors.white.withOpacity(0.9),
+                      color: colorScheme.onSurfaceVariant,
                     ),
                   ),
                   SizedBox(height: 8.h),
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8.w,
-                          vertical: 4.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(
-                            product.status,
-                          ).withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        child: Text(
-                          product.status,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: _getStatusColor(product.status),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 6.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: _getStatusColor(
+                        product.status ?? 'unknown',
+                      ).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    child: Text(
+                      _getStatusText(product.status ?? 'unknown'),
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: _getStatusColor(product.status ?? 'unknown'),
+                        fontWeight: FontWeight.w500,
                       ),
-                      SizedBox(width: 8.w),
-                      if (product.isActive)
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                            vertical: 4.h,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Text(
-                            'نشط',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.green,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                    ],
+                    ),
                   ),
                 ],
               ),
@@ -282,19 +123,19 @@ class ProductDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${product.price.toStringAsFixed(2)} د.ك',
+                  '${product.price ?? '0.00'} ر.س',
                   style: TextStyle(
                     fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.primary,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  'الكمية: ${product.quantity}',
+                  'Quantity: ${product.quantity}',
                   style: TextStyle(
-                    fontSize: 12.sp,
-                    color: Colors.white.withOpacity(0.9),
+                    fontSize: 14.sp,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -305,57 +146,197 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionCard({
-    required String title,
-    required List<Widget> children,
-  }) {
-    return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      child: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
-              ),
-            ),
-            SizedBox(height: 12.h),
-            ...children,
-          ],
+  Widget _buildProductInfo(ColorScheme colorScheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Product Information',
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+            color: colorScheme.onSurface,
+          ),
         ),
-      ),
+        SizedBox(height: 16.h),
+        Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+            side: BorderSide(
+              color: colorScheme.outline.withOpacity(0.1),
+              width: 1,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(20.w),
+            child: Column(
+              children: [
+                _buildInfoRow(
+                  S.current.description,
+                  product.description ?? 'No description',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.costPrice,
+                  '${product.cost ?? '0.00'} ر.س',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.taxRate,
+                  '${product.taxRate ?? '0'}%',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.unit,
+                  product.unit ?? 'No unit',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.barcode,
+                  product.barcode ?? 'No barcode',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.productIsActive,
+                  product.isActive == true
+                      ? S.current.active
+                      : S.current.inactive,
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.productIsTaxable,
+                  product.hasTax == true ? 'Yes' : 'No',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  S.current.trackInventory,
+                  product.trackInventory == true ? 'Yes' : 'No',
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  'Created At',
+                  _formatDate(product.createdAt),
+                  colorScheme,
+                ),
+                _buildInfoRow(
+                  'Updated At',
+                  _formatDate(product.updatedAt),
+                  colorScheme,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(String label, String value, ColorScheme colorScheme) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 120.w,
+          Expanded(
+            flex: 2,
             child: Text(
               label,
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
           ),
-          SizedBox(width: 8.w),
           Expanded(
+            flex: 3,
             child: Text(
               value,
-              style: TextStyle(fontSize: 14.sp, color: Colors.black87),
+              style: TextStyle(fontSize: 14.sp, color: colorScheme.onSurface),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductActions(BuildContext context, ColorScheme colorScheme) {
+    return Row(
+      children: [
+        Expanded(
+          child: FilledButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/products/edit',
+                arguments: product,
+              );
+            },
+            icon: Icon(Icons.edit, size: 18.sp),
+            label: Text(S.of(context).editProduct),
+            style: FilledButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 12.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: FilledButton.tonal(
+            onPressed: () => _showDeleteConfirmation(context),
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.error.withOpacity(0.1),
+              foregroundColor: AppColors.error,
+              padding: EdgeInsets.symmetric(vertical: 12.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.delete, size: 18.sp),
+                SizedBox(width: 8.w),
+                Text(S.of(context).deleteProduct),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showDeleteConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        title: Text(S.of(context).deleteConfirmation),
+        content: Text(
+          S
+              .of(context)
+              .deleteProductConfirmation(product.name ?? S.of(context).noName),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(S.of(context).cancel),
+          ),
+          FilledButton.tonal(
+            onPressed: () {
+              Navigator.pop(context);
+              // TODO: Implement delete functionality
+            },
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.error.withOpacity(0.1),
+              foregroundColor: AppColors.error,
+            ),
+            child: Text(S.of(context).delete),
           ),
         ],
       ),
@@ -364,56 +345,32 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'متوفر':
+      case 'active':
         return Colors.green;
-      case 'غير متوفر':
-        return Colors.red;
-      case 'منخفض المخزون':
+      case 'inactive':
         return Colors.orange;
+      case 'out_of_stock':
+        return Colors.red;
       default:
         return Colors.grey;
     }
   }
 
-  String _formatDate(String dateString) {
-    try {
-      final date = DateTime.parse(dateString);
-      return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}';
-    } catch (e) {
-      return dateString;
+  String _getStatusText(String status) {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return S.current.active;
+      case 'inactive':
+        return S.current.inactive;
+      case 'out_of_stock':
+        return S.current.outOfStock;
+      default:
+        return status;
     }
   }
 
-  void _showDeleteConfirmation(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('تأكيد الحذف'),
-          content: Text('هل أنت متأكد من حذف المنتج "${product.name}"؟'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('إلغاء'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                // TODO: Implement delete functionality
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('تم حذف المنتج بنجاح'),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-                Navigator.of(context).pop();
-              },
-              style: TextButton.styleFrom(foregroundColor: AppColors.error),
-              child: const Text('حذف'),
-            ),
-          ],
-        );
-      },
-    );
+  String _formatDate(DateTime? date) {
+    if (date == null) return 'No date';
+    return '${date.day}/${date.month}/${date.year}';
   }
 }

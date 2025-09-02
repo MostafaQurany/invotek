@@ -10,6 +10,24 @@ Invotek هو نظام متكامل لإدارة الفواتير الإلكتر�
 https://demo.invotik.com/
 ```
 
+## حالة التطوير الحالية (Current Development Status)
+
+**✅ المكتمل (Completed):**
+
+- 🔐 المصادقة (Authentication)
+- 👥 إدارة المستخدمين والصلاحيات (Users & Permissions)
+- 👤 إدارة العملاء (Clients)
+
+**🔄 قيد التطوير حالياً (Currently Developing):**
+
+- 🧾 إدارة الفواتير (Invoices)
+
+**⏳ قيد الانتظار (Pending):**
+
+- 🏢 إدارة الشركات (Companies)
+- 📂 فئات المنتجات (Product Categories)
+- 🧾 إدارة الفواتير (Invoices)
+
 ## الميزات المطلوبة (Features)
 
 ### 1. 🔐 المصادقة (Authentication) ✅ **مكتمل**
@@ -303,9 +321,9 @@ class ClientsFilterRequest {
 - ✅ `lib/features/clients/ui/screens/edit_client_screen.dart`
 - ✅ `lib/features/clients/ui/screens/client_details_screen.dart`
 
-### 5. 📦 إدارة المنتجات (Products) ✅ **مكتمل**
+### 5. 📦 إدارة المنتجات (Products) ✅ **مكتمل (النسخة الأولى)**
 
-**المسار**: `/api/products`
+**المسار**: `/api/company/products`
 
 - **عرض المنتجات**: `GET /api/products` ✅
 - **إنشاء منتج**: `POST /api/products` ✅
@@ -443,15 +461,15 @@ class ProductsFilterRequest {
 - ✅ `lib/features/products/ui/screens/edit_product_screen.dart`
 - ✅ `lib/features/products/ui/screens/product_details_screen.dart`
 
-### 6. 📂 فئات المنتجات (Product Categories) ⏳ **قيد التطوير**
+### 6. 📂 فئات المنتجات (Product Categories) ✅ **مكتمل (النسخة الأولى)**
 
-**المسار**: `/api/product-categories`
+**المسار**: `/api/company/product-categories`
 
-- **عرض الفئات**: `GET /api/product-categories` ⏳
-- **إنشاء فئة**: `POST /api/product-categories` ⏳
-- **عرض فئة**: `GET /api/product-categories/:id` ⏳
-- **تحديث فئة**: `PUT /api/product-categories/:id` ⏳
-- **حذف فئة**: `DELETE /api/product-categories/:id` ⏳
+- **عرض الفئات**: `GET /api/company/product-categories` ✅
+- **إنشاء فئة**: `POST /api/company/product-categories` ✅
+- **عرض فئة**: `GET /api/company/product-categories/:id` ✅
+- **تحديث فئة**: `PUT /api/company/product-categories/:id` ✅
+- **حذف فئة**: `DELETE /api/company/product-categories/:id` ✅
 
 **النماذج المطلوبة**:
 
@@ -688,8 +706,8 @@ enum SubscriptionStatus { active, expired, cancelled }
 - ✅ **فصل State و Cubit**: ملفات منفصلة لكل feature
 - ✅ **تنظيم Widgets**: فصل widgets في ملفات منفصلة
 - ✅ **Clean Architecture**: تطبيق نمط البنية النظيفة
-- ✅ **API Integration**: ربط كامل مع REST API
-- ✅ **Error Handling**: معالجة شاملة للأخطاء
+- ✅ **API Integration**: ربط كامل مع REST API عبر `ApiClient` موحد
+- ✅ **Error Handling**: معالجة شاملة للأخطاء عبر `ApiErrorHandler`
 - ✅ **Loading States**: حالات التحميل والانتظار
 - ✅ **Form Validation**: التحقق من صحة البيانات المدخلة
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
 import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
 
@@ -11,15 +10,19 @@ class ClientDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: const Text('تفاصيل العميل'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        scrolledUnderElevation: 1,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit),
+            icon: Icon(Icons.edit, color: colorScheme.onSurface),
             onPressed: () {
               Navigator.push(
                 context,
@@ -38,57 +41,86 @@ class ClientDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header Card
-            _buildHeaderCard(),
+            _buildHeaderCard(context),
             SizedBox(height: 24.h),
 
             // Basic Information Section
-            _buildSectionTitle('المعلومات الأساسية'),
+            _buildSectionTitle(context, 'المعلومات الأساسية'),
             SizedBox(height: 16.h),
-            _buildInfoCard([
-              _buildInfoRow('الاسم', client.name, Icons.person),
-              _buildInfoRow('البريد الإلكتروني', client.email, Icons.email),
+            _buildInfoCard(context, [
+              _buildInfoRow(context, 'الاسم', client.name, Icons.person),
+              _buildInfoRow(
+                context,
+                'البريد الإلكتروني',
+                client.email,
+                Icons.email,
+              ),
               if (client.phone != null)
-                _buildInfoRow('رقم الهاتف', client.phone!, Icons.phone),
+                _buildInfoRow(
+                  context,
+                  'رقم الهاتف',
+                  client.phone!,
+                  Icons.phone,
+                ),
               if (client.address != null)
-                _buildInfoRow('العنوان', client.address!, Icons.location_on),
+                _buildInfoRow(
+                  context,
+                  'العنوان',
+                  client.address!,
+                  Icons.location_on,
+                ),
             ]),
             SizedBox(height: 24.h),
 
             // Company Information Section
-            _buildSectionTitle('معلومات الشركة'),
+            _buildSectionTitle(context, 'معلومات الشركة'),
             SizedBox(height: 16.h),
-            _buildInfoCard([
+            _buildInfoCard(context, [
               if (client.company != null)
-                _buildInfoRow('اسم الشركة', client.company!, Icons.business),
+                _buildInfoRow(
+                  context,
+                  'اسم الشركة',
+                  client.company!,
+                  Icons.business,
+                ),
               if (client.taxNumber != null)
                 _buildInfoRow(
+                  context,
                   'الرقم الضريبي',
                   client.taxNumber!,
                   Icons.receipt,
                 ),
               if (client.website != null)
-                _buildInfoRow('الموقع الإلكتروني', client.website!, Icons.web),
+                _buildInfoRow(
+                  context,
+                  'الموقع الإلكتروني',
+                  client.website!,
+                  Icons.web,
+                ),
             ]),
             SizedBox(height: 24.h),
 
             // Contact Person Section
-            _buildSectionTitle('معلومات شخص الاتصال'),
+            _buildSectionTitle(context, 'معلومات شخص الاتصال'),
             SizedBox(height: 16.h),
-            _buildInfoCard([
+            _buildInfoCard(context, [
               if (client.contactPerson != null)
                 _buildInfoRow(
+                  context,
                   'اسم شخص الاتصال',
                   client.contactPerson!,
                   Icons.contact_phone,
                 ),
               if (client.contactPhone != null)
                 _buildInfoRow(
+                  context,
                   'هاتف شخص الاتصال',
                   client.contactPhone!,
                   Icons.phone_android,
                 ),
               if (client.contactEmail != null)
                 _buildInfoRow(
+                  context,
                   'بريد شخص الاتصال',
                   client.contactEmail!,
                   Icons.email_outlined,
@@ -97,26 +129,29 @@ class ClientDetailsScreen extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // Additional Information Section
-            _buildSectionTitle('معلومات إضافية'),
+            _buildSectionTitle(context, 'معلومات إضافية'),
             SizedBox(height: 16.h),
-            _buildInfoCard([
+            _buildInfoCard(context, [
               _buildInfoRow(
+                context,
                 'الحالة',
                 client.status == 'active' ? 'نشط' : 'غير نشط',
                 Icons.settings,
               ),
               _buildInfoRow(
+                context,
                 'تاريخ الإنشاء',
                 _formatDate(client.createdAt),
                 Icons.calendar_today,
               ),
               _buildInfoRow(
+                context,
                 'آخر تحديث',
                 _formatDate(client.updatedAt),
                 Icons.update,
               ),
               if (client.notes != null)
-                _buildInfoRow('ملاحظات', client.notes!, Icons.note),
+                _buildInfoRow(context, 'ملاحظات', client.notes!, Icons.note),
             ]),
             SizedBox(height: 32.h),
 
@@ -128,19 +163,21 @@ class ClientDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderCard() {
+  Widget _buildHeaderCard(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+          colors: [colorScheme.primary, colorScheme.primary.withOpacity(0.8)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.r),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.3),
+            color: colorScheme.primary.withOpacity(0.3),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -151,13 +188,13 @@ class ClientDetailsScreen extends StatelessWidget {
           // Avatar
           CircleAvatar(
             radius: 40.r,
-            backgroundColor: Colors.white,
+            backgroundColor: colorScheme.surface,
             child: Text(
               client.name.substring(0, 1).toUpperCase(),
               style: TextStyle(
                 fontSize: 24.sp,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+                color: colorScheme.primary,
               ),
             ),
           ),
@@ -172,8 +209,8 @@ class ClientDetailsScreen extends StatelessWidget {
                   client.name,
                   style: TextStyle(
                     fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onPrimary,
                   ),
                 ),
                 SizedBox(height: 4.h),
@@ -181,7 +218,7 @@ class ClientDetailsScreen extends StatelessWidget {
                   client.email,
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: Colors.white.withOpacity(0.9),
+                    color: colorScheme.onPrimary.withOpacity(0.9),
                   ),
                 ),
                 SizedBox(height: 8.h),
@@ -192,16 +229,16 @@ class ClientDetailsScreen extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: client.status == 'active'
-                        ? Colors.green
-                        : Colors.red,
-                    borderRadius: BorderRadius.circular(20),
+                        ? colorScheme.primary
+                        : colorScheme.error,
+                    borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
                     client.status == 'active' ? 'نشط' : 'غير نشط',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: colorScheme.onPrimary,
                       fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -213,27 +250,32 @@ class ClientDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionTitle(String title) {
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Text(
       title,
       style: TextStyle(
         fontSize: 18.sp,
-        fontWeight: FontWeight.bold,
-        color: AppColors.primary,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.primary,
       ),
     );
   }
 
-  Widget _buildInfoCard(List<Widget> children) {
+  Widget _buildInfoCard(BuildContext context, List<Widget> children) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: colorScheme.outline.withOpacity(0.1)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: colorScheme.outline.withOpacity(0.1),
             blurRadius: 5,
             offset: const Offset(0, 2),
           ),
@@ -243,13 +285,20 @@ class ClientDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, IconData icon) {
+  Widget _buildInfoRow(
+    BuildContext context,
+    String label,
+    String value,
+    IconData icon,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 8.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: AppColors.primary, size: 20.sp),
+          Icon(icon, color: colorScheme.primary, size: 20.sp),
           SizedBox(width: 12.w),
           Expanded(
             child: Column(
@@ -259,7 +308,7 @@ class ClientDetailsScreen extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 12.sp,
-                    color: Colors.grey[600],
+                    color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -268,7 +317,7 @@ class ClientDetailsScreen extends StatelessWidget {
                   value,
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: Colors.black87,
+                    color: colorScheme.onSurface,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -281,11 +330,13 @@ class ClientDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildActionButtons(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         // Edit Button
         Expanded(
-          child: ElevatedButton.icon(
+          child: FilledButton.icon(
             onPressed: () {
               Navigator.push(
                 context,
@@ -295,14 +346,12 @@ class ClientDetailsScreen extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(Icons.edit),
+            icon: Icon(Icons.edit),
             label: const Text('تعديل'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+            style: FilledButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 16.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
             ),
           ),
@@ -315,13 +364,13 @@ class ClientDetailsScreen extends StatelessWidget {
             onPressed: () {
               _showDeleteConfirmation(context);
             },
-            icon: const Icon(Icons.delete, color: Colors.red),
-            label: const Text('حذف', style: TextStyle(color: Colors.red)),
+            icon: Icon(Icons.delete, color: colorScheme.error),
+            label: Text('حذف', style: TextStyle(color: colorScheme.error)),
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.red),
+              side: BorderSide(color: colorScheme.error),
               padding: EdgeInsets.symmetric(vertical: 16.h),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
             ),
           ),
@@ -331,6 +380,8 @@ class ClientDetailsScreen extends StatelessWidget {
   }
 
   void _showDeleteConfirmation(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -347,7 +398,7 @@ class ClientDetailsScreen extends StatelessWidget {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: TextButton.styleFrom(foregroundColor: colorScheme.error),
             child: const Text('حذف'),
           ),
         ],
