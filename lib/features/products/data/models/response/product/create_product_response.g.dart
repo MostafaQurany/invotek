@@ -12,13 +12,13 @@ CreateProductResponse _$CreateProductResponseFromJson(
   name: json['name'] as String?,
   price: json['price'] as String?,
   quantity: (json['quantity'] as num?)?.toInt(),
-  companyId: (json['companyId'] as num?)?.toInt(),
-  updatedAt: json['updatedAt'] == null
+  companyId: (json['company_id'] as num?)?.toInt(),
+  updatedAt: json['updated_at'] == null
       ? null
-      : DateTime.parse(json['updatedAt'] as String),
-  createdAt: json['createdAt'] == null
+      : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
       ? null
-      : DateTime.parse(json['createdAt'] as String),
+      : DateTime.parse(json['created_at'] as String),
   id: (json['id'] as num?)?.toInt(),
 );
 
@@ -28,8 +28,8 @@ Map<String, dynamic> _$CreateProductResponseToJson(
   'name': instance.name,
   'price': instance.price,
   'quantity': instance.quantity,
-  'companyId': instance.companyId,
-  'updatedAt': instance.updatedAt?.toIso8601String(),
-  'createdAt': instance.createdAt?.toIso8601String(),
+  'company_id': instance.companyId,
+  'updated_at': instance.updatedAt?.toIso8601String(),
+  'created_at': instance.createdAt?.toIso8601String(),
   'id': instance.id,
 };

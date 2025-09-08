@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/validation/validation.dart';
 import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
+import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/widgets.dart';
@@ -17,7 +19,13 @@ class EditProductScreenWithProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EditProductScreen(product: product);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: getIt<ProductsCubit>()),
+        BlocProvider.value(value: getIt<CategoriesCubit>()..loadFirstPage()),
+      ],
+      child: EditProductScreen(product: product),
+    );
   }
 }
 
@@ -232,9 +240,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
             updateSuccess:
                 (products, updated, selectedProduct, currentPage, totalPages) {
                   messenger.hideCurrentSnackBar();
-                  messenger.showSnackBar(
+                  final controller = messenger.showSnackBar(
                     SnackBar(
-                      content: Text(S.of(context).productUpdatedSuccessfully),
+                      duration: Duration(milliseconds: 500),
+                      content: Text(
+                        S.of(context).productUpdatedSuccessfully,
+                        style: TextStyle(color: Colors.white),
+                      ),
                       backgroundColor: Colors.green,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -242,9 +254,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       ),
                     ),
                   );
-                  context.read<MenuCubit>().selectMenuItemByRoute(
-                    '/products/list',
-                  );
+                  controller.closed.then((_) {
+                    try {
+                      context.read<MenuCubit>().selectMenuItemByRoute(
+                        '/products/list',
+                      );
+                    } catch (_) {
+                      if (Navigator.of(context).canPop()) {
+                        Navigator.of(context).pop();
+                      } else {
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed('/products/list');
+                      }
+                    }
+                  });
                 },
             orElse: () {},
           );

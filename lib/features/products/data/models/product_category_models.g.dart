@@ -10,32 +10,32 @@ ProductCategoryApiModel _$ProductCategoryApiModelFromJson(
   Map<String, dynamic> json,
 ) => ProductCategoryApiModel(
   id: (json['id'] as num).toInt(),
-  companyId: (json['companyId'] as num?)?.toInt(),
+  companyId: (json['company_id'] as num?)?.toInt(),
   name: json['name'] as String,
   description: json['description'] as String?,
   status: json['status'] as String?,
   color: json['color'] as String?,
   icon: json['icon'] as String?,
-  createdAt: json['createdAt'] == null
+  createdAt: json['created_at'] == null
       ? null
-      : DateTime.parse(json['createdAt'] as String),
-  updatedAt: json['updatedAt'] == null
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
       ? null
-      : DateTime.parse(json['updatedAt'] as String),
+      : DateTime.parse(json['updated_at'] as String),
 );
 
 Map<String, dynamic> _$ProductCategoryApiModelToJson(
   ProductCategoryApiModel instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  'companyId': instance.companyId,
+  'company_id': instance.companyId,
   'name': instance.name,
   'description': instance.description,
   'status': instance.status,
   'color': instance.color,
   'icon': instance.icon,
-  'createdAt': instance.createdAt?.toIso8601String(),
-  'updatedAt': instance.updatedAt?.toIso8601String(),
+  'created_at': instance.createdAt?.toIso8601String(),
+  'updated_at': instance.updatedAt?.toIso8601String(),
 };
 
 CreateProductCategoryRequest _$CreateProductCategoryRequestFromJson(

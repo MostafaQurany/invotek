@@ -290,10 +290,10 @@ class S {
     );
   }
 
-  /// `Unknown error occurred`
+  /// `An unexpected error occurred. Please try again.`
   String get unknownError {
     return Intl.message(
-      'Unknown error occurred',
+      'An unexpected error occurred. Please try again.',
       name: 'unknownError',
       desc: '',
       args: [],
@@ -1151,7 +1151,7 @@ class S {
   }
 
   /// `Are you sure you want to delete user {name}?`
-  String deleteUserConfirmation(Object name) {
+  String deleteUserConfirmation(String name) {
     return Intl.message(
       'Are you sure you want to delete user $name?',
       name: 'deleteUserConfirmation',
@@ -1460,10 +1460,10 @@ class S {
     );
   }
 
-  /// `Manage Products And Categories`
+  /// `Products And Categories`
   String get productsCategories {
     return Intl.message(
-      'Manage Products And Categories',
+      'Products And Categories',
       name: 'productsCategories',
       desc: '',
       args: [],
@@ -1581,7 +1581,7 @@ class S {
   }
 
   /// `Are you sure you want to delete product "{name}"?`
-  String deleteProductConfirmation(Object name) {
+  String deleteProductConfirmation(String name) {
     return Intl.message(
       'Are you sure you want to delete product "$name"?',
       name: 'deleteProductConfirmation',
@@ -2215,6 +2215,586 @@ class S {
     return Intl.message(
       'Select Category',
       name: 'selectCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Exit App`
+  String get exitAppConfirmation {
+    return Intl.message(
+      'Exit App',
+      name: 'exitAppConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to exit the app?`
+  String get exitAppConfirmationMessage {
+    return Intl.message(
+      'Are you sure you want to exit the app?',
+      name: 'exitAppConfirmationMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No customers found`
+  String get noCustomersFound {
+    return Intl.message(
+      'No customers found',
+      name: 'noCustomersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press the add button to create a new customer`
+  String get noCustomersFoundMessage {
+    return Intl.message(
+      'Press the add button to create a new customer',
+      name: 'noCustomersFoundMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customers List`
+  String get customersList {
+    return Intl.message(
+      'Customers List',
+      name: 'customersList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Customer`
+  String get addCustomer {
+    return Intl.message(
+      'Add Customer',
+      name: 'addCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Customer`
+  String get editCustomer {
+    return Intl.message(
+      'Edit Customer',
+      name: 'editCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Customer`
+  String get deleteCustomer {
+    return Intl.message(
+      'Delete Customer',
+      name: 'deleteCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Details`
+  String get customerDetails {
+    return Intl.message(
+      'Customer Details',
+      name: 'customerDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Name`
+  String get customerName {
+    return Intl.message(
+      'Customer Name',
+      name: 'customerName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer name is required`
+  String get customerNameRequired {
+    return Intl.message(
+      'Customer name is required',
+      name: 'customerNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get customerEmail {
+    return Intl.message(
+      'Email',
+      name: 'customerEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number`
+  String get customerPhone {
+    return Intl.message(
+      'Phone Number',
+      name: 'customerPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get customerAddress {
+    return Intl.message(
+      'Address',
+      name: 'customerAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Number`
+  String get customerTaxNumber {
+    return Intl.message(
+      'Tax Number',
+      name: 'customerTaxNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get customerNotes {
+    return Intl.message(
+      'Notes',
+      name: 'customerNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get customerStatus {
+    return Intl.message(
+      'Status',
+      name: 'customerStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get customerStatusActive {
+    return Intl.message(
+      'Active',
+      name: 'customerStatusActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive`
+  String get customerStatusInactive {
+    return Intl.message(
+      'Inactive',
+      name: 'customerStatusInactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Information`
+  String get customerBasicInfo {
+    return Intl.message(
+      'Customer Information',
+      name: 'customerBasicInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Basic Information`
+  String get customerBasicInfoSection {
+    return Intl.message(
+      'Basic Information',
+      name: 'customerBasicInfoSection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company/Organization Name`
+  String get customerCompanyName {
+    return Intl.message(
+      'Company/Organization Name',
+      name: 'customerCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number is required`
+  String get customerPhoneRequired {
+    return Intl.message(
+      'Phone number is required',
+      name: 'customerPhoneRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commercial Register Number`
+  String get customerCommercialRegister {
+    return Intl.message(
+      'Commercial Register Number',
+      name: 'customerCommercialRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get customerCity {
+    return Intl.message(
+      'City',
+      name: 'customerCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Region/Province`
+  String get customerRegion {
+    return Intl.message(
+      'Region/Province',
+      name: 'customerRegion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Postal Code`
+  String get customerPostalCode {
+    return Intl.message(
+      'Postal Code',
+      name: 'customerPostalCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed Address`
+  String get customerDetailedAddress {
+    return Intl.message(
+      'Detailed Address',
+      name: 'customerDetailedAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional Information`
+  String get customerAdditionalInfo {
+    return Intl.message(
+      'Additional Information',
+      name: 'customerAdditionalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Responsible Person`
+  String get customerResponsiblePerson {
+    return Intl.message(
+      'Responsible Person',
+      name: 'customerResponsiblePerson',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer "{name}" created successfully`
+  String customerCreatedSuccessfully(Object name) {
+    return Intl.message(
+      'Customer "$name" created successfully',
+      name: 'customerCreatedSuccessfully',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Customer "{name}" updated successfully`
+  String customerUpdatedSuccessfully(Object name) {
+    return Intl.message(
+      'Customer "$name" updated successfully',
+      name: 'customerUpdatedSuccessfully',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Customer deleted successfully`
+  String get customerDeletedSuccessfully {
+    return Intl.message(
+      'Customer deleted successfully',
+      name: 'customerDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Delete`
+  String get confirmDeleteCustomer {
+    return Intl.message(
+      'Confirm Delete',
+      name: 'confirmDeleteCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete customer "{name}"?`
+  String confirmDeleteCustomerMessage(Object name) {
+    return Intl.message(
+      'Are you sure you want to delete customer "$name"?',
+      name: 'confirmDeleteCustomerMessage',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `View`
+  String get view {
+    return Intl.message(
+      'View',
+      name: 'view',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Customer`
+  String get addNewCustomer {
+    return Intl.message(
+      'Add New Customer',
+      name: 'addNewCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred: {error}`
+  String errorOccurred(Object error) {
+    return Intl.message(
+      'An error occurred: $error',
+      name: 'errorOccurred',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Search customers...`
+  String get searchCustomers {
+    return Intl.message(
+      'Search customers...',
+      name: 'searchCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company`
+  String get company {
+    return Intl.message(
+      'Company',
+      name: 'company',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear Filters`
+  String get clearFilters {
+    return Intl.message(
+      'Clear Filters',
+      name: 'clearFilters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customers`
+  String get customers {
+    return Intl.message(
+      'Customers',
+      name: 'customers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help`
+  String get help {
+    return Intl.message(
+      'Help',
+      name: 'help',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Customer Form`
+  String get formHelpTitle {
+    return Intl.message(
+      'Edit Customer Form',
+      name: 'formHelpTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information`
+  String get formHelpDescription {
+    return Intl.message(
+      'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information',
+      name: 'formHelpDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address Information`
+  String get addressInformation {
+    return Intl.message(
+      'Address Information',
+      name: 'addressInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Info`
+  String get contactInfo {
+    return Intl.message(
+      'Contact Info',
+      name: 'contactInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status Info`
+  String get statusInfo {
+    return Intl.message(
+      'Status Info',
+      name: 'statusInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created`
+  String get createdDate {
+    return Intl.message(
+      'Created',
+      name: 'createdDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Updated`
+  String get lastUpdated {
+    return Intl.message(
+      'Last Updated',
+      name: 'lastUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Delete`
+  String get confirmDelete {
+    return Intl.message(
+      'Confirm Delete',
+      name: 'confirmDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete customer "{name}"?`
+  String deleteCustomerConfirmation(Object name) {
+    return Intl.message(
+      'Are you sure you want to delete customer "$name"?',
+      name: 'deleteCustomerConfirmation',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Copy`
+  String get copy {
+    return Intl.message(
+      'Copy',
+      name: 'copy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer data copied to clipboard`
+  String get customerDataCopied {
+    return Intl.message(
+      'Customer data copied to clipboard',
+      name: 'customerDataCopied',
       desc: '',
       args: [],
     );

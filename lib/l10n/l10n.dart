@@ -244,7 +244,7 @@ abstract class S {
   /// No description provided for @unknownError.
   ///
   /// In en, this message translates to:
-  /// **'Unknown error occurred'**
+  /// **'An unexpected error occurred. Please try again.'**
   String get unknownError;
 
   /// No description provided for @loading.
@@ -761,7 +761,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete user {name}?'**
-  String deleteUserConfirmation(Object name);
+  String deleteUserConfirmation(String name);
 
   /// No description provided for @delete.
   ///
@@ -946,7 +946,7 @@ abstract class S {
   /// No description provided for @productsCategories.
   ///
   /// In en, this message translates to:
-  /// **'Manage Products And Categories'**
+  /// **'Products And Categories'**
   String get productsCategories;
 
   /// No description provided for @productsList.
@@ -1019,7 +1019,7 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete product \"{name}\"?'**
-  String deleteProductConfirmation(Object name);
+  String deleteProductConfirmation(String name);
 
   /// No description provided for @quantity.
   ///
@@ -1398,6 +1398,354 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Select Category'**
   String get selectCategory;
+
+  /// No description provided for @exitAppConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit App'**
+  String get exitAppConfirmation;
+
+  /// No description provided for @exitAppConfirmationMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to exit the app?'**
+  String get exitAppConfirmationMessage;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @noCustomersFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No customers found'**
+  String get noCustomersFound;
+
+  /// No description provided for @noCustomersFoundMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the add button to create a new customer'**
+  String get noCustomersFoundMessage;
+
+  /// No description provided for @customersList.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers List'**
+  String get customersList;
+
+  /// No description provided for @addCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Customer'**
+  String get addCustomer;
+
+  /// No description provided for @editCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Customer'**
+  String get editCustomer;
+
+  /// No description provided for @deleteCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Customer'**
+  String get deleteCustomer;
+
+  /// No description provided for @customerDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Details'**
+  String get customerDetails;
+
+  /// No description provided for @customerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get customerName;
+
+  /// No description provided for @customerNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer name is required'**
+  String get customerNameRequired;
+
+  /// No description provided for @customerEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get customerEmail;
+
+  /// No description provided for @customerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone Number'**
+  String get customerPhone;
+
+  /// No description provided for @customerAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get customerAddress;
+
+  /// No description provided for @customerTaxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Number'**
+  String get customerTaxNumber;
+
+  /// No description provided for @customerNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get customerNotes;
+
+  /// No description provided for @customerStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get customerStatus;
+
+  /// No description provided for @customerStatusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get customerStatusActive;
+
+  /// No description provided for @customerStatusInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get customerStatusInactive;
+
+  /// No description provided for @customerBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Information'**
+  String get customerBasicInfo;
+
+  /// No description provided for @customerBasicInfoSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get customerBasicInfoSection;
+
+  /// No description provided for @customerCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company/Organization Name'**
+  String get customerCompanyName;
+
+  /// No description provided for @customerPhoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get customerPhoneRequired;
+
+  /// No description provided for @customerCommercialRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial Register Number'**
+  String get customerCommercialRegister;
+
+  /// No description provided for @customerCity.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get customerCity;
+
+  /// No description provided for @customerRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Region/Province'**
+  String get customerRegion;
+
+  /// No description provided for @customerPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal Code'**
+  String get customerPostalCode;
+
+  /// No description provided for @customerDetailedAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed Address'**
+  String get customerDetailedAddress;
+
+  /// No description provided for @customerAdditionalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Information'**
+  String get customerAdditionalInfo;
+
+  /// No description provided for @customerResponsiblePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Responsible Person'**
+  String get customerResponsiblePerson;
+
+  /// No description provided for @customerCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer \"{name}\" created successfully'**
+  String customerCreatedSuccessfully(Object name);
+
+  /// No description provided for @customerUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer \"{name}\" updated successfully'**
+  String customerUpdatedSuccessfully(Object name);
+
+  /// No description provided for @customerDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer deleted successfully'**
+  String get customerDeletedSuccessfully;
+
+  /// No description provided for @confirmDeleteCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDeleteCustomer;
+
+  /// No description provided for @confirmDeleteCustomerMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete customer \"{name}\"?'**
+  String confirmDeleteCustomerMessage(Object name);
+
+  /// No description provided for @view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @addNewCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Customer'**
+  String get addNewCustomer;
+
+  /// No description provided for @errorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred: {error}'**
+  String errorOccurred(Object error);
+
+  /// No description provided for @searchCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search customers...'**
+  String get searchCustomers;
+
+  /// No description provided for @company.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get company;
+
+  /// No description provided for @clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get clearFilters;
+
+  /// No description provided for @customers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get customers;
+
+  /// No description provided for @help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help;
+
+  /// No description provided for @formHelpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Customer Form'**
+  String get formHelpTitle;
+
+  /// No description provided for @formHelpDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information'**
+  String get formHelpDescription;
+
+  /// No description provided for @addressInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Address Information'**
+  String get addressInformation;
+
+  /// No description provided for @contactInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Info'**
+  String get contactInfo;
+
+  /// No description provided for @statusInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Status Info'**
+  String get statusInfo;
+
+  /// No description provided for @createdDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get createdDate;
+
+  /// No description provided for @lastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get lastUpdated;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDelete;
+
+  /// No description provided for @deleteCustomerConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete customer \"{name}\"?'**
+  String deleteCustomerConfirmation(Object name);
+
+  /// No description provided for @copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get copy;
+
+  /// No description provided for @customerDataCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer data copied to clipboard'**
+  String get customerDataCopied;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -8,6 +8,13 @@ import 'package:invotek/features/auth/data/models/login_respond.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
 import 'package:invotek/features/auth/data/models/register_respond.dart';
 import 'package:invotek/features/clients/data/models/client_api_model.dart';
+import 'package:invotek/features/customers/data/models/request/create_customer_request.dart';
+import 'package:invotek/features/customers/data/models/request/update_customer_request.dart';
+import 'package:invotek/features/customers/data/models/response/create_customer_response.dart';
+import 'package:invotek/features/customers/data/models/response/delete_customer_response.dart';
+import 'package:invotek/features/customers/data/models/response/get_all_customers_response.dart';
+import 'package:invotek/features/customers/data/models/response/get_customer_by_id_response.dart';
+import 'package:invotek/features/customers/data/models/response/update_customer_response.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
 import 'package:invotek/features/products/data/models/response/product/product_responses.dart';
@@ -101,6 +108,35 @@ abstract class ApiClient {
 
   @POST(ApiConstants.clientsBulkUpdateStatus)
   Future<void> bulkUpdateStatus(@Body() Map<String, dynamic> request);
+
+  // Customers
+  @GET(ApiConstants.customers)
+  Future<GetAllCustomersResponse> getCustomers({
+    @Query('search') String? search,
+    @Query('status') String? status,
+    @Query('company') String? company,
+    @Query('page') int? page,
+    @Query('limit') int? limit,
+    @Query('sortBy') String? sortBy,
+    @Query('sortOrder') String? sortOrder,
+  });
+
+  @GET(ApiConstants.customerById)
+  Future<GetCustomerByIdResponse> getCustomerById(@Path('id') int id);
+
+  @POST(ApiConstants.createCustomer)
+  Future<CreateCustomerResponse> createCustomer(
+    @Body() CreateCustomerRequest request,
+  );
+
+  @PUT(ApiConstants.updateCustomer)
+  Future<UpdateCustomerResponse> updateCustomer(
+    @Path('id') int id,
+    @Body() UpdateCustomerRequest request,
+  );
+
+  @DELETE(ApiConstants.deleteCustomer)
+  Future<DeleteCustomerResponse> deleteCustomer(@Path('id') int id);
 
   // Product Categories
   @GET(ApiConstants.productCategories)

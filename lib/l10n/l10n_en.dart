@@ -83,7 +83,7 @@ class SEn extends S {
   String get authError => 'Login failed. Please check your email and password.';
 
   @override
-  String get unknownError => 'Unknown error occurred';
+  String get unknownError => 'An unexpected error occurred. Please try again.';
 
   @override
   String get loading => 'Loading...';
@@ -350,7 +350,7 @@ class SEn extends S {
   String get deleteConfirmation => 'Delete Confirmation';
 
   @override
-  String deleteUserConfirmation(Object name) {
+  String deleteUserConfirmation(String name) {
     return 'Are you sure you want to delete user $name?';
   }
 
@@ -449,7 +449,7 @@ class SEn extends S {
   String get onboardingStartNow => 'Start now';
 
   @override
-  String get productsCategories => 'Manage Products And Categories';
+  String get productsCategories => 'Products And Categories';
 
   @override
   String get productsList => 'Products List';
@@ -485,7 +485,7 @@ class SEn extends S {
   String get deleteProduct => 'Delete Product';
 
   @override
-  String deleteProductConfirmation(Object name) {
+  String deleteProductConfirmation(String name) {
     return 'Are you sure you want to delete product \"$name\"?';
   }
 
@@ -679,4 +679,191 @@ class SEn extends S {
 
   @override
   String get selectCategory => 'Select Category';
+
+  @override
+  String get exitAppConfirmation => 'Exit App';
+
+  @override
+  String get exitAppConfirmationMessage =>
+      'Are you sure you want to exit the app?';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get noCustomersFound => 'No customers found';
+
+  @override
+  String get noCustomersFoundMessage =>
+      'Press the add button to create a new customer';
+
+  @override
+  String get customersList => 'Customers List';
+
+  @override
+  String get addCustomer => 'Add Customer';
+
+  @override
+  String get editCustomer => 'Edit Customer';
+
+  @override
+  String get deleteCustomer => 'Delete Customer';
+
+  @override
+  String get customerDetails => 'Customer Details';
+
+  @override
+  String get customerName => 'Customer Name';
+
+  @override
+  String get customerNameRequired => 'Customer name is required';
+
+  @override
+  String get customerEmail => 'Email';
+
+  @override
+  String get customerPhone => 'Phone Number';
+
+  @override
+  String get customerAddress => 'Address';
+
+  @override
+  String get customerTaxNumber => 'Tax Number';
+
+  @override
+  String get customerNotes => 'Notes';
+
+  @override
+  String get customerStatus => 'Status';
+
+  @override
+  String get customerStatusActive => 'Active';
+
+  @override
+  String get customerStatusInactive => 'Inactive';
+
+  @override
+  String get customerBasicInfo => 'Customer Information';
+
+  @override
+  String get customerBasicInfoSection => 'Basic Information';
+
+  @override
+  String get customerCompanyName => 'Company/Organization Name';
+
+  @override
+  String get customerPhoneRequired => 'Phone number is required';
+
+  @override
+  String get customerCommercialRegister => 'Commercial Register Number';
+
+  @override
+  String get customerCity => 'City';
+
+  @override
+  String get customerRegion => 'Region/Province';
+
+  @override
+  String get customerPostalCode => 'Postal Code';
+
+  @override
+  String get customerDetailedAddress => 'Detailed Address';
+
+  @override
+  String get customerAdditionalInfo => 'Additional Information';
+
+  @override
+  String get customerResponsiblePerson => 'Responsible Person';
+
+  @override
+  String customerCreatedSuccessfully(Object name) {
+    return 'Customer \"$name\" created successfully';
+  }
+
+  @override
+  String customerUpdatedSuccessfully(Object name) {
+    return 'Customer \"$name\" updated successfully';
+  }
+
+  @override
+  String get customerDeletedSuccessfully => 'Customer deleted successfully';
+
+  @override
+  String get confirmDeleteCustomer => 'Confirm Delete';
+
+  @override
+  String confirmDeleteCustomerMessage(Object name) {
+    return 'Are you sure you want to delete customer \"$name\"?';
+  }
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get addNewCustomer => 'Add New Customer';
+
+  @override
+  String errorOccurred(Object error) {
+    return 'An error occurred: $error';
+  }
+
+  @override
+  String get searchCustomers => 'Search customers...';
+
+  @override
+  String get company => 'Company';
+
+  @override
+  String get clearFilters => 'Clear Filters';
+
+  @override
+  String get customers => 'Customers';
+
+  @override
+  String get help => 'Help';
+
+  @override
+  String get formHelpTitle => 'Edit Customer Form';
+
+  @override
+  String get formHelpDescription =>
+      'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information';
+
+  @override
+  String get addressInformation => 'Address Information';
+
+  @override
+  String get contactInfo => 'Contact Info';
+
+  @override
+  String get statusInfo => 'Status Info';
+
+  @override
+  String get createdDate => 'Created';
+
+  @override
+  String get lastUpdated => 'Last Updated';
+
+  @override
+  String get confirmDelete => 'Confirm Delete';
+
+  @override
+  String deleteCustomerConfirmation(Object name) {
+    return 'Are you sure you want to delete customer \"$name\"?';
+  }
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get customerDataCopied => 'Customer data copied to clipboard';
 }

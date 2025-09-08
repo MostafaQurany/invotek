@@ -60,6 +60,22 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
             }
           },
         ),
+        actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
+        actions: [
+          IconButton.filled(
+            style: IconButton.styleFrom(
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            icon: Icon(Icons.add, size: 18.sp),
+            onPressed: () {
+              _showAddCategoryDialog(context, context.read<CategoriesCubit>());
+            },
+          ),
+        ],
       ),
       body: BlocConsumer<CategoriesCubit, CategoriesState>(
         listener: (context, state) {
@@ -140,12 +156,12 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            _showAddCategoryDialog(context, context.read<CategoriesCubit>()),
-        icon: const Icon(Icons.add),
-        label: Text(S.of(context).addCategory),
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () =>
+      //       _showAddCategoryDialog(context, context.read<CategoriesCubit>()),
+      //   icon: const Icon(Icons.add),
+      //   label: Text(S.of(context).addCategory),
+      // ),
     );
   }
 

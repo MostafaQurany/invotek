@@ -26,6 +26,13 @@ class ApiConstants {
   static const String clientsBulkDelete = "clients/bulk-delete";
   static const String clientsBulkUpdateStatus = "clients/bulk-update-status";
 
+  // customers
+  static const String customers = "company/customers";
+  static const String customerById = "company/customers/{id}";
+  static const String createCustomer = "company/customers";
+  static const String updateCustomer = "company/customers/{id}";
+  static const String deleteCustomer = "company/customers/{id}";
+
   // users
   static const String users = "users";
   static const String userById = "users/{id}";

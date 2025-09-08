@@ -12,6 +12,7 @@ class UpdateProductRequest {
   final String? sku;
   final String? barcode;
   final String? unit;
+  @JsonKey(name: 'tax_rate')
   final String? taxRate;
   final String? notes;
   final String? brand;
@@ -22,10 +23,15 @@ class UpdateProductRequest {
   final String? material;
   final int? minQuantity;
   final int? maxQuantity;
+  @JsonKey(name: 'is_active')
   final bool isActive;
+  @JsonKey(name: 'has_tax')
   final bool hasTax;
+  @JsonKey(name: 'track_inventory')
   final bool trackInventory;
+  @JsonKey(name: 'status')
   final String status;
+  @JsonKey(name: 'product_category_id')
   final int? categoryId;
 
   UpdateProductRequest({

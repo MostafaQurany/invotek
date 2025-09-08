@@ -49,12 +49,21 @@ class ProductsSearchAndFilters extends StatelessWidget {
   }
 
   Widget _buildSearchBar() {
-    return SearchBar(
-      controller: searchController,
-      hintText: S.current.searchProducts,
-      leading: Icon(Icons.search, color: colorScheme.onSurfaceVariant),
-      padding: WidgetStateProperty.all(EdgeInsets.symmetric(horizontal: 16.w)),
-      onChanged: onSearch,
+    return SizedBox(
+      height: 45.h,
+
+      child: SearchBar(
+        controller: searchController,
+        hintText: S.current.searchProducts,
+        leading: Icon(
+          Icons.search,
+          color: colorScheme.onSurfaceVariant,
+          size: 18.sp,
+        ),
+        padding: WidgetStateProperty.all(EdgeInsets.symmetric(horizontal: 8.w)),
+        onChanged: onSearch,
+        textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.sp)),
+      ),
     );
   }
 
@@ -71,81 +80,111 @@ class ProductsSearchAndFilters extends StatelessWidget {
   Widget _buildCategoryFilter() {
     return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, _) {
-        final _categories = context.read<CategoriesCubit>().categories;
+        final categories = context.read<CategoriesCubit>().categories;
         final items = <DropdownMenuItem<String>>[
           DropdownMenuItem(
             value: 'all',
             child: Text(
               S.current.allCategories,
+              style: TextStyle(fontSize: 12.sp),
               overflow: TextOverflow.ellipsis,
             ),
           ),
         ];
         items.addAll(
-          _categories.map(
+          categories.map(
             (c) => DropdownMenuItem(
               value: c.id.toString(),
               child: Text(c.name, overflow: TextOverflow.ellipsis),
             ),
           ),
         );
-        return DropdownButtonFormField<String>(
-          value: items.any((item) => item.value == selectedCategory)
-              ? selectedCategory
-              : 'all',
-          isExpanded: true,
-          decoration: InputDecoration(
-            labelText: S.current.category,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
+        return SizedBox(
+          height: 45.h,
+          child: DropdownButtonFormField<String>(
+            value: items.any((item) => item.value == selectedCategory)
+                ? selectedCategory
+                : 'all',
+            isExpanded: true,
+            isDense: true,
+            decoration: InputDecoration(
+              labelText: S.current.category,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              filled: true,
+              fillColor: colorScheme.surfaceContainer,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 12.w,
+                vertical: 8.h,
+              ),
             ),
-            filled: true,
-            fillColor: colorScheme.surfaceContainer,
+            items: items,
+            onChanged: (value) {
+              if (value != null) {
+                onCategoryChanged(value);
+              }
+            },
           ),
-          items: items,
-          onChanged: (value) {
-            if (value != null) {
-              onCategoryChanged(value);
-            }
-          },
         );
       },
     );
   }
 
   Widget _buildStatusFilter() {
-    return DropdownButtonFormField<String>(
-      value: selectedStatus,
-      isExpanded: true,
-      decoration: InputDecoration(
-        labelText: S.current.status,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
-        filled: true,
-        fillColor: colorScheme.surfaceContainer,
+    return SizedBox(
+      height: 45.h,
+      child: DropdownButtonFormField<String>(
+        value: selectedStatus,
+        isExpanded: true,
+        isDense: true,
+        decoration: InputDecoration(
+          labelText: S.current.status,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
+          filled: true,
+          fillColor: colorScheme.surfaceContainer,
+          contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+        ),
+        items: [
+          DropdownMenuItem(
+            value: 'all',
+            child: Text(
+              S.current.allStatuses,
+              style: TextStyle(fontSize: 12.sp),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          DropdownMenuItem(
+            value: 'active',
+            child: Text(
+              S.current.active,
+              style: TextStyle(fontSize: 12.sp),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          DropdownMenuItem(
+            value: 'inactive',
+            child: Text(
+              S.current.inactive,
+              style: TextStyle(fontSize: 12.sp),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          DropdownMenuItem(
+            value: 'out_of_stock',
+            child: Text(
+              S.current.outOfStock,
+              style: TextStyle(fontSize: 12.sp),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+        onChanged: (value) {
+          if (value != null) {
+            onStatusChanged(value);
+          }
+        },
       ),
-      items: [
-        DropdownMenuItem(
-          value: 'all',
-          child: Text(S.current.allStatuses, overflow: TextOverflow.ellipsis),
-        ),
-        DropdownMenuItem(
-          value: 'active',
-          child: Text(S.current.active, overflow: TextOverflow.ellipsis),
-        ),
-        DropdownMenuItem(
-          value: 'inactive',
-          child: Text(S.current.inactive, overflow: TextOverflow.ellipsis),
-        ),
-        DropdownMenuItem(
-          value: 'out_of_stock',
-          child: Text(S.current.outOfStock, overflow: TextOverflow.ellipsis),
-        ),
-      ],
-      onChanged: (value) {
-        if (value != null) {
-          onStatusChanged(value);
-        }
-      },
     );
   }
 }

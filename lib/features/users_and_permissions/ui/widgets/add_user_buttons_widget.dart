@@ -25,7 +25,7 @@ class AddUserButtonsWidget extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.primary,
             foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(vertical: 16.h),
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -33,7 +33,6 @@ class AddUserButtonsWidget extends StatelessWidget {
           child: isLoading
               ? SizedBox(
                   height: 20.h,
-                  width: 20.w,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
@@ -55,7 +54,7 @@ class AddUserButtonsWidget extends StatelessWidget {
           style: OutlinedButton.styleFrom(
             foregroundColor: AppColors.primary,
             side: BorderSide(color: AppColors.primary),
-            padding: EdgeInsets.symmetric(vertical: 16.h),
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

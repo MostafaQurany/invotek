@@ -40,7 +40,6 @@ class CategoryDropdown extends StatelessWidget {
               categories,
           failure: (categories, currentPage, totalPages, error) => categories,
         );
-
         if (isLoading) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -63,8 +62,13 @@ class CategoryDropdown extends StatelessWidget {
           ),
         );
 
+        final String? effectiveValue =
+            items.where((item) => item.value == selectedCategoryId).isNotEmpty
+            ? selectedCategoryId
+            : null;
+
         return DropdownButtonFormField<String>(
-          value: selectedCategoryId,
+          value: effectiveValue,
           decoration: InputDecoration(
             labelText: label,
             border: OutlineInputBorder(

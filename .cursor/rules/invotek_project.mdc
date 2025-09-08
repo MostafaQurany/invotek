@@ -145,7 +145,9 @@ features/feature_name/
 - Use get_it for dependency injection
 - Follow the pattern in `core/di/injection.dart`
 - Register services as singletons when appropriate
-- Use factories for state management objects (Cubits) to avoid reusing closed instances
+- Use lazy singletons for shared Cubits that must persist across routes (e.g., ProductsCubit, CategoriesCubit)
+- Provide these shared Cubits once at the app shell using BlocProvider.value(getIt<Cubit>())
+- Access shared Cubits via Cubit.get(context) only under the shell; do not create route-scoped providers
 - Register `ThemeProvider` as a lazy singleton for theme control
 
 ## Code Generation

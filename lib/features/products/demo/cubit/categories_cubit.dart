@@ -62,7 +62,7 @@ sealed class CategoriesState with _$CategoriesState {
 
 class CategoriesCubit extends Cubit<CategoriesState> {
   final ProductsRepository _repository;
-
+  static CategoriesCubit get(context) => BlocProvider.of(context);
   final List<ProductCategoryApiModel> _categories = <ProductCategoryApiModel>[];
   int _currentPage = 1;
   int _totalPages = 1;

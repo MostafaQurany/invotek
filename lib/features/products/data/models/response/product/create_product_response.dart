@@ -7,8 +7,11 @@ class CreateProductResponse {
   final String? name;
   final String? price;
   final int? quantity;
+  @JsonKey(name: 'company_id')
   final int? companyId;
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   final int? id;
 

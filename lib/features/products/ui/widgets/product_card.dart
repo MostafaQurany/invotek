@@ -1,45 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import '../../../../generated/l10n.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
   final VoidCallback onTap;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
   final ColorScheme colorScheme;
 
   const ProductCard({
     super.key,
     required this.product,
     required this.onTap,
+    this.onEdit,
+    this.onDelete,
     required this.colorScheme,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.only(bottom: 12.h),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.r),
-        side: BorderSide(color: colorScheme.outline.withOpacity(0.1), width: 1),
+    return Slidable(
+      key: ValueKey(product.id ?? product.name ?? UniqueKey()),
+      endActionPane: ActionPane(
+        motion: const DrawerMotion(),
+        extentRatio: 0.55,
+        
+        children: [
+          SlidableAction(
+            onPressed: (_) => onEdit?.call(),
+            backgroundColor: colorScheme.primary.withOpacity(0.1),
+            foregroundColor: colorScheme.primary,
+            icon: Icons.edit,
+            autoClose: true,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          SlidableAction(
+            onPressed: (_) => onDelete?.call(),
+            backgroundColor: colorScheme.error.withOpacity(0.1),
+            foregroundColor: colorScheme.error,
+            icon: Icons.delete_outline,
+            autoClose: true,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ],
       ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16.r),
-        child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(),
-              SizedBox(height: 16.h),
-              _buildDetails(),
-              if (product.description != null) ...[
+      child: Card(
+        margin: EdgeInsets.only(bottom: 12.h),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+          side: BorderSide(
+            color: colorScheme.outline.withOpacity(0.1),
+            width: 1,
+          ),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16.r),
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeader(),
                 SizedBox(height: 12.h),
-                _buildDescription(),
+                _buildDetails(),
+                if (product.description != null &&
+                    (product.description?.isNotEmpty ?? false)) ...[
+                  SizedBox(height: 12.h),
+                  _buildDescription(),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),
@@ -80,16 +115,16 @@ class ProductCard extends StatelessWidget {
         Text(
           product.name ?? S.current.noName,
           style: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 14.sp,
             fontWeight: FontWeight.w600,
             color: colorScheme.onSurface,
           ),
         ),
         SizedBox(height: 4.h),
         Text(
-          product.status ?? S.current.undefined,
+          '${S.current.quantity}: ${product.quantity ?? 0}',
           style: TextStyle(
-            fontSize: 14.sp,
+            fontSize: 12.sp,
             color: colorScheme.onSurfaceVariant,
           ),
         ),
@@ -102,9 +137,9 @@ class ProductCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          '${product.price ?? '0.00'} ر.س',
+          'SAR ${_formatPrice(product.price)}',
           style: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w600,
             color: colorScheme.primary,
           ),
@@ -116,18 +151,20 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _buildStatusChip() {
+    final status = (product.status ?? 'inactive').toLowerCase();
+    final color = status == 'active' ? Colors.green : Colors.grey;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
       decoration: BoxDecoration(
-        color: _getStatusColor(product.status ?? 'unknown').withOpacity(0.1),
+        color: color.withOpacity(0.15),
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Text(
-        _getStatusText(product.status ?? 'unknown'),
+        _getStatusText(status),
         style: TextStyle(
           fontSize: 12.sp,
-          color: _getStatusColor(product.status ?? 'unknown'),
-          fontWeight: FontWeight.w500,
+          color: color,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -136,12 +173,7 @@ class ProductCard extends StatelessWidget {
   Widget _buildDetails() {
     return Row(
       children: [
-        _buildDetailItem(
-          icon: Icons.inventory,
-          text: '${S.current.quantity}: ${product.quantity}',
-        ),
-        SizedBox(width: 24.w),
-        if (product.sku != null)
+        if (product.sku != null && product.sku!.isNotEmpty)
           _buildDetailItem(icon: Icons.qr_code, text: 'SKU: ${product.sku}'),
       ],
     );
@@ -173,19 +205,6 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'active':
-        return Colors.green;
-      case 'inactive':
-        return Colors.orange;
-      case 'out_of_stock':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
   String _getStatusText(String status) {
     switch (status.toLowerCase()) {
       case 'active':
@@ -197,5 +216,11 @@ class ProductCard extends StatelessWidget {
       default:
         return status;
     }
+  }
+
+  String _formatPrice(dynamic price) {
+    if (price == null) return '0.00';
+    if (price is num) return price.toStringAsFixed(2);
+    return price.toString();
   }
 }

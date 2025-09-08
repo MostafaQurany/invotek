@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/validation/validation.dart';
+import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/ui/widgets/widgets.dart';
 
@@ -13,7 +15,15 @@ class AddProductScreenWithProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AddProductScreen();
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<ProductsCubit>()),
+        BlocProvider(
+          create: (context) => getIt<CategoriesCubit>()..loadFirstPage(),
+        ),
+      ],
+      child: const AddProductScreen(),
+    );
   }
 }
 
@@ -180,7 +190,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
             createSuccess:
                 (products, created, selectedProduct, currentPage, totalPages) {
                   messenger.hideCurrentSnackBar();
-                  messenger.showSnackBar(
+                  final controller = messenger.showSnackBar(
                     SnackBar(
                       content: Text(S.of(context).productAddedSuccessfully),
                       backgroundColor: Colors.green,
@@ -190,7 +200,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ),
                   );
-                  Navigator.pop(context);
+                  controller.closed.then((_) {
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
+                  });
                 },
             orElse: () {},
           );

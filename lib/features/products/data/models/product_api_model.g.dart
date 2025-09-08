@@ -9,8 +9,8 @@ part of 'product_api_model.dart';
 ProductApiModel _$ProductApiModelFromJson(Map<String, dynamic> json) =>
     ProductApiModel(
       id: (json['id'] as num).toInt(),
-      companyId: (json['companyId'] as num?)?.toInt(),
-      productCategoryId: (json['productCategoryId'] as num?)?.toInt(),
+      companyId: (json['company_id'] as num?)?.toInt(),
+      productCategoryId: (json['product_category_id'] as num?)?.toInt(),
       name: json['name'] as String?,
       sku: json['sku'] as String?,
       description: json['description'] as String?,
@@ -38,8 +38,8 @@ ProductApiModel _$ProductApiModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ProductApiModelToJson(ProductApiModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'companyId': instance.companyId,
-      'productCategoryId': instance.productCategoryId,
+      'company_id': instance.companyId,
+      'product_category_id': instance.productCategoryId,
       'name': instance.name,
       'sku': instance.sku,
       'description': instance.description,

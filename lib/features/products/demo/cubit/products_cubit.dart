@@ -66,7 +66,7 @@ sealed class ProductsState with _$ProductsState {
 
 class ProductsCubit extends Cubit<ProductsState> {
   final ProductsRepository _repository;
-
+  static ProductsCubit get(context) => BlocProvider.of(context);
   // persistent products cache used across states
   final List<ProductModel> _products = <ProductModel>[];
   int _currentPage = 1;

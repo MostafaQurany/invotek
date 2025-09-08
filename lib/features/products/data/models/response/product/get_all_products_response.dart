@@ -7,10 +7,13 @@ part 'get_all_products_response.g.dart';
 @JsonSerializable()
 class GetAllProductsResponse {
   final String? message;
+  @JsonKey(name: 'current_page')
   final int? currentPage;
   final List<ProductApiModel>? data;
   final int? from;
+  @JsonKey(name: 'last_page')
   final int? lastPage;
+  @JsonKey(name: 'per_page')
   final int? perPage;
   final int? to;
   final int? total;

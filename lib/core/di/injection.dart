@@ -17,6 +17,8 @@ import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
+import 'package:invotek/features/customers/data/repository/customers_repository.dart';
+import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
 import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
@@ -67,6 +69,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<ProductsRepository>(
     () => ProductsRepository(getIt<ApiClient>()),
   );
+  getIt.registerLazySingleton<CustomersRepository>(
+    () => CustomersRepository(getIt<ApiClient>()),
+  );
 
   // Register cubits (use factory so each screen gets a fresh instance)
   getIt.registerFactory<LocalizationCubit>(() => LocalizationCubit());
@@ -78,10 +83,13 @@ Future<void> configureDependencies() async {
   getIt.registerFactory<ClientsCubit>(
     () => ClientsCubit(getIt<ClientsRepository>()),
   );
-  getIt.registerFactory<ProductsCubit>(
+  getIt.registerLazySingleton<ProductsCubit>(
     () => ProductsCubit(getIt<ProductsRepository>()),
   );
-  getIt.registerFactory<CategoriesCubit>(
+  getIt.registerLazySingleton<CustomersCubit>(
+    () => CustomersCubit(getIt<CustomersRepository>()),
+  );
+  getIt.registerLazySingleton<CategoriesCubit>(
     () => CategoriesCubit(getIt<ProductsRepository>()),
   );
 

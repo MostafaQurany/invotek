@@ -75,6 +75,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   }
 
   void _showProductOptions(BuildContext context, ProductModel product) {
+    final productsCubit = context.read<ProductsCubit>();
     showModalBottomSheet(
       context: context,
       useSafeArea: true,
@@ -86,19 +87,23 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         product: product,
         onViewDetails: () {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/products/details', arguments: product);
+          Navigator.pushNamed(
+            context,
+            AppRoutes.productDetailsRoute,
+            arguments: product,
+          );
         },
         onEdit: () {
           Navigator.pop(context);
-          Navigator.pushNamed(context, '/products/edit', arguments: product);
+          Navigator.pushNamed(
+            context,
+            AppRoutes.editProductRoute,
+            arguments: product,
+          );
         },
         onDelete: () {
           Navigator.pop(context);
-          _confirmDeleteProduct(
-            context,
-            product,
-            context.read<ProductsCubit>(),
-          );
+          _confirmDeleteProduct(context, product, productsCubit);
         },
       ),
     );
@@ -182,6 +187,16 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                         product: product,
                         colorScheme: colorScheme,
                         onTap: () => _showProductOptions(context, product),
+                        onEdit: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.editProductRoute,
+                          arguments: product,
+                        ),
+                        onDelete: () => _confirmDeleteProduct(
+                          context,
+                          product,
+                          ProductsCubit.get(context),
+                        ),
                       );
                     },
                   ),
@@ -231,6 +246,22 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             }
           },
         ),
+        // actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
+        // actions: [
+        //   IconButton.filled(
+        //     style: IconButton.styleFrom(
+        //       backgroundColor: colorScheme.primary,
+        //       foregroundColor: colorScheme.onPrimary,
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(12.r),
+        //       ),
+        //     ),
+        //     icon: Icon(Icons.add, size: 18.sp),
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, AppRoutes.addProductRoute);
+        //     },
+        //   ),
+        // ],
       ),
       body: BlocConsumer<ProductsCubit, ProductsState>(
         listener: (context, state) {
@@ -288,8 +319,11 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addProductRoute);
         },
-        icon: const Icon(Icons.add),
-        label: Text(S.of(context).addProduct),
+        icon: Icon(Icons.add, size: 18.sp),
+        label: Text(
+          S.of(context).addProduct,
+          style: TextStyle(fontSize: 12.sp),
+        ),
       ),
     );
   }

@@ -5,13 +5,16 @@ part 'product_category_models.g.dart';
 @JsonSerializable()
 class ProductCategoryApiModel {
   final int id;
+  @JsonKey(name: 'company_id')
   final int? companyId;
   final String name;
   final String? description;
   final String? status;
   final String? color;
   final String? icon;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
 
   ProductCategoryApiModel({

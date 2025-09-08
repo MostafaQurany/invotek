@@ -59,6 +59,8 @@ class MenuItem {
         return s.managePermissions;
       case 'clients':
         return s.clientsProductsTitle;
+      case 'customers':
+        return s.customers;
       case 'products_categories':
         return s.productsCategories;
       case 'clients_list':
@@ -197,6 +199,13 @@ class MenuData {
             route: '/products/categories',
           ),
         ],
+      ),
+      MenuItem(
+        title: 'إدارة العملاء',
+        titleKey: 'customers',
+        icon: Icons.people_outline,
+        route: '/customers/list',
+        hasSubItems: false,
       ),
       MenuItem(
         title: 'إدارة المنتجات وفئاتها',

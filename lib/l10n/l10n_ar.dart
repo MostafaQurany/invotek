@@ -84,7 +84,7 @@ class SAr extends S {
       'فشل في تسجيل الدخول. يرجى التحقق من البريد الإلكتروني وكلمة المرور.';
 
   @override
-  String get unknownError => 'حدث خطأ غير معروف';
+  String get unknownError => 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.';
 
   @override
   String get loading => 'جاري التحميل...';
@@ -349,7 +349,7 @@ class SAr extends S {
   String get deleteConfirmation => 'تأكيد الحذف';
 
   @override
-  String deleteUserConfirmation(Object name) {
+  String deleteUserConfirmation(String name) {
     return 'هل أنت متأكد من حذف المستخدم $name؟';
   }
 
@@ -448,7 +448,7 @@ class SAr extends S {
   String get onboardingStartNow => 'ابدا الان';
 
   @override
-  String get productsCategories => 'إدارة المنتجات وفئاتها';
+  String get productsCategories => 'المنتجات وفئاتها';
 
   @override
   String get productsList => 'قائمة المنتجات';
@@ -484,7 +484,7 @@ class SAr extends S {
   String get deleteProduct => 'حذف المنتج';
 
   @override
-  String deleteProductConfirmation(Object name) {
+  String deleteProductConfirmation(String name) {
     return 'هل أنت متأكد من حذف المنتج \"$name\"؟';
   }
 
@@ -677,4 +677,189 @@ class SAr extends S {
 
   @override
   String get selectCategory => 'إختار الفئة';
+
+  @override
+  String get exitAppConfirmation => 'إغلاق التطبيق';
+
+  @override
+  String get exitAppConfirmationMessage => 'هل أنت متأكد من إغلاق التطبيق؟';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String get noCustomersFound => 'لا يوجد عملاء';
+
+  @override
+  String get noCustomersFoundMessage => 'اضغط على زر الإضافة لإنشاء عميل جديد';
+
+  @override
+  String get customersList => 'قائمة العملاء';
+
+  @override
+  String get addCustomer => 'إضافة عميل';
+
+  @override
+  String get editCustomer => 'تعديل العميل';
+
+  @override
+  String get deleteCustomer => 'حذف العميل';
+
+  @override
+  String get customerDetails => 'تفاصيل العميل';
+
+  @override
+  String get customerName => 'اسم العميل';
+
+  @override
+  String get customerNameRequired => 'اسم العميل مطلوب';
+
+  @override
+  String get customerEmail => 'البريد الإلكتروني';
+
+  @override
+  String get customerPhone => 'رقم الهاتف';
+
+  @override
+  String get customerAddress => 'العنوان';
+
+  @override
+  String get customerTaxNumber => 'الرقم الضريبي';
+
+  @override
+  String get customerNotes => 'ملاحظات';
+
+  @override
+  String get customerStatus => 'الحالة';
+
+  @override
+  String get customerStatusActive => 'نشط';
+
+  @override
+  String get customerStatusInactive => 'غير نشط';
+
+  @override
+  String get customerBasicInfo => 'معلومات العميل';
+
+  @override
+  String get customerBasicInfoSection => 'المعلومات الأساسية';
+
+  @override
+  String get customerCompanyName => 'اسم الشركة/المؤسسة';
+
+  @override
+  String get customerPhoneRequired => 'رقم الهاتف مطلوب';
+
+  @override
+  String get customerCommercialRegister => 'رقم السجل التجاري';
+
+  @override
+  String get customerCity => 'المدينة';
+
+  @override
+  String get customerRegion => 'المنطقة/المحافظة';
+
+  @override
+  String get customerPostalCode => 'الرمز البريدي';
+
+  @override
+  String get customerDetailedAddress => 'العنوان التفصيلي';
+
+  @override
+  String get customerAdditionalInfo => 'معلومات إضافية';
+
+  @override
+  String get customerResponsiblePerson => 'الشخص المسؤول';
+
+  @override
+  String customerCreatedSuccessfully(Object name) {
+    return 'تم إنشاء العميل \"$name\" بنجاح';
+  }
+
+  @override
+  String customerUpdatedSuccessfully(Object name) {
+    return 'تم تحديث العميل \"$name\" بنجاح';
+  }
+
+  @override
+  String get customerDeletedSuccessfully => 'تم حذف العميل بنجاح';
+
+  @override
+  String get confirmDeleteCustomer => 'تأكيد الحذف';
+
+  @override
+  String confirmDeleteCustomerMessage(Object name) {
+    return 'هل أنت متأكد من حذف العميل \"$name\"?';
+  }
+
+  @override
+  String get view => 'عرض';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get addNewCustomer => 'إضافة عميل جديد';
+
+  @override
+  String errorOccurred(Object error) {
+    return 'حدث خطأ: $error';
+  }
+
+  @override
+  String get searchCustomers => 'البحث في العملاء...';
+
+  @override
+  String get company => 'الشركة';
+
+  @override
+  String get clearFilters => 'مسح المرشحات';
+
+  @override
+  String get customers => 'العملاء';
+
+  @override
+  String get help => 'مساعدة';
+
+  @override
+  String get formHelpTitle => 'نموذج تعديل العميل';
+
+  @override
+  String get formHelpDescription =>
+      'هذا النموذج مقسم إلى ثلاث خطوات:\n\n1. المعلومات الأساسية\n2. معلومات العنوان\n3. المعلومات الإضافية';
+
+  @override
+  String get addressInformation => 'معلومات العنوان';
+
+  @override
+  String get contactInfo => 'معلومات الاتصال';
+
+  @override
+  String get statusInfo => 'معلومات الحالة';
+
+  @override
+  String get createdDate => 'تاريخ الإنشاء';
+
+  @override
+  String get lastUpdated => 'آخر تحديث';
+
+  @override
+  String get confirmDelete => 'تأكيد الحذف';
+
+  @override
+  String deleteCustomerConfirmation(Object name) {
+    return 'هل أنت متأكد من حذف العميل \"$name\"؟';
+  }
+
+  @override
+  String get copy => 'نسخ';
+
+  @override
+  String get customerDataCopied => 'تم نسخ بيانات العميل إلى الحافظة';
 }

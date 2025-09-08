@@ -6,6 +6,12 @@ import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/clients/ui/screens/add_client_screen.dart';
 import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
+import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
+import 'package:invotek/features/customers/demo/entit/customer_model.dart';
+import 'package:invotek/features/customers/ui/screens/add_customer_screen.dart';
+import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
+import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
+import 'package:invotek/features/customers/ui/screens/customer_details_screen.dart';
 import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
 import 'package:invotek/features/home/ui/home_screen.dart';
 import 'package:invotek/features/home/ui/widgets/menu_screen.dart';
@@ -31,11 +37,14 @@ class HomeScreenWithDrawer extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => MenuCubit()),
-        BlocProvider<ProductsCubit>(
-          create: (context) => getIt<ProductsCubit>()..loadFirstPage(),
+        BlocProvider<ProductsCubit>.value(
+          value: getIt<ProductsCubit>()..loadFirstPage(),
         ),
-        BlocProvider<CategoriesCubit>(
-          create: (context) => getIt<CategoriesCubit>()..loadFirstPage(),
+        BlocProvider<CategoriesCubit>.value(
+          value: getIt<CategoriesCubit>()..loadFirstPage(),
+        ),
+        BlocProvider<CustomersCubit>.value(
+          value: getIt<CustomersCubit>()..loadFirstPage(),
         ),
       ],
       child: ZoomDrawer(
@@ -89,6 +98,24 @@ class HomeScreenWithAppBar extends StatelessWidget {
                 return const ClientsListScreenWithProvider();
               case '/clients/add':
                 return const AddClientScreenWithProvider();
+              case '/customers':
+                return const CustomersListScreenWithProvider();
+              case '/customers/list':
+                return const CustomersListScreenWithProvider();
+              case '/customers/add':
+                return const AddCustomerScreenWithProvider();
+              case '/customers/edit':
+                final args = state.routeArguments;
+                if (args is CustomerModel) {
+                  return EditCustomerScreenWithProvider(customer: args);
+                }
+                return const HomeScreen();
+              case '/customers/details':
+                final args = state.routeArguments;
+                if (args is CustomerModel) {
+                  return CustomerDetailsScreen(customer: args);
+                }
+                return const HomeScreen();
               case '/products':
                 return const ProductsListScreenWithProvider();
               case '/products/list':

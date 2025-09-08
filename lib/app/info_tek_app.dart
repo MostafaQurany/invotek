@@ -8,6 +8,7 @@ import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/services/storage_service.dart';
 import 'package:invotek/core/theme/app_theme.dart';
+import 'package:invotek/core/widgets/app_exit_handler.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
@@ -74,34 +75,36 @@ class InfoTekApp extends StatelessWidget {
           ],
           child: BlocBuilder<LocalizationCubit, LocalizationState>(
             builder: (context, localizationState) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Invotek',
-                theme: AppTheme.lightTheme,
+              return AppExitHandler(
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Invotek',
+                  theme: AppTheme.lightTheme,
 
-                locale: localizationState.locale,
-                supportedLocales: const [Locale('en'), Locale('ar')],
-                localizationsDelegates: [
-                  S.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                ],
-                home: FutureBuilder<Widget>(
-                  future: _getInitialScreen(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Scaffold(
-                        body: Center(child: CircularProgressIndicator()),
-                      );
-                    }
+                  locale: localizationState.locale,
+                  supportedLocales: const [Locale('en'), Locale('ar')],
+                  localizationsDelegates: [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  home: FutureBuilder<Widget>(
+                    future: _getInitialScreen(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Scaffold(
+                          body: Center(child: CircularProgressIndicator()),
+                        );
+                      }
 
-                    return snapshot.data ?? const AuthScreen();
-                  },
+                      return snapshot.data ?? const AuthScreen();
+                    },
+                  ),
+                  routes: AppRoutes.routes,
+                  onGenerateRoute: AppRoutes.onGenerateRoute,
+                  onUnknownRoute: AppRoutes.onUnknownRoute,
                 ),
-                routes: AppRoutes.routes,
-                onGenerateRoute: AppRoutes.onGenerateRoute,
-                onUnknownRoute: AppRoutes.onUnknownRoute,
               );
             },
           ),

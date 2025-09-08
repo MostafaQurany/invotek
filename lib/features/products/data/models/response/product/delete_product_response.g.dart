@@ -9,7 +9,7 @@ part of 'delete_product_response.dart';
 DeleteProductResponse _$DeleteProductResponseFromJson(
   Map<String, dynamic> json,
 ) => DeleteProductResponse(
-  success: json['success'] as bool,
+  success: json['success'] as bool?,
   message: json['message'] as String?,
 );
 
