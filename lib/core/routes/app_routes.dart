@@ -12,6 +12,8 @@ import 'package:invotek/features/customers/ui/screens/add_customer_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customer_details_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expenses_list_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
@@ -53,6 +55,19 @@ class AppRoutes {
   static const String editCustomerRoute = '/customers/edit';
   static const String customerDetailsRoute = '/customers/details';
 
+  // Expenses routes
+  static const String expensesListRoute = '/expenses/list';
+  static const String addExpenseRoute = '/expenses/add';
+  static const String editExpenseRoute = '/expenses/edit';
+  static const String expenseDetailsRoute = '/expenses/details';
+
+  // Expense Categories routes
+  static const String expenseCategoriesListRoute = '/expense-categories/list';
+  static const String addExpenseCategoryRoute = '/expense-categories/add';
+  static const String editExpenseCategoryRoute = '/expense-categories/edit';
+  static const String expenseCategoryDetailsRoute =
+      '/expense-categories/details';
+
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
     homeRoute: (context) => const HomeScreenWithDrawer(),
@@ -72,6 +87,11 @@ class AppRoutes {
     categoriesListRoute: (context) => const CategoriesListScreenWithProvider(),
     // Customers routes
     customersListRoute: (context) => const CustomersListScreenWithProvider(),
+    // Expenses routes
+    expensesListRoute: (context) => const ExpensesListScreenWithProvider(),
+    // Expense Categories routes
+    expenseCategoriesListRoute: (context) =>
+        const ExpenseCategoriesListScreenWithProvider(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -122,6 +142,16 @@ class AppRoutes {
             child: CustomerDetailsScreen(customer: customer),
           ),
         );
+
+      // Expenses routes - TODO: Add screens when created
+      // case addExpenseRoute:
+      // case editExpenseRoute:
+      // case expenseDetailsRoute:
+
+      // Expense Categories routes - TODO: Add screens when created
+      // case addExpenseCategoryRoute:
+      // case editExpenseCategoryRoute:
+      // case expenseCategoryDetailsRoute:
 
       default:
         return null;

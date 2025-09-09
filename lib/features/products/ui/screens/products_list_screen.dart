@@ -6,6 +6,7 @@ import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/ui/screens/enhanced_products_list_screen.dart';
 import 'package:invotek/features/products/ui/widgets/widgets.dart';
 
 import '../../../../generated/l10n.dart';
@@ -15,7 +16,7 @@ class ProductsListScreenWithProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProductsListScreen();
+    return const EnhancedProductsListScreen();
   }
 }
 
@@ -161,10 +162,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           searchController: _searchController,
           selectedCategory: _selectedCategory,
           selectedStatus: _selectedStatus,
-          onSearch: _onSearch,
+          onSearchChanged: _onSearch,
           onCategoryChanged: _onCategoryChanged,
           onStatusChanged: _onStatusChanged,
-          colorScheme: colorScheme,
         ),
         // Products list
         Expanded(

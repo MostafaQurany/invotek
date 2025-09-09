@@ -17,6 +17,8 @@ import 'package:invotek/features/home/ui/home_screen.dart';
 import 'package:invotek/features/home/ui/widgets/menu_screen.dart';
 import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
+import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/ui/screens/add_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
@@ -26,6 +28,8 @@ import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expenses_list_screen_with_provider.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen_with_provider.dart';
 
 class HomeScreenWithDrawer extends StatelessWidget {
   const HomeScreenWithDrawer({super.key});
@@ -45,6 +49,12 @@ class HomeScreenWithDrawer extends StatelessWidget {
         ),
         BlocProvider<CustomersCubit>.value(
           value: getIt<CustomersCubit>()..loadFirstPage(),
+        ),
+        BlocProvider<ExpensesCubit>.value(
+          value: getIt<ExpensesCubit>()..loadFirstPage(),
+        ),
+        BlocProvider<ExpenseCategoriesCubit>.value(
+          value: getIt<ExpenseCategoriesCubit>()..loadFirstPage(),
         ),
       ],
       child: ZoomDrawer(
@@ -136,6 +146,12 @@ class HomeScreenWithAppBar extends StatelessWidget {
                   return ProductDetailsScreen(product: args);
                 }
                 return const HomeScreen();
+              case '/expenses':
+                return const ExpensesListScreenWithProvider();
+              case '/expenses/list':
+                return const ExpensesListScreenWithProvider();
+              case '/expenses/categories':
+                return const ExpenseCategoriesListScreenWithProvider();
               case '/home':
               default:
                 return const HomeScreen();

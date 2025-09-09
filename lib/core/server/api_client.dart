@@ -15,6 +15,20 @@ import 'package:invotek/features/customers/data/models/response/delete_customer_
 import 'package:invotek/features/customers/data/models/response/get_all_customers_response.dart';
 import 'package:invotek/features/customers/data/models/response/get_customer_by_id_response.dart';
 import 'package:invotek/features/customers/data/models/response/update_customer_response.dart';
+import 'package:invotek/features/expenses/data/models/request/create_expense_request.dart';
+import 'package:invotek/features/expenses/data/models/request/update_expense_request.dart';
+import 'package:invotek/features/expenses/data/models/request/create_expense_category_request.dart';
+import 'package:invotek/features/expenses/data/models/request/update_expense_category_request.dart';
+import 'package:invotek/features/expenses/data/models/response/get_all_expenses_response.dart';
+import 'package:invotek/features/expenses/data/models/response/create_expense_response.dart';
+import 'package:invotek/features/expenses/data/models/response/get_expense_by_id_response.dart';
+import 'package:invotek/features/expenses/data/models/response/update_expense_response.dart';
+import 'package:invotek/features/expenses/data/models/response/delete_expense_response.dart';
+import 'package:invotek/features/expenses/data/models/response/get_all_expense_categories_response.dart';
+import 'package:invotek/features/expenses/data/models/response/create_expense_category_response.dart';
+import 'package:invotek/features/expenses/data/models/response/get_expense_category_by_id_response.dart';
+import 'package:invotek/features/expenses/data/models/response/update_expense_category_response.dart';
+import 'package:invotek/features/expenses/data/models/response/delete_expense_category_response.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
 import 'package:invotek/features/products/data/models/response/product/product_responses.dart';
@@ -137,6 +151,67 @@ abstract class ApiClient {
 
   @DELETE(ApiConstants.deleteCustomer)
   Future<DeleteCustomerResponse> deleteCustomer(@Path('id') int id);
+
+  // Expenses
+  @GET(ApiConstants.expenses)
+  Future<GetAllExpensesResponse> getExpenses({
+    @Query('search') String? search,
+    @Query('status') String? status,
+    @Query('category_id') int? categoryId,
+    @Query('page') int? page,
+    @Query('limit') int? limit,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
+  });
+
+  @GET(ApiConstants.expenseById)
+  Future<GetExpenseByIdResponse> getExpenseById(@Path('id') int id);
+
+  @POST(ApiConstants.createExpense)
+  Future<CreateExpenseResponse> createExpense(
+    @Body() CreateExpenseRequest request,
+  );
+
+  @PUT(ApiConstants.updateExpense)
+  Future<UpdateExpenseResponse> updateExpense(
+    @Path('id') int id,
+    @Body() UpdateExpenseRequest request,
+  );
+
+  @DELETE(ApiConstants.deleteExpense)
+  Future<DeleteExpenseResponse> deleteExpense(@Path('id') int id);
+
+  // Expense Categories
+  @GET(ApiConstants.expenseCategories)
+  Future<GetAllExpenseCategoriesResponse> getExpenseCategories({
+    @Query('search') String? search,
+    @Query('status') String? status,
+    @Query('page') int? page,
+    @Query('limit') int? limit,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
+  });
+
+  @GET(ApiConstants.expenseCategoryById)
+  Future<GetExpenseCategoryByIdResponse> getExpenseCategoryById(
+    @Path('id') int id,
+  );
+
+  @POST(ApiConstants.createExpenseCategory)
+  Future<CreateExpenseCategoryResponse> createExpenseCategory(
+    @Body() CreateExpenseCategoryRequest request,
+  );
+
+  @PUT(ApiConstants.updateExpenseCategory)
+  Future<UpdateExpenseCategoryResponse> updateExpenseCategory(
+    @Path('id') int id,
+    @Body() UpdateExpenseCategoryRequest request,
+  );
+
+  @DELETE(ApiConstants.deleteExpenseCategory)
+  Future<DeleteExpenseCategoryResponse> deleteExpenseCategory(
+    @Path('id') int id,
+  );
 
   // Product Categories
   @GET(ApiConstants.productCategories)

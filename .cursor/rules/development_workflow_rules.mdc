@@ -1,0 +1,486 @@
+# Development Workflow Rules - قواعد سير العمل التطويري
+
+## نظرة عامة
+
+هذه القواعد لسير العمل التطويري في مشروع Invotek لضمان التنظيم والكفاءة.
+
+## قواعد Git
+
+### 1. رسائل الـ Commit
+
+**للرسائل:**
+```bash
+# إضافة ميزة جديدة
+git commit -m "feat: add user management screen"
+
+# إصلاح مشكلة
+git commit -m "fix: resolve navigation issue"
+
+# تحديث التصميم
+git commit -m "style: update button colors"
+
+# إضافة اختبارات
+git commit -m "test: add user cubit tests"
+
+# تحديث الوثائق
+git commit -m "docs: update API documentation"
+
+# إعادة هيكلة الكود
+git commit -m "refactor: improve user service structure"
+
+# إصلاح مشكلة حرجة
+git commit -m "hotfix: fix critical security issue"
+```
+
+### 2. فروع التطوير
+
+**للفروع:**
+```bash
+# إنشاء فرع جديد للميزة
+git checkout -b feature/user-management
+
+# إنشاء فرع جديد للإصلاح
+git checkout -b fix/navigation-issue
+
+# إنشاء فرع جديد للتحديث
+git checkout -b update/button-colors
+
+# إنشاء فرع جديد للاختبارات
+git checkout -b test/user-cubit-tests
+```
+
+### 3. دمج الفروع
+
+**للدمج:**
+```bash
+# الانتقال للفرع الرئيسي
+git checkout main
+
+# دمج الفرع
+git merge feature/user-management
+
+# حذف الفرع المدمج
+git branch -d feature/user-management
+```
+
+## قواعد التطوير
+
+### 1. إنشاء ميزة جديدة
+
+**الخطوات:**
+1. **إنشاء فرع جديد:**
+   ```bash
+   git checkout -b feature/new-feature
+   ```
+
+2. **تطوير الميزة:**
+   - إنشاء الملفات المطلوبة
+   - تطبيق القواعد المحددة
+   - اختبار الميزة
+
+3. **اختبار الميزة:**
+   - اختبار الوظائف الأساسية
+   - اختبار التصميم
+   - اختبار الأداء
+
+4. **رفع التغييرات:**
+   ```bash
+   git add .
+   git commit -m "feat: add new feature"
+   git push origin feature/new-feature
+   ```
+
+5. **إنشاء Pull Request:**
+   - مراجعة الكود
+   - اختبار شامل
+   - دمج الفرع
+
+### 2. إصلاح مشكلة
+
+**الخطوات:**
+1. **إنشاء فرع جديد:**
+   ```bash
+   git checkout -b fix/issue-description
+   ```
+
+2. **تحليل المشكلة:**
+   - تحديد سبب المشكلة
+   - تحديد الحل المناسب
+   - تطبيق الحل
+
+3. **اختبار الإصلاح:**
+   - اختبار الإصلاح
+   - اختبار عدم كسر وظائف أخرى
+   - اختبار شامل
+
+4. **رفع التغييرات:**
+   ```bash
+   git add .
+   git commit -m "fix: resolve issue description"
+   git push origin fix/issue-description
+   ```
+
+### 3. تحديث التصميم
+
+**الخطوات:**
+1. **إنشاء فرع جديد:**
+   ```bash
+   git checkout -b style/design-update
+   ```
+
+2. **تطبيق التحديثات:**
+   - استخدام AppColors
+   - استخدام flutter_screenutil
+   - تطبيق التصميم الموحد
+
+3. **اختبار التصميم:**
+   - اختبار على أحجام شاشات مختلفة
+   - اختبار دعم RTL
+   - اختبار إمكانية الوصول
+
+4. **رفع التغييرات:**
+   ```bash
+   git add .
+   git commit -m "style: update design elements"
+   git push origin style/design-update
+   ```
+
+## قواعد الاختبار
+
+### 1. اختبار الوحدة
+
+**لاختبار Cubit:**
+```dart
+void main() {
+  group('UserCubit Tests', () {
+    late UserCubit userCubit;
+    late MockUserRepository mockRepository;
+    
+    setUp(() {
+      mockRepository = MockUserRepository();
+      userCubit = UserCubit(mockRepository);
+    });
+    
+    tearDown(() {
+      userCubit.close();
+    });
+    
+    test('should emit loaded state when users are loaded', () async {
+      // Arrange
+      when(() => mockRepository.getUsers()).thenAnswer((_) async => mockUsers);
+      
+      // Act
+      userCubit.loadUsers();
+      
+      // Assert
+      expect(userCubit.state, UserState.loaded(mockUsers));
+    });
+  });
+}
+```
+
+### 2. اختبار الواجهة
+
+**لاختبار Widget:**
+```dart
+void main() {
+  group('UserScreen Tests', () {
+    testWidgets('should display user list', (tester) async {
+      // Arrange
+      await tester.pumpWidget(
+        BlocProvider(
+          create: (_) => UserCubit(MockUserRepository()),
+          child: UserScreen(),
+        ),
+      );
+      
+      // Act
+      await tester.pumpAndSettle();
+      
+      // Assert
+      expect(find.byType(UserList), findsOneWidget);
+    });
+  });
+}
+```
+
+### 3. اختبار التكامل
+
+**لاختبار التكامل:**
+```dart
+void main() {
+  group('User Management Integration Tests', () {
+    testWidgets('should create new user', (tester) async {
+      // Arrange
+      await tester.pumpWidget(MyApp());
+      
+      // Act
+      await tester.tap(find.byKey(Key('add_user_button')));
+      await tester.pumpAndSettle();
+      
+      await tester.enterText(find.byKey(Key('name_field')), 'John Doe');
+      await tester.enterText(find.byKey(Key('email_field')), 'john@example.com');
+      
+      await tester.tap(find.byKey(Key('save_button')));
+      await tester.pumpAndSettle();
+      
+      // Assert
+      expect(find.text('User created successfully'), findsOneWidget);
+    });
+  });
+}
+```
+
+## قواعد المراجعة
+
+### 1. مراجعة الكود
+
+**للمراجعة:**
+1. **فحص البنية:**
+   - اتباع Clean Architecture
+   - فصل المسؤوليات
+   - تنظيم الملفات
+
+2. **فحص الكود:**
+   - اتباع معايير الكود
+   - استخدام التسمية الصحيحة
+   - تجنب الكود المكرر
+
+3. **فحص التصميم:**
+   - استخدام AppColors
+   - استخدام flutter_screenutil
+   - دعم RTL
+
+4. **فحص الأداء:**
+   - تحسين ListView
+   - تحسين الذاكرة
+   - تجنب rebuilds غير ضرورية
+
+### 2. مراجعة الأمان
+
+**للأمان:**
+1. **فحص البيانات الحساسة:**
+   - عدم كشف البيانات الحساسة
+   - استخدام SecureStorage
+   - تطبيق التحقق
+
+2. **فحص API:**
+   - استخدام HTTPS
+   - تطبيق المصادقة
+   - معالجة الأخطاء
+
+3. **فحص التخزين:**
+   - تشفير البيانات الحساسة
+   - حماية البيانات المحلية
+   - تنظيف البيانات المؤقتة
+
+### 3. مراجعة إمكانية الوصول
+
+**للإمكانية:**
+1. **فحص Screen Readers:**
+   - استخدام semantic labels
+   - توفير alternative text
+   - دعم التنقل بالكيبورد
+
+2. **فحص RTL:**
+   - دعم اللغة العربية
+   - اختبار التصميم مع RTL
+   - التأكد من التباين
+
+3. **فحص التصميم المتجاوب:**
+   - اختبار على أحجام شاشات مختلفة
+   - اختبار على أجهزة مختلفة
+   - اختبار الأداء
+
+## قواعد النشر
+
+### 1. إعداد البيئة
+
+**للبيئة:**
+```bash
+# تثبيت التبعيات
+flutter pub get
+
+# تشغيل الاختبارات
+flutter test
+
+# فحص الكود
+flutter analyze
+
+# بناء التطبيق
+flutter build apk --release
+```
+
+### 2. اختبار النشر
+
+**للاختبار:**
+1. **اختبار الوظائف:**
+   - اختبار جميع الوظائف الأساسية
+   - اختبار التصميم
+   - اختبار الأداء
+
+2. **اختبار الأمان:**
+   - اختبار المصادقة
+   - اختبار التخزين
+   - اختبار API
+
+3. **اختبار إمكانية الوصول:**
+   - اختبار Screen Readers
+   - اختبار RTL
+   - اختبار التصميم المتجاوب
+
+### 3. نشر التطبيق
+
+**للنشر:**
+1. **إعداد البيئة:**
+   - إعداد مفاتيح التوقيع
+   - إعداد البيئة المناسبة
+   - إعداد التكوين
+
+2. **بناء التطبيق:**
+   - بناء APK للإصدار
+   - بناء AAB للمتجر
+   - اختبار البناء
+
+3. **رفع التطبيق:**
+   - رفع للمتجر
+   - اختبار النشر
+   - مراقبة الأداء
+
+## قواعد الصيانة
+
+### 1. تحديث التبعيات
+
+**للتحديث:**
+```bash
+# فحص التحديثات المتاحة
+flutter pub outdated
+
+# تحديث التبعيات
+flutter pub upgrade
+
+# تحديث التبعيات الرئيسية
+flutter pub upgrade --major-versions
+```
+
+### 2. تنظيف الكود
+
+**للتنظيف:**
+```bash
+# تنظيف الكود
+flutter clean
+
+# إعادة تثبيت التبعيات
+flutter pub get
+
+# تشغيل التحليل
+flutter analyze
+```
+
+### 3. مراقبة الأداء
+
+**للمراقبة:**
+1. **مراقبة الأداء:**
+   - مراقبة استخدام الذاكرة
+   - مراقبة سرعة التحميل
+   - مراقبة الأخطاء
+
+2. **مراقبة المستخدمين:**
+   - مراقبة سلوك المستخدمين
+   - مراقبة الأخطاء
+   - مراقبة الأداء
+
+3. **مراقبة الأمان:**
+   - مراقبة محاولات الاختراق
+   - مراقبة البيانات الحساسة
+   - مراقبة API
+
+## قواعد التوثيق
+
+### 1. توثيق الكود
+
+**للتوثيق:**
+```dart
+/// Loads user data from the repository
+/// 
+/// Returns [User] if successful, throws [ApiException] if failed
+/// 
+/// Example:
+/// ```dart
+/// final user = await userService.loadUser(1);
+/// ```
+Future<User> loadUser(int id) async {
+  // Implementation
+}
+```
+
+### 2. توثيق الميزات
+
+**للميزات:**
+```dart
+/// User management feature
+/// 
+/// This feature provides:
+/// - User listing with search and filters
+/// - User creation with validation
+/// - User editing with real-time updates
+/// - User deletion with confirmation
+/// 
+/// Usage:
+/// ```dart
+/// final userFeature = UserFeature();
+/// await userFeature.initialize();
+/// ```
+class UserFeature {
+  // Implementation
+}
+```
+
+### 3. توثيق API
+
+**للـ API:**
+```dart
+/// User API endpoints
+/// 
+/// Base URL: https://api.example.com/users
+/// 
+/// Endpoints:
+/// - GET /users - List all users
+/// - POST /users - Create new user
+/// - GET /users/{id} - Get user by ID
+/// - PUT /users/{id} - Update user
+/// - DELETE /users/{id} - Delete user
+class UserApi {
+  // Implementation
+}
+```
+
+## ملاحظات مهمة
+
+### 1. التوافق مع الذاكرة
+
+- استخدام `S.of(context)` للترجمة
+- استخدام الألوان المحددة في المشروع
+- عدم استخدام ألوان خارجية أو افتراضية
+
+### 2. الأداء
+
+- استخدام `RefreshIndicator` للـ pull-to-refresh
+- تحسين `ListView.builder` للأداء
+- تجنب rebuilds غير ضرورية
+
+### 3. إمكانية الوصول
+
+- استخدام semantic labels
+- دعم screen readers
+- توفير alternative text للصور
+
+### 4. التصميم المتجاوب
+
+- استخدام `flutter_screenutil` للأحجام
+- دعم RTL للغة العربية
+- اختبار على أحجام شاشات مختلفة
+
+---
+
+**ملاحظة:** يجب اتباع هذه القواعد في جميع مراحل التطوير لضمان الجودة والكفاءة.

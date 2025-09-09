@@ -341,6 +341,9 @@ class CustomersCubit extends Cubit<CustomersState> {
   }
 
   Future<void> deleteCustomer(int id) async {
+    print('🗑️ Deleting customer with ID: $id');
+    print('📊 Current customers count before deletion: ${_customers.length}');
+
     emit(
       CustomersState.loading(
         customers: _customers,
@@ -354,7 +357,14 @@ class CustomersCubit extends Cubit<CustomersState> {
 
     result.when(
       success: (_) {
+        print('✅ Delete API call successful');
+        final initialCount = _customers.length;
         _customers.removeWhere((c) => c.id == id);
+        final finalCount = _customers.length;
+        print(
+          '📊 Customers count after deletion: $finalCount (removed ${initialCount - finalCount})',
+        );
+
         emit(
           CustomersState.deleteSuccess(
             customers: _customers,
@@ -363,8 +373,12 @@ class CustomersCubit extends Cubit<CustomersState> {
             totalPages: _totalPages,
           ),
         );
+        print(
+          '🎯 Emitted deleteSuccess state with ${_customers.length} customers',
+        );
       },
       failure: (error) {
+        print('❌ Delete API call failed: $error');
         emit(
           CustomersState.failure(
             customers: _customers,

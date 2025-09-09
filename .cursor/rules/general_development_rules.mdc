@@ -1,0 +1,566 @@
+# General Development Rules - قواعد التطوير العامة
+
+## نظرة عامة
+
+هذه القواعد العامة للتطوير في مشروع Invotek لضمان الجودة والاتساق.
+
+## قواعد الكود
+
+### 1. تسمية الملفات
+
+**الملفات:**
+- `snake_case` (مثل: `user_screen.dart`)
+- `camelCase` للكلاسات (مثل: `UserScreen`)
+- `UPPER_SNAKE_CASE` للثوابت (مثل: `API_BASE_URL`)
+
+**المجلدات:**
+- `snake_case` (مثل: `user_management/`)
+- تجنب المسافات والرموز الخاصة
+
+### 2. تنظيم الاستيراد
+
+**ترتيب الاستيراد:**
+```dart
+// 1. Flutter imports
+import 'package:flutter/material.dart';
+
+// 2. Third-party package imports
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+// 3. Local imports (core, features)
+import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/users/ui/screens/user_screen.dart';
+
+// 4. Generated imports
+import 'package:invotek/generated/l10n.dart';
+```
+
+### 3. تنظيم الكود
+
+**ترتيب العناصر في الكلاس:**
+```dart
+class MyWidget extends StatefulWidget {
+  // 1. Constructors
+  const MyWidget({super.key});
+
+  // 2. Override methods
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  // 1. Fields
+  final _controller = TextEditingController();
+  
+  // 2. Override methods
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+
+  // 3. Private methods
+  void _handleTap() {}
+  
+  // 4. Public methods
+  void publicMethod() {}
+}
+```
+
+## قواعد التصميم
+
+### 1. استخدام flutter_screenutil
+
+**للأحجام:**
+```dart
+// العرض والارتفاع
+width: 200.w,
+height: 100.h,
+
+// الخط
+fontSize: 16.sp,
+
+// الحدود
+borderRadius: 12.r,
+
+// المسافات
+padding: EdgeInsets.all(16.w),
+margin: EdgeInsets.symmetric(horizontal: 16.w),
+```
+
+### 2. استخدام AppColors
+
+**للألوان:**
+```dart
+// الألوان الأساسية
+color: AppColors.primary,
+backgroundColor: AppColors.background,
+
+// ألوان النصوص
+color: AppColors.textPrimary,
+color: AppColors.textSecondary,
+
+// ألوان الحالة
+color: AppColors.error,
+color: AppColors.success,
+color: AppColors.warning,
+```
+
+### 3. دعم RTL
+
+**للغة العربية:**
+```dart
+// استخدام Directionality
+Directionality(
+  textDirection: TextDirection.rtl,
+  child: YourWidget(),
+)
+
+// أو استخدام Theme.of(context)
+Text(
+  text,
+  style: Theme.of(context).textTheme.bodyLarge,
+)
+```
+
+## قواعد إدارة الحالة
+
+### 1. استخدام Cubit
+
+**لإدارة الحالة:**
+```dart
+class MyCubit extends Cubit<MyState> {
+  MyCubit() : super(MyState.initial());
+
+  Future<void> loadData() async {
+    emit(MyState.loading());
+    try {
+      final data = await _repository.getData();
+      emit(MyState.loaded(data));
+    } catch (e) {
+      emit(MyState.error(e.toString()));
+    }
+  }
+}
+```
+
+### 2. استخدام BlocBuilder
+
+**للعرض:**
+```dart
+BlocBuilder<MyCubit, MyState>(
+  builder: (context, state) {
+    return state.when(
+      initial: () => _buildInitialState(),
+      loading: () => _buildLoadingState(),
+      loaded: (data) => _buildLoadedState(data),
+      error: (error) => _buildErrorState(error),
+    );
+  },
+)
+```
+
+### 3. استخدام BlocListener
+
+**للأحداث:**
+```dart
+BlocListener<MyCubit, MyState>(
+  listener: (context, state) {
+    state.whenOrNull(
+      error: (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error)),
+        );
+      },
+    );
+  },
+  child: YourWidget(),
+)
+```
+
+## قواعد API
+
+### 1. استخدام ApiClient
+
+**للطلبات:**
+```dart
+@RestApi(baseUrl: ApiConstants.baseUrl)
+abstract class ApiClient {
+  @GET('/users')
+  Future<ApiResult<List<User>>> getUsers();
+  
+  @POST('/users')
+  Future<ApiResult<User>> createUser(@Body() CreateUserRequest request);
+}
+```
+
+### 2. معالجة الأخطاء
+
+**للأخطاء:**
+```dart
+try {
+  final result = await _apiClient.getUsers();
+  result.when(
+    success: (data) => emit(MyState.loaded(data)),
+    failure: (error) => emit(MyState.error(error.message)),
+  );
+} catch (e) {
+  emit(MyState.error('خطأ غير متوقع'));
+}
+```
+
+### 3. استخدام ApiResult
+
+**للنتائج:**
+```dart
+Future<ApiResult<User>> getUser(int id) async {
+  try {
+    final response = await _apiClient.getUser(id);
+    return ApiResult.success(response);
+  } catch (e) {
+    return ApiResult.failure(ApiError.fromException(e));
+  }
+}
+```
+
+## قواعد التخزين
+
+### 1. استخدام StorageService
+
+**للبيانات المحلية:**
+```dart
+// حفظ البيانات
+await StorageService.setString('key', 'value');
+await StorageService.setInt('count', 42);
+
+// قراءة البيانات
+final value = await StorageService.getString('key');
+final count = await StorageService.getInt('count');
+```
+
+### 2. استخدام SecureStorage
+
+**للبيانات الحساسة:**
+```dart
+// حفظ البيانات الحساسة
+await SecureStorage.setString('token', token);
+
+// قراءة البيانات الحساسة
+final token = await SecureStorage.getString('token');
+```
+
+## قواعد التحقق
+
+### 1. استخدام Validators
+
+**للتحقق من البيانات:**
+```dart
+// التحقق من البريد الإلكتروني
+final emailError = Validators.validateEmail(email);
+
+// التحقق من كلمة المرور
+final passwordError = Validators.validatePassword(password);
+
+// التحقق من الاسم
+final nameError = Validators.validateName(name);
+```
+
+### 2. التحقق في النماذج
+
+**للنماذج:**
+```dart
+final _formKey = GlobalKey<FormState>();
+
+Form(
+  key: _formKey,
+  child: Column(
+    children: [
+      TextFormField(
+        validator: Validators.validateEmail,
+        decoration: InputDecoration(labelText: 'Email'),
+      ),
+      ElevatedButton(
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            // النموذج صحيح
+          }
+        },
+        child: Text('Submit'),
+      ),
+    ],
+  ),
+)
+```
+
+## قواعد التنقل
+
+### 1. استخدام AppRoutes
+
+**للتنقل:**
+```dart
+// التنقل العادي
+Navigator.pushNamed(context, AppRoutes.userDetailsRoute, arguments: user);
+
+// التنقل مع الاستبدال
+Navigator.pushReplacementNamed(context, AppRoutes.homeRoute);
+
+// التنقل مع الحذف
+Navigator.pushNamedAndRemoveUntil(
+  context,
+  AppRoutes.loginRoute,
+  (route) => false,
+);
+```
+
+### 2. تمرير البيانات
+
+**للبيانات:**
+```dart
+// تمرير البيانات
+Navigator.pushNamed(
+  context,
+  AppRoutes.userDetailsRoute,
+  arguments: user,
+);
+
+// استقبال البيانات
+final user = ModalRoute.of(context)!.settings.arguments as User;
+```
+
+## قواعد الترجمة
+
+### 1. استخدام S.of(context)
+
+**للترجمة:**
+```dart
+Text(S.of(context).welcome),
+Text(S.of(context).login),
+Text(S.of(context).errorMessage),
+```
+
+### 2. إضافة ترجمات جديدة
+
+**في ملفات ARB:**
+```json
+// intl_ar.arb
+{
+  "welcome": "مرحباً",
+  "login": "تسجيل الدخول",
+  "errorMessage": "رسالة خطأ"
+}
+
+// intl_en.arb
+{
+  "welcome": "Welcome",
+  "login": "Login",
+  "errorMessage": "Error Message"
+}
+```
+
+## قواعد الأداء
+
+### 1. تحسين ListView
+
+**للأداء:**
+```dart
+// استخدام ListView.builder
+ListView.builder(
+  itemCount: items.length,
+  itemBuilder: (context, index) {
+    return ItemWidget(item: items[index]);
+  },
+)
+
+// تجنب ListView مع children ثابتة
+// ❌ ListView(children: items.map(...).toList())
+```
+
+### 2. تحسين البحث
+
+**للبحث:**
+```dart
+Timer? _searchTimer;
+
+void _onSearchChanged(String query) {
+  _searchTimer?.cancel();
+  _searchTimer = Timer(Duration(milliseconds: 300), () {
+    context.read<MyCubit>().search(query);
+  });
+}
+```
+
+### 3. تحسين الذاكرة
+
+**للذاكرة:**
+```dart
+@override
+void dispose() {
+  _controller.dispose();
+  _searchTimer?.cancel();
+  super.dispose();
+}
+```
+
+## قواعد الأمان
+
+### 1. عدم كشف البيانات الحساسة
+
+**للأمان:**
+```dart
+// ❌ تجنب
+print('Token: $token');
+
+// ✅ استخدم
+AppLogger.info('User logged in successfully');
+```
+
+### 2. التحقق من البيانات
+
+**للتحقق:**
+```dart
+// التحقق من البيانات المدخلة
+if (email.isEmpty || !email.contains('@')) {
+  throw ValidationException('Invalid email');
+}
+```
+
+### 3. استخدام SecureStorage
+
+**للبيانات الحساسة:**
+```dart
+// حفظ البيانات الحساسة
+await SecureStorage.setString('token', token);
+
+// قراءة البيانات الحساسة
+final token = await SecureStorage.getString('token');
+```
+
+## قواعد الاختبار
+
+### 1. اختبار Cubit
+
+**لاختبار الحالة:**
+```dart
+test('should emit loaded state when data is loaded', () async {
+  // Arrange
+  when(() => mockRepository.getData()).thenAnswer((_) async => mockData);
+  
+  // Act
+  cubit.loadData();
+  
+  // Assert
+  expect(cubit.state, MyState.loaded(mockData));
+});
+```
+
+### 2. اختبار Widget
+
+**لاختبار الواجهة:**
+```dart
+testWidgets('should display user name', (tester) async {
+  // Arrange
+  final user = User(name: 'John Doe');
+  
+  // Act
+  await tester.pumpWidget(MyWidget(user: user));
+  
+  // Assert
+  expect(find.text('John Doe'), findsOneWidget);
+});
+```
+
+## قواعد التوثيق
+
+### 1. توثيق الكود
+
+**للتوثيق:**
+```dart
+/// Loads user data from the repository
+/// 
+/// Returns [User] if successful, throws [ApiException] if failed
+Future<User> loadUser(int id) async {
+  // Implementation
+}
+```
+
+### 2. توثيق الميزات
+
+**للميزات:**
+```dart
+/// User management feature
+/// 
+/// This feature provides:
+/// - User listing
+/// - User creation
+/// - User editing
+/// - User deletion
+class UserFeature {
+  // Implementation
+}
+```
+
+## قواعد Git
+
+### 1. رسائل الـ Commit
+
+**للرسائل:**
+```bash
+# إضافة ميزة جديدة
+git commit -m "feat: add user management screen"
+
+# إصلاح مشكلة
+git commit -m "fix: resolve navigation issue"
+
+# تحديث التصميم
+git commit -m "style: update button colors"
+
+# إضافة اختبارات
+git commit -m "test: add user cubit tests"
+```
+
+### 2. فروع التطوير
+
+**للفروع:**
+```bash
+# إنشاء فرع جديد
+git checkout -b feature/user-management
+
+# دمج الفرع
+git checkout main
+git merge feature/user-management
+```
+
+## ملاحظات مهمة
+
+### 1. التوافق مع الذاكرة
+
+- استخدام `S.of(context)` للترجمة
+- استخدام الألوان المحددة في المشروع
+- عدم استخدام ألوان خارجية أو افتراضية
+
+### 2. الأداء
+
+- استخدام `RefreshIndicator` للـ pull-to-refresh
+- تحسين `ListView.builder` للأداء
+- تجنب rebuilds غير ضرورية
+
+### 3. إمكانية الوصول
+
+- استخدام semantic labels
+- دعم screen readers
+- توفير alternative text للصور
+
+### 4. التصميم المتجاوب
+
+- استخدام `flutter_screenutil` للأحجام
+- دعم RTL للغة العربية
+- اختبار على أحجام شاشات مختلفة
+
+---
+
+**ملاحظة:** يجب اتباع هذه القواعد في جميع المشاريع الجديدة وتحديث المشاريع الموجودة لاتباعها.

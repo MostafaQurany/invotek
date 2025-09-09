@@ -33,6 +33,20 @@ class ApiConstants {
   static const String updateCustomer = "company/customers/{id}";
   static const String deleteCustomer = "company/customers/{id}";
 
+  // expenses
+  static const String expenses = "company/expenses";
+  static const String expenseById = "company/expenses/{id}";
+  static const String createExpense = "company/expenses";
+  static const String updateExpense = "company/expenses/{id}";
+  static const String deleteExpense = "company/expenses/{id}";
+
+  // expense categories
+  static const String expenseCategories = "company/expense-categories";
+  static const String expenseCategoryById = "company/expense-categories/{id}";
+  static const String createExpenseCategory = "company/expense-categories";
+  static const String updateExpenseCategory = "company/expense-categories/{id}";
+  static const String deleteExpenseCategory = "company/expense-categories/{id}";
+
   // users
   static const String users = "users";
   static const String userById = "users/{id}";

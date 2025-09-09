@@ -2,17 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/demo/entit/customer_model.dart';
-import 'package:invotek/features/customers/ui/widgets/customers_app_bar.dart';
-import 'package:invotek/features/customers/ui/widgets/customers_search_and_filters.dart';
-import 'package:invotek/features/customers/ui/widgets/customers_state_builder.dart';
-import 'package:invotek/features/customers/ui/widgets/customer_options_bottom_sheet.dart';
-import 'package:invotek/features/customers/ui/widgets/delete_customer_dialog.dart';
-import 'package:invotek/features/customers/ui/widgets/search_bar_delegate.dart';
+import 'package:invotek/features/customers/ui/widgets/cards/customers_header_widget.dart';
+import 'package:invotek/features/customers/ui/widgets/lists/customers_state_builder.dart';
+import 'package:invotek/features/customers/ui/widgets/cards/customer_options_bottom_sheet.dart';
+import 'package:invotek/features/customers/ui/widgets/dialogs/delete_customer_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class CustomersListScreen extends StatefulWidget {
@@ -55,48 +52,99 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      backgroundColor: colorScheme.surface,
-      body: CustomScrollView(
-        slivers: [
-          // App Bar
-          CustomersAppBar(
-            onMenuPressed: _handleMenuPressed,
-            onAddPressed: _navigateToAddCustomer,
-          ),
-
-          // Search and Filters
-          SliverPersistentHeader(
-            pinned: true,
-            delegate: SearchBarDelegate(
-              child: CustomersSearchAndFilters(
-                searchController: _searchController,
-                selectedStatus: _selectedStatus ?? '',
-                selectedCompany: _selectedCompany ?? '',
-                onSearchChanged: _onSearchChanged,
-                onStatusChanged: _onStatusChanged,
-                onCompanyChanged: _onCompanyChanged,
-                onClearFilters: _clearFilters,
+      backgroundColor: AppColors.primary,
+      body: BlocListener<CustomersCubit, CustomersState>(
+        listener: (context, state) {
+          print('🔄 CustomersListScreen received state: ${state.runtimeType}');
+          state.whenOrNull(
+            deleteSuccess:
+                (
+                  customers,
+                  deletedId,
+                  selectedCustomer,
+                  currentPage,
+                  totalPages,
+                ) {
+                  print(
+                    '✅ DeleteSuccess received with ${customers.length} customers, deletedId: $deletedId',
+                  );
+                  // Customer deleted successfully - UI will update automatically
+                  // No need to show SnackBar here as it's handled in the delete confirmation
+                },
+          );
+        },
+        child: RefreshIndicator(
+          onRefresh: () async {
+            CustomersCubit.get(context).loadFirstPage(refresh: true);
+          },
+          child: CustomScrollView(
+            slivers: [
+              // Custom Header Widget as Sliver
+              SliverToBoxAdapter(
+                child: CustomersHeaderWidget(
+                  onMenuPressed: _handleMenuPressed,
+                  searchController: _searchController,
+                  onSearchChanged: (query) {
+                    CustomersCubit.get(context).loadFirstPage(
+                      refresh: true,
+                      search: query.isEmpty ? null : query,
+                      status: _selectedStatus == 'all_status'
+                          ? null
+                          : _selectedStatus,
+                      company: _selectedCompany == 'all_company'
+                          ? null
+                          : _selectedCompany,
+                    );
+                  },
+                  selectedStatus: _selectedStatus ?? '',
+                  selectedCompany: _selectedCompany ?? '',
+                  onStatusChanged: _onStatusChanged,
+                  onCompanyChanged: _onCompanyChanged,
+                ),
               ),
-            ),
-          ),
 
-          // Customers List
-          CustomersStateBuilder(
-            onCustomerTap: (customer) =>
-                _showCustomerOptions(context, customer),
-            onCustomerView: _navigateToCustomerDetails,
-            onCustomerEdit: _navigateToEditCustomer,
-            onCustomerDelete: _showDeleteConfirmation,
-            onAddCustomer: _navigateToAddCustomer,
-            onRetry: _retry,
-          ),
+              // Customers List
+              SliverFillRemaining(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(28.r),
+                      topRight: Radius.circular(28.r),
+                    ),
+                  ),
+                  child: CustomersStateBuilder(
+                    onCustomerTap: (customer) =>
+                        _showCustomerOptions(context, customer),
+                    onCustomerView: _navigateToCustomerDetails,
+                    onCustomerEdit: _navigateToEditCustomer,
+                    onCustomerDelete: _showDeleteConfirmation,
+                    onAddCustomer: _navigateToAddCustomer,
+                    onRetry: _retry,
+                    selectedStatus: _selectedStatus ?? '',
+                    selectedCompany: _selectedCompany ?? '',
+                    onStatusChanged: _onStatusChanged,
+                    onCompanyChanged: _onCompanyChanged,
+                  ),
+                ),
+              ),
 
-          // Bottom spacing
-          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
-        ],
+              // Bottom spacing for FAB
+            ],
+          ),
+        ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToAddCustomer,
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.white,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
       ),
     );
   }
@@ -118,18 +166,14 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
       if (Navigator.of(context).canPop()) {
         Navigator.of(context).pop();
       } else {
-        Navigator.of(context).pushReplacementNamed('/home');
+        CustomersCubit.get(context).loadFirstPage(
+          refresh: true,
+          search: " query.isEmpty ? null : query",
+          status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+          company: _selectedCompany == 'all_company' ? null : _selectedCompany,
+        );
       }
     }
-  }
-
-  void _onSearchChanged(String query) {
-    CustomersCubit.get(context).loadFirstPage(
-      refresh: true,
-      search: query.isEmpty ? null : query,
-      status: _selectedStatus == 'all_status' ? null : _selectedStatus,
-      company: _selectedCompany == 'all_company' ? null : _selectedCompany,
-    );
   }
 
   void _onStatusChanged(String? status) {
@@ -150,15 +194,6 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
       status: _selectedStatus == 'all_status' ? null : _selectedStatus,
       company: _selectedCompany == 'all_company' ? null : _selectedCompany,
     );
-  }
-
-  void _clearFilters() {
-    setState(() {
-      _searchController.clear();
-      _selectedStatus = 'all_status';
-      _selectedCompany = 'all_company';
-    });
-    CustomersCubit.get(context).loadFirstPage(refresh: true);
   }
 
   void _retry() {
@@ -235,14 +270,24 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
   }
 
   void _showDeleteConfirmation(CustomerModel customer) {
+    // Capture the cubit before showing the dialog
+    final customersCubit = CustomersCubit.get(context);
+
     showDialog(
       context: context,
       builder: (context) => DeleteCustomerDialog(
         customer: customer,
         onConfirm: () {
-          CustomersCubit.get(context).deleteCustomer(customer.id);
+          customersCubit.deleteCustomer(customer.id);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(S.of(context).customerDeletedSuccessfully)),
+            SnackBar(
+              content: Text(S.of(context).customerDeletedSuccessfully),
+              backgroundColor: AppColors.error,
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
           );
         },
       ),

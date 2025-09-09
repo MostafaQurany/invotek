@@ -1,0 +1,554 @@
+# Common Widgets Rules - قواعد الـ Widgets المشتركة
+
+## نظرة عامة
+
+تم إنشاء مجموعة من **Common Widgets** في `core/widgets` لضمان التصميم الموحد والأداء المحسن عبر التطبيق.
+
+## الملفات الموجودة
+
+### 1. CommonSearchBar
+
+**الملف:** `lib/core/widgets/common_search_bar.dart`
+
+**الاستخدام:**
+```dart
+CommonSearchBar(
+  controller: _searchController,
+  hintText: 'Search items...',
+  onChanged: _onSearchChanged,
+  onClear: _onSearchCleared,
+)
+```
+
+**الخصائص:**
+- شريط بحث موحد مع تصميم Material 3
+- زر مسح مدمج
+- دعم RTL للغة العربية
+- تأثيرات بصرية محسنة
+
+### 2. CommonFilterRow
+
+**الملف:** `lib/core/widgets/common_filter_row.dart`
+
+**الاستخدام:**
+```dart
+CommonFilterRow(
+  filters: [
+    FilterConfig(
+      label: 'Status',
+      selectedValue: _selectedStatus,
+      options: [
+        FilterOption(value: 'all', label: 'All'),
+        FilterOption(value: 'active', label: 'Active'),
+        FilterOption(value: 'inactive', label: 'Inactive'),
+      ],
+      onChanged: _onStatusChanged,
+    ),
+    FilterConfig(
+      label: 'Category',
+      selectedValue: _selectedCategory,
+      options: [
+        FilterOption(value: 'all', label: 'All Categories'),
+        FilterOption(value: 'electronics', label: 'Electronics'),
+      ],
+      onChanged: _onCategoryChanged,
+    ),
+  ],
+)
+```
+
+**الخصائص:**
+- صف فلاتر متقدم مع dropdowns
+- دعم فلاتر متعددة
+- تصميم موحد ومتسق
+- تأثيرات hover وfocus
+
+### 3. CommonExtendedFAB
+
+**الملف:** `lib/core/widgets/common_extended_fab.dart`
+
+**الاستخدام:**
+```dart
+CommonExtendedFAB(
+  label: 'Add New Item',
+  icon: Icons.add,
+  onPressed: _addItem,
+)
+```
+
+**الخصائص:**
+- زر إضافة ممتد موحد
+- تصميم Material 3
+- تأثيرات بصرية محسنة
+- دعم الألوان المخصصة
+
+### 4. AnimatedEntryWidget
+
+**الملف:** `lib/core/widgets/animated_entry_widget.dart`
+
+**الاستخدام:**
+```dart
+AnimatedEntryWidget(
+  child: YourWidget(),
+  delay: Duration(milliseconds: 100),
+)
+```
+
+**الخصائص:**
+- تأثيرات دخول متحركة
+- تأخير قابل للتخصيص
+- تحسين تجربة المستخدم
+- أداء محسن
+
+## قواعد الاستخدام
+
+### 1. استخدام CommonSearchBar
+
+**في شاشات القوائم:**
+```dart
+class _MyListScreenState extends State<MyListScreen> {
+  final _searchController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          CommonSearchBar(
+            controller: _searchController,
+            hintText: 'Search ${S.of(context).items}...',
+            onChanged: _onSearchChanged,
+            onClear: _onSearchCleared,
+          ),
+          // باقي المحتوى
+        ],
+      ),
+    );
+  }
+
+  void _onSearchChanged(String query) {
+    // تطبيق البحث
+    context.read<MyCubit>().search(query);
+  }
+
+  void _onSearchCleared() {
+    // مسح البحث
+    context.read<MyCubit>().clearSearch();
+  }
+}
+```
+
+### 2. استخدام CommonFilterRow
+
+**مع فلاتر متعددة:**
+```dart
+CommonFilterRow(
+  filters: [
+    FilterConfig(
+      label: S.of(context).status,
+      selectedValue: _selectedStatus,
+      options: _buildStatusOptions(),
+      onChanged: _onStatusChanged,
+    ),
+    FilterConfig(
+      label: S.of(context).category,
+      selectedValue: _selectedCategory,
+      options: _buildCategoryOptions(),
+      onChanged: _onCategoryChanged,
+    ),
+  ],
+)
+
+List<FilterOption> _buildStatusOptions() {
+  return [
+    FilterOption(value: 'all', label: S.of(context).all),
+    FilterOption(value: 'active', label: S.of(context).active),
+    FilterOption(value: 'inactive', label: S.of(context).inactive),
+  ];
+}
+```
+
+### 3. استخدام CommonExtendedFAB
+
+**في شاشات القوائم:**
+```dart
+floatingActionButton: CommonExtendedFAB(
+  label: S.of(context).addNewItem,
+  icon: Icons.add,
+  onPressed: _addNewItem,
+)
+
+void _addNewItem() {
+  Navigator.pushNamed(context, AppRoutes.addItemRoute);
+}
+```
+
+### 4. استخدام AnimatedEntryWidget
+
+**لتحسين تجربة المستخدم:**
+```dart
+ListView.builder(
+  itemCount: items.length,
+  itemBuilder: (context, index) {
+    return AnimatedEntryWidget(
+      delay: Duration(milliseconds: index * 50),
+      child: ItemCard(
+        item: items[index],
+        onTap: () => _navigateToDetails(items[index]),
+      ),
+    );
+  },
+)
+```
+
+## قواعد التطوير
+
+### 1. إنشاء Common Widget جديد
+
+**عند الحاجة لـ widget جديد:**
+
+1. **إنشاء الملف في `core/widgets`:**
+```dart
+// lib/core/widgets/common_new_widget.dart
+class CommonNewWidget extends StatelessWidget {
+  const CommonNewWidget({
+    super.key,
+    required this.parameter,
+    this.onAction,
+  });
+
+  final String parameter;
+  final VoidCallback? onAction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // Implementation
+    );
+  }
+}
+```
+
+2. **إضافة export في `widgets.dart`:**
+```dart
+// lib/core/widgets/widgets.dart
+export 'common_new_widget.dart';
+```
+
+3. **توثيق الاستخدام في هذا الملف**
+
+4. **اختبار شامل**
+
+### 2. تحديث Common Widget موجود
+
+**عند تحديث widget موجود:**
+
+1. **الحفاظ على التوافق مع الإصدارات السابقة**
+2. **إضافة معاملات جديدة كـ optional**
+3. **اختبار شامل للتأكد من عدم كسر الكود الموجود**
+4. **تحديث التوثيق**
+
+### 3. استخدام AppColors
+
+**في جميع Common Widgets:**
+```dart
+// استخدام الألوان الموحدة
+backgroundColor: AppColors.background,
+primaryColor: AppColors.primary,
+textColor: AppColors.textPrimary,
+errorColor: AppColors.error,
+```
+
+### 4. دعم RTL
+
+**للدعم الكامل للغة العربية:**
+```dart
+// استخدام Directionality
+Directionality(
+  textDirection: TextDirection.rtl,
+  child: YourWidget(),
+)
+
+// أو استخدام Theme.of(context).textTheme
+Text(
+  text,
+  style: Theme.of(context).textTheme.bodyLarge,
+)
+```
+
+## أمثلة متقدمة
+
+### 1. شاشة قائمة محسنة كاملة
+
+```dart
+class EnhancedListScreen extends StatefulWidget {
+  const EnhancedListScreen({super.key});
+
+  @override
+  State<EnhancedListScreen> createState() => _EnhancedListScreenState();
+}
+
+class _EnhancedListScreenState extends State<EnhancedListScreen> {
+  final _searchController = TextEditingController();
+  String _selectedStatus = 'all';
+  String _selectedCategory = 'all';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          // البحث
+          CommonSearchBar(
+            controller: _searchController,
+            hintText: 'Search items...',
+            onChanged: _onSearchChanged,
+            onClear: _onSearchCleared,
+          ),
+          
+          // الفلاتر
+          CommonFilterRow(
+            filters: [
+              FilterConfig(
+                label: 'Status',
+                selectedValue: _selectedStatus,
+                options: _buildStatusOptions(),
+                onChanged: _onStatusChanged,
+              ),
+              FilterConfig(
+                label: 'Category',
+                selectedValue: _selectedCategory,
+                options: _buildCategoryOptions(),
+                onChanged: _onCategoryChanged,
+              ),
+            ],
+          ),
+          
+          // القائمة
+          Expanded(
+            child: BlocBuilder<MyCubit, MyState>(
+              builder: (context, state) {
+                return state.when(
+                  initial: () => _buildEmptyState(),
+                  loading: () => _buildLoadingState(),
+                  loaded: (items) => _buildItemsList(items),
+                  error: (error) => _buildErrorState(error),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: CommonExtendedFAB(
+        label: 'Add New Item',
+        icon: Icons.add,
+        onPressed: _addNewItem,
+      ),
+    );
+  }
+
+  Widget _buildItemsList(List<Item> items) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<MyCubit>().refresh();
+      },
+      child: ListView.builder(
+        padding: EdgeInsets.only(bottom: 80.h),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return AnimatedEntryWidget(
+            delay: Duration(milliseconds: index * 50),
+            child: ItemCard(
+              item: items[index],
+              onTap: () => _navigateToDetails(items[index]),
+              onEdit: () => _editItem(items[index]),
+              onDelete: () => _showDeleteConfirmation(items[index]),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+
+### 2. Custom Dialog محسن
+
+```dart
+class CommonDeleteDialog extends StatelessWidget {
+  const CommonDeleteDialog({
+    super.key,
+    required this.title,
+    required this.message,
+    required this.onConfirm,
+  });
+
+  final String title;
+  final String message;
+  final VoidCallback onConfirm;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: AppColors.surface,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      content: Text(
+        message,
+        style: TextStyle(color: AppColors.textSecondary),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            S.of(context).cancel,
+            style: TextStyle(color: AppColors.textSecondary),
+          ),
+        ),
+        FilledButton.tonal(
+          onPressed: () {
+            Navigator.pop(context);
+            onConfirm();
+          },
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.error.withOpacity(0.1),
+            foregroundColor: AppColors.error,
+          ),
+          child: Text(S.of(context).delete),
+        ),
+      ],
+    );
+  }
+}
+```
+
+## قواعد الأداء
+
+### 1. تحسين ListView
+
+```dart
+// استخدام ListView.builder للأداء
+ListView.builder(
+  itemCount: items.length,
+  itemBuilder: (context, index) {
+    return ItemCard(item: items[index]);
+  },
+)
+
+// تجنب ListView مع children ثابتة
+// ❌ ListView(children: items.map(...).toList())
+```
+
+### 2. تحسين البحث
+
+```dart
+// استخدام debounce للبحث
+Timer? _searchTimer;
+
+void _onSearchChanged(String query) {
+  _searchTimer?.cancel();
+  _searchTimer = Timer(Duration(milliseconds: 300), () {
+    context.read<MyCubit>().search(query);
+  });
+}
+```
+
+### 3. تحسين الذاكرة
+
+```dart
+@override
+void dispose() {
+  _searchController.dispose();
+  _searchTimer?.cancel();
+  super.dispose();
+}
+```
+
+## قواعد التصميم
+
+### 1. استخدام flutter_screenutil
+
+```dart
+// الأحجام
+width: 200.w,
+height: 100.h,
+fontSize: 16.sp,
+borderRadius: 12.r,
+
+// المسافات
+padding: EdgeInsets.all(16.w),
+margin: EdgeInsets.symmetric(horizontal: 16.w),
+```
+
+### 2. استخدام AppColors
+
+```dart
+// الألوان الأساسية
+backgroundColor: AppColors.background,
+primaryColor: AppColors.primary,
+errorColor: AppColors.error,
+successColor: AppColors.success,
+
+// ألوان النصوص
+textPrimary: AppColors.textPrimary,
+textSecondary: AppColors.textSecondary,
+```
+
+### 3. دعم الثيمات
+
+```dart
+// استخدام Theme.of(context)
+Text(
+  text,
+  style: Theme.of(context).textTheme.bodyLarge,
+)
+
+// أو استخدام AppColors مباشرة
+Text(
+  text,
+  style: TextStyle(
+    color: AppColors.textPrimary,
+    fontSize: 16.sp,
+  ),
+)
+```
+
+## ملاحظات مهمة
+
+### 1. التوافق مع الذاكرة
+
+- استخدام `S.of(context)` للترجمة
+- استخدام الألوان المحددة في المشروع
+- عدم استخدام ألوان خارجية أو افتراضية
+
+### 2. إمكانية الوصول
+
+- استخدام semantic labels
+- دعم screen readers
+- توفير alternative text للصور
+
+### 3. التصميم المتجاوب
+
+- استخدام `flutter_screenutil` للأحجام
+- دعم RTL للغة العربية
+- اختبار على أحجام شاشات مختلفة
+
+### 4. الأداء
+
+- تحسين ListView للأداء
+- استخدام debounce للبحث
+- تحسين الذاكرة مع dispose
+
+---
+
+**ملاحظة:** يجب استخدام Common Widgets في جميع الشاشات الجديدة وتحديث الشاشات الموجودة لاستخدامها.

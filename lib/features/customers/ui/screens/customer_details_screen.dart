@@ -2,176 +2,278 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/widgets/animated_entry_widget.dart';
+import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/demo/entit/customer_model.dart';
-import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
-import 'package:invotek/generated/l10n.dart';
 
-class CustomerDetailsScreen extends StatelessWidget {
+class CustomerDetailsScreen extends StatefulWidget {
   final CustomerModel customer;
 
   const CustomerDetailsScreen({super.key, required this.customer});
 
   @override
+  State<CustomerDetailsScreen> createState() => _CustomerDetailsScreenState();
+}
+
+class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
+  @override
   Widget build(BuildContext context) {
-    final s = S.of(context);
+    final customer = widget.customer;
 
     return Scaffold(
-      backgroundColor: AppColors.whiteGray,
-      appBar: AppBar(
-        title: Text(s.customerDetails),
-        backgroundColor: AppColors.white,
-        foregroundColor: AppColors.textPrimary,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.copy, color: AppColors.primary),
-            onPressed: () => _copyCustomerData(context, s),
-            tooltip: s.copy,
-          ),
-          IconButton(
-            icon: Icon(Icons.edit, color: AppColors.primary),
-            onPressed: () => _navigateToEdit(context),
-            tooltip: s.edit,
+      body: CustomScrollView(
+        slivers: [
+          // Modern Header
+          _buildModernHeader(customer),
+
+          // Quick Actions
+          _buildQuickActions(),
+
+          // Content Cards
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: StaggeredAnimatedList(
+                children: [
+                  _buildContactInfoCard(customer),
+                  SizedBox(height: 16.h),
+                  _buildAccountStatusCard(customer),
+                  SizedBox(height: 16.h),
+                  _buildAnalyticsCard(customer),
+                  SizedBox(height: 100.h), // Space for bottom actions
+                ],
+              ),
+            ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Customer Profile Card
-            _buildProfileCard(context, s),
 
-            SizedBox(height: 24.h),
+      // Bottom Actions
+      bottomNavigationBar: _buildBottomActions(),
+    );
+  }
 
-            // Contact Information Card
-            _buildContactInfoCard(context, s),
+  Widget _buildModernHeader(CustomerModel customer) {
+    return SliverToBoxAdapter(
+      child: AnimatedEntryWidget(
+        delay: Duration.zero,
+        child: Container(
+          height: 280.h,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [AppColors.primary, AppColors.primary.withOpacity(0.1)],
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(32.r),
+              bottomRight: Radius.circular(32.r),
+            ),
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Back Button
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: AppColors.white,
+                          size: 24.sp,
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        onPressed: () => _showHelpDialog(),
+                        icon: Icon(
+                          Icons.help_outline,
+                          color: AppColors.white,
+                          size: 24.sp,
+                        ),
+                      ),
+                    ],
+                  ),
 
-            SizedBox(height: 24.h),
+                  SizedBox(height: 20.h),
 
-            // Status Information Card
-            _buildStatusInfoCard(context, s),
+                  // Customer Info
+                  Row(
+                    children: [
+                      // Avatar
+                      Container(
+                        width: 80.w,
+                        height: 80.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            customer.name.isNotEmpty
+                                ? customer.name[0].toUpperCase()
+                                : 'C',
+                            style: TextStyle(
+                              fontSize: 32.sp,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ),
 
-            SizedBox(height: 32.h),
+                      SizedBox(width: 20.w),
 
-            // Action Buttons
-            _buildActionButtons(context, s),
-          ],
+                      // Customer Details
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              customer.name,
+                              style: TextStyle(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.white,
+                              ),
+                            ),
+                            SizedBox(height: 8.h),
+                            Text(
+                              customer.companyName ?? 'Company',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                color: AppColors.white.withOpacity(0.8),
+                              ),
+                            ),
+                            SizedBox(height: 12.h),
+                            _buildStatusChip(customer.status),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildProfileCard(BuildContext context, S s) {
-    return Card(
-      elevation: 2,
-      shadowColor: AppColors.black.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(32.w),
-        child: Column(
-          children: [
-            // Enhanced Avatar with better styling
-            Container(
-              width: 80.w,
-              height: 80.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  customer.name.isNotEmpty
-                      ? customer.name[0].toUpperCase()
-                      : 'C',
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32.sp,
-                  ),
-                ),
-              ),
+  Widget _buildStatusChip(String status) {
+    final isActive = status.toLowerCase() == 'active';
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      decoration: BoxDecoration(
+        color: isActive ? AppColors.white : AppColors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 8.w,
+            height: 8.w,
+            decoration: BoxDecoration(
+              color: isActive ? AppColors.success : AppColors.error,
+              shape: BoxShape.circle,
             ),
+          ),
+          SizedBox(width: 6.w),
+          Text(
+            status.toUpperCase(),
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w600,
+              color: isActive ? AppColors.primary : AppColors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-            SizedBox(height: 20.h),
+  Widget _buildQuickActions() {
+    return SliverToBoxAdapter(
+      child: AnimatedEntryWidget(
+        delay: Duration(milliseconds: 200),
+        child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildActionButton(
+                icon: Icons.phone,
+                label: 'Call',
+                onTap: () => _makeCall(),
+              ),
+              _buildActionButton(
+                icon: Icons.email,
+                label: 'Email',
+                onTap: () => _sendEmail(),
+              ),
+              _buildActionButton(
+                icon: Icons.receipt,
+                label: 'Invoices',
+                onTap: () => _viewInvoices(),
+              ),
+              _buildActionButton(
+                icon: Icons.shopping_cart,
+                label: 'Orders',
+                onTap: () => _viewOrders(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-            // Customer Name
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 70.w,
+        height: 70.w,
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(16.r),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: AppColors.primary, size: 24.sp),
+            SizedBox(height: 4.h),
             Text(
-              customer.name,
+              label,
               style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.bold,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w500,
                 color: AppColors.textPrimary,
               ),
-              textAlign: TextAlign.center,
-            ),
-
-            SizedBox(height: 8.h),
-
-            // Company Name (if available)
-            if (customer.companyName != null &&
-                customer.companyName!.isNotEmpty)
-              Text(
-                customer.companyName!,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.greyDark,
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-            SizedBox(height: 16.h),
-
-            // Enhanced Status Chip
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-              decoration: BoxDecoration(
-                color: customer.status == 'active'
-                    ? AppColors.primary
-                    : AppColors.error,
-                borderRadius: BorderRadius.circular(25.r),
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                        (customer.status == 'active'
-                                ? AppColors.primary
-                                : AppColors.error)
-                            .withOpacity(0.3),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    customer.status == 'active' ? Icons.check : Icons.close,
-                    color: AppColors.white,
-                    size: 16.sp,
-                  ),
-                  SizedBox(width: 6.w),
-                  Text(
-                    customer.status == 'active' ? s.active : s.inactive,
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),
@@ -179,416 +281,474 @@ class CustomerDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildContactInfoCard(BuildContext context, S s) {
-    return Card(
-      elevation: 2,
-      shadowColor: AppColors.black.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-      child: Padding(
-        padding: EdgeInsets.all(24.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Section Header
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Icon(
-                    Icons.contact_phone_outlined,
-                    color: AppColors.primary,
-                    size: 24.sp,
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                Text(
-                  s.contactInfo,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20.h),
-
-            // Email
-            _buildContactRow(
-              icon: Icons.email_outlined,
-              label: s.email,
-              value: customer.email,
-              iconColor: AppColors.primary,
-            ),
-
-            // Phone
-            if (customer.phone != null && customer.phone!.isNotEmpty)
-              _buildContactRow(
-                icon: Icons.phone_outlined,
-                label: s.customerPhone,
-                value: customer.phone!,
-                iconColor: AppColors.primary,
-              ),
-
-            // Address
-            if (customer.address != null && customer.address!.isNotEmpty)
-              _buildContactRow(
-                icon: Icons.location_on_outlined,
-                label: s.customerAddress,
-                value: customer.address!,
-                iconColor: AppColors.primary,
-                maxLines: 2,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusInfoCard(BuildContext context, S s) {
-    return Card(
-      elevation: 2,
-      shadowColor: AppColors.black.withOpacity(0.1),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-      child: Padding(
-        padding: EdgeInsets.all(24.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Section Header
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Icon(
-                    Icons.info_outlined,
-                    color: AppColors.primary,
-                    size: 24.sp,
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                Text(
-                  s.statusInfo,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20.h),
-
-            // Status Row
-            Row(
-              children: [
-                Icon(
-                  customer.status == 'active'
-                      ? Icons.check_circle
-                      : Icons.cancel,
-                  color: customer.status == 'active'
-                      ? AppColors.primary
-                      : AppColors.error,
-                  size: 20.sp,
-                ),
-                SizedBox(width: 12.w),
-                Text(
-                  s.status,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: AppColors.greyDark,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(width: 8.w),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 4.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: customer.status == 'active'
-                        ? AppColors.primary
-                        : AppColors.error,
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  child: Text(
-                    customer.status == 'active' ? s.active : s.inactive,
-                    style: TextStyle(
-                      color: AppColors.white,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 16.h),
-            if (customer.createdAt != null)
-              // Created Date
-              _buildStatusRow(
-                icon: Icons.calendar_today_outlined,
-                label: s.createdDate,
-                value: _formatDate(customer.createdAt!),
-              ),
-
-            SizedBox(height: 12.h),
-
-            if (customer.updatedAt != null)
-              // Last Updated
-              _buildStatusRow(
-                icon: Icons.update_outlined,
-                label: s.lastUpdated,
-                value: _formatDate(customer.updatedAt!),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContactRow({
-    required IconData icon,
-    required String label,
-    required String value,
-    required Color iconColor,
-    int maxLines = 1,
-  }) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16.h),
-      child: Row(
+  Widget _buildContactInfoCard(CustomerModel customer) {
+    return AnimatedCard(
+      delay: Duration(milliseconds: 400),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20.sp, color: iconColor),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: AppColors.greyDark,
-                    fontWeight: FontWeight.w500,
-                  ),
+          Row(
+            children: [
+              Icon(Icons.contact_phone, color: AppColors.primary, size: 24.sp),
+              SizedBox(width: 12.w),
+              Text(
+                'Contact Information',
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
                 ),
-                SizedBox(height: 4.h),
-                Text(
-                  value,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: AppColors.textPrimary,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: maxLines > 1 ? null : 'monospace',
-                  ),
-                  maxLines: maxLines,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20.h),
+
+          // Email
+          _buildInfoTile(
+            icon: Icons.email_outlined,
+            label: 'Email',
+            value: customer.email,
+            onAction: () => _copyToClipboard(customer.email),
+            actionLabel: 'Copy',
+          ),
+
+          SizedBox(height: 16.h),
+
+          // Phone
+          _buildInfoTile(
+            icon: Icons.phone_outlined,
+            label: 'Phone',
+            value: customer.phone ?? 'Not provided',
+            onAction: customer.phone != null ? () => _makeCall() : null,
+            actionLabel: 'Call',
+          ),
+
+          SizedBox(height: 16.h),
+
+          // Address
+          _buildInfoTile(
+            icon: Icons.location_on_outlined,
+            label: 'Address',
+            value: customer.address ?? 'Not provided',
+            onAction: customer.address != null ? () => _openMap() : null,
+            actionLabel: 'Map',
           ),
         ],
       ),
     );
   }
 
-  Widget _buildStatusRow({
+  Widget _buildAccountStatusCard(CustomerModel customer) {
+    return AnimatedCard(
+      delay: Duration(milliseconds: 600),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.account_circle_outlined,
+                color: AppColors.primary,
+                size: 24.sp,
+              ),
+              SizedBox(width: 12.w),
+              Text(
+                'Account Status',
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20.h),
+
+          // Status
+          _buildInfoTile(
+            icon: Icons.flag_outlined,
+            label: 'Status',
+            value: customer.status.toUpperCase(),
+            valueColor: customer.status.toLowerCase() == 'active'
+                ? AppColors.success
+                : AppColors.error,
+          ),
+
+          SizedBox(height: 16.h),
+
+          // Created Date
+          _buildInfoTile(
+            icon: Icons.calendar_today_outlined,
+            label: 'Created',
+            value: _formatDate(customer.createdAt),
+          ),
+
+          SizedBox(height: 16.h),
+
+          // Last Updated
+          _buildInfoTile(
+            icon: Icons.update_outlined,
+            label: 'Last Updated',
+            value: _formatDate(customer.updatedAt),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAnalyticsCard(CustomerModel customer) {
+    return AnimatedCard(
+      delay: Duration(milliseconds: 800),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.analytics_outlined,
+                color: AppColors.primary,
+                size: 24.sp,
+              ),
+              SizedBox(width: 12.w),
+              Text(
+                'Quick Insights',
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 20.h),
+
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatItem(
+                  icon: Icons.receipt_long,
+                  label: 'Invoices',
+                  value: '12',
+                  subtitle: '8 Paid',
+                ),
+              ),
+              SizedBox(width: 16.w),
+              Expanded(
+                child: _buildStatItem(
+                  icon: Icons.shopping_cart,
+                  label: 'Orders',
+                  value: '24',
+                  subtitle: 'SAR 15,420',
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem({
     required IconData icon,
     required String label,
     required String value,
+    required String subtitle,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: AppColors.primary.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: AppColors.primary, size: 24.sp),
+          SizedBox(height: 8.h),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.greyDark,
+            ),
+          ),
+          SizedBox(height: 2.h),
+          Text(
+            subtitle,
+            style: TextStyle(fontSize: 10.sp, color: AppColors.greyDark),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoTile({
+    required IconData icon,
+    required String label,
+    required String value,
+    String? actionLabel,
+    VoidCallback? onAction,
+    Color? valueColor,
   }) {
     return Row(
       children: [
-        Icon(icon, size: 20.sp, color: AppColors.greyDark),
+        Icon(icon, color: AppColors.greyDark, size: 20.sp),
         SizedBox(width: 12.w),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: AppColors.greyDark,
-            fontWeight: FontWeight.w500,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.greyDark,
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w500,
+                  color: valueColor ?? AppColors.textPrimary,
+                ),
+              ),
+            ],
           ),
         ),
-        SizedBox(width: 8.w),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'monospace',
+        if (onAction != null && actionLabel != null)
+          GestureDetector(
+            onTap: onAction,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              child: Text(
+                actionLabel,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
           ),
-        ),
       ],
     );
   }
 
-  Widget _buildActionButtons(BuildContext context, S s) {
-    return Row(
-      children: [
-        // Delete Button (Red Outlined)
-        Expanded(
-          child: OutlinedButton.icon(
-            onPressed: () => _showDeleteConfirmation(context, s),
-            icon: Icon(Icons.delete_outline, size: 20.sp),
-            label: Text(s.delete),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.error,
-              side: BorderSide(color: AppColors.error, width: 1.5),
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
+  Widget _buildBottomActions() {
+    return AnimatedEntryWidget(
+      delay: Duration(milliseconds: 1000),
+      child: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: Offset(0, -2),
             ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => _showDeleteConfirmation(),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.error),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.delete_outline,
+                        color: AppColors.error,
+                        size: 20.sp,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        'Delete',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.error,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                flex: 2,
+                child: FilledButton(
+                  onPressed: () => _editCustomer(),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.edit_outlined,
+                        color: AppColors.white,
+                        size: 20.sp,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        'Edit Customer',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-
-        SizedBox(width: 16.w),
-
-        // Edit Button (Primary Filled)
-        Expanded(
-          flex: 2,
-          child: FilledButton.icon(
-            onPressed: () => _navigateToEdit(context),
-            icon: Icon(Icons.edit, size: 20.sp),
-            label: Text(s.editCustomer),
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.white,
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              elevation: 2,
-              shadowColor: AppColors.primary.withOpacity(0.3),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  String _formatDate(DateTime dateTime) {
-    return '${dateTime.day.toString().padLeft(2, '0')}/${dateTime.month.toString().padLeft(2, '0')}/${dateTime.year}';
-  }
-
-  void _navigateToEdit(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => EditCustomerScreen(customer: customer),
       ),
     );
   }
 
-  void _copyCustomerData(BuildContext context, S s) {
-    // Create a formatted string with all customer data
-    final StringBuffer customerData = StringBuffer();
+  // Helper Methods
+  String _formatDate(DateTime? date) {
+    if (date == null) return 'Not available';
+    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
+  }
 
-    customerData.writeln('${s.customerDetails} - ${customer.name}');
-    customerData.writeln('=' * 30);
-    customerData.writeln();
-
-    // Basic Information
-    customerData.writeln(s.basicInformation);
-    customerData.writeln('${s.customerName}: ${customer.name}');
-    if (customer.companyName != null && customer.companyName!.isNotEmpty) {
-      customerData.writeln('${s.customerCompanyName}: ${customer.companyName}');
-    }
-    customerData.writeln('${s.email}: ${customer.email}');
-    if (customer.phone != null && customer.phone!.isNotEmpty) {
-      customerData.writeln('${s.customerPhone}: ${customer.phone}');
-    }
-    customerData.writeln();
-
-    // Address Information
-    if (customer.address != null && customer.address!.isNotEmpty) {
-      customerData.writeln(s.addressInformation);
-      customerData.writeln('${s.customerAddress}: ${customer.address}');
-      if (customer.city != null && customer.city!.isNotEmpty) {
-        customerData.writeln('${s.customerCity}: ${customer.city}');
-      }
-      if (customer.region != null && customer.region!.isNotEmpty) {
-        customerData.writeln('${s.customerRegion}: ${customer.region}');
-      }
-      if (customer.postalCode != null && customer.postalCode!.isNotEmpty) {
-        customerData.writeln('${s.customerPostalCode}: ${customer.postalCode}');
-      }
-      if (customer.detailedAddress != null &&
-          customer.detailedAddress!.isNotEmpty) {
-        customerData.writeln(
-          '${s.customerDetailedAddress}: ${customer.detailedAddress}',
-        );
-      }
-      customerData.writeln();
-    }
-
-    // Additional Information
-    customerData.writeln(s.additionalInformation);
-    customerData.writeln(
-      '${s.status}: ${customer.status == 'active' ? s.active : s.inactive}',
-    );
-    if (customer.taxNumber != null && customer.taxNumber!.isNotEmpty) {
-      customerData.writeln('${s.customerTaxNumber}: ${customer.taxNumber}');
-    }
-    if (customer.commercialRegister != null &&
-        customer.commercialRegister!.isNotEmpty) {
-      customerData.writeln(
-        '${s.customerCommercialRegister}: ${customer.commercialRegister}',
+  void _makeCall() {
+    if (widget.customer.phone != null) {
+      // Implement phone call functionality
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Calling ${widget.customer.phone}'),
+          backgroundColor: AppColors.primary,
+        ),
       );
     }
-    if (customer.responsiblePerson != null &&
-        customer.responsiblePerson!.isNotEmpty) {
-      customerData.writeln(
-        '${s.customerResponsiblePerson}: ${customer.responsiblePerson}',
+  }
+
+  void _sendEmail() {
+    if (widget.customer.email.isNotEmpty) {
+      // Implement email functionality
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Opening email to ${widget.customer.email}'),
+          backgroundColor: AppColors.primary,
+        ),
       );
     }
-    if (customer.notes != null && customer.notes!.isNotEmpty) {
-      customerData.writeln('${s.customerNotes}: ${customer.notes}');
-    }
+  }
 
-    // Dates
-    if (customer.createdAt != null) {
-      customerData.writeln(
-        '${s.createdDate}: ${_formatDate(customer.createdAt!)}',
-      );
-    }
-    if (customer.updatedAt != null) {
-      customerData.writeln(
-        '${s.lastUpdated}: ${_formatDate(customer.updatedAt!)}',
-      );
-    }
-
-    // Copy to clipboard
-    Clipboard.setData(ClipboardData(text: customerData.toString()));
-
-    // Show success message
+  void _viewInvoices() {
+    // Navigate to invoices
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(s.customerDataCopied),
+        content: Text('Viewing invoices for ${widget.customer.name}'),
         backgroundColor: AppColors.primary,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        duration: const Duration(seconds: 2),
       ),
     );
   }
 
-  void _showDeleteConfirmation(BuildContext context, S s) {
+  void _viewOrders() {
+    // Navigate to orders
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Viewing orders for ${widget.customer.name}'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  void _copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Copied to clipboard'),
+        backgroundColor: AppColors.success,
+      ),
+    );
+  }
+
+  void _openMap() {
+    // Implement map functionality
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Opening map'),
+        backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  void _editCustomer() {
+    Navigator.pushNamed(context, '/customers/edit', arguments: widget.customer);
+  }
+
+  void _showDeleteConfirmation() {
+    final customersCubit = CustomersCubit.get(context);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        title: Text(
+          'Delete Customer',
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
+        ),
+        content: Text(
+          'Are you sure you want to delete ${widget.customer.name}? This action cannot be undone.',
+          style: TextStyle(fontSize: 14.sp),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context); // Close dialog
+              customersCubit.deleteCustomer(widget.customer.id ?? 0);
+              Navigator.pop(context, 'deleted'); // Go back to list with result
+            },
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+            child: Text('Delete'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showHelpDialog() {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -597,27 +757,18 @@ class CustomerDetailsScreen extends StatelessWidget {
         ),
         title: Row(
           children: [
-            Icon(Icons.warning_amber_outlined, color: AppColors.error),
+            Icon(Icons.help_outline, color: AppColors.primary),
             SizedBox(width: 8.w),
-            Text(s.confirmDelete),
+            Text('Help'),
           ],
         ),
-        content: Text(s.deleteCustomerConfirmation(customer.name)),
+        content: Text(
+          'This screen shows detailed information about the customer including contact details, account status, and quick insights.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(s.cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context); // Close dialog
-              Navigator.pop(context, 'deleted'); // Go back to list with result
-            },
-            style: FilledButton.styleFrom(
-              backgroundColor: AppColors.error,
-              foregroundColor: AppColors.white,
-            ),
-            child: Text(s.delete),
+            child: Text('OK'),
           ),
         ],
       ),

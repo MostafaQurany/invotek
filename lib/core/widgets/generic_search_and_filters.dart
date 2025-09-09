@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/generated/l10n.dart';
 
 /// A generic, reusable search and filters widget that can be used throughout the app
@@ -76,21 +77,38 @@ class GenericSearchAndFilters extends StatelessWidget {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return SizedBox(
-      height: 40.h,
-      child: SearchBar(
+    return Container(
+      height: 48.h,
+      decoration: BoxDecoration(
+        color:
+            AppColors.searchBarBackground, // Light grey background from image
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: TextField(
         controller: searchController,
-        hintText: searchHintText,
-        leading: Icon(
-          Icons.search,
-          color: colorScheme.onSurfaceVariant,
-          size: 16.sp,
-        ),
-        padding: WidgetStateProperty.all(EdgeInsets.symmetric(horizontal: 8.w)),
         onChanged: onSearchChanged,
-        textStyle: WidgetStateProperty.all(TextStyle(fontSize: 12.sp)),
+        style: TextStyle(fontSize: 14.sp, color: AppColors.textPrimary),
+        decoration: InputDecoration(
+          hintText: searchHintText,
+          hintStyle: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
+          prefixIcon: Icon(
+            Icons.search,
+            color: AppColors.textSecondary,
+            size: 20.sp,
+          ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
+          ),
+        ),
       ),
     );
   }
@@ -124,10 +142,19 @@ class GenericSearchAndFilters extends StatelessWidget {
   }
 
   Widget _buildSingleFilter(BuildContext context, FilterConfig filter) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return SizedBox(
+    return Container(
       height: 50.h,
+      decoration: BoxDecoration(
+        color: AppColors.cardBackground, // White background for cards
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
       child: DropdownButtonFormField<String>(
         value:
             filter.options.any((option) => option.value == filter.selectedValue)
@@ -139,10 +166,13 @@ class GenericSearchAndFilters extends StatelessWidget {
         isDense: true,
         decoration: InputDecoration(
           labelText: filter.label,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.r)),
-          filled: true,
-          fillColor: colorScheme.surfaceContainer,
-          contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+          labelStyle: TextStyle(
+            fontSize: 12.sp,
+            color: AppColors.textSecondary,
+            fontWeight: FontWeight.w500,
+          ),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           isDense: true,
         ),
         items: filter.options
@@ -151,7 +181,10 @@ class GenericSearchAndFilters extends StatelessWidget {
                 value: option.value,
                 child: Text(
                   option.label,
-                  style: TextStyle(fontSize: 12.sp),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: AppColors.textPrimary,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -162,6 +195,12 @@ class GenericSearchAndFilters extends StatelessWidget {
             filter.onChanged(value);
           }
         },
+        icon: Icon(
+          Icons.keyboard_arrow_down,
+          color: AppColors.textSecondary,
+          size: 20.sp,
+        ),
+        style: TextStyle(fontSize: 14.sp, color: AppColors.textPrimary),
       ),
     );
   }

@@ -1,0 +1,756 @@
+# Advanced Development Rules - قواعد التطوير المتقدمة
+
+## نظرة عامة
+
+هذه القواعد المتقدمة للتطوير في مشروع Invotek لضمان الجودة العالية والأداء المحسن.
+
+## قواعد الأداء المتقدمة
+
+### 1. تحسين ListView للأداء
+
+**للأداء العالي:**
+```dart
+// استخدام ListView.builder مع itemExtent
+ListView.builder(
+  itemCount: items.length,
+  itemExtent: 80.h, // ارتفاع ثابت للأداء
+  itemBuilder: (context, index) {
+    return ItemWidget(item: items[index]);
+  },
+)
+
+// أو استخدام ListView.separated للفواصل
+ListView.separated(
+  itemCount: items.length,
+  separatorBuilder: (context, index) => Divider(height: 1.h),
+  itemBuilder: (context, index) {
+    return ItemWidget(item: items[index]);
+  },
+)
+```
+
+### 2. تحسين البحث المتقدم
+
+**للبحث المحسن:**
+```dart
+class SearchController {
+  Timer? _debounceTimer;
+  final Duration _debounceDelay = Duration(milliseconds: 300);
+  
+  void onSearchChanged(String query, Function(String) onSearch) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(_debounceDelay, () {
+      onSearch(query);
+    });
+  }
+  
+  void dispose() {
+    _debounceTimer?.cancel();
+  }
+}
+```
+
+### 3. تحسين الذاكرة
+
+**لإدارة الذاكرة:**
+```dart
+class MyWidget extends StatefulWidget {
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  late final TextEditingController _controller;
+  late final FocusNode _focusNode;
+  Timer? _timer;
+  
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+    _focusNode = FocusNode();
+  }
+  
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    _timer?.cancel();
+    super.dispose();
+  }
+}
+```
+
+## قواعد التصميم المتقدمة
+
+### 1. استخدام CustomScrollView
+
+**للتصميم المتقدم:**
+```dart
+CustomScrollView(
+  slivers: [
+    // App Bar
+    SliverAppBar(
+      expandedHeight: 200.h,
+      flexibleSpace: FlexibleSpaceBar(
+        title: Text('Title'),
+        background: Image.asset('assets/images/header.jpg'),
+      ),
+    ),
+    
+    // Search Bar
+    SliverPersistentHeader(
+      pinned: true,
+      delegate: SearchBarDelegate(
+        child: SearchBar(),
+      ),
+    ),
+    
+    // List
+    SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return ItemWidget(item: items[index]);
+        },
+        childCount: items.length,
+      ),
+    ),
+  ],
+)
+```
+
+### 2. استخدام AnimatedContainer
+
+**للحركات المتقدمة:**
+```dart
+AnimatedContainer(
+  duration: Duration(milliseconds: 300),
+  curve: Curves.easeInOut,
+  width: _isExpanded ? 200.w : 100.w,
+  height: _isExpanded ? 200.h : 100.h,
+  decoration: BoxDecoration(
+    color: _isExpanded ? AppColors.primary : AppColors.secondary,
+    borderRadius: BorderRadius.circular(_isExpanded ? 20.r : 10.r),
+  ),
+  child: Center(
+    child: Text(
+      _isExpanded ? 'Expanded' : 'Collapsed',
+      style: TextStyle(color: AppColors.white),
+    ),
+  ),
+)
+```
+
+### 3. استخدام Hero Animation
+
+**للانتقالات المتقدمة:**
+```dart
+// في الشاشة الأولى
+Hero(
+  tag: 'item_${item.id}',
+  child: ItemCard(item: item),
+)
+
+// في الشاشة الثانية
+Hero(
+  tag: 'item_${item.id}',
+  child: ItemDetailsCard(item: item),
+)
+```
+
+## قواعد إدارة الحالة المتقدمة
+
+### 1. استخدام BlocProvider.value
+
+**للـ Cubits المشتركة:**
+```dart
+// في main.dart
+BlocProvider.value(
+  value: getIt<ProductsCubit>(),
+  child: MyApp(),
+)
+
+// في الشاشة
+BlocBuilder<ProductsCubit, ProductsState>(
+  builder: (context, state) {
+    return state.when(
+      initial: () => _buildInitialState(),
+      loading: () => _buildLoadingState(),
+      loaded: (products) => _buildProductsList(products),
+      error: (error) => _buildErrorState(error),
+    );
+  },
+)
+```
+
+### 2. استخدام MultiBlocProvider
+
+**لعدة Cubits:**
+```dart
+MultiBlocProvider(
+  providers: [
+    BlocProvider<ProductsCubit>(
+      create: (context) => ProductsCubit(),
+    ),
+    BlocProvider<CategoriesCubit>(
+      create: (context) => CategoriesCubit(),
+    ),
+  ],
+  child: MyScreen(),
+)
+```
+
+### 3. استخدام BlocConsumer
+
+**للأحداث والحالة:**
+```dart
+BlocConsumer<MyCubit, MyState>(
+  listener: (context, state) {
+    state.whenOrNull(
+      error: (error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error)),
+        );
+      },
+      success: (data) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Success')),
+        );
+      },
+    );
+  },
+  builder: (context, state) {
+    return state.when(
+      initial: () => _buildInitialState(),
+      loading: () => _buildLoadingState(),
+      loaded: (data) => _buildLoadedState(data),
+      error: (error) => _buildErrorState(error),
+    );
+  },
+)
+```
+
+## قواعد API المتقدمة
+
+### 1. استخدام Interceptors
+
+**للـ API المتقدم:**
+```dart
+class AuthInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final token = StorageService.getString('token');
+    if (token != null) {
+      options.headers['Authorization'] = 'Bearer $token';
+    }
+    handler.next(options);
+  }
+  
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (err.response?.statusCode == 401) {
+      // Handle unauthorized
+      StorageService.remove('token');
+      // Navigate to login
+    }
+    handler.next(err);
+  }
+}
+```
+
+### 2. استخدام Retry Logic
+
+**للإعادة المحاولة:**
+```dart
+class RetryInterceptor extends Interceptor {
+  @override
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    if (err.response?.statusCode == 500) {
+      // Retry logic
+      final retryCount = err.requestOptions.extra['retryCount'] ?? 0;
+      if (retryCount < 3) {
+        await Future.delayed(Duration(seconds: 2));
+        final dio = Dio();
+        final response = await dio.fetch(err.requestOptions);
+        handler.resolve(response);
+        return;
+      }
+    }
+    handler.next(err);
+  }
+}
+```
+
+### 3. استخدام Caching
+
+**للتخزين المؤقت:**
+```dart
+class CacheInterceptor extends Interceptor {
+  final Map<String, Response> _cache = {};
+  
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    if (options.method == 'GET') {
+      final cachedResponse = _cache[options.path];
+      if (cachedResponse != null) {
+        handler.resolve(cachedResponse);
+        return;
+      }
+    }
+    handler.next(options);
+  }
+  
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    if (response.requestOptions.method == 'GET') {
+      _cache[response.requestOptions.path] = response;
+    }
+    handler.next(response);
+  }
+}
+```
+
+## قواعد التخزين المتقدمة
+
+### 1. استخدام Hive
+
+**للتخزين المحلي المتقدم:**
+```dart
+class HiveStorageService {
+  static late Box _box;
+  
+  static Future<void> init() async {
+    await Hive.initFlutter();
+    _box = await Hive.openBox('app_data');
+  }
+  
+  static Future<void> setString(String key, String value) async {
+    await _box.put(key, value);
+  }
+  
+  static String? getString(String key) {
+    return _box.get(key);
+  }
+  
+  static Future<void> setObject(String key, Map<String, dynamic> value) async {
+    await _box.put(key, value);
+  }
+  
+  static Map<String, dynamic>? getObject(String key) {
+    return _box.get(key);
+  }
+}
+```
+
+### 2. استخدام SQLite
+
+**للقواعد البيانات:**
+```dart
+class DatabaseHelper {
+  static late Database _database;
+  
+  static Future<void> init() async {
+    _database = await openDatabase(
+      'app_database.db',
+      version: 1,
+      onCreate: (db, version) {
+        db.execute('''
+          CREATE TABLE users (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL
+          )
+        ''');
+      },
+    );
+  }
+  
+  static Future<List<Map<String, dynamic>>> getUsers() async {
+    return await _database.query('users');
+  }
+  
+  static Future<void> insertUser(Map<String, dynamic> user) async {
+    await _database.insert('users', user);
+  }
+}
+```
+
+## قواعد التحقق المتقدمة
+
+### 1. استخدام Form Validation
+
+**للتحقق المتقدم:**
+```dart
+class AdvancedValidators {
+  static String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'البريد الإلكتروني مطلوب';
+    }
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+      return 'البريد الإلكتروني غير صحيح';
+    }
+    return null;
+  }
+  
+  static String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'كلمة المرور مطلوبة';
+    }
+    if (value.length < 8) {
+      return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+    }
+    if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)').hasMatch(value)) {
+      return 'كلمة المرور يجب أن تحتوي على حرف كبير وصغير ورقم';
+    }
+    return null;
+  }
+  
+  static String? validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'رقم الهاتف مطلوب';
+    }
+    if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+      return 'رقم الهاتف يجب أن يكون 10 أرقام';
+    }
+    return null;
+  }
+}
+```
+
+### 2. استخدام Custom Validators
+
+**للتحقق المخصص:**
+```dart
+class CustomValidators {
+  static String? validateAge(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'العمر مطلوب';
+    }
+    final age = int.tryParse(value);
+    if (age == null) {
+      return 'العمر يجب أن يكون رقماً';
+    }
+    if (age < 18) {
+      return 'العمر يجب أن يكون 18 سنة على الأقل';
+    }
+    if (age > 100) {
+      return 'العمر يجب أن يكون أقل من 100 سنة';
+    }
+    return null;
+  }
+  
+  static String? validateDate(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'التاريخ مطلوب';
+    }
+    final date = DateTime.tryParse(value);
+    if (date == null) {
+      return 'التاريخ غير صحيح';
+    }
+    if (date.isAfter(DateTime.now())) {
+      return 'التاريخ يجب أن يكون في الماضي';
+    }
+    return null;
+  }
+}
+```
+
+## قواعد التنقل المتقدمة
+
+### 1. استخدام Named Routes مع Parameters
+
+**للتنقل المتقدم:**
+```dart
+// في app_routes.dart
+static const String userDetailsRoute = '/user-details/:id';
+
+// في onGenerateRoute
+Route<dynamic> onGenerateRoute(RouteSettings settings) {
+  switch (settings.name) {
+    case AppRoutes.userDetailsRoute:
+      final id = settings.arguments as String;
+      return MaterialPageRoute(
+        builder: (_) => UserDetailsScreen(userId: id),
+      );
+    default:
+      return MaterialPageRoute(
+        builder: (_) => NotFoundScreen(),
+      );
+  }
+}
+```
+
+### 2. استخدام Route Guards
+
+**لحماية المسارات:**
+```dart
+class RouteGuard {
+  static bool canAccess(String route) {
+    final user = AuthService.getCurrentUser();
+    if (user == null) {
+      return false;
+    }
+    
+    switch (route) {
+      case AppRoutes.adminRoute:
+        return user.role == 'admin';
+      case AppRoutes.userRoute:
+        return user.role == 'user' || user.role == 'admin';
+      default:
+        return true;
+    }
+  }
+}
+```
+
+### 3. استخدام Deep Linking
+
+**للروابط العميقة:**
+```dart
+class DeepLinkHandler {
+  static void handleDeepLink(String link) {
+    final uri = Uri.parse(link);
+    switch (uri.path) {
+      case '/user':
+        final userId = uri.queryParameters['id'];
+        if (userId != null) {
+          Navigator.pushNamed(
+            navigatorKey.currentContext!,
+            AppRoutes.userDetailsRoute,
+            arguments: userId,
+          );
+        }
+        break;
+      case '/product':
+        final productId = uri.queryParameters['id'];
+        if (productId != null) {
+          Navigator.pushNamed(
+            navigatorKey.currentContext!,
+            AppRoutes.productDetailsRoute,
+            arguments: productId,
+          );
+        }
+        break;
+    }
+  }
+}
+```
+
+## قواعد الترجمة المتقدمة
+
+### 1. استخدام Pluralization
+
+**للجمع:**
+```dart
+// في intl_ar.arb
+{
+  "itemCount": "{count, plural, =0{لا توجد عناصر} =1{عنصر واحد} =2{عنصران} few{عناصر قليلة} many{عناصر كثيرة} other{عناصر}}"
+}
+
+// في الكود
+Text(S.of(context).itemCount(count))
+```
+
+### 2. استخدام Date Formatting
+
+**لتنسيق التواريخ:**
+```dart
+import 'package:intl/intl.dart';
+
+class DateFormatter {
+  static String formatDate(DateTime date, String locale) {
+    final formatter = DateFormat.yMMMMd(locale);
+    return formatter.format(date);
+  }
+  
+  static String formatTime(DateTime time, String locale) {
+    final formatter = DateFormat.Hm(locale);
+    return formatter.format(time);
+  }
+  
+  static String formatDateTime(DateTime dateTime, String locale) {
+    final formatter = DateFormat.yMMMMd(locale).add_Hm();
+    return formatter.format(dateTime);
+  }
+}
+```
+
+### 3. استخدام Number Formatting
+
+**لتنسيق الأرقام:**
+```dart
+import 'package:intl/intl.dart';
+
+class NumberFormatter {
+  static String formatCurrency(double amount, String locale) {
+    final formatter = NumberFormat.currency(locale: locale);
+    return formatter.format(amount);
+  }
+  
+  static String formatNumber(int number, String locale) {
+    final formatter = NumberFormat.decimalPattern(locale);
+    return formatter.format(number);
+  }
+  
+  static String formatPercentage(double percentage, String locale) {
+    final formatter = NumberFormat.percentPattern(locale);
+    return formatter.format(percentage);
+  }
+}
+```
+
+## قواعد الأمان المتقدمة
+
+### 1. استخدام Encryption
+
+**للتشفير:**
+```dart
+import 'package:encrypt/encrypt.dart';
+
+class EncryptionService {
+  static final _key = Key.fromBase64('your-base64-key');
+  static final _iv = IV.fromBase64('your-base64-iv');
+  static final _encrypter = Encrypter(AES(_key));
+  
+  static String encrypt(String text) {
+    final encrypted = _encrypter.encrypt(text, iv: _iv);
+    return encrypted.base64;
+  }
+  
+  static String decrypt(String encryptedText) {
+    final encrypted = Encrypted.fromBase64(encryptedText);
+    return _encrypter.decrypt(encrypted, iv: _iv);
+  }
+}
+```
+
+### 2. استخدام Biometric Authentication
+
+**للمصادقة البيومترية:**
+```dart
+import 'package:local_auth/local_auth.dart';
+
+class BiometricAuthService {
+  static final _localAuth = LocalAuthentication();
+  
+  static Future<bool> isBiometricAvailable() async {
+    return await _localAuth.canCheckBiometrics;
+  }
+  
+  static Future<bool> authenticate() async {
+    try {
+      return await _localAuth.authenticate(
+        localizedReason: 'تأكيد هويتك للمتابعة',
+        options: AuthenticationOptions(
+          biometricOnly: true,
+          stickyAuth: true,
+        ),
+      );
+    } catch (e) {
+      return false;
+    }
+  }
+}
+```
+
+### 3. استخدام Certificate Pinning
+
+**لحماية الاتصال:**
+```dart
+class CertificatePinningInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // Add certificate pinning logic
+    handler.next(options);
+  }
+}
+```
+
+## قواعد الاختبار المتقدمة
+
+### 1. استخدام Mock Objects
+
+**للمحاكاة:**
+```dart
+class MockApiClient extends Mock implements ApiClient {}
+
+void main() {
+  group('UserCubit Tests', () {
+    late UserCubit userCubit;
+    late MockApiClient mockApiClient;
+    
+    setUp(() {
+      mockApiClient = MockApiClient();
+      userCubit = UserCubit(mockApiClient);
+    });
+    
+    test('should emit loaded state when users are loaded', () async {
+      // Arrange
+      when(() => mockApiClient.getUsers()).thenAnswer((_) async => mockUsers);
+      
+      // Act
+      userCubit.loadUsers();
+      
+      // Assert
+      expect(userCubit.state, UserState.loaded(mockUsers));
+    });
+  });
+}
+```
+
+### 2. استخدام Integration Tests
+
+**للاختبار المتكامل:**
+```dart
+void main() {
+  group('User Management Integration Tests', () {
+    testWidgets('should create new user', (tester) async {
+      // Arrange
+      await tester.pumpWidget(MyApp());
+      
+      // Act
+      await tester.tap(find.byKey(Key('add_user_button')));
+      await tester.pumpAndSettle();
+      
+      await tester.enterText(find.byKey(Key('name_field')), 'John Doe');
+      await tester.enterText(find.byKey(Key('email_field')), 'john@example.com');
+      
+      await tester.tap(find.byKey(Key('save_button')));
+      await tester.pumpAndSettle();
+      
+      // Assert
+      expect(find.text('User created successfully'), findsOneWidget);
+    });
+  });
+}
+```
+
+## ملاحظات مهمة
+
+### 1. الأداء
+
+- استخدام lazy loading للأداء
+- تحسين ListView للأداء
+- استخدام caching للبيانات
+
+### 2. الأمان
+
+- استخدام encryption للبيانات الحساسة
+- تطبيق certificate pinning
+- استخدام biometric authentication
+
+### 3. إمكانية الوصول
+
+- دعم screen readers
+- استخدام semantic labels
+- توفير alternative text
+
+### 4. التصميم المتجاوب
+
+- استخدام flutter_screenutil
+- دعم RTL للغة العربية
+- اختبار على أحجام شاشات مختلفة
+
+---
+
+**ملاحظة:** يجب استخدام هذه القواعد المتقدمة في المشاريع المعقدة والكبيرة لضمان الجودة العالية والأداء المحسن.

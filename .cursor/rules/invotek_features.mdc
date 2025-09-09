@@ -316,7 +316,8 @@ class ClientsFilterRequest {
 - ✅ `lib/features/clients/data/repository/clients_repository.dart`
 - ✅ `lib/features/clients/demo/cubit/clients_state.dart`
 - ✅ `lib/features/clients/demo/cubit/clients_cubit.dart`
-- ✅ `lib/features/clients/ui/screens/clients_list_screen.dart`
+- ✅ `lib/features/clients/ui/screens/clients_list_screen.dart` (Legacy - للاستبدال)
+- ✅ `lib/features/clients/ui/screens/enhanced_clients_list_screen.dart` (Enhanced - المفضل)
 - ✅ `lib/features/clients/ui/screens/add_client_screen.dart`
 - ✅ `lib/features/clients/ui/screens/edit_client_screen.dart`
 - ✅ `lib/features/clients/ui/screens/client_details_screen.dart`
@@ -456,7 +457,8 @@ class ProductsFilterRequest {
 - ✅ `lib/features/products/data/repository/products_repository.dart`
 - ✅ `lib/features/products/demo/cubit/products_state.dart`
 - ✅ `lib/features/products/demo/cubit/products_cubit.dart`
-- ✅ `lib/features/products/ui/screens/products_list_screen.dart`
+- ✅ `lib/features/products/ui/screens/products_list_screen.dart` (Legacy - للاستبدال)
+- ✅ `lib/features/products/ui/screens/enhanced_products_list_screen.dart` (Enhanced - المفضل)
 - ✅ `lib/features/products/ui/screens/add_product_screen.dart`
 - ✅ `lib/features/products/ui/screens/edit_product_screen.dart`
 - ✅ `lib/features/products/ui/screens/product_details_screen.dart`
@@ -858,6 +860,75 @@ lib/features/<feature_name>/
 - تصدير البيانات
 - استيراد البيانات
 
+## النسخ المحسنة من الشاشات ✨
+
+### نظرة عامة
+
+تم إنشاء **نسخ محسنة** من شاشات القوائم الرئيسية لتحسين الأداء والتصميم:
+
+### 1. شاشات المنتجات المحسنة
+
+**الملفات الجديدة:**
+- ✅ `lib/features/products/ui/screens/enhanced_products_list_screen.dart`
+- ✅ `lib/features/products/ui/widgets/cards/enhanced_product_card.dart`
+- ✅ `lib/features/products/ui/widgets/dialogs/delete_product_dialog.dart`
+
+**المزايا:**
+- استخدام `CommonSearchBar` للبحث الموحد
+- استخدام `CommonFilterRow` للفلاتر المتقدمة
+- استخدام `CommonExtendedFAB` لزر الإضافة الممتد
+- تصميم موحد مع `AppColors`
+- معالجة أخطاء محسنة عبر dialogs مخصصة
+
+### 2. شاشات العملاء المحسنة
+
+**الملفات الجديدة:**
+- ✅ `lib/features/customers/ui/screens/enhanced_customers_list_screen.dart`
+- ✅ `lib/features/customers/ui/widgets/cards/enhanced_customer_card.dart`
+- ✅ `lib/features/customers/ui/widgets/dialogs/delete_customer_dialog.dart`
+
+**المزايا:**
+- نفس المزايا المذكورة أعلاه
+- تصميم متسق مع شاشات المنتجات
+- أداء محسن وكود أقل تكراراً
+
+### 3. Common Widgets المستخدمة
+
+**من `core/widgets`:**
+- ✅ `CommonSearchBar` - شريط البحث الموحد
+- ✅ `CommonFilterRow` - صف الفلاتر المتقدم
+- ✅ `CommonExtendedFAB` - زر الإضافة الممتد
+- ✅ `AnimatedEntryWidget` - تأثيرات الدخول المتحركة
+
+### 4. خطة الانتقال
+
+**المرحلة الأولى:**
+- ✅ إنشاء النسخ المحسنة
+- ✅ اختبار الوظائف الأساسية
+- ✅ التأكد من التوافق مع API
+
+**المرحلة الثانية:**
+- ⏳ تحديث routing لاستخدام النسخ المحسنة
+- ⏳ اختبار شامل للتأكد من عدم وجود مشاكل
+- ⏳ حذف النسخ القديمة
+
+**المرحلة الثالثة:**
+- ⏳ تطبيق نفس النمط على باقي الشاشات
+- ⏳ إنشاء common widgets إضافية حسب الحاجة
+- ⏳ توحيد التصميم في كامل التطبيق
+
+### 5. قواعد الاستخدام
+
+**يجب استخدام النسخ المحسنة في:**
+- ✅ جميع الشاشات الجديدة
+- ✅ عند تحديث الشاشات الموجودة
+- ✅ عند إصلاح مشاكل في النسخ القديمة
+
+**يجب تجنب:**
+- ❌ استخدام النسخ القديمة في مشاريع جديدة
+- ❌ إضافة ميزات جديدة للنسخ القديمة
+- ❌ إصلاح مشاكل في النسخ القديمة (بدلاً من الانتقال للمحسنة)
+
 ## ملاحظات مهمة
 
 - جميع النصوص باللغة العربية
@@ -865,5 +936,6 @@ lib/features/<feature_name>/
 - تطبيق أفضل ممارسات الأمان
 - اختبار شامل لكل ميزة
 - توثيق شامل للكود
+- استخدام النسخ المحسنة دائماً
 
 ---

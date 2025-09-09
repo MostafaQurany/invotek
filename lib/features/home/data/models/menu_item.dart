@@ -230,31 +230,25 @@ class MenuData {
         ],
       ),
       MenuItem(
-        title: 'المصروفات',
+        title: 'إدارة المصروفات وفئاتها',
         titleKey: 'expenses',
         icon: Icons.account_balance_wallet,
         route: '/expenses',
-        hasSubItems: false,
-        // subItems: [
-        //   MenuItem(
-        //     title: 'قائمة المصروفات',
-        //     titleKey: 'expenses_list',
-        //     icon: Icons.list,
-        //     route: '/expenses/list',
-        //   ),
-        //   MenuItem(
-        //     title: 'إضافة مصروف جديد',
-        //     titleKey: 'add_expense',
-        //     icon: Icons.add,
-        //     route: '/expenses/add',
-        //   ),
-        //   MenuItem(
-        //     title: 'فئات المصروفات',
-        //     titleKey: 'expense_categories',
-        //     icon: Icons.category,
-        //     route: '/expenses/categories',
-        //   ),
-        // ],
+        hasSubItems: true,
+        subItems: [
+          MenuItem(
+            title: 'قائمة المصروفات',
+            titleKey: 'expenses_list',
+            icon: Icons.list,
+            route: '/expenses/list',
+          ),
+          MenuItem(
+            title: 'فئات المصروفات',
+            titleKey: 'expense_categories',
+            icon: Icons.category,
+            route: '/expenses/categories',
+          ),
+        ],
       ),
       MenuItem(
         title: 'الفواتير الضريبية',

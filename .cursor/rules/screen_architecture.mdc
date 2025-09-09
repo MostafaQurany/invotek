@@ -1,0 +1,367 @@
+# Screen Architecture Rules - قواعد هندسة الشاشات
+
+## نظرة عامة على البنية الحالية
+
+يحتوي المشروع حالياً على **نسختين** من شاشات القوائم لكل من المنتجات والعملاء:
+
+### 1. النسخة الأصلية (Legacy Screens) 🔄
+
+**المنتجات:**
+- `lib/features/products/ui/screens/products_list_screen.dart`
+
+**العملاء:**
+- `lib/features/customers/ui/screens/customers_list_screen.dart`
+
+### 2. النسخة المحسنة (Enhanced Screens) ✨
+
+**المنتجات:**
+- `lib/features/products/ui/screens/enhanced_products_list_screen.dart`
+
+**العملاء:**
+- `lib/features/customers/ui/screens/enhanced_customers_list_screen.dart`
+
+## الفروقات الرئيسية بين النسختين
+
+### النسخة الأصلية (Legacy) 🔄
+
+**الخصائص:**
+- استخدام **widgets مخصصة قديمة** مثل `ProductsSearchAndFilters`, `ProductCard`
+- **إدارة حالة معقدة** مع BlocConsumer يدوي
+- **تصميم تقليدي** وأنماط layout قديمة
+- **تنظيم widgets قديم** (عدة widgets في ملف واحد)
+- استخدام **ألوان hardcoded** في بعض الأماكن
+- **معالجة أخطاء معقدة** مع try-catch متداخل
+
+**المشاكل:**
+- كود مكرر ومتكرر
+- صعوبة في الصيانة والتطوير
+- عدم توحيد التصميم
+- أداء أقل كفاءة
+
+### النسخة المحسنة (Enhanced) ✨
+
+**الخصائص:**
+- استخدام **common widgets جديدة** مثل `CommonSearchBar`, `CommonFilterRow`, `CommonExtendedFAB`
+- **هندسة أنظف** مع فصل أفضل للمسؤوليات
+- **تصميم حديث** باستخدام `AppColors.background`, `AppColors.primary`
+- استخدام **enhanced card widgets** مثل `EnhancedProductCard`, `EnhancedCustomerCard`
+- **إدارة حالة مبسطة** مع BlocBuilder patterns أنظف
+- **معالجة أخطاء موحدة** عبر dialogs مخصصة
+
+**المزايا:**
+- كود أقل تكراراً
+- سهولة في الصيانة والتطوير
+- تصميم موحد ومتسق
+- أداء أفضل وأسرع
+- استخدام أفضل للموارد
+
+## قواعد التطوير للشاشات
+
+### 1. استخدام النسخة المحسنة ✨
+
+**يجب استخدام النسخة المحسنة دائماً:**
+- `EnhancedProductsListScreen` بدلاً من `ProductsListScreen`
+- `EnhancedCustomersListScreen` بدلاً من `CustomersListScreen`
+
+### 2. Common Widgets المطلوبة
+
+**استخدام widgets مشتركة من `core/widgets`:**
+```dart
+// البحث
+CommonSearchBar(
+  controller: _searchController,
+  hintText: 'Search...',
+  onChanged: _onSearchChanged,
+  onClear: _onSearchCleared,
+)
+
+// الفلاتر
+CommonFilterRow(
+  filters: [
+    FilterConfig(
+      label: 'Status',
+      selectedValue: _selectedStatus,
+      options: [
+        FilterOption(value: 'all', label: 'All'),
+        FilterOption(value: 'active', label: 'Active'),
+      ],
+      onChanged: _onStatusChanged,
+    ),
+  ],
+)
+
+// زر الإضافة الممتد
+CommonExtendedFAB(
+  label: 'Add New Item',
+  icon: Icons.add,
+  onPressed: _addItem,
+)
+```
+
+### 3. Enhanced Cards
+
+**استخدام enhanced cards:**
+```dart
+// للمنتجات
+EnhancedProductCard(
+  product: product,
+  onTap: () => _navigateToDetails(product),
+  onEdit: () => _editProduct(product),
+  onDelete: () => _showDeleteConfirmation(product),
+)
+
+// للعملاء
+EnhancedCustomerCard(
+  customer: customer,
+  onTap: () => _navigateToDetails(customer),
+  onEdit: () => _editCustomer(customer),
+  onDelete: () => _showDeleteConfirmation(customer),
+)
+```
+
+### 4. معالجة الأخطاء الموحدة
+
+**استخدام dialogs مخصصة:**
+```dart
+// حذف المنتج
+void _showDeleteConfirmation(ProductModel product) {
+  final cubit = context.read<ProductsCubit>();
+  showDialog(
+    context: context,
+    builder: (context) => DeleteProductDialog(
+      product: product,
+      onConfirm: () => cubit.deleteProduct(product.id ?? 0),
+    ),
+  );
+}
+
+// حذف العميل
+void _showDeleteConfirmation(CustomerModel customer) {
+  final cubit = context.read<CustomersCubit>();
+  showDialog(
+    context: context,
+    builder: (context) => DeleteCustomerDialog(
+      customer: customer,
+      onConfirm: () => cubit.deleteCustomer(customer.id ?? 0),
+    ),
+  );
+}
+```
+
+### 5. إدارة الحالة المبسطة
+
+**استخدام BlocBuilder بدلاً من BlocConsumer:**
+```dart
+BlocBuilder<ProductsCubit, ProductsState>(
+  builder: (context, state) {
+    return state.when(
+      initial: (products, selectedProduct, currentPage, totalPages, error) => 
+          _buildEmptyState(),
+      loading: (products, selectedProduct, currentPage, totalPages, message) => 
+          _buildLoadingState(),
+      loaded: (products, selectedProduct, currentPage, totalPages) => 
+          _buildProductsList(products),
+      failure: (products, selectedProduct, currentPage, totalPages, error) => 
+          _buildErrorState(error),
+      createSuccess: (products, _, __, ___, ____) => _buildProductsList(products),
+      updateSuccess: (products, _, __, ___, ____) => _buildProductsList(products),
+      deleteSuccess: (products, _, __, ___, ____) => _buildProductsList(products),
+    );
+  },
+)
+```
+
+### 6. استخدام AppColors
+
+**استخدام ألوان موحدة:**
+```dart
+// الألوان الأساسية
+backgroundColor: AppColors.background,
+primaryColor: AppColors.primary,
+errorColor: AppColors.error,
+successColor: AppColors.success,
+
+// ألوان النصوص
+textPrimary: AppColors.textPrimary,
+textSecondary: AppColors.textSecondary,
+greyDark: AppColors.greyDark,
+```
+
+## خطة التنظيف
+
+### المرحلة الأولى: تحديد النسخة المستخدمة
+
+1. **فحص routing** في `app_routes.dart`
+2. **تحديد الشاشات المستخدمة** حالياً
+3. **تحديث routing** لاستخدام النسخة المحسنة
+
+### المرحلة الثانية: حذف النسخة القديمة
+
+1. **حذف الملفات القديمة:**
+   - `products_list_screen.dart`
+   - `customers_list_screen.dart`
+
+2. **حذف widgets القديمة:**
+   - `ProductsSearchAndFilters`
+   - `ProductCard`
+   - `CustomersSearchAndFilters`
+   - `CustomerCard`
+
+### المرحلة الثالثة: توحيد التصميم
+
+1. **تطبيق نفس النمط** على باقي الشاشات
+2. **إنشاء common widgets** إضافية حسب الحاجة
+3. **توحيد معالجة الأخطاء** عبر dialogs
+
+## قواعد التطوير المستقبلي
+
+### 1. إنشاء شاشات جديدة
+
+**يجب اتباع النمط المحسن:**
+- استخدام `CommonSearchBar` للبحث
+- استخدام `CommonFilterRow` للفلاتر
+- استخدام `CommonExtendedFAB` لزر الإضافة
+- استخدام enhanced cards للعرض
+- استخدام dialogs مخصصة للحذف
+
+### 2. تحديث الشاشات الموجودة
+
+**عند تحديث شاشة موجودة:**
+- تحويلها للنمط المحسن
+- استخدام common widgets
+- توحيد معالجة الأخطاء
+- تحسين الأداء
+
+### 3. إنشاء Common Widgets جديدة
+
+**عند الحاجة لـ widget جديد:**
+- إنشاؤه في `core/widgets`
+- إضافة export في `core/widgets/widgets.dart`
+- توثيق الاستخدام في هذا الملف
+- اختبار شامل
+
+## أمثلة على الاستخدام الصحيح
+
+### شاشة قائمة المنتجات المحسنة
+
+```dart
+class EnhancedProductsListScreen extends StatefulWidget {
+  const EnhancedProductsListScreen({super.key});
+
+  @override
+  State<EnhancedProductsListScreen> createState() =>
+      _EnhancedProductsListScreenState();
+}
+
+class _EnhancedProductsListScreenState
+    extends State<EnhancedProductsListScreen> {
+  final _searchController = TextEditingController();
+  String _selectedCategory = 'all_category';
+  String _selectedStatus = 'all_status';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          // البحث
+          CommonSearchBar(
+            controller: _searchController,
+            hintText: 'Search products...',
+            onChanged: _onSearchChanged,
+            onClear: _onSearchCleared,
+          ),
+          // الفلاتر
+          CommonFilterRow(filters: _buildFilters()),
+          // القائمة
+          Expanded(child: _buildProductsList()),
+        ],
+      ),
+      floatingActionButton: CommonExtendedFAB(
+        label: 'Add New Product',
+        icon: Icons.add,
+        onPressed: _addProduct,
+      ),
+    );
+  }
+}
+```
+
+### شاشة قائمة العملاء المحسنة
+
+```dart
+class EnhancedCustomersListScreen extends StatefulWidget {
+  const EnhancedCustomersListScreen({super.key});
+
+  @override
+  State<EnhancedCustomersListScreen> createState() =>
+      _EnhancedCustomersListScreenState();
+}
+
+class _EnhancedCustomersListScreenState
+    extends State<EnhancedCustomersListScreen> {
+  final _searchController = TextEditingController();
+  String _selectedStatus = 'all_status';
+  String _selectedCompany = 'all_company';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          // البحث
+          CommonSearchBar(
+            controller: _searchController,
+            hintText: 'Search customers...',
+            onChanged: _onSearchChanged,
+            onClear: _onSearchCleared,
+          ),
+          // الفلاتر
+          CommonFilterRow(filters: _buildFilters()),
+          // القائمة
+          Expanded(child: _buildCustomersList()),
+        ],
+      ),
+      floatingActionButton: CommonExtendedFAB(
+        label: 'Add Customer',
+        icon: Icons.add,
+        onPressed: _addCustomer,
+      ),
+    );
+  }
+}
+```
+
+## ملاحظات مهمة
+
+### 1. التوافق مع الذاكرة
+
+- استخدام `S.of(context)` للترجمة
+- استخدام الألوان المحددة في المشروع
+- عدم استخدام ألوان خارجية أو افتراضية
+
+### 2. الأداء
+
+- استخدام `RefreshIndicator` للـ pull-to-refresh
+- تحسين `ListView.builder` للأداء
+- تجنب rebuilds غير ضرورية
+
+### 3. إمكانية الوصول
+
+- استخدام semantic labels
+- دعم screen readers
+- توفير alternative text للصور
+
+### 4. التصميم المتجاوب
+
+- استخدام `flutter_screenutil` للأحجام
+- دعم RTL للغة العربية
+- اختبار على أحجام شاشات مختلفة
+
+---
+
+**ملاحظة:** يجب حذف النسخة القديمة بعد التأكد من عمل النسخة المحسنة بشكل صحيح.

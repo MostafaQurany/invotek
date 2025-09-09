@@ -5,7 +5,7 @@ import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/demo/entit/customer_model.dart';
-import 'package:invotek/features/customers/ui/widgets/customer_form.dart';
+import 'package:invotek/features/customers/ui/widgets/forms/customer_form.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class EditCustomerScreen extends StatefulWidget {
@@ -594,6 +594,9 @@ class EditCustomerScreenWithProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EditCustomerScreen(customer: customer);
+    return BlocProvider(
+      create: (context) => getIt<CustomersCubit>(),
+      child: EditCustomerScreen(customer: customer),
+    );
   }
 }
