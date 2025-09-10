@@ -86,16 +86,16 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
                   onMenuPressed: _handleMenuPressed,
                   searchController: _searchController,
                   onSearchChanged: (query) {
-                    CustomersCubit.get(context).loadFirstPage(
-                      refresh: true,
-                      search: query.isEmpty ? null : query,
-                      status: _selectedStatus == 'all_status'
-                          ? null
-                          : _selectedStatus,
-                      company: _selectedCompany == 'all_company'
-                          ? null
-                          : _selectedCompany,
-                    );
+                    // CustomersCubit.get(context).loadFirstPage(
+                    //   refresh: true,
+                    //   search: query.isEmpty ? null : query,
+                    //   status: _selectedStatus == 'all_status'
+                    //       ? null
+                    //       : _selectedStatus,
+                    //   company: _selectedCompany == 'all_company'
+                    //       ? null
+                    //       : _selectedCompany,
+                    // );
                   },
                   selectedStatus: _selectedStatus ?? '',
                   selectedCompany: _selectedCompany ?? '',
@@ -166,38 +166,38 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
       if (Navigator.of(context).canPop()) {
         Navigator.of(context).pop();
       } else {
-        CustomersCubit.get(context).loadFirstPage(
-          refresh: true,
-          search: " query.isEmpty ? null : query",
-          status: _selectedStatus == 'all_status' ? null : _selectedStatus,
-          company: _selectedCompany == 'all_company' ? null : _selectedCompany,
-        );
+        // CustomersCubit.get(context).loadFirstPage(
+        //   refresh: true,
+        //   search: " query.isEmpty ? null : query",
+        //   status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+        //   company: _selectedCompany == 'all_company' ? null : _selectedCompany,
+        // );
       }
     }
   }
 
   void _onStatusChanged(String? status) {
     setState(() => _selectedStatus = status);
-    CustomersCubit.get(context).loadFirstPage(
-      refresh: true,
-      search: _searchController.text.isEmpty ? null : _searchController.text,
-      status: _selectedStatus == 'all_status' ? null : _selectedStatus,
-      company: _selectedCompany == 'all_company' ? null : _selectedCompany,
-    );
+    // CustomersCubit.get(context).loadFirstPage(
+    //   refresh: true,
+    //   search: _searchController.text.isEmpty ? null : _searchController.text,
+    //   status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+    //   company: _selectedCompany == 'all_company' ? null : _selectedCompany,
+    // );
   }
 
   void _onCompanyChanged(String? company) {
     setState(() => _selectedCompany = company);
-    CustomersCubit.get(context).loadFirstPage(
-      refresh: true,
-      search: _searchController.text.isEmpty ? null : _searchController.text,
-      status: _selectedStatus == 'all_status' ? null : _selectedStatus,
-      company: _selectedCompany == 'all_company' ? null : _selectedCompany,
-    );
+    // CustomersCubit.get(context).loadFirstPage(
+    //   refresh: true,
+    //   search: _searchController.text.isEmpty ? null : _searchController.text,
+    //   status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+    //   company: _selectedCompany == 'all_company' ? null : _selectedCompany,
+    // );
   }
 
   void _retry() {
-    CustomersCubit.get(context).loadFirstPage(refresh: true);
+  //  CustomersCubit.get(context).loadFirstPage(refresh: true);
   }
 
   // Navigation Methods

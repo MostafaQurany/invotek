@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
-import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
 import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
 import 'package:invotek/features/clients/ui/screens/client_details_screen.dart';
 
@@ -66,7 +66,7 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
           IconButton(
             icon: Icon(Icons.add, color: colorScheme.onSurface),
             onPressed: () {
-              context.read<MenuCubit>().selectMenuItemByRoute('/clients/add');
+              Navigator.pushNamed(context, AppRoutes.addClientRoute);
             },
           ),
         ],

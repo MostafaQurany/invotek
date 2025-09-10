@@ -151,7 +151,7 @@ class ExpensesRepository {
       paymentMethod: apiExpense.paymentMethod,
       notes: apiExpense.notes,
       attachment: apiExpense.attachment,
-      createdBy: apiExpense.createdBy,
+      createdBy: apiExpense.createdBy.toString(),
       createdAt: apiExpense.createdAt,
       updatedAt: apiExpense.updatedAt,
     );

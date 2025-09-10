@@ -7,6 +7,7 @@ import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/widgets/states/expenses_empty_state.dart';
 import 'package:invotek/features/expenses/ui/widgets/states/expenses_error_state.dart';
 import 'package:invotek/features/expenses/ui/widgets/lists/expenses_list.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpensesStateBuilder extends StatelessWidget {
   final Function(ExpenseModel) onExpenseTap;
@@ -46,14 +47,23 @@ class ExpensesStateBuilder extends StatelessWidget {
           initial:
               (expenses, selectedExpense, currentPage, totalPages, error) =>
                   SliverFillRemaining(
-                    child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(28.r),
+                          topRight: Radius.circular(28.r),
+                        ),
+                      ),
+                      child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                    ),
                   ),
           loading:
               (expenses, selectedExpense, currentPage, totalPages, message) =>
                   SliverFillRemaining(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.white,
+                        color: AppColors.backgroundLight,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(28.r),
                           topRight: Radius.circular(28.r),
@@ -69,8 +79,8 @@ class ExpensesStateBuilder extends StatelessWidget {
                             SizedBox(height: 16),
                             Text(
                               message == 'loading_more'
-                                  ? 'Loading more...'
-                                  : 'Loading expenses...',
+                                  ? S.of(context).loadingMore
+                                  : S.of(context).loadingExpenses,
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 14,
@@ -84,7 +94,16 @@ class ExpensesStateBuilder extends StatelessWidget {
           loaded: (expenses, selectedExpense, currentPage, totalPages) {
             if (expenses.isEmpty) {
               return SliverFillRemaining(
-                child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundLight,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(28.r),
+                      topRight: Radius.circular(28.r),
+                    ),
+                  ),
+                  child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                ),
               );
             }
             return ExpensesList(
@@ -96,36 +115,90 @@ class ExpensesStateBuilder extends StatelessWidget {
             );
           },
           createSuccess:
-              (expenses, created, selectedExpense, currentPage, totalPages) =>
-                  ExpensesList(
-                    expenses: expenses,
-                    onExpenseTap: onExpenseTap,
-                    onExpenseView: onExpenseView,
-                    onExpenseEdit: onExpenseEdit,
-                    onExpenseDelete: onExpenseDelete,
-                  ),
+              (expenses, created, selectedExpense, currentPage, totalPages) {
+                if (expenses.isEmpty) {
+                  return SliverFillRemaining(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(28.r),
+                          topRight: Radius.circular(28.r),
+                        ),
+                      ),
+                      child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                    ),
+                  );
+                }
+                return ExpensesList(
+                  expenses: expenses,
+                  onExpenseTap: onExpenseTap,
+                  onExpenseView: onExpenseView,
+                  onExpenseEdit: onExpenseEdit,
+                  onExpenseDelete: onExpenseDelete,
+                );
+              },
           updateSuccess:
-              (expenses, updated, selectedExpense, currentPage, totalPages) =>
-                  ExpensesList(
-                    expenses: expenses,
-                    onExpenseTap: onExpenseTap,
-                    onExpenseView: onExpenseView,
-                    onExpenseEdit: onExpenseEdit,
-                    onExpenseDelete: onExpenseDelete,
-                  ),
+              (expenses, updated, selectedExpense, currentPage, totalPages) {
+                if (expenses.isEmpty) {
+                  return SliverFillRemaining(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(28.r),
+                          topRight: Radius.circular(28.r),
+                        ),
+                      ),
+                      child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                    ),
+                  );
+                }
+                return ExpensesList(
+                  expenses: expenses,
+                  onExpenseTap: onExpenseTap,
+                  onExpenseView: onExpenseView,
+                  onExpenseEdit: onExpenseEdit,
+                  onExpenseDelete: onExpenseDelete,
+                );
+              },
           deleteSuccess:
-              (expenses, deletedId, selectedExpense, currentPage, totalPages) =>
-                  ExpensesList(
-                    expenses: expenses,
-                    onExpenseTap: onExpenseTap,
-                    onExpenseView: onExpenseView,
-                    onExpenseEdit: onExpenseEdit,
-                    onExpenseDelete: onExpenseDelete,
-                  ),
+              (expenses, deletedId, selectedExpense, currentPage, totalPages) {
+                if (expenses.isEmpty) {
+                  return SliverFillRemaining(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(28.r),
+                          topRight: Radius.circular(28.r),
+                        ),
+                      ),
+                      child: ExpensesEmptyState(onAddExpense: onAddExpense),
+                    ),
+                  );
+                }
+                return ExpensesList(
+                  expenses: expenses,
+                  onExpenseTap: onExpenseTap,
+                  onExpenseView: onExpenseView,
+                  onExpenseEdit: onExpenseEdit,
+                  onExpenseDelete: onExpenseDelete,
+                );
+              },
           failure:
               (expenses, selectedExpense, currentPage, totalPages, error) =>
                   SliverFillRemaining(
-                    child: ExpensesErrorState(error: error, onRetry: onRetry),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.backgroundLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(28.r),
+                          topRight: Radius.circular(28.r),
+                        ),
+                      ),
+                      child: ExpensesErrorState(error: error, onRetry: onRetry),
+                    ),
                   ),
         );
       },

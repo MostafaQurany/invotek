@@ -5,36 +5,58 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/home/data/models/menu_item.dart';
-import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
+import 'package:invotek/features/home/data/models/navigation_state.dart';
 import 'package:invotek/generated/l10n.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
 
   @override
+  State<MenuScreen> createState() => _MenuScreenState();
+}
+
+class _MenuScreenState extends State<MenuScreen> {
+  final NavigationController _navigationController = NavigationController();
+  NavigationState _currentState = NavigationState();
+
+  @override
+  void initState() {
+    super.initState();
+    _navigationController.addListener(_onNavigationChanged);
+  }
+
+  @override
+  void dispose() {
+    _navigationController.removeListener(_onNavigationChanged);
+    super.dispose();
+  }
+
+  void _onNavigationChanged(NavigationState state) {
+    setState(() {
+      _currentState = state;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MenuCubit, MenuState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Column(
-              children: [
-                // Header
-                _buildHeader(context),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header
+            _buildHeader(context),
 
-                SizedBox(height: 20.h),
+            SizedBox(height: 20.h),
 
-                // Menu Items
-                Expanded(child: _buildMenuItems(context, state)),
+            // Menu Items
+            Expanded(child: _buildMenuItems(context, _currentState)),
 
-                // Footer
-                _buildFooter(context),
-              ],
-            ),
-          ),
-        );
-      },
+            // Footer
+            _buildFooter(context),
+          ],
+        ),
+      ),
     );
   }
 
@@ -73,7 +95,7 @@ class MenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItems(BuildContext context, MenuState state) {
+  Widget _buildMenuItems(BuildContext context, NavigationState state) {
     return ListView.builder(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       itemCount: state.menuItems.length,
@@ -88,7 +110,7 @@ class MenuScreen extends StatelessWidget {
     BuildContext context,
     MenuItem item,
     int index,
-    MenuState state,
+    NavigationState state,
   ) {
     final isExpanded = state.expandedItemIndex == index;
 
@@ -101,9 +123,9 @@ class MenuScreen extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 if (item.hasSubItems) {
-                  context.read<MenuCubit>().toggleExpandedItem(index);
+                  _navigationController.toggleExpandedItem(index);
                 } else {
-                  context.read<MenuCubit>().selectMenuItem(index);
+                  _navigationController.selectMenuItem(index);
                   ZoomDrawer.of(context)!.close();
                 }
               },
@@ -193,7 +215,7 @@ class MenuScreen extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () {
-            context.read<MenuCubit>().selectSubMenuItem(parentIndex, subIndex);
+            _navigationController.selectSubMenuItem(parentIndex, subIndex);
             ZoomDrawer.of(context)!.close();
           },
           borderRadius: BorderRadius.circular(8),

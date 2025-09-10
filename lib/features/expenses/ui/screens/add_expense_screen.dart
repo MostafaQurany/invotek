@@ -1,0 +1,264 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
+import 'package:invotek/features/expenses/ui/widgets/headers/add_expense_header_widget.dart';
+import 'package:invotek/features/expenses/ui/widgets/sections/add_expense_form_section.dart';
+import 'package:invotek/features/expenses/ui/widgets/sections/add_expense_bottom_actions.dart';
+import 'package:invotek/generated/l10n.dart';
+
+class AddExpenseScreen extends StatefulWidget {
+  const AddExpenseScreen({super.key});
+
+  @override
+  State<AddExpenseScreen> createState() => _AddExpenseScreenState();
+}
+
+class _AddExpenseScreenState extends State<AddExpenseScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  // Form controllers
+  late TextEditingController _titleController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _amountController;
+  late TextEditingController _expenseDateController;
+  late TextEditingController _referenceNumberController;
+  late TextEditingController _notesController;
+
+  // Form data
+  ExpenseCategoryModel? _selectedCategory;
+  String _selectedPaymentMethod = 'cash';
+  DateTime _selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeControllers();
+    _loadExpenseCategories();
+  }
+
+  void _initializeControllers() {
+    _titleController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _amountController = TextEditingController();
+    _expenseDateController = TextEditingController(
+      text: DateFormat('yyyy-MM-dd').format(_selectedDate),
+    );
+    _referenceNumberController = TextEditingController();
+    _notesController = TextEditingController();
+
+    // Add listeners to trigger UI updates
+    _titleController.addListener(_onFieldChanged);
+    _amountController.addListener(_onFieldChanged);
+    _expenseDateController.addListener(_onFieldChanged);
+  }
+
+  void _loadExpenseCategories() {
+    final categoriesCubit = ExpenseCategoriesCubit.get(context);
+    // Only load if categories are empty, otherwise use existing data
+    if (categoriesCubit.categories.isEmpty) {
+      categoriesCubit.loadFirstPage(refresh: false);
+    }
+  }
+
+  @override
+  void dispose() {
+    // Remove listeners before disposing
+    _titleController.removeListener(_onFieldChanged);
+    _amountController.removeListener(_onFieldChanged);
+    _expenseDateController.removeListener(_onFieldChanged);
+
+    _titleController.dispose();
+    _descriptionController.dispose();
+    _amountController.dispose();
+    _expenseDateController.dispose();
+    _referenceNumberController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  void _onFieldChanged() {
+    setState(() {
+      // Trigger UI rebuild to update button state
+    });
+  }
+
+  bool get _isFormValid {
+    final titleValid = _titleController.text.trim().isNotEmpty;
+    final amountValid =
+        _amountController.text.trim().isNotEmpty &&
+        double.tryParse(_amountController.text.trim()) != null &&
+        double.parse(_amountController.text.trim()) > 0;
+    final categoryValid = _selectedCategory != null;
+
+    return titleValid && amountValid && categoryValid;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.primary,
+      body: BlocListener<ExpensesCubit, ExpensesState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            createSuccess:
+                (
+                  expenses,
+                  created,
+                  selectedExpense,
+                  currentPage,
+                  totalPages,
+                ) async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.hideCurrentSnackBar();
+                  await messenger
+                      .showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            S.of(context).expenseCreatedSuccessfully,
+                          ),
+                          backgroundColor: AppColors.primary,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                          duration: Duration(milliseconds: 200),
+                        ),
+                      )
+                      .closed;
+                  Navigator.pop(context);
+                },
+            failure:
+                (expenses, selectedExpense, currentPage, totalPages, error) {
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.hideCurrentSnackBar();
+                  messenger.showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Error: $error',
+                      ), // TODO: Add to localization
+                      backgroundColor: AppColors.error,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      duration: Duration(milliseconds: 200),
+                    ),
+                  );
+                },
+          );
+        },
+        child: Form(
+          key: _formKey,
+          child: CustomScrollView(
+            slivers: [
+              // Header Section
+              SliverToBoxAdapter(child: AddExpenseHeaderWidget()),
+
+              // Form Content Section
+              SliverToBoxAdapter(
+                child: AddExpenseFormSection(
+                  titleController: _titleController,
+                  descriptionController: _descriptionController,
+                  amountController: _amountController,
+                  referenceNumberController: _referenceNumberController,
+                  notesController: _notesController,
+                  selectedCategory: _selectedCategory,
+                  selectedPaymentMethod: _selectedPaymentMethod,
+                  selectedDate: _selectedDate,
+                  onDateSelected: (date) => _selectDate(),
+                  onCategoryChanged: (category) {
+                    setState(() {
+                      _selectedCategory = category;
+                    });
+                  },
+                  onPaymentMethodChanged: (method) {
+                    setState(() {
+                      _selectedPaymentMethod = method;
+                    });
+                  },
+                ),
+              ),
+
+              // Bottom Actions Section
+              SliverToBoxAdapter(
+                child: AddExpenseBottomActions(
+                  onSaveExpense: _saveExpense,
+                  isFormValid: _isFormValid,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _selectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+        _expenseDateController.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
+  void _saveExpense() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    if (_selectedCategory == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).pleaseSelectCategory),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+      return;
+    }
+
+    final expensesCubit = ExpensesCubit.get(context);
+    expensesCubit.createExpense(
+      expenseCategoryId: _selectedCategory!.id,
+      title: _titleController.text.trim(),
+      description: _descriptionController.text.trim().isEmpty
+          ? null
+          : _descriptionController.text.trim(),
+      amount: double.parse(_amountController.text.trim()),
+      expenseDate: _expenseDateController.text.trim(),
+      referenceNumber: _referenceNumberController.text.trim().isEmpty
+          ? null
+          : _referenceNumberController.text.trim(),
+      paymentMethod: _selectedPaymentMethod,
+      notes: _notesController.text.trim().isEmpty
+          ? null
+          : _notesController.text.trim(),
+    );
+  }
+}
+
+class AddExpenseScreenWithProvider extends StatelessWidget {
+  const AddExpenseScreenWithProvider({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // No need to provide cubits here since they're already available
+    // from the centralized AppProviders
+    return const AddExpenseScreen();
+  }
+}

@@ -12,6 +12,8 @@ import 'package:invotek/features/customers/ui/screens/add_customer_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customer_details_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
+import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
+import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/expenses_list_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
@@ -92,6 +94,7 @@ class AppRoutes {
     // Expense Categories routes
     expenseCategoriesListRoute: (context) =>
         const ExpenseCategoriesListScreenWithProvider(),
+
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {

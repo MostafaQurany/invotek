@@ -7,6 +7,9 @@ class ExpenseCategoryApiModel {
   final int id;
   final String name;
   final String status;
+  final String? description;
+  final String? color;
+  final String? icon;
   @JsonKey(
     name: 'created_at',
     fromJson: _stringToDateTime,
@@ -24,6 +27,9 @@ class ExpenseCategoryApiModel {
     required this.id,
     required this.name,
     required this.status,
+    this.description,
+    this.color,
+    this.icon,
     this.createdAt,
     this.updatedAt,
   });

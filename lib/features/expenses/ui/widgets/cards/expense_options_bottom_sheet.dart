@@ -136,7 +136,7 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
             Icon(
               icon,
               size: 24.sp,
-              color: isDestructive ? AppColors.error : AppColors.textSecondary,
+              color: isDestructive ? AppColors.error : AppColors.primary,
             ),
             SizedBox(width: 16.w),
             Text(

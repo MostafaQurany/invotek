@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
+import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpensesHeaderWidget extends StatefulWidget {
   final VoidCallback onMenuPressed;
-  final VoidCallback onAddPressed;
   final TextEditingController searchController;
   final Function(String) onSearchChanged;
   final String selectedStatus;
@@ -16,7 +18,6 @@ class ExpensesHeaderWidget extends StatefulWidget {
   const ExpensesHeaderWidget({
     super.key,
     required this.onMenuPressed,
-    required this.onAddPressed,
     required this.searchController,
     required this.onSearchChanged,
     required this.selectedStatus,
@@ -97,12 +98,10 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
           IconButton(
             onPressed: widget.onMenuPressed,
             icon: Icon(Icons.menu, color: AppColors.white, size: 24.sp),
-          ),
-
-          // Title
+          ), // Title
           Expanded(
             child: Text(
-              'Expenses List',
+              S.of(context).expensesList,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.white,
@@ -111,12 +110,10 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
               ),
             ),
           ),
-
-          // Add Button
           IconButton(
-            onPressed: widget.onAddPressed,
-            icon: Icon(Icons.add, color: AppColors.white, size: 24.sp),
-          ),
+            onPressed: null,
+            icon: Icon(Icons.menu, color: AppColors.primary, size: 24.sp),
+          ), //
         ],
       ),
     );
@@ -144,7 +141,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
             child: Container(
               padding: EdgeInsets.all(12.w),
               decoration: BoxDecoration(
-                color: AppColors.white.withOpacity(0.2),
+                color: AppColors.backgroundLight,
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: AnimatedRotation(
@@ -152,7 +149,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
                 duration: const Duration(milliseconds: 300),
                 child: Icon(
                   Icons.filter_list,
-                  color: AppColors.white,
+                  color: AppColors.primary,
                   size: 20.sp,
                 ),
               ),
@@ -169,20 +166,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w),
         padding: EdgeInsets.all(16.w),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8,
-              offset: Offset(0, -2),
-            ),
-          ],
-        ),
+
         child: Row(
           children: [
             // Status Filter
@@ -198,7 +182,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
                   DropdownMenuItem(value: 'inactive', child: Text('Inactive')),
                 ],
                 onChanged: widget.onStatusChanged,
-                hint: 'Status',
+                hint: S.of(context).status,
               ),
             ),
 
@@ -206,25 +190,56 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
 
             // Category Filter
             Expanded(
-              child: _buildFilterDropdown(
-                value: widget.selectedCategory,
-                items: const [
-                  DropdownMenuItem(
-                    value: 'all_category',
-                    child: Text('All Categories'),
+              child:
+                  BlocBuilder<ExpenseCategoriesCubit, ExpenseCategoriesState>(
+                    builder: (context, state) {
+                      return _buildCategoryDropdown(state);
+                    },
                   ),
-                  DropdownMenuItem(value: '1', child: Text('Office Supplies')),
-                  DropdownMenuItem(value: '2', child: Text('Travel')),
-                  DropdownMenuItem(value: '3', child: Text('Marketing')),
-                ],
-                onChanged: widget.onCategoryChanged,
-                hint: 'Category',
-              ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildCategoryDropdown(ExpenseCategoriesState state) {
+    return state.whenOrNull(
+          loaded: (categories, selectedCategory, currentPage, totalPages) {
+            // Create dropdown items from categories
+            final List<DropdownMenuItem<String>> categoryItems = [
+              const DropdownMenuItem(
+                value: 'all_category',
+                child: Text('All Categories'),
+              ),
+              ...categories.map(
+                (category) => DropdownMenuItem(
+                  value: category.id.toString(),
+                  child: Text(category.name),
+                ),
+              ),
+            ];
+
+            return _buildFilterDropdown(
+              value: widget.selectedCategory,
+              items: categoryItems,
+              onChanged: widget.onCategoryChanged,
+              hint: S.of(context).categories,
+            );
+          },
+        ) ??
+        // Fallback when categories are not loaded yet
+        _buildFilterDropdown(
+          value: widget.selectedCategory,
+          items: const [
+            DropdownMenuItem(
+              value: 'all_category',
+              child: Text('All Categories'),
+            ),
+          ],
+          onChanged: widget.onCategoryChanged,
+          hint: S.of(context).categories,
+        );
   }
 
   Widget _buildFilterDropdown({
@@ -234,10 +249,11 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
     required String hint,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       decoration: BoxDecoration(
         color: AppColors.searchBarBackground,
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.circular(16.r),
+
         border: Border.all(color: AppColors.grey.withOpacity(0.3)),
       ),
       child: DropdownButtonHideUnderline(
@@ -250,7 +266,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
               onChanged(newValue);
             }
           },
-          style: TextStyle(color: AppColors.textPrimary, fontSize: 14.sp),
+          style: TextStyle(color: AppColors.textPrimary, fontSize: 12.sp),
           icon: Icon(
             Icons.keyboard_arrow_down,
             color: AppColors.textSecondary,

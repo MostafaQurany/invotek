@@ -279,6 +279,75 @@ class SEn extends S {
   String get expensesReport => 'Expenses Report';
 
   @override
+  String get newExpense => 'New Expense';
+
+  @override
+  String get trackYourBusinessExpenses => 'Track your business expenses';
+
+  @override
+  String get basicInformation => 'Basic Information';
+
+  @override
+  String get expenseTitle => 'Expense Title';
+
+  @override
+  String get expenseTitleHint => 'e.g., Office supplies, Travel expenses';
+
+  @override
+  String get titleIsRequired => 'Title is required';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get descriptionHint => 'Add more details about this expense';
+
+  @override
+  String get financialDetails => 'Financial Details';
+
+  @override
+  String get amount => 'Amount';
+
+  @override
+  String get amountHint => '0.00';
+
+  @override
+  String get amountHelperText => 'Enter the total amount spent including tax';
+
+  @override
+  String get amountIsRequired => 'Amount is required';
+
+  @override
+  String get pleaseEnterValidAmount => 'Please enter a valid amount';
+
+  @override
+  String get additionalInformation => 'Additional Information';
+
+  @override
+  String get referenceNumber => 'Reference Number';
+
+  @override
+  String get referenceNumberHint => 'Invoice number, receipt ID, etc.';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get notesHint => 'Any additional information or context';
+
+  @override
+  String get createExpense => 'Create Expense';
+
+  @override
+  String get expenseCreatedSuccessfully => 'Expense created successfully!';
+
+  @override
+  String get pleaseSelectCategory => 'Please select a category';
+
+  @override
+  String get completeRequiredFields => 'Complete required fields';
+
+  @override
   String get customersReport => 'Customers Report';
 
   @override
@@ -449,7 +518,7 @@ class SEn extends S {
   String get onboardingStartNow => 'Start now';
 
   @override
-  String get productsCategories => 'Products And Categories';
+  String get productsCategories => 'Products';
 
   @override
   String get productsList => 'Products List';
@@ -527,12 +596,6 @@ class SEn extends S {
 
   @override
   String get errorDeletingCategory => 'Error deleting category';
-
-  @override
-  String get basicInformation => 'Basic Information';
-
-  @override
-  String get description => 'Description';
 
   @override
   String get price => 'Price';
@@ -654,12 +717,6 @@ class SEn extends S {
 
   @override
   String get centimeters => 'cm';
-
-  @override
-  String get additionalInformation => 'Additional Information';
-
-  @override
-  String get notes => 'Notes';
 
   @override
   String get productIsActive => 'Product is Active';
@@ -866,4 +923,191 @@ class SEn extends S {
 
   @override
   String get customerDataCopied => 'Customer data copied to clipboard';
+
+  @override
+  String get addExpenseHelp => 'Help for adding an expense';
+
+  @override
+  String get addExpenseHelpDescription =>
+      'This screen allows you to create and track business expenses. Here\'s what you can do:';
+
+  @override
+  String get enterExpenseTitleAndDescription =>
+      'Enter expense title and description';
+
+  @override
+  String get setAmountDateAndPaymentMethod =>
+      'Set amount, date, and payment method';
+
+  @override
+  String get selectAppropriateExpenseCategory =>
+      'Select appropriate expense category';
+
+  @override
+  String get addReferenceNumberAndNotes => 'Add reference number and notes';
+
+  @override
+  String get gotIt => 'Got it!';
+
+  @override
+  String get categorization => 'Categorization';
+
+  @override
+  String get additionalInfo => 'Additional Info';
+
+  @override
+  String get create => 'Create';
+
+  @override
+  String get expenseDate => 'Expense Date';
+
+  @override
+  String get selectTheDateThisExpenseOccurred =>
+      'Select the date this expense occurred';
+
+  @override
+  String get paymentMethod => 'Payment Method';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get creditCard => 'Credit Card';
+
+  @override
+  String get debitCard => 'Debit Card';
+
+  @override
+  String get bankTransfer => 'Bank Transfer';
+
+  @override
+  String get check => 'Check';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get tryAgain => 'Try Again';
+
+  @override
+  String get loadingMore => 'Loading more...';
+
+  @override
+  String get loadingExpenses => 'Loading expenses...';
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get expenseDetails => 'Expense Details';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get financialInformation => 'Financial Information';
+
+  @override
+  String get paymentInformation => 'Payment Information';
+
+  @override
+  String get metadata => 'Metadata';
+
+  @override
+  String get createdBy => 'Created By';
+
+  @override
+  String get createdAt => 'Created At';
+
+  @override
+  String get updatedAt => 'Updated At';
+
+  @override
+  String get expenseUpdatedSuccessfully => 'Expense updated successfully';
+
+  @override
+  String get editExpense => 'Edit Expense';
+
+  @override
+  String get addNewExpenseCategory => 'Add New Expense Category';
+
+  @override
+  String get backToCategories => 'Back to Categories';
+
+  @override
+  String get newCategoryDetails => 'New Category Details';
+
+  @override
+  String get categoryName => 'Category Name';
+
+  @override
+  String get categoryNameRequired => 'Category name is required';
+
+  @override
+  String get enterCategoryName => 'Enter category name';
+
+  @override
+  String get categoryDescription => 'Category Description';
+
+  @override
+  String get enterCategoryDescription =>
+      'Enter a brief description for the category';
+
+  @override
+  String get icon => 'Icon';
+
+  @override
+  String get categoryPreview => 'Category Preview';
+
+  @override
+  String get saveCategory => 'Save Category';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get editExpenseCategory => 'Edit Expense Category';
+
+  @override
+  String get updateCategory => 'Update Category';
+
+  @override
+  String get categoryCreatedSuccessfully => 'Category created successfully';
+
+  @override
+  String get noCategoriesFound => 'No Categories Found';
+
+  @override
+  String get createYourFirstExpenseCategory =>
+      'Create your first expense category';
+
+  @override
+  String get errorLoadingCategories => 'Error Loading Categories';
+
+  @override
+  String get deleteAllCategories => 'Delete All Categories';
+
+  @override
+  String get deleteCategory => 'Delete Category';
+
+  @override
+  String deleteCategoryConfirmation(String name) {
+    return 'Are you sure you want to delete category \"$name\"?';
+  }
+
+  @override
+  String errorMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String statusCategory(String status) {
+    return 'Status: $status';
+  }
 }

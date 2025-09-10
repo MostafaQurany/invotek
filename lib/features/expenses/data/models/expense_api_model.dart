@@ -20,8 +20,8 @@ class ExpenseApiModel {
   final String paymentMethod;
   final String? notes;
   final String? attachment;
-  @JsonKey(name: 'created_by')
-  final String createdBy;
+  @JsonKey(name: 'created_by', fromJson: _createdByFromJson)
+  final int createdBy;
   @JsonKey(
     name: 'created_at',
     fromJson: _stringToDateTime,
@@ -61,4 +61,9 @@ class ExpenseApiModel {
       dateTime != null ? DateTime.parse(dateTime) : null;
   static String? _dateTimeToString(DateTime? dateTime) =>
       dateTime?.toIso8601String();
+  static int _createdByFromJson(dynamic value) {
+    if (value is int) return value;
+    if (value is String) return int.parse(value);
+    throw Exception('Invalid created_by value: $value');
+  }
 }

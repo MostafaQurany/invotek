@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/widgets/cards/expense_card.dart';
 
@@ -23,6 +25,7 @@ class ExpensesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final expensesCubit = ExpensesCubit.get(context);
 
     return SliverFillRemaining(
       child: Container(
@@ -33,26 +36,43 @@ class ExpensesList extends StatelessWidget {
             topRight: Radius.circular(28.r),
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 16.h),
-            itemCount: expenses.length,
-            itemBuilder: (context, index) {
-              final expense = expenses[index];
-              return Padding(
-                padding: EdgeInsets.only(bottom: 12.h),
-                child: ExpenseCard(
-                  expense: expense,
-                  onTap: () => onExpenseTap(expense),
-                  onEdit: () => onExpenseEdit(expense),
-                  onDelete: () => onExpenseDelete(expense),
-                  onView: () => onExpenseView(expense),
-                  colorScheme: colorScheme,
-                ),
-              );
-            },
-          ),
+        child: BlocBuilder<ExpensesCubit, ExpensesState>(
+          builder: (context, state) {
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
+              itemCount: expenses.length + (expensesCubit.hasMore ? 1 : 0),
+              separatorBuilder: (context, index) => SizedBox(height: 12.h),
+              itemBuilder: (context, index) {
+                // Show loading indicator at the end if there are more pages
+                if (index == expenses.length) {
+                  return Container(
+                    padding: EdgeInsets.all(16.h),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                        strokeWidth: 2.0,
+                      ),
+                    ),
+                  );
+                }
+
+                final expense = expenses[index];
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: ExpenseCard(
+                    expense: expense,
+                    onTap: () => onExpenseTap(expense),
+                    onEdit: () => onExpenseEdit(expense),
+                    onDelete: () => onExpenseDelete(expense),
+                    onView: () => onExpenseView(expense),
+                    colorScheme: colorScheme,
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );

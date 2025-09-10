@@ -20,7 +20,7 @@ ExpenseApiModel _$ExpenseApiModelFromJson(
   paymentMethod: json['payment_method'] as String,
   notes: json['notes'] as String?,
   attachment: json['attachment'] as String?,
-  createdBy: json['created_by'] as String,
+  createdBy: ExpenseApiModel._createdByFromJson(json['created_by']),
   createdAt: ExpenseApiModel._stringToDateTime(json['created_at'] as String?),
   updatedAt: ExpenseApiModel._stringToDateTime(json['updated_at'] as String?),
 );

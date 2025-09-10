@@ -12,6 +12,9 @@ ExpenseCategoryApiModel _$ExpenseCategoryApiModelFromJson(
   id: (json['id'] as num).toInt(),
   name: json['name'] as String,
   status: json['status'] as String,
+  description: json['description'] as String?,
+  color: json['color'] as String?,
+  icon: json['icon'] as String?,
   createdAt: ExpenseCategoryApiModel._stringToDateTime(
     json['created_at'] as String?,
   ),
@@ -26,6 +29,9 @@ Map<String, dynamic> _$ExpenseCategoryApiModelToJson(
   'id': instance.id,
   'name': instance.name,
   'status': instance.status,
+  'description': instance.description,
+  'color': instance.color,
+  'icon': instance.icon,
   'created_at': ExpenseCategoryApiModel._dateTimeToString(instance.createdAt),
   'updated_at': ExpenseCategoryApiModel._dateTimeToString(instance.updatedAt),
 };

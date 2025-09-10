@@ -920,6 +920,236 @@ class S {
     );
   }
 
+  /// `New Expense`
+  String get newExpense {
+    return Intl.message(
+      'New Expense',
+      name: 'newExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track your business expenses`
+  String get trackYourBusinessExpenses {
+    return Intl.message(
+      'Track your business expenses',
+      name: 'trackYourBusinessExpenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Basic Information`
+  String get basicInformation {
+    return Intl.message(
+      'Basic Information',
+      name: 'basicInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense Title`
+  String get expenseTitle {
+    return Intl.message(
+      'Expense Title',
+      name: 'expenseTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `e.g., Office supplies, Travel expenses`
+  String get expenseTitleHint {
+    return Intl.message(
+      'e.g., Office supplies, Travel expenses',
+      name: 'expenseTitleHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title is required`
+  String get titleIsRequired {
+    return Intl.message(
+      'Title is required',
+      name: 'titleIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add more details about this expense`
+  String get descriptionHint {
+    return Intl.message(
+      'Add more details about this expense',
+      name: 'descriptionHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial Details`
+  String get financialDetails {
+    return Intl.message(
+      'Financial Details',
+      name: 'financialDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount {
+    return Intl.message(
+      'Amount',
+      name: 'amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `0.00`
+  String get amountHint {
+    return Intl.message(
+      '0.00',
+      name: 'amountHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the total amount spent including tax`
+  String get amountHelperText {
+    return Intl.message(
+      'Enter the total amount spent including tax',
+      name: 'amountHelperText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount is required`
+  String get amountIsRequired {
+    return Intl.message(
+      'Amount is required',
+      name: 'amountIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid amount`
+  String get pleaseEnterValidAmount {
+    return Intl.message(
+      'Please enter a valid amount',
+      name: 'pleaseEnterValidAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional Information`
+  String get additionalInformation {
+    return Intl.message(
+      'Additional Information',
+      name: 'additionalInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reference Number`
+  String get referenceNumber {
+    return Intl.message(
+      'Reference Number',
+      name: 'referenceNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice number, receipt ID, etc.`
+  String get referenceNumberHint {
+    return Intl.message(
+      'Invoice number, receipt ID, etc.',
+      name: 'referenceNumberHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message(
+      'Notes',
+      name: 'notes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Any additional information or context`
+  String get notesHint {
+    return Intl.message(
+      'Any additional information or context',
+      name: 'notesHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create Expense`
+  String get createExpense {
+    return Intl.message(
+      'Create Expense',
+      name: 'createExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense created successfully!`
+  String get expenseCreatedSuccessfully {
+    return Intl.message(
+      'Expense created successfully!',
+      name: 'expenseCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a category`
+  String get pleaseSelectCategory {
+    return Intl.message(
+      'Please select a category',
+      name: 'pleaseSelectCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Complete required fields`
+  String get completeRequiredFields {
+    return Intl.message(
+      'Complete required fields',
+      name: 'completeRequiredFields',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Customers Report`
   String get customersReport {
     return Intl.message(
@@ -1460,10 +1690,10 @@ class S {
     );
   }
 
-  /// `Products And Categories`
+  /// `Products`
   String get productsCategories {
     return Intl.message(
-      'Products And Categories',
+      'Products',
       name: 'productsCategories',
       desc: '',
       args: [],
@@ -1715,26 +1945,6 @@ class S {
     return Intl.message(
       'Error deleting category',
       name: 'errorDeletingCategory',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Basic Information`
-  String get basicInformation {
-    return Intl.message(
-      'Basic Information',
-      name: 'basicInformation',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Description`
-  String get description {
-    return Intl.message(
-      'Description',
-      name: 'description',
       desc: '',
       args: [],
     );
@@ -2135,26 +2345,6 @@ class S {
     return Intl.message(
       'cm',
       name: 'centimeters',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Additional Information`
-  String get additionalInformation {
-    return Intl.message(
-      'Additional Information',
-      name: 'additionalInformation',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Notes`
-  String get notes {
-    return Intl.message(
-      'Notes',
-      name: 'notes',
       desc: '',
       args: [],
     );
@@ -2797,6 +2987,586 @@ class S {
       name: 'customerDataCopied',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Help for adding an expense`
+  String get addExpenseHelp {
+    return Intl.message(
+      'Help for adding an expense',
+      name: 'addExpenseHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This screen allows you to create and track business expenses. Here's what you can do:`
+  String get addExpenseHelpDescription {
+    return Intl.message(
+      'This screen allows you to create and track business expenses. Here\'s what you can do:',
+      name: 'addExpenseHelpDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter expense title and description`
+  String get enterExpenseTitleAndDescription {
+    return Intl.message(
+      'Enter expense title and description',
+      name: 'enterExpenseTitleAndDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set amount, date, and payment method`
+  String get setAmountDateAndPaymentMethod {
+    return Intl.message(
+      'Set amount, date, and payment method',
+      name: 'setAmountDateAndPaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select appropriate expense category`
+  String get selectAppropriateExpenseCategory {
+    return Intl.message(
+      'Select appropriate expense category',
+      name: 'selectAppropriateExpenseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add reference number and notes`
+  String get addReferenceNumberAndNotes {
+    return Intl.message(
+      'Add reference number and notes',
+      name: 'addReferenceNumberAndNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Got it!`
+  String get gotIt {
+    return Intl.message(
+      'Got it!',
+      name: 'gotIt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categorization`
+  String get categorization {
+    return Intl.message(
+      'Categorization',
+      name: 'categorization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional Info`
+  String get additionalInfo {
+    return Intl.message(
+      'Additional Info',
+      name: 'additionalInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create`
+  String get create {
+    return Intl.message(
+      'Create',
+      name: 'create',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense Date`
+  String get expenseDate {
+    return Intl.message(
+      'Expense Date',
+      name: 'expenseDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select the date this expense occurred`
+  String get selectTheDateThisExpenseOccurred {
+    return Intl.message(
+      'Select the date this expense occurred',
+      name: 'selectTheDateThisExpenseOccurred',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Method`
+  String get paymentMethod {
+    return Intl.message(
+      'Payment Method',
+      name: 'paymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash`
+  String get cash {
+    return Intl.message(
+      'Cash',
+      name: 'cash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Credit Card`
+  String get creditCard {
+    return Intl.message(
+      'Credit Card',
+      name: 'creditCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debit Card`
+  String get debitCard {
+    return Intl.message(
+      'Debit Card',
+      name: 'debitCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bank Transfer`
+  String get bankTransfer {
+    return Intl.message(
+      'Bank Transfer',
+      name: 'bankTransfer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check`
+  String get check {
+    return Intl.message(
+      'Check',
+      name: 'check',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get other {
+    return Intl.message(
+      'Other',
+      name: 'other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get somethingWentWrong {
+    return Intl.message(
+      'Something went wrong',
+      name: 'somethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try Again`
+  String get tryAgain {
+    return Intl.message(
+      'Try Again',
+      name: 'tryAgain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading more...`
+  String get loadingMore {
+    return Intl.message(
+      'Loading more...',
+      name: 'loadingMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading expenses...`
+  String get loadingExpenses {
+    return Intl.message(
+      'Loading expenses...',
+      name: 'loadingExpenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Categories`
+  String get categories {
+    return Intl.message(
+      'Categories',
+      name: 'categories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense Details`
+  String get expenseDetails {
+    return Intl.message(
+      'Expense Details',
+      name: 'expenseDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Title`
+  String get title {
+    return Intl.message(
+      'Title',
+      name: 'title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get date {
+    return Intl.message(
+      'Date',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial Information`
+  String get financialInformation {
+    return Intl.message(
+      'Financial Information',
+      name: 'financialInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Information`
+  String get paymentInformation {
+    return Intl.message(
+      'Payment Information',
+      name: 'paymentInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Metadata`
+  String get metadata {
+    return Intl.message(
+      'Metadata',
+      name: 'metadata',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created By`
+  String get createdBy {
+    return Intl.message(
+      'Created By',
+      name: 'createdBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created At`
+  String get createdAt {
+    return Intl.message(
+      'Created At',
+      name: 'createdAt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated At`
+  String get updatedAt {
+    return Intl.message(
+      'Updated At',
+      name: 'updatedAt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense updated successfully`
+  String get expenseUpdatedSuccessfully {
+    return Intl.message(
+      'Expense updated successfully',
+      name: 'expenseUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Expense`
+  String get editExpense {
+    return Intl.message(
+      'Edit Expense',
+      name: 'editExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Expense Category`
+  String get addNewExpenseCategory {
+    return Intl.message(
+      'Add New Expense Category',
+      name: 'addNewExpenseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back to Categories`
+  String get backToCategories {
+    return Intl.message(
+      'Back to Categories',
+      name: 'backToCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Category Details`
+  String get newCategoryDetails {
+    return Intl.message(
+      'New Category Details',
+      name: 'newCategoryDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category Name`
+  String get categoryName {
+    return Intl.message(
+      'Category Name',
+      name: 'categoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category name is required`
+  String get categoryNameRequired {
+    return Intl.message(
+      'Category name is required',
+      name: 'categoryNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter category name`
+  String get enterCategoryName {
+    return Intl.message(
+      'Enter category name',
+      name: 'enterCategoryName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category Description`
+  String get categoryDescription {
+    return Intl.message(
+      'Category Description',
+      name: 'categoryDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter a brief description for the category`
+  String get enterCategoryDescription {
+    return Intl.message(
+      'Enter a brief description for the category',
+      name: 'enterCategoryDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Icon`
+  String get icon {
+    return Intl.message(
+      'Icon',
+      name: 'icon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category Preview`
+  String get categoryPreview {
+    return Intl.message(
+      'Category Preview',
+      name: 'categoryPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Category`
+  String get saveCategory {
+    return Intl.message(
+      'Save Category',
+      name: 'saveCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving...`
+  String get saving {
+    return Intl.message(
+      'Saving...',
+      name: 'saving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Expense Category`
+  String get editExpenseCategory {
+    return Intl.message(
+      'Edit Expense Category',
+      name: 'editExpenseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Category`
+  String get updateCategory {
+    return Intl.message(
+      'Update Category',
+      name: 'updateCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category created successfully`
+  String get categoryCreatedSuccessfully {
+    return Intl.message(
+      'Category created successfully',
+      name: 'categoryCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Categories Found`
+  String get noCategoriesFound {
+    return Intl.message(
+      'No Categories Found',
+      name: 'noCategoriesFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create your first expense category`
+  String get createYourFirstExpenseCategory {
+    return Intl.message(
+      'Create your first expense category',
+      name: 'createYourFirstExpenseCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error Loading Categories`
+  String get errorLoadingCategories {
+    return Intl.message(
+      'Error Loading Categories',
+      name: 'errorLoadingCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete All Categories`
+  String get deleteAllCategories {
+    return Intl.message(
+      'Delete All Categories',
+      name: 'deleteAllCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Category`
+  String get deleteCategory {
+    return Intl.message(
+      'Delete Category',
+      name: 'deleteCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete category "{name}"?`
+  String deleteCategoryConfirmation(String name) {
+    return Intl.message(
+      'Are you sure you want to delete category "$name"?',
+      name: 'deleteCategoryConfirmation',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Error: {error}`
+  String errorMessage(String error) {
+    return Intl.message(
+      'Error: $error',
+      name: 'errorMessage',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Status: {status}`
+  String statusCategory(String status) {
+    return Intl.message(
+      'Status: $status',
+      name: 'statusCategory',
+      desc: '',
+      args: [status],
     );
   }
 }

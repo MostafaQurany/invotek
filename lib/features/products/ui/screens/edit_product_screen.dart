@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/validation/validation.dart';
-import 'package:invotek/features/home/demo/cubit/menu_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
@@ -255,19 +254,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     ),
                   );
                   controller.closed.then((_) {
-                    try {
-                      context.read<MenuCubit>().selectMenuItemByRoute(
-                        '/products/list',
-                      );
-                    } catch (_) {
-                      if (Navigator.of(context).canPop()) {
-                        Navigator.of(context).pop();
-                      } else {
-                        Navigator.of(
-                          context,
-                        ).pushReplacementNamed('/products/list');
-                      }
-                    }
+                    Navigator.pop(context);
                   });
                 },
             orElse: () {},

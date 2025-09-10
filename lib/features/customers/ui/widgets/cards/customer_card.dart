@@ -37,7 +37,10 @@ class CustomerCard extends StatelessWidget {
             foregroundColor: colorScheme.primary,
             icon: Icons.edit,
             autoClose: true,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12.r),
+              bottomLeft: Radius.circular(12.r),
+            ),
           ),
           SlidableAction(
             onPressed: (_) => onDelete?.call(),
@@ -45,7 +48,10 @@ class CustomerCard extends StatelessWidget {
             foregroundColor: colorScheme.error,
             icon: Icons.delete_outline,
             autoClose: true,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(12.r),
+              bottomRight: Radius.circular(12.r),
+            ),
           ),
         ],
       ),

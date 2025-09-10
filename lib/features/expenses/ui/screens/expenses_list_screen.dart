@@ -3,12 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
+import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
 import 'package:invotek/features/expenses/ui/widgets/cards/expenses_header_widget.dart';
 import 'package:invotek/features/expenses/ui/widgets/lists/expenses_state_builder.dart';
 import 'package:invotek/features/expenses/ui/widgets/cards/expense_options_bottom_sheet.dart';
 import 'package:invotek/features/expenses/ui/widgets/dialogs/delete_expense_dialog.dart';
+import 'package:invotek/features/expenses/ui/screens/add_expense_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_details_screen.dart';
 
 class ExpensesListScreen extends StatefulWidget {
   const ExpensesListScreen({super.key});
@@ -28,14 +32,30 @@ class ExpensesListScreenWithProvider extends StatelessWidget {
 
 class _ExpensesListScreenState extends State<ExpensesListScreen> {
   final _searchController = TextEditingController();
+  final _scrollController = ScrollController();
 
   String? _selectedStatus;
   String? _selectedCategory;
+  bool _isNavigating = false;
 
   @override
   void initState() {
     super.initState();
     _initializeOptions();
+    _setupScrollListener();
+  }
+
+  void _setupScrollListener() {
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        // Load more when user is 200 pixels from bottom
+        final expensesCubit = ExpensesCubit.get(context);
+        if (expensesCubit.hasMore) {
+          expensesCubit.loadNextPage();
+        }
+      }
+    });
   }
 
   void _initializeOptions() {
@@ -46,6 +66,7 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -74,17 +95,19 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
           );
         },
         child: SafeArea(
+          bottom: false,
           child: RefreshIndicator(
             onRefresh: () async {
               ExpensesCubit.get(context).loadFirstPage(refresh: true);
+              ExpenseCategoriesCubit.get(context).loadFirstPage(refresh: true);
             },
             child: CustomScrollView(
+              controller: _scrollController,
               slivers: [
-                // Custom Header Widget as Sliver
+                // Custom Header Widget as Sliver - now part of scrollable content
                 SliverToBoxAdapter(
                   child: ExpensesHeaderWidget(
                     onMenuPressed: _handleMenuPressed,
-                    onAddPressed: _navigateToAddExpense,
                     searchController: _searchController,
                     onSearchChanged: (query) {
                       ExpensesCubit.get(context).loadFirstPage(
@@ -105,7 +128,7 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
                   ),
                 ),
 
-                // Expenses List
+                // Expenses List - now uses SliverList for proper scrolling
                 ExpensesStateBuilder(
                   onExpenseTap: (expense) =>
                       _showExpenseOptions(context, expense),
@@ -124,18 +147,14 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: _navigateToAddExpense,
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
-        icon: Icon(Icons.add, size: 20.sp),
-        label: Text(
-          'Add Expense',
-          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
-        ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32.r),
+          borderRadius: BorderRadius.circular(16.r),
         ),
+        child: Icon(Icons.add, size: 22.sp),
       ),
     );
   }
@@ -172,31 +191,44 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
   }
 
   void _navigateToAddExpense() {
-    // TODO: Implement when AddExpenseScreen is created
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Add Expense screen - Coming Soon!'),
-        backgroundColor: AppColors.primary,
+    if (_isNavigating) return;
+
+    setState(() {
+      _isNavigating = true;
+    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AddExpenseScreenWithProvider(),
+        settings: const RouteSettings(name: '/add-expense'),
       ),
-    );
+    ).then((_) {
+      if (mounted) {
+        setState(() {
+          _isNavigating = false;
+        });
+      }
+    });
   }
 
   void _navigateToExpenseDetails(ExpenseModel expense) {
-    // TODO: Implement when ExpenseDetailsScreen is created
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Expense Details screen - Coming Soon!'),
-        backgroundColor: AppColors.primary,
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            ExpenseDetailsScreenWithProvider(expense: expense),
+        settings: const RouteSettings(name: '/expense-details'),
       ),
     );
   }
 
   void _navigateToEditExpense(ExpenseModel expense) {
-    // TODO: Implement when EditExpenseScreen is created
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Edit Expense screen - Coming Soon!'),
-        backgroundColor: AppColors.primary,
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditExpenseScreenWithProvider(expense: expense),
+        settings: const RouteSettings(name: '/edit-expense'),
       ),
     );
   }

@@ -216,6 +216,9 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
   Future<void> createExpenseCategory({
     required String name,
     String status = 'active',
+    String? description,
+    String? color,
+    String? icon,
   }) async {
     emit(
       ExpenseCategoriesState.loading(
@@ -229,6 +232,9 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
     final result = await _repository.createExpenseCategory(
       name: name,
       status: status,
+      description: description,
+      color: color,
+      icon: icon,
     );
 
     result.when(
@@ -260,6 +266,9 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
     required int id,
     String? name,
     String? status,
+    String? description,
+    String? color,
+    String? icon,
   }) async {
     emit(
       ExpenseCategoriesState.loading(
@@ -274,6 +283,9 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
       id: id,
       name: name,
       status: status,
+      description: description,
+      color: color,
+      icon: icon,
     );
 
     result.when(

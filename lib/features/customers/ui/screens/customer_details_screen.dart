@@ -63,7 +63,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [AppColors.primary, AppColors.primary.withOpacity(0.1)],
+              colors: [AppColors.primary, AppColors.primary.withOpacity(0.6)],
             ),
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(32.r),

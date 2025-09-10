@@ -12,8 +12,18 @@ class CreateExpenseResponse {
 
   CreateExpenseResponse({this.data, this.message, this.success});
 
-  factory CreateExpenseResponse.fromJson(Map<String, dynamic> json) =>
-      _$CreateExpenseResponseFromJson(json);
+  factory CreateExpenseResponse.fromJson(Map<String, dynamic> json) {
+    // Handle direct expense data (not wrapped in 'data' field)
+    if (json.containsKey('id') && json.containsKey('title')) {
+      return CreateExpenseResponse(
+        data: ExpenseApiModel.fromJson(json),
+        message: json['message'] as String?,
+        success: json['success'] as bool? ?? true,
+      );
+    }
+    // Handle wrapped response structure
+    return _$CreateExpenseResponseFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$CreateExpenseResponseToJson(this);
 }

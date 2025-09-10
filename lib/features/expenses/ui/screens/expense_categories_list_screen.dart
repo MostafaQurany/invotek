@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
-import 'package:invotek/features/expenses/ui/widgets/cards/expense_categories_header_widget.dart';
-import 'package:invotek/features/expenses/ui/widgets/lists/expense_categories_state_builder.dart';
-import 'package:invotek/features/expenses/ui/widgets/cards/expense_category_options_bottom_sheet.dart';
-import 'package:invotek/features/expenses/ui/widgets/dialogs/delete_expense_category_dialog.dart';
+import 'package:invotek/features/expenses/ui/screens/add_expense_category_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpenseCategoriesListScreen extends StatefulWidget {
   const ExpenseCategoriesListScreen({super.key});
@@ -18,46 +18,104 @@ class ExpenseCategoriesListScreen extends StatefulWidget {
       _ExpenseCategoriesListScreenState();
 }
 
-class ExpenseCategoriesListScreenWithProvider extends StatelessWidget {
-  const ExpenseCategoriesListScreenWithProvider({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ExpenseCategoriesListScreen();
-  }
-}
-
 class _ExpenseCategoriesListScreenState
     extends State<ExpenseCategoriesListScreen> {
-  final _searchController = TextEditingController();
-
-  String? _selectedStatus;
-
   @override
   void initState() {
     super.initState();
-    _initializeOptions();
+    _loadCategories();
   }
 
-  void _initializeOptions() {
-    _selectedStatus = 'all_status';
+  void _loadCategories() {
+    final categoriesCubit = ExpenseCategoriesCubit.get(context);
+    categoriesCubit.loadFirstPage(refresh: true);
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  void _navigateToAddCategory() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AddExpenseCategoryScreen()),
+    );
+  }
+
+  void _navigateToEditCategory(ExpenseCategoryModel category) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            EditExpenseCategoryScreenWithProvider(category: category),
+        settings: const RouteSettings(name: AppRoutes.editExpenseCategoryRoute),
+      ),
+    );
+  }
+
+  void _showDeleteConfirmation(ExpenseCategoryModel category) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(S.of(context).deleteCategory),
+        content: Text(S.of(context).deleteCategoryConfirmation(category.name)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(S.of(context).cancel),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              final categoriesCubit = ExpenseCategoriesCubit.get(context);
+              categoriesCubit.deleteExpenseCategory(category.id);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.error,
+              foregroundColor: AppColors.white,
+            ),
+            child: Text(S.of(context).delete),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.backgroundLight,
+      appBar: AppBar(
+        backgroundColor: AppColors.backgroundLight,
+        title: Text(
+          S.of(context).expenseCategories,
+          style: TextStyle(
+            color: AppColors.primary,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        leading: IconButton.filled(
+          style: IconButton.styleFrom(
+            backgroundColor: AppColors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+          ),
+          onPressed: () {
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                zoomDrawer.toggle();
+              }
+            } catch (e) {
+              if (Navigator.of(context).canPop()) {
+                Navigator.of(context).pop();
+              } else {
+                Navigator.of(context).pushReplacementNamed('/home');
+              }
+            }
+          },
+          icon: Icon(Icons.menu, color: AppColors.primary),
+        ),
+      ),
       body: BlocListener<ExpenseCategoriesCubit, ExpenseCategoriesState>(
         listener: (context, state) {
-          print(
-            '🔄 ExpenseCategoriesListScreen received state: ${state.runtimeType}',
-          );
           state.whenOrNull(
             deleteSuccess:
                 (
@@ -67,159 +125,252 @@ class _ExpenseCategoriesListScreenState
                   currentPage,
                   totalPages,
                 ) {
-                  print(
-                    '✅ DeleteSuccess received with ${categories.length} categories, deletedId: $deletedId',
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(S.of(context).categoryDeletedSuccessfully),
+                      backgroundColor: AppColors.primary,
+                    ),
                   );
-                  // Category deleted successfully - UI will update automatically
+                },
+            failure:
+                (categories, selectedCategory, currentPage, totalPages, error) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(S.of(context).errorMessage(error)),
+                      backgroundColor: AppColors.error,
+                    ),
+                  );
                 },
           );
         },
-        child: RefreshIndicator(
-          onRefresh: () async {
-            ExpenseCategoriesCubit.get(context).loadFirstPage(refresh: true);
+        child: BlocBuilder<ExpenseCategoriesCubit, ExpenseCategoriesState>(
+          builder: (context, state) {
+            return state.when(
+              initial:
+                  (
+                    categories,
+                    selectedCategory,
+                    currentPage,
+                    totalPages,
+                    error,
+                  ) => _buildEmptyState(),
+              loading:
+                  (
+                    categories,
+                    selectedCategory,
+                    currentPage,
+                    totalPages,
+                    message,
+                  ) => _buildLoadingState(),
+              loaded: (categories, selectedCategory, currentPage, totalPages) =>
+                  _buildCategoriesList(categories),
+              createSuccess:
+                  (
+                    categories,
+                    created,
+                    selectedCategory,
+                    currentPage,
+                    totalPages,
+                  ) => _buildCategoriesList(categories),
+              updateSuccess:
+                  (
+                    categories,
+                    updated,
+                    selectedCategory,
+                    currentPage,
+                    totalPages,
+                  ) => _buildCategoriesList(categories),
+              deleteSuccess:
+                  (
+                    categories,
+                    deletedId,
+                    selectedCategory,
+                    currentPage,
+                    totalPages,
+                  ) => _buildCategoriesList(categories),
+              failure:
+                  (
+                    categories,
+                    selectedCategory,
+                    currentPage,
+                    totalPages,
+                    error,
+                  ) => _buildErrorState(error),
+            );
           },
-          child: CustomScrollView(
-            slivers: [
-              // Custom Header Widget as Sliver
-              SliverToBoxAdapter(
-                child: ExpenseCategoriesHeaderWidget(
-                  onMenuPressed: _handleMenuPressed,
-                  onAddPressed: _navigateToAddExpenseCategory,
-                  searchController: _searchController,
-                  onSearchChanged: (query) {
-                    ExpenseCategoriesCubit.get(context).loadFirstPage(
-                      refresh: true,
-                      search: query.isEmpty ? null : query,
-                      status: _selectedStatus == 'all_status'
-                          ? null
-                          : _selectedStatus,
-                    );
-                  },
-                  selectedStatus: _selectedStatus ?? '',
-                  onStatusChanged: _onStatusChanged,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToAddCategory,
+        backgroundColor: AppColors.primary,
+        child: Icon(Icons.add, color: AppColors.white),
+      ),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return Center(child: CircularProgressIndicator(color: AppColors.primary));
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.category_outlined,
+            size: 80.sp,
+            color: AppColors.textSecondary,
+          ),
+          SizedBox(height: 16.h),
+          Text(
+            S.of(context).noCategoriesFound,
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            S.of(context).createYourFirstExpenseCategory,
+            style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
+          ),
+          SizedBox(height: 24.h),
+          ElevatedButton(
+            onPressed: _navigateToAddCategory,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+            ),
+            child: Text(S.of(context).addCategory),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState(String error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.error_outline, size: 80.sp, color: AppColors.error),
+          SizedBox(height: 16.h),
+          Text(
+            S.of(context).errorLoadingCategories,
+            style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            error,
+            style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 24.h),
+          ElevatedButton(
+            onPressed: _loadCategories,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+            ),
+            child: Text(S.of(context).retry),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategoriesList(List<ExpenseCategoryModel> categories) {
+    if (categories.isEmpty) {
+      return _buildEmptyState();
+    }
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        _loadCategories();
+      },
+      child: ListView.builder(
+        padding: EdgeInsets.all(16.w),
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          return Container(
+            margin: EdgeInsets.only(bottom: 12.h),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(12.r),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 8,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: ListTile(
+              contentPadding: EdgeInsets.all(16.w),
+              leading: Container(
+                width: 48.w,
+                height: 48.w,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: Icon(
+                  Icons.category,
+                  color: AppColors.primary,
+                  size: 24.sp,
                 ),
               ),
-
-              // Categories List
-              ExpenseCategoriesStateBuilder(
-                onCategoryTap: (category) =>
-                    _showCategoryOptions(context, category),
-                onCategoryView: _navigateToCategoryDetails,
-                onCategoryEdit: _navigateToEditCategory,
-                onCategoryDelete: _showDeleteConfirmation,
-                onAddCategory: _navigateToAddExpenseCategory,
-                onRetry: _retry,
-                selectedStatus: _selectedStatus ?? '',
-                onStatusChanged: _onStatusChanged,
+              title: Text(
+                category.name,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
               ),
-
-              // Bottom spacing for FAB
-              SliverToBoxAdapter(child: SizedBox(height: 100.h)),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _navigateToAddExpenseCategory,
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        icon: Icon(Icons.add, size: 20.sp),
-        label: Text(
-          'Add Category',
-          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32.r),
-        ),
-      ),
-    );
-  }
-
-  // Event Handlers
-  void _handleMenuPressed() {
-    ZoomDrawer.of(context)?.toggle();
-  }
-
-  void _onStatusChanged(String status) {
-    setState(() {
-      _selectedStatus = status;
-    });
-    ExpenseCategoriesCubit.get(context).loadFirstPage(
-      refresh: true,
-      search: _searchController.text.isEmpty ? null : _searchController.text,
-      status: status == 'all_status' ? null : status,
-    );
-  }
-
-  void _navigateToAddExpenseCategory() {
-    // TODO: Implement when AddExpenseCategoryScreen is created
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Add Category screen - Coming Soon!'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _navigateToCategoryDetails(ExpenseCategoryModel category) {
-    // TODO: Implement when ExpenseCategoryDetailsScreen is created
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Category Details screen - Coming Soon!'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _navigateToEditCategory(ExpenseCategoryModel category) {
-    // TODO: Implement when EditExpenseCategoryScreen is created
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Edit Category screen - Coming Soon!'),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _showCategoryOptions(
-    BuildContext context,
-    ExpenseCategoryModel category,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => ExpenseCategoryOptionsBottomSheet(
-        category: category,
-        onView: () {
-          Navigator.pop(context);
-          _navigateToCategoryDetails(category);
-        },
-        onEdit: () {
-          Navigator.pop(context);
-          _navigateToEditCategory(category);
-        },
-        onDelete: () {
-          Navigator.pop(context);
-          _showDeleteConfirmation(category);
+              subtitle: Text(
+                S.of(context).statusCategory(category.status),
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    onPressed: () => _navigateToEditCategory(category),
+                    icon: Icon(Icons.edit),
+                    color: AppColors.primary,
+                  ),
+                  IconButton(
+                    onPressed: () => _showDeleteConfirmation(category),
+                    icon: Icon(Icons.delete),
+                    color: AppColors.error,
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       ),
     );
   }
+}
 
-  void _showDeleteConfirmation(ExpenseCategoryModel category) {
-    final categoriesCubit = ExpenseCategoriesCubit.get(context);
-    showDialog(
-      context: context,
-      builder: (context) => DeleteExpenseCategoryDialog(
-        category: category,
-        onConfirm: () {
-          categoriesCubit.deleteExpenseCategory(category.id);
-        },
-      ),
-    );
-  }
+class ExpenseCategoriesListScreenWithProvider extends StatelessWidget {
+  const ExpenseCategoriesListScreenWithProvider({super.key});
 
-  void _retry() {
-    ExpenseCategoriesCubit.get(context).loadFirstPage(refresh: true);
+  @override
+  Widget build(BuildContext context) {
+    return const ExpenseCategoriesListScreen();
   }
 }

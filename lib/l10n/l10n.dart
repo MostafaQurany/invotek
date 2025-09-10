@@ -619,6 +619,144 @@ abstract class S {
   /// **'Expenses Report'**
   String get expensesReport;
 
+  /// No description provided for @newExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'New Expense'**
+  String get newExpense;
+
+  /// No description provided for @trackYourBusinessExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your business expenses'**
+  String get trackYourBusinessExpenses;
+
+  /// No description provided for @basicInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get basicInformation;
+
+  /// No description provided for @expenseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Title'**
+  String get expenseTitle;
+
+  /// No description provided for @expenseTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Office supplies, Travel expenses'**
+  String get expenseTitleHint;
+
+  /// No description provided for @titleIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Title is required'**
+  String get titleIsRequired;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @descriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add more details about this expense'**
+  String get descriptionHint;
+
+  /// No description provided for @financialDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Details'**
+  String get financialDetails;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amount;
+
+  /// No description provided for @amountHint.
+  ///
+  /// In en, this message translates to:
+  /// **'0.00'**
+  String get amountHint;
+
+  /// No description provided for @amountHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the total amount spent including tax'**
+  String get amountHelperText;
+
+  /// No description provided for @amountIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount is required'**
+  String get amountIsRequired;
+
+  /// No description provided for @pleaseEnterValidAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid amount'**
+  String get pleaseEnterValidAmount;
+
+  /// No description provided for @additionalInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Information'**
+  String get additionalInformation;
+
+  /// No description provided for @referenceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference Number'**
+  String get referenceNumber;
+
+  /// No description provided for @referenceNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice number, receipt ID, etc.'**
+  String get referenceNumberHint;
+
+  /// No description provided for @notes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @notesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Any additional information or context'**
+  String get notesHint;
+
+  /// No description provided for @createExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Expense'**
+  String get createExpense;
+
+  /// No description provided for @expenseCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense created successfully!'**
+  String get expenseCreatedSuccessfully;
+
+  /// No description provided for @pleaseSelectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a category'**
+  String get pleaseSelectCategory;
+
+  /// No description provided for @completeRequiredFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete required fields'**
+  String get completeRequiredFields;
+
   /// No description provided for @customersReport.
   ///
   /// In en, this message translates to:
@@ -946,7 +1084,7 @@ abstract class S {
   /// No description provided for @productsCategories.
   ///
   /// In en, this message translates to:
-  /// **'Products And Categories'**
+  /// **'Products'**
   String get productsCategories;
 
   /// No description provided for @productsList.
@@ -1098,18 +1236,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Error deleting category'**
   String get errorDeletingCategory;
-
-  /// No description provided for @basicInformation.
-  ///
-  /// In en, this message translates to:
-  /// **'Basic Information'**
-  String get basicInformation;
-
-  /// No description provided for @description.
-  ///
-  /// In en, this message translates to:
-  /// **'Description'**
-  String get description;
 
   /// No description provided for @price.
   ///
@@ -1350,18 +1476,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'cm'**
   String get centimeters;
-
-  /// No description provided for @additionalInformation.
-  ///
-  /// In en, this message translates to:
-  /// **'Additional Information'**
-  String get additionalInformation;
-
-  /// No description provided for @notes.
-  ///
-  /// In en, this message translates to:
-  /// **'Notes'**
-  String get notes;
 
   /// No description provided for @productIsActive.
   ///
@@ -1746,6 +1860,354 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Customer data copied to clipboard'**
   String get customerDataCopied;
+
+  /// No description provided for @addExpenseHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Help for adding an expense'**
+  String get addExpenseHelp;
+
+  /// No description provided for @addExpenseHelpDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen allows you to create and track business expenses. Here\'s what you can do:'**
+  String get addExpenseHelpDescription;
+
+  /// No description provided for @enterExpenseTitleAndDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter expense title and description'**
+  String get enterExpenseTitleAndDescription;
+
+  /// No description provided for @setAmountDateAndPaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Set amount, date, and payment method'**
+  String get setAmountDateAndPaymentMethod;
+
+  /// No description provided for @selectAppropriateExpenseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select appropriate expense category'**
+  String get selectAppropriateExpenseCategory;
+
+  /// No description provided for @addReferenceNumberAndNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Add reference number and notes'**
+  String get addReferenceNumberAndNotes;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Got it!'**
+  String get gotIt;
+
+  /// No description provided for @categorization.
+  ///
+  /// In en, this message translates to:
+  /// **'Categorization'**
+  String get categorization;
+
+  /// No description provided for @additionalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Info'**
+  String get additionalInfo;
+
+  /// No description provided for @create.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get create;
+
+  /// No description provided for @expenseDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Date'**
+  String get expenseDate;
+
+  /// No description provided for @selectTheDateThisExpenseOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the date this expense occurred'**
+  String get selectTheDateThisExpenseOccurred;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get paymentMethod;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @creditCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Card'**
+  String get creditCard;
+
+  /// No description provided for @debitCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit Card'**
+  String get debitCard;
+
+  /// No description provided for @bankTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Transfer'**
+  String get bankTransfer;
+
+  /// No description provided for @check.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get check;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// No description provided for @tryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try Again'**
+  String get tryAgain;
+
+  /// No description provided for @loadingMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading more...'**
+  String get loadingMore;
+
+  /// No description provided for @loadingExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading expenses...'**
+  String get loadingExpenses;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @expenseDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Details'**
+  String get expenseDetails;
+
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get title;
+
+  /// No description provided for @date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// No description provided for @financialInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Information'**
+  String get financialInformation;
+
+  /// No description provided for @paymentInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Information'**
+  String get paymentInformation;
+
+  /// No description provided for @metadata.
+  ///
+  /// In en, this message translates to:
+  /// **'Metadata'**
+  String get metadata;
+
+  /// No description provided for @createdBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Created By'**
+  String get createdBy;
+
+  /// No description provided for @createdAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created At'**
+  String get createdAt;
+
+  /// No description provided for @updatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated At'**
+  String get updatedAt;
+
+  /// No description provided for @expenseUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense updated successfully'**
+  String get expenseUpdatedSuccessfully;
+
+  /// No description provided for @editExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Expense'**
+  String get editExpense;
+
+  /// No description provided for @addNewExpenseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Expense Category'**
+  String get addNewExpenseCategory;
+
+  /// No description provided for @backToCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Categories'**
+  String get backToCategories;
+
+  /// No description provided for @newCategoryDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'New Category Details'**
+  String get newCategoryDetails;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Name'**
+  String get categoryName;
+
+  /// No description provided for @categoryNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Category name is required'**
+  String get categoryNameRequired;
+
+  /// No description provided for @enterCategoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter category name'**
+  String get enterCategoryName;
+
+  /// No description provided for @categoryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Description'**
+  String get categoryDescription;
+
+  /// No description provided for @enterCategoryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a brief description for the category'**
+  String get enterCategoryDescription;
+
+  /// No description provided for @icon.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get icon;
+
+  /// No description provided for @categoryPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Category Preview'**
+  String get categoryPreview;
+
+  /// No description provided for @saveCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Category'**
+  String get saveCategory;
+
+  /// No description provided for @saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get saving;
+
+  /// No description provided for @editExpenseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Expense Category'**
+  String get editExpenseCategory;
+
+  /// No description provided for @updateCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Category'**
+  String get updateCategory;
+
+  /// No description provided for @categoryCreatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Category created successfully'**
+  String get categoryCreatedSuccessfully;
+
+  /// No description provided for @noCategoriesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No Categories Found'**
+  String get noCategoriesFound;
+
+  /// No description provided for @createYourFirstExpenseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first expense category'**
+  String get createYourFirstExpenseCategory;
+
+  /// No description provided for @errorLoadingCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Categories'**
+  String get errorLoadingCategories;
+
+  /// No description provided for @deleteAllCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete All Categories'**
+  String get deleteAllCategories;
+
+  /// No description provided for @deleteCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Category'**
+  String get deleteCategory;
+
+  /// No description provided for @deleteCategoryConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete category \"{name}\"?'**
+  String deleteCategoryConfirmation(String name);
+
+  /// No description provided for @errorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {error}'**
+  String errorMessage(String error);
+
+  /// No description provided for @statusCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Status: {status}'**
+  String statusCategory(String status);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

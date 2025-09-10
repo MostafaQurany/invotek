@@ -11,8 +11,17 @@ UpdateExpenseCategoryRequest _$UpdateExpenseCategoryRequestFromJson(
 ) => UpdateExpenseCategoryRequest(
   name: json['name'] as String?,
   status: json['status'] as String?,
+  description: json['description'] as String?,
+  color: json['color'] as String?,
+  icon: json['icon'] as String?,
 );
 
 Map<String, dynamic> _$UpdateExpenseCategoryRequestToJson(
   UpdateExpenseCategoryRequest instance,
-) => <String, dynamic>{'name': instance.name, 'status': instance.status};
+) => <String, dynamic>{
+  'name': ?instance.name,
+  'status': ?instance.status,
+  'description': ?instance.description,
+  'color': ?instance.color,
+  'icon': ?instance.icon,
+};

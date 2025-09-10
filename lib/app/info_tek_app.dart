@@ -4,17 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
-import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/core/providers/app_providers.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/services/storage_service.dart';
 import 'package:invotek/core/theme/app_theme.dart';
 import 'package:invotek/core/widgets/app_exit_handler.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
-import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
-import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InfoTekApp extends StatelessWidget {
@@ -60,19 +57,7 @@ class InfoTekApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MultiBlocProvider(
-          providers: [
-            BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
-            BlocProvider<LocalizationCubit>(
-              create: (context) =>
-                  getIt<LocalizationCubit>()..initializeLanguage(),
-            ),
-            BlocProvider<OnboardingCubit>(
-              create: (context) => getIt<OnboardingCubit>(),
-            ),
-
-            // users and permissions
-            BlocProvider<UsersCubit>(create: (context) => getIt<UsersCubit>()),
-          ],
+          providers: AppProviders.providers,
           child: BlocBuilder<LocalizationCubit, LocalizationState>(
             builder: (context, localizationState) {
               return AppExitHandler(

@@ -2,6 +2,9 @@ class ExpenseCategoryModel {
   final int id;
   final String name;
   final String status;
+  final String? description;
+  final String? color;
+  final String? icon;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -9,6 +12,9 @@ class ExpenseCategoryModel {
     required this.id,
     required this.name,
     required this.status,
+    this.description,
+    this.color,
+    this.icon,
     this.createdAt,
     this.updatedAt,
   });
@@ -25,6 +31,9 @@ class ExpenseCategoryModel {
     int? id,
     String? name,
     String? status,
+    String? description,
+    String? color,
+    String? icon,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -32,6 +41,9 @@ class ExpenseCategoryModel {
       id: id ?? this.id,
       name: name ?? this.name,
       status: status ?? this.status,
+      description: description ?? this.description,
+      color: color ?? this.color,
+      icon: icon ?? this.icon,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

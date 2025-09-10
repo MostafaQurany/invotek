@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpenseCategoriesHeaderWidget extends StatefulWidget {
   final VoidCallback onMenuPressed;
@@ -96,11 +97,10 @@ class _ExpenseCategoriesHeaderWidgetState
             onPressed: widget.onMenuPressed,
             icon: Icon(Icons.menu, color: AppColors.white, size: 24.sp),
           ),
-
           // Title
           Expanded(
             child: Text(
-              'Expense Categories',
+              S.of(context).expenseCategories,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColors.white,
@@ -112,8 +112,8 @@ class _ExpenseCategoriesHeaderWidgetState
 
           // Add Button
           IconButton(
-            onPressed: widget.onAddPressed,
-            icon: Icon(Icons.add, color: AppColors.white, size: 24.sp),
+            onPressed: null,
+            icon: Icon(Icons.add, color: AppColors.primary, size: 24.sp),
           ),
         ],
       ),
@@ -167,20 +167,6 @@ class _ExpenseCategoriesHeaderWidgetState
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16.w),
         padding: EdgeInsets.all(16.w),
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16.r),
-            topRight: Radius.circular(16.r),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8,
-              offset: Offset(0, -2),
-            ),
-          ],
-        ),
         child: Row(
           children: [
             // Status Filter
@@ -212,7 +198,7 @@ class _ExpenseCategoriesHeaderWidgetState
     required String hint,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w),
       decoration: BoxDecoration(
         color: AppColors.searchBarBackground,
         borderRadius: BorderRadius.circular(8.r),

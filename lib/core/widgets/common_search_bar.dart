@@ -57,7 +57,7 @@ class CommonSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height ?? 48.h,
+      //height: height ?? 48.h,
       decoration: BoxDecoration(
         color: backgroundColor ?? AppColors.searchBarBackground,
         borderRadius: BorderRadius.circular(borderRadius ?? 32.r),

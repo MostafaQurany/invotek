@@ -279,6 +279,75 @@ class SAr extends S {
   String get expensesReport => 'تقرير المصروفات';
 
   @override
+  String get newExpense => 'مصروف جديد';
+
+  @override
+  String get trackYourBusinessExpenses => 'تتبع مصروفات عملك';
+
+  @override
+  String get basicInformation => 'معلومات أساسية';
+
+  @override
+  String get expenseTitle => 'عنوان المصروف';
+
+  @override
+  String get expenseTitleHint => 'مثال: مستلزمات مكتبية، مصروفات سفر';
+
+  @override
+  String get titleIsRequired => 'العنوان مطلوب';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get descriptionHint => 'أضف المزيد من التفاصيل حول هذا المصروف';
+
+  @override
+  String get financialDetails => 'التفاصيل المالية';
+
+  @override
+  String get amount => 'المبلغ';
+
+  @override
+  String get amountHint => '0.00';
+
+  @override
+  String get amountHelperText => 'أدخل إجمالي المبلغ المنفق بما في ذلك الضرائب';
+
+  @override
+  String get amountIsRequired => 'المبلغ مطلوب';
+
+  @override
+  String get pleaseEnterValidAmount => 'يرجى إدخال مبلغ صحيح';
+
+  @override
+  String get additionalInformation => 'معلومات إضافية';
+
+  @override
+  String get referenceNumber => 'رقم المرجع';
+
+  @override
+  String get referenceNumberHint => 'رقم الفاتورة، معرف الإيصال، إلخ';
+
+  @override
+  String get notes => 'ملاحظات';
+
+  @override
+  String get notesHint => 'أي معلومات إضافية أو سياق';
+
+  @override
+  String get createExpense => 'إنشاء مصروف';
+
+  @override
+  String get expenseCreatedSuccessfully => 'تم إنشاء المصروف بنجاح!';
+
+  @override
+  String get pleaseSelectCategory => 'يرجى اختيار فئة';
+
+  @override
+  String get completeRequiredFields => 'أكمل الحقول المطلوبة';
+
+  @override
   String get customersReport => 'تقرير العملاء';
 
   @override
@@ -322,7 +391,7 @@ class SAr extends S {
   String get all => 'الكل';
 
   @override
-  String get active => 'نشط';
+  String get active => 'نشطة';
 
   @override
   String get inactive => 'غير نشط';
@@ -448,7 +517,7 @@ class SAr extends S {
   String get onboardingStartNow => 'ابدا الان';
 
   @override
-  String get productsCategories => 'المنتجات وفئاتها';
+  String get productsCategories => 'المنتجات';
 
   @override
   String get productsList => 'قائمة المنتجات';
@@ -526,12 +595,6 @@ class SAr extends S {
 
   @override
   String get errorDeletingCategory => 'خطأ في حذف الفئة';
-
-  @override
-  String get basicInformation => 'معلومات أساسية';
-
-  @override
-  String get description => 'الوصف';
 
   @override
   String get price => 'السعر';
@@ -653,12 +716,6 @@ class SAr extends S {
 
   @override
   String get centimeters => 'سم';
-
-  @override
-  String get additionalInformation => 'معلومات إضافية';
-
-  @override
-  String get notes => 'ملاحظات';
 
   @override
   String get productIsActive => 'المنتج نشط';
@@ -862,4 +919,188 @@ class SAr extends S {
 
   @override
   String get customerDataCopied => 'تم نسخ بيانات العميل إلى الحافظة';
+
+  @override
+  String get addExpenseHelp => 'مساعدة في إضافة المصروف';
+
+  @override
+  String get addExpenseHelpDescription =>
+      'يسمح لك هذا الشاشة بإنشاء وتتبع المصروفات التجارية. هذا ما يمكنك فعله:';
+
+  @override
+  String get enterExpenseTitleAndDescription => 'أدخل عنوان المصروف والوصف';
+
+  @override
+  String get setAmountDateAndPaymentMethod =>
+      'ضبط المبلغ، التاريخ، وطريقة الدفع';
+
+  @override
+  String get selectAppropriateExpenseCategory =>
+      'اختيار الفئة المناسبة للمصروف';
+
+  @override
+  String get addReferenceNumberAndNotes => 'إضافة رقم المرجع والملاحظات';
+
+  @override
+  String get gotIt => 'فهمت!';
+
+  @override
+  String get categorization => 'التصنيف';
+
+  @override
+  String get additionalInfo => 'معلومات إضافية';
+
+  @override
+  String get create => 'إنشاء';
+
+  @override
+  String get expenseDate => 'تاريخ المصروف';
+
+  @override
+  String get selectTheDateThisExpenseOccurred =>
+      'اختر التاريخ الذي حدث فيه المصروف';
+
+  @override
+  String get paymentMethod => 'طريقة الدفع';
+
+  @override
+  String get cash => 'نقدي';
+
+  @override
+  String get creditCard => 'بطاقة ائتمان';
+
+  @override
+  String get debitCard => 'بطاقة ائتمان';
+
+  @override
+  String get bankTransfer => 'تحويل بنكي';
+
+  @override
+  String get check => 'شيك';
+
+  @override
+  String get other => 'أخرى';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ';
+
+  @override
+  String get tryAgain => 'إعادة المحاولة';
+
+  @override
+  String get loadingMore => 'جاري تحميل المزيد...';
+
+  @override
+  String get loadingExpenses => 'جاري تحميل المصروفات...';
+
+  @override
+  String get categories => 'الفئات';
+
+  @override
+  String get expenseDetails => 'تفاصيل المصروف';
+
+  @override
+  String get title => 'العنوان';
+
+  @override
+  String get date => 'التاريخ';
+
+  @override
+  String get financialInformation => 'المعلومات المالية';
+
+  @override
+  String get paymentInformation => 'معلومات الدفع';
+
+  @override
+  String get metadata => 'البيانات الوصفية';
+
+  @override
+  String get createdBy => 'أنشأ بواسطة';
+
+  @override
+  String get createdAt => 'تاريخ الإنشاء';
+
+  @override
+  String get updatedAt => 'تاريخ التحديث';
+
+  @override
+  String get expenseUpdatedSuccessfully => 'تم تحديث المصروف بنجاح';
+
+  @override
+  String get editExpense => 'تعديل المصروف';
+
+  @override
+  String get addNewExpenseCategory => 'إضافة فئة مصروفات جديدة';
+
+  @override
+  String get backToCategories => 'العودة للفئات';
+
+  @override
+  String get newCategoryDetails => 'بيانات الفئة الجديدة';
+
+  @override
+  String get categoryName => 'اسم الفئة';
+
+  @override
+  String get categoryNameRequired => 'اسم الفئة مطلوب';
+
+  @override
+  String get enterCategoryName => 'أدخل اسم الفئة';
+
+  @override
+  String get categoryDescription => 'وصف الفئة';
+
+  @override
+  String get enterCategoryDescription => 'أدخل وصفاً مختصراً للفئة';
+
+  @override
+  String get icon => 'الأيقونة';
+
+  @override
+  String get categoryPreview => 'معاينة الفئة';
+
+  @override
+  String get saveCategory => 'حفظ الفئة';
+
+  @override
+  String get saving => 'جاري الحفظ...';
+
+  @override
+  String get editExpenseCategory => 'تعديل فئة المصروفات';
+
+  @override
+  String get updateCategory => 'تحديث الفئة';
+
+  @override
+  String get categoryCreatedSuccessfully => 'تم إنشاء الفئة بنجاح';
+
+  @override
+  String get noCategoriesFound => 'لا توجد فئات';
+
+  @override
+  String get createYourFirstExpenseCategory => 'إنشاء فئة مصروفات جديدة';
+
+  @override
+  String get errorLoadingCategories => 'خطأ في تحميل الفئات';
+
+  @override
+  String get deleteAllCategories => 'حذف جميع الفئات';
+
+  @override
+  String get deleteCategory => 'حذف الفئة';
+
+  @override
+  String deleteCategoryConfirmation(String name) {
+    return 'هل أنت متأكد من حذف الفئة \"$name\"؟';
+  }
+
+  @override
+  String errorMessage(String error) {
+    return 'خطأ: $error';
+  }
+
+  @override
+  String statusCategory(String status) {
+    return 'الحالة: $status';
+  }
 }

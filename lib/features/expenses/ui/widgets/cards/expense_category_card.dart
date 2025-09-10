@@ -45,12 +45,24 @@ class ExpenseCategoryCard extends StatelessWidget {
               width: 50.w,
               height: 50.w,
               decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
+                color: _parseColor(
+                  category.color?.isNotEmpty == true
+                      ? category.color!
+                      : '#3B966E',
+                ).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Icon(
-                Icons.category,
-                color: AppColors.primary,
+                _getIconData(
+                  category.icon?.isNotEmpty == true
+                      ? category.icon!
+                      : 'fas fa-money-bill',
+                ),
+                color: _parseColor(
+                  category.color?.isNotEmpty == true
+                      ? category.color!
+                      : '#3B966E',
+                ),
                 size: 24.sp,
               ),
             ),
@@ -72,6 +84,19 @@ class ExpenseCategoryCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  if (category.description != null &&
+                      category.description!.isNotEmpty) ...[
+                    SizedBox(height: 4.h),
+                    Text(
+                      category.description!,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: AppColors.textSecondary,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                   SizedBox(height: 4.h),
                   Text(
                     'Created: ${category.createdAtString}',
@@ -108,5 +133,68 @@ class ExpenseCategoryCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _parseColor(String colorString) {
+    try {
+      return Color(int.parse(colorString.replaceFirst('#', '0xFF')));
+    } catch (e) {
+      return AppColors.primary;
+    }
+  }
+
+  IconData _getIconData(String iconName) {
+    switch (iconName) {
+      case 'fas fa-credit-card':
+        return Icons.credit_card;
+      case 'fas fa-tag':
+        return Icons.tag;
+      case 'fas fa-dollar-sign':
+        return Icons.attach_money;
+      case 'fas fa-receipt':
+        return Icons.receipt;
+      case 'fas fa-file-alt':
+        return Icons.description;
+      case 'fas fa-shopping-cart':
+        return Icons.shopping_cart;
+      case 'fas fa-wallet':
+        return Icons.account_balance_wallet;
+      case 'fas fa-university':
+        return Icons.account_balance;
+      case 'fas fa-building':
+        return Icons.business;
+      case 'fas fa-plane':
+        return Icons.flight;
+      case 'fas fa-book':
+        return Icons.book;
+      case 'fas fa-graduation-cap':
+        return Icons.school;
+      case 'fas fa-home':
+        return Icons.home;
+      case 'fas fa-car':
+        return Icons.directions_car;
+      case 'fas fa-gas-pump':
+        return Icons.local_gas_station;
+      case 'fas fa-coffee':
+        return Icons.local_cafe;
+      case 'fas fa-utensils':
+        return Icons.restaurant;
+      case 'fas fa-tshirt':
+        return Icons.checkroom;
+      case 'fas fa-gift':
+        return Icons.card_giftcard;
+      case 'fas fa-eye':
+        return Icons.visibility;
+      case 'fas fa-medkit':
+        return Icons.medical_services;
+      case 'fas fa-heart':
+        return Icons.favorite;
+      case 'fas fa-briefcase':
+        return Icons.work;
+      case 'fas fa-money-bill':
+        return Icons.money;
+      default:
+        return Icons.help_outline;
+    }
   }
 }

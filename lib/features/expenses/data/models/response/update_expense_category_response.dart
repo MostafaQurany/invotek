@@ -12,8 +12,18 @@ class UpdateExpenseCategoryResponse {
 
   UpdateExpenseCategoryResponse({this.data, this.message, this.success});
 
-  factory UpdateExpenseCategoryResponse.fromJson(Map<String, dynamic> json) =>
-      _$UpdateExpenseCategoryResponseFromJson(json);
+  factory UpdateExpenseCategoryResponse.fromJson(Map<String, dynamic> json) {
+    // Handle direct response (API returns category data directly)
+    if (json.containsKey('id') && json.containsKey('name')) {
+      return UpdateExpenseCategoryResponse(
+        data: ExpenseCategoryApiModel.fromJson(json),
+        message: 'Category updated successfully',
+        success: true,
+      );
+    }
+    // Handle wrapped response (if API changes to wrap data)
+    return _$UpdateExpenseCategoryResponseFromJson(json);
+  }
 
   Map<String, dynamic> toJson() => _$UpdateExpenseCategoryResponseToJson(this);
 }

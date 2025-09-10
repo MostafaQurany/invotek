@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
 import 'package:invotek/features/expenses/ui/widgets/states/expense_categories_empty_state.dart';
@@ -52,21 +54,31 @@ class ExpenseCategoriesStateBuilder extends StatelessWidget {
                 totalPages,
                 message,
               ) => SliverFillRemaining(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        message == 'loading_more'
-                            ? 'Loading more...'
-                            : 'Loading categories...',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                      ),
-                    ],
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundLight,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(28.r),
+                      topRight: Radius.circular(28.r),
+                    ),
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          message == 'loading_more'
+                              ? 'Loading more...'
+                              : 'Loading categories...',
+                          style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

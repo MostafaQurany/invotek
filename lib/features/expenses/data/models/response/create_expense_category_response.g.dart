@@ -9,9 +9,18 @@ part of 'create_expense_category_response.dart';
 CreateExpenseCategoryResponse _$CreateExpenseCategoryResponseFromJson(
   Map<String, dynamic> json,
 ) => CreateExpenseCategoryResponse(
-  data: json['data'] == null
+  id: (json['id'] as num?)?.toInt(),
+  name: json['name'] as String?,
+  status: json['status'] as String?,
+  description: json['description'] as String?,
+  color: json['color'] as String?,
+  icon: json['icon'] as String?,
+  createdAt: json['created_at'] == null
       ? null
-      : ExpenseCategoryApiModel.fromJson(json['data'] as Map<String, dynamic>),
+      : DateTime.parse(json['created_at'] as String),
+  updatedAt: json['updated_at'] == null
+      ? null
+      : DateTime.parse(json['updated_at'] as String),
   message: json['message'] as String?,
   success: json['success'] as bool?,
 );
@@ -19,7 +28,14 @@ CreateExpenseCategoryResponse _$CreateExpenseCategoryResponseFromJson(
 Map<String, dynamic> _$CreateExpenseCategoryResponseToJson(
   CreateExpenseCategoryResponse instance,
 ) => <String, dynamic>{
-  'data': instance.data,
+  'id': instance.id,
+  'name': instance.name,
+  'status': instance.status,
+  'description': instance.description,
+  'color': instance.color,
+  'icon': instance.icon,
+  'created_at': instance.createdAt?.toIso8601String(),
+  'updated_at': instance.updatedAt?.toIso8601String(),
   'message': instance.message,
   'success': instance.success,
 };

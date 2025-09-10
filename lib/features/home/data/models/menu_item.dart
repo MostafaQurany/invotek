@@ -152,54 +152,55 @@ class MenuData {
         //   ),
         // ],
       ),
-      MenuItem(
-        title: 'العملاء',
-        titleKey: 'clients',
-        icon: Icons.inventory,
-        route: '/clients',
-        hasSubItems: true,
-        subItems: [
-          MenuItem(
-            title: 'قائمة العملاء',
-            titleKey: 'clients_list',
-            icon: Icons.people,
-            route: '/clients/list',
-          ),
-          MenuItem(
-            title: 'إضافة عميل جديد',
-            titleKey: 'add_client',
-            icon: Icons.person_add,
-            route: '/clients/add',
-          ),
-          MenuItem(
-            title: 'إدارة المنتجات',
-            titleKey: 'manage_products',
-            icon: Icons.inventory_2,
-            route: '/products',
-            hasSubItems: true,
-            subItems: [
-              MenuItem(
-                title: 'قائمة المنتجات',
-                titleKey: 'products_list',
-                icon: Icons.list,
-                route: '/products/list',
-              ),
-              MenuItem(
-                title: 'إضافة منتج جديد',
-                titleKey: 'add_product',
-                icon: Icons.add_box,
-                route: '/products/add',
-              ),
-            ],
-          ),
-          MenuItem(
-            title: 'فئات المنتجات',
-            titleKey: 'product_categories',
-            icon: Icons.category,
-            route: '/products/categories',
-          ),
-        ],
-      ),
+
+      // MenuItem(
+      //   title: 'العملاء',
+      //   titleKey: 'clients',
+      //   icon: Icons.inventory,
+      //   route: '/clients',
+      //   hasSubItems: true,
+      //   subItems: [
+      //     MenuItem(
+      //       title: 'قائمة العملاء',
+      //       titleKey: 'clients_list',
+      //       icon: Icons.people,
+      //       route: '/clients/list',
+      //     ),
+      //     MenuItem(
+      //       title: 'إضافة عميل جديد',
+      //       titleKey: 'add_client',
+      //       icon: Icons.person_add,
+      //       route: '/clients/add',
+      //     ),
+      //     MenuItem(
+      //       title: 'إدارة المنتجات',
+      //       titleKey: 'manage_products',
+      //       icon: Icons.inventory_2,
+      //       route: '/products',
+      //       hasSubItems: true,
+      //       subItems: [
+      //         MenuItem(
+      //           title: 'قائمة المنتجات',
+      //           titleKey: 'products_list',
+      //           icon: Icons.list,
+      //           route: '/products/list',
+      //         ),
+      //         MenuItem(
+      //           title: 'إضافة منتج جديد',
+      //           titleKey: 'add_product',
+      //           icon: Icons.add_box,
+      //           route: '/products/add',
+      //         ),
+      //       ],
+      //     ),
+      //     MenuItem(
+      //       title: 'فئات المنتجات',
+      //       titleKey: 'product_categories',
+      //       icon: Icons.category,
+      //       route: '/products/categories',
+      //     ),
+      //   ],
+      // ),
       MenuItem(
         title: 'إدارة العملاء',
         titleKey: 'customers',

@@ -57,17 +57,39 @@ class ExpenseCategoriesRepository {
   Future<ApiResult<ExpenseCategoryModel>> createExpenseCategory({
     required String name,
     String status = 'active',
+    String? description,
+    String? color,
+    String? icon,
   }) async {
     try {
       final response = await _apiClient.createExpenseCategory(
-        CreateExpenseCategoryRequest(name: name, status: status),
+        CreateExpenseCategoryRequest(
+          name: name,
+          status: status,
+          description: description,
+          color: color,
+          icon: icon,
+        ),
       );
-      if (response.data == null) {
+      if (response.id == null) {
         return ApiResult.failure(
           ApiErrorHandler.handleError(Exception('Category not found')),
         );
       }
-      return ApiResult.success(_convertToExpenseCategoryModel(response.data!));
+      return ApiResult.success(
+        _convertToExpenseCategoryModel(
+          ExpenseCategoryApiModel(
+            id: response.id ?? 0,
+            name: response.name ?? '',
+            status: response.status ?? '',
+            description: response.description,
+            color: response.color,
+            icon: response.icon,
+            createdAt: response.createdAt,
+            updatedAt: response.updatedAt,
+          ),
+        ),
+      );
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
@@ -77,11 +99,20 @@ class ExpenseCategoriesRepository {
     required int id,
     String? name,
     String? status,
+    String? description,
+    String? color,
+    String? icon,
   }) async {
     try {
       final response = await _apiClient.updateExpenseCategory(
         id,
-        UpdateExpenseCategoryRequest(name: name, status: status),
+        UpdateExpenseCategoryRequest(
+          name: name,
+          status: status,
+          description: description,
+          color: color,
+          icon: icon,
+        ),
       );
       if (response.data == null) {
         return ApiResult.failure(
@@ -111,6 +142,9 @@ class ExpenseCategoriesRepository {
       id: apiCategory.id,
       name: apiCategory.name,
       status: apiCategory.status,
+      description: apiCategory.description,
+      color: apiCategory.color,
+      icon: apiCategory.icon,
       createdAt: apiCategory.createdAt,
       updatedAt: apiCategory.updatedAt,
     );
