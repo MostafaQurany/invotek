@@ -1,32 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/di/injection.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/validation/validation.dart';
-import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/products/ui/widgets/widgets.dart';
-
-import '../../../../generated/l10n.dart';
-
-class EditProductScreenWithProvider extends StatelessWidget {
-  final ProductModel product;
-
-  const EditProductScreenWithProvider({super.key, required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: getIt<ProductsCubit>()),
-        BlocProvider.value(value: getIt<CategoriesCubit>()..loadFirstPage()),
-      ],
-      child: EditProductScreen(product: product),
-    );
-  }
-}
+import 'package:invotek/generated/l10n.dart';
 
 class EditProductScreen extends StatefulWidget {
   final ProductModel product;
@@ -37,196 +16,98 @@ class EditProductScreen extends StatefulWidget {
   State<EditProductScreen> createState() => _EditProductScreenState();
 }
 
-class _EditProductScreenState extends State<EditProductScreen> {
-  final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _nameController;
-  late final TextEditingController _descriptionController;
-  late final TextEditingController _priceController;
-  late final TextEditingController _costController;
-  late final TextEditingController _quantityController;
-  late final TextEditingController _skuController;
-  late final TextEditingController _barcodeController;
-  late final TextEditingController _unitController;
-  late final TextEditingController _taxRateController;
-  late final TextEditingController _notesController;
-  late final TextEditingController _brandController;
-  late final TextEditingController _modelController;
-  late final TextEditingController _weightController;
-  late final TextEditingController _dimensionsController;
-  late final TextEditingController _colorController;
-  late final TextEditingController _materialController;
-  late final TextEditingController _minQuantityController;
-  late final TextEditingController _maxQuantityController;
+class EditProductScreenWithProvider extends StatelessWidget {
+  final ProductModel product;
 
-  late String _selectedStatus;
-  String? _selectedCategoryId;
-  late bool _isActive;
-  late bool _hasTax;
-  late bool _trackInventory;
+  const EditProductScreenWithProvider({super.key, required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<ProductsCubit>(),
+      child: EditProductScreen(product: product),
+    );
+  }
+}
+
+class _EditProductScreenState extends State<EditProductScreen>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  int _currentTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _initializeControllers();
-  }
-
-  void _initializeControllers() {
-    _nameController = TextEditingController(text: widget.product.name ?? '');
-    _descriptionController = TextEditingController(
-      text: widget.product.description ?? '',
-    );
-    _priceController = TextEditingController(text: widget.product.price ?? '');
-    _costController = TextEditingController(text: widget.product.cost ?? '');
-    _quantityController = TextEditingController(
-      text: widget.product.quantity?.toString() ?? '',
-    );
-    _skuController = TextEditingController(text: widget.product.sku ?? '');
-    _barcodeController = TextEditingController(
-      text: widget.product.barcode ?? '',
-    );
-    _unitController = TextEditingController(text: widget.product.unit ?? '');
-    _taxRateController = TextEditingController(
-      text: widget.product.taxRate ?? '',
-    );
-    _notesController = TextEditingController(text: '');
-    _brandController = TextEditingController(text: '');
-    _modelController = TextEditingController(text: '');
-    _weightController = TextEditingController(text: '');
-    _dimensionsController = TextEditingController(text: '');
-    _colorController = TextEditingController(text: '');
-    _materialController = TextEditingController(text: '');
-    _minQuantityController = TextEditingController(text: '');
-    _maxQuantityController = TextEditingController(text: '');
-
-    _selectedStatus = widget.product.status ?? 'active';
-    _selectedCategoryId = widget.product.productCategoryId?.toString();
-    _isActive = widget.product.isActive ?? true;
-    _hasTax = widget.product.hasTax ?? false;
-    _trackInventory = widget.product.trackInventory ?? false;
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+    });
   }
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
-    _priceController.dispose();
-    _costController.dispose();
-    _quantityController.dispose();
-    _skuController.dispose();
-    _barcodeController.dispose();
-    _unitController.dispose();
-    _taxRateController.dispose();
-    _notesController.dispose();
-    _brandController.dispose();
-    _modelController.dispose();
-    _weightController.dispose();
-    _dimensionsController.dispose();
-    _colorController.dispose();
-    _materialController.dispose();
-    _minQuantityController.dispose();
-    _maxQuantityController.dispose();
+    _tabController.dispose();
     super.dispose();
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      try {
-        context.read<ProductsCubit>().updateProduct(
-          id: widget.product.id ?? 0,
-          name: _nameController.text.trim(),
-          description: _descriptionController.text.trim().isEmpty
-              ? null
-              : _descriptionController.text.trim(),
-          price: _priceController.text.trim(),
-          cost: _costController.text.trim().isEmpty
-              ? null
-              : _costController.text.trim(),
-          quantity: int.parse(_quantityController.text),
-          sku: _skuController.text.trim().isEmpty
-              ? null
-              : _skuController.text.trim(),
-          barcode: _barcodeController.text.trim().isEmpty
-              ? null
-              : _barcodeController.text.trim(),
-          unit: _unitController.text.trim().isEmpty
-              ? null
-              : _unitController.text.trim(),
-          taxRate: _taxRateController.text.trim().isEmpty
-              ? null
-              : _taxRateController.text.trim(),
-          notes: _notesController.text.trim().isEmpty
-              ? null
-              : _notesController.text.trim(),
-          brand: _brandController.text.trim().isEmpty
-              ? null
-              : _brandController.text.trim(),
-          model: _modelController.text.trim().isEmpty
-              ? null
-              : _modelController.text.trim(),
-          weight: _weightController.text.trim().isEmpty
-              ? null
-              : _weightController.text.trim(),
-          dimensions: _dimensionsController.text.trim().isEmpty
-              ? null
-              : _dimensionsController.text.trim(),
-          color: _colorController.text.trim().isEmpty
-              ? null
-              : _colorController.text.trim(),
-          material: _materialController.text.trim().isEmpty
-              ? null
-              : _materialController.text.trim(),
-          minQuantity: _minQuantityController.text.trim().isEmpty
-              ? null
-              : int.parse(_minQuantityController.text),
-          maxQuantity: _maxQuantityController.text.trim().isEmpty
-              ? null
-              : int.parse(_maxQuantityController.text),
-          isActive: _isActive,
-          hasTax: _hasTax,
-          trackInventory: _trackInventory,
-          status: _selectedStatus,
-          categoryId: _selectedCategoryId != null
-              ? int.parse(_selectedCategoryId!)
-              : null,
-        );
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('خطأ في البيانات المدخلة: $e'),
-            backgroundColor: AppColors.error,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-          ),
-        );
-      }
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: AppColors.whiteGray,
       appBar: AppBar(
-        title: Text(S.of(context).editProduct),
-        backgroundColor: colorScheme.surface,
+        title: Text(s.editProduct),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.textPrimary,
         elevation: 0,
         scrolledUnderElevation: 1,
-        foregroundColor: colorScheme.onSurface,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
+            onPressed: () => _showHelpDialog(context),
+          ),
+          SizedBox(width: 8.w),
+        ],
       ),
       body: BlocListener<ProductsCubit, ProductsState>(
         listener: (context, state) {
-          final messenger = ScaffoldMessenger.of(context);
-          state.maybeWhen(
+          state.whenOrNull(
+            updateSuccess:
+                (
+                  products,
+                  updated,
+                  selectedProduct,
+                  currentPage,
+                  totalPages,
+                ) async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  messenger.hideCurrentSnackBar();
+                  await messenger
+                      .showSnackBar(
+                        SnackBar(
+                          content: Text(s.productUpdatedSuccessfully),
+                          backgroundColor: AppColors.primary,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                        ),
+                      )
+                      .closed;
+                  Navigator.pop(context);
+                },
             failure:
                 (products, selectedProduct, currentPage, totalPages, error) {
-                  messenger.hideCurrentSnackBar();
-                  messenger.showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(error),
+                      content: Text(s.errorOccurred(error)),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -234,555 +115,538 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       ),
                     ),
                   );
-                  context.read<ProductsCubit>().clearError();
                 },
-            updateSuccess:
-                (products, updated, selectedProduct, currentPage, totalPages) {
-                  messenger.hideCurrentSnackBar();
-                  final controller = messenger.showSnackBar(
-                    SnackBar(
-                      duration: Duration(milliseconds: 500),
-                      content: Text(
-                        S.of(context).productUpdatedSuccessfully,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Colors.green,
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
-                  );
-                  controller.closed.then((_) {
-                    Navigator.pop(context);
-                  });
-                },
-            orElse: () {},
           );
         },
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(16.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Basic Information Section
-                FormSectionCard(
-                  title: S.of(context).basicInformation,
-                  colorScheme: colorScheme,
-                  children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: '${S.of(context).name} *',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        filled: true,
-                        fillColor: colorScheme.surfaceContainer,
-                      ),
-                      validator: Validation.validateRequired,
-                    ),
-                    SizedBox(height: 16.h),
-                    TextFormField(
-                      controller: _descriptionController,
-                      decoration: InputDecoration(
-                        labelText: S.of(context).description,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        filled: true,
-                        fillColor: colorScheme.surfaceContainer,
-                      ),
-                      maxLines: 3,
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CategoryDropdown(
-                            selectedCategoryId: _selectedCategoryId,
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedCategoryId = value;
-                              });
-                            },
-                            colorScheme: colorScheme,
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: DropdownButtonFormField<String>(
-                            value: _selectedStatus,
-                            decoration: InputDecoration(
-                              labelText: '${S.of(context).status} *',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                            items: [
-                              DropdownMenuItem(
-                                value: 'active',
-                                child: Text(
-                                  S.of(context).active,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'inactive',
-                                child: Text(S.of(context).inactive),
-                              ),
-                              DropdownMenuItem(
-                                value: 'out_of_stock',
-                                child: Text(S.of(context).outOfStock),
-                              ),
-                            ],
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedStatus = value!;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+        child: Column(
+          children: [
+            // Tab Bar
+            Container(
+              color: AppColors.white,
+              child: TabBar(
+                controller: _tabController,
+                indicatorColor: AppColors.primary,
+                labelColor: AppColors.primary,
+                unselectedLabelColor: AppColors.greyDark,
+                labelStyle: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.sp,
                 ),
+                tabs: [
+                  Tab(text: s.basicInformation),
+                  Tab(text: s.pricing),
+                  Tab(text: s.inventory),
+                  Tab(text: s.productDetails),
+                ],
+              ),
+            ),
 
-                SizedBox(height: 20.h),
+            // Form Content
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                physics:
+                    const NeverScrollableScrollPhysics(), // Disable swipe navigation
+                children: [
+                  _buildBasicInfoTab(s),
+                  _buildPricingTab(s),
+                  _buildInventoryTab(s),
+                  _buildProductDetailsTab(s),
+                ],
+              ),
+            ),
 
-                // Pricing Section
-                FormSectionCard(
-                  title: S.of(context).pricing,
-                  colorScheme: colorScheme,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _priceController,
-                            decoration: InputDecoration(
-                              labelText: '${S.of(context).sellingPrice} *',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                              suffixText: 'ر.س',
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) => Validation.validateNumber(
-                              value,
-                              S.of(context).sellingPrice,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _costController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).costPrice,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                              suffixText: 'ر.س',
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) => value?.isEmpty == true
-                                ? null
-                                : Validation.validateNumber(
-                                    value,
-                                    S.of(context).costPrice,
-                                  ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    TextFormField(
-                      controller: _taxRateController,
-                      decoration: InputDecoration(
-                        labelText: S.of(context).taxRate,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        filled: true,
-                        fillColor: colorScheme.surfaceContainer,
-                        suffixText: '%',
-                      ),
-                      keyboardType: TextInputType.number,
-                      validator: (value) => value?.isEmpty == true
-                          ? null
-                          : Validation.validateNumber(
-                              value,
-                              S.of(context).taxRate,
-                            ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 20.h),
-
-                // Inventory Section
-                FormSectionCard(
-                  title: S.of(context).inventory,
-                  colorScheme: colorScheme,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _quantityController,
-                            decoration: InputDecoration(
-                              labelText: '${S.of(context).quantity} *',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return S.of(context).thisFieldIsRequired;
-                              }
-                              final intValue = int.tryParse(value);
-                              if (intValue == null || intValue < 0) {
-                                return S
-                                    .of(context)
-                                    .quantityMustBeAPositiveInteger;
-                              }
-                              return null;
-                            },
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _unitController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).unit,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                              hintText:
-                                  '${S.of(context).piece}, ${S.of(context).kilogram}, ${S.of(context).meter}...',
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _minQuantityController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).minimumQuantity,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) => value?.isEmpty == true
-                                ? null
-                                : (int.tryParse(value!) == null
-                                      ? S.of(context).invalidNumber
-                                      : null),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _maxQuantityController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).maximumQuantity,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) => value?.isEmpty == true
-                                ? null
-                                : (int.tryParse(value!) == null
-                                      ? S.of(context).invalidNumber
-                                      : null),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 20.h),
-
-                // Product Details Section
-                FormSectionCard(
-                  title: S.of(context).productDetails,
-                  colorScheme: colorScheme,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _skuController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).productSku,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _barcodeController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).barcode,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _brandController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).brand,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _modelController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).model,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _colorController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).color,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _materialController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).material,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: _weightController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).weight,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                              suffixText: S.of(context).kilogram,
-                            ),
-                            keyboardType: TextInputType.number,
-                            validator: (value) => value?.isEmpty == true
-                                ? null
-                                : Validation.validateNumber(
-                                    value,
-                                    S.of(context).weight,
-                                  ),
-                          ),
-                        ),
-                        SizedBox(width: 12.w),
-                        Expanded(
-                          child: TextFormField(
-                            controller: _dimensionsController,
-                            decoration: InputDecoration(
-                              labelText: S.of(context).dimensions,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.r),
-                              ),
-                              filled: true,
-                              fillColor: colorScheme.surfaceContainer,
-                              hintText: '20x30x40 ${S.of(context).centimeters}',
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 20.h),
-
-                // Additional Information Section
-                FormSectionCard(
-                  title: S.of(context).additionalInformation,
-                  colorScheme: colorScheme,
-                  children: [
-                    TextFormField(
-                      controller: _notesController,
-                      decoration: InputDecoration(
-                        labelText: S.of(context).notes,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        filled: true,
-                        fillColor: colorScheme.surfaceContainer,
-                      ),
-                      maxLines: 3,
-                    ),
-                    SizedBox(height: 16.h),
-                    SwitchListTile(
-                      title: Text(S.of(context).productIsActive),
-                      subtitle: Text(S.of(context).enableDisableProduct),
-                      value: _isActive,
-                      onChanged: (value) {
-                        setState(() {
-                          _isActive = value;
-                        });
-                      },
-                      activeColor: colorScheme.primary,
-                    ),
-                    SwitchListTile(
-                      title: Text(S.of(context).productIsTaxable),
-                      subtitle: Text(S.of(context).applyTaxToProduct),
-                      value: _hasTax,
-                      onChanged: (value) {
-                        setState(() {
-                          _hasTax = value;
-                        });
-                      },
-                      activeColor: colorScheme.primary,
-                    ),
-                    SwitchListTile(
-                      title: Text(S.of(context).trackInventory),
-                      subtitle: Text(
-                        S.of(context).trackAvailableProductQuantity,
-                      ),
-                      value: _trackInventory,
-                      onChanged: (value) {
-                        setState(() {
-                          _trackInventory = value;
-                        });
-                      },
-                      activeColor: colorScheme.primary,
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 30.h),
-
-                // Submit Button
-                BlocBuilder<ProductsCubit, ProductsState>(
-                  builder: (context, state) {
-                    final isLoading = state.maybeWhen(
-                      loading:
-                          (
-                            products,
-                            selectedProduct,
-                            currentPage,
-                            totalPages,
-                            message,
-                          ) => true,
-                      orElse: () => false,
-                    );
-
-                    return FilledButton(
-                      onPressed: isLoading ? null : _submitForm,
-                      style: FilledButton.styleFrom(
+            // Bottom Action Buttons
+            Container(
+              padding: EdgeInsets.all(16.w),
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  // Cancel/Previous Button
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: _currentTabIndex == 0
+                          ? () =>
+                                Navigator.pop(context) // Cancel on first tab
+                          : () => _goToPreviousTab(), // Previous on other tabs
+                      style: OutlinedButton.styleFrom(
                         padding: EdgeInsets.symmetric(vertical: 16.h),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
                         ),
+                        side: BorderSide(
+                          color: AppColors.grey.withOpacity(0.3),
+                        ),
                       ),
-                      child: isLoading
-                          ? SizedBox(
-                              width: 20.w,
-                              height: 20.h,
-                              child: CircularProgressIndicator(
-                                color: colorScheme.onPrimary,
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : Text(
-                              S.of(context).editProduct,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                    );
-                  },
-                ),
-
-                SizedBox(height: 20.h),
-              ],
+                      child: Text(
+                        _currentTabIndex == 0 ? s.cancel : 'Previous',
+                        style: TextStyle(
+                          color: AppColors.greyDark,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  // Next/Save Button
+                  Expanded(
+                    flex: 2,
+                    child: FilledButton(
+                      onPressed: _currentTabIndex == 3
+                          ? _handleSubmit // Save on last tab
+                          : () => _goToNextTab(), // Next on other tabs
+                      style: FilledButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.white,
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Text(
+                        _currentTabIndex == 3 ? s.editProduct : 'Next',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBasicInfoTab(S s) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            s.basicInformation,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          _buildFormField(
+            label: '${s.name} *',
+            hint: s.name,
+            icon: Icons.inventory_2_outlined,
+            initialValue: widget.product.name,
+            isRequired: true,
+          ),
+          SizedBox(height: 16.h),
+          _buildFormField(
+            label: s.description,
+            hint: s.description,
+            icon: Icons.description_outlined,
+            initialValue: widget.product.description,
+            maxLines: 3,
+          ),
+          SizedBox(height: 16.h),
+          _buildFormField(
+            label: 'Category',
+            hint: 'Product Category',
+            icon: Icons.category_outlined,
+            initialValue: widget.product.productCategoryId?.toString(),
+          ),
+          SizedBox(height: 16.h),
+          _buildStatusDropdown(s),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPricingTab(S s) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            s.pricing,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          _buildFormField(
+            label: '${s.sellingPrice} *',
+            hint: s.sellingPrice,
+            icon: Icons.sell_outlined,
+            initialValue: widget.product.price,
+            keyboardType: TextInputType.number,
+            isRequired: true,
+          ),
+          SizedBox(height: 16.h),
+          _buildFormField(
+            label: s.costPrice,
+            hint: s.costPrice,
+            icon: Icons.account_balance_wallet_outlined,
+            initialValue: widget.product.cost,
+            keyboardType: TextInputType.number,
+          ),
+          SizedBox(height: 16.h),
+          _buildFormField(
+            label: s.taxRate,
+            hint: s.taxRate,
+            icon: Icons.percent_outlined,
+            initialValue: widget.product.taxRate,
+            keyboardType: TextInputType.number,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInventoryTab(S s) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            s.inventory,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          _buildFormField(
+            label: '${s.quantity} *',
+            hint: s.quantity,
+            icon: Icons.numbers_outlined,
+            initialValue: widget.product.quantity?.toString(),
+            keyboardType: TextInputType.number,
+            isRequired: true,
+          ),
+          SizedBox(height: 16.h),
+          _buildFormField(
+            label: s.unit,
+            hint: 'piece, kg, meter...',
+            icon: Icons.straighten_outlined,
+            initialValue: widget.product.unit,
+          ),
+          SizedBox(height: 16.h),
+          // Additional inventory fields can be added here if needed
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductDetailsTab(S s) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            s.productDetails,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Row(
+            children: [
+              Expanded(
+                child: _buildFormField(
+                  label: s.productSku,
+                  hint: s.productSku,
+                  icon: Icons.qr_code_outlined,
+                  initialValue: widget.product.sku,
+                ),
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                child: _buildFormField(
+                  label: s.barcode,
+                  hint: s.barcode,
+                  icon: Icons.barcode_reader,
+                  initialValue: widget.product.barcode,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16.h),
+          // Additional product detail fields can be added here if needed
+          SizedBox(height: 20.h),
+          Text(
+            'Settings',
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          SwitchListTile(
+            title: Text(s.productIsActive),
+            subtitle: Text(s.enableDisableProduct),
+            value: widget.product.isActive ?? true,
+            onChanged: (value) {
+              // Handle active change
+            },
+            activeColor: AppColors.primary,
+          ),
+          Divider(height: 1),
+          SwitchListTile(
+            title: Text(s.productIsTaxable),
+            subtitle: Text(s.applyTaxToProduct),
+            value: widget.product.hasTax ?? false,
+            onChanged: (value) {
+              // Handle tax change
+            },
+            activeColor: AppColors.primary,
+          ),
+          Divider(height: 1),
+          SwitchListTile(
+            title: Text(s.trackInventory),
+            subtitle: Text(s.trackAvailableProductQuantity),
+            value: widget.product.trackInventory ?? false,
+            onChanged: (value) {
+              // Handle inventory tracking change
+            },
+            activeColor: AppColors.primary,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFormField({
+    required String label,
+    required String hint,
+    required IconData icon,
+    String? initialValue,
+    TextInputType? keyboardType,
+    int maxLines = 1,
+    bool isRequired = false,
+  }) {
+    final controller = TextEditingController(text: initialValue ?? '');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            if (isRequired) ...[
+              SizedBox(width: 4.w),
+              Text(
+                '*',
+                style: TextStyle(
+                  color: AppColors.error,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ],
+        ),
+        SizedBox(height: 8.h),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(
+              color: AppColors.greyDark.withOpacity(0.6),
+              fontSize: 14.sp,
+            ),
+            prefixIcon: Icon(icon, color: AppColors.primary, size: 20.sp),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.primary, width: 2),
+            ),
+            filled: true,
+            fillColor: AppColors.white,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
+          ),
+          textDirection:
+              keyboardType == TextInputType.emailAddress ||
+                  keyboardType == TextInputType.phone ||
+                  keyboardType == TextInputType.number
+              ? TextDirection.ltr
+              : TextDirection.rtl,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatusDropdown(S s) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              '${s.status} *',
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            SizedBox(width: 4.w),
+            Text(
+              '*',
+              style: TextStyle(
+                color: AppColors.error,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 8.h),
+        DropdownButtonFormField<String>(
+          value: widget.product.status ?? 'active',
+          isExpanded: true,
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.flag_outlined,
+              color: AppColors.primary,
+              size: 20.sp,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              borderSide: BorderSide(color: AppColors.primary, width: 2),
+            ),
+            filled: true,
+            fillColor: AppColors.white,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16.w,
+              vertical: 16.h,
+            ),
+          ),
+          items: [
+            DropdownMenuItem(
+              value: 'active',
+              child: Text(s.active, overflow: TextOverflow.ellipsis),
+            ),
+            DropdownMenuItem(
+              value: 'inactive',
+              child: Text(s.inactive, overflow: TextOverflow.ellipsis),
+            ),
+            DropdownMenuItem(
+              value: 'out_of_stock',
+              child: Text('Out of Stock', overflow: TextOverflow.ellipsis),
+            ),
+            DropdownMenuItem(
+              value: 'discontinued',
+              child: Text('Discontinued', overflow: TextOverflow.ellipsis),
+            ),
+          ],
+          onChanged: (value) {
+            // Handle status change
+          },
+        ),
+      ],
+    );
+  }
+
+  void _showHelpDialog(BuildContext context) {
+    final s = S.of(context);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Product Help'),
+        content: Text(
+          'This screen helps you edit product information. Navigate through tabs to update different sections.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(s.close),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _goToNextTab() {
+    if (_currentTabIndex < 3) {
+      _tabController.animateTo(_currentTabIndex + 1);
+    }
+  }
+
+  void _goToPreviousTab() {
+    if (_currentTabIndex > 0) {
+      _tabController.animateTo(_currentTabIndex - 1);
+    }
+  }
+
+  void _handleSubmit() {
+    final cubit = ProductsCubit.get(context);
+    cubit.updateProduct(
+      id: widget.product.id ?? 0,
+      name: widget.product.name ?? '',
+      description: widget.product.description,
+      price: widget.product.price ?? '',
+      cost: widget.product.cost,
+      quantity: widget.product.quantity ?? 0,
+      sku: widget.product.sku,
+      barcode: widget.product.barcode,
+      unit: widget.product.unit,
+      taxRate: widget.product.taxRate,
+      isActive: widget.product.isActive ?? true,
+      hasTax: widget.product.hasTax ?? false,
+      trackInventory: widget.product.trackInventory ?? false,
+      status: widget.product.status ?? 'active',
+      categoryId: widget.product.productCategoryId,
     );
   }
 }

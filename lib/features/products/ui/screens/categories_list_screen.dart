@@ -30,15 +30,21 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
         title: Text(S.of(context).productCategories),
-        backgroundColor: colorScheme.surface,
+        backgroundColor: AppColors.backgroundLight,
         elevation: 0,
         scrolledUnderElevation: 1,
-        foregroundColor: colorScheme.onSurface,
+        foregroundColor: AppColors.primary,
         leading: IconButton(
-          icon: Icon(Icons.menu, color: colorScheme.onSurface),
+          style: IconButton.styleFrom(
+            backgroundColor: AppColors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+          ),
+          icon: Icon(Icons.menu, color: AppColors.primary),
           onPressed: () {
             try {
               final zoomDrawer = ZoomDrawer.of(context);

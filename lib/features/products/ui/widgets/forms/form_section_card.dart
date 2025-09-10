@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 
 class FormSectionCard extends StatelessWidget {
   final String title;
+  final IconData icon;
   final List<Widget> children;
-  final ColorScheme colorScheme;
 
   const FormSectionCard({
     super.key,
     required this.title,
+    required this.icon,
     required this.children,
-    required this.colorScheme,
   });
 
   @override
@@ -19,20 +20,26 @@ class FormSectionCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
-        side: BorderSide(color: colorScheme.outline.withOpacity(0.1), width: 1),
+        side: BorderSide(color: AppColors.grey.withOpacity(0.2), width: 1),
       ),
       child: Padding(
         padding: EdgeInsets.all(20.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w600,
-                color: colorScheme.onSurface,
-              ),
+            Row(
+              children: [
+                Icon(icon, color: AppColors.primary, size: 24.sp),
+                SizedBox(width: 12.w),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20.h),
             ...children,
