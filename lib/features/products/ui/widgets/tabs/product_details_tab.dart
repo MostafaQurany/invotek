@@ -5,8 +5,7 @@ import 'package:invotek/features/products/ui/widgets/forms/form_section_card.dar
 import 'package:invotek/generated/l10n.dart';
 
 class ProductDetailsTab extends StatelessWidget {
-  final TextEditingController skuController;
-  final TextEditingController barcodeController;
+
   final TextEditingController brandController;
   final TextEditingController modelController;
   final TextEditingController colorController;
@@ -23,8 +22,6 @@ class ProductDetailsTab extends StatelessWidget {
 
   const ProductDetailsTab({
     super.key,
-    required this.skuController,
-    required this.barcodeController,
     required this.brandController,
     required this.modelController,
     required this.colorController,
@@ -49,119 +46,7 @@ class ProductDetailsTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Product Details Card
-          FormSectionCard(
-            title: s.productDetails,
-            icon: Icons.info_outlined,
-            children: [
-              // SKU and Barcode Row
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                      controller: skuController,
-                      label: s.productSku,
-                      hint: 'Enter product SKU',
-                      icon: Icons.qr_code_outlined,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: CustomTextField(
-                      controller: barcodeController,
-                      label: s.barcode,
-                      hint: 'Enter barcode',
-                      icon: Icons.barcode_reader,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-
-              // Brand and Model Row
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                      controller: brandController,
-                      label: s.brand,
-                      hint: 'Enter brand',
-                      icon: Icons.business_outlined,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: CustomTextField(
-                      controller: modelController,
-                      label: s.model,
-                      hint: 'Enter model',
-                      icon: Icons.model_training_outlined,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-
-              // Color and Material Row
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                      controller: colorController,
-                      label: s.color,
-                      hint: 'Enter color',
-                      icon: Icons.palette_outlined,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: CustomTextField(
-                      controller: materialController,
-                      label: s.material,
-                      hint: 'Enter material',
-                      icon: Icons.texture_outlined,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-
-              // Weight and Dimensions Row
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomTextField(
-                      controller: weightController,
-                      label: s.weight,
-                      hint: 'Enter weight',
-                      icon: Icons.scale_outlined,
-                      keyboardType: TextInputType.number,
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: CustomTextField(
-                      controller: dimensionsController,
-                      label: s.dimensions,
-                      hint: '20x30x40 cm',
-                      icon: Icons.straighten_outlined,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16.h),
-
-              // Notes
-              CustomTextField(
-                controller: notesController,
-                label: s.notes,
-                hint: 'Enter additional notes',
-                icon: Icons.note_outlined,
-                maxLines: 3,
-              ),
-            ],
-          ),
-
+   
           SizedBox(height: 20.h),
 
           // Settings Card

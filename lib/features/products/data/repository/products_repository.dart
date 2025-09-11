@@ -130,11 +130,23 @@ class ProductsRepository {
         final product = ProductModel(
           id: response.id,
           companyId: response.companyId,
+          productCategoryId: response.categoryId,
+          sku: response.sku,
+          barcode: response.barcode,
+          unit: response.unit,
+          taxRate: response.taxRate,
+          cost: response.cost,
+          description: response.description,
+          hasTax: response.hasTax,
+          image: response.image,
+          isActive: response.isActive,
+          trackInventory: response.trackInventory,
+          status: response.status,
+          createdAt: response.createdAt,
+          updatedAt: response.updatedAt,
           name: response.name,
           price: response.price,
           quantity: response.quantity,
-          createdAt: response.createdAt,
-          updatedAt: response.updatedAt,
         );
         return ApiResult.success(product);
       }

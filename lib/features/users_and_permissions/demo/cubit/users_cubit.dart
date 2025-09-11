@@ -70,7 +70,14 @@ class UsersCubit extends Cubit<UsersState> {
 
           _users = updatedUsers;
           _hasMorePages = _repository.hasMorePages;
-          emit(UsersListLoaded(users: updatedUsers));
+          emit(
+            UsersListLoaded(
+              users: updatedUsers,
+              hasMoreData: _repository.hasMorePages,
+              currentPage: _repository.currentPage,
+              totalPages: _repository.lastPage,
+            ),
+          );
         },
         failure: (error) {
           emit(UsersListError(message: S.current.errorLoadingUsers));
@@ -100,6 +107,33 @@ class UsersCubit extends Cubit<UsersState> {
       sortBy: sortBy,
       sortOrder: sortOrder,
       isRefresh: true,
+    );
+  }
+
+  // Method to load more users (pagination)
+  Future<void> loadMoreUsers({
+    String? search,
+    String? role,
+    String? status,
+    String? sortBy,
+    String? sortOrder,
+  }) async {
+    if (isClosed || !_hasMorePages || state is UsersListLoadingMore) return;
+
+    // Get current page from repository
+    final currentPage = _repository.currentPage;
+    final nextPage = currentPage + 1;
+
+    emit(UsersListLoadingMore(users: _users));
+
+    await loadUsers(
+      search: search,
+      role: role,
+      status: status,
+      page: nextPage,
+      limit: 20,
+      sortBy: sortBy,
+      sortOrder: sortOrder,
     );
   }
 

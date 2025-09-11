@@ -30,6 +30,7 @@ class CustomersListScreenWithProvider extends StatelessWidget {
 
 class _CustomersListScreenState extends State<CustomersListScreen> {
   final _searchController = TextEditingController();
+  final _scrollController = ScrollController();
   String? _selectedStatus;
   String? _selectedCompany;
 
@@ -37,6 +38,7 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
   void initState() {
     super.initState();
     _initializeOptions();
+    _scrollController.addListener(_onScroll);
   }
 
   void _initializeOptions() {
@@ -47,7 +49,19 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      // Load more when user is 200 pixels from the bottom
+      final cubit = context.read<CustomersCubit>();
+      if (cubit.hasMore) {
+        cubit.loadNextPage();
+      }
+    }
   }
 
   @override
@@ -74,46 +88,48 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
                 },
           );
         },
-        child: RefreshIndicator(
-          onRefresh: () async {
-            CustomersCubit.get(context).loadFirstPage(refresh: true);
-          },
-          child: CustomScrollView(
-            slivers: [
-              // Custom Header Widget as Sliver
-              SliverToBoxAdapter(
-                child: CustomersHeaderWidget(
-                  onMenuPressed: _handleMenuPressed,
-                  searchController: _searchController,
-                  onSearchChanged: (query) {
-                    // CustomersCubit.get(context).loadFirstPage(
-                    //   refresh: true,
-                    //   search: query.isEmpty ? null : query,
-                    //   status: _selectedStatus == 'all_status'
-                    //       ? null
-                    //       : _selectedStatus,
-                    //   company: _selectedCompany == 'all_company'
-                    //       ? null
-                    //       : _selectedCompany,
-                    // );
-                  },
-                  selectedStatus: _selectedStatus ?? '',
-                  selectedCompany: _selectedCompany ?? '',
-                  onStatusChanged: _onStatusChanged,
-                  onCompanyChanged: _onCompanyChanged,
-                ),
+        child: CustomScrollView(
+          controller: _scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            // Custom Header Widget as Sliver
+            SliverToBoxAdapter(
+              child: CustomersHeaderWidget(
+                onMenuPressed: _handleMenuPressed,
+                searchController: _searchController,
+                onSearchChanged: (query) {
+                  // CustomersCubit.get(context).loadFirstPage(
+                  //   refresh: true,
+                  //   search: query.isEmpty ? null : query,
+                  //   status: _selectedStatus == 'all_status'
+                  //       ? null
+                  //       : _selectedStatus,
+                  //   company: _selectedCompany == 'all_company'
+                  //       ? null
+                  //       : _selectedCompany,
+                  // );
+                },
+                selectedStatus: _selectedStatus ?? '',
+                selectedCompany: _selectedCompany ?? '',
+                onStatusChanged: _onStatusChanged,
+                onCompanyChanged: _onCompanyChanged,
               ),
+            ),
 
-              // Customers List
-              SliverFillRemaining(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+            // Customers List with Refresh
+            SliverFillRemaining(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
                   ),
+                ),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    CustomersCubit.get(context).loadFirstPage(refresh: true);
+                  },
                   child: CustomersStateBuilder(
                     onCustomerTap: (customer) =>
                         _showCustomerOptions(context, customer),
@@ -129,10 +145,10 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
                   ),
                 ),
               ),
+            ),
 
-              // Bottom spacing for FAB
-            ],
-          ),
+            // Bottom spacing for FAB
+          ],
         ),
       ),
 
@@ -197,7 +213,7 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
   }
 
   void _retry() {
-  //  CustomersCubit.get(context).loadFirstPage(refresh: true);
+    //  CustomersCubit.get(context).loadFirstPage(refresh: true);
   }
 
   // Navigation Methods

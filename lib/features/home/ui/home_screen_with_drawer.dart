@@ -21,8 +21,10 @@ import 'package:invotek/features/products/ui/screens/categories_list_screen.dart
 import 'package:invotek/features/products/ui/screens/edit_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
+import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/users_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/expenses_list_screen_with_provider.dart';
 import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen_with_provider.dart';
@@ -114,11 +116,11 @@ class _HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
     switch (route) {
       case AppRoutes.usersPermissionsRoute:
         return const UsersPermissionsScreenWithProvider();
-      case '/users/list':
-        return const UsersPermissionsScreenWithProvider();
-      case '/users/add':
+      case AppRoutes.usersListRoute:
+        return const UsersListScreenWithProvider();
+      case AppRoutes.addUserRoute:
         return const AddUserScreenWithProvider();
-      case '/users/permissions':
+      case AppRoutes.managePermissionsRoute:
         return const ManagePermissionsScreenWithProvider();
       case '/clients/list':
         return const ClientsListScreenWithProvider();
@@ -181,6 +183,8 @@ class _HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
         return const HomeScreen();
       case '/expense-categories/delete-all':
         return const DeleteAllCategoriesScreenWithProvider();
+      case AppRoutes.settingsRoute:
+        return const SettingsScreen();
       case '/home':
       default:
         return const HomeScreen();

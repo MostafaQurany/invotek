@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/users_and_permissions/data/models/permission_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_state.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ManagePermissionsScreen extends StatefulWidget {
   const ManagePermissionsScreen({super.key});
@@ -42,13 +46,13 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
   ];
 
   final Map<String, String> _moduleNames = {
-    'users': 'المستخدمين',
-    'clients': 'العملاء',
-    'products': 'المنتجات',
-    'invoices': 'الفواتير',
-    'expenses': 'المصروفات',
-    'reports': 'التقارير',
-    'settings': 'الإعدادات',
+    'users': 'Users',
+    'clients': 'Clients',
+    'products': 'Products',
+    'invoices': 'Invoices',
+    'expenses': 'Expenses',
+    'reports': 'Reports',
+    'settings': 'Settings',
   };
 
   @override
@@ -82,51 +86,188 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         }
       },
       child: Scaffold(
-        backgroundColor: colorScheme.surface,
-        appBar: AppBar(
-          title: Text('إدارة الصلاحيات'),
-          backgroundColor: colorScheme.surface,
-          foregroundColor: colorScheme.onSurface,
-          scrolledUnderElevation: 1,
-          elevation: 0,
-          bottom: TabBar(
-            controller: _tabController,
-            indicatorColor: colorScheme.primary,
-            labelColor: colorScheme.onSurface,
-            unselectedLabelColor: colorScheme.onSurfaceVariant,
-            tabs: const [
-              Tab(text: 'الأدوار'),
-              Tab(text: 'الصلاحيات'),
-            ],
-          ),
-        ),
-        body: BlocBuilder<PermissionsCubit, PermissionsState>(
-          builder: (context, state) {
-            if (state.isLoading) {
-              return Center(
-                child: CircularProgressIndicator(color: colorScheme.primary),
-              );
-            }
+        backgroundColor: AppColors.primary,
+        body: CustomScrollView(
+          slivers: [
+            // Custom Header Widget as Sliver
+            SliverToBoxAdapter(child: _buildPermissionsHeader()),
 
-            return TabBarView(
-              controller: _tabController,
-              children: [_buildRolesTab(state), _buildPermissionsTab(state)],
-            );
-          },
+            // Permissions Content
+            SliverFillRemaining(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundLight,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    // Tab Bar
+                    Container(
+                      color: AppColors.backgroundLight,
+                      child: TabBar(
+                        controller: _tabController,
+                        indicatorColor: AppColors.primary,
+                        labelColor: AppColors.primary,
+                        unselectedLabelColor: AppColors.grey,
+                        tabs: const [
+                          Tab(text: 'Roles'),
+                          Tab(text: 'Permissions'),
+                        ],
+                      ),
+                    ),
+                    // Tab Content
+                    Expanded(
+                      child: BlocBuilder<PermissionsCubit, PermissionsState>(
+                        builder: (context, state) {
+                          if (state.isLoading) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primary,
+                              ),
+                            );
+                          }
+                          return TabBarView(
+                            controller: _tabController,
+                            children: [
+                              _buildRolesTab(state),
+                              _buildPermissionsTab(state),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _showAddRoleDialog(context),
-          backgroundColor: colorScheme.primary,
-          foregroundColor: colorScheme.onPrimary,
-          child: const Icon(Icons.add),
+          backgroundColor: AppColors.primary,
+          foregroundColor: AppColors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
         ),
       ),
     );
   }
 
-  Widget _buildRolesTab(PermissionsState state) {
-    final colorScheme = Theme.of(context).colorScheme;
+  // Helper Methods
+  Widget _buildPermissionsHeader() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(20.w, 50.h, 20.w, 20.h),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.primary, AppColors.primary.withOpacity(0.8)],
+        ),
+      ),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                // Menu Button
+                GestureDetector(
+                  onTap: _handleMenuPressed,
+                  child: Container(
+                    padding: EdgeInsets.all(8.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Icon(
+                      Icons.menu_rounded,
+                      color: AppColors.white,
+                      size: 24.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Manage Permissions',
+                        style: TextStyle(
+                          color: AppColors.white,
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        'Manage roles and permissions',
+                        style: TextStyle(
+                          color: AppColors.white.withOpacity(0.8),
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Permissions Button
+                GestureDetector(
+                  onTap: _navigateToUsers,
+                  child: Container(
+                    padding: EdgeInsets.all(8.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: Icon(
+                      Icons.people_rounded,
+                      color: AppColors.white,
+                      size: 24.sp,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
+  // Event Handlers
+  void _handleMenuPressed() {
+    try {
+      final zoomDrawer = ZoomDrawer.of(context);
+      if (zoomDrawer != null) {
+        zoomDrawer.toggle();
+      } else {
+        // Fallback navigation if zoom drawer is not available
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        } else {
+          Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+        }
+      }
+    } catch (e) {
+      // Error handling for zoom drawer
+      debugPrint('Error toggling zoom drawer: $e');
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      }
+    }
+  }
+
+  void _navigateToUsers() {
+    Navigator.pushNamed(context, AppRoutes.usersListRoute);
+  }
+
+  Widget _buildRolesTab(PermissionsState state) {
     return Column(
       children: [
         // Module Filter
@@ -135,12 +276,12 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
           child: DropdownButtonFormField<String>(
             value: _selectedModule,
             decoration: InputDecoration(
-              labelText: 'اختر الوحدة',
+              labelText: 'Select Module',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
               filled: true,
-              fillColor: colorScheme.surfaceContainer,
+              fillColor: AppColors.backgroundLight,
             ),
             items: _modules.map((module) {
               return DropdownMenuItem(
@@ -213,8 +354,8 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
-                role.isActive ? 'نشط' : 'غير نشط',
-                style: TextStyle(color: colorScheme.onPrimary, fontSize: 12.sp),
+                role.isActive ? 'Active' : 'Inactive',
+                style: TextStyle(color: AppColors.white, fontSize: 12.sp),
               ),
             ),
             SizedBox(width: 8.w),
@@ -227,7 +368,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                     children: [
                       Icon(Icons.edit, color: colorScheme.onSurfaceVariant),
                       SizedBox(width: 8.w),
-                      Text('تعديل'),
+                      Text(S.of(context).edit),
                     ],
                   ),
                 ),
@@ -237,7 +378,10 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                     children: [
                       Icon(Icons.delete, color: colorScheme.error),
                       SizedBox(width: 8.w),
-                      Text('حذف', style: TextStyle(color: colorScheme.error)),
+                      Text(
+                        S.of(context).delete,
+                        style: TextStyle(color: AppColors.error),
+                      ),
                     ],
                   ),
                 ),
@@ -252,21 +396,18 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'صلاحيات ${_moduleNames[_selectedModule]}',
+                  '${_moduleNames[_selectedModule]} Permissions',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
-                    color: colorScheme.primary,
+                    color: AppColors.primary,
                   ),
                 ),
                 SizedBox(height: 8.h),
                 if (modulePermissions.isEmpty)
                   Text(
-                    'لا توجد صلاحيات لهذه الوحدة',
-                    style: TextStyle(
-                      color: colorScheme.onSurfaceVariant,
-                      fontSize: 12.sp,
-                    ),
+                    'No permissions for this module',
+                    style: TextStyle(color: AppColors.grey, fontSize: 12.sp),
                   )
                 else
                   Wrap(
@@ -278,8 +419,8 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                           permission.name,
                           style: TextStyle(fontSize: 12.sp),
                         ),
-                        backgroundColor: colorScheme.primary.withOpacity(0.1),
-                        side: BorderSide(color: colorScheme.primary),
+                        backgroundColor: AppColors.primary.withOpacity(0.1),
+                        side: BorderSide(color: AppColors.primary),
                       );
                     }).toList(),
                   ),
@@ -287,7 +428,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 Row(
                   children: [
                     Text(
-                      'إجمالي الصلاحيات: ',
+                      'Total Permissions: ',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12.sp,
@@ -296,7 +437,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                     Text(
                       '${role.permissions.length}',
                       style: TextStyle(
-                        color: colorScheme.primary,
+                        color: AppColors.primary,
                         fontWeight: FontWeight.w600,
                         fontSize: 12.sp,
                       ),
@@ -312,7 +453,6 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
   }
 
   Widget _buildPermissionsTab(PermissionsState state) {
-    final colorScheme = Theme.of(context).colorScheme;
     final modulePermissions = state.permissions
         .where((p) => p.module == _selectedModule)
         .toList();
@@ -325,12 +465,12 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
           child: DropdownButtonFormField<String>(
             value: _selectedModule,
             decoration: InputDecoration(
-              labelText: 'اختر الوحدة',
+              labelText: 'Select Module',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
               filled: true,
-              fillColor: colorScheme.surfaceContainer,
+              fillColor: AppColors.backgroundLight,
             ),
             items: _modules.map((module) {
               return DropdownMenuItem(
@@ -395,8 +535,8 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: Text(
-            permission.isActive ? 'نشط' : 'غير نشط',
-            style: TextStyle(color: colorScheme.onPrimary, fontSize: 10.sp),
+            permission.isActive ? 'Active' : 'Inactive',
+            style: TextStyle(color: AppColors.white, fontSize: 10.sp),
           ),
         ),
       ),
@@ -446,14 +586,14 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('إضافة دور جديد'),
+        title: const Text('Add New Role'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'اسم الدور',
+                labelText: 'Role Name',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -463,7 +603,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(
-                labelText: 'وصف الدور',
+                labelText: 'Role Description',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -475,7 +615,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -489,7 +629,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 Navigator.pop(context);
               }
             },
-            child: const Text('إضافة'),
+            child: const Text('Add'),
           ),
         ],
       ),
@@ -503,14 +643,14 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تعديل الدور'),
+        title: const Text('Edit Role'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'اسم الدور',
+                labelText: 'Role Name',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -520,7 +660,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(
-                labelText: 'وصف الدور',
+                labelText: 'Role Description',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -532,7 +672,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: const Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -548,7 +688,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 Navigator.pop(context);
               }
             },
-            child: const Text('حفظ'),
+            child: const Text('Save'),
           ),
         ],
       ),
@@ -561,12 +701,14 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تأكيد الحذف'),
-        content: Text('هل أنت متأكد من حذف الدور "${role.name}"؟'),
+        title: const Text('Confirm Delete'),
+        content: Text(
+          'Are you sure you want to delete the role "${role.name}"?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
@@ -574,7 +716,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: colorScheme.error),
-            child: const Text('حذف'),
+            child: const Text('Delete'),
           ),
         ],
       ),

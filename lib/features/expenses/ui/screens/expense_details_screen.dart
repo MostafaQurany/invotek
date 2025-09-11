@@ -29,17 +29,20 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Modern Header
-          _buildModernHeader(expense),
+          // Modern Header with Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration.zero,
+              child: _buildModernHeaderContent(expense),
+            ),
+          ),
 
-          // Quick Actions
-          _buildQuickActions(),
-
-          // Content Cards
+          // Content Cards with Staggered Animation
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: StaggeredAnimatedList(
+                staggerDelay: Duration(milliseconds: 150),
                 children: [
                   _buildBasicInfoCard(expense),
                   SizedBox(height: 16.h),
@@ -58,119 +61,117 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
         ],
       ),
 
-      // Bottom Actions
-      bottomNavigationBar: _buildBottomActions(),
+      // Bottom Actions with Animation
+      bottomNavigationBar: AnimatedEntryWidget(
+        delay: Duration(milliseconds: 800),
+        child: _buildBottomActions(),
+      ),
     );
   }
 
-  Widget _buildModernHeader(ExpenseModel expense) {
-    return SliverToBoxAdapter(
-      child: AnimatedEntryWidget(
-        delay: Duration.zero,
-        child: Container(
-          height: 280.h,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.primary, AppColors.primary.withOpacity(0.6)],
-            ),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(32.r),
-              bottomRight: Radius.circular(32.r),
-            ),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all(20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildModernHeaderContent(ExpenseModel expense) {
+    return Container(
+      height: 280.h,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.primary, AppColors.primary.withOpacity(0.6)],
+        ),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(32.r),
+          bottomRight: Radius.circular(32.r),
+        ),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Back Button and Help
+              Row(
                 children: [
-                  // Back Button and Help
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: AppColors.white,
-                          size: 24.sp,
-                        ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: () => _showHelpDialog(),
-                        icon: Icon(
-                          Icons.help_outline,
-                          color: AppColors.white,
-                          size: 24.sp,
-                        ),
-                      ),
-                    ],
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColors.white,
+                      size: 24.sp,
+                    ),
                   ),
-
-                  SizedBox(height: 20.h),
-
-                  // Expense Info
-                  Row(
-                    children: [
-                      // Avatar
-                      Container(
-                        width: 80.w,
-                        height: 80.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.receipt_long,
-                            color: AppColors.primary,
-                            size: 32.sp,
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: 20.w),
-
-                      // Expense Details
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              expense.title,
-                              style: TextStyle(
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.white,
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            Text(
-                              expense.formattedAmount,
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                color: AppColors.white.withOpacity(0.8),
-                              ),
-                            ),
-                            SizedBox(height: 12.h),
-                            _buildStatusChip(expense.paymentMethod),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Spacer(),
+                  IconButton(
+                    onPressed: () => _showHelpDialog(),
+                    icon: Icon(
+                      Icons.help_outline,
+                      color: AppColors.white,
+                      size: 24.sp,
+                    ),
                   ),
                 ],
               ),
-            ),
+
+              SizedBox(height: 20.h),
+
+              // Expense Info
+              Row(
+                children: [
+                  // Avatar
+                  Container(
+                    width: 80.w,
+                    height: 80.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.receipt_long,
+                        color: AppColors.primary,
+                        size: 32.sp,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(width: 20.w),
+
+                  // Expense Details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          expense.title,
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          expense.formattedAmount,
+                          style: TextStyle(
+                            fontSize: 18.sp,
+                            color: AppColors.white.withOpacity(0.8),
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        _buildStatusChip(expense.paymentMethod),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -209,85 +210,8 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
     );
   }
 
-  Widget _buildQuickActions() {
-    return SliverToBoxAdapter(
-      child: AnimatedEntryWidget(
-        delay: Duration(milliseconds: 200),
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildActionButton(
-                icon: Icons.edit,
-                label: 'Edit',
-                onTap: () => _navigateToEditExpense(context),
-              ),
-              _buildActionButton(
-                icon: Icons.copy,
-                label: 'Copy',
-                onTap: () => _copyExpenseDetails(),
-              ),
-              _buildActionButton(
-                icon: Icons.share,
-                label: 'Share',
-                onTap: () => _shareExpense(),
-              ),
-              _buildActionButton(
-                icon: Icons.delete,
-                label: 'Delete',
-                onTap: () => _showDeleteConfirmation(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton({
-    required IconData icon,
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 70.w,
-        height: 70.w,
-        decoration: BoxDecoration(
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: AppColors.primary, size: 24.sp),
-            SizedBox(height: 4.h),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildBasicInfoCard(ExpenseModel expense) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 400),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -357,7 +281,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
 
   Widget _buildFinancialInfoCard(ExpenseModel expense) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 600),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -405,7 +328,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
 
   Widget _buildPaymentInfoCard(ExpenseModel expense) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 800),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -441,7 +363,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
     }
 
     return AnimatedCard(
-      delay: Duration(milliseconds: 1000),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -475,7 +396,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
 
   Widget _buildMetadataCard(ExpenseModel expense) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 1200),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -715,27 +635,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
         builder: (context) =>
             EditExpenseScreenWithProvider(expense: widget.expense),
         settings: const RouteSettings(name: '/edit-expense'),
-      ),
-    );
-  }
-
-  void _copyExpenseDetails() {
-    final details =
-        '''
-${widget.expense.title}
-Amount: ${widget.expense.formattedAmount}
-Date: ${widget.expense.formattedDate}
-Payment Method: ${_formatPaymentMethod(widget.expense.paymentMethod)}
-${widget.expense.description != null ? 'Description: ${widget.expense.description}' : ''}
-''';
-    _copyToClipboard(details);
-  }
-
-  void _shareExpense() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Sharing expense: ${widget.expense.title}'),
-        backgroundColor: AppColors.primary,
       ),
     );
   }

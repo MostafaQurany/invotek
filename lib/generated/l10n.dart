@@ -160,10 +160,10 @@ class S {
     );
   }
 
-  /// `Invalid email format`
+  /// `Invalid email`
   String get emailInvalid {
     return Intl.message(
-      'Invalid email format',
+      'Invalid email',
       name: 'emailInvalid',
       desc: '',
       args: [],
@@ -200,10 +200,10 @@ class S {
     );
   }
 
-  /// `Confirm password is required`
+  /// `Password confirmation is required`
   String get confirmPasswordRequired {
     return Intl.message(
-      'Confirm password is required',
+      'Password confirmation is required',
       name: 'confirmPasswordRequired',
       desc: '',
       args: [],
@@ -420,10 +420,10 @@ class S {
     );
   }
 
-  /// `Tax invoices`
+  /// `Tax Invoices`
   String get taxInvoices {
     return Intl.message(
-      'Tax invoices',
+      'Tax Invoices',
       name: 'taxInvoices',
       desc: '',
       args: [],
@@ -540,10 +540,10 @@ class S {
     );
   }
 
-  /// `العربية`
+  /// `Arabic`
   String get arabic {
     return Intl.message(
-      'العربية',
+      'Arabic',
       name: 'arabic',
       desc: '',
       args: [],
@@ -770,10 +770,10 @@ class S {
     );
   }
 
-  /// `Add New User`
+  /// `Add User`
   String get addUser {
     return Intl.message(
-      'Add New User',
+      'Add User',
       name: 'addUser',
       desc: '',
       args: [],
@@ -800,10 +800,10 @@ class S {
     );
   }
 
-  /// `Add New Client`
+  /// `Add Client`
   String get addClient {
     return Intl.message(
-      'Add New Client',
+      'Add Client',
       name: 'addClient',
       desc: '',
       args: [],
@@ -840,10 +840,10 @@ class S {
     );
   }
 
-  /// `Add New Expense`
+  /// `Add Expense`
   String get addExpense {
     return Intl.message(
-      'Add New Expense',
+      'Add Expense',
       name: 'addExpense',
       desc: '',
       args: [],
@@ -870,10 +870,10 @@ class S {
     );
   }
 
-  /// `Create New Invoice`
+  /// `Create Invoice`
   String get createInvoice {
     return Intl.message(
-      'Create New Invoice',
+      'Create Invoice',
       name: 'createInvoice',
       desc: '',
       args: [],
@@ -1830,10 +1830,10 @@ class S {
     );
   }
 
-  /// `No Name`
+  /// `No name`
   String get noName {
     return Intl.message(
-      'No Name',
+      'No name',
       name: 'noName',
       desc: '',
       args: [],
@@ -2150,10 +2150,10 @@ class S {
     );
   }
 
-  /// `Add New Product`
+  /// `Add Product`
   String get addProduct {
     return Intl.message(
-      'Add New Product',
+      'Add Product',
       name: 'addProduct',
       desc: '',
       args: [],
@@ -2820,10 +2820,10 @@ class S {
     );
   }
 
-  /// `An error occurred: {error}`
+  /// `Error: {error}`
   String errorOccurred(Object error) {
     return Intl.message(
-      'An error occurred: $error',
+      'Error: $error',
       name: 'errorOccurred',
       desc: '',
       args: [error],
@@ -3567,6 +3567,2896 @@ class S {
       name: 'statusCategory',
       desc: '',
       args: [status],
+    );
+  }
+
+  /// `Settings`
+  String get settings {
+    return Intl.message(
+      'Settings',
+      name: 'settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Name`
+  String get companyName {
+    return Intl.message(
+      'Company Name',
+      name: 'companyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Email`
+  String get companyEmail {
+    return Intl.message(
+      'Company Email',
+      name: 'companyEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Phone`
+  String get companyPhone {
+    return Intl.message(
+      'Company Phone',
+      name: 'companyPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Address`
+  String get companyAddress {
+    return Intl.message(
+      'Company Address',
+      name: 'companyAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark Mode`
+  String get darkMode {
+    return Intl.message(
+      'Dark Mode',
+      name: 'darkMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Dark Mode`
+  String get enableDarkMode {
+    return Intl.message(
+      'Enable Dark Mode',
+      name: 'enableDarkMode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications`
+  String get notifications {
+    return Intl.message(
+      'Notifications',
+      name: 'notifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receive Notifications`
+  String get receiveNotifications {
+    return Intl.message(
+      'Receive Notifications',
+      name: 'receiveNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Information`
+  String get appInfo {
+    return Intl.message(
+      'App Information',
+      name: 'appInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message(
+      'Home',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Users and Permissions Management`
+  String get usersManagement {
+    return Intl.message(
+      'Users and Permissions Management',
+      name: 'usersManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customers Management`
+  String get customersManagement {
+    return Intl.message(
+      'Customers Management',
+      name: 'customersManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products and Categories Management`
+  String get productsCategoriesManagement {
+    return Intl.message(
+      'Products and Categories Management',
+      name: 'productsCategoriesManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expenses & Categories Management`
+  String get expensesManagement {
+    return Intl.message(
+      'Expenses & Categories Management',
+      name: 'expensesManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Support Email`
+  String get supportEmail {
+    return Intl.message(
+      'Support Email',
+      name: 'supportEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Website`
+  String get website {
+    return Intl.message(
+      'Website',
+      name: 'website',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyPolicy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms of Use`
+  String get termsOfUse {
+    return Intl.message(
+      'Terms of Use',
+      name: 'termsOfUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Settings`
+  String get saveSettings {
+    return Intl.message(
+      'Save Settings',
+      name: 'saveSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving Settings...`
+  String get savingSettings {
+    return Intl.message(
+      'Saving Settings...',
+      name: 'savingSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings saved successfully`
+  String get settingsSavedSuccessfully {
+    return Intl.message(
+      'Settings saved successfully',
+      name: 'settingsSavedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name is required`
+  String get companyNameRequired {
+    return Intl.message(
+      'Company name is required',
+      name: 'companyNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company email is required`
+  String get companyEmailRequired {
+    return Intl.message(
+      'Company email is required',
+      name: 'companyEmailRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid company email`
+  String get companyEmailInvalid {
+    return Intl.message(
+      'Invalid company email',
+      name: 'companyEmailInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company phone is required`
+  String get companyPhoneRequired {
+    return Intl.message(
+      'Company phone is required',
+      name: 'companyPhoneRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company address is required`
+  String get companyAddressRequired {
+    return Intl.message(
+      'Company address is required',
+      name: 'companyAddressRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company name`
+  String get enterCompanyName {
+    return Intl.message(
+      'Enter company name',
+      name: 'enterCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company email`
+  String get enterCompanyEmail {
+    return Intl.message(
+      'Enter company email',
+      name: 'enterCompanyEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company phone`
+  String get enterCompanyPhone {
+    return Intl.message(
+      'Enter company phone',
+      name: 'enterCompanyPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company address`
+  String get enterCompanyAddress {
+    return Intl.message(
+      'Enter company address',
+      name: 'enterCompanyAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language changed to Arabic`
+  String get languageChangedToArabic {
+    return Intl.message(
+      'Language changed to Arabic',
+      name: 'languageChangedToArabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language changed to English`
+  String get languageChangedToEnglish {
+    return Intl.message(
+      'Language changed to English',
+      name: 'languageChangedToEnglish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark mode enabled`
+  String get darkModeEnabled {
+    return Intl.message(
+      'Dark mode enabled',
+      name: 'darkModeEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark mode disabled`
+  String get darkModeDisabled {
+    return Intl.message(
+      'Dark mode disabled',
+      name: 'darkModeDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications enabled`
+  String get notificationsEnabled {
+    return Intl.message(
+      'Notifications enabled',
+      name: 'notificationsEnabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications disabled`
+  String get notificationsDisabled {
+    return Intl.message(
+      'Notifications disabled',
+      name: 'notificationsDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or`
+  String get or {
+    return Intl.message(
+      'Or',
+      name: 'or',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reports`
+  String get reports {
+    return Intl.message(
+      'Reports',
+      name: 'reports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User Management`
+  String get userManagement {
+    return Intl.message(
+      'User Management',
+      name: 'userManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Permissions Management`
+  String get permissionsManagement {
+    return Intl.message(
+      'Permissions Management',
+      name: 'permissionsManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clients Management`
+  String get clientsManagement {
+    return Intl.message(
+      'Clients Management',
+      name: 'clientsManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products & Categories Management`
+  String get productsManagement {
+    return Intl.message(
+      'Products & Categories Management',
+      name: 'productsManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to Invotek App`
+  String get welcomeToInvotek {
+    return Intl.message(
+      'Welcome to Invotek App',
+      name: 'welcomeToInvotek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage invoices and customers easily`
+  String get manageInvoicesAndCustomers {
+    return Intl.message(
+      'Manage invoices and customers easily',
+      name: 'manageInvoicesAndCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Actions`
+  String get quickActions {
+    return Intl.message(
+      'Quick Actions',
+      name: 'quickActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage Customers`
+  String get manageCustomers {
+    return Intl.message(
+      'Manage Customers',
+      name: 'manageCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add, edit and delete customers`
+  String get addAndEditCustomers {
+    return Intl.message(
+      'Add, edit and delete customers',
+      name: 'addAndEditCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage Invoices`
+  String get manageInvoices {
+    return Intl.message(
+      'Manage Invoices',
+      name: 'manageInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create and edit invoices`
+  String get createAndEditInvoices {
+    return Intl.message(
+      'Create and edit invoices',
+      name: 'createAndEditInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View reports and statistics`
+  String get viewReportsAndStatistics {
+    return Intl.message(
+      'View reports and statistics',
+      name: 'viewReportsAndStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create New Invoice`
+  String get createNewInvoice {
+    return Intl.message(
+      'Create New Invoice',
+      name: 'createNewInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View All Invoices`
+  String get viewAllInvoices {
+    return Intl.message(
+      'View All Invoices',
+      name: 'viewAllInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device Information`
+  String get deviceInfo {
+    return Intl.message(
+      'Device Information',
+      name: 'deviceInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Screen dimensions and performance`
+  String get screenDimensionsAndPerformance {
+    return Intl.message(
+      'Screen dimensions and performance',
+      name: 'screenDimensionsAndPerformance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device Type`
+  String get deviceType {
+    return Intl.message(
+      'Device Type',
+      name: 'deviceType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tablet`
+  String get tablet {
+    return Intl.message(
+      'Tablet',
+      name: 'tablet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone`
+  String get phone {
+    return Intl.message(
+      'Phone',
+      name: 'phone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme Demo`
+  String get themeDemo {
+    return Intl.message(
+      'Theme Demo',
+      name: 'themeDemo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme Information`
+  String get themeInfo {
+    return Intl.message(
+      'Theme Information',
+      name: 'themeInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Type`
+  String get type {
+    return Intl.message(
+      'Type',
+      name: 'type',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark`
+  String get dark {
+    return Intl.message(
+      'Dark',
+      name: 'dark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get light {
+    return Intl.message(
+      'Light',
+      name: 'light',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Screen Dimensions`
+  String get screenDimensions {
+    return Intl.message(
+      'Screen Dimensions',
+      name: 'screenDimensions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text Styles`
+  String get textStyles {
+    return Intl.message(
+      'Text Styles',
+      name: 'textStyles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Main Title`
+  String get mainTitle {
+    return Intl.message(
+      'Main Title',
+      name: 'mainTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sub Title`
+  String get subTitle {
+    return Intl.message(
+      'Sub Title',
+      name: 'subTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal Text`
+  String get normalText {
+    return Intl.message(
+      'Normal Text',
+      name: 'normalText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Small Text`
+  String get smallText {
+    return Intl.message(
+      'Small Text',
+      name: 'smallText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Link`
+  String get link {
+    return Intl.message(
+      'Link',
+      name: 'link',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error Text`
+  String get errorText {
+    return Intl.message(
+      'Error Text',
+      name: 'errorText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Success Text`
+  String get successText {
+    return Intl.message(
+      'Success Text',
+      name: 'successText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Buttons`
+  String get buttons {
+    return Intl.message(
+      'Buttons',
+      name: 'buttons',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal Button`
+  String get normalButton {
+    return Intl.message(
+      'Normal Button',
+      name: 'normalButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Outlined Button`
+  String get outlinedButton {
+    return Intl.message(
+      'Outlined Button',
+      name: 'outlinedButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading Button`
+  String get loadingButton {
+    return Intl.message(
+      'Loading Button',
+      name: 'loadingButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Input Fields`
+  String get inputFields {
+    return Intl.message(
+      'Input Fields',
+      name: 'inputFields',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter username`
+  String get enterUsername {
+    return Intl.message(
+      'Enter username',
+      name: 'enterUsername',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cards`
+  String get cards {
+    return Intl.message(
+      'Cards',
+      name: 'cards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Interactive Card`
+  String get interactiveCard {
+    return Intl.message(
+      'Interactive Card',
+      name: 'interactiveCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This is an interactive card that can be pressed`
+  String get interactiveCardDescription {
+    return Intl.message(
+      'This is an interactive card that can be pressed',
+      name: 'interactiveCardDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading Card`
+  String get loadingCard {
+    return Intl.message(
+      'Loading Card',
+      name: 'loadingCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Responsive Texts`
+  String get responsiveTexts {
+    return Intl.message(
+      'Responsive Texts',
+      name: 'responsiveTexts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Small Responsive Text`
+  String get smallResponsiveText {
+    return Intl.message(
+      'Small Responsive Text',
+      name: 'smallResponsiveText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medium Responsive Text`
+  String get mediumResponsiveText {
+    return Intl.message(
+      'Medium Responsive Text',
+      name: 'mediumResponsiveText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Large Responsive Text`
+  String get largeResponsiveText {
+    return Intl.message(
+      'Large Responsive Text',
+      name: 'largeResponsiveText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Normal button pressed`
+  String get buttonPressed {
+    return Intl.message(
+      'Normal button pressed',
+      name: 'buttonPressed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Outlined button pressed`
+  String get outlinedButtonPressed {
+    return Intl.message(
+      'Outlined button pressed',
+      name: 'outlinedButtonPressed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Card pressed`
+  String get cardPressed {
+    return Intl.message(
+      'Card pressed',
+      name: 'cardPressed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Calling {phone}`
+  String calling(Object phone) {
+    return Intl.message(
+      'Calling $phone',
+      name: 'calling',
+      desc: '',
+      args: [phone],
+    );
+  }
+
+  /// `Opening email to {email}`
+  String openingEmail(Object email) {
+    return Intl.message(
+      'Opening email to $email',
+      name: 'openingEmail',
+      desc: '',
+      args: [email],
+    );
+  }
+
+  /// `Viewing invoices for {name}`
+  String viewingInvoices(Object name) {
+    return Intl.message(
+      'Viewing invoices for $name',
+      name: 'viewingInvoices',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Viewing orders for {name}`
+  String viewingOrders(Object name) {
+    return Intl.message(
+      'Viewing orders for $name',
+      name: 'viewingOrders',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Copied to clipboard`
+  String get copiedToClipboard {
+    return Intl.message(
+      'Copied to clipboard',
+      name: 'copiedToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Opening map`
+  String get openingMap {
+    return Intl.message(
+      'Opening map',
+      name: 'openingMap',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid phone number`
+  String get phoneNumberInvalid {
+    return Intl.message(
+      'Invalid phone number',
+      name: 'phoneNumberInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advanced Technology Company`
+  String get advancedTechCompany {
+    return Intl.message(
+      'Advanced Technology Company',
+      name: 'advancedTechCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial Services Institution`
+  String get financialServicesInstitution {
+    return Intl.message(
+      'Financial Services Institution',
+      name: 'financialServicesInstitution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Construction & Development Company`
+  String get constructionDevelopmentCompany {
+    return Intl.message(
+      'Construction & Development Company',
+      name: 'constructionDevelopmentCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Modern Education Institution`
+  String get modernEducationInstitution {
+    return Intl.message(
+      'Modern Education Institution',
+      name: 'modernEducationInstitution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tourism & Entertainment Company`
+  String get tourismEntertainmentCompany {
+    return Intl.message(
+      'Tourism & Entertainment Company',
+      name: 'tourismEntertainmentCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Healthcare Institution`
+  String get healthcareInstitution {
+    return Intl.message(
+      'Healthcare Institution',
+      name: 'healthcareInstitution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transport & Logistics Company`
+  String get transportLogisticsCompany {
+    return Intl.message(
+      'Transport & Logistics Company',
+      name: 'transportLogisticsCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `E-commerce Institution`
+  String get ecommerceInstitution {
+    return Intl.message(
+      'E-commerce Institution',
+      name: 'ecommerceInstitution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Help`
+  String get productHelp {
+    return Intl.message(
+      'Product Help',
+      name: 'productHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please fill in all required fields`
+  String get fillAllRequiredFields {
+    return Intl.message(
+      'Please fill in all required fields',
+      name: 'fillAllRequiredFields',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product name is required`
+  String get productNameRequired {
+    return Intl.message(
+      'Product name is required',
+      name: 'productNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product price is required`
+  String get productPriceRequired {
+    return Intl.message(
+      'Product price is required',
+      name: 'productPriceRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product quantity is required`
+  String get productQuantityRequired {
+    return Intl.message(
+      'Product quantity is required',
+      name: 'productQuantityRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter a valid quantity`
+  String get enterValidQuantity {
+    return Intl.message(
+      'Please enter a valid quantity',
+      name: 'enterValidQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get add {
+    return Intl.message(
+      'Add',
+      name: 'add',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update`
+  String get update {
+    return Intl.message(
+      'Update',
+      name: 'update',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete "{name}"?`
+  String areYouSureDelete(Object name) {
+    return Intl.message(
+      'Are you sure you want to delete "$name"?',
+      name: 'areYouSureDelete',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Error loading products`
+  String get errorLoadingProducts {
+    return Intl.message(
+      'Error loading products',
+      name: 'errorLoadingProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading product data`
+  String get errorLoadingProduct {
+    return Intl.message(
+      'Error loading product data',
+      name: 'errorLoadingProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error creating product`
+  String get errorCreatingProduct {
+    return Intl.message(
+      'Error creating product',
+      name: 'errorCreatingProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No categories to delete`
+  String get noCategoriesToDelete {
+    return Intl.message(
+      'No categories to delete',
+      name: 'noCategoriesToDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All categories deleted successfully`
+  String get allCategoriesDeletedSuccessfully {
+    return Intl.message(
+      'All categories deleted successfully',
+      name: 'allCategoriesDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Status`
+  String get allStatus {
+    return Intl.message(
+      'All Status',
+      name: 'allStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password changed successfully`
+  String get passwordChangedSuccessfully {
+    return Intl.message(
+      'Password changed successfully',
+      name: 'passwordChangedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Operation completed successfully`
+  String get operationCompletedSuccessfully {
+    return Intl.message(
+      'Operation completed successfully',
+      name: 'operationCompletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit User`
+  String get editUser {
+    return Intl.message(
+      'Edit User',
+      name: 'editUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Role`
+  String get addNewRole {
+    return Intl.message(
+      'Add New Role',
+      name: 'addNewRole',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Role`
+  String get editRole {
+    return Intl.message(
+      'Edit Role',
+      name: 'editRole',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No email`
+  String get noEmail {
+    return Intl.message(
+      'No email',
+      name: 'noEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No role`
+  String get noRole {
+    return Intl.message(
+      'No role',
+      name: 'noRole',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Accountant`
+  String get accountant {
+    return Intl.message(
+      'Accountant',
+      name: 'accountant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Supervisor`
+  String get supervisor {
+    return Intl.message(
+      'Supervisor',
+      name: 'supervisor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load roles and permissions: {error}`
+  String failedToLoadRoles(Object error) {
+    return Intl.message(
+      'Failed to load roles and permissions: $error',
+      name: 'failedToLoadRoles',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to load user permissions: {error}`
+  String failedToLoadUserPermissions(Object error) {
+    return Intl.message(
+      'Failed to load user permissions: $error',
+      name: 'failedToLoadUserPermissions',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to add role: {error}`
+  String failedToAddRole(Object error) {
+    return Intl.message(
+      'Failed to add role: $error',
+      name: 'failedToAddRole',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to update role: {error}`
+  String failedToUpdateRole(Object error) {
+    return Intl.message(
+      'Failed to update role: $error',
+      name: 'failedToUpdateRole',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to delete role: {error}`
+  String failedToDeleteRole(Object error) {
+    return Intl.message(
+      'Failed to delete role: $error',
+      name: 'failedToDeleteRole',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to update user permissions: {error}`
+  String failedToUpdateUserPermissions(Object error) {
+    return Intl.message(
+      'Failed to update user permissions: $error',
+      name: 'failedToUpdateUserPermissions',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `View Users`
+  String get viewUsers {
+    return Intl.message(
+      'View Users',
+      name: 'viewUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Page Not Found`
+  String get pageNotFound {
+    return Intl.message(
+      'Page Not Found',
+      name: 'pageNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The requested page was not found`
+  String get requestedPageNotFound {
+    return Intl.message(
+      'The requested page was not found',
+      name: 'requestedPageNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open email application`
+  String get cannotOpenEmailApp {
+    return Intl.message(
+      'Cannot open email application',
+      name: 'cannotOpenEmailApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open website`
+  String get cannotOpenWebsite {
+    return Intl.message(
+      'Cannot open website',
+      name: 'cannotOpenWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy Coming Soon`
+  String get privacyPolicyComingSoon {
+    return Intl.message(
+      'Privacy Policy Coming Soon',
+      name: 'privacyPolicyComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Terms of Use Coming Soon`
+  String get termsOfUseComingSoon {
+    return Intl.message(
+      'Terms of Use Coming Soon',
+      name: 'termsOfUseComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Version {version} (Build {build})`
+  String appVersionWithBuild(Object version, Object build) {
+    return Intl.message(
+      'Version $version (Build $build)',
+      name: 'appVersionWithBuild',
+      desc: '',
+      args: [version, build],
+    );
+  }
+
+  /// `Contact us for support`
+  String get contactUsForSupport {
+    return Intl.message(
+      'Contact us for support',
+      name: 'contactUsForSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Visit Invotek website`
+  String get visitInvotekWebsite {
+    return Intl.message(
+      'Visit Invotek website',
+      name: 'visitInvotekWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View privacy policy`
+  String get viewPrivacyPolicy {
+    return Intl.message(
+      'View privacy policy',
+      name: 'viewPrivacyPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View terms of use`
+  String get viewTermsOfUse {
+    return Intl.message(
+      'View terms of use',
+      name: 'viewTermsOfUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome to Invotek app`
+  String get welcomeToInvotekApp {
+    return Intl.message(
+      'Welcome to Invotek app',
+      name: 'welcomeToInvotekApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Easy invoice and customer management`
+  String get easyInvoiceCustomerManagement {
+    return Intl.message(
+      'Easy invoice and customer management',
+      name: 'easyInvoiceCustomerManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Management`
+  String get customerManagement {
+    return Intl.message(
+      'Customer Management',
+      name: 'customerManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add, edit and delete customers`
+  String get addEditDeleteCustomers {
+    return Intl.message(
+      'Add, edit and delete customers',
+      name: 'addEditDeleteCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Management`
+  String get invoiceManagement {
+    return Intl.message(
+      'Invoice Management',
+      name: 'invoiceManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create and edit invoices`
+  String get createEditInvoices {
+    return Intl.message(
+      'Create and edit invoices',
+      name: 'createEditInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View reports and statistics`
+  String get viewReportsStatistics {
+    return Intl.message(
+      'View reports and statistics',
+      name: 'viewReportsStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Actions`
+  String get quickActionsTitle {
+    return Intl.message(
+      'Quick Actions',
+      name: 'quickActionsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Screen dimensions and performance`
+  String get screenDimensionsPerformance {
+    return Intl.message(
+      'Screen dimensions and performance',
+      name: 'screenDimensionsPerformance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter product name`
+  String get enterProductName {
+    return Intl.message(
+      'Enter product name',
+      name: 'enterProductName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter product description`
+  String get enterProductDescription {
+    return Intl.message(
+      'Enter product description',
+      name: 'enterProductDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter quantity`
+  String get enterQuantity {
+    return Intl.message(
+      'Enter quantity',
+      name: 'enterQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `piece, kg, meter...`
+  String get pieceKgMeter {
+    return Intl.message(
+      'piece, kg, meter...',
+      name: 'pieceKgMeter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter product SKU`
+  String get enterProductSku {
+    return Intl.message(
+      'Enter product SKU',
+      name: 'enterProductSku',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter barcode`
+  String get enterBarcode {
+    return Intl.message(
+      'Enter barcode',
+      name: 'enterBarcode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter selling price`
+  String get enterSellingPrice {
+    return Intl.message(
+      'Enter selling price',
+      name: 'enterSellingPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter cost price`
+  String get enterCostPrice {
+    return Intl.message(
+      'Enter cost price',
+      name: 'enterCostPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter tax rate percentage`
+  String get enterTaxRatePercentage {
+    return Intl.message(
+      'Enter tax rate percentage',
+      name: 'enterTaxRatePercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter responsible person`
+  String get enterResponsiblePerson {
+    return Intl.message(
+      'Enter responsible person',
+      name: 'enterResponsiblePerson',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter notes`
+  String get enterNotes {
+    return Intl.message(
+      'Enter notes',
+      name: 'enterNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `example@email.com`
+  String get exampleEmail {
+    return Intl.message(
+      'example@email.com',
+      name: 'exampleEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `0500000000`
+  String get examplePhone {
+    return Intl.message(
+      '0500000000',
+      name: 'examplePhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter city`
+  String get enterCity {
+    return Intl.message(
+      'Enter city',
+      name: 'enterCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter region`
+  String get enterRegion {
+    return Intl.message(
+      'Enter region',
+      name: 'enterRegion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter postal code`
+  String get enterPostalCode {
+    return Intl.message(
+      'Enter postal code',
+      name: 'enterPostalCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter client address`
+  String get enterAddress {
+    return Intl.message(
+      'Enter client address',
+      name: 'enterAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter detailed address`
+  String get enterDetailedAddress {
+    return Intl.message(
+      'Enter detailed address',
+      name: 'enterDetailedAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter customer name`
+  String get enterCustomerName {
+    return Intl.message(
+      'Enter customer name',
+      name: 'enterCustomerName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter email address`
+  String get enterEmailAddress {
+    return Intl.message(
+      'Enter email address',
+      name: 'enterEmailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter tax number`
+  String get enterTaxNumber {
+    return Intl.message(
+      'Enter tax number',
+      name: 'enterTaxNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter commercial register`
+  String get enterCommercialRegister {
+    return Intl.message(
+      'Enter commercial register',
+      name: 'enterCommercialRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter client name`
+  String get enterClientName {
+    return Intl.message(
+      'Enter client name',
+      name: 'enterClientName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter email`
+  String get enterClientEmail {
+    return Intl.message(
+      'Enter email',
+      name: 'enterClientEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone number`
+  String get enterClientPhone {
+    return Intl.message(
+      'Enter phone number',
+      name: 'enterClientPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter client address`
+  String get enterClientAddress {
+    return Intl.message(
+      'Enter client address',
+      name: 'enterClientAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company name`
+  String get enterClientCompany {
+    return Intl.message(
+      'Enter company name',
+      name: 'enterClientCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete client "{name}"?`
+  String areYouSureDeleteClient(Object name) {
+    return Intl.message(
+      'Are you sure you want to delete client "$name"?',
+      name: 'areYouSureDeleteClient',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Client updated successfully`
+  String get clientUpdatedSuccessfully {
+    return Intl.message(
+      'Client updated successfully',
+      name: 'clientUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client added successfully`
+  String get clientAddedSuccessfully {
+    return Intl.message(
+      'Client added successfully',
+      name: 'clientAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client Details`
+  String get clientDetails {
+    return Intl.message(
+      'Client Details',
+      name: 'clientDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Client`
+  String get editClient {
+    return Intl.message(
+      'Edit Client',
+      name: 'editClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Client`
+  String get addNewClient {
+    return Intl.message(
+      'Add New Client',
+      name: 'addNewClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Department`
+  String get department {
+    return Intl.message(
+      'Department',
+      name: 'department',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Address`
+  String get emailAddress {
+    return Intl.message(
+      'Email Address',
+      name: 'emailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User ID`
+  String get userId {
+    return Intl.message(
+      'User ID',
+      name: 'userId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View user details`
+  String get viewUserDetails {
+    return Intl.message(
+      'View user details',
+      name: 'viewUserDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit user information`
+  String get editUserInformation {
+    return Intl.message(
+      'Edit user information',
+      name: 'editUserInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete user permanently`
+  String get deleteUserPermanently {
+    return Intl.message(
+      'Delete user permanently',
+      name: 'deleteUserPermanently',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `8 Paid`
+  String get paidInvoices {
+    return Intl.message(
+      '8 Paid',
+      name: 'paidInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SAR 15,420`
+  String get totalAmount {
+    return Intl.message(
+      'SAR 15,420',
+      name: 'totalAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Month`
+  String get thisMonth {
+    return Intl.message(
+      'This Month',
+      name: 'thisMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bought This`
+  String get boughtThis {
+    return Intl.message(
+      'Bought This',
+      name: 'boughtThis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Available`
+  String get available {
+    return Intl.message(
+      'Available',
+      name: 'available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Management`
+  String get productManagement {
+    return Intl.message(
+      'Product Management',
+      name: 'productManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expense Management`
+  String get expenseManagement {
+    return Intl.message(
+      'Expense Management',
+      name: 'expenseManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System Access`
+  String get systemAccess {
+    return Intl.message(
+      'System Access',
+      name: 'systemAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to view users list`
+  String get viewUsersDescription {
+    return Intl.message(
+      'Ability to view users list',
+      name: 'viewUsersDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to add new user`
+  String get addUserDescription {
+    return Intl.message(
+      'Ability to add new user',
+      name: 'addUserDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit user data`
+  String get editUserDescription {
+    return Intl.message(
+      'Ability to edit user data',
+      name: 'editUserDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete User`
+  String get deleteUser {
+    return Intl.message(
+      'Delete User',
+      name: 'deleteUser',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to delete user`
+  String get deleteUserDescription {
+    return Intl.message(
+      'Ability to delete user',
+      name: 'deleteUserDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to manage user permissions`
+  String get managePermissionsDescription {
+    return Intl.message(
+      'Ability to manage user permissions',
+      name: 'managePermissionsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Clients`
+  String get viewClients {
+    return Intl.message(
+      'View Clients',
+      name: 'viewClients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to view clients list`
+  String get viewClientsDescription {
+    return Intl.message(
+      'Ability to view clients list',
+      name: 'viewClientsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to add new client`
+  String get addClientDescription {
+    return Intl.message(
+      'Ability to add new client',
+      name: 'addClientDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit client data`
+  String get editClientDescription {
+    return Intl.message(
+      'Ability to edit client data',
+      name: 'editClientDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Client`
+  String get deleteClient {
+    return Intl.message(
+      'Delete Client',
+      name: 'deleteClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to delete client`
+  String get deleteClientDescription {
+    return Intl.message(
+      'Ability to delete client',
+      name: 'deleteClientDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Products`
+  String get viewProducts {
+    return Intl.message(
+      'View Products',
+      name: 'viewProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to view products list`
+  String get viewProductsDescription {
+    return Intl.message(
+      'Ability to view products list',
+      name: 'viewProductsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to add new product`
+  String get addProductDescription {
+    return Intl.message(
+      'Ability to add new product',
+      name: 'addProductDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit product data`
+  String get editProductDescription {
+    return Intl.message(
+      'Ability to edit product data',
+      name: 'editProductDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to delete product`
+  String get deleteProductDescription {
+    return Intl.message(
+      'Ability to delete product',
+      name: 'deleteProductDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Invoices`
+  String get viewInvoices {
+    return Intl.message(
+      'View Invoices',
+      name: 'viewInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to view invoices list`
+  String get viewInvoicesDescription {
+    return Intl.message(
+      'Ability to view invoices list',
+      name: 'viewInvoicesDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to create new invoice`
+  String get createInvoiceDescription {
+    return Intl.message(
+      'Ability to create new invoice',
+      name: 'createInvoiceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Invoice`
+  String get editInvoice {
+    return Intl.message(
+      'Edit Invoice',
+      name: 'editInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit invoice`
+  String get editInvoiceDescription {
+    return Intl.message(
+      'Ability to edit invoice',
+      name: 'editInvoiceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Invoice`
+  String get deleteInvoice {
+    return Intl.message(
+      'Delete Invoice',
+      name: 'deleteInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to delete invoice`
+  String get deleteInvoiceDescription {
+    return Intl.message(
+      'Ability to delete invoice',
+      name: 'deleteInvoiceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Invoice`
+  String get sendInvoice {
+    return Intl.message(
+      'Send Invoice',
+      name: 'sendInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to send invoice to client`
+  String get sendInvoiceDescription {
+    return Intl.message(
+      'Ability to send invoice to client',
+      name: 'sendInvoiceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Expenses`
+  String get viewExpenses {
+    return Intl.message(
+      'View Expenses',
+      name: 'viewExpenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to view expenses list`
+  String get viewExpensesDescription {
+    return Intl.message(
+      'Ability to view expenses list',
+      name: 'viewExpensesDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to add new expense`
+  String get addExpenseDescription {
+    return Intl.message(
+      'Ability to add new expense',
+      name: 'addExpenseDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit expense`
+  String get editExpenseDescription {
+    return Intl.message(
+      'Ability to edit expense',
+      name: 'editExpenseDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Expense`
+  String get deleteExpense {
+    return Intl.message(
+      'Delete Expense',
+      name: 'deleteExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to delete expense`
+  String get deleteExpenseDescription {
+    return Intl.message(
+      'Ability to delete expense',
+      name: 'deleteExpenseDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Reports`
+  String get viewReports {
+    return Intl.message(
+      'View Reports',
+      name: 'viewReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to view reports`
+  String get viewReportsDescription {
+    return Intl.message(
+      'Ability to view reports',
+      name: 'viewReportsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export Reports`
+  String get exportReports {
+    return Intl.message(
+      'Export Reports',
+      name: 'exportReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to export reports`
+  String get exportReportsDescription {
+    return Intl.message(
+      'Ability to export reports',
+      name: 'exportReportsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit company settings`
+  String get companySettingsDescription {
+    return Intl.message(
+      'Ability to edit company settings',
+      name: 'companySettingsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ability to edit system settings`
+  String get systemSettingsDescription {
+    return Intl.message(
+      'Ability to edit system settings',
+      name: 'systemSettingsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System Administrator`
+  String get systemAdministrator {
+    return Intl.message(
+      'System Administrator',
+      name: 'systemAdministrator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has all permissions in the system`
+  String get systemAdministratorDescription {
+    return Intl.message(
+      'Has all permissions in the system',
+      name: 'systemAdministratorDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manages invoices, expenses and financial reports`
+  String get accountantDescription {
+    return Intl.message(
+      'Manages invoices, expenses and financial reports',
+      name: 'accountantDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Limited permissions for viewing and reading`
+  String get userDescription {
+    return Intl.message(
+      'Limited permissions for viewing and reading',
+      name: 'userDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manages users and permissions`
+  String get supervisorDescription {
+    return Intl.message(
+      'Manages users and permissions',
+      name: 'supervisorDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search in clients...`
+  String get searchInClients {
+    return Intl.message(
+      'Search in clients...',
+      name: 'searchInClients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No clients`
+  String get noClients {
+    return Intl.message(
+      'No clients',
+      name: 'noClients',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press add button to create new client`
+  String get pressAddToCreateClient {
+    return Intl.message(
+      'Press add button to create new client',
+      name: 'pressAddToCreateClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message(
+      'Address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Information`
+  String get companyInformation {
+    return Intl.message(
+      'Company Information',
+      name: 'companyInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Number`
+  String get taxNumber {
+    return Intl.message(
+      'Tax Number',
+      name: 'taxNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Person Information`
+  String get contactPersonInformation {
+    return Intl.message(
+      'Contact Person Information',
+      name: 'contactPersonInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Person Name`
+  String get contactPersonName {
+    return Intl.message(
+      'Contact Person Name',
+      name: 'contactPersonName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Person Phone`
+  String get contactPersonPhone {
+    return Intl.message(
+      'Contact Person Phone',
+      name: 'contactPersonPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Person Email`
+  String get contactPersonEmail {
+    return Intl.message(
+      'Contact Person Email',
+      name: 'contactPersonEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creation Date`
+  String get creationDate {
+    return Intl.message(
+      'Creation Date',
+      name: 'creationDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client Name`
+  String get clientName {
+    return Intl.message(
+      'Client Name',
+      name: 'clientName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter website`
+  String get enterWebsite {
+    return Intl.message(
+      'Enter website',
+      name: 'enterWebsite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter contact person name`
+  String get enterContactPersonName {
+    return Intl.message(
+      'Enter contact person name',
+      name: 'enterContactPersonName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter contact person phone`
+  String get enterContactPersonPhone {
+    return Intl.message(
+      'Enter contact person phone',
+      name: 'enterContactPersonPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter contact person email`
+  String get enterContactPersonEmail {
+    return Intl.message(
+      'Enter contact person email',
+      name: 'enterContactPersonEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter additional notes`
+  String get enterAdditionalNotes {
+    return Intl.message(
+      'Enter additional notes',
+      name: 'enterAdditionalNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit client data for "{name}"`
+  String editClientData(Object name) {
+    return Intl.message(
+      'Edit client data for "$name"',
+      name: 'editClientData',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Save Changes`
+  String get saveChanges {
+    return Intl.message(
+      'Save Changes',
+      name: 'saveChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error updating client: {error}`
+  String errorUpdatingClient(Object error) {
+    return Intl.message(
+      'Error updating client: $error',
+      name: 'errorUpdatingClient',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Fill the form below to add new client to the system`
+  String get fillFormToAddClient {
+    return Intl.message(
+      'Fill the form below to add new client to the system',
+      name: 'fillFormToAddClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error creating client: {error}`
+  String errorCreatingClient(Object error) {
+    return Intl.message(
+      'Error creating client: $error',
+      name: 'errorCreatingClient',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Error loading clients: {error}`
+  String errorLoadingClients(Object error) {
+    return Intl.message(
+      'Error loading clients: $error',
+      name: 'errorLoadingClients',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Error deleting client: {error}`
+  String errorDeletingClient(Object error) {
+    return Intl.message(
+      'Error deleting client: $error',
+      name: 'errorDeletingClient',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Error loading statistics: {error}`
+  String errorLoadingStatistics(Object error) {
+    return Intl.message(
+      'Error loading statistics: $error',
+      name: 'errorLoadingStatistics',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Error deleting clients: {error}`
+  String errorDeletingClients(Object error) {
+    return Intl.message(
+      'Error deleting clients: $error',
+      name: 'errorDeletingClients',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Error updating client status: {error}`
+  String errorUpdatingClientStatus(Object error) {
+    return Intl.message(
+      'Error updating client status: $error',
+      name: 'errorUpdatingClientStatus',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Data conversion error: {error}`
+  String dataConversionError(Object error) {
+    return Intl.message(
+      'Data conversion error: $error',
+      name: 'dataConversionError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Name must be at least 3 characters`
+  String get nameMinLength {
+    return Intl.message(
+      'Name must be at least 3 characters',
+      name: 'nameMinLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name must be less than 50 characters`
+  String get nameMaxLength {
+    return Intl.message(
+      'Name must be less than 50 characters',
+      name: 'nameMaxLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number is required`
+  String get phoneRequired {
+    return Intl.message(
+      'Phone number is required',
+      name: 'phoneRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number must be at least 10 digits`
+  String get phoneMinLength {
+    return Intl.message(
+      'Phone number must be at least 10 digits',
+      name: 'phoneMinLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number must be less than 15 digits`
+  String get phoneMaxLength {
+    return Intl.message(
+      'Phone number must be less than 15 digits',
+      name: 'phoneMaxLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 8 characters`
+  String get passwordMinLength {
+    return Intl.message(
+      'Password must be at least 8 characters',
+      name: 'passwordMinLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be less than 50 characters`
+  String get passwordMaxLength {
+    return Intl.message(
+      'Password must be less than 50 characters',
+      name: 'passwordMaxLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one uppercase letter`
+  String get passwordUppercase {
+    return Intl.message(
+      'Password must contain at least one uppercase letter',
+      name: 'passwordUppercase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one lowercase letter`
+  String get passwordLowercase {
+    return Intl.message(
+      'Password must contain at least one lowercase letter',
+      name: 'passwordLowercase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must contain at least one number`
+  String get passwordNumber {
+    return Intl.message(
+      'Password must contain at least one number',
+      name: 'passwordNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get passwordsDoNotMatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'passwordsDoNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This field`
+  String get thisField {
+    return Intl.message(
+      'This field',
+      name: 'thisField',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search...`
+  String get search {
+    return Intl.message(
+      'Search...',
+      name: 'search',
+      desc: '',
+      args: [],
     );
   }
 }

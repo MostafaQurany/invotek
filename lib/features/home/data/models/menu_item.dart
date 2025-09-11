@@ -48,9 +48,9 @@ class MenuItem {
   String getLocalizedTitle(S s) {
     switch (titleKey) {
       case 'home':
-        return 'الرئيسية';
+        return s.home;
       case 'users_permissions':
-        return s.usersPermissionsTitle;
+        return s.usersManagement;
       case 'users_list':
         return s.usersList;
       case 'add_user':
@@ -60,9 +60,9 @@ class MenuItem {
       case 'clients':
         return s.clientsProductsTitle;
       case 'customers':
-        return s.customers;
+        return s.customersManagement;
       case 'products_categories':
-        return s.productsCategories;
+        return s.productsCategoriesManagement;
       case 'clients_list':
         return s.clientsList;
       case 'add_client':
@@ -74,7 +74,7 @@ class MenuItem {
       case 'products_list':
         return s.productsList;
       case 'expenses':
-        return s.expensesTitle;
+        return s.expensesManagement;
       case 'expenses_list':
         return s.expensesList;
       case 'add_expense':
@@ -82,7 +82,7 @@ class MenuItem {
       case 'expense_categories':
         return s.expenseCategories;
       case 'tax_invoices':
-        return s.taxInvoicesTitle;
+        return s.taxInvoices;
       case 'invoices_list':
         return s.invoicesList;
       case 'create_invoice':
@@ -92,7 +92,7 @@ class MenuItem {
       case 'returned_invoices':
         return s.returnedInvoices;
       case 'reports':
-        return 'التقارير';
+        return s.reports;
       case 'sales_report':
         return s.salesReport;
       case 'expenses_report':
@@ -102,7 +102,7 @@ class MenuItem {
       case 'products_report':
         return s.productsReport;
       case 'settings':
-        return 'الإعدادات';
+        return s.settings;
       case 'company_settings':
         return s.companySettings;
       case 'system_settings':
@@ -130,27 +130,22 @@ class MenuData {
         titleKey: 'users_permissions',
         icon: Icons.people,
         route: AppRoutes.usersPermissionsRoute,
-        hasSubItems: false,
-        // subItems: [
-        //   MenuItem(
-        //     title: 'قائمة المستخدمين',
-        //     titleKey: 'users_list',
-        //     icon: Icons.list,
-        //     route: '/users/list',
-        //   ),
-        //   MenuItem(
-        //     title: 'إضافة مستخدم جديد',
-        //     titleKey: 'add_user',
-        //     icon: Icons.person_add,
-        //     route: '/users/add',
-        //   ),
-        //   MenuItem(
-        //     title: 'إدارة الصلاحيات',
-        //     titleKey: 'manage_permissions',
-        //     icon: Icons.security,
-        //     route: '/users/permissions',
-        //   ),
-        // ],
+        hasSubItems: true,
+        subItems: [
+          MenuItem(
+            title: 'قائمة المستخدمين',
+            titleKey: 'users_list',
+            icon: Icons.list,
+            route: AppRoutes.usersListRoute,
+          ),
+
+          MenuItem(
+            title: 'إدارة الصلاحيات',
+            titleKey: 'manage_permissions',
+            icon: Icons.security,
+            route: AppRoutes.managePermissionsRoute,
+          ),
+        ],
       ),
 
       // MenuItem(
@@ -321,7 +316,7 @@ class MenuData {
         title: 'الإعدادات',
         titleKey: 'settings',
         icon: Icons.settings,
-        route: '/settings',
+        route: AppRoutes.settingsRoute,
         hasSubItems: false,
         // subItems: [
         //   MenuItem(

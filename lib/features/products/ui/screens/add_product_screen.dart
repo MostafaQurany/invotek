@@ -262,10 +262,10 @@ class _AddProductScreenState extends State<AddProductScreen>
                     minQuantityController: _minQuantityController,
                     maxQuantityController: _maxQuantityController,
                     validationErrors: _validationErrors,
-                  ),
-                  ProductDetailsTab(
                     skuController: _skuController,
                     barcodeController: _barcodeController,
+                  ),
+                  ProductDetailsTab(
                     brandController: _brandController,
                     modelController: _modelController,
                     colorController: _colorController,

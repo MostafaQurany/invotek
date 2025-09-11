@@ -36,6 +36,8 @@ class ProductApiModel {
   final DateTime? updatedAt;
   final String? image;
 
+  
+
   ProductApiModel({
     required this.id,
     this.companyId,

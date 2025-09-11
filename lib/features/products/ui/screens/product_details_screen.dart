@@ -8,7 +8,6 @@ import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_details_header.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_summary_card.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_info_card.dart';
-import 'package:invotek/features/products/ui/widgets/cards/product_insights_card.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_details_bottom_actions.dart';
 import 'package:invotek/features/products/ui/widgets/dialogs/delete_product_dialog.dart';
 
@@ -29,23 +28,32 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Modern Header
+          // Modern Header with Animation
           SliverToBoxAdapter(
-            child: ProductDetailsHeader(
-              product: product,
-              onBack: () => Navigator.pop(context),
-              onEdit: () => _editProduct(),
+            child: AnimatedEntryWidget(
+              delay: Duration.zero,
+              child: ProductDetailsHeader(
+                product: product,
+                onBack: () => Navigator.pop(context),
+                onEdit: () => _editProduct(),
+              ),
             ),
           ),
 
-          // space
-          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+          // Space with Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 200),
+              child: SizedBox(height: 16.h),
+            ),
+          ),
 
-          // Content Cards
+          // Content Cards with Staggered Animation
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: StaggeredAnimatedList(
+                staggerDelay: Duration(milliseconds: 150),
                 children: [
                   ProductSummaryCard(product: product),
                   SizedBox(height: 16.h),
@@ -53,9 +61,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     product: product,
                     onCopyToClipboard: _copyToClipboard,
                   ),
-                  SizedBox(height: 16.h),
-                  ProductInsightsCard(product: product),
-                  SizedBox(height: 100.h), // Space for bottom actions
+                  // SizedBox(height: 16.h),
+                  // ProductInsightsCard(product: product),
+                  SizedBox(height: 15.h), // Space for bottom actions
                 ],
               ),
             ),
@@ -63,10 +71,13 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ],
       ),
 
-      // Bottom Actions
-      bottomNavigationBar: ProductDetailsBottomActions(
-        onDelete: () => _showDeleteConfirmation(),
-        onEdit: () => _editProduct(),
+      // Bottom Actions with Animation
+      bottomNavigationBar: AnimatedEntryWidget(
+        delay: Duration(milliseconds: 800),
+        child: ProductDetailsBottomActions(
+          onDelete: () => _showDeleteConfirmation(),
+          onEdit: () => _editProduct(),
+        ),
       ),
     );
   }

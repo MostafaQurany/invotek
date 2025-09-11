@@ -65,6 +65,7 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerView: onCustomerView,
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
+                  isLoadingMore: message == 'loading_more',
                 );
               },
           loaded: (customers, selectedCustomer, currentPage, totalPages) {

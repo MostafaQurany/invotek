@@ -23,17 +23,28 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Modern Header
-          _buildModernHeader(customer),
+          // Modern Header with Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration.zero,
+              child: _buildModernHeaderContent(customer),
+            ),
+          ),
 
-          // Quick Actions
-          _buildQuickActions(),
+          // Quick Actions with Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 200),
+              child: _buildQuickActionsContent(),
+            ),
+          ),
 
-          // Content Cards
+          // Content Cards with Staggered Animation
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: StaggeredAnimatedList(
+                staggerDelay: Duration(milliseconds: 150),
                 children: [
                   _buildContactInfoCard(customer),
                   SizedBox(height: 16.h),
@@ -48,124 +59,122 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
         ],
       ),
 
-      // Bottom Actions
-      bottomNavigationBar: _buildBottomActions(),
+      // Bottom Actions with Animation
+      bottomNavigationBar: AnimatedEntryWidget(
+        delay: Duration(milliseconds: 800),
+        child: _buildBottomActions(),
+      ),
     );
   }
 
-  Widget _buildModernHeader(CustomerModel customer) {
-    return SliverToBoxAdapter(
-      child: AnimatedEntryWidget(
-        delay: Duration.zero,
-        child: Container(
-          height: 280.h,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppColors.primary, AppColors.primary.withOpacity(0.6)],
-            ),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(32.r),
-              bottomRight: Radius.circular(32.r),
-            ),
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all(20.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _buildModernHeaderContent(CustomerModel customer) {
+    return Container(
+      height: 280.h,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.primary, AppColors.primary.withOpacity(0.6)],
+        ),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(32.r),
+          bottomRight: Radius.circular(32.r),
+        ),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(20.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Back Button
+              Row(
                 children: [
-                  // Back Button
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: AppColors.white,
-                          size: 24.sp,
-                        ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: () => _showHelpDialog(),
-                        icon: Icon(
-                          Icons.help_outline,
-                          color: AppColors.white,
-                          size: 24.sp,
-                        ),
-                      ),
-                    ],
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColors.white,
+                      size: 24.sp,
+                    ),
                   ),
-
-                  SizedBox(height: 20.h),
-
-                  // Customer Info
-                  Row(
-                    children: [
-                      // Avatar
-                      Container(
-                        width: 80.w,
-                        height: 80.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 10,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            customer.name.isNotEmpty
-                                ? customer.name[0].toUpperCase()
-                                : 'C',
-                            style: TextStyle(
-                              fontSize: 32.sp,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(width: 20.w),
-
-                      // Customer Details
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              customer.name,
-                              style: TextStyle(
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.white,
-                              ),
-                            ),
-                            SizedBox(height: 8.h),
-                            Text(
-                              customer.companyName ?? 'Company',
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                color: AppColors.white.withOpacity(0.8),
-                              ),
-                            ),
-                            SizedBox(height: 12.h),
-                            _buildStatusChip(customer.status),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Spacer(),
+                  IconButton(
+                    onPressed: () => _showHelpDialog(),
+                    icon: Icon(
+                      Icons.help_outline,
+                      color: AppColors.white,
+                      size: 24.sp,
+                    ),
                   ),
                 ],
               ),
-            ),
+
+              SizedBox(height: 20.h),
+
+              // Customer Info
+              Row(
+                children: [
+                  // Avatar
+                  Container(
+                    width: 80.w,
+                    height: 80.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        customer.name.isNotEmpty
+                            ? customer.name[0].toUpperCase()
+                            : 'C',
+                        style: TextStyle(
+                          fontSize: 32.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(width: 20.w),
+
+                  // Customer Details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          customer.name,
+                          style: TextStyle(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          customer.companyName ?? 'Company',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: AppColors.white.withOpacity(0.8),
+                          ),
+                        ),
+                        SizedBox(height: 12.h),
+                        _buildStatusChip(customer.status),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
@@ -205,38 +214,33 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
     );
   }
 
-  Widget _buildQuickActions() {
-    return SliverToBoxAdapter(
-      child: AnimatedEntryWidget(
-        delay: Duration(milliseconds: 200),
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildActionButton(
-                icon: Icons.phone,
-                label: 'Call',
-                onTap: () => _makeCall(),
-              ),
-              _buildActionButton(
-                icon: Icons.email,
-                label: 'Email',
-                onTap: () => _sendEmail(),
-              ),
-              _buildActionButton(
-                icon: Icons.receipt,
-                label: 'Invoices',
-                onTap: () => _viewInvoices(),
-              ),
-              _buildActionButton(
-                icon: Icons.shopping_cart,
-                label: 'Orders',
-                onTap: () => _viewOrders(),
-              ),
-            ],
+  Widget _buildQuickActionsContent() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildActionButton(
+            icon: Icons.phone,
+            label: 'Call',
+            onTap: () => _makeCall(),
           ),
-        ),
+          _buildActionButton(
+            icon: Icons.email,
+            label: 'Email',
+            onTap: () => _sendEmail(),
+          ),
+          _buildActionButton(
+            icon: Icons.receipt,
+            label: 'Invoices',
+            onTap: () => _viewInvoices(),
+          ),
+          _buildActionButton(
+            icon: Icons.shopping_cart,
+            label: 'Orders',
+            onTap: () => _viewOrders(),
+          ),
+        ],
       ),
     );
   }
@@ -283,7 +287,6 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
 
   Widget _buildContactInfoCard(CustomerModel customer) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 400),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -340,7 +343,6 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
 
   Widget _buildAccountStatusCard(CustomerModel customer) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 600),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -398,7 +400,6 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
 
   Widget _buildAnalyticsCard(CustomerModel customer) {
     return AnimatedCard(
-      delay: Duration(milliseconds: 800),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -737,7 +738,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           FilledButton(
             onPressed: () {
               Navigator.pop(context); // Close dialog
-              customersCubit.deleteCustomer(widget.customer.id ?? 0);
+              customersCubit.deleteCustomer(widget.customer.id);
               Navigator.pop(context, 'deleted'); // Go back to list with result
             },
             style: FilledButton.styleFrom(backgroundColor: AppColors.error),

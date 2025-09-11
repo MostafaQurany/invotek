@@ -70,7 +70,11 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.primary, AppColors.primary.withOpacity(0.9)],
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -115,21 +119,46 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
       child: Row(
         children: [
           // Menu Button
-          IconButton(
-            icon: Icon(Icons.menu, color: AppColors.white, size: 24.sp),
-            onPressed: widget.onMenuPressed,
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.white.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: IconButton(
+              onPressed: widget.onMenuPressed,
+              icon: Icon(
+                Icons.menu_rounded,
+                color: AppColors.white,
+                size: 24.sp,
+              ),
+              padding: EdgeInsets.all(8.w),
+            ),
           ),
+          SizedBox(width: 16.w),
 
           // Title
           Expanded(
-            child: Text(
-              s.customersList,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: AppColors.white,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  s.customersList,
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  'Manage customers and contacts',
+                  style: TextStyle(
+                    color: AppColors.white.withOpacity(0.8),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

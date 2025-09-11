@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
 import 'package:invotek/features/clients/ui/screens/add_client_screen.dart';
@@ -12,10 +13,8 @@ import 'package:invotek/features/customers/ui/screens/add_customer_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customer_details_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
-import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/expenses_list_screen.dart';
-import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen_with_provider.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
@@ -24,9 +23,14 @@ import 'package:invotek/features/products/ui/screens/edit_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/edit_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/user_details_screen.dart';
+import 'package:invotek/features/users_and_permissions/ui/screens/users_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
+import 'package:invotek/features/auth/demo/entit/user_model.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
+import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
 
 class AppRoutes {
   static const String authRoute = '/auth';
@@ -42,6 +46,8 @@ class AppRoutes {
 
   // Users & Permissions routes
   static const String usersPermissionsRoute = '/users-permissions';
+  static const String userDetailsRoute = '/users/details';
+  static const String editUserRoute = '/users/edit';
   // Products routes
   static const String productsListRoute = '/products/list';
   static const String addProductRoute = '/products/add';
@@ -70,11 +76,16 @@ class AppRoutes {
   static const String expenseCategoryDetailsRoute =
       '/expense-categories/details';
 
+  // Settings routes
+  static const String settingsRoute = '/settings';
+
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
     homeRoute: (context) => const HomeScreenWithDrawer(),
     onboardingRoute: (context) => const OnboardingScreen(),
-    usersListRoute: (context) => const UsersPermissionsScreenWithProvider(),
+    usersPermissionsRoute: (context) =>
+        const UsersPermissionsScreenWithProvider(),
+    usersListRoute: (context) => const UsersListScreenWithProvider(),
     addUserRoute: (context) => const AddUserScreenWithProvider(),
     managePermissionsRoute: (context) =>
         const ManagePermissionsScreenWithProvider(),
@@ -84,8 +95,6 @@ class AppRoutes {
     addProductRoute: (context) {
       return const AddProductScreenWithProvider();
     },
-    usersPermissionsRoute: (context) =>
-        const UsersPermissionsScreenWithProvider(),
     categoriesListRoute: (context) => const CategoriesListScreenWithProvider(),
     // Customers routes
     customersListRoute: (context) => const CustomersListScreenWithProvider(),
@@ -94,7 +103,8 @@ class AppRoutes {
     // Expense Categories routes
     expenseCategoriesListRoute: (context) =>
         const ExpenseCategoriesListScreenWithProvider(),
-
+    // Settings routes
+    settingsRoute: (context) => const SettingsScreen(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -146,6 +156,18 @@ class AppRoutes {
           ),
         );
 
+      // Users routes
+      case userDetailsRoute:
+        final user = settings.arguments as User;
+        return MaterialPageRoute(
+          builder: (context) => UserDetailsScreen(user: user),
+        );
+      case editUserRoute:
+        final user = settings.arguments as User;
+        return MaterialPageRoute(
+          builder: (context) => EditUserScreenWithProvider(user: user),
+        );
+
       // Expenses routes - TODO: Add screens when created
       // case addExpenseRoute:
       // case editExpenseRoute:
@@ -164,8 +186,8 @@ class AppRoutes {
   static Route<dynamic> onUnknownRoute(RouteSettings settings) {
     return MaterialPageRoute(
       builder: (context) => Scaffold(
-        appBar: AppBar(title: const Text('صفحة غير موجودة')),
-        body: const Center(child: Text('الصفحة المطلوبة غير موجودة')),
+        appBar: AppBar(title: Text(S.of(context).pageNotFound)),
+        body: Center(child: Text(S.of(context).requestedPageNotFound)),
       ),
     );
   }

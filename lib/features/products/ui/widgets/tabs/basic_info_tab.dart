@@ -68,7 +68,7 @@ class BasicInfoTab extends StatelessWidget {
                     child: CategoryDropdown(
                       selectedCategoryId: selectedCategoryId,
                       onChanged: onCategoryChanged,
-                      colorScheme: Theme.of(context).colorScheme,
+                      errorText: validationErrors['category'],
                     ),
                   ),
                   SizedBox(width: 12.w),

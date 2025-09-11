@@ -5,7 +5,9 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
+import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/ui/widgets/cards/products_header_widget.dart';
 import 'package:invotek/features/products/ui/widgets/lists/products_state_builder.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_options_bottom_sheet.dart';
@@ -30,6 +32,7 @@ class ProductsListScreenWithProvider extends StatelessWidget {
 
 class _ProductsListScreenState extends State<ProductsListScreen> {
   final _searchController = TextEditingController();
+  final _scrollController = ScrollController();
   String? _selectedCategory;
   String? _selectedStatus;
 
@@ -37,6 +40,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   void initState() {
     super.initState();
     _initializeOptions();
+    _scrollController.addListener(_onScroll);
   }
 
   void _initializeOptions() {
@@ -47,7 +51,19 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      // Load more when user is 200 pixels from the bottom
+      final cubit = context.read<ProductsCubit>();
+      if (cubit.hasMore) {
+        cubit.loadNextPage();
+      }
+    }
   }
 
   @override
@@ -74,46 +90,51 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 },
           );
         },
-        child: RefreshIndicator(
-          onRefresh: () async {
-            ProductsCubit.get(context).loadFirstPage(refresh: true);
-          },
-          child: CustomScrollView(
-            slivers: [
-              // Custom Header Widget as Sliver
-              SliverToBoxAdapter(
-                child: ProductsHeaderWidget(
-                  onMenuPressed: _handleMenuPressed,
-                  searchController: _searchController,
-                  onSearchChanged: (query) {
-                    // ProductsCubit.get(context).loadFirstPage(
-                    //   refresh: true,
-                    //   search: query.isEmpty ? null : query,
-                    //   category: _selectedCategory == 'all'
-                    //       ? null
-                    //       : _selectedCategory,
-                    //   status: _selectedStatus == 'all'
-                    //       ? null
-                    //       : _selectedStatus,
-                    // );
-                  },
-                  selectedCategory: _selectedCategory ?? '',
-                  selectedStatus: _selectedStatus ?? '',
-                  onCategoryChanged: _onCategoryChanged,
-                  onStatusChanged: _onStatusChanged,
-                ),
+        child: CustomScrollView(
+          controller: _scrollController,
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            // Custom Header Widget as Sliver
+            SliverToBoxAdapter(
+              child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                builder: (context, categoriesState) {
+                  return categoriesState.when(
+                    initial: (categories, currentPage, totalPages, error) =>
+                        _buildProductsHeader(categories),
+                    loading: (categories, currentPage, totalPages, message) =>
+                        _buildProductsHeader(categories),
+                    loaded: (categories, currentPage, totalPages) =>
+                        _buildProductsHeader(categories),
+                    createSuccess:
+                        (categories, created, currentPage, totalPages) =>
+                            _buildProductsHeader(categories),
+                    updateSuccess:
+                        (categories, updated, currentPage, totalPages) =>
+                            _buildProductsHeader(categories),
+                    deleteSuccess:
+                        (categories, deletedId, currentPage, totalPages) =>
+                            _buildProductsHeader(categories),
+                    failure: (categories, currentPage, totalPages, error) =>
+                        _buildProductsHeader(categories),
+                  );
+                },
               ),
+            ),
 
-              // Products List
-              SliverFillRemaining(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+            // Products List with Refresh
+            SliverFillRemaining(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundLight,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
                   ),
+                ),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    ProductsCubit.get(context).loadFirstPage(refresh: true);
+                  },
                   child: ProductsStateBuilder(
                     onProductTap: (product) =>
                         _showProductOptions(context, product),
@@ -129,10 +150,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                   ),
                 ),
               ),
+            ),
 
-              // Bottom spacing for FAB
-            ],
-          ),
+            // Bottom spacing for FAB
+          ],
         ),
       ),
 
@@ -146,6 +167,31 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         ),
         child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
       ),
+    );
+  }
+
+  // Helper Methods
+  Widget _buildProductsHeader(List<ProductCategoryApiModel> categories) {
+    return ProductsHeaderWidget(
+      onMenuPressed: _handleMenuPressed,
+      searchController: _searchController,
+      onSearchChanged: (query) {
+        // ProductsCubit.get(context).loadFirstPage(
+        //   refresh: true,
+        //   search: query.isEmpty ? null : query,
+        //   category: _selectedCategory == 'all'
+        //       ? null
+        //       : _selectedCategory,
+        //   status: _selectedStatus == 'all'
+        //       ? null
+        //       : _selectedStatus,
+        // );
+      },
+      selectedCategory: _selectedCategory ?? '',
+      selectedStatus: _selectedStatus ?? '',
+      onCategoryChanged: _onCategoryChanged,
+      onStatusChanged: _onStatusChanged,
+      categories: categories,
     );
   }
 

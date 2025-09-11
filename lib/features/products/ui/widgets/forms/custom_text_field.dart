@@ -60,8 +60,10 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           maxLines: maxLines,
           validator: validator,
+
           decoration: InputDecoration(
             hintText: hint,
+
             prefixIcon: Icon(icon, color: AppColors.textSecondary, size: 20.sp),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),

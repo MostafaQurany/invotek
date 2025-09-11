@@ -97,8 +97,8 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                                   return TextButton(
                                     child: Text(
                                       state.locale.languageCode == 'ar'
-                                          ? 'English'
-                                          : 'العربية',
+                                          ? S.of(context).english
+                                          : S.of(context).arabic,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall!
@@ -239,7 +239,7 @@ class OrDivider extends StatelessWidget {
       children: [
         Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
         SizedBox(width: 20.w),
-        Text("Or"),
+        Text(S.of(context).or),
         SizedBox(width: 20.w),
         Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
       ],

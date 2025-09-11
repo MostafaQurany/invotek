@@ -27,7 +27,7 @@ class ProductCard extends StatelessWidget {
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
         extentRatio: 0.55,
-        
+
         children: [
           SlidableAction(
             onPressed: (_) => onEdit?.call(),
@@ -64,16 +64,7 @@ class ProductCard extends StatelessWidget {
             padding: EdgeInsets.all(16.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                SizedBox(height: 12.h),
-                _buildDetails(),
-                if (product.description != null &&
-                    (product.description?.isNotEmpty ?? false)) ...[
-                  SizedBox(height: 12.h),
-                  _buildDescription(),
-                ],
-              ],
+              children: [_buildHeader()],
             ),
           ),
         ),
@@ -167,15 +158,6 @@ class ProductCard extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-    );
-  }
-
-  Widget _buildDetails() {
-    return Row(
-      children: [
-        if (product.sku != null && product.sku!.isNotEmpty)
-          _buildDetailItem(icon: Icons.qr_code, text: 'SKU: ${product.sku}'),
-      ],
     );
   }
 

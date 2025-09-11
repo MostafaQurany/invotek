@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/ui/widgets/forms/category_dropdown.dart';
+import 'package:invotek/features/products/ui/widgets/forms/status_dropdown.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class EditProductScreen extends StatefulWidget {
@@ -23,10 +24,7 @@ class EditProductScreenWithProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ProductsCubit>(),
-      child: EditProductScreen(product: product),
-    );
+    return EditProductScreen(product: product);
   }
 }
 
@@ -35,6 +33,26 @@ class _EditProductScreenState extends State<EditProductScreen>
   late TabController _tabController;
   int _currentTabIndex = 0;
 
+  // Form Controllers
+  late TextEditingController _nameController;
+  late TextEditingController _descriptionController;
+  late TextEditingController _priceController;
+  late TextEditingController _costController;
+  late TextEditingController _taxRateController;
+  late TextEditingController _quantityController;
+  late TextEditingController _unitController;
+  late TextEditingController _skuController;
+  late TextEditingController _barcodeController;
+
+  // Form State
+  String? _selectedCategoryId;
+  String _selectedStatus = 'active';
+  bool _isActive = true;
+  bool _hasTax = false;
+  bool _trackInventory = false;
+
+  // Form Key for validation
+  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -44,11 +62,46 @@ class _EditProductScreenState extends State<EditProductScreen>
         _currentTabIndex = _tabController.index;
       });
     });
+
+    // Initialize controllers with product data
+    _nameController = TextEditingController(text: widget.product.name ?? '');
+    _descriptionController = TextEditingController(
+      text: widget.product.description ?? '',
+    );
+    _priceController = TextEditingController(text: widget.product.price ?? '');
+    _costController = TextEditingController(text: widget.product.cost ?? '');
+    _taxRateController = TextEditingController(
+      text: widget.product.taxRate ?? '',
+    );
+    _quantityController = TextEditingController(
+      text: widget.product.quantity?.toString() ?? '',
+    );
+    _unitController = TextEditingController(text: widget.product.unit ?? '');
+    _skuController = TextEditingController(text: widget.product.sku ?? '');
+    _barcodeController = TextEditingController(
+      text: widget.product.barcode ?? '',
+    );
+
+    // Initialize form state
+    _selectedCategoryId = widget.product.productCategoryId?.toString();
+    _selectedStatus = widget.product.status ?? 'active';
+    _isActive = widget.product.isActive ?? true;
+    _hasTax = widget.product.hasTax ?? false;
+    _trackInventory = widget.product.trackInventory ?? false;
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    _nameController.dispose();
+    _descriptionController.dispose();
+    _priceController.dispose();
+    _costController.dispose();
+    _taxRateController.dispose();
+    _quantityController.dispose();
+    _unitController.dispose();
+    _skuController.dispose();
+    _barcodeController.dispose();
     super.dispose();
   }
 
@@ -143,16 +196,19 @@ class _EditProductScreenState extends State<EditProductScreen>
 
             // Form Content
             Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                physics:
-                    const NeverScrollableScrollPhysics(), // Disable swipe navigation
-                children: [
-                  _buildBasicInfoTab(s),
-                  _buildPricingTab(s),
-                  _buildInventoryTab(s),
-                  _buildProductDetailsTab(s),
-                ],
+              child: Form(
+                key: _formKey,
+                child: TabBarView(
+                  controller: _tabController,
+                  physics:
+                      const NeverScrollableScrollPhysics(), // Disable swipe navigation
+                  children: [
+                    _buildBasicInfoTab(s),
+                    _buildPricingTab(s),
+                    _buildInventoryTab(s),
+                    _buildProductDetailsTab(s),
+                  ],
+                ),
               ),
             ),
 
@@ -248,29 +304,38 @@ class _EditProductScreenState extends State<EditProductScreen>
           ),
           SizedBox(height: 20.h),
           _buildFormField(
+            controller: _nameController,
             label: '${s.name} *',
             hint: s.name,
             icon: Icons.inventory_2_outlined,
-            initialValue: widget.product.name,
             isRequired: true,
           ),
           SizedBox(height: 16.h),
           _buildFormField(
+            controller: _descriptionController,
             label: s.description,
             hint: s.description,
             icon: Icons.description_outlined,
-            initialValue: widget.product.description,
             maxLines: 3,
           ),
           SizedBox(height: 16.h),
-          _buildFormField(
-            label: 'Category',
-            hint: 'Product Category',
-            icon: Icons.category_outlined,
-            initialValue: widget.product.productCategoryId?.toString(),
+          CategoryDropdown(
+            selectedCategoryId: _selectedCategoryId,
+            onChanged: (value) {
+              setState(() {
+                _selectedCategoryId = value;
+              });
+            },
           ),
           SizedBox(height: 16.h),
-          _buildStatusDropdown(s),
+          StatusDropdown(
+            selectedStatus: _selectedStatus,
+            onChanged: (value) {
+              setState(() {
+                _selectedStatus = value ?? 'active';
+              });
+            },
+          ),
         ],
       ),
     );
@@ -292,27 +357,27 @@ class _EditProductScreenState extends State<EditProductScreen>
           ),
           SizedBox(height: 20.h),
           _buildFormField(
+            controller: _priceController,
             label: '${s.sellingPrice} *',
             hint: s.sellingPrice,
             icon: Icons.sell_outlined,
-            initialValue: widget.product.price,
             keyboardType: TextInputType.number,
             isRequired: true,
           ),
           SizedBox(height: 16.h),
           _buildFormField(
+            controller: _costController,
             label: s.costPrice,
             hint: s.costPrice,
             icon: Icons.account_balance_wallet_outlined,
-            initialValue: widget.product.cost,
             keyboardType: TextInputType.number,
           ),
           SizedBox(height: 16.h),
           _buildFormField(
+            controller: _taxRateController,
             label: s.taxRate,
             hint: s.taxRate,
             icon: Icons.percent_outlined,
-            initialValue: widget.product.taxRate,
             keyboardType: TextInputType.number,
           ),
         ],
@@ -336,19 +401,19 @@ class _EditProductScreenState extends State<EditProductScreen>
           ),
           SizedBox(height: 20.h),
           _buildFormField(
+            controller: _quantityController,
             label: '${s.quantity} *',
             hint: s.quantity,
             icon: Icons.numbers_outlined,
-            initialValue: widget.product.quantity?.toString(),
             keyboardType: TextInputType.number,
             isRequired: true,
           ),
           SizedBox(height: 16.h),
           _buildFormField(
+            controller: _unitController,
             label: s.unit,
             hint: 'piece, kg, meter...',
             icon: Icons.straighten_outlined,
-            initialValue: widget.product.unit,
           ),
           SizedBox(height: 16.h),
           // Additional inventory fields can be added here if needed
@@ -376,19 +441,19 @@ class _EditProductScreenState extends State<EditProductScreen>
             children: [
               Expanded(
                 child: _buildFormField(
+                  controller: _skuController,
                   label: s.productSku,
                   hint: s.productSku,
                   icon: Icons.qr_code_outlined,
-                  initialValue: widget.product.sku,
                 ),
               ),
               SizedBox(width: 12.w),
               Expanded(
                 child: _buildFormField(
+                  controller: _barcodeController,
                   label: s.barcode,
                   hint: s.barcode,
                   icon: Icons.barcode_reader,
-                  initialValue: widget.product.barcode,
                 ),
               ),
             ],
@@ -397,7 +462,7 @@ class _EditProductScreenState extends State<EditProductScreen>
           // Additional product detail fields can be added here if needed
           SizedBox(height: 20.h),
           Text(
-            'Settings',
+            s.settings,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -408,9 +473,11 @@ class _EditProductScreenState extends State<EditProductScreen>
           SwitchListTile(
             title: Text(s.productIsActive),
             subtitle: Text(s.enableDisableProduct),
-            value: widget.product.isActive ?? true,
+            value: _isActive,
             onChanged: (value) {
-              // Handle active change
+              setState(() {
+                _isActive = value;
+              });
             },
             activeColor: AppColors.primary,
           ),
@@ -418,9 +485,11 @@ class _EditProductScreenState extends State<EditProductScreen>
           SwitchListTile(
             title: Text(s.productIsTaxable),
             subtitle: Text(s.applyTaxToProduct),
-            value: widget.product.hasTax ?? false,
+            value: _hasTax,
             onChanged: (value) {
-              // Handle tax change
+              setState(() {
+                _hasTax = value;
+              });
             },
             activeColor: AppColors.primary,
           ),
@@ -428,9 +497,11 @@ class _EditProductScreenState extends State<EditProductScreen>
           SwitchListTile(
             title: Text(s.trackInventory),
             subtitle: Text(s.trackAvailableProductQuantity),
-            value: widget.product.trackInventory ?? false,
+            value: _trackInventory,
             onChanged: (value) {
-              // Handle inventory tracking change
+              setState(() {
+                _trackInventory = value;
+              });
             },
             activeColor: AppColors.primary,
           ),
@@ -440,16 +511,14 @@ class _EditProductScreenState extends State<EditProductScreen>
   }
 
   Widget _buildFormField({
+    required TextEditingController controller,
     required String label,
     required String hint,
     required IconData icon,
-    String? initialValue,
     TextInputType? keyboardType,
     int maxLines = 1,
     bool isRequired = false,
   }) {
-    final controller = TextEditingController(text: initialValue ?? '');
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -518,86 +587,6 @@ class _EditProductScreenState extends State<EditProductScreen>
     );
   }
 
-  Widget _buildStatusDropdown(S s) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              '${s.status} *',
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            SizedBox(width: 4.w),
-            Text(
-              '*',
-              style: TextStyle(
-                color: AppColors.error,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 8.h),
-        DropdownButtonFormField<String>(
-          value: widget.product.status ?? 'active',
-          isExpanded: true,
-          decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.flag_outlined,
-              color: AppColors.primary,
-              size: 20.sp,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.primary, width: 2),
-            ),
-            filled: true,
-            fillColor: AppColors.white,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 16.h,
-            ),
-          ),
-          items: [
-            DropdownMenuItem(
-              value: 'active',
-              child: Text(s.active, overflow: TextOverflow.ellipsis),
-            ),
-            DropdownMenuItem(
-              value: 'inactive',
-              child: Text(s.inactive, overflow: TextOverflow.ellipsis),
-            ),
-            DropdownMenuItem(
-              value: 'out_of_stock',
-              child: Text('Out of Stock', overflow: TextOverflow.ellipsis),
-            ),
-            DropdownMenuItem(
-              value: 'discontinued',
-              child: Text('Discontinued', overflow: TextOverflow.ellipsis),
-            ),
-          ],
-          onChanged: (value) {
-            // Handle status change
-          },
-        ),
-      ],
-    );
-  }
-
   void _showHelpDialog(BuildContext context) {
     final s = S.of(context);
     showDialog(
@@ -630,23 +619,124 @@ class _EditProductScreenState extends State<EditProductScreen>
   }
 
   void _handleSubmit() {
+    // Validate form if it exists
+    final formState = _formKey.currentState;
+    if (formState != null && !formState.validate()) {
+      // Show error message or scroll to first error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill in all required fields'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // Validate required fields
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product name is required'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (_priceController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product price is required'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+      return;
+    }
+
+    if (_quantityController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product quantity is required'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // Parse quantity
+    int? quantity;
+    try {
+      quantity = int.parse(_quantityController.text.trim());
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter a valid quantity'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+      return;
+    }
+
+    // Parse category ID
+    int? categoryId;
+    if (_selectedCategoryId != null && _selectedCategoryId!.isNotEmpty) {
+      try {
+        categoryId = int.parse(_selectedCategoryId!);
+      } catch (e) {
+        // Category ID parsing failed, but it's optional
+        categoryId = null;
+      }
+    }
+
     final cubit = ProductsCubit.get(context);
     cubit.updateProduct(
       id: widget.product.id ?? 0,
-      name: widget.product.name ?? '',
-      description: widget.product.description,
-      price: widget.product.price ?? '',
-      cost: widget.product.cost,
-      quantity: widget.product.quantity ?? 0,
-      sku: widget.product.sku,
-      barcode: widget.product.barcode,
-      unit: widget.product.unit,
-      taxRate: widget.product.taxRate,
-      isActive: widget.product.isActive ?? true,
-      hasTax: widget.product.hasTax ?? false,
-      trackInventory: widget.product.trackInventory ?? false,
-      status: widget.product.status ?? 'active',
-      categoryId: widget.product.productCategoryId,
+      name: _nameController.text.trim(),
+      description: _descriptionController.text.trim().isEmpty
+          ? null
+          : _descriptionController.text.trim(),
+      price: _priceController.text.trim(),
+      cost: _costController.text.trim().isEmpty
+          ? null
+          : _costController.text.trim(),
+      quantity: quantity,
+      sku: _skuController.text.trim().isEmpty
+          ? null
+          : _skuController.text.trim(),
+      barcode: _barcodeController.text.trim().isEmpty
+          ? null
+          : _barcodeController.text.trim(),
+      unit: _unitController.text.trim().isEmpty
+          ? null
+          : _unitController.text.trim(),
+      taxRate: _taxRateController.text.trim().isEmpty
+          ? null
+          : _taxRateController.text.trim(),
+      isActive: _isActive,
+      hasTax: _hasTax,
+      trackInventory: _trackInventory,
+      status: _selectedStatus,
+      categoryId: categoryId,
     );
   }
 }

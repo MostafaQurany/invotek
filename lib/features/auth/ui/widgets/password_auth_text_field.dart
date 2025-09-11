@@ -5,6 +5,8 @@ import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/core/validation/validators.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
 
+import '../../../../generated/l10n.dart';
+
 class PasswordAuthTextField extends StatefulWidget {
   final TextEditingController controller;
   const PasswordAuthTextField({super.key, required this.controller});
@@ -62,7 +64,7 @@ class _PasswordAuthTextFieldState extends State<PasswordAuthTextField> {
               },
             )
           : null,
-      hint: "*************************",
+      hint: S.of(context).enterPassword,
       prefixIcon: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ImageIcon(

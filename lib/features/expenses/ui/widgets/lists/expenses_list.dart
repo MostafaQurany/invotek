@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/widgets/cards/expense_card.dart';
 
@@ -12,6 +10,7 @@ class ExpensesList extends StatelessWidget {
   final Function(ExpenseModel) onExpenseView;
   final Function(ExpenseModel) onExpenseEdit;
   final Function(ExpenseModel) onExpenseDelete;
+  final bool isLoadingMore;
 
   const ExpensesList({
     super.key,
@@ -20,12 +19,12 @@ class ExpensesList extends StatelessWidget {
     required this.onExpenseView,
     required this.onExpenseEdit,
     required this.onExpenseDelete,
+    this.isLoadingMore = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final expensesCubit = ExpensesCubit.get(context);
 
     return SliverFillRemaining(
       child: Container(
@@ -36,43 +35,78 @@ class ExpensesList extends StatelessWidget {
             topRight: Radius.circular(28.r),
           ),
         ),
-        child: BlocBuilder<ExpensesCubit, ExpensesState>(
-          builder: (context, state) {
-            return ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
-              itemCount: expenses.length + (expensesCubit.hasMore ? 1 : 0),
-              separatorBuilder: (context, index) => SizedBox(height: 12.h),
-              itemBuilder: (context, index) {
-                // Show loading indicator at the end if there are more pages
-                if (index == expenses.length) {
-                  return Container(
-                    padding: EdgeInsets.all(16.h),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.primary,
-                        strokeWidth: 2.0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Expenses Count Header
+            Padding(
+              padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 16.h),
+              child: Row(
+                children: [
+                  Text(
+                    'Expenses (${expenses.length})',
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 6.h,
+                    ),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20.r),
+                    ),
+                    child: Text(
+                      '${expenses.length} Total',
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: colorScheme.primary,
                       ),
                     ),
-                  );
-                }
+                  ),
+                ],
+              ),
+            ),
 
-                final expense = expenses[index];
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: ExpenseCard(
+            // Expenses List
+            Expanded(
+              child: ListView.separated(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                itemCount: expenses.length + (isLoadingMore ? 1 : 0),
+                separatorBuilder: (context, index) => SizedBox(height: 12.h),
+                itemBuilder: (context, index) {
+                  if (index == expenses.length && isLoadingMore) {
+                    return Container(
+                      padding: EdgeInsets.all(16.w),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                          strokeWidth: 2.0,
+                        ),
+                      ),
+                    );
+                  }
+
+                  final expense = expenses[index];
+                  return ExpenseCard(
                     expense: expense,
                     onTap: () => onExpenseTap(expense),
                     onEdit: () => onExpenseEdit(expense),
                     onDelete: () => onExpenseDelete(expense),
                     onView: () => onExpenseView(expense),
                     colorScheme: colorScheme,
-                  ),
-                );
-              },
-            );
-          },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

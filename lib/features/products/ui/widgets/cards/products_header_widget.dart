@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/core/widgets/generic_search_and_filters.dart';
+import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ProductsHeaderWidget extends StatefulWidget {
@@ -13,6 +14,7 @@ class ProductsHeaderWidget extends StatefulWidget {
   final String selectedStatus;
   final Function(String) onCategoryChanged;
   final Function(String) onStatusChanged;
+  final List<ProductCategoryApiModel> categories;
 
   const ProductsHeaderWidget({
     super.key,
@@ -23,6 +25,7 @@ class ProductsHeaderWidget extends StatefulWidget {
     required this.selectedStatus,
     required this.onCategoryChanged,
     required this.onStatusChanged,
+    required this.categories,
   });
 
   @override
@@ -70,7 +73,11 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [AppColors.primary, AppColors.primary.withOpacity(0.9)],
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -115,21 +122,46 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
       child: Row(
         children: [
           // Menu Button
-          IconButton(
-            icon: Icon(Icons.menu, color: AppColors.white, size: 24.sp),
-            onPressed: widget.onMenuPressed,
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.white.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: IconButton(
+              onPressed: widget.onMenuPressed,
+              icon: Icon(
+                Icons.menu_rounded,
+                color: AppColors.white,
+                size: 24.sp,
+              ),
+              padding: EdgeInsets.all(8.w),
+            ),
           ),
+          SizedBox(width: 16.w),
 
           // Title
           Expanded(
-            child: Text(
-              s.products,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
-                color: AppColors.white,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  s.products,
+                  style: TextStyle(
+                    color: AppColors.white,
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  'Manage products and inventory',
+                  style: TextStyle(
+                    color: AppColors.white.withOpacity(0.8),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -212,13 +244,12 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
               value: widget.selectedCategory,
               options: [
                 FilterOptionExtensions.custom('all', s.all),
-                FilterOptionExtensions.custom('electronics', 'Electronics'),
-                FilterOptionExtensions.custom('clothing', 'Clothing'),
-                FilterOptionExtensions.custom('books', 'Books'),
-                FilterOptionExtensions.custom('home', 'Home'),
-                FilterOptionExtensions.custom('sports', 'Sports'),
-                FilterOptionExtensions.custom('beauty', 'Beauty'),
-                FilterOptionExtensions.custom('automotive', 'Automotive'),
+                ...widget.categories.map(
+                  (category) => FilterOptionExtensions.custom(
+                    category.id.toString(),
+                    category.name,
+                  ),
+                ),
               ],
               onChanged: widget.onCategoryChanged,
             ),
@@ -235,8 +266,6 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
                 FilterOptionExtensions.custom('all', s.all),
                 FilterOptionExtensions.status('active', s.active),
                 FilterOptionExtensions.status('inactive', s.inactive),
-                FilterOptionExtensions.status('out_of_stock', 'Out of Stock'),
-                FilterOptionExtensions.status('discontinued', 'Discontinued'),
               ],
               onChanged: widget.onStatusChanged,
             ),

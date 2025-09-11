@@ -85,10 +85,7 @@ class _ExpenseCategoriesListScreenState
         backgroundColor: AppColors.backgroundLight,
         title: Text(
           S.of(context).expenseCategories,
-          style: TextStyle(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w600),
         ),
         leading: IconButton.filled(
           style: IconButton.styleFrom(
@@ -113,6 +110,19 @@ class _ExpenseCategoriesListScreenState
           },
           icon: Icon(Icons.menu, color: AppColors.primary),
         ),
+        actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
+        actions: [
+          IconButton.filled(
+            style: IconButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            onPressed: _navigateToAddCategory,
+            icon: Icon(Icons.add, color: AppColors.white),
+          ),
+        ],
       ),
       body: BlocListener<ExpenseCategoriesCubit, ExpenseCategoriesState>(
         listener: (context, state) {
@@ -199,11 +209,6 @@ class _ExpenseCategoriesListScreenState
             );
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddCategory,
-        backgroundColor: AppColors.primary,
-        child: Icon(Icons.add, color: AppColors.white),
       ),
     );
   }

@@ -47,10 +47,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                     context.read<LocalizationCubit>().changeLanguageToArabic();
                   }
                 },
-                icon: Icon(
-                  Icons.language,
-                  size: ScreenUtils.iconSizeMedium,
-                ),
+                icon: Icon(Icons.language, size: ScreenUtils.iconSizeMedium),
               );
             },
           ),
@@ -62,10 +59,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 Navigator.of(context).pushReplacementNamed('/auth');
               }
             },
-            icon: Icon(
-              Icons.logout,
-              size: ScreenUtils.iconSizeMedium,
-            ),
+            icon: Icon(Icons.logout, size: ScreenUtils.iconSizeMedium),
           ),
         ],
       ),
@@ -82,37 +76,37 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 print('Searching for: $value');
               },
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingLarge),
-            
+
             // Welcome Section
             ResponsiveInfoCard(
               title: S.of(context).welcome,
-              subtitle: 'مرحباً بك في تطبيق Invotek',
-              description: 'إدارة الفواتير والعملاء بسهولة',
+              subtitle: S.of(context).welcomeToInvotekApp,
+              description: S.of(context).easyInvoiceCustomerManagement,
               icon: Icons.dashboard,
               iconColor: AppColors.primary,
               backgroundColor: AppColors.primary.withOpacity(0.1),
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingLarge),
-            
+
             // Quick Actions
             Text(
-              'الإجراءات السريعة',
+              S.of(context).quickActions,
               style: TextStyle(
                 fontSize: ScreenUtils.fontSizeXLarge,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingMedium),
-            
+
             // Action Cards
             ResponsiveActionCard(
-              title: 'إدارة العملاء',
-              subtitle: 'إضافة وتعديل وحذف العملاء',
+              title: S.of(context).customerManagement,
+              subtitle: S.of(context).addEditDeleteCustomers,
               icon: Icons.people,
               iconColor: AppColors.primary,
               onTap: () {
@@ -125,12 +119,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 color: AppColors.grey,
               ),
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingSmall),
-            
+
             ResponsiveActionCard(
-              title: 'إدارة الفواتير',
-              subtitle: 'إنشاء وتعديل الفواتير',
+              title: S.of(context).invoiceManagement,
+              subtitle: S.of(context).createEditInvoices,
               icon: Icons.receipt,
               iconColor: Colors.orange,
               onTap: () {
@@ -143,12 +137,12 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 color: AppColors.grey,
               ),
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingSmall),
-            
+
             ResponsiveActionCard(
-              title: 'التقارير',
-              subtitle: 'عرض التقارير والإحصائيات',
+              title: S.of(context).reports,
+              subtitle: S.of(context).viewReportsStatistics,
               icon: Icons.analytics,
               iconColor: Colors.green,
               onTap: () {
@@ -161,21 +155,21 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 color: AppColors.grey,
               ),
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingLarge),
-            
+
             // Buttons Section
             Text(
-              'إجراءات سريعة',
+              S.of(context).quickActionsTitle,
               style: TextStyle(
                 fontSize: ScreenUtils.fontSizeXLarge,
                 fontWeight: FontWeight.bold,
                 color: AppColors.textPrimary,
               ),
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingMedium),
-            
+
             ResponsiveButton(
               text: 'إضافة عميل جديد',
               icon: Icons.person_add,
@@ -184,9 +178,9 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 print('Add new customer');
               },
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingSmall),
-            
+
             ResponsiveButton(
               text: 'إنشاء فاتورة جديدة',
               icon: Icons.add_shopping_cart,
@@ -196,9 +190,9 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 print('Create new invoice');
               },
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingSmall),
-            
+
             ResponsiveOutlinedButton(
               text: 'عرض جميع الفواتير',
               icon: Icons.list,
@@ -207,14 +201,15 @@ class _HomeDashboardState extends State<HomeDashboard> {
                 print('View all invoices');
               },
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingLarge),
-            
+
             // Device Info Card
             ResponsiveInfoCard(
               title: 'معلومات الجهاز',
-              subtitle: 'أبعاد الشاشة والأداء',
-              description: '''
+              subtitle: S.of(context).screenDimensionsPerformance,
+              description:
+                  '''
 العرض: ${ScreenUtils.screenWidth.toStringAsFixed(0)}px
 الارتفاع: ${ScreenUtils.screenHeight.toStringAsFixed(0)}px
 نوع الجهاز: ${ScreenUtils.isTablet ? 'تابلت' : 'هاتف'}
@@ -223,7 +218,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
               icon: Icons.device_hub,
               iconColor: Colors.blue,
             ),
-            
+
             SizedBox(height: ScreenUtils.paddingLarge),
           ],
         ),
@@ -231,5 +226,3 @@ class _HomeDashboardState extends State<HomeDashboard> {
     );
   }
 }
-
-

@@ -77,7 +77,7 @@ class StatusDropdown extends StatelessWidget {
             fillColor: AppColors.white,
             contentPadding: EdgeInsets.symmetric(
               horizontal: 16.w,
-              vertical: 16.h,
+              vertical: 8.h,
             ),
             errorText: errorText,
           ),
@@ -89,14 +89,6 @@ class StatusDropdown extends StatelessWidget {
             DropdownMenuItem(
               value: 'inactive',
               child: Text(s.inactive, overflow: TextOverflow.ellipsis),
-            ),
-            DropdownMenuItem(
-              value: 'out_of_stock',
-              child: Text('Out of Stock', overflow: TextOverflow.ellipsis),
-            ),
-            DropdownMenuItem(
-              value: 'discontinued',
-              child: Text('Discontinued', overflow: TextOverflow.ellipsis),
             ),
           ],
           onChanged: onChanged,

@@ -64,6 +64,7 @@ class ProductsStateBuilder extends StatelessWidget {
                   onProductView: onProductView,
                   onProductEdit: onProductEdit,
                   onProductDelete: onProductDelete,
+                  isLoadingMore: message == 'loading_more',
                 );
               },
           loaded: (products, selectedProduct, currentPage, totalPages) {

@@ -5,6 +5,7 @@ import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
 
 import '../../../../core/validation/validators.dart';
+import '../../../../generated/l10n.dart';
 
 class EmailAuthTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -13,7 +14,7 @@ class EmailAuthTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AuthTextFiled(
-      hint: "example@example.com",
+      hint: S.of(context).enterEmail,
       prefixIcon: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ImageIcon(

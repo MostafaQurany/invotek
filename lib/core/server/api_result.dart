@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:invotek/core/server/api_error_handler.dart';
 part 'api_result.freezed.dart';
 
 @Freezed()
@@ -8,7 +7,6 @@ abstract class ApiResult<T> with _$ApiResult<T> {
   const factory ApiResult.failure(String errorMessage) = Failure<T>;
 
   // إضافة fromJson method للتحقق من message
-  @JsonKey(includeFromJson: false, includeToJson: false)
   static ApiResult<T> fromJson<T>(
     Map<String, dynamic> json,
     T Function(Map<String, dynamic>) fromJsonT,

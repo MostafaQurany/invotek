@@ -166,7 +166,7 @@ abstract class S {
   /// No description provided for @emailInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Invalid email format'**
+  /// **'Invalid email'**
   String get emailInvalid;
 
   /// No description provided for @passwordRequired.
@@ -190,7 +190,7 @@ abstract class S {
   /// No description provided for @confirmPasswordRequired.
   ///
   /// In en, this message translates to:
-  /// **'Confirm password is required'**
+  /// **'Password confirmation is required'**
   String get confirmPasswordRequired;
 
   /// No description provided for @passwordsNotMatch.
@@ -322,7 +322,7 @@ abstract class S {
   /// No description provided for @taxInvoices.
   ///
   /// In en, this message translates to:
-  /// **'Tax invoices'**
+  /// **'Tax Invoices'**
   String get taxInvoices;
 
   /// No description provided for @taxInvoicesDesc.
@@ -394,7 +394,7 @@ abstract class S {
   /// No description provided for @arabic.
   ///
   /// In en, this message translates to:
-  /// **'العربية'**
+  /// **'Arabic'**
   String get arabic;
 
   /// No description provided for @notAMember.
@@ -532,7 +532,7 @@ abstract class S {
   /// No description provided for @addUser.
   ///
   /// In en, this message translates to:
-  /// **'Add New User'**
+  /// **'Add User'**
   String get addUser;
 
   /// No description provided for @managePermissions.
@@ -550,7 +550,7 @@ abstract class S {
   /// No description provided for @addClient.
   ///
   /// In en, this message translates to:
-  /// **'Add New Client'**
+  /// **'Add Client'**
   String get addClient;
 
   /// No description provided for @manageProducts.
@@ -574,7 +574,7 @@ abstract class S {
   /// No description provided for @addExpense.
   ///
   /// In en, this message translates to:
-  /// **'Add New Expense'**
+  /// **'Add Expense'**
   String get addExpense;
 
   /// No description provided for @expenseCategories.
@@ -592,7 +592,7 @@ abstract class S {
   /// No description provided for @createInvoice.
   ///
   /// In en, this message translates to:
-  /// **'Create New Invoice'**
+  /// **'Create Invoice'**
   String get createInvoice;
 
   /// No description provided for @postedInvoices.
@@ -1168,7 +1168,7 @@ abstract class S {
   /// No description provided for @noName.
   ///
   /// In en, this message translates to:
-  /// **'No Name'**
+  /// **'No name'**
   String get noName;
 
   /// No description provided for @undefined.
@@ -1360,7 +1360,7 @@ abstract class S {
   /// No description provided for @addProduct.
   ///
   /// In en, this message translates to:
-  /// **'Add New Product'**
+  /// **'Add Product'**
   String get addProduct;
 
   /// No description provided for @pricing.
@@ -1762,7 +1762,7 @@ abstract class S {
   /// No description provided for @errorOccurred.
   ///
   /// In en, this message translates to:
-  /// **'An error occurred: {error}'**
+  /// **'Error: {error}'**
   String errorOccurred(Object error);
 
   /// No description provided for @searchCustomers.
@@ -2208,6 +2208,1740 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Status: {status}'**
   String statusCategory(String status);
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @companyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get companyName;
+
+  /// No description provided for @companyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Email'**
+  String get companyEmail;
+
+  /// No description provided for @companyPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Phone'**
+  String get companyPhone;
+
+  /// No description provided for @companyAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Address'**
+  String get companyAddress;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// No description provided for @enableDarkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Dark Mode'**
+  String get enableDarkMode;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @receiveNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive Notifications'**
+  String get receiveNotifications;
+
+  /// No description provided for @appInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'App Information'**
+  String get appInfo;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @usersManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Users and Permissions Management'**
+  String get usersManagement;
+
+  /// No description provided for @customersManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers Management'**
+  String get customersManagement;
+
+  /// No description provided for @productsCategoriesManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Products and Categories Management'**
+  String get productsCategoriesManagement;
+
+  /// No description provided for @expensesManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses & Categories Management'**
+  String get expensesManagement;
+
+  /// No description provided for @supportEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Support Email'**
+  String get supportEmail;
+
+  /// No description provided for @website.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get website;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// No description provided for @termsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use'**
+  String get termsOfUse;
+
+  /// No description provided for @saveSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Settings'**
+  String get saveSettings;
+
+  /// No description provided for @savingSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving Settings...'**
+  String get savingSettings;
+
+  /// No description provided for @settingsSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved successfully'**
+  String get settingsSavedSuccessfully;
+
+  /// No description provided for @companyNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Company name is required'**
+  String get companyNameRequired;
+
+  /// No description provided for @companyEmailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Company email is required'**
+  String get companyEmailRequired;
+
+  /// No description provided for @companyEmailInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid company email'**
+  String get companyEmailInvalid;
+
+  /// No description provided for @companyPhoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Company phone is required'**
+  String get companyPhoneRequired;
+
+  /// No description provided for @companyAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Company address is required'**
+  String get companyAddressRequired;
+
+  /// No description provided for @enterCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter company name'**
+  String get enterCompanyName;
+
+  /// No description provided for @enterCompanyEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter company email'**
+  String get enterCompanyEmail;
+
+  /// No description provided for @enterCompanyPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter company phone'**
+  String get enterCompanyPhone;
+
+  /// No description provided for @enterCompanyAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter company address'**
+  String get enterCompanyAddress;
+
+  /// No description provided for @languageChangedToArabic.
+  ///
+  /// In en, this message translates to:
+  /// **'Language changed to Arabic'**
+  String get languageChangedToArabic;
+
+  /// No description provided for @languageChangedToEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'Language changed to English'**
+  String get languageChangedToEnglish;
+
+  /// No description provided for @darkModeEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode enabled'**
+  String get darkModeEnabled;
+
+  /// No description provided for @darkModeDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode disabled'**
+  String get darkModeDisabled;
+
+  /// No description provided for @notificationsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications enabled'**
+  String get notificationsEnabled;
+
+  /// No description provided for @notificationsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications disabled'**
+  String get notificationsDisabled;
+
+  /// No description provided for @or.
+  ///
+  /// In en, this message translates to:
+  /// **'Or'**
+  String get or;
+
+  /// No description provided for @reports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get reports;
+
+  /// No description provided for @userManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'User Management'**
+  String get userManagement;
+
+  /// No description provided for @permissionsManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions Management'**
+  String get permissionsManagement;
+
+  /// No description provided for @clientsManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Clients Management'**
+  String get clientsManagement;
+
+  /// No description provided for @productsManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Products & Categories Management'**
+  String get productsManagement;
+
+  /// No description provided for @welcomeToInvotek.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Invotek App'**
+  String get welcomeToInvotek;
+
+  /// No description provided for @manageInvoicesAndCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage invoices and customers easily'**
+  String get manageInvoicesAndCustomers;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @manageCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Customers'**
+  String get manageCustomers;
+
+  /// No description provided for @addAndEditCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Add, edit and delete customers'**
+  String get addAndEditCustomers;
+
+  /// No description provided for @manageInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Invoices'**
+  String get manageInvoices;
+
+  /// No description provided for @createAndEditInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and edit invoices'**
+  String get createAndEditInvoices;
+
+  /// No description provided for @viewReportsAndStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'View reports and statistics'**
+  String get viewReportsAndStatistics;
+
+  /// No description provided for @createNewInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Invoice'**
+  String get createNewInvoice;
+
+  /// No description provided for @viewAllInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'View All Invoices'**
+  String get viewAllInvoices;
+
+  /// No description provided for @deviceInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Information'**
+  String get deviceInfo;
+
+  /// No description provided for @screenDimensionsAndPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen dimensions and performance'**
+  String get screenDimensionsAndPerformance;
+
+  /// No description provided for @deviceType.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Type'**
+  String get deviceType;
+
+  /// No description provided for @tablet.
+  ///
+  /// In en, this message translates to:
+  /// **'Tablet'**
+  String get tablet;
+
+  /// No description provided for @phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get phone;
+
+  /// No description provided for @themeDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Demo'**
+  String get themeDemo;
+
+  /// No description provided for @themeInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Information'**
+  String get themeInfo;
+
+  /// No description provided for @type.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get type;
+
+  /// No description provided for @dark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get dark;
+
+  /// No description provided for @light.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get light;
+
+  /// No description provided for @screenDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen Dimensions'**
+  String get screenDimensions;
+
+  /// No description provided for @textStyles.
+  ///
+  /// In en, this message translates to:
+  /// **'Text Styles'**
+  String get textStyles;
+
+  /// No description provided for @mainTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Main Title'**
+  String get mainTitle;
+
+  /// No description provided for @subTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sub Title'**
+  String get subTitle;
+
+  /// No description provided for @normalText.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal Text'**
+  String get normalText;
+
+  /// No description provided for @smallText.
+  ///
+  /// In en, this message translates to:
+  /// **'Small Text'**
+  String get smallText;
+
+  /// No description provided for @link.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get link;
+
+  /// No description provided for @errorText.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Text'**
+  String get errorText;
+
+  /// No description provided for @successText.
+  ///
+  /// In en, this message translates to:
+  /// **'Success Text'**
+  String get successText;
+
+  /// No description provided for @buttons.
+  ///
+  /// In en, this message translates to:
+  /// **'Buttons'**
+  String get buttons;
+
+  /// No description provided for @normalButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal Button'**
+  String get normalButton;
+
+  /// No description provided for @outlinedButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Outlined Button'**
+  String get outlinedButton;
+
+  /// No description provided for @loadingButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Button'**
+  String get loadingButton;
+
+  /// No description provided for @inputFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Input Fields'**
+  String get inputFields;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @enterUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter username'**
+  String get enterUsername;
+
+  /// No description provided for @cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards'**
+  String get cards;
+
+  /// No description provided for @interactiveCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive Card'**
+  String get interactiveCard;
+
+  /// No description provided for @interactiveCardDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This is an interactive card that can be pressed'**
+  String get interactiveCardDescription;
+
+  /// No description provided for @loadingCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Card'**
+  String get loadingCard;
+
+  /// No description provided for @responsiveTexts.
+  ///
+  /// In en, this message translates to:
+  /// **'Responsive Texts'**
+  String get responsiveTexts;
+
+  /// No description provided for @smallResponsiveText.
+  ///
+  /// In en, this message translates to:
+  /// **'Small Responsive Text'**
+  String get smallResponsiveText;
+
+  /// No description provided for @mediumResponsiveText.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium Responsive Text'**
+  String get mediumResponsiveText;
+
+  /// No description provided for @largeResponsiveText.
+  ///
+  /// In en, this message translates to:
+  /// **'Large Responsive Text'**
+  String get largeResponsiveText;
+
+  /// No description provided for @buttonPressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal button pressed'**
+  String get buttonPressed;
+
+  /// No description provided for @outlinedButtonPressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Outlined button pressed'**
+  String get outlinedButtonPressed;
+
+  /// No description provided for @cardPressed.
+  ///
+  /// In en, this message translates to:
+  /// **'Card pressed'**
+  String get cardPressed;
+
+  /// No description provided for @calling.
+  ///
+  /// In en, this message translates to:
+  /// **'Calling {phone}'**
+  String calling(Object phone);
+
+  /// No description provided for @openingEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening email to {email}'**
+  String openingEmail(Object email);
+
+  /// No description provided for @viewingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing invoices for {name}'**
+  String viewingInvoices(Object name);
+
+  /// No description provided for @viewingOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing orders for {name}'**
+  String viewingOrders(Object name);
+
+  /// No description provided for @copiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get copiedToClipboard;
+
+  /// No description provided for @openingMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening map'**
+  String get openingMap;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @phoneNumberInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number'**
+  String get phoneNumberInvalid;
+
+  /// No description provided for @advancedTechCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced Technology Company'**
+  String get advancedTechCompany;
+
+  /// No description provided for @financialServicesInstitution.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Services Institution'**
+  String get financialServicesInstitution;
+
+  /// No description provided for @constructionDevelopmentCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Construction & Development Company'**
+  String get constructionDevelopmentCompany;
+
+  /// No description provided for @modernEducationInstitution.
+  ///
+  /// In en, this message translates to:
+  /// **'Modern Education Institution'**
+  String get modernEducationInstitution;
+
+  /// No description provided for @tourismEntertainmentCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Tourism & Entertainment Company'**
+  String get tourismEntertainmentCompany;
+
+  /// No description provided for @healthcareInstitution.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthcare Institution'**
+  String get healthcareInstitution;
+
+  /// No description provided for @transportLogisticsCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport & Logistics Company'**
+  String get transportLogisticsCompany;
+
+  /// No description provided for @ecommerceInstitution.
+  ///
+  /// In en, this message translates to:
+  /// **'E-commerce Institution'**
+  String get ecommerceInstitution;
+
+  /// No description provided for @productHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Help'**
+  String get productHelp;
+
+  /// No description provided for @fillAllRequiredFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in all required fields'**
+  String get fillAllRequiredFields;
+
+  /// No description provided for @productNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Product name is required'**
+  String get productNameRequired;
+
+  /// No description provided for @productPriceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Product price is required'**
+  String get productPriceRequired;
+
+  /// No description provided for @productQuantityRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Product quantity is required'**
+  String get productQuantityRequired;
+
+  /// No description provided for @enterValidQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid quantity'**
+  String get enterValidQuantity;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @update.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get update;
+
+  /// No description provided for @areYouSureDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{name}\"?'**
+  String areYouSureDelete(Object name);
+
+  /// No description provided for @errorLoadingProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading products'**
+  String get errorLoadingProducts;
+
+  /// No description provided for @errorLoadingProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading product data'**
+  String get errorLoadingProduct;
+
+  /// No description provided for @errorCreatingProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating product'**
+  String get errorCreatingProduct;
+
+  /// No description provided for @noCategoriesToDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories to delete'**
+  String get noCategoriesToDelete;
+
+  /// No description provided for @allCategoriesDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'All categories deleted successfully'**
+  String get allCategoriesDeletedSuccessfully;
+
+  /// No description provided for @allStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'All Status'**
+  String get allStatus;
+
+  /// No description provided for @passwordChangedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChangedSuccessfully;
+
+  /// No description provided for @operationCompletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation completed successfully'**
+  String get operationCompletedSuccessfully;
+
+  /// No description provided for @editUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit User'**
+  String get editUser;
+
+  /// No description provided for @addNewRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Role'**
+  String get addNewRole;
+
+  /// No description provided for @editRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Role'**
+  String get editRole;
+
+  /// No description provided for @noEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'No email'**
+  String get noEmail;
+
+  /// No description provided for @noRole.
+  ///
+  /// In en, this message translates to:
+  /// **'No role'**
+  String get noRole;
+
+  /// No description provided for @accountant.
+  ///
+  /// In en, this message translates to:
+  /// **'Accountant'**
+  String get accountant;
+
+  /// No description provided for @supervisor.
+  ///
+  /// In en, this message translates to:
+  /// **'Supervisor'**
+  String get supervisor;
+
+  /// No description provided for @failedToLoadRoles.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load roles and permissions: {error}'**
+  String failedToLoadRoles(Object error);
+
+  /// No description provided for @failedToLoadUserPermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load user permissions: {error}'**
+  String failedToLoadUserPermissions(Object error);
+
+  /// No description provided for @failedToAddRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add role: {error}'**
+  String failedToAddRole(Object error);
+
+  /// No description provided for @failedToUpdateRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update role: {error}'**
+  String failedToUpdateRole(Object error);
+
+  /// No description provided for @failedToDeleteRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete role: {error}'**
+  String failedToDeleteRole(Object error);
+
+  /// No description provided for @failedToUpdateUserPermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update user permissions: {error}'**
+  String failedToUpdateUserPermissions(Object error);
+
+  /// No description provided for @viewUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'View Users'**
+  String get viewUsers;
+
+  /// No description provided for @pageNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Page Not Found'**
+  String get pageNotFound;
+
+  /// No description provided for @requestedPageNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'The requested page was not found'**
+  String get requestedPageNotFound;
+
+  /// No description provided for @cannotOpenEmailApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open email application'**
+  String get cannotOpenEmailApp;
+
+  /// No description provided for @cannotOpenWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open website'**
+  String get cannotOpenWebsite;
+
+  /// No description provided for @privacyPolicyComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy Coming Soon'**
+  String get privacyPolicyComingSoon;
+
+  /// No description provided for @termsOfUseComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Use Coming Soon'**
+  String get termsOfUseComingSoon;
+
+  /// No description provided for @appVersionWithBuild.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version} (Build {build})'**
+  String appVersionWithBuild(Object build, Object version);
+
+  /// No description provided for @contactUsForSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us for support'**
+  String get contactUsForSupport;
+
+  /// No description provided for @visitInvotekWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Invotek website'**
+  String get visitInvotekWebsite;
+
+  /// No description provided for @viewPrivacyPolicy.
+  ///
+  /// In en, this message translates to:
+  /// **'View privacy policy'**
+  String get viewPrivacyPolicy;
+
+  /// No description provided for @viewTermsOfUse.
+  ///
+  /// In en, this message translates to:
+  /// **'View terms of use'**
+  String get viewTermsOfUse;
+
+  /// No description provided for @welcomeToInvotekApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Invotek app'**
+  String get welcomeToInvotekApp;
+
+  /// No description provided for @easyInvoiceCustomerManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy invoice and customer management'**
+  String get easyInvoiceCustomerManagement;
+
+  /// No description provided for @customerManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Management'**
+  String get customerManagement;
+
+  /// No description provided for @addEditDeleteCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Add, edit and delete customers'**
+  String get addEditDeleteCustomers;
+
+  /// No description provided for @invoiceManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Management'**
+  String get invoiceManagement;
+
+  /// No description provided for @createEditInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and edit invoices'**
+  String get createEditInvoices;
+
+  /// No description provided for @viewReportsStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'View reports and statistics'**
+  String get viewReportsStatistics;
+
+  /// No description provided for @quickActionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActionsTitle;
+
+  /// No description provided for @screenDimensionsPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Screen dimensions and performance'**
+  String get screenDimensionsPerformance;
+
+  /// No description provided for @enterProductName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter product name'**
+  String get enterProductName;
+
+  /// No description provided for @enterProductDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter product description'**
+  String get enterProductDescription;
+
+  /// No description provided for @enterQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter quantity'**
+  String get enterQuantity;
+
+  /// No description provided for @pieceKgMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'piece, kg, meter...'**
+  String get pieceKgMeter;
+
+  /// No description provided for @enterProductSku.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter product SKU'**
+  String get enterProductSku;
+
+  /// No description provided for @enterBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter barcode'**
+  String get enterBarcode;
+
+  /// No description provided for @enterSellingPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter selling price'**
+  String get enterSellingPrice;
+
+  /// No description provided for @enterCostPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter cost price'**
+  String get enterCostPrice;
+
+  /// No description provided for @enterTaxRatePercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter tax rate percentage'**
+  String get enterTaxRatePercentage;
+
+  /// No description provided for @enterResponsiblePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter responsible person'**
+  String get enterResponsiblePerson;
+
+  /// No description provided for @enterNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter notes'**
+  String get enterNotes;
+
+  /// No description provided for @exampleEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'example@email.com'**
+  String get exampleEmail;
+
+  /// No description provided for @examplePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'0500000000'**
+  String get examplePhone;
+
+  /// No description provided for @enterCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter city'**
+  String get enterCity;
+
+  /// No description provided for @enterRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter region'**
+  String get enterRegion;
+
+  /// No description provided for @enterPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter postal code'**
+  String get enterPostalCode;
+
+  /// No description provided for @enterAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter client address'**
+  String get enterAddress;
+
+  /// No description provided for @enterDetailedAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter detailed address'**
+  String get enterDetailedAddress;
+
+  /// No description provided for @enterCustomerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer name'**
+  String get enterCustomerName;
+
+  /// No description provided for @enterEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email address'**
+  String get enterEmailAddress;
+
+  /// No description provided for @enterTaxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter tax number'**
+  String get enterTaxNumber;
+
+  /// No description provided for @enterCommercialRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter commercial register'**
+  String get enterCommercialRegister;
+
+  /// No description provided for @enterClientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter client name'**
+  String get enterClientName;
+
+  /// No description provided for @enterClientEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email'**
+  String get enterClientEmail;
+
+  /// No description provided for @enterClientPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone number'**
+  String get enterClientPhone;
+
+  /// No description provided for @enterClientAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter client address'**
+  String get enterClientAddress;
+
+  /// No description provided for @enterClientCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter company name'**
+  String get enterClientCompany;
+
+  /// No description provided for @areYouSureDeleteClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete client \"{name}\"?'**
+  String areYouSureDeleteClient(Object name);
+
+  /// No description provided for @clientUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Client updated successfully'**
+  String get clientUpdatedSuccessfully;
+
+  /// No description provided for @clientAddedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Client added successfully'**
+  String get clientAddedSuccessfully;
+
+  /// No description provided for @clientDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Details'**
+  String get clientDetails;
+
+  /// No description provided for @editClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Client'**
+  String get editClient;
+
+  /// No description provided for @addNewClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Client'**
+  String get addNewClient;
+
+  /// No description provided for @department.
+  ///
+  /// In en, this message translates to:
+  /// **'Department'**
+  String get department;
+
+  /// No description provided for @emailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// No description provided for @userId.
+  ///
+  /// In en, this message translates to:
+  /// **'User ID'**
+  String get userId;
+
+  /// No description provided for @viewUserDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View user details'**
+  String get viewUserDetails;
+
+  /// No description provided for @editUserInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit user information'**
+  String get editUserInformation;
+
+  /// No description provided for @deleteUserPermanently.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete user permanently'**
+  String get deleteUserPermanently;
+
+  /// No description provided for @paidInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'8 Paid'**
+  String get paidInvoices;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'SAR 15,420'**
+  String get totalAmount;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// No description provided for @boughtThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought This'**
+  String get boughtThis;
+
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available;
+
+  /// No description provided for @productManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Management'**
+  String get productManagement;
+
+  /// No description provided for @expenseManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense Management'**
+  String get expenseManagement;
+
+  /// No description provided for @systemAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'System Access'**
+  String get systemAccess;
+
+  /// No description provided for @viewUsersDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to view users list'**
+  String get viewUsersDescription;
+
+  /// No description provided for @addUserDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to add new user'**
+  String get addUserDescription;
+
+  /// No description provided for @editUserDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit user data'**
+  String get editUserDescription;
+
+  /// No description provided for @deleteUser.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete User'**
+  String get deleteUser;
+
+  /// No description provided for @deleteUserDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to delete user'**
+  String get deleteUserDescription;
+
+  /// No description provided for @managePermissionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to manage user permissions'**
+  String get managePermissionsDescription;
+
+  /// No description provided for @viewClients.
+  ///
+  /// In en, this message translates to:
+  /// **'View Clients'**
+  String get viewClients;
+
+  /// No description provided for @viewClientsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to view clients list'**
+  String get viewClientsDescription;
+
+  /// No description provided for @addClientDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to add new client'**
+  String get addClientDescription;
+
+  /// No description provided for @editClientDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit client data'**
+  String get editClientDescription;
+
+  /// No description provided for @deleteClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Client'**
+  String get deleteClient;
+
+  /// No description provided for @deleteClientDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to delete client'**
+  String get deleteClientDescription;
+
+  /// No description provided for @viewProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'View Products'**
+  String get viewProducts;
+
+  /// No description provided for @viewProductsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to view products list'**
+  String get viewProductsDescription;
+
+  /// No description provided for @addProductDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to add new product'**
+  String get addProductDescription;
+
+  /// No description provided for @editProductDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit product data'**
+  String get editProductDescription;
+
+  /// No description provided for @deleteProductDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to delete product'**
+  String get deleteProductDescription;
+
+  /// No description provided for @viewInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'View Invoices'**
+  String get viewInvoices;
+
+  /// No description provided for @viewInvoicesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to view invoices list'**
+  String get viewInvoicesDescription;
+
+  /// No description provided for @createInvoiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to create new invoice'**
+  String get createInvoiceDescription;
+
+  /// No description provided for @editInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Invoice'**
+  String get editInvoice;
+
+  /// No description provided for @editInvoiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit invoice'**
+  String get editInvoiceDescription;
+
+  /// No description provided for @deleteInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Invoice'**
+  String get deleteInvoice;
+
+  /// No description provided for @deleteInvoiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to delete invoice'**
+  String get deleteInvoiceDescription;
+
+  /// No description provided for @sendInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Invoice'**
+  String get sendInvoice;
+
+  /// No description provided for @sendInvoiceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to send invoice to client'**
+  String get sendInvoiceDescription;
+
+  /// No description provided for @viewExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'View Expenses'**
+  String get viewExpenses;
+
+  /// No description provided for @viewExpensesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to view expenses list'**
+  String get viewExpensesDescription;
+
+  /// No description provided for @addExpenseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to add new expense'**
+  String get addExpenseDescription;
+
+  /// No description provided for @editExpenseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit expense'**
+  String get editExpenseDescription;
+
+  /// No description provided for @deleteExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Expense'**
+  String get deleteExpense;
+
+  /// No description provided for @deleteExpenseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to delete expense'**
+  String get deleteExpenseDescription;
+
+  /// No description provided for @viewReports.
+  ///
+  /// In en, this message translates to:
+  /// **'View Reports'**
+  String get viewReports;
+
+  /// No description provided for @viewReportsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to view reports'**
+  String get viewReportsDescription;
+
+  /// No description provided for @exportReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Reports'**
+  String get exportReports;
+
+  /// No description provided for @exportReportsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to export reports'**
+  String get exportReportsDescription;
+
+  /// No description provided for @companySettingsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit company settings'**
+  String get companySettingsDescription;
+
+  /// No description provided for @systemSettingsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ability to edit system settings'**
+  String get systemSettingsDescription;
+
+  /// No description provided for @systemAdministrator.
+  ///
+  /// In en, this message translates to:
+  /// **'System Administrator'**
+  String get systemAdministrator;
+
+  /// No description provided for @systemAdministratorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Has all permissions in the system'**
+  String get systemAdministratorDescription;
+
+  /// No description provided for @accountantDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Manages invoices, expenses and financial reports'**
+  String get accountantDescription;
+
+  /// No description provided for @userDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Limited permissions for viewing and reading'**
+  String get userDescription;
+
+  /// No description provided for @supervisorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Manages users and permissions'**
+  String get supervisorDescription;
+
+  /// No description provided for @searchInClients.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in clients...'**
+  String get searchInClients;
+
+  /// No description provided for @noClients.
+  ///
+  /// In en, this message translates to:
+  /// **'No clients'**
+  String get noClients;
+
+  /// No description provided for @pressAddToCreateClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Press add button to create new client'**
+  String get pressAddToCreateClient;
+
+  /// No description provided for @address.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get address;
+
+  /// No description provided for @companyInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Information'**
+  String get companyInformation;
+
+  /// No description provided for @taxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Number'**
+  String get taxNumber;
+
+  /// No description provided for @contactPersonInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person Information'**
+  String get contactPersonInformation;
+
+  /// No description provided for @contactPersonName.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person Name'**
+  String get contactPersonName;
+
+  /// No description provided for @contactPersonPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person Phone'**
+  String get contactPersonPhone;
+
+  /// No description provided for @contactPersonEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Person Email'**
+  String get contactPersonEmail;
+
+  /// No description provided for @creationDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Creation Date'**
+  String get creationDate;
+
+  /// No description provided for @clientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Client Name'**
+  String get clientName;
+
+  /// No description provided for @enterWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter website'**
+  String get enterWebsite;
+
+  /// No description provided for @enterContactPersonName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter contact person name'**
+  String get enterContactPersonName;
+
+  /// No description provided for @enterContactPersonPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter contact person phone'**
+  String get enterContactPersonPhone;
+
+  /// No description provided for @enterContactPersonEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter contact person email'**
+  String get enterContactPersonEmail;
+
+  /// No description provided for @enterAdditionalNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter additional notes'**
+  String get enterAdditionalNotes;
+
+  /// No description provided for @editClientData.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit client data for \"{name}\"'**
+  String editClientData(Object name);
+
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
+  /// No description provided for @errorUpdatingClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating client: {error}'**
+  String errorUpdatingClient(Object error);
+
+  /// No description provided for @fillFormToAddClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill the form below to add new client to the system'**
+  String get fillFormToAddClient;
+
+  /// No description provided for @errorCreatingClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Error creating client: {error}'**
+  String errorCreatingClient(Object error);
+
+  /// No description provided for @errorLoadingClients.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading clients: {error}'**
+  String errorLoadingClients(Object error);
+
+  /// No description provided for @errorDeletingClient.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting client: {error}'**
+  String errorDeletingClient(Object error);
+
+  /// No description provided for @errorLoadingStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading statistics: {error}'**
+  String errorLoadingStatistics(Object error);
+
+  /// No description provided for @errorDeletingClients.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting clients: {error}'**
+  String errorDeletingClients(Object error);
+
+  /// No description provided for @errorUpdatingClientStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating client status: {error}'**
+  String errorUpdatingClientStatus(Object error);
+
+  /// No description provided for @dataConversionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Data conversion error: {error}'**
+  String dataConversionError(Object error);
+
+  /// No description provided for @nameMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get nameMinLength;
+
+  /// No description provided for @nameMaxLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be less than 50 characters'**
+  String get nameMaxLength;
+
+  /// No description provided for @phoneRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is required'**
+  String get phoneRequired;
+
+  /// No description provided for @phoneMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must be at least 10 digits'**
+  String get phoneMinLength;
+
+  /// No description provided for @phoneMaxLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number must be less than 15 digits'**
+  String get phoneMaxLength;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordMinLength;
+
+  /// No description provided for @passwordMaxLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be less than 50 characters'**
+  String get passwordMaxLength;
+
+  /// No description provided for @passwordUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one uppercase letter'**
+  String get passwordUppercase;
+
+  /// No description provided for @passwordLowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one lowercase letter'**
+  String get passwordLowercase;
+
+  /// No description provided for @passwordNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain at least one number'**
+  String get passwordNumber;
+
+  /// No description provided for @passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// No description provided for @thisField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field'**
+  String get thisField;
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get search;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

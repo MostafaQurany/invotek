@@ -21,6 +21,11 @@ class UsersListLoading extends UsersState {
   const UsersListLoading();
 }
 
+class UsersListLoadingMore extends UsersState {
+  final List<User> users;
+  const UsersListLoadingMore({required this.users});
+}
+
 class UserCreating extends UsersState {
   const UserCreating();
 }
@@ -50,7 +55,14 @@ class BulkOperationLoading extends UsersState {
 class UsersListLoaded extends UsersState {
   final List<User> users;
   final bool hasMoreData;
-  const UsersListLoaded({required this.users, this.hasMoreData = true});
+  final int currentPage;
+  final int totalPages;
+  const UsersListLoaded({
+    required this.users,
+    this.hasMoreData = true,
+    this.currentPage = 1,
+    this.totalPages = 1,
+  });
 }
 
 class UserCreated extends UsersState {

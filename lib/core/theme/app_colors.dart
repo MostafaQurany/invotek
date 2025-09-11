@@ -33,6 +33,7 @@ class AppColors {
   static const Color error = Colors.red;
   static const Color success = Color(0xFF4CAF50);
   static const Color warning = Color(0xFFFF9800);
+  static const Color info = Color(0xFF2196F3);
 
   // basic
   static const Color white = Colors.white;
@@ -41,4 +42,9 @@ class AppColors {
   static final Color greyDark = Colors.grey[800] ?? Colors.grey;
   static final Color greyLight = Colors.grey[300] ?? Colors.grey;
   static final Color grey = Colors.grey;
+
+  // Material Design 3 colors
+  static const Color onPrimary = Colors.white;
+  static const Color onSurface = Color(0xFF1C1B1F);
+  static const Color onSurfaceVariant = Color(0xFF49454F);
 }

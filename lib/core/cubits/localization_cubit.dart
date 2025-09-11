@@ -8,7 +8,13 @@ class LocalizationState {
   const LocalizationState({required this.locale});
 
   @override
-  List<Object?> get props => [locale];
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is LocalizationState && other.locale == locale;
+  }
+
+  @override
+  int get hashCode => locale.hashCode;
 
   LocalizationState copyWith({Locale? locale}) {
     return LocalizationState(locale: locale ?? this.locale);

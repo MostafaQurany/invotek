@@ -4,37 +4,37 @@ part 'product_model.g.dart';
 
 @JsonSerializable()
 class ProductModel {
-  final int? id;
+  int? id;
   @JsonKey(name: 'company_id')
-  final int? companyId;
+  int? companyId;
   @JsonKey(name: 'product_category_id')
-  final int? productCategoryId;
-  final String? name;
-  final String? sku;
-  final String? description;
-  final String? price;
-  final String? cost;
+  int? productCategoryId;
+  String? name;
+  String? sku;
+  String? description;
+  String? price;
+  String? cost;
   @JsonKey(name: 'tax_rate')
-  final String? taxRate;
+  String? taxRate;
   @JsonKey(name: 'tax_rate_backup')
-  final String? taxRateBackup;
-  final int? quantity;
+  String? taxRateBackup;
+  int? quantity;
   @JsonKey(name: 'quantity_backup')
-  final int? quantityBackup;
-  final String? barcode;
-  final String? unit;
+  int? quantityBackup;
+  String? barcode;
+  String? unit;
   @JsonKey(name: 'has_tax')
-  final bool? hasTax;
+  bool? hasTax;
   @JsonKey(name: 'is_active')
-  final bool? isActive;
+  bool? isActive;
   @JsonKey(name: 'track_inventory')
-  final bool? trackInventory;
-  final String? status;
+  bool? trackInventory;
+  String? status;
   @JsonKey(name: 'created_at')
-  final DateTime? createdAt;
+  DateTime? createdAt;
   @JsonKey(name: 'updated_at')
-  final DateTime? updatedAt;
-  final String? image;
+  DateTime? updatedAt;
+  String? image;
 
   ProductModel({
     this.id,
