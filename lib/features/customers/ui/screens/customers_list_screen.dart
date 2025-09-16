@@ -88,67 +88,53 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
                 },
           );
         },
-        child: CustomScrollView(
-          controller: _scrollController,
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            // Custom Header Widget as Sliver
-            SliverToBoxAdapter(
-              child: CustomersHeaderWidget(
-                onMenuPressed: _handleMenuPressed,
-                searchController: _searchController,
-                onSearchChanged: (query) {
-                  // CustomersCubit.get(context).loadFirstPage(
-                  //   refresh: true,
-                  //   search: query.isEmpty ? null : query,
-                  //   status: _selectedStatus == 'all_status'
-                  //       ? null
-                  //       : _selectedStatus,
-                  //   company: _selectedCompany == 'all_company'
-                  //       ? null
-                  //       : _selectedCompany,
-                  // );
-                },
-                selectedStatus: _selectedStatus ?? '',
-                selectedCompany: _selectedCompany ?? '',
-                onStatusChanged: _onStatusChanged,
-                onCompanyChanged: _onCompanyChanged,
-              ),
-            ),
-
-            // Customers List with Refresh
-            SliverFillRemaining(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28.r),
-                    topRight: Radius.circular(28.r),
-                  ),
-                ),
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    CustomersCubit.get(context).loadFirstPage(refresh: true);
+        child: RefreshIndicator(
+          onRefresh: () async {
+            CustomersCubit.get(context).loadFirstPage(refresh: true);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Header Widget - Scrolls with content
+                CustomersHeaderWidget(
+                  onMenuPressed: _handleMenuPressed,
+                  searchController: _searchController,
+                  onSearchChanged: (query) {
+                    // CustomersCubit.get(context).loadFirstPage(
+                    //   refresh: true,
+                    //   search: query.isEmpty ? null : query,
+                    //   status: _selectedStatus == 'all_status'
+                    //       ? null
+                    //       : _selectedStatus,
+                    //   company: _selectedCompany == 'all_company'
+                    //       ? null
+                    //       : _selectedCompany,
+                    // );
                   },
-                  child: CustomersStateBuilder(
-                    onCustomerTap: (customer) =>
-                        _showCustomerOptions(context, customer),
-                    onCustomerView: _navigateToCustomerDetails,
-                    onCustomerEdit: _navigateToEditCustomer,
-                    onCustomerDelete: _showDeleteConfirmation,
-                    onAddCustomer: _navigateToAddCustomer,
-                    onRetry: _retry,
-                    selectedStatus: _selectedStatus ?? '',
-                    selectedCompany: _selectedCompany ?? '',
-                    onStatusChanged: _onStatusChanged,
-                    onCompanyChanged: _onCompanyChanged,
-                  ),
+                  selectedStatus: _selectedStatus ?? '',
+                  selectedCompany: _selectedCompany ?? '',
+                  onStatusChanged: _onStatusChanged,
+                  onCompanyChanged: _onCompanyChanged,
                 ),
-              ),
-            ),
 
-            // Bottom spacing for FAB
-          ],
+                // Customers List Content
+                CustomersStateBuilder(
+                  onCustomerTap: (customer) =>
+                      _showCustomerOptions(context, customer),
+                  onCustomerView: _navigateToCustomerDetails,
+                  onCustomerEdit: _navigateToEditCustomer,
+                  onCustomerDelete: _showDeleteConfirmation,
+                  onAddCustomer: _navigateToAddCustomer,
+                  onRetry: _retry,
+                  selectedStatus: _selectedStatus ?? '',
+                  selectedCompany: _selectedCompany ?? '',
+                  onStatusChanged: _onStatusChanged,
+                  onCompanyChanged: _onCompanyChanged,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
 

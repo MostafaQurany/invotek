@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
 import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
@@ -84,32 +85,48 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
             context.read<ClientsCubit>().clearError();
           }
         },
-        child: Column(
-          children: [
-            // Search and Filter Section
-            _buildSearchAndFilterSection(),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            context.read<ClientsCubit>().loadClients();
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Search and Filter Section
+                _buildSearchAndFilterSection(),
 
-            // Clients List
-            Expanded(
-              child: BlocBuilder<ClientsCubit, ClientsState>(
-                builder: (context, state) {
-                  if (state.isLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: colorScheme.primary,
-                      ),
-                    );
-                  }
+                // Clients List Content
+                BlocBuilder<ClientsCubit, ClientsState>(
+                  builder: (context, state) {
+                    if (state.isLoading) {
+                      return Container(
+                        height: 0.75.sh,
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundLight,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(28.r),
+                            topRight: Radius.circular(28.r),
+                          ),
+                        ),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: colorScheme.primary,
+                          ),
+                        ),
+                      );
+                    }
 
-                  if (state.clients.isEmpty) {
-                    return _buildEmptyState();
-                  }
+                    if (state.clients.isEmpty) {
+                      return _buildEmptyState();
+                    }
 
-                  return _buildClientsList(state.clients);
-                },
-              ),
+                    return _buildClientsList(state.clients);
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -239,47 +256,162 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
   }
 
   Widget _buildEmptyState() {
-    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      height: 0.75.sh,
+      decoration: BoxDecoration(
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
+        ),
+      ),
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(32.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Empty State Icon
+              Container(
+                width: 120.w,
+                height: 120.w,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(60.r),
+                ),
+                child: Icon(
+                  Icons.people_outline,
+                  size: 60.sp,
+                  color: AppColors.primary.withOpacity(0.6),
+                ),
+              ),
 
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.people_outline,
-            size: 80.sp,
-            color: colorScheme.onSurfaceVariant,
+              SizedBox(height: 32.h),
+
+              // Empty State Title
+              Text(
+                'No clients found',
+                style: TextStyle(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              SizedBox(height: 12.h),
+
+              // Empty State Description
+              Text(
+                'Start by adding your first client to the system',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  color: AppColors.grey,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+
+              SizedBox(height: 32.h),
+
+              // Add Client Button
+              FilledButton.icon(
+                onPressed: () => Navigator.pushNamed(context, '/clients/add'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.white,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 32.w,
+                    vertical: 16.h,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
+                icon: Icon(Icons.add, size: 20.sp),
+                label: Text(
+                  'Add First Client',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 16.h),
-          Text(
-            'لا توجد عملاء',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: colorScheme.onSurface,
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Text(
-            'اضغط على زر الإضافة لإنشاء عميل جديد',
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildClientsList(List<Client> clients) {
-    return ListView.builder(
-      padding: EdgeInsets.all(16.w),
-      itemCount: clients.length,
-      itemBuilder: (context, index) {
-        final client = clients[index];
-        return _buildClientCard(client);
-      },
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 25.h),
+          // Clients Count Header
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              children: [
+                Text(
+                  'Clients (${clients.length})',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 6.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: Text(
+                    '${clients.length} Total',
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 15.h),
+          // Clients List - Using ListView.builder for memory efficiency
+          ListView.builder(
+            physics:
+                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
+            shrinkWrap: true, // Takes only the space it needs
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: clients.length,
+            itemBuilder: (context, index) {
+              final client = clients[index];
+              return Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: _buildClientCard(client),
+              );
+            },
+          ),
+          // Bottom spacing for FAB
+          SizedBox(height: 80.h),
+        ],
+      ),
     );
   }
 

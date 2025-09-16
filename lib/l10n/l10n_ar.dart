@@ -1141,13 +1141,13 @@ class SAr extends S {
   String get home => 'الرئيسية';
 
   @override
-  String get usersManagement => 'إدارة المستخدمين والصلاحيات';
+  String get usersManagement => 'المستخدمين والصلاحيات';
 
   @override
-  String get customersManagement => 'إدارة العملاء';
+  String get customersManagement => 'العملاء';
 
   @override
-  String get productsCategoriesManagement => 'إدارة المنتجات وفئاتها';
+  String get productsCategoriesManagement => 'المنتجات وفئاتها';
 
   @override
   String get expensesManagement => 'إدارة المصروفات وفئاتها';
@@ -2019,4 +2019,7 @@ class SAr extends S {
 
   @override
   String get search => 'البحث...';
+
+  @override
+  String get loadingUsers => 'جاري تحميل المستخدمين...';
 }

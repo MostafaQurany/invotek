@@ -155,7 +155,7 @@ class _UsersHeaderWidgetState extends State<UsersHeaderWidget>
                         hintText: 'Search users',
                         onChanged: widget.onSearchChanged,
                         backgroundColor: AppColors.white,
-                        borderRadius: 16.r,
+                        borderRadius: 32.r,
                         prefixIcon: Icons.search_rounded,
                         suffixIcon: Icons.tune_rounded,
                       ),

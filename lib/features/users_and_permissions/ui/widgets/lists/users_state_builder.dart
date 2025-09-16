@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/demo/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/lists/users_list.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/states/users_empty_state.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/states/users_error_state.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UsersStateBuilder extends StatelessWidget {
   final Function(User) onUserTap;
@@ -38,7 +41,32 @@ class UsersStateBuilder extends StatelessWidget {
     return BlocBuilder<UsersCubit, UsersState>(
       builder: (context, state) {
         if (state is UsersListLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return Container(
+            height: 0.75.sh,
+            decoration: BoxDecoration(
+              color: AppColors.backgroundLight,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(28.r),
+                topRight: Radius.circular(28.r),
+              ),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(color: AppColors.primary),
+                  SizedBox(height: 16.h),
+                  Text(
+                    S.of(context).loadingUsers,
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
         }
 
         if (state is UsersListLoadingMore) {
@@ -82,9 +110,25 @@ class UsersStateBuilder extends StatelessWidget {
             isLoadingMore: false,
           );
         }
+        final users = context.read<UsersCubit>().users;
+        if (users.isEmpty) {
+          return UsersEmptyState(onAddUser: onAddUser);
+        }
 
-        // Default empty state
-        return UsersEmptyState(onAddUser: onAddUser);
+        return UsersList(
+          users: users,
+          onUserTap: onUserTap,
+          onUserView: onUserView,
+          onUserEdit: onUserEdit,
+          onUserDelete: onUserDelete,
+          onAddUser: onAddUser,
+          onRetry: onRetry,
+          selectedRole: selectedRole,
+          selectedStatus: selectedStatus,
+          onRoleChanged: onRoleChanged,
+          onStatusChanged: onStatusChanged,
+          isLoadingMore: false,
+        );
       },
     );
   }

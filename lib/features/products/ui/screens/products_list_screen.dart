@@ -90,70 +90,57 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 },
           );
         },
-        child: CustomScrollView(
-          controller: _scrollController,
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            // Custom Header Widget as Sliver
-            SliverToBoxAdapter(
-              child: BlocBuilder<CategoriesCubit, CategoriesState>(
-                builder: (context, categoriesState) {
-                  return categoriesState.when(
-                    initial: (categories, currentPage, totalPages, error) =>
-                        _buildProductsHeader(categories),
-                    loading: (categories, currentPage, totalPages, message) =>
-                        _buildProductsHeader(categories),
-                    loaded: (categories, currentPage, totalPages) =>
-                        _buildProductsHeader(categories),
-                    createSuccess:
-                        (categories, created, currentPage, totalPages) =>
-                            _buildProductsHeader(categories),
-                    updateSuccess:
-                        (categories, updated, currentPage, totalPages) =>
-                            _buildProductsHeader(categories),
-                    deleteSuccess:
-                        (categories, deletedId, currentPage, totalPages) =>
-                            _buildProductsHeader(categories),
-                    failure: (categories, currentPage, totalPages, error) =>
-                        _buildProductsHeader(categories),
-                  );
-                },
-              ),
-            ),
-
-            // Products List with Refresh
-            SliverFillRemaining(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28.r),
-                    topRight: Radius.circular(28.r),
-                  ),
-                ),
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    ProductsCubit.get(context).loadFirstPage(refresh: true);
+        child: RefreshIndicator(
+          onRefresh: () async {
+            ProductsCubit.get(context).loadFirstPage(refresh: true);
+            CategoriesCubit.get(context).loadFirstPage(refresh: true);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Header Widget - Scrolls with content
+                BlocBuilder<CategoriesCubit, CategoriesState>(
+                  builder: (context, categoriesState) {
+                    return categoriesState.when(
+                      initial: (categories, currentPage, totalPages, error) =>
+                          _buildProductsHeader(categories),
+                      loading: (categories, currentPage, totalPages, message) =>
+                          _buildProductsHeader(categories),
+                      loaded: (categories, currentPage, totalPages) =>
+                          _buildProductsHeader(categories),
+                      createSuccess:
+                          (categories, created, currentPage, totalPages) =>
+                              _buildProductsHeader(categories),
+                      updateSuccess:
+                          (categories, updated, currentPage, totalPages) =>
+                              _buildProductsHeader(categories),
+                      deleteSuccess:
+                          (categories, deletedId, currentPage, totalPages) =>
+                              _buildProductsHeader(categories),
+                      failure: (categories, currentPage, totalPages, error) =>
+                          _buildProductsHeader(categories),
+                    );
                   },
-                  child: ProductsStateBuilder(
-                    onProductTap: (product) =>
-                        _showProductOptions(context, product),
-                    onProductView: _navigateToProductDetails,
-                    onProductEdit: _navigateToEditProduct,
-                    onProductDelete: _showDeleteConfirmation,
-                    onAddProduct: _navigateToAddProduct,
-                    onRetry: _retry,
-                    selectedCategory: _selectedCategory ?? '',
-                    selectedStatus: _selectedStatus ?? '',
-                    onCategoryChanged: _onCategoryChanged,
-                    onStatusChanged: _onStatusChanged,
-                  ),
                 ),
-              ),
-            ),
 
-            // Bottom spacing for FAB
-          ],
+                // Products List Content
+                ProductsStateBuilder(
+                  onProductTap: (product) =>
+                      _showProductOptions(context, product),
+                  onProductView: _navigateToProductDetails,
+                  onProductEdit: _navigateToEditProduct,
+                  onProductDelete: _showDeleteConfirmation,
+                  onAddProduct: _navigateToAddProduct,
+                  onRetry: _retry,
+                  selectedCategory: _selectedCategory ?? '',
+                  selectedStatus: _selectedStatus ?? '',
+                  onCategoryChanged: _onCategoryChanged,
+                  onStatusChanged: _onStatusChanged,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
 

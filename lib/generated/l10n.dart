@@ -3690,30 +3690,30 @@ class S {
     );
   }
 
-  /// `Users and Permissions Management`
+  /// `Users and Permissions`
   String get usersManagement {
     return Intl.message(
-      'Users and Permissions Management',
+      'Users and Permissions',
       name: 'usersManagement',
       desc: '',
       args: [],
     );
   }
 
-  /// `Customers Management`
+  /// `Customers`
   String get customersManagement {
     return Intl.message(
-      'Customers Management',
+      'Customers',
       name: 'customersManagement',
       desc: '',
       args: [],
     );
   }
 
-  /// `Products and Categories Management`
+  /// `Products and Categories`
   String get productsCategoriesManagement {
     return Intl.message(
-      'Products and Categories Management',
+      'Products and Categories',
       name: 'productsCategoriesManagement',
       desc: '',
       args: [],
@@ -6455,6 +6455,16 @@ class S {
     return Intl.message(
       'Search...',
       name: 'search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading users...`
+  String get loadingUsers {
+    return Intl.message(
+      'Loading users...',
+      name: 'loadingUsers',
       desc: '',
       args: [],
     );

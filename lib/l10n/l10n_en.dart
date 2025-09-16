@@ -1148,14 +1148,13 @@ class SEn extends S {
   String get home => 'Home';
 
   @override
-  String get usersManagement => 'Users and Permissions Management';
+  String get usersManagement => 'Users and Permissions';
 
   @override
-  String get customersManagement => 'Customers Management';
+  String get customersManagement => 'Customers';
 
   @override
-  String get productsCategoriesManagement =>
-      'Products and Categories Management';
+  String get productsCategoriesManagement => 'Products and Categories';
 
   @override
   String get expensesManagement => 'Expenses & Categories Management';
@@ -2035,4 +2034,7 @@ class SEn extends S {
 
   @override
   String get search => 'Search...';
+
+  @override
+  String get loadingUsers => 'Loading users...';
 }

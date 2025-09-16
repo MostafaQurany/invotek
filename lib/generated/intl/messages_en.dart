@@ -346,7 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customers": MessageLookupByLibrary.simpleMessage("Customers"),
         "customersList": MessageLookupByLibrary.simpleMessage("Customers List"),
         "customersManagement":
-            MessageLookupByLibrary.simpleMessage("Customers Management"),
+            MessageLookupByLibrary.simpleMessage("Customers"),
         "customersReport":
             MessageLookupByLibrary.simpleMessage("Customers Report"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
@@ -645,6 +645,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loadingExpenses":
             MessageLookupByLibrary.simpleMessage("Loading expenses..."),
         "loadingMore": MessageLookupByLibrary.simpleMessage("Loading more..."),
+        "loadingUsers":
+            MessageLookupByLibrary.simpleMessage("Loading users..."),
         "loggingIn": MessageLookupByLibrary.simpleMessage("Logging in..."),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginLoadin": MessageLookupByLibrary.simpleMessage("Logging in..."),
@@ -859,8 +861,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Product updated successfully"),
         "products": MessageLookupByLibrary.simpleMessage("Products"),
         "productsCategories": MessageLookupByLibrary.simpleMessage("Products"),
-        "productsCategoriesManagement": MessageLookupByLibrary.simpleMessage(
-            "Products and Categories Management"),
+        "productsCategoriesManagement":
+            MessageLookupByLibrary.simpleMessage("Products and Categories"),
         "productsList": MessageLookupByLibrary.simpleMessage("Products List"),
         "productsManagement": MessageLookupByLibrary.simpleMessage(
             "Products & Categories Management"),
@@ -1036,8 +1038,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "usersAndPermissionsManagement": MessageLookupByLibrary.simpleMessage(
             "Users and Permissions Management"),
         "usersList": MessageLookupByLibrary.simpleMessage("Users List"),
-        "usersManagement": MessageLookupByLibrary.simpleMessage(
-            "Users and Permissions Management"),
+        "usersManagement":
+            MessageLookupByLibrary.simpleMessage("Users and Permissions"),
         "usersPermissions":
             MessageLookupByLibrary.simpleMessage("Users and Permissions"),
         "usersPermissionsDesc": MessageLookupByLibrary.simpleMessage(

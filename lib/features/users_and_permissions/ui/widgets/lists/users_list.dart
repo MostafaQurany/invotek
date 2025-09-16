@@ -39,13 +39,21 @@ class UsersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 0),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 25.h),
           // Users Count Header
           Padding(
-            padding: EdgeInsets.only(bottom: 16.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+
             child: Row(
               children: [
                 Text(
@@ -78,26 +86,34 @@ class UsersList extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 15.h),
+          // Users List - Using ListView.builder for memory efficiency
+          ListView.builder(
+            controller: scrollController,
+            physics:
+                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
+            shrinkWrap: true, // Takes only the space it needs
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: users.length + (isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == users.length && isLoadingMore) {
+                return Container(
+                  padding: EdgeInsets.all(16.w),
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
 
-          // Users List
-          Expanded(
-            child: ListView.separated(
-              controller: scrollController,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: users.length + (isLoadingMore ? 1 : 0),
-              separatorBuilder: (context, index) => SizedBox(height: 12.h),
-              itemBuilder: (context, index) {
-                if (index == users.length && isLoadingMore) {
-                  return Container(
-                    padding: EdgeInsets.all(16.w),
-                    child: const Center(child: CircularProgressIndicator()),
-                  );
-                }
-                final user = users[index];
-                return UserCard(user: user, onTap: () => onUserTap(user));
-              },
-            ),
+              final user = users[index];
+              print(index);
+              return Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: UserCard(user: user, onTap: () => onUserTap(user)),
+              );
+            },
           ),
+
+          // Bottom spacing for FAB
+          SizedBox(height: 80.h),
         ],
       ),
     );

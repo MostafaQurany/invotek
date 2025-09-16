@@ -339,8 +339,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customerUpdatedSuccessfully": m6,
         "customers": MessageLookupByLibrary.simpleMessage("العملاء"),
         "customersList": MessageLookupByLibrary.simpleMessage("قائمة العملاء"),
-        "customersManagement":
-            MessageLookupByLibrary.simpleMessage("إدارة العملاء"),
+        "customersManagement": MessageLookupByLibrary.simpleMessage("العملاء"),
         "customersReport":
             MessageLookupByLibrary.simpleMessage("تقرير العملاء"),
         "dark": MessageLookupByLibrary.simpleMessage("داكن"),
@@ -645,6 +644,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جاري تحميل المصروفات..."),
         "loadingMore":
             MessageLookupByLibrary.simpleMessage("جاري تحميل المزيد..."),
+        "loadingUsers":
+            MessageLookupByLibrary.simpleMessage("جاري تحميل المستخدمين..."),
         "loggingIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول..."),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "loginLoadin": MessageLookupByLibrary.simpleMessage("التسجيل..."),
@@ -857,7 +858,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "products": MessageLookupByLibrary.simpleMessage("المنتجات"),
         "productsCategories": MessageLookupByLibrary.simpleMessage("المنتجات"),
         "productsCategoriesManagement":
-            MessageLookupByLibrary.simpleMessage("إدارة المنتجات وفئاتها"),
+            MessageLookupByLibrary.simpleMessage("المنتجات وفئاتها"),
         "productsList": MessageLookupByLibrary.simpleMessage("قائمة المنتجات"),
         "productsManagement":
             MessageLookupByLibrary.simpleMessage("إدارة المنتجات وفئاتها"),
@@ -1034,7 +1035,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إدارة المستخدمين والصلاحيات"),
         "usersList": MessageLookupByLibrary.simpleMessage("قائمة المستخدمين"),
         "usersManagement":
-            MessageLookupByLibrary.simpleMessage("إدارة المستخدمين والصلاحيات"),
+            MessageLookupByLibrary.simpleMessage("المستخدمين والصلاحيات"),
         "usersPermissions":
             MessageLookupByLibrary.simpleMessage("المستخدمين والصلاحيات"),
         "usersPermissionsDesc": MessageLookupByLibrary.simpleMessage(

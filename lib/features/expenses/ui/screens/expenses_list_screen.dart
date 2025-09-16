@@ -96,68 +96,54 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
         },
         child: SafeArea(
           bottom: false,
-          child: CustomScrollView(
-            controller: _scrollController,
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              // Custom Header Widget as Sliver - now part of scrollable content
-              SliverToBoxAdapter(
-                child: ExpensesHeaderWidget(
-                  onMenuPressed: _handleMenuPressed,
-                  searchController: _searchController,
-                  onSearchChanged: (query) {
-                    ExpensesCubit.get(context).loadFirstPage(
-                      refresh: true,
-                      search: query.isEmpty ? null : query,
-                      status: _selectedStatus == 'all_status'
-                          ? null
-                          : _selectedStatus,
-                      categoryId: _selectedCategory == 'all_category'
-                          ? null
-                          : int.tryParse(_selectedCategory ?? ''),
-                    );
-                  },
-                  selectedStatus: _selectedStatus ?? '',
-                  selectedCategory: _selectedCategory ?? '',
-                  onStatusChanged: _onStatusChanged,
-                  onCategoryChanged: _onCategoryChanged,
-                ),
-              ),
-
-              // Expenses List with Refresh
-              SliverFillRemaining(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
-                  ),
-                  child: RefreshIndicator(
-                    onRefresh: () async {
-                      ExpensesCubit.get(context).loadFirstPage(refresh: true);
-                      ExpenseCategoriesCubit.get(
-                        context,
-                      ).loadFirstPage(refresh: true);
+          child: RefreshIndicator(
+            onRefresh: () async {
+              ExpensesCubit.get(context).loadFirstPage(refresh: true);
+              ExpenseCategoriesCubit.get(context).loadFirstPage(refresh: true);
+            },
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  // Header Widget - Scrolls with content
+                  ExpensesHeaderWidget(
+                    onMenuPressed: _handleMenuPressed,
+                    searchController: _searchController,
+                    onSearchChanged: (query) {
+                      ExpensesCubit.get(context).loadFirstPage(
+                        refresh: true,
+                        search: query.isEmpty ? null : query,
+                        status: _selectedStatus == 'all_status'
+                            ? null
+                            : _selectedStatus,
+                        categoryId: _selectedCategory == 'all_category'
+                            ? null
+                            : int.tryParse(_selectedCategory ?? ''),
+                      );
                     },
-                    child: ExpensesStateBuilder(
-                      onExpenseTap: (expense) =>
-                          _showExpenseOptions(context, expense),
-                      onExpenseView: _navigateToExpenseDetails,
-                      onExpenseEdit: _navigateToEditExpense,
-                      onExpenseDelete: _showDeleteConfirmation,
-                      onAddExpense: _navigateToAddExpense,
-                      onRetry: _retry,
-                      selectedStatus: _selectedStatus ?? '',
-                      selectedCategory: _selectedCategory ?? '',
-                      onStatusChanged: _onStatusChanged,
-                      onCategoryChanged: _onCategoryChanged,
-                    ),
+                    selectedStatus: _selectedStatus ?? '',
+                    selectedCategory: _selectedCategory ?? '',
+                    onStatusChanged: _onStatusChanged,
+                    onCategoryChanged: _onCategoryChanged,
                   ),
-                ),
+
+                  // Expenses List Content
+                  ExpensesStateBuilder(
+                    onExpenseTap: (expense) =>
+                        _showExpenseOptions(context, expense),
+                    onExpenseView: _navigateToExpenseDetails,
+                    onExpenseEdit: _navigateToEditExpense,
+                    onExpenseDelete: _showDeleteConfirmation,
+                    onAddExpense: _navigateToAddExpense,
+                    onRetry: _retry,
+                    selectedStatus: _selectedStatus ?? '',
+                    selectedCategory: _selectedCategory ?? '',
+                    onStatusChanged: _onStatusChanged,
+                    onCategoryChanged: _onCategoryChanged,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_card.dart';
 
@@ -23,16 +24,21 @@ class ProductsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Container(
-      padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 0),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 25.h),
           // Products Count Header
           Padding(
-            padding: EdgeInsets.only(bottom: 16.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: Row(
               children: [
                 Text(
@@ -40,7 +46,7 @@ class ProductsList extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
-                    color: colorScheme.onSurface,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const Spacer(),
@@ -50,7 +56,7 @@ class ProductsList extends StatelessWidget {
                     vertical: 6.h,
                   ),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary.withOpacity(0.1),
+                    color: AppColors.primary.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
@@ -58,38 +64,45 @@ class ProductsList extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: colorScheme.primary,
+                      color: AppColors.primary,
                     ),
                   ),
                 ),
               ],
             ),
           ),
+          SizedBox(height: 15.h),
+          // Products List - Using ListView.builder for memory efficiency
+          ListView.builder(
+            physics:
+                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
+            shrinkWrap: true, // Takes only the space it needs
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: products.length + (isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == products.length && isLoadingMore) {
+                return Container(
+                  padding: EdgeInsets.all(16.w),
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
 
-          // Products List
-          Expanded(
-            child: ListView.separated(
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: products.length + (isLoadingMore ? 1 : 0),
-              separatorBuilder: (context, index) => SizedBox(height: 12.h),
-              itemBuilder: (context, index) {
-                if (index == products.length && isLoadingMore) {
-                  return Container(
-                    padding: EdgeInsets.all(16.w),
-                    child: const Center(child: CircularProgressIndicator()),
-                  );
-                }
-                final product = products[index];
-                return ProductCard(
+              final product = products[index];
+              return Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: ProductCard(
                   product: product,
                   onTap: () => onProductTap(product),
                   onEdit: () => onProductEdit(product),
                   onDelete: () => onProductDelete(product),
-                  colorScheme: colorScheme,
-                );
-              },
-            ),
+                  //  onView: () => onProductView(product),
+                  colorScheme: Theme.of(context).colorScheme,
+                ),
+              );
+            },
           ),
+          // Bottom spacing for FAB
+          SizedBox(height: 80.h),
         ],
       ),
     );

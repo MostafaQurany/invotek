@@ -41,11 +41,7 @@ class ExpenseCategoriesStateBuilder extends StatelessWidget {
         return state.when(
           initial:
               (categories, selectedCategory, currentPage, totalPages, error) =>
-                  SliverFillRemaining(
-                    child: ExpenseCategoriesEmptyState(
-                      onAddCategory: onAddCategory,
-                    ),
-                  ),
+                  ExpenseCategoriesEmptyState(onAddCategory: onAddCategory),
           loading:
               (
                 categories,
@@ -53,42 +49,36 @@ class ExpenseCategoriesStateBuilder extends StatelessWidget {
                 currentPage,
                 totalPages,
                 message,
-              ) => SliverFillRemaining(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.backgroundLight,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+              ) => Container(
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundLight,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
                   ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        SizedBox(height: 16),
-                        Text(
-                          message == 'loading_more'
-                              ? 'Loading more...'
-                              : 'Loading categories...',
-                          style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                        ),
-                      ],
-                    ),
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        message == 'loading_more'
+                            ? 'Loading more...'
+                            : 'Loading categories...',
+                        style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                      ),
+                    ],
                   ),
                 ),
               ),
           loaded: (categories, selectedCategory, currentPage, totalPages) {
             if (categories.isEmpty) {
-              return SliverFillRemaining(
-                child: ExpenseCategoriesEmptyState(
-                  onAddCategory: onAddCategory,
-                ),
-              );
+              return ExpenseCategoriesEmptyState(onAddCategory: onAddCategory);
             }
             return ExpenseCategoriesList(
               categories: categories,
@@ -142,12 +132,7 @@ class ExpenseCategoriesStateBuilder extends StatelessWidget {
               ),
           failure:
               (categories, selectedCategory, currentPage, totalPages, error) =>
-                  SliverFillRemaining(
-                    child: ExpenseCategoriesErrorState(
-                      error: error,
-                      onRetry: onRetry,
-                    ),
-                  ),
+                  ExpenseCategoriesErrorState(error: error, onRetry: onRetry),
         );
       },
     );

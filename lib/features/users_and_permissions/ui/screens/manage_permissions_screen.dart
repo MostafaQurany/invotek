@@ -87,13 +87,13 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
       },
       child: Scaffold(
         backgroundColor: AppColors.primary,
-        body: CustomScrollView(
-          slivers: [
-            // Custom Header Widget as Sliver
-            SliverToBoxAdapter(child: _buildPermissionsHeader()),
+        body: Column(
+          children: [
+            // Header Widget - Fixed at top
+            _buildPermissionsHeader(),
 
-            // Permissions Content
-            SliverFillRemaining(
+            // Permissions Content - Takes remaining space
+            Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.backgroundLight,

@@ -92,11 +92,13 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
+            // TODO : show the rank of the data in the home screen
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.all(8.w),
                 child: Row(
                   children: [
+                    // TODO : Total invoices   
                     Expanded(
                       child: SizedBox(
                         height: 80.h,
@@ -118,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                     SizedBox(width: 10.w),
+                    // TODO : total Expansees 
                     Expanded(
                       child: SizedBox(
                         height: 80.h,
@@ -147,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen>
                 padding: EdgeInsets.all(8.w),
                 child: Row(
                   children: [
+                    //TODO : total clints
                     Expanded(
                       child: SizedBox(
                         height: 80.h,
@@ -171,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen>
                     ),
 
                     SizedBox(width: 10.w),
+                    // TODO : total tax invoices
                     Expanded(
                       child: SizedBox(
                         height: 80.h,
@@ -197,11 +202,29 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
             ),
-
+            // TODO : short cuts of adding data
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.all(8.w),
-                child: Row(children: []),
+                child: Row(
+                  children: [
+                    // TODO :  create a row of fast access of adding {customer , Expenses , invoice  , product }
+                    
+                  ],
+                ),
+              ),
+            ),
+
+            // TODO : this part will change depends on the user role
+            // show the last 5 invoices from any type 
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(8.w),
+                child: Row(
+                  children: [
+                    // TODO : show the last 5 invoices
+                  ],
+                ),
               ),
             ),
           ],

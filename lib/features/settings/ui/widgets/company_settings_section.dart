@@ -176,6 +176,7 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
                     S.of(context).saveSettings,
                     style: AppTextTheme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: AppColors.white,
                     ),
                   ),
           ),

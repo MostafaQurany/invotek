@@ -418,14 +418,14 @@
   "receiveNotifications": "تلقي الإشعارات",
   "appInfo": "معلومات التطبيق",
   "home": "الرئيسية",
-  "usersManagement": "إدارة المستخدمين والصلاحيات",
+  "usersManagement": "المستخدمين والصلاحيات",
   "usersList": "قائمة المستخدمين",
-  "managePermissions": "إدارة الصلاحيات",
-  "customersManagement": "إدارة العملاء",
-  "productsCategoriesManagement": "إدارة المنتجات وفئاتها",
+  "managePermissions": "الصلاحيات",
+  "customersManagement": "العملاء",
+  "productsCategoriesManagement": "المنتجات وفئاتها",
   "productsList": "قائمة المنتجات",
   "productCategories": "فئات المنتجات",
-  "expensesManagement": "إدارة المصروفات وفئاتها",
+  "expensesManagement": "المصروفات وفئاتها",
   "expensesList": "قائمة المصروفات",
   "expenseCategories": "فئات المصروفات",
   "taxInvoices": "الفواتير الضريبية",
@@ -806,5 +806,6 @@
   "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
   "passwordsDoNotMatch": "كلمة المرور غير متطابقة",
   "thisField": "هذا الحقل",
-  "search": "البحث..."
+  "search": "البحث...",
+  "loadingUsers": "جاري تحميل المستخدمين..."
 }

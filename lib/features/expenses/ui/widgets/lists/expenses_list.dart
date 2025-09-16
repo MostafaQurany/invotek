@@ -24,90 +24,86 @@ class ExpensesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return SliverFillRemaining(
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColors.backgroundLight,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28.r),
-            topRight: Radius.circular(28.r),
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.backgroundLight,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Expenses Count Header
-            Padding(
-              padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 16.h),
-              child: Row(
-                children: [
-                  Text(
-                    'Expenses (${expenses.length})',
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 25.h),
+          // Expenses Count Header
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              children: [
+                Text(
+                  'Expenses (${expenses.length})',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 6.h,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20.r),
+                  ),
+                  child: Text(
+                    '${expenses.length} Total',
                     style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w600,
-                      color: colorScheme.onSurface,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primary,
                     ),
                   ),
-                  const Spacer(),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 6.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colorScheme.primary.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    child: Text(
-                      '${expenses.length} Total',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
+          SizedBox(height: 15.h),
+          // Expenses List - Using ListView.builder for memory efficiency
+          ListView.builder(
+            physics:
+                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
+            shrinkWrap: true, // Takes only the space it needs
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: expenses.length + (isLoadingMore ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == expenses.length && isLoadingMore) {
+                return Container(
+                  padding: EdgeInsets.all(16.w),
+                  child: const Center(child: CircularProgressIndicator()),
+                );
+              }
 
-            // Expenses List
-            Expanded(
-              child: ListView.separated(
-                physics: const AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemCount: expenses.length + (isLoadingMore ? 1 : 0),
-                separatorBuilder: (context, index) => SizedBox(height: 12.h),
-                itemBuilder: (context, index) {
-                  if (index == expenses.length && isLoadingMore) {
-                    return Container(
-                      padding: EdgeInsets.all(16.w),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.primary,
-                          strokeWidth: 2.0,
-                        ),
-                      ),
-                    );
-                  }
-
-                  final expense = expenses[index];
-                  return ExpenseCard(
-                    expense: expense,
-                    onTap: () => onExpenseTap(expense),
-                    onEdit: () => onExpenseEdit(expense),
-                    onDelete: () => onExpenseDelete(expense),
-                    onView: () => onExpenseView(expense),
-                    colorScheme: colorScheme,
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+              final expense = expenses[index];
+              return Padding(
+                padding: EdgeInsets.only(bottom: 12.h),
+                child: ExpenseCard(
+                  expense: expense,
+                  onTap: () => onExpenseTap(expense),
+                  onEdit: () => onExpenseEdit(expense),
+                  onDelete: () => onExpenseDelete(expense),
+                  onView: () => onExpenseView(expense),
+                  colorScheme: Theme.of(context).colorScheme,
+                ),
+              );
+            },
+          ),
+          // Bottom spacing for FAB
+          SizedBox(height: 80.h),
+        ],
       ),
     );
   }

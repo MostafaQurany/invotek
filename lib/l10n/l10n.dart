@@ -2284,19 +2284,19 @@ abstract class S {
   /// No description provided for @usersManagement.
   ///
   /// In en, this message translates to:
-  /// **'Users and Permissions Management'**
+  /// **'Users and Permissions'**
   String get usersManagement;
 
   /// No description provided for @customersManagement.
   ///
   /// In en, this message translates to:
-  /// **'Customers Management'**
+  /// **'Customers'**
   String get customersManagement;
 
   /// No description provided for @productsCategoriesManagement.
   ///
   /// In en, this message translates to:
-  /// **'Products and Categories Management'**
+  /// **'Products and Categories'**
   String get productsCategoriesManagement;
 
   /// No description provided for @expensesManagement.
@@ -3942,6 +3942,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Search...'**
   String get search;
+
+  /// No description provided for @loadingUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading users...'**
+  String get loadingUsers;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

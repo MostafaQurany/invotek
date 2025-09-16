@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/providers/app_providers.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
@@ -44,18 +45,23 @@ class HomeScreenWithDrawer extends StatelessWidget {
     // Initialize data for cubits that need initial loading
     AppProviders.initializeData(context);
 
-    return ZoomDrawer(
-      controller: ZoomDrawerController(),
-      menuScreen: const MenuScreen(),
-      mainScreen: const HomeScreenWithAppBar(),
-      borderRadius: 24.0,
-      showShadow: true,
-      angle: 0.0,
-      slideWidth: MediaQuery.of(context).size.width * 0.85,
-      menuBackgroundColor: colorScheme.primary,
-      duration: const Duration(milliseconds: 275),
-      mainScreenScale: 0.3,
-      mainScreenTapClose: true,
+    return BlocBuilder<LocalizationCubit, LocalizationState>(
+      builder: (context, state) {
+        return ZoomDrawer(
+          controller: ZoomDrawerController(),
+          menuScreen: const MenuScreen(),
+          mainScreen: const HomeScreenWithAppBar(),
+          borderRadius: 24.0,
+          showShadow: true,
+          angle: 0.0,
+          slideWidth: MediaQuery.of(context).size.width * 0.85,
+          menuBackgroundColor: colorScheme.primary,
+          duration: const Duration(milliseconds: 275),
+          mainScreenScale: 0.3,
+          mainScreenTapClose: true,
+          isRtl: state.locale.languageCode == 'ar' ? true : false,
+        );
+      },
     );
   }
 }

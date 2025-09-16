@@ -418,14 +418,14 @@
   "receiveNotifications": "Receive Notifications",
   "appInfo": "App Information",
   "home": "Home",
-  "usersManagement": "Users and Permissions Management",
+  "usersManagement": "Users and Permissions",
   "usersList": "Users List",
   "managePermissions": "Manage Permissions",
-  "customersManagement": "Customers Management",
-  "productsCategoriesManagement": "Products and Categories Management",
+  "customersManagement": "Customers",
+  "productsCategoriesManagement": "Products and Categories",
   "productsList": "Products List",
   "productCategories": "Product Categories",
-  "expensesManagement": "Expenses and Categories Management",
+  "expensesManagement": "Expenses and Categories",
   "expensesList": "Expenses List",
   "expenseCategories": "Expense Categories",
   "taxInvoices": "Tax Invoices",
@@ -806,5 +806,6 @@
   "confirmPasswordRequired": "Password confirmation is required",
   "passwordsDoNotMatch": "Passwords do not match",
   "thisField": "This field",
-  "search": "Search..."
+  "search": "Search...",
+  "loadingUsers": "Loading users..."
 }

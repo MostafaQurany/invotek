@@ -11,7 +11,7 @@ class ExpensesEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: AppColors.backgroundLight,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(28.r),
           topRight: Radius.circular(28.r),

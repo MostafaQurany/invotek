@@ -90,43 +90,34 @@ class _UsersListScreenState extends State<UsersListScreen> {
             );
           }
         },
-        child: CustomScrollView(
-          controller: _scrollController,
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
-            // Custom Header Widget as Sliver
-            SliverToBoxAdapter(child: _buildUsersHeader()),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            context.read<UsersCubit>().refreshUsers();
+          },
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                // Header Widget - Scrolls with content
+                _buildUsersHeader(),
 
-            // Users List with Refresh
-            SliverFillRemaining(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundLight,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(28.r),
-                    topRight: Radius.circular(28.r),
-                  ),
+                // Users List Content
+                UsersStateBuilder(
+                  onUserTap: (user) => _showUserOptions(context, user),
+                  onUserView: _navigateToUserDetails,
+                  onUserEdit: _navigateToEditUser,
+                  onUserDelete: _showDeleteConfirmation,
+                  onAddUser: _navigateToAddUser,
+                  onRetry: _retry,
+                  selectedRole: _selectedRole ?? '',
+                  selectedStatus: _selectedStatus ?? '',
+                  onRoleChanged: _onRoleChanged,
+                  onStatusChanged: _onStatusChanged,
                 ),
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    context.read<UsersCubit>().refreshUsers();
-                  },
-                  child: UsersStateBuilder(
-                    onUserTap: (user) => _showUserOptions(context, user),
-                    onUserView: _navigateToUserDetails,
-                    onUserEdit: _navigateToEditUser,
-                    onUserDelete: _showDeleteConfirmation,
-                    onAddUser: _navigateToAddUser,
-                    onRetry: _retry,
-                    selectedRole: _selectedRole ?? '',
-                    selectedStatus: _selectedStatus ?? '',
-                    onRoleChanged: _onRoleChanged,
-                    onStatusChanged: _onStatusChanged,
-                  ),
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
