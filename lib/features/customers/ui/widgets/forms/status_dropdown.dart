@@ -45,7 +45,7 @@ class StatusDropdown extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         DropdownButtonFormField<String>(
-          value: selectedStatus,
+          initialValue: selectedStatus,
           decoration: InputDecoration(
             prefixIcon: Icon(Icons.flag_outlined, color: AppColors.greyDark),
             border: OutlineInputBorder(

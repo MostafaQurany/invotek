@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../expense_category_api_model.dart';
 
 part 'create_expense_category_response.g.dart';
 

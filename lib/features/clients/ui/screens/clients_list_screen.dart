@@ -181,7 +181,7 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
               // Status Filter
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: _selectedStatus,
+                  initialValue: _selectedStatus,
                   decoration: InputDecoration(
                     labelText: 'الحالة',
                     border: OutlineInputBorder(
@@ -210,7 +210,7 @@ class _ClientsListScreenState extends State<ClientsListScreen> {
               // Company Filter
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: _selectedCompany,
+                  initialValue: _selectedCompany,
                   decoration: InputDecoration(
                     labelText: 'الشركة',
                     border: OutlineInputBorder(

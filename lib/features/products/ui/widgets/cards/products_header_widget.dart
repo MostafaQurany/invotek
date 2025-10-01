@@ -294,7 +294,7 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
         ],
       ),
       child: DropdownButtonFormField<String>(
-        value: options.any((option) => option.value == value)
+        initialValue: options.any((option) => option.value == value)
             ? value
             : options.isNotEmpty
             ? options.first.value

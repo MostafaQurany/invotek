@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 // Removed unused: ApiResult
 import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/features/auth/data/models/google_login_request.dart';
+import 'package:invotek/features/auth/data/models/google_login_respond.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
 import 'package:invotek/features/auth/data/models/login_respond.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
@@ -29,6 +31,17 @@ import 'package:invotek/features/expenses/data/models/response/create_expense_ca
 import 'package:invotek/features/expenses/data/models/response/get_expense_category_by_id_response.dart';
 import 'package:invotek/features/expenses/data/models/response/update_expense_category_response.dart';
 import 'package:invotek/features/expenses/data/models/response/delete_expense_category_response.dart';
+import 'package:invotek/features/invoices/data/models/requests/activating_tax_integration_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
+import 'package:invotek/features/invoices/data/models/responses/activating_tax_integration_responses.dart';
+import 'package:invotek/features/invoices/data/models/responses/create_invoice_response.dart';
+import 'package:invotek/features/invoices/data/models/responses/deactivating_tax_integration_responses.dart';
+import 'package:invotek/features/invoices/data/models/responses/delete_invoice_response.dart';
+import 'package:invotek/features/invoices/data/models/responses/get_all_invoices_response.dart';
+import 'package:invotek/features/invoices/data/models/responses/get_invoice_response.dart';
+import 'package:invotek/features/invoices/data/models/responses/get_tax_integration_status.dart';
+import 'package:invotek/features/invoices/data/models/responses/update_invoice_response.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
 import 'package:invotek/features/products/data/models/response/product/product_responses.dart';
@@ -48,6 +61,9 @@ abstract class ApiClient {
 
   @POST(ApiConstants.logOut)
   Future<void> logout();
+
+  @POST(ApiConstants.googleLogin)
+  Future<GoogleLoginRespond> googleLogin(@Body() GoogleLoginRequest request);
 
   // Products
   @GET(ApiConstants.products)
@@ -238,4 +254,58 @@ abstract class ApiClient {
   Future<DeleteProductCategoryResponse> deleteProductCategory(
     @Path('id') int id,
   );
+
+  // ===== INVOICES APIs =====
+  // عرض الفواتير | List Invoices
+  @GET(ApiConstants.invoices)
+  Future<GetAllInvoicesResponse> getAllInvoices({
+    @Query('search') String? search,
+    @Query('status') String? status,
+    @Query('customer_id') int? customerId,
+    @Query('payment_method') String? paymentMethod,
+    @Query('date_from') String? dateFrom,
+    @Query('date_to') String? dateTo,
+    @Query('min_amount') double? minAmount,
+    @Query('max_amount') double? maxAmount,
+    @Query('page') int? page,
+    @Query('limit') int? limit,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
+  });
+
+  // عرض فاتورة | Show Invoice
+  @GET(ApiConstants.invoiceById)
+  Future<GetInvoiceResponse> getInvoiceById(@Path('id') int id);
+
+  // إنشاء فاتورة جديدة | Create Invoice
+  @POST(ApiConstants.createInvoice)
+  Future<CreateInvoiceResponse> createInvoice(
+    @Body() CreateInvoiceRequest request,
+  );
+
+  // تحديث فاتورة | Update Invoice
+  @PUT(ApiConstants.updateInvoice)
+  Future<UpdateInvoiceResponse> updateInvoice(
+    @Path('id') int id,
+    @Body() UpdateInvoiceRequest request,
+  );
+
+  // حذف فاتورة | Delete Invoice
+  @DELETE(ApiConstants.deleteInvoice)
+  Future<DeleteInvoiceResponse> deleteInvoice(@Path('id') int id);
+
+  // ===== TAX INTEGRATION APIs =====
+  // تفعيل التكامل الضريبي | Activating tax integration
+  @POST(ApiConstants.activateTaxIntegration)
+  Future<ActivatingTaxIntegrationResponses> activateTaxIntegration(
+    @Body() ActivatingTaxIntegrationRequest request,
+  );
+
+  // إلغاء التكامل الضريبي | Deactivating tax integration
+  @POST(ApiConstants.deactivateTaxIntegration)
+  Future<DeactivatingTaxIntegrationResponses> deactivateTaxIntegration();
+
+  // حالة التكامل الضريبي | Tax integration status
+  @GET(ApiConstants.taxIntegrationStatus)
+  Future<GetTaxIntegrationStatus> getTaxIntegrationStatus();
 }

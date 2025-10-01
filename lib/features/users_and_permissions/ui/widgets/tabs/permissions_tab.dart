@@ -243,7 +243,7 @@ class _PermissionsTabState extends State<PermissionsTab> {
                 _permissions[key] = value;
               });
             },
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
         ],
       ),

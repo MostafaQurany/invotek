@@ -148,7 +148,7 @@ class ProfileTab extends StatelessWidget {
                       Switch(
                         value: isActive,
                         onChanged: onActiveChanged,
-                        activeColor: AppColors.primary,
+                        activeThumbColor: AppColors.primary,
                       ),
                     ],
                   ),

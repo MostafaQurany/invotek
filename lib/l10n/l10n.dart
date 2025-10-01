@@ -226,7 +226,7 @@ abstract class S {
   /// No description provided for @networkError.
   ///
   /// In en, this message translates to:
-  /// **'Network connection error. Please check your connection and try again.'**
+  /// **'Network error'**
   String get networkError;
 
   /// No description provided for @serverError.
@@ -1762,7 +1762,7 @@ abstract class S {
   /// No description provided for @errorOccurred.
   ///
   /// In en, this message translates to:
-  /// **'Error: {error}'**
+  /// **'An error occurred: {error}'**
   String errorOccurred(Object error);
 
   /// No description provided for @searchCustomers.
@@ -2302,7 +2302,7 @@ abstract class S {
   /// No description provided for @expensesManagement.
   ///
   /// In en, this message translates to:
-  /// **'Expenses & Categories Management'**
+  /// **'Expenses & Categories'**
   String get expensesManagement;
 
   /// No description provided for @supportEmail.
@@ -3256,7 +3256,7 @@ abstract class S {
   /// No description provided for @enterAddress.
   ///
   /// In en, this message translates to:
-  /// **'Enter client address'**
+  /// **'Enter address'**
   String get enterAddress;
 
   /// No description provided for @enterDetailedAddress.
@@ -3948,6 +3948,588 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Loading users...'**
   String get loadingUsers;
+
+  /// No description provided for @signInFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in failed'**
+  String get signInFailed;
+
+  /// No description provided for @loginCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Login cancelled'**
+  String get loginCancelled;
+
+  /// No description provided for @failedToGetUserData.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get user data'**
+  String get failedToGetUserData;
+
+  /// No description provided for @loginError.
+  ///
+  /// In en, this message translates to:
+  /// **'Login error'**
+  String get loginError;
+
+  /// No description provided for @playServicesNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Play services not available'**
+  String get playServicesNotAvailable;
+
+  /// No description provided for @googleSignInError.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign in error'**
+  String get googleSignInError;
+
+  /// No description provided for @addInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Invoice'**
+  String get addInvoice;
+
+  /// No description provided for @invoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get invoices;
+
+  /// No description provided for @searchInInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in invoices...'**
+  String get searchInInvoices;
+
+  /// No description provided for @allPaymentMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'All Payment Methods'**
+  String get allPaymentMethods;
+
+  /// No description provided for @customer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get customer;
+
+  /// No description provided for @allCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'All Customers'**
+  String get allCustomers;
+
+  /// No description provided for @items.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get items;
+
+  /// No description provided for @paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paid;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @overdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get overdue;
+
+  /// No description provided for @draft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get draft;
+
+  /// No description provided for @card.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get card;
+
+  /// No description provided for @total.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get total;
+
+  /// No description provided for @subtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get subtotal;
+
+  /// No description provided for @tax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get tax;
+
+  /// No description provided for @noItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No items'**
+  String get noItems;
+
+  /// No description provided for @addItemsToInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Add items to invoice'**
+  String get addItemsToInvoice;
+
+  /// No description provided for @qty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get qty;
+
+  /// No description provided for @payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get payment;
+
+  /// No description provided for @paymentDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Details'**
+  String get paymentDetails;
+
+  /// No description provided for @markAsPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Paid'**
+  String get markAsPaid;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
+
+  /// No description provided for @duplicate.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate'**
+  String get duplicate;
+
+  /// No description provided for @downloadPDF.
+  ///
+  /// In en, this message translates to:
+  /// **'Download PDF'**
+  String get downloadPDF;
+
+  /// No description provided for @noInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices'**
+  String get noInvoices;
+
+  /// No description provided for @noInvoicesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the add button to create a new invoice'**
+  String get noInvoicesDescription;
+
+  /// No description provided for @addFirstInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Add First Invoice'**
+  String get addFirstInvoice;
+
+  /// No description provided for @deleteInvoiceConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Invoice Confirmation'**
+  String get deleteInvoiceConfirmation;
+
+  /// No description provided for @deleteInvoiceWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this invoice? This action cannot be undone.'**
+  String get deleteInvoiceWarning;
+
+  /// No description provided for @sendMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Method'**
+  String get sendMethod;
+
+  /// No description provided for @sms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get sms;
+
+  /// No description provided for @emailDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Details'**
+  String get emailDetails;
+
+  /// No description provided for @subject.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject'**
+  String get subject;
+
+  /// No description provided for @enterSubject.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter subject'**
+  String get enterSubject;
+
+  /// No description provided for @message.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get message;
+
+  /// No description provided for @enterMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter message'**
+  String get enterMessage;
+
+  /// No description provided for @includePDF.
+  ///
+  /// In en, this message translates to:
+  /// **'Include PDF'**
+  String get includePDF;
+
+  /// No description provided for @paymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Date'**
+  String get paymentDate;
+
+  /// No description provided for @addNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Notes'**
+  String get addNotes;
+
+  /// No description provided for @invoiceHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Help'**
+  String get invoiceHelp;
+
+  /// No description provided for @creatingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating Invoices'**
+  String get creatingInvoices;
+
+  /// No description provided for @createInvoiceStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Enter basic customer information'**
+  String get createInvoiceStep1;
+
+  /// No description provided for @createInvoiceStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Add items and quantities'**
+  String get createInvoiceStep2;
+
+  /// No description provided for @createInvoiceStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Set payment method and date'**
+  String get createInvoiceStep3;
+
+  /// No description provided for @createInvoiceStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Review and save the invoice'**
+  String get createInvoiceStep4;
+
+  /// No description provided for @managingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Invoices'**
+  String get managingInvoices;
+
+  /// No description provided for @manageInvoiceStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Use search and filters to find invoices'**
+  String get manageInvoiceStep1;
+
+  /// No description provided for @manageInvoiceStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Tap on invoice to view details'**
+  String get manageInvoiceStep2;
+
+  /// No description provided for @manageInvoiceStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Use buttons to edit or delete'**
+  String get manageInvoiceStep3;
+
+  /// No description provided for @manageInvoiceStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'4. Send invoice to customer when needed'**
+  String get manageInvoiceStep4;
+
+  /// No description provided for @paymentMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Methods'**
+  String get paymentMethods;
+
+  /// No description provided for @paymentMethodCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentMethodCash;
+
+  /// No description provided for @paymentMethodCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Card'**
+  String get paymentMethodCard;
+
+  /// No description provided for @paymentMethodBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Transfer'**
+  String get paymentMethodBank;
+
+  /// No description provided for @paymentMethodCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get paymentMethodCheck;
+
+  /// No description provided for @taxIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Integration'**
+  String get taxIntegration;
+
+  /// No description provided for @taxIntegrationStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Enable tax integration'**
+  String get taxIntegrationStep1;
+
+  /// No description provided for @taxIntegrationStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'2. Enter company tax information'**
+  String get taxIntegrationStep2;
+
+  /// No description provided for @taxIntegrationStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'3. Test connection and save settings'**
+  String get taxIntegrationStep3;
+
+  /// No description provided for @invoiceDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Details'**
+  String get invoiceDetails;
+
+  /// No description provided for @customerInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Information'**
+  String get customerInformation;
+
+  /// No description provided for @amountInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount Information'**
+  String get amountInformation;
+
+  /// No description provided for @invoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Number'**
+  String get invoiceNumber;
+
+  /// No description provided for @enterInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter invoice number'**
+  String get enterInvoiceNumber;
+
+  /// No description provided for @issueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue Date'**
+  String get issueDate;
+
+  /// No description provided for @selectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Date'**
+  String get selectDate;
+
+  /// No description provided for @enterCustomerEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer email'**
+  String get enterCustomerEmail;
+
+  /// No description provided for @enterCustomerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter customer phone'**
+  String get enterCustomerPhone;
+
+  /// No description provided for @enterSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter subtotal'**
+  String get enterSubtotal;
+
+  /// No description provided for @enterTaxAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter tax amount'**
+  String get enterTaxAmount;
+
+  /// No description provided for @taxIntegrationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Integration Settings'**
+  String get taxIntegrationSettings;
+
+  /// No description provided for @configureTaxIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure Tax Integration'**
+  String get configureTaxIntegration;
+
+  /// No description provided for @enableTaxIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Tax Integration'**
+  String get enableTaxIntegration;
+
+  /// No description provided for @taxType.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Type'**
+  String get taxType;
+
+  /// No description provided for @vat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get vat;
+
+  /// No description provided for @salesTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Tax'**
+  String get salesTax;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
+  /// No description provided for @saudiArabia.
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi Arabia'**
+  String get saudiArabia;
+
+  /// No description provided for @uae.
+  ///
+  /// In en, this message translates to:
+  /// **'United Arab Emirates'**
+  String get uae;
+
+  /// No description provided for @kuwait.
+  ///
+  /// In en, this message translates to:
+  /// **'Kuwait'**
+  String get kuwait;
+
+  /// No description provided for @testConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Connection'**
+  String get testConnection;
+
+  /// No description provided for @vatNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT Number'**
+  String get vatNumber;
+
+  /// No description provided for @enterVatNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter VAT number'**
+  String get enterVatNumber;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @postalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal Code'**
+  String get postalCode;
+
+  /// No description provided for @contactInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get contactInformation;
+
+  /// No description provided for @enterPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone'**
+  String get enterPhone;
+
+  /// No description provided for @testingConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing connection...'**
+  String get testingConnection;
+
+  /// No description provided for @taxAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Amount'**
+  String get taxAmount;
+
+  /// No description provided for @enterDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter description'**
+  String get enterDescription;
+
+  /// No description provided for @searchInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Search invoices...'**
+  String get searchInvoices;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

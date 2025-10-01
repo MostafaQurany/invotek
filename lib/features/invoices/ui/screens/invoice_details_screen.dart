@@ -1,0 +1,292 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/widgets/animated_entry_widget.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen.dart';
+import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_summary_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_payment_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
+import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
+import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
+import 'package:invotek/generated/l10n.dart';
+
+class InvoiceDetailsScreen extends StatefulWidget {
+  final InvoiceModel invoice;
+
+  const InvoiceDetailsScreen({super.key, required this.invoice});
+
+  @override
+  State<InvoiceDetailsScreen> createState() => _InvoiceDetailsScreenState();
+}
+
+class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final invoice = widget.invoice;
+
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          // Modern Header with Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration.zero,
+              child: InvoiceDetailsHeaderWidget(
+                invoice: invoice,
+                onBack: () => Navigator.pop(context),
+                onEdit: () => _editInvoice(),
+                onShare: () => _shareInvoice(),
+                onPrint: () => _printInvoice(),
+              ),
+            ),
+          ),
+
+          // Space with Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 200),
+              child: SizedBox(height: 16.h),
+            ),
+          ),
+
+          // Content Cards with Staggered Animation
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 400),
+              child: InvoiceSummaryCard(
+                invoice: invoice,
+                onStatusTap: () => _showStatusOptions(),
+              ),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 600),
+              child: SizedBox(height: 16.h),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 800),
+              child: InvoiceCustomerCard(
+                customer: invoice.customer,
+                onCustomerTap: () => _viewCustomerDetails(),
+              ),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 1000),
+              child: SizedBox(height: 16.h),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 1200),
+              child: InvoiceItemsCard(
+                items: invoice.items,
+                onItemTap: (item) => _viewItemDetails(item),
+              ),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 1400),
+              child: SizedBox(height: 16.h),
+            ),
+          ),
+
+          SliverToBoxAdapter(
+            child: AnimatedEntryWidget(
+              delay: Duration(milliseconds: 1600),
+              child: InvoicePaymentCard(
+                invoice: invoice,
+                onPaymentMethodTap: () => _changePaymentMethod(),
+                onMarkPaid: () => _markAsPaid(),
+              ),
+            ),
+          ),
+
+          // Bottom spacing
+          SliverToBoxAdapter(
+            child: SizedBox(height: 100.h),
+          ),
+        ],
+      ),
+      floatingActionButton: _buildFloatingActionButton(),
+    );
+  }
+
+  Widget _buildFloatingActionButton() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Send Invoice Button
+        FloatingActionButton(
+          heroTag: "send",
+          onPressed: _sendInvoice,
+          backgroundColor: AppColors.success,
+          child: const Icon(Icons.send, color: Colors.white),
+        ),
+        SizedBox(height: 8.h),
+        
+        // Edit Invoice Button
+        FloatingActionButton(
+          heroTag: "edit",
+          onPressed: _editInvoice,
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.edit, color: Colors.white),
+        ),
+        SizedBox(height: 8.h),
+        
+        // More Options Button
+        FloatingActionButton(
+          heroTag: "more",
+          onPressed: _showMoreOptions,
+          backgroundColor: AppColors.surface,
+          child: const Icon(Icons.more_vert, color: AppColors.textPrimary),
+        ),
+      ],
+    );
+  }
+
+  void _editInvoice() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditInvoiceScreen(invoice: widget.invoice),
+      ),
+    );
+  }
+
+  void _shareInvoice() {
+    // TODO: Implement share functionality
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('مشاركة الفاتورة')),
+    );
+  }
+
+  void _printInvoice() {
+    // TODO: Implement print functionality
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('طباعة الفاتورة')),
+    );
+  }
+
+  void _showStatusOptions() {
+    // TODO: Implement status options
+  }
+
+  void _viewCustomerDetails() {
+    // TODO: Navigate to customer details
+  }
+
+  void _viewItemDetails(dynamic item) {
+    // TODO: Show item details
+  }
+
+  void _changePaymentMethod() {
+    // TODO: Implement payment method change
+  }
+
+  void _markAsPaid() {
+    showDialog(
+      context: context,
+      builder: (context) => MarkPaidDialog(
+        invoice: widget.invoice,
+        onMarkPaid: () {
+          // TODO: Implement mark as paid
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+
+  void _sendInvoice() {
+    showDialog(
+      context: context,
+      builder: (context) => SendInvoiceDialog(
+        invoice: widget.invoice,
+        onSend: () {
+          // TODO: Implement send invoice
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+
+  void _showMoreOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => _buildMoreOptionsBottomSheet(),
+    );
+  }
+
+  Widget _buildMoreOptionsBottomSheet() {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.delete, color: AppColors.error),
+            title: Text(S.of(context).deleteInvoice),
+            onTap: () {
+              Navigator.pop(context);
+              _deleteInvoice();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.copy, color: AppColors.primary),
+            title: Text('تكرار الفاتورة'),
+            onTap: () {
+              Navigator.pop(context);
+              _duplicateInvoice();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.download, color: AppColors.success),
+            title: Text('تحميل PDF'),
+            onTap: () {
+              Navigator.pop(context);
+              _downloadPDF();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _deleteInvoice() {
+    showDialog(
+      context: context,
+      builder: (context) => DeleteInvoiceDialog(
+        invoice: widget.invoice,
+        onDelete: () {
+          context.read<InvoicesCubit>().deleteInvoice(widget.invoice.id);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
+      ),
+    );
+  }
+
+  void _duplicateInvoice() {
+    // TODO: Implement duplicate invoice
+  }
+
+  void _downloadPDF() {
+    // TODO: Implement PDF download
+  }
+}

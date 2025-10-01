@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/features/products/ui/widgets/forms/custom_text_field.dart';
 import 'package:invotek/features/products/ui/widgets/forms/form_section_card.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -60,7 +59,7 @@ class ProductDetailsTab extends StatelessWidget {
                 subtitle: Text(s.enableDisableProduct),
                 value: isActive,
                 onChanged: onActiveChanged,
-                activeColor: Theme.of(context).colorScheme.primary,
+                activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
               Divider(height: 1),
 
@@ -70,7 +69,7 @@ class ProductDetailsTab extends StatelessWidget {
                 subtitle: Text(s.applyTaxToProduct),
                 value: hasTax,
                 onChanged: onTaxChanged,
-                activeColor: Theme.of(context).colorScheme.primary,
+                activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
               Divider(height: 1),
 
@@ -80,7 +79,7 @@ class ProductDetailsTab extends StatelessWidget {
                 subtitle: Text(s.trackAvailableProductQuantity),
                 value: trackInventory,
                 onChanged: onInventoryChanged,
-                activeColor: Theme.of(context).colorScheme.primary,
+                activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
             ],
           ),

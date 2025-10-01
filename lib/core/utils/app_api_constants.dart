@@ -3,6 +3,7 @@ class ApiConstants {
   static const String login = "login";
   static const String register = "register";
   static const String logOut = "logout";
+  static const String googleLogin = "auth/google/login";
 
   // products
   static const String products = "company/products";
@@ -56,6 +57,21 @@ class ApiConstants {
   static const String changePassword = "users/{id}/change-password";
   static const String uploadAvatar = "users/{id}/avatar";
   static bool valid = false;
+  // ===== INVOICES APIs =====
+  // الفواتير | Invoices
+  static const String invoices = "company/tax-invoices";
+  static const String invoiceById = "company/tax-invoices/{id}";
+  static const String createInvoice = "company/tax-invoices";
+  static const String updateInvoice = "company/tax-invoices/{id}";
+  static const String deleteInvoice = "company/tax-invoices/{id}";
+
+  // ===== TAX INTEGRATION APIs =====
+  // التكامل الضريبي | Tax Integration
+  static const String activateTaxIntegration =
+      "company/tax-integration/activate";
+  static const String deactivateTaxIntegration =
+      "company/tax-integration/deactivate";
+  static const String taxIntegrationStatus = "company/tax-integration/status";
 }
 
 class ApiKey {

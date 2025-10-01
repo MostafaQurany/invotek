@@ -42,6 +42,9 @@ class AppColors {
   static final Color greyDark = Colors.grey[800] ?? Colors.grey;
   static final Color greyLight = Colors.grey[300] ?? Colors.grey;
   static final Color grey = Colors.grey;
+  
+  // Border colors
+  static const Color border = Color(0xFFE5E7EB);
 
   // Material Design 3 colors
   static const Color onPrimary = Colors.white;

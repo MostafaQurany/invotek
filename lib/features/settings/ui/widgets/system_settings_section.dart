@@ -164,7 +164,7 @@ class _SystemSettingsSectionState extends State<SystemSettingsSection> {
       trailing: Switch(
         value: value,
         onChanged: onChanged,
-        activeColor: AppColors.primary,
+        activeThumbColor: AppColors.primary,
       ),
     );
   }

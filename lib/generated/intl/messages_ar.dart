@@ -58,7 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m18(error) => "حدث خطأ: ${error}";
 
-  static String m19(error) => "حدث خطأ: ${error}";
+  static String m19(error) => "حدث خطأ ${error}";
 
   static String m20(error) => "حدث خطأ أثناء تحديث العميل: ${error}";
 
@@ -109,6 +109,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مساعدة في إضافة المصروف"),
         "addExpenseHelpDescription": MessageLookupByLibrary.simpleMessage(
             "يسمح لك هذا الشاشة بإنشاء وتتبع المصروفات التجارية. هذا ما يمكنك فعله:"),
+        "addFirstInvoice":
+            MessageLookupByLibrary.simpleMessage("إضافة أول فاتورة"),
+        "addInvoice": MessageLookupByLibrary.simpleMessage("إضافة فاتورة"),
+        "addItemsToInvoice":
+            MessageLookupByLibrary.simpleMessage("إضافة عناصر للفاتورة"),
         "addNewClient": MessageLookupByLibrary.simpleMessage("إضافة عميل جديد"),
         "addNewCustomer":
             MessageLookupByLibrary.simpleMessage("إضافة عميل جديد"),
@@ -117,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addNewRole": MessageLookupByLibrary.simpleMessage("إضافة دور جديد"),
         "addNewUserMessage": MessageLookupByLibrary.simpleMessage(
             "اضغط على زر الإضافة لإنشاء مستخدم جديد"),
+        "addNotes": MessageLookupByLibrary.simpleMessage("إضافة ملاحظات"),
         "addProduct": MessageLookupByLibrary.simpleMessage("إضافة منتج"),
         "addProductDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية إضافة منتج جديد"),
@@ -141,6 +147,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "allCategories": MessageLookupByLibrary.simpleMessage("جميع الفئات"),
         "allCategoriesDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف جميع الفئات بنجاح"),
+        "allCustomers": MessageLookupByLibrary.simpleMessage("جميع العملاء"),
+        "allPaymentMethods":
+            MessageLookupByLibrary.simpleMessage("جميع طرق الدفع"),
         "allStatus": MessageLookupByLibrary.simpleMessage("جميع الحالات"),
         "allStatuses": MessageLookupByLibrary.simpleMessage("جميع الحالات"),
         "alreadyHaveAnAccount":
@@ -149,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "amountHelperText": MessageLookupByLibrary.simpleMessage(
             "أدخل إجمالي المبلغ المنفق بما في ذلك الضرائب"),
         "amountHint": MessageLookupByLibrary.simpleMessage("0.00"),
+        "amountInformation":
+            MessageLookupByLibrary.simpleMessage("معلومات المبلغ"),
         "amountIsRequired":
             MessageLookupByLibrary.simpleMessage("المبلغ مطلوب"),
         "appInfo": MessageLookupByLibrary.simpleMessage("معلومات التطبيق"),
@@ -180,6 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكن فتح تطبيق البريد الإلكتروني"),
         "cannotOpenWebsite": MessageLookupByLibrary.simpleMessage(
             "لا يمكن فتح الموقع الإلكتروني"),
+        "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cardPressed":
             MessageLookupByLibrary.simpleMessage("تم الضغط على البطاقة"),
         "cards": MessageLookupByLibrary.simpleMessage("البطاقات"),
@@ -207,6 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "check": MessageLookupByLibrary.simpleMessage("شيك"),
         "chooseFeature": MessageLookupByLibrary.simpleMessage(
             "اختر الميزة التي تريد إدارتها"),
+        "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "clearFilters": MessageLookupByLibrary.simpleMessage("مسح المرشحات"),
         "clientAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة العميل بنجاح"),
@@ -248,6 +261,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "إمكانية تعديل إعدادات الشركة"),
         "completeRequiredFields":
             MessageLookupByLibrary.simpleMessage("أكمل الحقول المطلوبة"),
+        "configureTaxIntegration":
+            MessageLookupByLibrary.simpleMessage("تكوين التكامل الضريبي"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "confirmDeleteCustomer":
             MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
@@ -259,6 +274,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "constructionDevelopmentCompany":
             MessageLookupByLibrary.simpleMessage("شركة البناء والتطوير"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الاتصال"),
+        "contactInformation":
+            MessageLookupByLibrary.simpleMessage("معلومات الاتصال"),
         "contactPersonEmail":
             MessageLookupByLibrary.simpleMessage("بريد شخص الاتصال"),
         "contactPersonInformation":
@@ -273,6 +290,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم النسخ إلى الحافظة"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "costPrice": MessageLookupByLibrary.simpleMessage("سعر التكلفة"),
+        "country": MessageLookupByLibrary.simpleMessage("البلد"),
         "create": MessageLookupByLibrary.simpleMessage("إنشاء"),
         "createAnAccount": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
         "createAndEditInvoices":
@@ -283,6 +301,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "createInvoice": MessageLookupByLibrary.simpleMessage("إنشاء فاتورة"),
         "createInvoiceDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية إنشاء فاتورة جديدة"),
+        "createInvoiceStep1": MessageLookupByLibrary.simpleMessage(
+            "1. أدخل معلومات العميل الأساسية"),
+        "createInvoiceStep2":
+            MessageLookupByLibrary.simpleMessage("2. أضف العناصر والكميات"),
+        "createInvoiceStep3":
+            MessageLookupByLibrary.simpleMessage("3. حدد طريقة الدفع والتاريخ"),
+        "createInvoiceStep4":
+            MessageLookupByLibrary.simpleMessage("4. راجع الفاتورة واحفظها"),
         "createNewInvoice":
             MessageLookupByLibrary.simpleMessage("إنشاء فاتورة جديدة"),
         "createYourFirstExpenseCategory":
@@ -290,8 +316,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdAt": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdBy": MessageLookupByLibrary.simpleMessage("أنشأ بواسطة"),
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
+        "creatingInvoices":
+            MessageLookupByLibrary.simpleMessage("إنشاء الفواتير"),
         "creationDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "creditCard": MessageLookupByLibrary.simpleMessage("بطاقة ائتمان"),
+        "customer": MessageLookupByLibrary.simpleMessage("العميل"),
         "customerAdditionalInfo":
             MessageLookupByLibrary.simpleMessage("معلومات إضافية"),
         "customerAddress": MessageLookupByLibrary.simpleMessage("العنوان"),
@@ -315,6 +344,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تفاصيل العميل"),
         "customerEmail":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "customerInformation":
+            MessageLookupByLibrary.simpleMessage("معلومات العميل"),
         "customerManagement":
             MessageLookupByLibrary.simpleMessage("إدارة العملاء"),
         "customerName": MessageLookupByLibrary.simpleMessage("اسم العميل"),
@@ -367,8 +398,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteExpenseDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية حذف المصروف"),
         "deleteInvoice": MessageLookupByLibrary.simpleMessage("حذف فاتورة"),
+        "deleteInvoiceConfirmation":
+            MessageLookupByLibrary.simpleMessage("تأكيد حذف الفاتورة"),
         "deleteInvoiceDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية حذف الفاتورة"),
+        "deleteInvoiceWarning": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء."),
         "deleteProduct": MessageLookupByLibrary.simpleMessage("حذف منتج"),
         "deleteProductConfirmation": m10,
         "deleteProductDescription":
@@ -388,6 +423,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "dimensions": MessageLookupByLibrary.simpleMessage("الأبعاد"),
         "dontHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
+        "downloadPDF": MessageLookupByLibrary.simpleMessage("تحميل PDF"),
+        "draft": MessageLookupByLibrary.simpleMessage("مسودة"),
+        "duplicate": MessageLookupByLibrary.simpleMessage("نسخ"),
         "easyInvoiceCustomerManagement": MessageLookupByLibrary.simpleMessage(
             "إدارة الفواتير والعملاء بسهولة"),
         "ecommerceInstitution":
@@ -419,6 +457,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
         "emailAddress":
             MessageLookupByLibrary.simpleMessage("عنوان البريد الإلكتروني"),
+        "emailDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل البريد الإلكتروني"),
         "emailInvalid":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني غير صحيح"),
         "emailRequired":
@@ -427,11 +467,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تفعيل الوضع الداكن"),
         "enableDisableProduct":
             MessageLookupByLibrary.simpleMessage("تفعيل/إلغاء تفعيل المنتج"),
+        "enableTaxIntegration":
+            MessageLookupByLibrary.simpleMessage("تفعيل التكامل الضريبي"),
         "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
         "enterAdditionalNotes":
             MessageLookupByLibrary.simpleMessage("أدخل ملاحظات إضافية"),
-        "enterAddress":
-            MessageLookupByLibrary.simpleMessage("أدخل عنوان العميل"),
+        "enterAddress": MessageLookupByLibrary.simpleMessage("أدخل العنوان"),
         "enterBarcode": MessageLookupByLibrary.simpleMessage("أدخل الباركود"),
         "enterCategoryDescription":
             MessageLookupByLibrary.simpleMessage("أدخل وصفاً مختصراً للفئة"),
@@ -466,8 +507,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل هاتف شخص الاتصال"),
         "enterCostPrice":
             MessageLookupByLibrary.simpleMessage("أدخل سعر التكلفة"),
+        "enterCustomerEmail":
+            MessageLookupByLibrary.simpleMessage("أدخل بريد العميل الإلكتروني"),
         "enterCustomerName":
             MessageLookupByLibrary.simpleMessage("أدخل اسم العميل"),
+        "enterCustomerPhone":
+            MessageLookupByLibrary.simpleMessage("أدخل هاتف العميل"),
+        "enterDescription": MessageLookupByLibrary.simpleMessage("أدخل الوصف"),
         "enterDetailedAddress":
             MessageLookupByLibrary.simpleMessage("أدخل العنوان التفصيلي"),
         "enterEmail":
@@ -478,9 +524,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل عنوان المصروف والوصف"),
         "enterFullName":
             MessageLookupByLibrary.simpleMessage("أدخل الاسم الكامل"),
+        "enterInvoiceNumber":
+            MessageLookupByLibrary.simpleMessage("أدخل رقم الفاتورة"),
+        "enterMessage": MessageLookupByLibrary.simpleMessage("أدخل الرسالة"),
         "enterNotes": MessageLookupByLibrary.simpleMessage("أدخل الملاحظات"),
         "enterPassword":
             MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور"),
+        "enterPhone": MessageLookupByLibrary.simpleMessage("أدخل الهاتف"),
         "enterPhoneNumber":
             MessageLookupByLibrary.simpleMessage("أدخل رقم الهاتف"),
         "enterPostalCode":
@@ -497,6 +547,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل الشخص المسؤول"),
         "enterSellingPrice":
             MessageLookupByLibrary.simpleMessage("أدخل سعر البيع"),
+        "enterSubject": MessageLookupByLibrary.simpleMessage("أدخل الموضوع"),
+        "enterSubtotal":
+            MessageLookupByLibrary.simpleMessage("أدخل المجموع الفرعي"),
+        "enterTaxAmount":
+            MessageLookupByLibrary.simpleMessage("أدخل مبلغ الضريبة"),
         "enterTaxNumber":
             MessageLookupByLibrary.simpleMessage("أدخل الرقم الضريبي"),
         "enterTaxRatePercentage":
@@ -505,6 +560,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل اسم المستخدم"),
         "enterValidQuantity":
             MessageLookupByLibrary.simpleMessage("يرجى إدخال كمية صحيحة"),
+        "enterVatNumber": MessageLookupByLibrary.simpleMessage(
+            "أدخل رقم ضريبة القيمة المضافة"),
         "enterWebsite":
             MessageLookupByLibrary.simpleMessage("أدخل الموقع الإلكتروني"),
         "errorAddingCategory":
@@ -571,7 +628,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "فئات المصروفات وإدارة المصروفات"),
         "expensesList": MessageLookupByLibrary.simpleMessage("قائمة المصروفات"),
         "expensesManagement":
-            MessageLookupByLibrary.simpleMessage("إدارة المصروفات وفئاتها"),
+            MessageLookupByLibrary.simpleMessage("المصروفات وفئاتها"),
         "expensesReport":
             MessageLookupByLibrary.simpleMessage("تقرير المصروفات"),
         "expensesTitle": MessageLookupByLibrary.simpleMessage("المصروفات"),
@@ -580,6 +637,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إمكانية تصدير التقارير"),
         "failedToAddRole": m22,
         "failedToDeleteRole": m23,
+        "failedToGetUserData": MessageLookupByLibrary.simpleMessage(
+            "فشل في الحصول على بيانات المستخدم"),
         "failedToLoadRoles": m24,
         "failedToLoadUserPermissions": m25,
         "failedToUpdateRole": m26,
@@ -603,6 +662,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "formHelpTitle":
             MessageLookupByLibrary.simpleMessage("نموذج تعديل العميل"),
         "fullName": MessageLookupByLibrary.simpleMessage("الاسم الكامل"),
+        "googleSignInError":
+            MessageLookupByLibrary.simpleMessage("خطأ في تسجيل الدخول بالجوجل"),
         "gotIt": MessageLookupByLibrary.simpleMessage("فهمت!"),
         "hasTax": MessageLookupByLibrary.simpleMessage("يخضع للضريبة"),
         "haveAccountLogin":
@@ -613,6 +674,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "icon": MessageLookupByLibrary.simpleMessage("الأيقونة"),
         "inactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
+        "includePDF": MessageLookupByLibrary.simpleMessage("تضمين PDF"),
         "inputFields": MessageLookupByLibrary.simpleMessage("حقول الإدخال"),
         "interactiveCard":
             MessageLookupByLibrary.simpleMessage("بطاقة تفاعلية"),
@@ -622,11 +684,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "inventory": MessageLookupByLibrary.simpleMessage("المخزون"),
         "inventorySettings":
             MessageLookupByLibrary.simpleMessage("إعدادات المخزون"),
+        "invoiceDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل الفاتورة"),
+        "invoiceHelp": MessageLookupByLibrary.simpleMessage("مساعدة الفواتير"),
         "invoiceManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الفواتير"),
+        "invoiceNumber": MessageLookupByLibrary.simpleMessage("رقم الفاتورة"),
+        "invoices": MessageLookupByLibrary.simpleMessage("الفواتير"),
         "invoicesList": MessageLookupByLibrary.simpleMessage("قائمة الفواتير"),
         "isActive": MessageLookupByLibrary.simpleMessage("نشط"),
+        "issueDate": MessageLookupByLibrary.simpleMessage("تاريخ الإصدار"),
+        "items": MessageLookupByLibrary.simpleMessage("العناصر"),
         "kilogram": MessageLookupByLibrary.simpleMessage("كجم"),
+        "kuwait": MessageLookupByLibrary.simpleMessage("دولة الكويت"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "languageChangedToArabic":
             MessageLookupByLibrary.simpleMessage("تم تغيير اللغة إلى العربية"),
@@ -648,6 +718,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جاري تحميل المستخدمين..."),
         "loggingIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول..."),
         "login": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "loginCancelled": MessageLookupByLibrary.simpleMessage("تم الإلغاء"),
+        "loginError":
+            MessageLookupByLibrary.simpleMessage("خطأ في تسجيل الدخول"),
         "loginLoadin": MessageLookupByLibrary.simpleMessage("التسجيل..."),
         "loginSuccess":
             MessageLookupByLibrary.simpleMessage("تم تسجيل الدخول بنجاح"),
@@ -659,6 +732,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "mainTitle": MessageLookupByLibrary.simpleMessage("عنوان رئيسي"),
         "manageCustomers":
             MessageLookupByLibrary.simpleMessage("إدارة العملاء"),
+        "manageInvoiceStep1": MessageLookupByLibrary.simpleMessage(
+            "1. استخدم البحث والفلترة للعثور على الفواتير"),
+        "manageInvoiceStep2": MessageLookupByLibrary.simpleMessage(
+            "2. اضغط على الفاتورة لعرض التفاصيل"),
+        "manageInvoiceStep3": MessageLookupByLibrary.simpleMessage(
+            "3. استخدم الأزرار للتحرير أو الحذف"),
+        "manageInvoiceStep4": MessageLookupByLibrary.simpleMessage(
+            "4. أرسل الفاتورة للعميل عند الحاجة"),
         "manageInvoices":
             MessageLookupByLibrary.simpleMessage("إدارة الفواتير"),
         "manageInvoicesAndCustomers": MessageLookupByLibrary.simpleMessage(
@@ -670,11 +751,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageProducts":
             MessageLookupByLibrary.simpleMessage("إدارة المنتجات"),
         "manager": MessageLookupByLibrary.simpleMessage("مشرف"),
+        "managingInvoices":
+            MessageLookupByLibrary.simpleMessage("إدارة الفواتير"),
+        "markAsPaid": MessageLookupByLibrary.simpleMessage("تحديد كمدفوعة"),
         "material": MessageLookupByLibrary.simpleMessage("المادة"),
         "maximumQuantity":
             MessageLookupByLibrary.simpleMessage("الحد الأقصى للكمية"),
         "mediumResponsiveText":
             MessageLookupByLibrary.simpleMessage("نص متجاوب متوسط"),
+        "message": MessageLookupByLibrary.simpleMessage("الرسالة"),
         "metadata": MessageLookupByLibrary.simpleMessage("البيانات الوصفية"),
         "meter": MessageLookupByLibrary.simpleMessage("متر"),
         "minimumQuantity":
@@ -692,8 +777,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nameRequired": MessageLookupByLibrary.simpleMessage("الاسم مطلوب"),
         "nameShort": MessageLookupByLibrary.simpleMessage(
             "الاسم يجب أن يكون حرفين على الأقل"),
-        "networkError": MessageLookupByLibrary.simpleMessage(
-            "خطأ في الاتصال بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى."),
+        "networkError":
+            MessageLookupByLibrary.simpleMessage("خطأ في الإتصال بالشبكة"),
         "newCategoryDetails":
             MessageLookupByLibrary.simpleMessage("بيانات الفئة الجديدة"),
         "newExpense": MessageLookupByLibrary.simpleMessage("مصروف جديد"),
@@ -713,6 +798,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "noEmail": MessageLookupByLibrary.simpleMessage("بدون بريد إلكتروني"),
         "noHaveAccountRejester": MessageLookupByLibrary.simpleMessage(
             "ليس لديك حساب؟ إنشاء حساب جديد"),
+        "noInvoices": MessageLookupByLibrary.simpleMessage("لا توجد فواتير"),
+        "noInvoicesDescription": MessageLookupByLibrary.simpleMessage(
+            "اضغط على زر الإضافة لإنشاء فاتورة جديدة"),
+        "noItems": MessageLookupByLibrary.simpleMessage("لا توجد عناصر"),
         "noName": MessageLookupByLibrary.simpleMessage("بدون اسم"),
         "noProductsFound":
             MessageLookupByLibrary.simpleMessage("لا توجد منتجات"),
@@ -774,7 +863,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "outlinedButton": MessageLookupByLibrary.simpleMessage("زر مخطط"),
         "outlinedButtonPressed":
             MessageLookupByLibrary.simpleMessage("تم الضغط على الزر المخطط"),
+        "overdue": MessageLookupByLibrary.simpleMessage("متأخرة"),
         "pageNotFound": MessageLookupByLibrary.simpleMessage("صفحة غير موجودة"),
+        "paid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
         "paidInvoices": MessageLookupByLibrary.simpleMessage("8 مدفوعة"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة المرور"),
         "passwordChangedSuccessfully":
@@ -799,14 +890,24 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كلمة المرور غير متطابقة"),
         "passwordsNotMatch":
             MessageLookupByLibrary.simpleMessage("كلمة المرور غير متطابقة"),
+        "payment": MessageLookupByLibrary.simpleMessage("الدفع"),
+        "paymentDate": MessageLookupByLibrary.simpleMessage("تاريخ الدفع"),
+        "paymentDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الدفع"),
         "paymentInformation":
             MessageLookupByLibrary.simpleMessage("معلومات الدفع"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
+        "paymentMethodBank": MessageLookupByLibrary.simpleMessage("تحويل بنكي"),
+        "paymentMethodCard":
+            MessageLookupByLibrary.simpleMessage("بطاقة ائتمان"),
+        "paymentMethodCash": MessageLookupByLibrary.simpleMessage("نقدي"),
+        "paymentMethodCheck": MessageLookupByLibrary.simpleMessage("شيك"),
+        "paymentMethods": MessageLookupByLibrary.simpleMessage("طرق الدفع"),
+        "pending": MessageLookupByLibrary.simpleMessage("معلقة"),
         "permissionsManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الصلاحيات"),
         "personalInformation":
             MessageLookupByLibrary.simpleMessage("المعلومات الشخصية"),
-        "phone": MessageLookupByLibrary.simpleMessage("هاتف"),
+        "phone": MessageLookupByLibrary.simpleMessage("الهاتف"),
         "phoneMaxLength": MessageLookupByLibrary.simpleMessage(
             "رقم الهاتف يجب أن يكون أقل من 15 رقم"),
         "phoneMinLength": MessageLookupByLibrary.simpleMessage(
@@ -819,10 +920,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "piece": MessageLookupByLibrary.simpleMessage("قطعة"),
         "pieceKgMeter":
             MessageLookupByLibrary.simpleMessage("قطعة، كيلو، متر..."),
+        "playServicesNotAvailable":
+            MessageLookupByLibrary.simpleMessage("خطأ في الخدمات المتاحة"),
         "pleaseEnterValidAmount":
             MessageLookupByLibrary.simpleMessage("يرجى إدخال مبلغ صحيح"),
         "pleaseSelectCategory":
             MessageLookupByLibrary.simpleMessage("يرجى اختيار فئة"),
+        "postalCode": MessageLookupByLibrary.simpleMessage("الرمز البريدي"),
         "postedInvoices":
             MessageLookupByLibrary.simpleMessage("الفواتير المعلنة"),
         "pressAddToCreateClient": MessageLookupByLibrary.simpleMessage(
@@ -864,6 +968,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إدارة المنتجات وفئاتها"),
         "productsReport":
             MessageLookupByLibrary.simpleMessage("تقرير المنتجات"),
+        "qty": MessageLookupByLibrary.simpleMessage("الكمية"),
         "quantity": MessageLookupByLibrary.simpleMessage("الكمية"),
         "quantityMustBeAPositiveInteger": MessageLookupByLibrary.simpleMessage(
             "يجب أن تكون الكمية رقم صحيح غير سالب"),
@@ -896,6 +1001,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "role": MessageLookupByLibrary.simpleMessage("الدور"),
         "rule": MessageLookupByLibrary.simpleMessage("الدور"),
         "salesReport": MessageLookupByLibrary.simpleMessage("تقرير المبيعات"),
+        "salesTax": MessageLookupByLibrary.simpleMessage("ضريبة المبيعات"),
+        "saudiArabia":
+            MessageLookupByLibrary.simpleMessage("المملكة العربية السعودية"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "saveCategory": MessageLookupByLibrary.simpleMessage("حفظ الفئة"),
         "saveChanges": MessageLookupByLibrary.simpleMessage("حفظ التعديلات"),
@@ -916,6 +1024,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("البحث عن مستخدم..."),
         "searchInClients":
             MessageLookupByLibrary.simpleMessage("البحث في العملاء..."),
+        "searchInvoices":
+            MessageLookupByLibrary.simpleMessage("البحث في الفواتير..."),
         "searchProducts":
             MessageLookupByLibrary.simpleMessage("البحث في المنتجات..."),
         "securityInformation":
@@ -924,13 +1034,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "اختيار الفئة المناسبة للمصروف"),
         "selectCategory": MessageLookupByLibrary.simpleMessage("إختار الفئة"),
+        "selectDate": MessageLookupByLibrary.simpleMessage("اختر التاريخ"),
         "selectTheDateThisExpenseOccurred":
             MessageLookupByLibrary.simpleMessage(
                 "اختر التاريخ الذي حدث فيه المصروف"),
         "sellingPrice": MessageLookupByLibrary.simpleMessage("سعر البيع"),
+        "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendInvoice": MessageLookupByLibrary.simpleMessage("إرسال فاتورة"),
         "sendInvoiceDescription": MessageLookupByLibrary.simpleMessage(
             "إمكانية إرسال الفاتورة للعميل"),
+        "sendMethod": MessageLookupByLibrary.simpleMessage("طريقة الإرسال"),
         "serverError": MessageLookupByLibrary.simpleMessage(
             "خطأ في الخادم. يرجى المحاولة لاحقاً."),
         "setAmountDateAndPaymentMethod": MessageLookupByLibrary.simpleMessage(
@@ -939,12 +1052,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsSavedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حفظ الإعدادات بنجاح"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
+        "signInFailed":
+            MessageLookupByLibrary.simpleMessage("فشل تسجيل الدخول"),
         "signInWithGoogle":
-            MessageLookupByLibrary.simpleMessage("تسجيل الدخول بـ Google"),
+            MessageLookupByLibrary.simpleMessage("تسجيل الدخول بالجوجل"),
         "sku": MessageLookupByLibrary.simpleMessage("رمز المنتج"),
         "smallResponsiveText":
             MessageLookupByLibrary.simpleMessage("نص متجاوب صغير"),
         "smallText": MessageLookupByLibrary.simpleMessage("نص صغير"),
+        "sms": MessageLookupByLibrary.simpleMessage("رسالة نصية"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage("حدث خطأ"),
         "startNow": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
         "state": MessageLookupByLibrary.simpleMessage("الحالة"),
@@ -952,6 +1068,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "statusCategory": m29,
         "statusInfo": MessageLookupByLibrary.simpleMessage("معلومات الحالة"),
         "subTitle": MessageLookupByLibrary.simpleMessage("عنوان فرعي"),
+        "subject": MessageLookupByLibrary.simpleMessage("الموضوع"),
+        "subtotal": MessageLookupByLibrary.simpleMessage("المجموع الفرعي"),
         "successText": MessageLookupByLibrary.simpleMessage("نص نجاح"),
         "supervisor": MessageLookupByLibrary.simpleMessage("مشرف"),
         "supervisorDescription":
@@ -968,6 +1086,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "systemSettingsDescription": MessageLookupByLibrary.simpleMessage(
             "إمكانية تعديل إعدادات النظام"),
         "tablet": MessageLookupByLibrary.simpleMessage("تابلت"),
+        "tax": MessageLookupByLibrary.simpleMessage("الضريبة"),
+        "taxAmount": MessageLookupByLibrary.simpleMessage("مبلغ الضريبة"),
+        "taxIntegration":
+            MessageLookupByLibrary.simpleMessage("التكامل الضريبي"),
+        "taxIntegrationSettings":
+            MessageLookupByLibrary.simpleMessage("إعدادات التكامل الضريبي"),
+        "taxIntegrationStep1": MessageLookupByLibrary.simpleMessage(
+            "1. قم بتفعيل التكامل الضريبي"),
+        "taxIntegrationStep2": MessageLookupByLibrary.simpleMessage(
+            "2. أدخل معلومات الشركة الضريبية"),
+        "taxIntegrationStep3": MessageLookupByLibrary.simpleMessage(
+            "3. اختبر الاتصال واحفظ الإعدادات"),
         "taxInvoices":
             MessageLookupByLibrary.simpleMessage("الفواتير الضريبية"),
         "taxInvoicesDesc": MessageLookupByLibrary.simpleMessage(
@@ -977,10 +1107,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "taxRate": MessageLookupByLibrary.simpleMessage("نسبة الضريبة"),
         "taxSettings": MessageLookupByLibrary.simpleMessage("إعدادات الضريبة"),
+        "taxType": MessageLookupByLibrary.simpleMessage("نوع الضريبة"),
         "tekpart": MessageLookupByLibrary.simpleMessage("تك بارت"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "termsOfUseComingSoon":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام قريباً"),
+        "testConnection":
+            MessageLookupByLibrary.simpleMessage("اختبار الاتصال"),
+        "testingConnection":
+            MessageLookupByLibrary.simpleMessage("جاري اختبار الاتصال..."),
         "textStyles": MessageLookupByLibrary.simpleMessage("أنماط النصوص"),
         "themeDemo": MessageLookupByLibrary.simpleMessage("تجربة الثيمات"),
         "themeInfo": MessageLookupByLibrary.simpleMessage("معلومات الثيم"),
@@ -991,6 +1126,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "title": MessageLookupByLibrary.simpleMessage("العنوان"),
         "titleIsRequired":
             MessageLookupByLibrary.simpleMessage("العنوان مطلوب"),
+        "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalAmount": MessageLookupByLibrary.simpleMessage("15,420 ريال"),
         "tourismEntertainmentCompany":
             MessageLookupByLibrary.simpleMessage("شركة السياحة والترفيه"),
@@ -1003,6 +1139,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شركة النقل واللوجستيات"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "type": MessageLookupByLibrary.simpleMessage("النوع"),
+        "uae": MessageLookupByLibrary.simpleMessage(
+            "دولة الإمارات العربية المتحدة"),
         "undefined": MessageLookupByLibrary.simpleMessage("غير محدد"),
         "unit": MessageLookupByLibrary.simpleMessage("الوحدة"),
         "unknownError": MessageLookupByLibrary.simpleMessage(
@@ -1044,6 +1182,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستخدمين والصلاحيات"),
         "validationError": MessageLookupByLibrary.simpleMessage(
             "يرجى التحقق من صحة البيانات المدخلة"),
+        "vat": MessageLookupByLibrary.simpleMessage("ضريبة القيمة المضافة"),
+        "vatNumber":
+            MessageLookupByLibrary.simpleMessage("رقم ضريبة القيمة المضافة"),
         "view": MessageLookupByLibrary.simpleMessage("عرض"),
         "viewAllInvoices":
             MessageLookupByLibrary.simpleMessage("عرض جميع الفواتير"),

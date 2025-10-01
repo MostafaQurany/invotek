@@ -274,7 +274,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         Container(
           padding: EdgeInsets.all(16.w),
           child: DropdownButtonFormField<String>(
-            value: _selectedModule,
+            initialValue: _selectedModule,
             decoration: InputDecoration(
               labelText: 'Select Module',
               border: OutlineInputBorder(
@@ -463,7 +463,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         Container(
           padding: EdgeInsets.all(16.w),
           child: DropdownButtonFormField<String>(
-            value: _selectedModule,
+            initialValue: _selectedModule,
             decoration: InputDecoration(
               labelText: 'Select Module',
               border: OutlineInputBorder(

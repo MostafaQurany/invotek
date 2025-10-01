@@ -11,7 +11,6 @@ import 'package:invotek/features/expenses/ui/widgets/fields/color_selection_fiel
 import 'package:invotek/features/expenses/ui/widgets/fields/status_field.dart';
 import 'package:invotek/features/expenses/ui/widgets/headers/edit_exoense_category_header_widget.dart';
 import 'package:invotek/features/expenses/ui/widgets/preview/category_preview_widget.dart';
-import 'package:invotek/features/expenses/ui/widgets/headers/add_category_header_widget.dart';
 import 'package:invotek/features/expenses/ui/widgets/sections/add_category_bottom_actions.dart';
 import 'package:invotek/generated/l10n.dart';
 

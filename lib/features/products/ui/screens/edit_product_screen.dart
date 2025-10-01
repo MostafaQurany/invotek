@@ -160,7 +160,7 @@ class _EditProductScreenState extends State<EditProductScreen>
                 (products, selectedProduct, currentPage, totalPages, error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(s.errorOccurred(error)),
+                      content: Text(S.current.errorOccurred(error)),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -479,7 +479,7 @@ class _EditProductScreenState extends State<EditProductScreen>
                 _isActive = value;
               });
             },
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
           Divider(height: 1),
           SwitchListTile(
@@ -491,7 +491,7 @@ class _EditProductScreenState extends State<EditProductScreen>
                 _hasTax = value;
               });
             },
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
           Divider(height: 1),
           SwitchListTile(
@@ -503,7 +503,7 @@ class _EditProductScreenState extends State<EditProductScreen>
                 _trackInventory = value;
               });
             },
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
         ],
       ),

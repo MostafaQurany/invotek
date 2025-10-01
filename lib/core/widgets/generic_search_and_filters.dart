@@ -54,7 +54,7 @@ class GenericSearchAndFilters extends StatelessWidget {
             color: colorScheme.surface,
             border: Border(
               bottom: BorderSide(
-                color: colorScheme.outline.withOpacity(0.1),
+                color: colorScheme.outline.withValues(alpha: 0.1),
                 width: 1,
               ),
             ),
@@ -85,7 +85,7 @@ class GenericSearchAndFilters extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: Offset(0, 2),
           ),
@@ -149,14 +149,14 @@ class GenericSearchAndFilters extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 4,
             offset: Offset(0, 2),
           ),
         ],
       ),
       child: DropdownButtonFormField<String>(
-        value:
+        initialValue:
             filter.options.any((option) => option.value == filter.selectedValue)
             ? filter.selectedValue
             : filter.options.isNotEmpty

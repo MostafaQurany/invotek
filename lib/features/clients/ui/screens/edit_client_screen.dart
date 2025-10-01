@@ -394,7 +394,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       items: items.map((String item) {
         return DropdownMenuItem<String>(value: item, child: Text(item));
       }).toList(),

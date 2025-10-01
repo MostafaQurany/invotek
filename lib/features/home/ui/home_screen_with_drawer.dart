@@ -16,6 +16,7 @@ import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 import 'package:invotek/features/home/data/models/navigation_state.dart';
 import 'package:invotek/features/home/ui/home_screen.dart';
 import 'package:invotek/features/home/ui/widgets/menu_screen.dart';
+import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/ui/screens/add_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
@@ -70,28 +71,18 @@ class HomeScreenWithAppBar extends StatefulWidget {
   const HomeScreenWithAppBar({super.key});
 
   @override
-  State<HomeScreenWithAppBar> createState() => _HomeScreenWithAppBarState();
+  State<HomeScreenWithAppBar> createState() => HomeScreenWithAppBarState();
 }
 
-class _HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
-  final NavigationController _navigationController = NavigationController();
+class HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
   NavigationState _currentState = NavigationState();
 
-  @override
-  void initState() {
-    super.initState();
-    _navigationController.addListener(_onNavigationChanged);
-  }
-
-  @override
-  void dispose() {
-    _navigationController.removeListener(_onNavigationChanged);
-    super.dispose();
-  }
-
-  void _onNavigationChanged(NavigationState state) {
+  void navigateToRoute(String route, {dynamic arguments}) {
     setState(() {
-      _currentState = state;
+      _currentState = _currentState.copyWith(
+        currentRoute: route,
+        routeArguments: arguments,
+      );
     });
   }
 
@@ -191,6 +182,10 @@ class _HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
         return const DeleteAllCategoriesScreenWithProvider();
       case AppRoutes.settingsRoute:
         return const SettingsScreen();
+      // Invoices routes
+      case AppRoutes.invoicesListRoute:
+        return const InvoicesListScreenWithProvider();
+
       case '/home':
       default:
         return const HomeScreen();

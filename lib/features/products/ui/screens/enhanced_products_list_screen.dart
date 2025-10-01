@@ -11,7 +11,6 @@ import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/enhanced_product_card.dart';
 import 'package:invotek/features/products/ui/widgets/dialogs/delete_product_dialog.dart';
-import 'package:invotek/generated/l10n.dart';
 
 class EnhancedProductsListScreen extends StatefulWidget {
   const EnhancedProductsListScreen({super.key});
