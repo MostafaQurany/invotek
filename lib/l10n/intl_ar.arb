@@ -819,7 +819,7 @@
   "googleSignInError": "خطأ في تسجيل الدخول بالجوجل",
   "addInvoice": "إضافة فاتورة",
   "invoices": "الفواتير",
-  "searchInvoices": "البحث في الفواتير...",
+  "searchInInvoices": "البحث في الفواتير...",
   "allPaymentMethods": "جميع طرق الدفع",
   "customer": "العميل",
   "allCustomers": "جميع العملاء",
@@ -928,5 +928,290 @@
   "bankTransfer": "تحويل بنكي",
   "check": "شيك", 
   "enterDescription": "أدخل الوصف",
-  "searchInvoices": "البحث في الفواتير..."
+  "searchInvoices": "البحث في الفواتير...",
+  "invoiceDetails": "تفاصيل الفاتورة",
+  "loadingInvoiceDetails": "جاري تحميل تفاصيل الفاتورة...",
+  "invoiceNumber": "رقم الفاتورة",
+  "errorLoadingInvoice": "خطأ في تحميل الفاتورة",
+  "retry": "إعادة المحاولة",
+  "noInvoiceData": "لا توجد بيانات للفاتورة",
+  "invoiceNumberLabel": "رقم الفاتورة: {number}",
+  "@invoiceNumberLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "shareInvoice": "مشاركة الفاتورة",
+  "printInvoice": "طباعة الفاتورة",
+  "sendInvoice": "إرسال الفاتورة",
+  "downloadPDF": "تحميل PDF",
+  "deleteInvoice": "حذف الفاتورة",
+  "duplicateInvoice": "تكرار الفاتورة",
+  "viewQRCode": "عرض رمز QR",
+  "viewTaxUID": "عرض معرف الضريبة",
+  "updateStatus": "تحديث الحالة",
+  "markAsPaid": "تحديد كمدفوعة",
+  "changeStatus": "تغيير الحالة",
+  "moreOptions": "خيارات إضافية",
+  "refreshData": "تحديث البيانات",
+  "invoiceCopiedToClipboard": "تم نسخ تفاصيل الفاتورة إلى الحافظة",
+  "invoiceCopiedForPrinting": "تم نسخ تفاصيل الفاتورة للطباعة",
+  "invoiceSentSuccessfully": "تم إرسال الفاتورة بنجاح",
+  "invoiceDeletedSuccessfully": "تم حذف الفاتورة بنجاح",
+  "invoiceStatusUpdated": "تم تحديث حالة الفاتورة إلى: {status}",
+  "@invoiceStatusUpdated": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSavedSuccessfully": "تم حفظ الملف في: {path}",
+  "@fileSavedSuccessfully": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "noQRCodeAvailable": "لا يوجد رمز QR متاح لهذه الفاتورة",
+  "noTaxUIDAvailable": "لا يوجد معرف ضريبة متاح لهذه الفاتورة",
+  "taxUIDCopied": "تم نسخ معرف الضريبة",
+  "shareInvoiceText": "فاتورة رقم: {number}\nالعميل: {customer}\nالتاريخ: {date}\nالمبلغ: {amount} ر.س\nالحالة: {status}\n\nتم إنشاؤها بواسطة تطبيق Invotek",
+  "@shareInvoiceText": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "customer": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "printInvoiceText": "فاتورة\n{separator}\nرقم الفاتورة: {number}\nالتاريخ: {date}\nالحالة: {status}\n\nبيانات العميل:\nالاسم: {customer}\n{contact}\n\nعناصر الفاتورة:\n{items}\n\nالمجاميع:\nالمجموع الفرعي: {subtotal} ر.س\n{tax}\nالمجموع الكلي: {total} ر.س\n\n{separator}\nشكراً لتعاملكم معنا\nتم إنشاء هذه الفاتورة بواسطة تطبيق Invotek\n{separator}",
+  "@printInvoiceText": {
+    "placeholders": {
+      "separator": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      },
+      "customer": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "statusPaid": "مدفوعة",
+  "statusPending": "معلقة",
+  "statusOverdue": "متأخرة",
+  "statusDraft": "مسودة",
+  "customerDetails": "تفاصيل العميل",
+  "itemDetails": "تفاصيل العنصر",
+  "changePaymentMethod": "تغيير طريقة الدفع",
+  "loading": "جاري التحميل...",
+  "creatingFile": "جاري إنشاء ملف...",
+  "sendingInvoice": "جاري إرسال الفاتورة...",
+  "deletingInvoice": "جاري حذف الفاتورة...",
+  "updatingStatus": "جاري تحديث الحالة...",
+  "errorSharingInvoice": "فشل في مشاركة الفاتورة: {error}",
+  "@errorSharingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPrintingInvoice": "فشل في طباعة الفاتورة: {error}",
+  "@errorPrintingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSendingInvoice": "فشل في إرسال الفاتورة: {error}",
+  "@errorSendingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeletingInvoice": "فشل في حذف الفاتورة: {error}",
+  "@errorDeletingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCreatingFile": "فشل في إنشاء الملف: {error}",
+  "@errorCreatingFile": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorUpdatingStatus": "فشل في تحديث الحالة: {error}",
+  "@errorUpdatingStatus": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "duplicateInvoiceMessage": "تكرار الفاتورة {number}",
+  "@duplicateInvoiceMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "viewCustomerDetails": "عرض تفاصيل العميل: {name}",
+  "@viewCustomerDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "viewItemDetails": "عرض تفاصيل العنصر: {name}",
+  "@viewItemDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changePaymentMethodForInvoice": "تغيير طريقة الدفع للفاتورة {number}",
+  "@changePaymentMethodForInvoice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "taxUID": "معرف الضريبة",
+  "taxUIDForInvoice": "معرف الضريبة للفاتورة {number}:",
+  "@taxUIDForInvoice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "copy": "نسخ",
+  "close": "إغلاق",
+  "customerName": "اسم العميل",
+  "customerEmail": "بريد العميل",
+  "customerPhone": "هاتف العميل",
+  "customerAddress": "عنوان العميل",
+  "invoiceItems": "عناصر الفاتورة",
+  "itemName": "الاسم",
+  "itemQuantity": "الكمية",
+  "itemPrice": "السعر",
+  "itemTotal": "المجموع",
+  "subtotal": "المجموع الفرعي",
+  "taxAmount": "الضريبة",
+  "totalAmount": "المجموع الكلي",
+  "thankYouMessage": "شكراً لتعاملكم معنا",
+  "createdByInvotek": "تم إنشاء هذه الفاتورة بواسطة تطبيق Invotek",
+  "separator": "=",
+  "itemSeparator": "-",
+  "itemHeader": "الاسم\t\tالكمية\tالسعر\tالمجموع",
+  "itemRow": "{name}\t\t{quantity}\t{price}\t{total}",
+  "@itemRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "taxLine": "الضريبة: {amount} ر.س",
+  "@taxLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subtotalLine": "المجموع الفرعي: {amount} ر.س",
+  "@subtotalLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "totalLine": "المجموع الكلي: {amount} ر.س",
+  "@totalLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "fileName": "فاتورة_{number}_{timestamp}",
+  "@fileName": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "timestamp": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingProductDetails": "جاري تحميل تفاصيل المنتج...",
+  "@loadingProductDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

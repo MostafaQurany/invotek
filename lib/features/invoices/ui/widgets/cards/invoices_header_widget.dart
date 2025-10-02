@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
-import 'package:invotek/core/widgets/common_filter_row.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoicesHeaderWidget extends StatelessWidget {
@@ -39,13 +39,18 @@ class InvoicesHeaderWidget extends StatelessWidget {
           // Title and Refresh Button
           Row(
             children: [
+              // Menu Button
+              CommonMenuButton(color: AppColors.primary),
+
               Expanded(
-                child: Text(
-                  S.of(context).invoices,
-                  style: TextStyle(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                child: Center(
+                  child: Text(
+                    S.of(context).invoices,
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ),
               ),
@@ -115,7 +120,6 @@ class InvoicesHeaderWidget extends StatelessWidget {
           //     ),
           //   ],
           // ),
-        
         ],
       ),
     );

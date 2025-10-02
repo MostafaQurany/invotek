@@ -75,7 +75,7 @@ class EnhancedInvoiceCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            invoice.invoiceNumber,
+                            invoice.invoiceNumber ?? "Invoice Number",
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.w700,
@@ -84,7 +84,7 @@ class EnhancedInvoiceCard extends StatelessWidget {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            invoice.customerName,
+                            invoice.customerName ?? "Customer Name",
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.textSecondary,
@@ -95,7 +95,7 @@ class EnhancedInvoiceCard extends StatelessWidget {
                     ),
 
                     // Status Badge
-                    _buildStatusBadge(invoice.status),
+                    _buildStatusBadge(invoice.status ?? "pending"),
                   ],
                 ),
 
@@ -127,7 +127,7 @@ class EnhancedInvoiceCard extends StatelessWidget {
                             Text(
                               NumberFormat.currency(
                                 symbol: 'ر.س',
-                              ).format(double.tryParse(invoice.total) ?? 0),
+                              ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w700,
@@ -139,8 +139,8 @@ class EnhancedInvoiceCard extends StatelessWidget {
                       ),
 
                       // Tax Amount
-                      if (double.tryParse(invoice.taxAmount) != null &&
-                          double.tryParse(invoice.taxAmount)! > 0)
+                      if (double.tryParse(invoice.taxAmount ?? '0.00') != null &&
+                          double.tryParse(invoice.taxAmount ?? '0.00')! > 0)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -156,7 +156,7 @@ class EnhancedInvoiceCard extends StatelessWidget {
                             Text(
                               NumberFormat.currency(
                                 symbol: 'ر.س',
-                              ).format(double.tryParse(invoice.taxAmount) ?? 0),
+                              ).format(double.tryParse(invoice.taxAmount ?? '0.00') ?? 0),
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
@@ -179,16 +179,16 @@ class EnhancedInvoiceCard extends StatelessWidget {
                       child: _buildDetailItem(
                         icon: Icons.calendar_today,
                         label: S.of(context).date,
-                        value: _formatDate(invoice.issueDate),
+                        value: _formatDate(invoice.issueDate ?? ""),
                       ),
                     ),
 
                     // Payment Method
                     Expanded(
                       child: _buildDetailItem(
-                        icon: _getPaymentMethodIcon(invoice.paymentMethodCode),
+                        icon: _getPaymentMethodIcon(invoice.paymentMethodCode ?? ""),
                         label: S.of(context).paymentMethod,
-                        value: _getPaymentMethodText(invoice.paymentMethodCode),
+                        value: _getPaymentMethodText(invoice.paymentMethodCode ?? ""),
                       ),
                     ),
 
@@ -197,7 +197,7 @@ class EnhancedInvoiceCard extends StatelessWidget {
                       child: _buildDetailItem(
                         icon: Icons.shopping_cart,
                         label: S.of(context).items,
-                        value: '${invoice.items.length}',
+                        value: '${invoice.items?.length ?? 0}',
                       ),
                     ),
                   ],

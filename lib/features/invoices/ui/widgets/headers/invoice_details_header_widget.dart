@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -8,16 +12,12 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
   final InvoiceModel invoice;
   final VoidCallback onBack;
   final VoidCallback onEdit;
-  final VoidCallback onShare;
-  final VoidCallback onPrint;
 
   const InvoiceDetailsHeaderWidget({
     super.key,
     required this.invoice,
     required this.onBack,
     required this.onEdit,
-    required this.onShare,
-    required this.onPrint,
   });
 
   @override
@@ -43,7 +43,7 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
               IconButton(
                 onPressed: onBack,
                 icon: Icon(
-                  Icons.arrow_back,
+                  Icons.arrow_back_ios,
                   color: AppColors.textPrimary,
                   size: 24.sp,
                 ),
@@ -63,14 +63,18 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                         color: AppColors.textPrimary,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     SizedBox(height: 2.h),
                     Text(
-                      invoice.invoiceNumber,
+                      invoice.invoiceNumber ?? "Invoice Number",
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ],
                 ),
@@ -79,26 +83,6 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
               // Action Buttons
               Row(
                 children: [
-                  // Share Button
-                  IconButton(
-                    onPressed: onShare,
-                    icon: Icon(
-                      Icons.share,
-                      color: AppColors.primary,
-                      size: 20.sp,
-                    ),
-                  ),
-
-                  // Print Button
-                  IconButton(
-                    onPressed: onPrint,
-                    icon: Icon(
-                      Icons.print,
-                      color: AppColors.primary,
-                      size: 20.sp,
-                    ),
-                  ),
-
                   // Edit Button
                   IconButton(
                     onPressed: onEdit,
@@ -116,7 +100,7 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
           SizedBox(height: 16.h),
 
           // Invoice Status
-          _buildStatusRow( context),
+          _buildStatusRow(context),
         ],
       ),
     );
@@ -126,7 +110,7 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
@@ -135,12 +119,14 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
-              color: _getStatusColor(invoice.status).withOpacity(0.1),
+              color: _getStatusColor(
+                invoice.status ?? "pending",
+              ).withOpacity(0.1),
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Icon(
-              _getStatusIcon(invoice.status),
-              color: _getStatusColor(invoice.status),
+              _getStatusIcon(invoice.status ?? "pending"),
+              color: _getStatusColor(invoice.status ?? "pending"),
               size: 20.sp,
             ),
           ),
@@ -162,11 +148,11 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  _getStatusText(invoice.status),
+                  _getStatusText(invoice.status ?? "pending"),
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
-                    color: _getStatusColor(invoice.status),
+                    color: _getStatusColor(invoice.status ?? "pending"),
                   ),
                 ),
               ],
@@ -187,7 +173,14 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
               ),
               SizedBox(height: 2.h),
               Text(
-                '${double.tryParse(invoice.total)?.toStringAsFixed(2) ?? '0.00'} ر.س',
+                NumberFormat.currency(
+                  symbol:
+                      context.read<LocalizationCubit>().getCurrentLanguage() ==
+                          'ar'
+                      ? AppCurrency.currencyAr
+                      : AppCurrency.currencyEn,
+                ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
+
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,

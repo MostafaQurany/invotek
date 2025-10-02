@@ -5,31 +5,31 @@ part 'invoice_item.g.dart';
 
 @JsonSerializable()
 class InvoiceItem {
-  final String id;
+  final int? id;
   @JsonKey(name: "tax_invoice_id")
-  final String taxInvoiceId;
+  final int? taxInvoiceId;
   @JsonKey(name: "name")
-  final String name;
+  final String? name;
   @JsonKey(name: "description")
-  final String description;
+  final String? description;
   @JsonKey(name: "quantity")
-  final String quantity;
+  final String? quantity;
   @JsonKey(name: "price")
-  final String price;
+  final String? price;
   @JsonKey(name: "discount")
-  final String discount;
+  final String? discount;
   @JsonKey(name: "tax_percent")
-  final String taxPercent;
+  final String? taxPercent;
   @JsonKey(name: "tax_amount")
-  final String taxAmount;
+  final String? taxAmount;
   @JsonKey(name: "total")
-  final String total;
+  final String? total;
   @JsonKey(name: "created_at")
-  final String createdAt;
+  final String? createdAt;
   @JsonKey(name: "updated_at")
-  final String updatedAt;
+  final String? updatedAt;
   @JsonKey(name: "product_id")
-  final String productId;
+  final int? productId;
   final ProductApiModel? product;
 
   InvoiceItem({

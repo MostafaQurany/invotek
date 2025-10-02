@@ -98,7 +98,7 @@ class InvoiceRepository {
     required DeleteInvoiceRequest request,
   }) async {
     try {
-      final response = await _apiClient.deleteInvoice(int.parse(request.id));
+      final response = await _apiClient.deleteInvoice(request.id);
       return ApiResult.success(response);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));

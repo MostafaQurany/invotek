@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
+import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen.dart';
@@ -14,6 +15,7 @@ import 'package:invotek/features/invoices/ui/widgets/cards/invoice_payment_card.
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
+import 'package:invotek/features/invoices/ui/widgets/dialogs/item_details_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoiceDetailsScreen extends StatefulWidget {
@@ -41,8 +43,6 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
                 invoice: invoice,
                 onBack: () => Navigator.pop(context),
                 onEdit: () => _editInvoice(),
-                onShare: () => _shareInvoice(),
-                onPrint: () => _printInvoice(),
               ),
             ),
           ),
@@ -77,7 +77,21 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
             child: AnimatedEntryWidget(
               delay: Duration(milliseconds: 800),
               child: InvoiceCustomerCard(
-                customer: invoice.customer,
+                customer:
+                    invoice.customer ??
+                    InvoiceCustomerModel(
+                      id: 0,
+                      name: "Customer Name",
+                      email: "Customer Email",
+                      phone: "Customer Phone ",
+                      companyId: 0,
+                      taxNumber: "0",
+                      address: "0",
+                      notes: "0",
+                      status: "0",
+                      createdAt: "0",
+                      updatedAt: "0",
+                    ),
                 onCustomerTap: () => _viewCustomerDetails(),
               ),
             ),
@@ -94,7 +108,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
             child: AnimatedEntryWidget(
               delay: Duration(milliseconds: 1200),
               child: InvoiceItemsCard(
-                items: invoice.items,
+                items: invoice.items ?? [],
                 onItemTap: (item) => _viewItemDetails(item),
               ),
             ),
@@ -119,9 +133,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
           ),
 
           // Bottom spacing
-          SliverToBoxAdapter(
-            child: SizedBox(height: 100.h),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: 100.h)),
         ],
       ),
       floatingActionButton: _buildFloatingActionButton(),
@@ -140,7 +152,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
           child: const Icon(Icons.send, color: Colors.white),
         ),
         SizedBox(height: 8.h),
-        
+
         // Edit Invoice Button
         FloatingActionButton(
           heroTag: "edit",
@@ -149,7 +161,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
           child: const Icon(Icons.edit, color: Colors.white),
         ),
         SizedBox(height: 8.h),
-        
+
         // More Options Button
         FloatingActionButton(
           heroTag: "more",
@@ -172,16 +184,16 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
 
   void _shareInvoice() {
     // TODO: Implement share functionality
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('مشاركة الفاتورة')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('مشاركة الفاتورة')));
   }
 
   void _printInvoice() {
     // TODO: Implement print functionality
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('طباعة الفاتورة')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('طباعة الفاتورة')));
   }
 
   void _showStatusOptions() {
@@ -193,7 +205,10 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
   }
 
   void _viewItemDetails(dynamic item) {
-    // TODO: Show item details
+    showDialog(
+      context: context,
+      builder: (context) => ItemDetailsDialog(item: item),
+    );
   }
 
   void _changePaymentMethod() {
@@ -274,7 +289,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
       builder: (context) => DeleteInvoiceDialog(
         invoice: widget.invoice,
         onDelete: () {
-          context.read<InvoicesCubit>().deleteInvoice(widget.invoice.id);
+          context.read<InvoicesCubit>().deleteInvoice(widget.invoice.id ?? 0);
           Navigator.pop(context);
           Navigator.pop(context);
         },

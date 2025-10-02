@@ -11,79 +11,81 @@ class InvoicesErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(32.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Error Icon
-            Container(
-              width: 120.w,
-              height: 120.w,
-              decoration: BoxDecoration(
-                color: AppColors.error.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(60.r),
+    return SliverFillRemaining(
+      child: Center(
+        child: Padding(
+          padding: EdgeInsets.all(32.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Error Icon
+              Container(
+                width: 120.w,
+                height: 120.w,
+                decoration: BoxDecoration(
+                  color: AppColors.error.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(60.r),
+                ),
+                child: Icon(
+                  Icons.error_outline,
+                  size: 60.sp,
+                  color: AppColors.error,
+                ),
               ),
-              child: Icon(
-                Icons.error_outline,
-                size: 60.sp,
-                color: AppColors.error,
+
+              SizedBox(height: 24.h),
+
+              // Title
+              Text(
+                S.of(context).errorOccurred(error),
+                style: TextStyle(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary,
+                ),
               ),
-            ),
 
-            SizedBox(height: 24.h),
+              SizedBox(height: 12.h),
 
-            // Title
-            Text(
-              S.of(context).errorOccurred(error),
-              style: TextStyle(
-                fontSize: 24.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+              // Error Message
+              Text(
+                error,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  color: AppColors.textSecondary,
+                  height: 1.5,
+                ),
               ),
-            ),
 
-            SizedBox(height: 12.h),
+              SizedBox(height: 32.h),
 
-            // Error Message
-            Text(
-              error,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: AppColors.textSecondary,
-                height: 1.5,
-              ),
-            ),
-
-            SizedBox(height: 32.h),
-
-            // Retry Button
-            if (onRetry != null)
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: onRetry,
-                  icon: Icon(Icons.refresh, size: 20.sp),
-                  label: Text(
-                    S.of(context).retry,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
+              // Retry Button
+              if (onRetry != null)
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: onRetry,
+                    icon: Icon(Icons.refresh, size: 20.sp),
+                    label: Text(
+                      S.of(context).retry,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.error,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.error,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

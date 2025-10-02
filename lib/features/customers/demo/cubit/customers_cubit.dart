@@ -390,4 +390,42 @@ class CustomersCubit extends Cubit<CustomersState> {
       },
     );
   }
+
+  Future<void> getCustomerById(int id) async {
+    emit(
+      CustomersState.loading(
+        customers: _customers,
+        selectedCustomer: null,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'loading_customer',
+      ),
+    );
+
+    final result = await _repository.getCustomerById(id);
+
+    result.when(
+      success: (customer) {
+        emit(
+          CustomersState.loaded(
+            customers: _customers,
+            selectedCustomer: customer,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(
+          CustomersState.failure(
+            customers: _customers,
+            selectedCustomer: null,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
+      },
+    );
+  }
 }

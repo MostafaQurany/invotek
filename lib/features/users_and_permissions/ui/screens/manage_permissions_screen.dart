@@ -9,6 +9,7 @@ import 'package:invotek/features/users_and_permissions/data/models/permission_mo
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_state.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 
 class ManagePermissionsScreen extends StatefulWidget {
   const ManagePermissionsScreen({super.key});
@@ -177,21 +178,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             Row(
               children: [
                 // Menu Button
-                GestureDetector(
-                  onTap: _handleMenuPressed,
-                  child: Container(
-                    padding: EdgeInsets.all(8.w),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    child: Icon(
-                      Icons.menu_rounded,
-                      color: AppColors.white,
-                      size: 24.sp,
-                    ),
-                  ),
-                ),
+                const CommonMenuButton(),
                 SizedBox(width: 16.w),
                 Expanded(
                   child: Column(

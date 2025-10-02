@@ -55,7 +55,7 @@ class InvoiceCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            invoice.invoiceNumber,
+                            invoice.invoiceNumber ?? "Invoice Number",
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
@@ -64,7 +64,7 @@ class InvoiceCard extends StatelessWidget {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            invoice.customerName,
+                            invoice.customerName ?? "Customer Name",
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.textSecondary,
@@ -75,7 +75,7 @@ class InvoiceCard extends StatelessWidget {
                     ),
 
                     // Status Badge
-                    _buildStatusBadge(invoice.status),
+                    _buildStatusBadge(invoice.status ?? "pending"),
                   ],
                 ),
 
@@ -100,7 +100,7 @@ class InvoiceCard extends StatelessWidget {
                           Text(
                             NumberFormat.currency(
                               symbol: 'ر.س',
-                            ).format(double.tryParse(invoice.total) ?? 0),
+                            ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
@@ -124,7 +124,7 @@ class InvoiceCard extends StatelessWidget {
                         ),
                         SizedBox(height: 2.h),
                         Text(
-                          _formatDate(invoice.issueDate),
+                          _formatDate(invoice.issueDate ?? ""),
                           style: TextStyle(
                             fontSize: 14.sp,
                             color: AppColors.textPrimary,
@@ -141,13 +141,13 @@ class InvoiceCard extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      _getPaymentMethodIcon(invoice.paymentMethodCode),
+                      _getPaymentMethodIcon(invoice.paymentMethodCode ?? ""),
                       size: 16.sp,
                       color: AppColors.textSecondary,
                     ),
                     SizedBox(width: 8.w),
                     Text(
-                      _getPaymentMethodText(invoice.paymentMethodCode),
+                      _getPaymentMethodText(invoice.paymentMethodCode ?? ""),
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
@@ -155,7 +155,7 @@ class InvoiceCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '${invoice.items.length} ${S.of(context).items}',
+                      '${invoice.items?.length ?? 0} ${S.of(context).items}',
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: AppColors.textSecondary,

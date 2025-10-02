@@ -80,7 +80,7 @@ class DeleteInvoiceDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        invoice.invoiceNumber,
+                        invoice.invoiceNumber ?? "Invoice Number",
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -89,7 +89,7 @@ class DeleteInvoiceDialog extends StatelessWidget {
                       ),
                       SizedBox(height: 2.h),
                       Text(
-                        invoice.customerName,
+                        invoice.customerName ?? "Customer Name",
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.textSecondary,

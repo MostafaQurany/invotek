@@ -50,7 +50,6 @@ class AddInvoiceFormSection extends StatefulWidget {
 class _AddInvoiceFormSectionState extends State<AddInvoiceFormSection> {
   @override
   Widget build(BuildContext context) {
-    final s = S.of(context);
     return SingleChildScrollView(
       padding: EdgeInsets.all(16.w),
       child: Column(
@@ -176,10 +175,7 @@ class _AddInvoiceFormSectionState extends State<AddInvoiceFormSection> {
               ),
             ),
             items: [
-              DropdownMenuItem(
-                value: 'draft',
-                child: Text(S.current.draft),
-              ),
+              DropdownMenuItem(value: 'draft', child: Text(S.current.draft)),
               DropdownMenuItem(
                 value: 'pending',
                 child: Text(S.current.pending),
@@ -335,10 +331,7 @@ class _AddInvoiceFormSectionState extends State<AddInvoiceFormSection> {
                 value: 'bank_transfer',
                 child: Text(S.current.bankTransfer),
               ),
-              DropdownMenuItem(
-                value: 'check',
-                child: Text(S.current.check),
-              ),
+              DropdownMenuItem(value: 'check', child: Text(S.current.check)),
             ],
             onChanged: (value) {
               if (value != null) widget.onPaymentMethodChanged(value);

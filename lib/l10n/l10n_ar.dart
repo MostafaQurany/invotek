@@ -777,13 +777,13 @@ class SAr extends S {
   String get customerNameRequired => 'اسم العميل مطلوب';
 
   @override
-  String get customerEmail => 'البريد الإلكتروني';
+  String get customerEmail => 'بريد العميل';
 
   @override
-  String get customerPhone => 'رقم الهاتف';
+  String get customerPhone => 'هاتف العميل';
 
   @override
-  String get customerAddress => 'العنوان';
+  String get customerAddress => 'عنوان العميل';
 
   @override
   String get customerTaxNumber => 'الرقم الضريبي';
@@ -1724,7 +1724,7 @@ class SAr extends S {
   String get paidInvoices => '8 مدفوعة';
 
   @override
-  String get totalAmount => '15,420 ريال';
+  String get totalAmount => 'المجموع الكلي';
 
   @override
   String get thisMonth => 'هذا الشهر';
@@ -1811,13 +1811,13 @@ class SAr extends S {
   String get editInvoiceDescription => 'إمكانية تعديل الفاتورة';
 
   @override
-  String get deleteInvoice => 'حذف فاتورة';
+  String get deleteInvoice => 'حذف الفاتورة';
 
   @override
   String get deleteInvoiceDescription => 'إمكانية حذف الفاتورة';
 
   @override
-  String get sendInvoice => 'إرسال فاتورة';
+  String get sendInvoice => 'إرسال الفاتورة';
 
   @override
   String get sendInvoiceDescription => 'إمكانية إرسال الفاتورة للعميل';
@@ -2047,7 +2047,7 @@ class SAr extends S {
   String get invoices => 'الفواتير';
 
   @override
-  String get searchInInvoices => 'Search in invoices...';
+  String get searchInInvoices => 'البحث في الفواتير...';
 
   @override
   String get allPaymentMethods => 'جميع طرق الدفع';
@@ -2307,11 +2307,258 @@ class SAr extends S {
   String get testingConnection => 'جاري اختبار الاتصال...';
 
   @override
-  String get taxAmount => 'مبلغ الضريبة';
+  String get taxAmount => 'الضريبة';
 
   @override
   String get enterDescription => 'أدخل الوصف';
 
   @override
   String get searchInvoices => 'البحث في الفواتير...';
+
+  @override
+  String get loadingInvoiceDetails => 'جاري تحميل تفاصيل الفاتورة...';
+
+  @override
+  String get errorLoadingInvoice => 'خطأ في تحميل الفاتورة';
+
+  @override
+  String get noInvoiceData => 'لا توجد بيانات للفاتورة';
+
+  @override
+  String invoiceNumberLabel(String number) {
+    return 'رقم الفاتورة: $number';
+  }
+
+  @override
+  String get shareInvoice => 'مشاركة الفاتورة';
+
+  @override
+  String get printInvoice => 'طباعة الفاتورة';
+
+  @override
+  String get duplicateInvoice => 'تكرار الفاتورة';
+
+  @override
+  String get viewQRCode => 'عرض رمز QR';
+
+  @override
+  String get viewTaxUID => 'عرض معرف الضريبة';
+
+  @override
+  String get updateStatus => 'تحديث الحالة';
+
+  @override
+  String get changeStatus => 'تغيير الحالة';
+
+  @override
+  String get moreOptions => 'خيارات إضافية';
+
+  @override
+  String get refreshData => 'تحديث البيانات';
+
+  @override
+  String get invoiceCopiedToClipboard => 'تم نسخ تفاصيل الفاتورة إلى الحافظة';
+
+  @override
+  String get invoiceCopiedForPrinting => 'تم نسخ تفاصيل الفاتورة للطباعة';
+
+  @override
+  String get invoiceSentSuccessfully => 'تم إرسال الفاتورة بنجاح';
+
+  @override
+  String get invoiceDeletedSuccessfully => 'تم حذف الفاتورة بنجاح';
+
+  @override
+  String invoiceStatusUpdated(String status) {
+    return 'تم تحديث حالة الفاتورة إلى: $status';
+  }
+
+  @override
+  String fileSavedSuccessfully(String path) {
+    return 'تم حفظ الملف في: $path';
+  }
+
+  @override
+  String get noQRCodeAvailable => 'لا يوجد رمز QR متاح لهذه الفاتورة';
+
+  @override
+  String get noTaxUIDAvailable => 'لا يوجد معرف ضريبة متاح لهذه الفاتورة';
+
+  @override
+  String get taxUIDCopied => 'تم نسخ معرف الضريبة';
+
+  @override
+  String shareInvoiceText(
+    String number,
+    String customer,
+    String date,
+    String amount,
+    String status,
+  ) {
+    return 'فاتورة رقم: $number\nالعميل: $customer\nالتاريخ: $date\nالمبلغ: $amount ر.س\nالحالة: $status\n\nتم إنشاؤها بواسطة تطبيق Invotek';
+  }
+
+  @override
+  String printInvoiceText(
+    String separator,
+    String number,
+    String date,
+    String status,
+    String customer,
+    String contact,
+    String items,
+    String subtotal,
+    String tax,
+    String total,
+  ) {
+    return 'فاتورة\n$separator\nرقم الفاتورة: $number\nالتاريخ: $date\nالحالة: $status\n\nبيانات العميل:\nالاسم: $customer\n$contact\n\nعناصر الفاتورة:\n$items\n\nالمجاميع:\nالمجموع الفرعي: $subtotal ر.س\n$tax\nالمجموع الكلي: $total ر.س\n\n$separator\nشكراً لتعاملكم معنا\nتم إنشاء هذه الفاتورة بواسطة تطبيق Invotek\n$separator';
+  }
+
+  @override
+  String get statusPaid => 'مدفوعة';
+
+  @override
+  String get statusPending => 'معلقة';
+
+  @override
+  String get statusOverdue => 'متأخرة';
+
+  @override
+  String get statusDraft => 'مسودة';
+
+  @override
+  String get itemDetails => 'تفاصيل العنصر';
+
+  @override
+  String get changePaymentMethod => 'تغيير طريقة الدفع';
+
+  @override
+  String get creatingFile => 'جاري إنشاء ملف...';
+
+  @override
+  String get sendingInvoice => 'جاري إرسال الفاتورة...';
+
+  @override
+  String get deletingInvoice => 'جاري حذف الفاتورة...';
+
+  @override
+  String get updatingStatus => 'جاري تحديث الحالة...';
+
+  @override
+  String errorSharingInvoice(String error) {
+    return 'فشل في مشاركة الفاتورة: $error';
+  }
+
+  @override
+  String errorPrintingInvoice(String error) {
+    return 'فشل في طباعة الفاتورة: $error';
+  }
+
+  @override
+  String errorSendingInvoice(String error) {
+    return 'فشل في إرسال الفاتورة: $error';
+  }
+
+  @override
+  String errorDeletingInvoice(String error) {
+    return 'فشل في حذف الفاتورة: $error';
+  }
+
+  @override
+  String errorCreatingFile(String error) {
+    return 'فشل في إنشاء الملف: $error';
+  }
+
+  @override
+  String errorUpdatingStatus(String error) {
+    return 'فشل في تحديث الحالة: $error';
+  }
+
+  @override
+  String duplicateInvoiceMessage(String number) {
+    return 'تكرار الفاتورة $number';
+  }
+
+  @override
+  String viewCustomerDetails(String name) {
+    return 'عرض تفاصيل العميل: $name';
+  }
+
+  @override
+  String viewItemDetails(String name) {
+    return 'عرض تفاصيل العنصر: $name';
+  }
+
+  @override
+  String changePaymentMethodForInvoice(String number) {
+    return 'تغيير طريقة الدفع للفاتورة $number';
+  }
+
+  @override
+  String get taxUID => 'معرف الضريبة';
+
+  @override
+  String taxUIDForInvoice(String number) {
+    return 'معرف الضريبة للفاتورة $number:';
+  }
+
+  @override
+  String get invoiceItems => 'عناصر الفاتورة';
+
+  @override
+  String get itemName => 'الاسم';
+
+  @override
+  String get itemQuantity => 'الكمية';
+
+  @override
+  String get itemPrice => 'السعر';
+
+  @override
+  String get itemTotal => 'المجموع';
+
+  @override
+  String get thankYouMessage => 'شكراً لتعاملكم معنا';
+
+  @override
+  String get createdByInvotek => 'تم إنشاء هذه الفاتورة بواسطة تطبيق Invotek';
+
+  @override
+  String get separator => '=';
+
+  @override
+  String get itemSeparator => '-';
+
+  @override
+  String get itemHeader => 'الاسم\t\tالكمية\tالسعر\tالمجموع';
+
+  @override
+  String itemRow(String name, String quantity, String price, String total) {
+    return '$name\t\t$quantity\t$price\t$total';
+  }
+
+  @override
+  String taxLine(String amount) {
+    return 'الضريبة: $amount ر.س';
+  }
+
+  @override
+  String subtotalLine(String amount) {
+    return 'المجموع الفرعي: $amount ر.س';
+  }
+
+  @override
+  String totalLine(String amount) {
+    return 'المجموع الكلي: $amount ر.س';
+  }
+
+  @override
+  String fileName(String number, String timestamp) {
+    return 'فاتورة_${number}_$timestamp';
+  }
+
+  @override
+  String loadingProductDetails(String name) {
+    return 'جاري تحميل تفاصيل المنتج...';
+  }
 }

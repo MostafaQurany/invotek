@@ -42,6 +42,7 @@ import 'package:invotek/features/invoices/data/models/responses/get_all_invoices
 import 'package:invotek/features/invoices/data/models/responses/get_invoice_response.dart';
 import 'package:invotek/features/invoices/data/models/responses/get_tax_integration_status.dart';
 import 'package:invotek/features/invoices/data/models/responses/update_invoice_response.dart';
+import 'package:invotek/features/products/data/models/product_api_model.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
 import 'package:invotek/features/products/data/models/response/product/product_responses.dart';
@@ -83,7 +84,7 @@ abstract class ApiClient {
   });
 
   @GET(ApiConstants.productById)
-  Future<GetProductByIdResponse> getProductById(@Path('id') int id);
+  Future<ProductApiModel> getProductById(@Path('id') int id);
 
   @POST(ApiConstants.createProduct)
   Future<CreateProductResponse> createProduct(

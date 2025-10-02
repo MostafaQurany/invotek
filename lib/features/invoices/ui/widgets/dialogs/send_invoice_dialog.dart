@@ -34,7 +34,7 @@ class _SendInvoiceDialogState extends State<SendInvoiceDialog> {
   }
 
   void _initializeControllers() {
-    _emailController.text = widget.invoice.customer.email;
+    _emailController.text = widget.invoice.customer?.email ?? "Email";
     _subjectController.text = 'Invoice ${widget.invoice.invoiceNumber}';
     _messageController.text = 'Please find attached your invoice.';
   }
@@ -81,7 +81,7 @@ class _SendInvoiceDialogState extends State<SendInvoiceDialog> {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      widget.invoice.invoiceNumber,
+                      widget.invoice.invoiceNumber ?? "Invoice Number",
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,

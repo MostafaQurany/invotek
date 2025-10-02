@@ -6,85 +6,80 @@ part 'invoice_model.g.dart';
 
 @JsonSerializable()
 class InvoiceModel {
-  final String id;
+  final int? id;
   @JsonKey(name: "invoice_id")
-  final String invoiceId;
+  final int? invoiceId;
   @JsonKey(name: "invoice_number")
-  final String invoiceNumber;
+  final String? invoiceNumber;
   @JsonKey(name: "tax_uid")
-  final String taxUid;
+  final String? taxUid;
   @JsonKey(name: "qr_code")
-  final String qrCode;
+  final String? qrCode;
   @JsonKey(name: "invoice_type")
-  final String invoiceType;
+  final String? invoiceType;
   @JsonKey(name: "document_type")
-  final String documentType;
+  final String? documentType;
   @JsonKey(name: "status")
-  final String status;
+  final String? status;
   @JsonKey(name: "error_message")
-  final String errorMessage;
+  final String? errorMessage;
   @JsonKey(name: "issue_date")
-  final String issueDate;
+  final String? issueDate;
   @JsonKey(name: "customer_name")
-  final String customerName;
+  final String? customerName;
   @JsonKey(name: "payment_method_code")
-  final String paymentMethodCode;
+  final String? paymentMethodCode;
   @JsonKey(name: "subtotal")
-  final String subtotal;
+  final String? subtotal;
   @JsonKey(name: "tax_amount")
-  final String taxAmount;
+  final String? taxAmount;
   @JsonKey(name: "discount")
-  final String discount;
+  final String? discount;
   @JsonKey(name: "total")
-  final String total;
+  final String? total;
   @JsonKey(name: "description")
-  final String description;
-  @JsonKey(name: "api_request")
-  final String apiRequest;
-  @JsonKey(name: "api_response")
-  final String apiResponse;
+  final String? description;
   @JsonKey(name: "sent_at")
-  final String sentAt;
+  final String? sentAt;
   @JsonKey(name: "created_at")
-  final String createdAt;
+  final String? createdAt;
   @JsonKey(name: "updated_at")
-  final String updatedAt;
+  final String? updatedAt;
   @JsonKey(name: "company_id")
-  final String companyId;
+  final int? companyId;
   @JsonKey(name: "customer_id")
-  final String customerId;
+  final int? customerId;
   @JsonKey(name: "items")
-  final List<InvoiceItem> items;
+  final List<InvoiceItem>? items;
   @JsonKey(name: "customer")
-  final InvoiceCustomerModel customer;
+  final InvoiceCustomerModel? customer;
 
   InvoiceModel({
-    required this.id,
-    required this.invoiceId,
-    required this.invoiceNumber,
-    required this.taxUid,
-    required this.qrCode,
-    required this.invoiceType,
-    required this.documentType,
-    required this.status,
-    required this.errorMessage,
-    required this.issueDate,
-    required this.customerName,
-    required this.paymentMethodCode,
-    required this.subtotal,
-    required this.taxAmount,
-    required this.discount,
-    required this.total,
-    required this.description,
-    required this.apiRequest,
-    required this.apiResponse,
-    required this.sentAt,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.companyId,
-    required this.customerId,
-    required this.items,
-    required this.customer,
+     this.id,
+    this.invoiceId,
+     this.invoiceNumber,
+    this.taxUid,
+    this.qrCode,
+    this.invoiceType,
+    this.documentType,
+    this.status,
+    this.errorMessage,
+    this.issueDate,
+    this.customerName,
+    this.paymentMethodCode,
+    this.subtotal,
+    this.taxAmount,
+    this.discount,
+    this.total,
+    this.description,
+
+    this.sentAt,
+    this.createdAt,
+    this.updatedAt,
+    this.companyId,
+    this.customerId,
+    this.items,
+    this.customer,
   });
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) =>

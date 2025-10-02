@@ -928,5 +928,290 @@
   "bankTransfer": "Bank Transfer",
   "check": "Check",
   "enterDescription": "Enter description",
-  "searchInvoices": "Search invoices..."
+  "searchInvoices": "Search invoices...",
+  "invoiceDetails": "Invoice Details",
+  "loadingInvoiceDetails": "Loading invoice details...",
+  "invoiceNumber": "Invoice Number",
+  "errorLoadingInvoice": "Error loading invoice",
+  "retry": "Retry",
+  "noInvoiceData": "No invoice data available",
+  "invoiceNumberLabel": "Invoice Number: {number}",
+  "@invoiceNumberLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "shareInvoice": "Share Invoice",
+  "printInvoice": "Print Invoice",
+  "sendInvoice": "Send Invoice",
+  "downloadPDF": "Download PDF",
+  "deleteInvoice": "Delete Invoice",
+  "duplicateInvoice": "Duplicate Invoice",
+  "viewQRCode": "View QR Code",
+  "viewTaxUID": "View Tax UID",
+  "updateStatus": "Update Status",
+  "markAsPaid": "Mark as Paid",
+  "changeStatus": "Change Status",
+  "moreOptions": "More Options",
+  "refreshData": "Refresh Data",
+  "invoiceCopiedToClipboard": "Invoice details copied to clipboard",
+  "invoiceCopiedForPrinting": "Invoice details copied for printing",
+  "invoiceSentSuccessfully": "Invoice sent successfully",
+  "invoiceDeletedSuccessfully": "Invoice deleted successfully",
+  "invoiceStatusUpdated": "Invoice status updated to: {status}",
+  "@invoiceStatusUpdated": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSavedSuccessfully": "File saved to: {path}",
+  "@fileSavedSuccessfully": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "noQRCodeAvailable": "No QR code available for this invoice",
+  "noTaxUIDAvailable": "No tax UID available for this invoice",
+  "taxUIDCopied": "Tax UID copied",
+  "shareInvoiceText": "Invoice Number: {number}\nCustomer: {customer}\nDate: {date}\nAmount: {amount} SAR\nStatus: {status}\n\nCreated by Invotek App",
+  "@shareInvoiceText": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "customer": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "printInvoiceText": "Invoice\n{separator}\nInvoice Number: {number}\nDate: {date}\nStatus: {status}\n\nCustomer Information:\nName: {customer}\n{contact}\n\nInvoice Items:\n{items}\n\nTotals:\nSubtotal: {subtotal} SAR\n{tax}\nTotal: {total} SAR\n\n{separator}\nThank you for your business\nThis invoice was created by Invotek App\n{separator}",
+  "@printInvoiceText": {
+    "placeholders": {
+      "separator": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      },
+      "customer": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "statusPaid": "Paid",
+  "statusPending": "Pending",
+  "statusOverdue": "Overdue",
+  "statusDraft": "Draft",
+  "customerDetails": "Customer Details",
+  "itemDetails": "Item Details",
+  "changePaymentMethod": "Change Payment Method",
+  "loading": "Loading...",
+  "creatingFile": "Creating file...",
+  "sendingInvoice": "Sending invoice...",
+  "deletingInvoice": "Deleting invoice...",
+  "updatingStatus": "Updating status...",
+  "errorSharingInvoice": "Failed to share invoice: {error}",
+  "@errorSharingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPrintingInvoice": "Failed to print invoice: {error}",
+  "@errorPrintingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSendingInvoice": "Failed to send invoice: {error}",
+  "@errorSendingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeletingInvoice": "Failed to delete invoice: {error}",
+  "@errorDeletingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCreatingFile": "Failed to create file: {error}",
+  "@errorCreatingFile": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorUpdatingStatus": "Failed to update status: {error}",
+  "@errorUpdatingStatus": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "duplicateInvoiceMessage": "Duplicate invoice {number}",
+  "@duplicateInvoiceMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "viewCustomerDetails": "View customer details: {name}",
+  "@viewCustomerDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "viewItemDetails": "View item details: {name}",
+  "@viewItemDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changePaymentMethodForInvoice": "Change payment method for invoice {number}",
+  "@changePaymentMethodForInvoice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "taxUID": "Tax UID",
+  "taxUIDForInvoice": "Tax UID for invoice {number}:",
+  "@taxUIDForInvoice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "copy": "Copy",
+  "close": "Close",
+  "customerName": "Customer Name",
+  "customerEmail": "Customer Email",
+  "customerPhone": "Customer Phone",
+  "customerAddress": "Customer Address",
+  "invoiceItems": "Invoice Items",
+  "itemName": "Name",
+  "itemQuantity": "Quantity",
+  "itemPrice": "Price",
+  "itemTotal": "Total",
+  "subtotal": "Subtotal",
+  "taxAmount": "Tax Amount",
+  "totalAmount": "Total Amount",
+  "thankYouMessage": "Thank you for your business",
+  "createdByInvotek": "This invoice was created by Invotek App",
+  "separator": "=",
+  "itemSeparator": "-",
+  "itemHeader": "Name\t\tQuantity\tPrice\tTotal",
+  "itemRow": "{name}\t\t{quantity}\t{price}\t{total}",
+  "@itemRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "taxLine": "Tax: {amount} SAR",
+  "@taxLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subtotalLine": "Subtotal: {amount} SAR",
+  "@subtotalLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "totalLine": "Total: {amount} SAR",
+  "@totalLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "fileName": "Invoice_{number}_{timestamp}",
+  "@fileName": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "timestamp": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingProductDetails": "Loading product details...",
+  "@loadingProductDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -44,7 +44,7 @@ sealed class InvoicesState with _$InvoicesState {
 
   const factory InvoicesState.deleteSuccess({
     required List<InvoiceModel> invoices,
-    required String deletedId,
+    required int deletedId,
     InvoiceModel? selectedInvoice,
     @Default(1) int currentPage,
     @Default(1) int totalPages,

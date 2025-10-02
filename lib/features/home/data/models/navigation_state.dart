@@ -7,6 +7,7 @@ class NavigationState {
   final int selectedIndex;
   final int? expandedItemIndex;
   final int? selectedSubIndex;
+  final bool isDrawerOpen;
 
   NavigationState({
     this.currentRoute = '/home',
@@ -15,6 +16,7 @@ class NavigationState {
     this.selectedIndex = 0,
     this.expandedItemIndex,
     this.selectedSubIndex,
+    this.isDrawerOpen = false,
   }) : menuItems = menuItems ?? MenuData.getMenuItems();
 
   NavigationState copyWith({
@@ -24,14 +26,16 @@ class NavigationState {
     int? selectedIndex,
     int? expandedItemIndex,
     int? selectedSubIndex,
+    bool? isDrawerOpen,
   }) {
     return NavigationState(
       currentRoute: currentRoute ?? this.currentRoute,
       routeArguments: routeArguments ?? this.routeArguments,
       menuItems: menuItems ?? this.menuItems,
       selectedIndex: selectedIndex ?? this.selectedIndex,
-      expandedItemIndex: expandedItemIndex ?? this.expandedItemIndex,
+      expandedItemIndex: expandedItemIndex,
       selectedSubIndex: selectedSubIndex ?? this.selectedSubIndex,
+      isDrawerOpen: isDrawerOpen ?? this.isDrawerOpen,
     );
   }
 }

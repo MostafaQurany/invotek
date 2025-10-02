@@ -66,19 +66,17 @@ class InvoicesStateBuilder extends StatelessWidget {
                 if (invoices.isEmpty) {
                   return InvoicesLoadingState();
                 }
-                return Column(
-                  children: [
-                    Expanded(
-                      child: InvoicesList(
-                        invoices: invoices,
-                        onInvoiceTap: onInvoiceTap,
-                        onInvoiceView: onInvoiceView,
-                        onInvoiceEdit: onInvoiceEdit,
-                        onInvoiceDelete: onInvoiceDelete,
-                      ),
+                return SliverList(
+                  delegate: SliverChildListDelegate([
+                    InvoicesList(
+                      invoices: invoices,
+                      onInvoiceTap: onInvoiceTap,
+                      onInvoiceView: onInvoiceView,
+                      onInvoiceEdit: onInvoiceEdit,
+                      onInvoiceDelete: onInvoiceDelete,
                     ),
                     InvoicesLoadingState(),
-                  ],
+                  ]),
                 );
               },
           loaded: (invoices, selectedInvoice, currentPage, totalPages) {
@@ -148,19 +146,25 @@ class InvoicesStateBuilder extends StatelessWidget {
             if (invoices.isEmpty) {
               return InvoicesErrorState(error: error, onRetry: onRetry);
             }
-            return Column(
-              children: [
-                Expanded(
-                  child: InvoicesList(
-                    invoices: invoices,
-                    onInvoiceTap: onInvoiceTap,
-                    onInvoiceView: onInvoiceView,
-                    onInvoiceEdit: onInvoiceEdit,
-                    onInvoiceDelete: onInvoiceDelete,
+            return SliverList(
+              delegate: SliverChildListDelegate([
+                InvoicesList(
+                  invoices: invoices,
+                  onInvoiceTap: onInvoiceTap,
+                  onInvoiceView: onInvoiceView,
+                  onInvoiceEdit: onInvoiceEdit,
+                  onInvoiceDelete: onInvoiceDelete,
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      'Error: $error',
+                      style: TextStyle(color: Colors.red),
+                    ),
                   ),
                 ),
-                InvoicesErrorState(error: error, onRetry: onRetry),
-              ],
+              ]),
             );
           },
         );

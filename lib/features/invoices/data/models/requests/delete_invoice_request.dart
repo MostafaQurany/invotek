@@ -4,7 +4,7 @@ part 'delete_invoice_request.g.dart';
 
 @JsonSerializable()
 class DeleteInvoiceRequest {
-  final String id;
+  final int id;
   DeleteInvoiceRequest({required this.id});
   factory DeleteInvoiceRequest.fromJson(Map<String, dynamic> json) =>
       _$DeleteInvoiceRequestFromJson(json);

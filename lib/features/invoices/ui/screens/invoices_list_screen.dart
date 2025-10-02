@@ -9,7 +9,7 @@ import 'package:invotek/features/invoices/ui/widgets/cards/invoices_header_widge
 import 'package:invotek/features/invoices/ui/widgets/lists/invoices_state_builder.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/screens/add_invoice_screen.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_details_screen.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 
 class InvoicesListScreen extends StatefulWidget {
   const InvoicesListScreen({super.key});
@@ -76,7 +76,9 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       context.read<InvoicesCubit>().loadFirstPage(
         search: query.isEmpty ? null : query,
         status: _selectedStatus == 'all' ? null : _selectedStatus,
-        paymentMethod: _selectedPaymentMethod == 'all' ? null : _selectedPaymentMethod,
+        paymentMethod: _selectedPaymentMethod == 'all'
+            ? null
+            : _selectedPaymentMethod,
         customerId: _selectedCustomer == 'all' ? null : _selectedCustomer,
       );
     }
@@ -89,7 +91,9 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     context.read<InvoicesCubit>().loadFirstPage(
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: status == 'all' ? null : status,
-      paymentMethod: _selectedPaymentMethod == 'all' ? null : _selectedPaymentMethod,
+      paymentMethod: _selectedPaymentMethod == 'all'
+          ? null
+          : _selectedPaymentMethod,
       customerId: _selectedCustomer == 'all' ? null : _selectedCustomer,
     );
   }
@@ -113,7 +117,9 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     context.read<InvoicesCubit>().loadFirstPage(
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: _selectedStatus == 'all' ? null : _selectedStatus,
-      paymentMethod: _selectedPaymentMethod == 'all' ? null : _selectedPaymentMethod,
+      paymentMethod: _selectedPaymentMethod == 'all'
+          ? null
+          : _selectedPaymentMethod,
       customerId: customer == 'all' ? null : customer,
     );
   }
@@ -123,7 +129,9 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       refresh: true,
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: _selectedStatus == 'all' ? null : _selectedStatus,
-      paymentMethod: _selectedPaymentMethod == 'all' ? null : _selectedPaymentMethod,
+      paymentMethod: _selectedPaymentMethod == 'all'
+          ? null
+          : _selectedPaymentMethod,
       customerId: _selectedCustomer == 'all' ? null : _selectedCustomer,
     );
   }
@@ -133,11 +141,10 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       setState(() {
         _isNavigating = true;
       });
-      Navigator.push(
+      Navigator.pushNamed(
         context,
-        MaterialPageRoute(
-          builder: (context) => InvoiceDetailsScreen(invoice: invoice),
-        ),
+        AppRoutes.enhancedInvoiceDetailsRoute,
+        arguments: invoice.id?.toString() ?? '0',
       ).then((_) {
         setState(() {
           _isNavigating = false;
@@ -174,7 +181,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       builder: (context) => DeleteInvoiceDialog(
         invoice: invoice,
         onDelete: () {
-          context.read<InvoicesCubit>().deleteInvoice(invoice.id);
+          context.read<InvoicesCubit>().deleteInvoice(invoice.id ?? 0);
         },
       ),
     );
@@ -187,9 +194,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       });
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => const AddInvoiceScreen(),
-        ),
+        MaterialPageRoute(builder: (context) => const AddInvoiceScreen()),
       ).then((_) {
         setState(() {
           _isNavigating = false;
@@ -205,41 +210,42 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          // Header with Search and Filters
-          SliverToBoxAdapter(
-            child: InvoicesHeaderWidget(
-              searchController: _searchController,
-              onSearchChanged: _onSearchChanged,
-              selectedStatus: _selectedStatus,
-              selectedPaymentMethod: _selectedPaymentMethod,
-              selectedCustomer: _selectedCustomer,
+      body: SafeArea(
+        child: CustomScrollView(
+          controller: _scrollController,
+          slivers: [
+            // Header with Search and Filters
+            SliverToBoxAdapter(
+              child: InvoicesHeaderWidget(
+                searchController: _searchController,
+                onSearchChanged: _onSearchChanged,
+                selectedStatus: _selectedStatus,
+                selectedPaymentMethod: _selectedPaymentMethod,
+                selectedCustomer: _selectedCustomer,
+                onStatusChanged: _onStatusChanged,
+                onPaymentMethodChanged: _onPaymentMethodChanged,
+                onCustomerChanged: _onCustomerChanged,
+                onRefresh: _onRefresh,
+              ),
+            ),
+
+            // Invoices List with State Management
+            InvoicesStateBuilder(
+              onInvoiceTap: _onInvoiceTap,
+              onInvoiceView: _onInvoiceView,
+              onInvoiceEdit: _onInvoiceEdit,
+              onInvoiceDelete: _onInvoiceDelete,
+              onAddInvoice: _onAddInvoice,
+              onRetry: _onRetry,
+              selectedStatus: _selectedStatus ?? 'all',
+              selectedPaymentMethod: _selectedPaymentMethod ?? 'all',
+              selectedCustomer: _selectedCustomer ?? 'all',
               onStatusChanged: _onStatusChanged,
               onPaymentMethodChanged: _onPaymentMethodChanged,
               onCustomerChanged: _onCustomerChanged,
-              onRefresh: _onRefresh,
             ),
-          ),
-
-          // Invoices List with State Management
-          InvoicesStateBuilder(
-            onInvoiceTap: _onInvoiceTap,
-            onInvoiceView: _onInvoiceView,
-            onInvoiceEdit: _onInvoiceEdit,
-            onInvoiceDelete: _onInvoiceDelete,
-            onAddInvoice: _onAddInvoice,
-            onRetry: _onRetry,
-            selectedStatus: _selectedStatus ?? 'all',
-            selectedPaymentMethod: _selectedPaymentMethod ?? 'all',
-            selectedCustomer: _selectedCustomer ?? 'all',
-            onStatusChanged: _onStatusChanged,
-            onPaymentMethodChanged: _onPaymentMethodChanged,
-            onCustomerChanged: _onCustomerChanged,
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _onAddInvoice,
@@ -248,10 +254,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
         icon: const Icon(Icons.add),
         label: Text(
           'إضافة فاتورة',
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-          ),
+          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
         ),
       ),
     );

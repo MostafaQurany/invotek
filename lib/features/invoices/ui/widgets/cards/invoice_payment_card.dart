@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -92,7 +91,7 @@ class InvoicePaymentCard extends StatelessWidget {
           SizedBox(height: 20.h),
 
           // Action Buttons
-          if (invoice.status.toLowerCase() != 'paid') _buildActionButtons(),
+          // if (invoice.status?.toLowerCase() != 'paid') _buildActionButtons(),
         ],
       ),
     );
@@ -102,13 +101,13 @@ class InvoicePaymentCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
         children: [
           Icon(
-            _getPaymentMethodIcon(invoice.paymentMethodCode),
+            _getPaymentMethodIcon(invoice.paymentMethodCode ?? ""),
             size: 20.sp,
             color: AppColors.primary,
           ),
@@ -127,7 +126,7 @@ class InvoicePaymentCard extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  _getPaymentMethodText(invoice.paymentMethodCode),
+                  _getPaymentMethodText(invoice.paymentMethodCode ?? ""),
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -137,20 +136,20 @@ class InvoicePaymentCard extends StatelessWidget {
               ],
             ),
           ),
-          if (onPaymentMethodTap != null)
-            IconButton(
-              onPressed: onPaymentMethodTap,
-              icon: Icon(Icons.edit, size: 16.sp, color: AppColors.primary),
-            ),
+          // if (onPaymentMethodTap != null)
+          //   IconButton(
+          //     onPressed: onPaymentMethodTap,
+          //     icon: Icon(Icons.edit, size: 16.sp, color: AppColors.primary),
+          //   ),
         ],
       ),
     );
   }
 
   Widget _buildAmountBreakdown() {
-    final subtotal = double.tryParse(invoice.subtotal) ?? 0.0;
-    final taxAmount = double.tryParse(invoice.taxAmount) ?? 0.0;
-    final total = double.tryParse(invoice.total) ?? 0.0;
+    final subtotal = double.tryParse(invoice.subtotal ?? '0.00') ?? 0.0;
+    final taxAmount = double.tryParse(invoice.taxAmount ?? '0.00') ?? 0.0;
+    final total = double.tryParse(invoice.total ?? '0.00') ?? 0.0;
 
     return Column(
       children: [
@@ -163,7 +162,8 @@ class InvoicePaymentCard extends StatelessWidget {
               style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
             ),
             Text(
-              NumberFormat.currency(symbol: 'ر.س').format(subtotal),
+              subtotal.toString(),
+              // NumberFormat.currency(symbol: 'ر.س').format(subtotal),
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
@@ -187,7 +187,8 @@ class InvoicePaymentCard extends StatelessWidget {
                 ),
               ),
               Text(
-                NumberFormat.currency(symbol: 'ر.س').format(taxAmount),
+                taxAmount.toString(),
+                // NumberFormat.currency(symbol: 'ر.س').format(taxAmount),
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -216,7 +217,8 @@ class InvoicePaymentCard extends StatelessWidget {
               ),
             ),
             Text(
-              NumberFormat.currency(symbol: 'ر.س').format(total),
+              total.toString(),
+              // NumberFormat.currency(symbol: 'ر.س').format(total),
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w700,
@@ -229,52 +231,52 @@ class InvoicePaymentCard extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons() {
-    return Row(
-      children: [
-        // Mark as Paid Button
-        Expanded(
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onMarkPaid,
-              borderRadius: BorderRadius.circular(8.r),
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
-                decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(
-                    color: AppColors.success.withOpacity(0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.check_circle,
-                      size: 16.sp,
-                      color: AppColors.success,
-                    ),
-                    SizedBox(width: 6.w),
-                    Text(
-                      S.current.markAsPaid,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.success,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildActionButtons() {
+  //   return Row(
+  //     children: [
+  //       // Mark as Paid Button
+  //       Expanded(
+  //         child: Material(
+  //           color: Colors.transparent,
+  //           child: InkWell(
+  //             onTap: onMarkPaid,
+  //             borderRadius: BorderRadius.circular(8.r),
+  //             child: Container(
+  //               padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+  //               decoration: BoxDecoration(
+  //                 color: AppColors.success.withOpacity(0.1),
+  //                 borderRadius: BorderRadius.circular(8.r),
+  //                 border: Border.all(
+  //                   color: AppColors.success.withOpacity(0.3),
+  //                   width: 1,
+  //                 ),
+  //               ),
+  //               child: Row(
+  //                 mainAxisAlignment: MainAxisAlignment.center,
+  //                 children: [
+  //                   Icon(
+  //                     Icons.check_circle,
+  //                     size: 16.sp,
+  //                     color: AppColors.success,
+  //                   ),
+  //                   SizedBox(width: 6.w),
+  //                   Text(
+  //                     S.current.markAsPaid,
+  //                     style: TextStyle(
+  //                       fontSize: 14.sp,
+  //                       fontWeight: FontWeight.w600,
+  //                       color: AppColors.success,
+  //                     ),
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   IconData _getPaymentMethodIcon(String paymentMethod) {
     switch (paymentMethod.toLowerCase()) {

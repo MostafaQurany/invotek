@@ -59,7 +59,7 @@ class EditInvoiceHeaderWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 2.h),
                 Text(
-                  invoice.invoiceNumber,
+                  invoice.invoiceNumber ?? "Invoice Number",
                   style: TextStyle(
                     fontSize: 14.sp,
                     color: AppColors.textSecondary,

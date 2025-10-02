@@ -55,19 +55,19 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
 
   void _populateFormData() {
     final invoice = widget.invoice;
-    _invoiceNumberController.text = invoice.invoiceNumber;
-    _customerNameController.text = invoice.customerName;
-    _customerEmailController.text = invoice.customer.email;
-    _customerPhoneController.text = invoice.customer.phone;
-    _subtotalController.text = invoice.subtotal;
-    _taxAmountController.text = invoice.taxAmount;
-    _totalController.text = invoice.total;
-    _descriptionController.text = invoice.description;
-    _issueDateController.text = invoice.issueDate;
+    _invoiceNumberController.text = invoice.invoiceNumber ?? "Invoice Number";
+    _customerNameController.text = invoice.customerName ?? "Customer Name";
+    _customerEmailController.text = invoice.customer?.email ?? "Customer Email";
+    _customerPhoneController.text = invoice.customer?.phone ?? "Customer Phone";
+    _subtotalController.text = invoice.subtotal ?? "0.00";
+    _taxAmountController.text = invoice.taxAmount ?? "0.00";
+    _totalController.text = invoice.total ?? "0.00";
+    _descriptionController.text = invoice.description ?? "No Description";
+    _issueDateController.text = invoice.issueDate ?? "0.00";
     
-    _selectedStatus = invoice.status;
-    _selectedPaymentMethod = invoice.paymentMethodCode;
-    _selectedDate = DateTime.tryParse(invoice.issueDate) ?? DateTime.now();
+    _selectedStatus = invoice.status ?? "draft";
+    _selectedPaymentMethod = invoice.paymentMethodCode ?? "cash";
+    _selectedDate = DateTime.tryParse(invoice.issueDate ?? "0.00") ?? DateTime.now();
   }
 
   @override

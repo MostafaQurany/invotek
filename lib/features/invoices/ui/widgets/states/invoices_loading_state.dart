@@ -7,29 +7,31 @@ class InvoicesLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(32.w),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Loading Indicator
-          CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
-            strokeWidth: 3.w,
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Loading Text
-          Text(
-            'Loading invoices...',
-            style: TextStyle(
-              fontSize: 16.sp,
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
+    return SliverToBoxAdapter(
+      child: Container(
+        padding: EdgeInsets.all(32.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Loading Indicator
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+              strokeWidth: 3.w,
             ),
-          ),
-        ],
+
+            SizedBox(height: 16.h),
+
+            // Loading Text
+            Text(
+              'Loading invoices...',
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: AppColors.textSecondary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

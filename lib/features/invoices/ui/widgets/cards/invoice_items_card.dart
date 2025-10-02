@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/features/invoices/data/models/invoice_item.dart';
 import 'package:invotek/generated/l10n.dart';
 
-class InvoiceItemsCard extends StatelessWidget {
+class InvoiceItemsCard extends StatefulWidget {
   final List<InvoiceItem> items;
   final Function(InvoiceItem)? onItemTap;
 
   const InvoiceItemsCard({super.key, required this.items, this.onItemTap});
 
+  @override
+  State<InvoiceItemsCard> createState() => _InvoiceItemsCardState();
+}
+
+class _InvoiceItemsCardState extends State<InvoiceItemsCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +68,7 @@ class InvoiceItemsCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      '${items.length} ${S.of(context).items}',
+                      '${widget.items.length} ${S.of(context).items}',
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700,
@@ -76,17 +84,17 @@ class InvoiceItemsCard extends StatelessWidget {
           SizedBox(height: 20.h),
 
           // Items List
-          if (items.isEmpty)
-            _buildEmptyState()
+          if (widget.items.isEmpty)
+            Center(child: _buildEmptyState())
           else
             Column(
-              children: items.asMap().entries.map((entry) {
+              children: widget.items.asMap().entries.map((entry) {
                 final index = entry.key;
                 final item = entry.value;
                 return Column(
                   children: [
                     _buildItemRow(item, index + 1),
-                    if (index < items.length - 1) SizedBox(height: 12.h),
+                    if (index < widget.items.length - 1) SizedBox(height: 12.h),
                   ],
                 );
               }).toList(),
@@ -100,7 +108,7 @@ class InvoiceItemsCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(20.w),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.primary.withOpacity(0.2),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Column(
@@ -133,12 +141,12 @@ class InvoiceItemsCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onItemTap != null ? () => onItemTap!(item) : null,
+        onTap: widget.onItemTap != null ? () => widget.onItemTap!(item) : null,
         borderRadius: BorderRadius.circular(8.r),
         child: Container(
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
-            color: AppColors.background,
+            color: AppColors.primary.withOpacity(0.2),
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: AppColors.border, width: 1),
           ),
@@ -172,17 +180,17 @@ class InvoiceItemsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.name,
+                      item.name ?? "Item Name",
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    if (item.description.isNotEmpty) ...[
+                    if (item.description?.isNotEmpty ?? false) ...[
                       SizedBox(height: 2.h),
                       Text(
-                        item.description,
+                        item.description ?? "No Description",
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: AppColors.textSecondary,
@@ -192,7 +200,7 @@ class InvoiceItemsCard extends StatelessWidget {
                       ),
                     ],
                     SizedBox(height: 4.h),
-                    Row(
+                    Wrap(
                       children: [
                         Text(
                           '${S.current.qty}: ${item.quantity}',
@@ -203,7 +211,7 @@ class InvoiceItemsCard extends StatelessWidget {
                         ),
                         SizedBox(width: 16.w),
                         Text(
-                          '${S.current.price}: ${NumberFormat.currency(symbol: 'ر.س').format(double.tryParse(item.price) ?? 0)}',
+                          '${S.current.price}: ${NumberFormat.currency(symbol: context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn).format(double.tryParse(item.price ?? '0.00') ?? 0)}',
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColors.textSecondary,
@@ -216,28 +224,39 @@ class InvoiceItemsCard extends StatelessWidget {
               ),
 
               // Total Amount
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    NumberFormat.currency(
-                      symbol: 'ر.س',
-                    ).format(double.tryParse(item.total) ?? 0),
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
+              Expanded(
+                child: Wrap(
+                  alignment: WrapAlignment.end,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      NumberFormat.currency(
+                        symbol:
+                            context
+                                    .read<LocalizationCubit>()
+                                    .getCurrentLanguage() ==
+                                'ar'
+                            ? AppCurrency.currencyAr
+                            : AppCurrency.currencyEn,
+                      ).format(double.tryParse(item.total ?? '0.00') ?? 0),
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
-                  ),
-                  if (onItemTap != null) ...[
-                    SizedBox(height: 2.h),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 12.sp,
-                      color: AppColors.textSecondary,
-                    ),
+                    if (widget.onItemTap != null) ...[
+                      SizedBox(width: 2.w),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12.sp,
+                        color: AppColors.textSecondary,
+                      ),
+                    ],
                   ],
-                ],
+                ),
               ),
             ],
           ),

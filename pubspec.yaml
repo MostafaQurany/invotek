@@ -57,6 +57,11 @@ dependencies:
   url_launcher: ^6.3.1
   get: ^4.6.6
   google_sign_in: ^7.2.0
+  # New dependencies for enhanced invoice features
+  share_plus: ^7.2.1
+  printing: ^5.11.1
+  pdf: ^3.10.4
+  qr_flutter: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

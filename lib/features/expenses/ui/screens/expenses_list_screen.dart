@@ -161,7 +161,29 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
 
   // Event Handlers
   void _handleMenuPressed() {
-    ZoomDrawer.of(context)?.toggle();
+    try {
+      final zoomDrawer = ZoomDrawer.of(context);
+      if (zoomDrawer != null) {
+        zoomDrawer.toggle();
+      } else {
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        } else {
+          Navigator.of(context).pushReplacementNamed('/home');
+        }
+      }
+    } catch (e) {
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      } else {
+        // CustomersCubit.get(context).loadFirstPage(
+        //   refresh: true,
+        //   search: " query.isEmpty ? null : query",
+        //   status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+        //   company: _selectedCompany == 'all_company' ? null : _selectedCompany,
+        // );
+      }
+    }
   }
 
   void _onStatusChanged(String status) {

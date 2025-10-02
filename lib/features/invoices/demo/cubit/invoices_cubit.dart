@@ -107,9 +107,9 @@ class InvoicesCubit extends Cubit<InvoicesState> {
 
     result.when(
       success: (response) {
-        _invoices.addAll(response.body.data);
-        _currentPage = response.body.currentPage.toInt();
-        _totalPages = response.body.lastPage.toInt();
+        _invoices.addAll(response.data.data ?? []);
+        _currentPage = response.data.currentPage?.toInt() ?? 1;
+        _totalPages = response.data.lastPage?.toInt() ?? 1;
 
         emit(
           InvoicesState.loaded(
@@ -169,8 +169,8 @@ class InvoicesCubit extends Cubit<InvoicesState> {
     result.when(
       success: (response) {
         _currentPage = nextPage;
-        _invoices.addAll(response.body.data);
-        _totalPages = response.body.lastPage.toInt();
+        _invoices.addAll(response.data.data ?? []);
+        _totalPages = response.data.lastPage?.toInt() ?? 1;
 
         emit(
           InvoicesState.loaded(
@@ -365,7 +365,7 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   }
 
   /// Delete invoice
-  Future<void> deleteInvoice(String id) async {
+  Future<void> deleteInvoice(int id) async {
     emit(
       InvoicesState.loading(
         invoices: _invoices,

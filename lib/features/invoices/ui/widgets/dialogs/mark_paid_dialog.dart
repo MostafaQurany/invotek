@@ -86,7 +86,7 @@ class _MarkPaidDialogState extends State<MarkPaidDialog> {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      widget.invoice.invoiceNumber,
+                      widget.invoice.invoiceNumber ?? "Invoice Number",
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,

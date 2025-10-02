@@ -8,7 +8,7 @@ part of 'get_invoice_response.dart';
 
 GetInvoiceResponse _$GetInvoiceResponseFromJson(Map<String, dynamic> json) =>
     GetInvoiceResponse(
-      success: json['success'] as String,
+      success: json['success'] as bool,
       data: InvoiceModel.fromJson(json['data'] as Map<String, dynamic>),
     );
 

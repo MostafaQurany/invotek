@@ -21,19 +21,20 @@ class InvoicesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 8.h),
-      itemCount: invoices.length,
-      itemBuilder: (context, index) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
         final invoice = invoices[index];
-        return InvoiceCard(
-          invoice: invoice,
-          onTap: () => onInvoiceTap(invoice),
-          onView: () => onInvoiceView(invoice),
-          onEdit: () => onInvoiceEdit(invoice),
-          onDelete: () => onInvoiceDelete(invoice),
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.h),
+          child: InvoiceCard(
+            invoice: invoice,
+            onTap: () => onInvoiceTap(invoice),
+            onView: () => onInvoiceView(invoice),
+            onEdit: () => onInvoiceEdit(invoice),
+            onDelete: () => onInvoiceDelete(invoice),
+          ),
         );
-      },
+      }, childCount: invoices.length),
     );
   }
 }

@@ -7,8 +7,8 @@ part 'get_all_invoices_response.g.dart';
 @JsonSerializable()
 class GetAllInvoicesResponse {
   final bool success;
-  final GetAllInvoicesBody body;
-  GetAllInvoicesResponse({required this.body, required this.success});
+  final GetAllInvoicesBody data;
+  GetAllInvoicesResponse({required this.data, required this.success});
 
   factory GetAllInvoicesResponse.fromJson(Map<String, dynamic> json) =>
       _$GetAllInvoicesResponseFromJson(json);
@@ -18,26 +18,26 @@ class GetAllInvoicesResponse {
 
 @JsonSerializable()
 class GetAllInvoicesBody {
-  final num total;
-  @JsonKey(
-    name: 'next_page_url',
-    toJson: _nextPageUrlToJson,
-    fromJson: _nextPageUrlFromJson,
-    defaultValue: false,
-  )
-  final bool hasNextPage;
+  final num? total;
+  // @JsonKey(
+  //   name: 'next_page_url',
+  //   toJson: _nextPageUrlToJson,
+  //   fromJson: _nextPageUrlFromJson,
+  //   defaultValue: false,
+  // )
+  // final bool? hasNextPage;
   @JsonKey(name: 'last_page')
-  final num lastPage;
+  final num? lastPage;
   @JsonKey(name: "current_page")
-  final num currentPage;
-  final List<InvoiceModel> data;
+  final num? currentPage;
+  final List<InvoiceModel>? data;
 
   GetAllInvoicesBody({
-    required this.hasNextPage,
-    required this.lastPage,
-    required this.total,
-    required this.data,
-    required this.currentPage,
+    //this.hasNextPage,
+    this.lastPage,
+    this.total,
+    this.data,
+    this.currentPage,
   });
 
   factory GetAllInvoicesBody.fromJson(Map<String, dynamic> json) =>

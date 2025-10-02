@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -59,7 +62,7 @@ class InvoiceSummaryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      invoice.invoiceNumber,
+                      invoice.invoiceNumber ?? "Invoice Number",
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
@@ -68,7 +71,7 @@ class InvoiceSummaryCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      _formatDate(invoice.issueDate),
+                      _formatDate(invoice.issueDate ?? ""),
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
@@ -79,7 +82,7 @@ class InvoiceSummaryCard extends StatelessWidget {
               ),
 
               // Status Badge
-              _buildStatusBadge(invoice.status),
+              _buildStatusBadge(invoice.status ?? "pending"),
             ],
           ),
 
@@ -89,7 +92,7 @@ class InvoiceSummaryCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              color: AppColors.background,
+              color: AppColors.primary.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Column(
@@ -108,8 +111,14 @@ class InvoiceSummaryCard extends StatelessWidget {
                     ),
                     Text(
                       NumberFormat.currency(
-                        symbol: 'ر.س',
-                      ).format(double.tryParse(invoice.total) ?? 0),
+                        symbol:
+                            context
+                                    .read<LocalizationCubit>()
+                                    .getCurrentLanguage() ==
+                                'ar'
+                            ? AppCurrency.currencyAr
+                            : AppCurrency.currencyEn,
+                      ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
@@ -120,8 +129,8 @@ class InvoiceSummaryCard extends StatelessWidget {
                 ),
 
                 // Subtotal and Tax
-                if (double.tryParse(invoice.subtotal) != null &&
-                    double.tryParse(invoice.taxAmount) != null)
+                if (double.tryParse(invoice.subtotal ?? '0.00') != null &&
+                    double.tryParse(invoice.taxAmount ?? '0.00') != null)
                   Column(
                     children: [
                       SizedBox(height: 12.h),
@@ -137,8 +146,16 @@ class InvoiceSummaryCard extends StatelessWidget {
                           ),
                           Text(
                             NumberFormat.currency(
-                              symbol: 'ر.س',
-                            ).format(double.tryParse(invoice.subtotal) ?? 0),
+                              symbol:
+                                  context
+                                          .read<LocalizationCubit>()
+                                          .getCurrentLanguage() ==
+                                      'ar'
+                                  ? AppCurrency.currencyAr
+                                  : AppCurrency.currencyEn,
+                            ).format(
+                              double.tryParse(invoice.subtotal ?? '0.00') ?? 0,
+                            ),
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -147,8 +164,10 @@ class InvoiceSummaryCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      if (double.tryParse(invoice.taxAmount) != null &&
-                          double.tryParse(invoice.taxAmount)! > 0) ...[
+                      if (double.tryParse(invoice.taxAmount ?? '0.00') !=
+                              null &&
+                          double.tryParse(invoice.taxAmount ?? '0.00')! >
+                              0) ...[
                         SizedBox(height: 8.h),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,9 +180,10 @@ class InvoiceSummaryCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              NumberFormat.currency(
-                                symbol: 'ر.س',
-                              ).format(double.tryParse(invoice.taxAmount) ?? 0),
+                              NumberFormat.currency(symbol: 'ر.س').format(
+                                double.tryParse(invoice.taxAmount ?? '0.00') ??
+                                    0,
+                              ),
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
@@ -189,16 +209,16 @@ class InvoiceSummaryCard extends StatelessWidget {
                 child: _buildInfoItem(
                   icon: Icons.shopping_cart,
                   label: S.of(context).items,
-                  value: '${invoice.items.length}',
+                  value: '${invoice.items?.length ?? 0}',
                 ),
               ),
 
               // Payment Method
               Expanded(
                 child: _buildInfoItem(
-                  icon: _getPaymentMethodIcon(invoice.paymentMethodCode),
+                  icon: _getPaymentMethodIcon(invoice.paymentMethodCode ?? ""),
                   label: S.of(context).paymentMethod,
-                  value: _getPaymentMethodText(invoice.paymentMethodCode),
+                  value: _getPaymentMethodText(invoice.paymentMethodCode ?? ""),
                 ),
               ),
             ],

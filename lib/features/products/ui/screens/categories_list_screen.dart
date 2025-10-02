@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 
 import '../../../../generated/l10n.dart';
 
@@ -37,35 +37,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
         elevation: 0,
         scrolledUnderElevation: 1,
         foregroundColor: AppColors.primary,
-        leading: IconButton(
-          style: IconButton.styleFrom(
-            backgroundColor: AppColors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-          ),
-          icon: Icon(Icons.menu, color: AppColors.primary),
-          onPressed: () {
-            try {
-              final zoomDrawer = ZoomDrawer.of(context);
-              if (zoomDrawer != null) {
-                zoomDrawer.toggle();
-              } else {
-                if (Navigator.of(context).canPop()) {
-                  Navigator.of(context).pop();
-                } else {
-                  Navigator.of(context).pushReplacementNamed('/home');
-                }
-              }
-            } catch (e) {
-              if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
-              } else {
-                Navigator.of(context).pushReplacementNamed('/home');
-              }
-            }
-          },
-        ),
+        leading: const CommonMenuButton(),
         actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
         actions: [
           IconButton.filled(

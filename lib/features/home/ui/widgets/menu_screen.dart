@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/features/home/data/models/menu_item.dart';
 import 'package:invotek/features/home/data/models/navigation_state.dart';
-import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -16,8 +16,6 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
-  NavigationState _currentState = NavigationState();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,48 +57,55 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   Widget _buildMenuItems() {
-    return ListView.builder(
-      itemCount: _currentState.menuItems.length,
-      itemBuilder: (context, index) {
-        final item = _currentState.menuItems[index];
-        return _buildMenuItem(item, index);
+    return BlocBuilder<NavigationCubit, NavigationState>(
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount: state.menuItems.length,
+          itemBuilder: (context, index) {
+            final item = state.menuItems[index];
+            return _buildMenuItem(item, index, state);
+          },
+        );
       },
     );
   }
 
-  Widget _buildMenuItem(MenuItem item, int index) {
-    final isSelected = _currentState.selectedIndex == index;
-    final isExpanded = _currentState.expandedItemIndex == index;
+  Widget _buildMenuItem(MenuItem item, int index, NavigationState state) {
+    final isSelected = state.selectedIndex == index;
+    final isExpanded = state.expandedItemIndex == index;
 
     return Column(
       children: [
         ListTile(
-          leading: Icon(
-            item.icon,
-            color: isSelected ? AppColors.primary : Colors.white,
-          ),
+          leading: Icon(item.icon, color: Colors.white, size: 24.sp),
           title: Text(
             item.getLocalizedTitle(S.of(context)),
             style: TextStyle(
-              color: isSelected ? AppColors.primary : Colors.white,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              color: Colors.white,
+              fontWeight: isSelected ? FontWeight.w800 : FontWeight.normal,
+              fontSize: isSelected ? 16.sp : 14.sp,
             ),
           ),
           trailing: item.hasSubItems
               ? Icon(
                   isExpanded ? Icons.expand_less : Icons.expand_more,
                   color: Colors.white,
+                  size: 24.sp,
                 )
               : null,
           onTap: () => _onMenuItemTap(item, index),
         ),
         if (item.hasSubItems && isExpanded)
-          _buildSubMenuItems(item.subItems, index),
+          _buildSubMenuItems(item.subItems, index, state),
       ],
     );
   }
 
-  Widget _buildSubMenuItems(List<MenuItem> subItems, int parentIndex) {
+  Widget _buildSubMenuItems(
+    List<MenuItem> subItems,
+    int parentIndex,
+    NavigationState state,
+  ) {
     return Container(
       color: Colors.white.withOpacity(0.1),
       child: Column(
@@ -108,21 +113,21 @@ class _MenuScreenState extends State<MenuScreen> {
           final subIndex = entry.key;
           final subItem = entry.value;
           final isSubSelected =
-              _currentState.selectedIndex == parentIndex &&
-              _currentState.selectedSubIndex == subIndex;
+              state.selectedIndex == parentIndex &&
+              state.selectedSubIndex == subIndex;
 
           return ListTile(
             leading: Icon(
               subItem.icon,
-              color: isSubSelected ? AppColors.primary : Colors.white70,
+              color: isSubSelected ? Colors.white : Colors.white70,
               size: 20,
             ),
             title: Text(
               subItem.getLocalizedTitle(S.of(context)),
               style: TextStyle(
-                color: isSubSelected ? AppColors.primary : Colors.white70,
-                fontWeight: isSubSelected ? FontWeight.bold : FontWeight.normal,
-                fontSize: 14,
+                color: isSubSelected ? Colors.white : Colors.white70,
+                fontWeight: isSubSelected ? FontWeight.w500 : FontWeight.normal,
+                fontSize: isSubSelected ? 14.sp : 12.sp,
               ),
             ),
             onTap: () => _onSubMenuItemTap(subItem, parentIndex, subIndex),
@@ -153,38 +158,29 @@ class _MenuScreenState extends State<MenuScreen> {
 
   void _onMenuItemTap(MenuItem item, int index) {
     if (item.hasSubItems) {
-      // تبديل حالة التوسيع
-      setState(() {
-        _currentState = _currentState.copyWith(
-          expandedItemIndex: _currentState.expandedItemIndex == index
-              ? null
-              : index,
-          selectedIndex: index,
-          selectedSubIndex: null,
-        );
-      });
+      // إذا كان العنصر موسع، أغلق القائمة الفرعية
+      // إذا كان مغلق، افتح القائمة الفرعية
+      context.read<NavigationCubit>().expandMenuItem(index);
     } else {
-      // التنقل إلى الشاشة
-      _navigateToScreen(item.route);
+      // إغلاق جميع العناصر الموسعة عند التنقل
+      context.read<NavigationCubit>().collapseAllItems();
+      _navigateToScreen(item.route, index);
     }
   }
 
   void _onSubMenuItemTap(MenuItem subItem, int parentIndex, int subIndex) {
-    setState(() {
-      _currentState = _currentState.copyWith(
-        selectedIndex: parentIndex,
-        selectedSubIndex: subIndex,
-        expandedItemIndex: parentIndex,
-      );
-    });
-    _navigateToScreen(subItem.route);
+    _navigateToScreen(subItem.route, parentIndex, subIndex);
   }
 
-  void _navigateToScreen(String route) {
+  void _navigateToScreen(String route, int index, [int? subIndex]) {
+    // تحديث حالة التنقل
+    context.read<NavigationCubit>().setSelectedMenuItem(
+      index,
+      subIndex: subIndex,
+    );
+    context.read<NavigationCubit>().navigateToRoute(route);
+
     // إغلاق الدرج
     ZoomDrawer.of(context)?.close();
-
-    // استخدام Navigator.pushReplacementNamed بدلاً من findAncestorStateOfType
-    Navigator.pushReplacementNamed(context, route);
   }
 }

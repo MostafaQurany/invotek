@@ -90,7 +90,7 @@ class InvoiceOptionsBottomSheet extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  invoice.invoiceNumber,
+                  invoice.invoiceNumber ?? "Invoice Number",
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
@@ -99,7 +99,7 @@ class InvoiceOptionsBottomSheet extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  invoice.customerName,
+                  invoice.customerName ?? "Customer Name",
                   style: TextStyle(
                     fontSize: 14.sp,
                     color: AppColors.textSecondary,
@@ -108,7 +108,7 @@ class InvoiceOptionsBottomSheet extends StatelessWidget {
               ],
             ),
           ),
-          _buildStatusBadge(invoice.status),
+          _buildStatusBadge(invoice.status ?? "pending"),
         ],
       ),
     );
@@ -187,7 +187,7 @@ class InvoiceOptionsBottomSheet extends StatelessWidget {
         SizedBox(height: 12.h),
 
         // Send Button
-        if (invoice.status.toLowerCase() != 'paid')
+        if (invoice.status?.toLowerCase() != 'paid')
           _buildActionButton(
             icon: Icons.send,
             label: S.current.send,
@@ -195,10 +195,10 @@ class InvoiceOptionsBottomSheet extends StatelessWidget {
             onTap: onSend,
           ),
 
-        if (invoice.status.toLowerCase() != 'paid') SizedBox(height: 12.h),
+        if (invoice.status?.toLowerCase() != 'paid') SizedBox(height: 12.h),
 
         // Mark as Paid Button
-        if (invoice.status.toLowerCase() != 'paid')
+        if (invoice.status?.toLowerCase() != 'paid')
           _buildActionButton(
             icon: Icons.check_circle,
             label: S.current.markAsPaid,
@@ -206,7 +206,7 @@ class InvoiceOptionsBottomSheet extends StatelessWidget {
             onTap: onMarkPaid,
           ),
 
-        if (invoice.status.toLowerCase() != 'paid') SizedBox(height: 12.h),
+        if (invoice.status?.toLowerCase() != 'paid') SizedBox(height: 12.h),
 
         // Duplicate Button
         _buildActionButton(

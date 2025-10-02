@@ -63,7 +63,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      customer.name,
+                      customer.name ?? "Customer Name",
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700,
@@ -91,41 +91,41 @@ class InvoiceCustomerCard extends StatelessWidget {
           Column(
             children: [
               // Email
-              if (customer.email.isNotEmpty)
+              if (customer.email?.isNotEmpty ?? false)
                 _buildDetailRow(
                   icon: Icons.email,
                   label: S.of(context).email,
-                  value: customer.email,
+                  value: customer.email ?? "Customer Email",
                 ),
 
-              if (customer.email.isNotEmpty) SizedBox(height: 12.h),
+              if (customer.email?.isNotEmpty ?? false) SizedBox(height: 12.h),
 
               // Phone
-              if (customer.phone.isNotEmpty)
+              if (customer.phone?.isNotEmpty ?? false)
                 _buildDetailRow(
                   icon: Icons.phone,
                   label: S.of(context).phone,
-                  value: customer.phone,
+                  value: customer.phone ?? "Customer Phone",
                 ),
 
-              if (customer.phone.isNotEmpty) SizedBox(height: 12.h),
+              if (customer.phone?.isNotEmpty ?? false) SizedBox(height: 12.h),
 
               // Address
-              if (customer.address.isNotEmpty)
+              if (customer.address?.isNotEmpty ?? false)
                 _buildDetailRow(
                   icon: Icons.location_on,
                   label: S.of(context).address,
-                  value: customer.address,
+                  value: customer.address ?? "Customer Address",
                 ),
 
-              if (customer.address.isNotEmpty) SizedBox(height: 12.h),
+              if (customer.address?.isNotEmpty ?? false) SizedBox(height: 12.h),
 
               // Tax Number
-              if (customer.taxNumber.isNotEmpty)
+              if (customer.taxNumber?.isNotEmpty ?? false)
                 _buildDetailRow(
                   icon: Icons.receipt,
                   label: S.of(context).taxNumber,
-                  value: customer.taxNumber,
+                  value: customer.taxNumber ?? "Customer Tax Number"  ,
                 ),
             ],
           ),

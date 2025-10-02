@@ -12,6 +12,8 @@ import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.da
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 
 /// Centralized provider for all cubits in the app
 class AppProviders {
@@ -24,6 +26,7 @@ class AppProviders {
       create: (context) => getIt<OnboardingCubit>(),
     ),
     BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
+    BlocProvider<NavigationCubit>(create: (context) => NavigationCubit()),
 
     // Users and permissions
     BlocProvider<UsersCubit>(create: (context) => getIt<UsersCubit>()),
@@ -48,6 +51,9 @@ class AppProviders {
     BlocProvider<ExpenseCategoriesCubit>(
       create: (context) => getIt<ExpenseCategoriesCubit>(),
     ),
+
+    // Invoices
+    BlocProvider<InvoicesCubit>(create: (context) => getIt<InvoicesCubit>()),
   ];
 
   /// Initialize data for cubits that need initial loading
@@ -58,5 +64,6 @@ class AppProviders {
     context.read<CustomersCubit>().loadFirstPage();
     context.read<ExpensesCubit>().loadFirstPage();
     context.read<ExpenseCategoriesCubit>().loadFirstPage();
+    context.read<InvoicesCubit>().loadFirstPage();
   }
 }

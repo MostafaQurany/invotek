@@ -10,19 +10,19 @@ InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) => InvoiceItem(
   product: json['product'] == null
       ? null
       : ProductApiModel.fromJson(json['product'] as Map<String, dynamic>),
-  id: json['id'] as String,
-  taxInvoiceId: json['tax_invoice_id'] as String,
-  name: json['name'] as String,
-  description: json['description'] as String,
-  quantity: json['quantity'] as String,
-  price: json['price'] as String,
-  discount: json['discount'] as String,
-  taxPercent: json['tax_percent'] as String,
-  taxAmount: json['tax_amount'] as String,
-  total: json['total'] as String,
-  createdAt: json['created_at'] as String,
-  updatedAt: json['updated_at'] as String,
-  productId: json['product_id'] as String,
+  id: (json['id'] as num?)?.toInt(),
+  taxInvoiceId: (json['tax_invoice_id'] as num?)?.toInt(),
+  name: json['name'] as String?,
+  description: json['description'] as String?,
+  quantity: json['quantity'] as String?,
+  price: json['price'] as String?,
+  discount: json['discount'] as String?,
+  taxPercent: json['tax_percent'] as String?,
+  taxAmount: json['tax_amount'] as String?,
+  total: json['total'] as String?,
+  createdAt: json['created_at'] as String?,
+  updatedAt: json['updated_at'] as String?,
+  productId: (json['product_id'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$InvoiceItemToJson(InvoiceItem instance) =>

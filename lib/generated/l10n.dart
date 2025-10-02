@@ -2550,30 +2550,30 @@ class S {
     );
   }
 
-  /// `Email`
+  /// `Customer Email`
   String get customerEmail {
     return Intl.message(
-      'Email',
+      'Customer Email',
       name: 'customerEmail',
       desc: '',
       args: [],
     );
   }
 
-  /// `Phone Number`
+  /// `Customer Phone`
   String get customerPhone {
     return Intl.message(
-      'Phone Number',
+      'Customer Phone',
       name: 'customerPhone',
       desc: '',
       args: [],
     );
   }
 
-  /// `Address`
+  /// `Customer Address`
   String get customerAddress {
     return Intl.message(
-      'Address',
+      'Customer Address',
       name: 'customerAddress',
       desc: '',
       args: [],
@@ -5550,10 +5550,10 @@ class S {
     );
   }
 
-  /// `SAR 15,420`
+  /// `Total Amount`
   String get totalAmount {
     return Intl.message(
-      'SAR 15,420',
+      'Total Amount',
       name: 'totalAmount',
       desc: '',
       args: [],
@@ -7437,6 +7437,648 @@ class S {
       name: 'searchInvoices',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Loading invoice details...`
+  String get loadingInvoiceDetails {
+    return Intl.message(
+      'Loading invoice details...',
+      name: 'loadingInvoiceDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading invoice`
+  String get errorLoadingInvoice {
+    return Intl.message(
+      'Error loading invoice',
+      name: 'errorLoadingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No invoice data available`
+  String get noInvoiceData {
+    return Intl.message(
+      'No invoice data available',
+      name: 'noInvoiceData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Number: {number}`
+  String invoiceNumberLabel(String number) {
+    return Intl.message(
+      'Invoice Number: $number',
+      name: 'invoiceNumberLabel',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Share Invoice`
+  String get shareInvoice {
+    return Intl.message(
+      'Share Invoice',
+      name: 'shareInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Invoice`
+  String get printInvoice {
+    return Intl.message(
+      'Print Invoice',
+      name: 'printInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duplicate Invoice`
+  String get duplicateInvoice {
+    return Intl.message(
+      'Duplicate Invoice',
+      name: 'duplicateInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View QR Code`
+  String get viewQRCode {
+    return Intl.message(
+      'View QR Code',
+      name: 'viewQRCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Tax UID`
+  String get viewTaxUID {
+    return Intl.message(
+      'View Tax UID',
+      name: 'viewTaxUID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Status`
+  String get updateStatus {
+    return Intl.message(
+      'Update Status',
+      name: 'updateStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Status`
+  String get changeStatus {
+    return Intl.message(
+      'Change Status',
+      name: 'changeStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More Options`
+  String get moreOptions {
+    return Intl.message(
+      'More Options',
+      name: 'moreOptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh Data`
+  String get refreshData {
+    return Intl.message(
+      'Refresh Data',
+      name: 'refreshData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice details copied to clipboard`
+  String get invoiceCopiedToClipboard {
+    return Intl.message(
+      'Invoice details copied to clipboard',
+      name: 'invoiceCopiedToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice details copied for printing`
+  String get invoiceCopiedForPrinting {
+    return Intl.message(
+      'Invoice details copied for printing',
+      name: 'invoiceCopiedForPrinting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice sent successfully`
+  String get invoiceSentSuccessfully {
+    return Intl.message(
+      'Invoice sent successfully',
+      name: 'invoiceSentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice deleted successfully`
+  String get invoiceDeletedSuccessfully {
+    return Intl.message(
+      'Invoice deleted successfully',
+      name: 'invoiceDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice status updated to: {status}`
+  String invoiceStatusUpdated(String status) {
+    return Intl.message(
+      'Invoice status updated to: $status',
+      name: 'invoiceStatusUpdated',
+      desc: '',
+      args: [status],
+    );
+  }
+
+  /// `File saved to: {path}`
+  String fileSavedSuccessfully(String path) {
+    return Intl.message(
+      'File saved to: $path',
+      name: 'fileSavedSuccessfully',
+      desc: '',
+      args: [path],
+    );
+  }
+
+  /// `No QR code available for this invoice`
+  String get noQRCodeAvailable {
+    return Intl.message(
+      'No QR code available for this invoice',
+      name: 'noQRCodeAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tax UID available for this invoice`
+  String get noTaxUIDAvailable {
+    return Intl.message(
+      'No tax UID available for this invoice',
+      name: 'noTaxUIDAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax UID copied`
+  String get taxUIDCopied {
+    return Intl.message(
+      'Tax UID copied',
+      name: 'taxUIDCopied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Number: {number}\nCustomer: {customer}\nDate: {date}\nAmount: {amount} SAR\nStatus: {status}\n\nCreated by Invotek App`
+  String shareInvoiceText(String number, String customer, String date,
+      String amount, String status) {
+    return Intl.message(
+      'Invoice Number: $number\nCustomer: $customer\nDate: $date\nAmount: $amount SAR\nStatus: $status\n\nCreated by Invotek App',
+      name: 'shareInvoiceText',
+      desc: '',
+      args: [number, customer, date, amount, status],
+    );
+  }
+
+  /// `Invoice\n{separator}\nInvoice Number: {number}\nDate: {date}\nStatus: {status}\n\nCustomer Information:\nName: {customer}\n{contact}\n\nInvoice Items:\n{items}\n\nTotals:\nSubtotal: {subtotal} SAR\n{tax}\nTotal: {total} SAR\n\n{separator}\nThank you for your business\nThis invoice was created by Invotek App\n{separator}`
+  String printInvoiceText(
+      String separator,
+      String number,
+      String date,
+      String status,
+      String customer,
+      String contact,
+      String items,
+      String subtotal,
+      String tax,
+      String total) {
+    return Intl.message(
+      'Invoice\n$separator\nInvoice Number: $number\nDate: $date\nStatus: $status\n\nCustomer Information:\nName: $customer\n$contact\n\nInvoice Items:\n$items\n\nTotals:\nSubtotal: $subtotal SAR\n$tax\nTotal: $total SAR\n\n$separator\nThank you for your business\nThis invoice was created by Invotek App\n$separator',
+      name: 'printInvoiceText',
+      desc: '',
+      args: [
+        separator,
+        number,
+        date,
+        status,
+        customer,
+        contact,
+        items,
+        subtotal,
+        tax,
+        total
+      ],
+    );
+  }
+
+  /// `Paid`
+  String get statusPaid {
+    return Intl.message(
+      'Paid',
+      name: 'statusPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get statusPending {
+    return Intl.message(
+      'Pending',
+      name: 'statusPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overdue`
+  String get statusOverdue {
+    return Intl.message(
+      'Overdue',
+      name: 'statusOverdue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Draft`
+  String get statusDraft {
+    return Intl.message(
+      'Draft',
+      name: 'statusDraft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item Details`
+  String get itemDetails {
+    return Intl.message(
+      'Item Details',
+      name: 'itemDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Payment Method`
+  String get changePaymentMethod {
+    return Intl.message(
+      'Change Payment Method',
+      name: 'changePaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating file...`
+  String get creatingFile {
+    return Intl.message(
+      'Creating file...',
+      name: 'creatingFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sending invoice...`
+  String get sendingInvoice {
+    return Intl.message(
+      'Sending invoice...',
+      name: 'sendingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deleting invoice...`
+  String get deletingInvoice {
+    return Intl.message(
+      'Deleting invoice...',
+      name: 'deletingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updating status...`
+  String get updatingStatus {
+    return Intl.message(
+      'Updating status...',
+      name: 'updatingStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to share invoice: {error}`
+  String errorSharingInvoice(String error) {
+    return Intl.message(
+      'Failed to share invoice: $error',
+      name: 'errorSharingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to print invoice: {error}`
+  String errorPrintingInvoice(String error) {
+    return Intl.message(
+      'Failed to print invoice: $error',
+      name: 'errorPrintingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to send invoice: {error}`
+  String errorSendingInvoice(String error) {
+    return Intl.message(
+      'Failed to send invoice: $error',
+      name: 'errorSendingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to delete invoice: {error}`
+  String errorDeletingInvoice(String error) {
+    return Intl.message(
+      'Failed to delete invoice: $error',
+      name: 'errorDeletingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to create file: {error}`
+  String errorCreatingFile(String error) {
+    return Intl.message(
+      'Failed to create file: $error',
+      name: 'errorCreatingFile',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to update status: {error}`
+  String errorUpdatingStatus(String error) {
+    return Intl.message(
+      'Failed to update status: $error',
+      name: 'errorUpdatingStatus',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Duplicate invoice {number}`
+  String duplicateInvoiceMessage(String number) {
+    return Intl.message(
+      'Duplicate invoice $number',
+      name: 'duplicateInvoiceMessage',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `View customer details: {name}`
+  String viewCustomerDetails(String name) {
+    return Intl.message(
+      'View customer details: $name',
+      name: 'viewCustomerDetails',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `View item details: {name}`
+  String viewItemDetails(String name) {
+    return Intl.message(
+      'View item details: $name',
+      name: 'viewItemDetails',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Change payment method for invoice {number}`
+  String changePaymentMethodForInvoice(String number) {
+    return Intl.message(
+      'Change payment method for invoice $number',
+      name: 'changePaymentMethodForInvoice',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Tax UID`
+  String get taxUID {
+    return Intl.message(
+      'Tax UID',
+      name: 'taxUID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax UID for invoice {number}:`
+  String taxUIDForInvoice(String number) {
+    return Intl.message(
+      'Tax UID for invoice $number:',
+      name: 'taxUIDForInvoice',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Invoice Items`
+  String get invoiceItems {
+    return Intl.message(
+      'Invoice Items',
+      name: 'invoiceItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get itemName {
+    return Intl.message(
+      'Name',
+      name: 'itemName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity`
+  String get itemQuantity {
+    return Intl.message(
+      'Quantity',
+      name: 'itemQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get itemPrice {
+    return Intl.message(
+      'Price',
+      name: 'itemPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get itemTotal {
+    return Intl.message(
+      'Total',
+      name: 'itemTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thank you for your business`
+  String get thankYouMessage {
+    return Intl.message(
+      'Thank you for your business',
+      name: 'thankYouMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This invoice was created by Invotek App`
+  String get createdByInvotek {
+    return Intl.message(
+      'This invoice was created by Invotek App',
+      name: 'createdByInvotek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `=`
+  String get separator {
+    return Intl.message(
+      '=',
+      name: 'separator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `-`
+  String get itemSeparator {
+    return Intl.message(
+      '-',
+      name: 'itemSeparator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name\t\tQuantity\tPrice\tTotal`
+  String get itemHeader {
+    return Intl.message(
+      'Name\t\tQuantity\tPrice\tTotal',
+      name: 'itemHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{name}\t\t{quantity}\t{price}\t{total}`
+  String itemRow(String name, String quantity, String price, String total) {
+    return Intl.message(
+      '$name\t\t$quantity\t$price\t$total',
+      name: 'itemRow',
+      desc: '',
+      args: [name, quantity, price, total],
+    );
+  }
+
+  /// `Tax: {amount} SAR`
+  String taxLine(String amount) {
+    return Intl.message(
+      'Tax: $amount SAR',
+      name: 'taxLine',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Subtotal: {amount} SAR`
+  String subtotalLine(String amount) {
+    return Intl.message(
+      'Subtotal: $amount SAR',
+      name: 'subtotalLine',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Total: {amount} SAR`
+  String totalLine(String amount) {
+    return Intl.message(
+      'Total: $amount SAR',
+      name: 'totalLine',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Invoice_{number}_{timestamp}`
+  String fileName(String number, String timestamp) {
+    return Intl.message(
+      'Invoice_${number}_$timestamp',
+      name: 'fileName',
+      desc: '',
+      args: [number, timestamp],
+    );
+  }
+
+  /// `Loading product details...`
+  String loadingProductDetails(String name) {
+    return Intl.message(
+      'Loading product details...',
+      name: 'loadingProductDetails',
+      desc: '',
+      args: [name],
     );
   }
 }

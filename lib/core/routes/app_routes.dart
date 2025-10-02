@@ -5,6 +5,7 @@ import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/ui/screens/add_invoice_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoice_details_screen_with_provider.dart';
+import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
@@ -89,6 +90,8 @@ class AppRoutes {
   static const String addInvoiceRoute = '/invoices/add';
   static const String editInvoiceRoute = '/invoices/edit';
   static const String invoiceDetailsRoute = '/invoices/details';
+  static const String enhancedInvoiceDetailsRoute =
+      '/invoices/details/enhanced';
   static const String postedInvoicesRoute = '/invoices/posted';
   static const String returnedInvoicesRoute = '/invoices/returned';
 
@@ -193,6 +196,12 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) =>
               InvoiceDetailsScreenWithProvider(invoice: invoice),
+        );
+      case enhancedInvoiceDetailsRoute:
+        final invoiceId = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) =>
+              EnhancedInvoiceDetailsScreenWithProvider(invoiceId: invoiceId),
         );
 
       default:

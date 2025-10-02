@@ -166,7 +166,7 @@ part 'get_invoice_response.g.dart';
 
 @JsonSerializable()
 class GetInvoiceResponse {
-  final String success;
+  final bool success;
   final InvoiceModel data;
   GetInvoiceResponse({required this.success, required this.data});
   factory GetInvoiceResponse.fromJson(Map<String, dynamic> json) =>

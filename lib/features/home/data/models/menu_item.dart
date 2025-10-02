@@ -89,7 +89,7 @@ class MenuItem {
 
 class MenuData {
   static double index = 0;
-  
+
   static List<MenuItem> getMenuItems() {
     return [
       MenuItem(

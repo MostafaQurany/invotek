@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
@@ -9,6 +8,7 @@ import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart
 import 'package:invotek/features/expenses/ui/screens/add_expense_category_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 
 class ExpenseCategoriesListScreen extends StatefulWidget {
   const ExpenseCategoriesListScreen({super.key});
@@ -87,29 +87,7 @@ class _ExpenseCategoriesListScreenState
           S.of(context).expenseCategories,
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        leading: IconButton.filled(
-          style: IconButton.styleFrom(
-            backgroundColor: AppColors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-          ),
-          onPressed: () {
-            try {
-              final zoomDrawer = ZoomDrawer.of(context);
-              if (zoomDrawer != null) {
-                zoomDrawer.toggle();
-              }
-            } catch (e) {
-              if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
-              } else {
-                Navigator.of(context).pushReplacementNamed('/home');
-              }
-            }
-          },
-          icon: Icon(Icons.menu, color: AppColors.primary),
-        ),
+        leading: const CommonMenuButton(),
         actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
         actions: [
           IconButton.filled(

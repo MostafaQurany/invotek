@@ -1600,19 +1600,19 @@ abstract class S {
   /// No description provided for @customerEmail.
   ///
   /// In en, this message translates to:
-  /// **'Email'**
+  /// **'Customer Email'**
   String get customerEmail;
 
   /// No description provided for @customerPhone.
   ///
   /// In en, this message translates to:
-  /// **'Phone Number'**
+  /// **'Customer Phone'**
   String get customerPhone;
 
   /// No description provided for @customerAddress.
   ///
   /// In en, this message translates to:
-  /// **'Address'**
+  /// **'Customer Address'**
   String get customerAddress;
 
   /// No description provided for @customerTaxNumber.
@@ -3400,7 +3400,7 @@ abstract class S {
   /// No description provided for @totalAmount.
   ///
   /// In en, this message translates to:
-  /// **'SAR 15,420'**
+  /// **'Total Amount'**
   String get totalAmount;
 
   /// No description provided for @thisMonth.
@@ -4530,6 +4530,395 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Search invoices...'**
   String get searchInvoices;
+
+  /// No description provided for @loadingInvoiceDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading invoice details...'**
+  String get loadingInvoiceDetails;
+
+  /// No description provided for @errorLoadingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading invoice'**
+  String get errorLoadingInvoice;
+
+  /// No description provided for @noInvoiceData.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoice data available'**
+  String get noInvoiceData;
+
+  /// No description provided for @invoiceNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Number: {number}'**
+  String invoiceNumberLabel(String number);
+
+  /// No description provided for @shareInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Share Invoice'**
+  String get shareInvoice;
+
+  /// No description provided for @printInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Invoice'**
+  String get printInvoice;
+
+  /// No description provided for @duplicateInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate Invoice'**
+  String get duplicateInvoice;
+
+  /// No description provided for @viewQRCode.
+  ///
+  /// In en, this message translates to:
+  /// **'View QR Code'**
+  String get viewQRCode;
+
+  /// No description provided for @viewTaxUID.
+  ///
+  /// In en, this message translates to:
+  /// **'View Tax UID'**
+  String get viewTaxUID;
+
+  /// No description provided for @updateStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Status'**
+  String get updateStatus;
+
+  /// No description provided for @changeStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Status'**
+  String get changeStatus;
+
+  /// No description provided for @moreOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More Options'**
+  String get moreOptions;
+
+  /// No description provided for @refreshData.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh Data'**
+  String get refreshData;
+
+  /// No description provided for @invoiceCopiedToClipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice details copied to clipboard'**
+  String get invoiceCopiedToClipboard;
+
+  /// No description provided for @invoiceCopiedForPrinting.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice details copied for printing'**
+  String get invoiceCopiedForPrinting;
+
+  /// No description provided for @invoiceSentSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice sent successfully'**
+  String get invoiceSentSuccessfully;
+
+  /// No description provided for @invoiceDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice deleted successfully'**
+  String get invoiceDeletedSuccessfully;
+
+  /// No description provided for @invoiceStatusUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice status updated to: {status}'**
+  String invoiceStatusUpdated(String status);
+
+  /// No description provided for @fileSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'File saved to: {path}'**
+  String fileSavedSuccessfully(String path);
+
+  /// No description provided for @noQRCodeAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No QR code available for this invoice'**
+  String get noQRCodeAvailable;
+
+  /// No description provided for @noTaxUIDAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No tax UID available for this invoice'**
+  String get noTaxUIDAvailable;
+
+  /// No description provided for @taxUIDCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax UID copied'**
+  String get taxUIDCopied;
+
+  /// No description provided for @shareInvoiceText.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Number: {number}\nCustomer: {customer}\nDate: {date}\nAmount: {amount} SAR\nStatus: {status}\n\nCreated by Invotek App'**
+  String shareInvoiceText(
+    String number,
+    String customer,
+    String date,
+    String amount,
+    String status,
+  );
+
+  /// No description provided for @printInvoiceText.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice\n{separator}\nInvoice Number: {number}\nDate: {date}\nStatus: {status}\n\nCustomer Information:\nName: {customer}\n{contact}\n\nInvoice Items:\n{items}\n\nTotals:\nSubtotal: {subtotal} SAR\n{tax}\nTotal: {total} SAR\n\n{separator}\nThank you for your business\nThis invoice was created by Invotek App\n{separator}'**
+  String printInvoiceText(
+    String separator,
+    String number,
+    String date,
+    String status,
+    String customer,
+    String contact,
+    String items,
+    String subtotal,
+    String tax,
+    String total,
+  );
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get statusPaid;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @statusOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get statusOverdue;
+
+  /// No description provided for @statusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get statusDraft;
+
+  /// No description provided for @itemDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Item Details'**
+  String get itemDetails;
+
+  /// No description provided for @changePaymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Payment Method'**
+  String get changePaymentMethod;
+
+  /// No description provided for @creatingFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating file...'**
+  String get creatingFile;
+
+  /// No description provided for @sendingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending invoice...'**
+  String get sendingInvoice;
+
+  /// No description provided for @deletingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting invoice...'**
+  String get deletingInvoice;
+
+  /// No description provided for @updatingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating status...'**
+  String get updatingStatus;
+
+  /// No description provided for @errorSharingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to share invoice: {error}'**
+  String errorSharingInvoice(String error);
+
+  /// No description provided for @errorPrintingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to print invoice: {error}'**
+  String errorPrintingInvoice(String error);
+
+  /// No description provided for @errorSendingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send invoice: {error}'**
+  String errorSendingInvoice(String error);
+
+  /// No description provided for @errorDeletingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete invoice: {error}'**
+  String errorDeletingInvoice(String error);
+
+  /// No description provided for @errorCreatingFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create file: {error}'**
+  String errorCreatingFile(String error);
+
+  /// No description provided for @errorUpdatingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update status: {error}'**
+  String errorUpdatingStatus(String error);
+
+  /// No description provided for @duplicateInvoiceMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Duplicate invoice {number}'**
+  String duplicateInvoiceMessage(String number);
+
+  /// No description provided for @viewCustomerDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View customer details: {name}'**
+  String viewCustomerDetails(String name);
+
+  /// No description provided for @viewItemDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View item details: {name}'**
+  String viewItemDetails(String name);
+
+  /// No description provided for @changePaymentMethodForInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Change payment method for invoice {number}'**
+  String changePaymentMethodForInvoice(String number);
+
+  /// No description provided for @taxUID.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax UID'**
+  String get taxUID;
+
+  /// No description provided for @taxUIDForInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax UID for invoice {number}:'**
+  String taxUIDForInvoice(String number);
+
+  /// No description provided for @invoiceItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Items'**
+  String get invoiceItems;
+
+  /// No description provided for @itemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get itemName;
+
+  /// No description provided for @itemQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get itemQuantity;
+
+  /// No description provided for @itemPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get itemPrice;
+
+  /// No description provided for @itemTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get itemTotal;
+
+  /// No description provided for @thankYouMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your business'**
+  String get thankYouMessage;
+
+  /// No description provided for @createdByInvotek.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice was created by Invotek App'**
+  String get createdByInvotek;
+
+  /// No description provided for @separator.
+  ///
+  /// In en, this message translates to:
+  /// **'='**
+  String get separator;
+
+  /// No description provided for @itemSeparator.
+  ///
+  /// In en, this message translates to:
+  /// **'-'**
+  String get itemSeparator;
+
+  /// No description provided for @itemHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Name\t\tQuantity\tPrice\tTotal'**
+  String get itemHeader;
+
+  /// No description provided for @itemRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}\t\t{quantity}\t{price}\t{total}'**
+  String itemRow(String name, String quantity, String price, String total);
+
+  /// No description provided for @taxLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax: {amount} SAR'**
+  String taxLine(String amount);
+
+  /// No description provided for @subtotalLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal: {amount} SAR'**
+  String subtotalLine(String amount);
+
+  /// No description provided for @totalLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: {amount} SAR'**
+  String totalLine(String amount);
+
+  /// No description provided for @fileName.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice_{number}_{timestamp}'**
+  String fileName(String number, String timestamp);
+
+  /// No description provided for @loadingProductDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading product details...'**
+  String loadingProductDetails(String name);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

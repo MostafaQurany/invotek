@@ -108,3 +108,8 @@ class ApiErrors {
   static const String retryAgainMessage = "retry_again_message";
   static const String ok = "Ok";
 }
+
+class AppCurrency {
+  static const String currencyAr = "د.ع";
+  static const String currencyEn = "AED";
+}

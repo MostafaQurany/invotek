@@ -168,7 +168,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)?  initial,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<InvoiceModel> invoices,  String deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)?  initial,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _LoadingInvoices() when loading != null:
@@ -195,7 +195,7 @@ return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)  initial,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  loaded,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<InvoiceModel> invoices,  String deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)  initial,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  loaded,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _LoadingInvoices():
@@ -218,7 +218,7 @@ return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)?  initial,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<InvoiceModel> invoices,  String deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)?  initial,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _LoadingInvoices() when loading != null:
@@ -647,7 +647,7 @@ class _DeleteSuccessInvoices implements InvoicesState {
   return EqualUnmodifiableListView(_invoices);
 }
 
- final  String deletedId;
+ final  int deletedId;
 @override final  InvoiceModel? selectedInvoice;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
@@ -682,7 +682,7 @@ abstract mixin class _$DeleteSuccessInvoicesCopyWith<$Res> implements $InvoicesS
   factory _$DeleteSuccessInvoicesCopyWith(_DeleteSuccessInvoices value, $Res Function(_DeleteSuccessInvoices) _then) = __$DeleteSuccessInvoicesCopyWithImpl;
 @override @useResult
 $Res call({
- List<InvoiceModel> invoices, String deletedId, InvoiceModel? selectedInvoice, int currentPage, int totalPages
+ List<InvoiceModel> invoices, int deletedId, InvoiceModel? selectedInvoice, int currentPage, int totalPages
 });
 
 
@@ -703,7 +703,7 @@ class __$DeleteSuccessInvoicesCopyWithImpl<$Res>
   return _then(_DeleteSuccessInvoices(
 invoices: null == invoices ? _self._invoices : invoices // ignore: cast_nullable_to_non_nullable
 as List<InvoiceModel>,deletedId: null == deletedId ? _self.deletedId : deletedId // ignore: cast_nullable_to_non_nullable
-as String,selectedInvoice: freezed == selectedInvoice ? _self.selectedInvoice : selectedInvoice // ignore: cast_nullable_to_non_nullable
+as int,selectedInvoice: freezed == selectedInvoice ? _self.selectedInvoice : selectedInvoice // ignore: cast_nullable_to_non_nullable
 as InvoiceModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int,

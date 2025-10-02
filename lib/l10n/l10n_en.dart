@@ -781,13 +781,13 @@ class SEn extends S {
   String get customerNameRequired => 'Customer name is required';
 
   @override
-  String get customerEmail => 'Email';
+  String get customerEmail => 'Customer Email';
 
   @override
-  String get customerPhone => 'Phone Number';
+  String get customerPhone => 'Customer Phone';
 
   @override
-  String get customerAddress => 'Address';
+  String get customerAddress => 'Customer Address';
 
   @override
   String get customerTaxNumber => 'Tax Number';
@@ -1738,7 +1738,7 @@ class SEn extends S {
   String get paidInvoices => '8 Paid';
 
   @override
-  String get totalAmount => 'SAR 15,420';
+  String get totalAmount => 'Total Amount';
 
   @override
   String get thisMonth => 'This Month';
@@ -2329,4 +2329,251 @@ class SEn extends S {
 
   @override
   String get searchInvoices => 'Search invoices...';
+
+  @override
+  String get loadingInvoiceDetails => 'Loading invoice details...';
+
+  @override
+  String get errorLoadingInvoice => 'Error loading invoice';
+
+  @override
+  String get noInvoiceData => 'No invoice data available';
+
+  @override
+  String invoiceNumberLabel(String number) {
+    return 'Invoice Number: $number';
+  }
+
+  @override
+  String get shareInvoice => 'Share Invoice';
+
+  @override
+  String get printInvoice => 'Print Invoice';
+
+  @override
+  String get duplicateInvoice => 'Duplicate Invoice';
+
+  @override
+  String get viewQRCode => 'View QR Code';
+
+  @override
+  String get viewTaxUID => 'View Tax UID';
+
+  @override
+  String get updateStatus => 'Update Status';
+
+  @override
+  String get changeStatus => 'Change Status';
+
+  @override
+  String get moreOptions => 'More Options';
+
+  @override
+  String get refreshData => 'Refresh Data';
+
+  @override
+  String get invoiceCopiedToClipboard => 'Invoice details copied to clipboard';
+
+  @override
+  String get invoiceCopiedForPrinting => 'Invoice details copied for printing';
+
+  @override
+  String get invoiceSentSuccessfully => 'Invoice sent successfully';
+
+  @override
+  String get invoiceDeletedSuccessfully => 'Invoice deleted successfully';
+
+  @override
+  String invoiceStatusUpdated(String status) {
+    return 'Invoice status updated to: $status';
+  }
+
+  @override
+  String fileSavedSuccessfully(String path) {
+    return 'File saved to: $path';
+  }
+
+  @override
+  String get noQRCodeAvailable => 'No QR code available for this invoice';
+
+  @override
+  String get noTaxUIDAvailable => 'No tax UID available for this invoice';
+
+  @override
+  String get taxUIDCopied => 'Tax UID copied';
+
+  @override
+  String shareInvoiceText(
+    String number,
+    String customer,
+    String date,
+    String amount,
+    String status,
+  ) {
+    return 'Invoice Number: $number\nCustomer: $customer\nDate: $date\nAmount: $amount SAR\nStatus: $status\n\nCreated by Invotek App';
+  }
+
+  @override
+  String printInvoiceText(
+    String separator,
+    String number,
+    String date,
+    String status,
+    String customer,
+    String contact,
+    String items,
+    String subtotal,
+    String tax,
+    String total,
+  ) {
+    return 'Invoice\n$separator\nInvoice Number: $number\nDate: $date\nStatus: $status\n\nCustomer Information:\nName: $customer\n$contact\n\nInvoice Items:\n$items\n\nTotals:\nSubtotal: $subtotal SAR\n$tax\nTotal: $total SAR\n\n$separator\nThank you for your business\nThis invoice was created by Invotek App\n$separator';
+  }
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusOverdue => 'Overdue';
+
+  @override
+  String get statusDraft => 'Draft';
+
+  @override
+  String get itemDetails => 'Item Details';
+
+  @override
+  String get changePaymentMethod => 'Change Payment Method';
+
+  @override
+  String get creatingFile => 'Creating file...';
+
+  @override
+  String get sendingInvoice => 'Sending invoice...';
+
+  @override
+  String get deletingInvoice => 'Deleting invoice...';
+
+  @override
+  String get updatingStatus => 'Updating status...';
+
+  @override
+  String errorSharingInvoice(String error) {
+    return 'Failed to share invoice: $error';
+  }
+
+  @override
+  String errorPrintingInvoice(String error) {
+    return 'Failed to print invoice: $error';
+  }
+
+  @override
+  String errorSendingInvoice(String error) {
+    return 'Failed to send invoice: $error';
+  }
+
+  @override
+  String errorDeletingInvoice(String error) {
+    return 'Failed to delete invoice: $error';
+  }
+
+  @override
+  String errorCreatingFile(String error) {
+    return 'Failed to create file: $error';
+  }
+
+  @override
+  String errorUpdatingStatus(String error) {
+    return 'Failed to update status: $error';
+  }
+
+  @override
+  String duplicateInvoiceMessage(String number) {
+    return 'Duplicate invoice $number';
+  }
+
+  @override
+  String viewCustomerDetails(String name) {
+    return 'View customer details: $name';
+  }
+
+  @override
+  String viewItemDetails(String name) {
+    return 'View item details: $name';
+  }
+
+  @override
+  String changePaymentMethodForInvoice(String number) {
+    return 'Change payment method for invoice $number';
+  }
+
+  @override
+  String get taxUID => 'Tax UID';
+
+  @override
+  String taxUIDForInvoice(String number) {
+    return 'Tax UID for invoice $number:';
+  }
+
+  @override
+  String get invoiceItems => 'Invoice Items';
+
+  @override
+  String get itemName => 'Name';
+
+  @override
+  String get itemQuantity => 'Quantity';
+
+  @override
+  String get itemPrice => 'Price';
+
+  @override
+  String get itemTotal => 'Total';
+
+  @override
+  String get thankYouMessage => 'Thank you for your business';
+
+  @override
+  String get createdByInvotek => 'This invoice was created by Invotek App';
+
+  @override
+  String get separator => '=';
+
+  @override
+  String get itemSeparator => '-';
+
+  @override
+  String get itemHeader => 'Name\t\tQuantity\tPrice\tTotal';
+
+  @override
+  String itemRow(String name, String quantity, String price, String total) {
+    return '$name\t\t$quantity\t$price\t$total';
+  }
+
+  @override
+  String taxLine(String amount) {
+    return 'Tax: $amount SAR';
+  }
+
+  @override
+  String subtotalLine(String amount) {
+    return 'Subtotal: $amount SAR';
+  }
+
+  @override
+  String totalLine(String amount) {
+    return 'Total: $amount SAR';
+  }
+
+  @override
+  String fileName(String number, String timestamp) {
+    return 'Invoice_${number}_$timestamp';
+  }
+
+  @override
+  String loadingProductDetails(String name) {
+    return 'Loading product details...';
+  }
 }
