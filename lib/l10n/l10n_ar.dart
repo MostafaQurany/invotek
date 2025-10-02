@@ -2095,6 +2095,17 @@ class SAr extends S {
   String get qty => 'الكمية';
 
   @override
+  String get searchItems => 'البحث في العناصر...';
+
+  @override
+  String get showLess => 'إظهار أقل';
+
+  @override
+  String showAllItems(Object count) {
+    return 'إظهار جميع العناصر ($count)';
+  }
+
+  @override
   String get payment => 'الدفع';
 
   @override

@@ -28,10 +28,6 @@ import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
-import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
-import 'package:invotek/features/customers/demo/entit/customer_model.dart';
-import 'package:invotek/features/customers/data/repository/customers_repository.dart';
-import 'package:invotek/features/customers/ui/screens/customer_details_screen.dart';
 
 /// شاشة تفاصيل الفاتورة المحسنة مع دعم استدعاء API وإدارة الحالة
 class EnhancedInvoiceDetailsScreen extends StatefulWidget {
@@ -51,18 +47,11 @@ class _EnhancedInvoiceDetailsScreenState
   bool _isLoadingProduct = false;
   int? _loadingProductId;
 
-  // إضافة CustomersCubit محلي
-  late CustomersCubit _customersCubit;
-  bool _isLoadingCustomer = false;
-  int? _loadingCustomerId;
-
   @override
   void initState() {
     super.initState();
     // إنشاء ProductsCubit محلي
     _productsCubit = ProductsCubit(getIt<ProductsRepository>());
-    // إنشاء CustomersCubit محلي
-    _customersCubit = CustomersCubit(getIt<CustomersRepository>());
 
     // استدعاء API لجلب تفاصيل الفاتورة
     context.read<InvoicesCubit>().getInvoiceById(widget.invoiceId);
@@ -71,7 +60,6 @@ class _EnhancedInvoiceDetailsScreenState
   @override
   void dispose() {
     _productsCubit.close();
-    _customersCubit.close();
     super.dispose();
   }
 
@@ -124,110 +112,64 @@ class _EnhancedInvoiceDetailsScreenState
                 },
           );
         },
-        child: BlocListener<CustomersCubit, CustomersState>(
-          bloc: _customersCubit,
-          listener: (context, customersState) {
-            customersState.whenOrNull(
-              loaded: (customers, selectedCustomer, currentPage, totalPages) {
-                if (selectedCustomer != null && _isLoadingCustomer) {
-                  // إغلاق مؤشر التحميل
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  }
-
-                  _isLoadingCustomer = false;
-                  _loadingCustomerId = null;
-
-                  // الانتقال إلى شاشة تفاصيل العميل
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BlocProvider<CustomersCubit>.value(
-                        value: _customersCubit,
-                        child: CustomerDetailsScreen(customer: selectedCustomer),
-                      ),
-                    ),
-                  );
-                }
-              },
-              failure: (customers, selectedCustomer, currentPage, totalPages, error) {
-                if (_isLoadingCustomer) {
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  }
-
-                  _isLoadingCustomer = false;
-                  _loadingCustomerId = null;
-
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('خطأ في تحميل العميل: $error'),
-                      backgroundColor: AppColors.error,
-                    ),
-                  );
-                }
-              },
-            );
-          },
-          child: BlocBuilder<InvoicesCubit, InvoicesState>(
-            builder: (context, state) {
-              return state.when(
-                initial:
-                    (invoices, selectedInvoice, currentPage, totalPages, error) =>
-                        _buildLoadingState(),
-                loading:
-                    (
-                      invoices,
-                      selectedInvoice,
-                      currentPage,
-                      totalPages,
-                      message,
-                    ) {
+        child: BlocBuilder<InvoicesCubit, InvoicesState>(
+          builder: (context, state) {
+            return state.when(
+              initial:
+                  (invoices, selectedInvoice, currentPage, totalPages, error) =>
+                      _buildLoadingState(),
+              loading:
+                  (
+                    invoices,
+                    selectedInvoice,
+                    currentPage,
+                    totalPages,
+                    message,
+                  ) {
                     if (message == 'loading_invoice') {
                       return _buildLoadingState();
                     }
                     return _buildContent(selectedInvoice);
                   },
-                loaded: (invoices, selectedInvoice, currentPage, totalPages) {
-                  return _buildContent(selectedInvoice);
-                },
-                createSuccess:
-                    (
-                      invoices,
-                      created,
-                      selectedInvoice,
-                      currentPage,
-                      totalPages,
-                    ) {
+              loaded: (invoices, selectedInvoice, currentPage, totalPages) {
+                return _buildContent(selectedInvoice);
+              },
+              createSuccess:
+                  (
+                    invoices,
+                    created,
+                    selectedInvoice,
+                    currentPage,
+                    totalPages,
+                  ) {
                     return _buildContent(selectedInvoice);
                   },
-                updateSuccess:
-                    (
-                      invoices,
-                      updated,
-                      selectedInvoice,
-                      currentPage,
-                      totalPages,
-                    ) {
+              updateSuccess:
+                  (
+                    invoices,
+                    updated,
+                    selectedInvoice,
+                    currentPage,
+                    totalPages,
+                  ) {
                     return _buildContent(selectedInvoice);
                   },
-                deleteSuccess:
-                    (
-                      invoices,
-                      deletedId,
-                      selectedInvoice,
-                      currentPage,
-                      totalPages,
-                    ) {
+              deleteSuccess:
+                  (
+                    invoices,
+                    deletedId,
+                    selectedInvoice,
+                    currentPage,
+                    totalPages,
+                  ) {
                     return _buildContent(selectedInvoice);
                   },
-                failure:
-                    (invoices, selectedInvoice, currentPage, totalPages, error) {
-                  return _buildErrorState(error);
-                },
-              );
-            },
-          ),
+              failure:
+                  (invoices, selectedInvoice, currentPage, totalPages, error) {
+                    return _buildErrorState(error);
+                  },
+            );
+          },
         ),
       ),
     );
@@ -629,34 +571,14 @@ class _EnhancedInvoiceDetailsScreenState
   }
 
   void _viewCustomerDetails(InvoiceModel invoice) {
-    if (invoice.customer?.id != null) {
-      _isLoadingCustomer = true;
-      _loadingCustomerId = invoice.customer!.id;
-      
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16.h),
-              Text('جاري تحميل تفاصيل العميل...'),
-            ],
-          ),
+    // TODO: Navigate to customer details
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          S.of(context).viewCustomerDetails(invoice.customerName ?? ''),
         ),
-      );
-
-      _customersCubit.getCustomerById(invoice.customer!.id!);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('لا يوجد معرف عميل متاح'),
-          backgroundColor: AppColors.warning,
-        ),
-      );
-    }
+      ),
+    );
   }
 
   void _viewItemDetails(dynamic item) {

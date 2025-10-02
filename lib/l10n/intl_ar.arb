@@ -837,6 +837,14 @@
   "qty": "الكمية",
   "price": "السعر",
   "description": "الوصف",
+  "searchItems": "البحث في العناصر...",
+  "showLess": "إظهار أقل",
+  "showAllItems": "إظهار جميع العناصر ({count})",
+  "@showAllItems": {
+    "count": {
+      "type": "int"
+    }
+  },
   "payment": "الدفع",
   "paymentDetails": "تفاصيل الدفع",
   "markAsPaid": "تحديد كمدفوعة",
@@ -918,7 +926,7 @@
   "enterPhone": "أدخل الهاتف",
   "email": "البريد الإلكتروني",
   "enterEmail": "أدخل البريد الإلكتروني",
-  "testingConnection": "جاري اختبار الاتصال..." , 
+  "testingConnection": "جاري اختبار الاتصال...",
   "errorOccurred": "حدث خطأ {error}",
   "taxAmount": "مبلغ الضريبة",
   "enterTaxAmount": "أدخل مبلغ الضريبة",
@@ -926,7 +934,7 @@
   "paymentMethod": "طريقة الدفع",
   "cash": "نقدي",
   "bankTransfer": "تحويل بنكي",
-  "check": "شيك", 
+  "check": "شيك",
   "enterDescription": "أدخل الوصف",
   "searchInvoices": "البحث في الفواتير...",
   "invoiceDetails": "تفاصيل الفاتورة",

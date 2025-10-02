@@ -837,6 +837,14 @@
   "qty": "Qty",
   "price": "Price",
   "description": "Description",
+  "searchItems": "Search items...",
+  "showLess": "Show Less",
+  "showAllItems": "Show All Items ({count})",
+  "@showAllItems": {
+    "count": {
+      "type": "int"
+    }
+  },
   "payment": "Payment",
   "paymentDetails": "Payment Details",
   "markAsPaid": "Mark as Paid",

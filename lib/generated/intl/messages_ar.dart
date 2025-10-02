@@ -114,23 +114,25 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m44(number, customer, date, amount, status) =>
       "فاتورة رقم: ${number}\nالعميل: ${customer}\nالتاريخ: ${date}\nالمبلغ: ${amount} ر.س\nالحالة: ${status}\n\nتم إنشاؤها بواسطة تطبيق Invotek";
 
-  static String m45(status) => "الحالة: ${status}";
+  static String m45(count) => "إظهار جميع العناصر (${count})";
 
-  static String m46(amount) => "المجموع الفرعي: ${amount} ر.س";
+  static String m46(status) => "الحالة: ${status}";
 
-  static String m47(amount) => "الضريبة: ${amount} ر.س";
+  static String m47(amount) => "المجموع الفرعي: ${amount} ر.س";
 
-  static String m48(number) => "معرف الضريبة للفاتورة ${number}:";
+  static String m48(amount) => "الضريبة: ${amount} ر.س";
 
-  static String m49(amount) => "المجموع الكلي: ${amount} ر.س";
+  static String m49(number) => "معرف الضريبة للفاتورة ${number}:";
 
-  static String m50(name) => "عرض تفاصيل العميل: ${name}";
+  static String m50(amount) => "المجموع الكلي: ${amount} ر.س";
 
-  static String m51(name) => "عرض تفاصيل العنصر: ${name}";
+  static String m51(name) => "عرض تفاصيل العميل: ${name}";
 
-  static String m52(name) => "عرض الفواتير لـ ${name}";
+  static String m52(name) => "عرض تفاصيل العنصر: ${name}";
 
-  static String m53(name) => "عرض الطلبات لـ ${name}";
+  static String m53(name) => "عرض الفواتير لـ ${name}";
+
+  static String m54(name) => "عرض الطلبات لـ ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1131,6 +1133,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("البحث في الفواتير..."),
         "searchInvoices":
             MessageLookupByLibrary.simpleMessage("البحث في الفواتير..."),
+        "searchItems":
+            MessageLookupByLibrary.simpleMessage("البحث في العناصر..."),
         "searchProducts":
             MessageLookupByLibrary.simpleMessage("البحث في المنتجات..."),
         "securityInformation":
@@ -1161,6 +1165,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حفظ الإعدادات بنجاح"),
         "shareInvoice": MessageLookupByLibrary.simpleMessage("مشاركة الفاتورة"),
         "shareInvoiceText": m44,
+        "showAllItems": m45,
+        "showLess": MessageLookupByLibrary.simpleMessage("إظهار أقل"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "signInFailed":
             MessageLookupByLibrary.simpleMessage("فشل تسجيل الدخول"),
@@ -1175,7 +1181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "startNow": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
         "state": MessageLookupByLibrary.simpleMessage("الحالة"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),
-        "statusCategory": m45,
+        "statusCategory": m46,
         "statusDraft": MessageLookupByLibrary.simpleMessage("مسودة"),
         "statusInfo": MessageLookupByLibrary.simpleMessage("معلومات الحالة"),
         "statusOverdue": MessageLookupByLibrary.simpleMessage("متأخرة"),
@@ -1184,7 +1190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subTitle": MessageLookupByLibrary.simpleMessage("عنوان فرعي"),
         "subject": MessageLookupByLibrary.simpleMessage("الموضوع"),
         "subtotal": MessageLookupByLibrary.simpleMessage("المجموع الفرعي"),
-        "subtotalLine": m46,
+        "subtotalLine": m47,
         "successText": MessageLookupByLibrary.simpleMessage("نص نجاح"),
         "supervisor": MessageLookupByLibrary.simpleMessage("مشرف"),
         "supervisorDescription":
@@ -1219,7 +1225,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "الفواتير غير المعلنة والفواتير المدفوعة والفواتير المرتجعة وإنشاء فاتورة جديدة"),
         "taxInvoicesTitle":
             MessageLookupByLibrary.simpleMessage("الفواتير الضريبية"),
-        "taxLine": m47,
+        "taxLine": m48,
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "taxRate": MessageLookupByLibrary.simpleMessage("نسبة الضريبة"),
         "taxSettings": MessageLookupByLibrary.simpleMessage("إعدادات الضريبة"),
@@ -1227,7 +1233,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxUID": MessageLookupByLibrary.simpleMessage("معرف الضريبة"),
         "taxUIDCopied":
             MessageLookupByLibrary.simpleMessage("تم نسخ معرف الضريبة"),
-        "taxUIDForInvoice": m48,
+        "taxUIDForInvoice": m49,
         "tekpart": MessageLookupByLibrary.simpleMessage("تك بارت"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "termsOfUseComingSoon":
@@ -1250,7 +1256,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("العنوان مطلوب"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalAmount": MessageLookupByLibrary.simpleMessage("المجموع الكلي"),
-        "totalLine": m49,
+        "totalLine": m50,
         "tourismEntertainmentCompany":
             MessageLookupByLibrary.simpleMessage("شركة السياحة والترفيه"),
         "trackAvailableProductQuantity": MessageLookupByLibrary.simpleMessage(
@@ -1317,7 +1323,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewClients": MessageLookupByLibrary.simpleMessage("عرض العملاء"),
         "viewClientsDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية عرض قائمة العملاء"),
-        "viewCustomerDetails": m50,
+        "viewCustomerDetails": m51,
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewExpenses": MessageLookupByLibrary.simpleMessage("عرض المصروفات"),
         "viewExpensesDescription":
@@ -1325,7 +1331,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewInvoices": MessageLookupByLibrary.simpleMessage("عرض الفواتير"),
         "viewInvoicesDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية عرض قائمة الفواتير"),
-        "viewItemDetails": m51,
+        "viewItemDetails": m52,
         "viewPrivacyPolicy":
             MessageLookupByLibrary.simpleMessage("اطلع على سياسة الخصوصية"),
         "viewProducts": MessageLookupByLibrary.simpleMessage("عرض المنتجات"),
@@ -1347,8 +1353,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewUsers": MessageLookupByLibrary.simpleMessage("عرض المستخدمين"),
         "viewUsersDescription": MessageLookupByLibrary.simpleMessage(
             "إمكانية عرض قائمة المستخدمين"),
-        "viewingInvoices": m52,
-        "viewingOrders": m53,
+        "viewingInvoices": m53,
+        "viewingOrders": m54,
         "visitInvotekWebsite":
             MessageLookupByLibrary.simpleMessage("زيارة موقع إنفوتك"),
         "website": MessageLookupByLibrary.simpleMessage("الموقع الإلكتروني"),

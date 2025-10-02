@@ -2110,6 +2110,17 @@ class SEn extends S {
   String get qty => 'Qty';
 
   @override
+  String get searchItems => 'Search items...';
+
+  @override
+  String get showLess => 'Show Less';
+
+  @override
+  String showAllItems(Object count) {
+    return 'Show All Items ($count)';
+  }
+
+  @override
   String get payment => 'Payment';
 
   @override

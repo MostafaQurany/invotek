@@ -119,23 +119,25 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m44(number, customer, date, amount, status) =>
       "Invoice Number: ${number}\nCustomer: ${customer}\nDate: ${date}\nAmount: ${amount} SAR\nStatus: ${status}\n\nCreated by Invotek App";
 
-  static String m45(status) => "Status: ${status}";
+  static String m45(count) => "Show All Items (${count})";
 
-  static String m46(amount) => "Subtotal: ${amount} SAR";
+  static String m46(status) => "Status: ${status}";
 
-  static String m47(amount) => "Tax: ${amount} SAR";
+  static String m47(amount) => "Subtotal: ${amount} SAR";
 
-  static String m48(number) => "Tax UID for invoice ${number}:";
+  static String m48(amount) => "Tax: ${amount} SAR";
 
-  static String m49(amount) => "Total: ${amount} SAR";
+  static String m49(number) => "Tax UID for invoice ${number}:";
 
-  static String m50(name) => "View customer details: ${name}";
+  static String m50(amount) => "Total: ${amount} SAR";
 
-  static String m51(name) => "View item details: ${name}";
+  static String m51(name) => "View customer details: ${name}";
 
-  static String m52(name) => "Viewing invoices for ${name}";
+  static String m52(name) => "View item details: ${name}";
 
-  static String m53(name) => "Viewing orders for ${name}";
+  static String m53(name) => "Viewing invoices for ${name}";
+
+  static String m54(name) => "Viewing orders for ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1137,6 +1139,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search in invoices..."),
         "searchInvoices":
             MessageLookupByLibrary.simpleMessage("Search invoices..."),
+        "searchItems": MessageLookupByLibrary.simpleMessage("Search items..."),
         "searchProducts":
             MessageLookupByLibrary.simpleMessage("Search products..."),
         "securityInformation":
@@ -1168,6 +1171,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Settings saved successfully"),
         "shareInvoice": MessageLookupByLibrary.simpleMessage("Share Invoice"),
         "shareInvoiceText": m44,
+        "showAllItems": m45,
+        "showLess": MessageLookupByLibrary.simpleMessage("Show Less"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
         "signInFailed": MessageLookupByLibrary.simpleMessage("Sign in failed"),
         "signInWithGoogle":
@@ -1182,7 +1187,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "startNow": MessageLookupByLibrary.simpleMessage("Start Now"),
         "state": MessageLookupByLibrary.simpleMessage("Status"),
         "status": MessageLookupByLibrary.simpleMessage("Status"),
-        "statusCategory": m45,
+        "statusCategory": m46,
         "statusDraft": MessageLookupByLibrary.simpleMessage("Draft"),
         "statusInfo": MessageLookupByLibrary.simpleMessage("Status Info"),
         "statusOverdue": MessageLookupByLibrary.simpleMessage("Overdue"),
@@ -1191,7 +1196,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subTitle": MessageLookupByLibrary.simpleMessage("Sub Title"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal"),
-        "subtotalLine": m46,
+        "subtotalLine": m47,
         "successText": MessageLookupByLibrary.simpleMessage("Success Text"),
         "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
         "supervisorDescription": MessageLookupByLibrary.simpleMessage(
@@ -1224,14 +1229,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Unposted invoices & Postpaid invoices & Returned invoices & Create a new invoice"),
         "taxInvoicesTitle":
             MessageLookupByLibrary.simpleMessage("Tax Invoices"),
-        "taxLine": m47,
+        "taxLine": m48,
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "taxRate": MessageLookupByLibrary.simpleMessage("Tax Rate"),
         "taxSettings": MessageLookupByLibrary.simpleMessage("Tax Settings"),
         "taxType": MessageLookupByLibrary.simpleMessage("Tax Type"),
         "taxUID": MessageLookupByLibrary.simpleMessage("Tax UID"),
         "taxUIDCopied": MessageLookupByLibrary.simpleMessage("Tax UID copied"),
-        "taxUIDForInvoice": m48,
+        "taxUIDForInvoice": m49,
         "tekpart": MessageLookupByLibrary.simpleMessage("TekPart"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Terms of Use"),
         "termsOfUseComingSoon":
@@ -1254,7 +1259,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Title is required"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalAmount": MessageLookupByLibrary.simpleMessage("Total Amount"),
-        "totalLine": m49,
+        "totalLine": m50,
         "tourismEntertainmentCompany": MessageLookupByLibrary.simpleMessage(
             "Tourism & Entertainment Company"),
         "trackAvailableProductQuantity": MessageLookupByLibrary.simpleMessage(
@@ -1319,7 +1324,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewClients": MessageLookupByLibrary.simpleMessage("View Clients"),
         "viewClientsDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to view clients list"),
-        "viewCustomerDetails": m50,
+        "viewCustomerDetails": m51,
         "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
         "viewExpenses": MessageLookupByLibrary.simpleMessage("View Expenses"),
         "viewExpensesDescription": MessageLookupByLibrary.simpleMessage(
@@ -1327,7 +1332,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewInvoices": MessageLookupByLibrary.simpleMessage("View Invoices"),
         "viewInvoicesDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to view invoices list"),
-        "viewItemDetails": m51,
+        "viewItemDetails": m52,
         "viewPrivacyPolicy":
             MessageLookupByLibrary.simpleMessage("View privacy policy"),
         "viewProducts": MessageLookupByLibrary.simpleMessage("View Products"),
@@ -1349,8 +1354,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewUsers": MessageLookupByLibrary.simpleMessage("View Users"),
         "viewUsersDescription":
             MessageLookupByLibrary.simpleMessage("Ability to view users list"),
-        "viewingInvoices": m52,
-        "viewingOrders": m53,
+        "viewingInvoices": m53,
+        "viewingOrders": m54,
         "visitInvotekWebsite":
             MessageLookupByLibrary.simpleMessage("Visit Invotek website"),
         "website": MessageLookupByLibrary.simpleMessage("Website"),

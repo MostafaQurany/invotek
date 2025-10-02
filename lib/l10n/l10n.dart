@@ -4093,6 +4093,24 @@ abstract class S {
   /// **'Qty'**
   String get qty;
 
+  /// No description provided for @searchItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Search items...'**
+  String get searchItems;
+
+  /// No description provided for @showLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get showLess;
+
+  /// No description provided for @showAllItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Show All Items ({count})'**
+  String showAllItems(Object count);
+
   /// No description provided for @payment.
   ///
   /// In en, this message translates to:

@@ -154,51 +154,86 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
               // QR Code
               if (invoice.qrCode?.isNotEmpty ?? false)
                 Container(
-                  width: 200.w,
-                  height: 200.w,
+                  padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.primary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(
-                      color: AppColors.primary.withOpacity(0.3),
-                      width: 2,
-                    ),
                   ),
-                  child: QrImageView(
-                    data: invoice.qrCode!,
-                    version: QrVersions.auto,
-                    size: 200.w,
-                    backgroundColor: Colors.white,
-                    foregroundColor: AppColors.primary,
-                    errorStateBuilder: (context, error) {
-                      return Container(
-                        width: 200.w,
-                        height: 200.w,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.qr_code,
+                        size: 24.sp,
+                        color: AppColors.textSecondary,
+                      ),
+                      SizedBox(width: 12.w),
+                      Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.qr_code,
-                              size: 80.sp,
-                              color: AppColors.primary,
-                            ),
-                            SizedBox(height: 8.h),
                             Text(
-                              'رمز QR',
+                              'QR- Code',
                               style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.primary,
+                                fontSize: 12.sp,
+                                color: AppColors.textSecondary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            Container(
+                              width: 200.w,
+                              height: 200.w,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(
+                                  color: AppColors.primary.withOpacity(0.3),
+                                  width: 2,
+                                ),
+                              ),
+                              child: QrImageView(
+                                data: invoice.qrCode!,
+                                version: QrVersions.auto,
+                                size: 200.w,
+                                backgroundColor: Colors.white,
+                                foregroundColor: AppColors.primary,
+                                errorStateBuilder: (context, error) {
+                                  return Container(
+                                    width: 200.w,
+                                    height: 200.w,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.qr_code,
+                                          size: 80.sp,
+                                          color: AppColors.primary,
+                                        ),
+                                        SizedBox(height: 8.h),
+                                        Text(
+                                          'رمز QR',
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.primary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ],
                         ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
 

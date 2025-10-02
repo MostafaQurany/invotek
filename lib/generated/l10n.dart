@@ -6710,6 +6710,36 @@ class S {
     );
   }
 
+  /// `Search items...`
+  String get searchItems {
+    return Intl.message(
+      'Search items...',
+      name: 'searchItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Less`
+  String get showLess {
+    return Intl.message(
+      'Show Less',
+      name: 'showLess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show All Items ({count})`
+  String showAllItems(Object count) {
+    return Intl.message(
+      'Show All Items ($count)',
+      name: 'showAllItems',
+      desc: '',
+      args: [count],
+    );
+  }
+
   /// `Payment`
   String get payment {
     return Intl.message(
