@@ -25,7 +25,6 @@ import 'package:invotek/features/expenses/data/models/request/update_expense_cat
 import 'package:invotek/features/expenses/data/models/response/get_all_expenses_response.dart';
 import 'package:invotek/features/expenses/data/models/response/create_expense_response.dart';
 import 'package:invotek/features/expenses/data/models/response/get_expense_by_id_response.dart';
-import 'package:invotek/features/expenses/data/models/response/update_expense_response.dart';
 import 'package:invotek/features/expenses/data/models/response/delete_expense_response.dart';
 import 'package:invotek/features/expenses/data/models/response/get_all_expense_categories_response.dart';
 import 'package:invotek/features/expenses/data/models/response/create_expense_category_response.dart';
