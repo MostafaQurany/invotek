@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
@@ -87,7 +88,26 @@ class _ExpenseCategoriesListScreenState
           S.of(context).expenseCategories,
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        leading: const CommonMenuButton(),
+        leading: Padding(
+          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: IconButton(
+              onPressed: () {
+                ZoomDrawer.of(context)?.toggle();
+              },
+              icon: Icon(
+                Icons.menu_rounded,
+                color: AppColors.white,
+                size: 24.sp,
+              ),
+              padding: EdgeInsets.all(8.w),
+            ),
+          ),
+        ),
         actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
         actions: [
           IconButton.filled(

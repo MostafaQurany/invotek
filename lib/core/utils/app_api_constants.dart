@@ -72,6 +72,9 @@ class ApiConstants {
   static const String deactivateTaxIntegration =
       "company/tax-integration/deactivate";
   static const String taxIntegrationStatus = "company/tax-integration/status";
+
+  // Dashboard
+  static const String dashboard = "company/dashboard";
 }
 
 class ApiKey {

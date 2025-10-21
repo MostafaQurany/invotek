@@ -17,9 +17,7 @@ class ModernPaymentMethodFieldWidget extends StatelessWidget {
   static const List<String> _paymentMethods = [
     'cash',
     'credit_card',
-    'debit_card',
     'bank_transfer',
-    'check',
     'other',
   ];
 

@@ -81,19 +81,20 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
               ),
 
               // Action Buttons
-              Row(
-                children: [
-                  // Edit Button
-                  IconButton(
-                    onPressed: onEdit,
-                    icon: Icon(
-                      Icons.edit,
-                      color: AppColors.primary,
-                      size: 20.sp,
+              if (invoice.status != 'sent')
+                Row(
+                  children: [
+                    // Edit Button
+                    IconButton(
+                      onPressed: onEdit,
+                      icon: Icon(
+                        Icons.edit,
+                        color: AppColors.primary,
+                        size: 20.sp,
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
             ],
           ),
 

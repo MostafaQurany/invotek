@@ -6,6 +6,7 @@ import '../../demo/entit/customer_model.dart';
 import '../models/customer_api_model.dart';
 import '../models/request/create_customer_request.dart';
 import '../models/request/update_customer_request.dart';
+import '../models/pagination_result.dart';
 
 class CustomersRepository {
   final ApiClient _apiClient;
@@ -35,6 +36,33 @@ class CustomersRepository {
       final data = response.data ?? [];
       final customers = data.map((c) => _convertToCustomerModel(c)).toList();
       return ApiResult.success(customers);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  Future<ApiResult<PaginationResult>> getCustomersWithPagination({
+    String? search,
+    String? status,
+    String? company,
+    int? page,
+    int? limit,
+    String? sortBy,
+    String? sortOrder,
+  }) async {
+    try {
+      final response = await _apiClient.getCustomers(
+        search: search,
+        status: status,
+        company: company,
+        page: page,
+        limit: limit,
+        sortBy: sortBy,
+        sortOrder: sortOrder,
+      );
+
+      final paginationResult = PaginationResult.fromResponse(response);
+      return ApiResult.success(paginationResult);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }

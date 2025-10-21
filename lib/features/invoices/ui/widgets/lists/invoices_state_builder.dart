@@ -66,7 +66,7 @@ class InvoicesStateBuilder extends StatelessWidget {
           loading: (invoices, selectedInvoice, currentPage, totalPages, message) {
             // Always show invoices if they exist, otherwise show loading state
             if (invoices.isEmpty) {
-              return SliverToBoxAdapter(child: InvoicesLoadingState());
+              return InvoicesLoadingState();
             }
 
             // Show existing invoices with loading indicator at bottom
@@ -161,24 +161,13 @@ class InvoicesStateBuilder extends StatelessWidget {
                 child: InvoicesErrorState(error: error, onRetry: onRetry),
               );
             }
-            return SliverList(
-              delegate: SliverChildListDelegate([
-                InvoicesList(
-                  invoices: invoices,
-                  onInvoiceTap: onInvoiceTap,
-                  onInvoiceView: onInvoiceView,
-                  onInvoiceEdit: onInvoiceEdit,
-                  onInvoiceDelete: onInvoiceDelete,
-                  showLoadingIndicator: false,
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    'Error: $error',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ),
-              ]),
+            return InvoicesList(
+              invoices: invoices,
+              onInvoiceTap: onInvoiceTap,
+              onInvoiceView: onInvoiceView,
+              onInvoiceEdit: onInvoiceEdit,
+              onInvoiceDelete: onInvoiceDelete,
+              showLoadingIndicator: false,
             );
           },
         );

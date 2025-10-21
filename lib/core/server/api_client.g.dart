@@ -802,7 +802,7 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<UpdateExpenseResponse> updateExpense(
+  Future<ExpenseApiModel> updateExpense(
     int id,
     UpdateExpenseRequest request,
   ) async {
@@ -811,7 +811,7 @@ class _ApiClient implements ApiClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<UpdateExpenseResponse>(
+    final _options = _setStreamType<ExpenseApiModel>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -822,9 +822,9 @@ class _ApiClient implements ApiClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late UpdateExpenseResponse _value;
+    late ExpenseApiModel _value;
     try {
-      _value = UpdateExpenseResponse.fromJson(_result.data!);
+      _value = ExpenseApiModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -1408,6 +1408,33 @@ class _ApiClient implements ApiClient {
     late GetTaxIntegrationStatus _value;
     try {
       _value = GetTaxIntegrationStatus.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<DashboardResponse> getDashboard() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<DashboardResponse>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'company/dashboard',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late DashboardResponse _value;
+    try {
+      _value = DashboardResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

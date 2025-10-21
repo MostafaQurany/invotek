@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
+import 'package:invotek/features/expenses/ui/screens/add_expense_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_details_screen.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/ui/screens/add_invoice_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoice_details_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_creation_stepper_screen.dart';
+import 'package:invotek/features/printing/ui/screens/print_options_screen.dart';
+import 'package:invotek/features/printing/ui/screens/thermal_print_screen.dart';
+import 'package:invotek/features/printing/ui/screens/pdf_preview_screen.dart';
+import 'package:invotek/features/printing/ui/screens/printer_settings_screen.dart';
 import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
@@ -88,12 +97,19 @@ class AppRoutes {
   // Invoices routes
   static const String invoicesListRoute = '/invoices/list';
   static const String addInvoiceRoute = '/invoices/add';
+  static const String invoiceCreationStepperRoute = '/invoices/create-stepper';
   static const String editInvoiceRoute = '/invoices/edit';
   static const String invoiceDetailsRoute = '/invoices/details';
   static const String enhancedInvoiceDetailsRoute =
       '/invoices/details/enhanced';
   static const String postedInvoicesRoute = '/invoices/posted';
   static const String returnedInvoicesRoute = '/invoices/returned';
+
+  // Printing routes
+  static const String printOptionsRoute = '/invoices/print/options';
+  static const String thermalPrintRoute = '/invoices/print/thermal';
+  static const String pdfPreviewRoute = '/invoices/print/pdf';
+  static const String printerSettingsRoute = '/invoices/print/settings';
 
   // Settings routes
   static const String settingsRoute = '/settings';
@@ -120,7 +136,12 @@ class AppRoutes {
         const ExpenseCategoriesListScreenWithProvider(),
     invoicesListRoute: (context) => const InvoicesListScreenWithProvider(),
     addInvoiceRoute: (context) => const AddInvoiceScreenWithProvider(),
+    invoiceCreationStepperRoute: (context) =>
+        const InvoiceCreationStepperScreen(),
     settingsRoute: (context) => const SettingsScreen(),
+
+    // expenses routes
+    addExpenseRoute: (context) => const AddExpenseScreenWithProvider(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -204,6 +225,46 @@ class AppRoutes {
               EnhancedInvoiceDetailsScreenWithProvider(invoiceId: invoiceId),
         );
 
+      // Printing routes
+      case printOptionsRoute:
+        final invoice = settings.arguments as InvoiceModel;
+        return MaterialPageRoute(
+          builder: (context) => PrintOptionsScreen(invoice: invoice),
+        );
+      case thermalPrintRoute:
+        final invoice = settings.arguments as InvoiceModel;
+        return MaterialPageRoute(
+          builder: (context) => ThermalPrintScreen(invoice: invoice),
+        );
+      case pdfPreviewRoute:
+        final invoice = settings.arguments as InvoiceModel;
+        return MaterialPageRoute(
+          builder: (context) => PDFPreviewScreen(invoice: invoice),
+        );
+      case printerSettingsRoute:
+        return MaterialPageRoute(
+          builder: (context) => const PrinterSettingsScreen(),
+        );
+      // expenses routes
+      case expensesListRoute:
+        return MaterialPageRoute(
+          builder: (context) => const ExpensesListScreenWithProvider(),
+        );
+      case addExpenseRoute:
+        return MaterialPageRoute(
+          builder: (context) => const AddExpenseScreenWithProvider(),
+        );
+      case editExpenseRoute:
+        final expense = settings.arguments as ExpenseModel;
+        return MaterialPageRoute(
+          builder: (context) => EditExpenseScreenWithProvider(expense: expense),
+        );
+      case expenseDetailsRoute:
+        final expense = settings.arguments as ExpenseModel;
+        return MaterialPageRoute(
+          builder: (context) =>
+              ExpenseDetailsScreenWithProvider(expense: expense),
+        );
       default:
         return null;
     }

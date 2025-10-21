@@ -465,6 +465,165 @@ class SAr extends S {
   String get noDataReceived => 'لم يتم استلام بيانات من الخادم';
 
   @override
+  String get cannotEditInvoice => 'لا يمكن تعديل الفاتورة';
+
+  @override
+  String get invoiceAlreadySent => 'تم إرسال الفاتورة بالفعل';
+
+  @override
+  String get cannotEditSentInvoice => 'لا يمكن تعديل الفواتير المرسلة';
+
+  @override
+  String get noData => 'لا توجد بيانات';
+
+  @override
+  String get selectCustomer => 'اختيار العميل';
+
+  @override
+  String get searchCustomers => 'البحث عن العملاء';
+
+  @override
+  String get loadingCustomers => 'جاري تحميل العملاء...';
+
+  @override
+  String get errorLoadingCustomers => 'خطأ في تحميل العملاء';
+
+  @override
+  String get noCustomersFound => 'لا توجد عملاء';
+
+  @override
+  String get noCustomersMatchSearch => 'لا توجد عملاء يطابقون البحث';
+
+  @override
+  String get addFirstCustomer => 'أضف أول عميل';
+
+  @override
+  String get tryDifferentSearch => 'جرب بحث مختلف';
+
+  @override
+  String get addNewCustomer => 'إضافة عميل جديد';
+
+  @override
+  String get companyInformation => 'معلومات الشركة';
+
+  @override
+  String get companyName => 'اسم الشركة';
+
+  @override
+  String get enterCompanyName => 'أدخل اسم الشركة';
+
+  @override
+  String get address => 'العنوان';
+
+  @override
+  String get enterAddress => 'أدخل العنوان';
+
+  @override
+  String get errorCreatingCustomer => 'خطأ في إنشاء العميل';
+
+  @override
+  String get selectProduct => 'اختيار المنتج';
+
+  @override
+  String get searchProducts => 'البحث في المنتجات...';
+
+  @override
+  String get loadingProducts => 'جاري تحميل المنتجات...';
+
+  @override
+  String get errorLoadingProducts => 'حدث خطأ أثناء تحميل المنتجات';
+
+  @override
+  String get noProductsFound => 'لا توجد منتجات';
+
+  @override
+  String get noProductsMatchSearch => 'لا توجد منتجات تطابق البحث';
+
+  @override
+  String get addFirstProduct => 'أضف أول منتج';
+
+  @override
+  String get addNewProduct => 'إضافة منتج جديد';
+
+  @override
+  String get productName => 'اسم المنتج';
+
+  @override
+  String get enterProductName => 'أدخل اسم المنتج';
+
+  @override
+  String get sku => 'رمز المنتج';
+
+  @override
+  String get enterSku => 'أدخل رمز المنتج';
+
+  @override
+  String get pricingInformation => 'معلومات التسعير';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get enterPrice => 'أدخل السعر';
+
+  @override
+  String get priceRequired => 'السعر مطلوب';
+
+  @override
+  String get invalidPrice => 'سعر غير صحيح';
+
+  @override
+  String get quantity => 'الكمية';
+
+  @override
+  String get enterQuantity => 'أدخل الكمية';
+
+  @override
+  String get quantityRequired => 'الكمية مطلوبة';
+
+  @override
+  String get invalidQuantity => 'كمية غير صحيحة';
+
+  @override
+  String get errorCreatingProduct => 'حدث خطأ أثناء إنشاء المنتج';
+
+  @override
+  String get invoiceItems => 'عناصر الفاتورة';
+
+  @override
+  String get items => 'العناصر';
+
+  @override
+  String get noItemsAdded => 'لم يتم إضافة أي عناصر بعد';
+
+  @override
+  String get addItemsToInvoice => 'إضافة عناصر للفاتورة';
+
+  @override
+  String get manualItem => 'عنصر يدوي';
+
+  @override
+  String get discount => 'الخصم';
+
+  @override
+  String get addFromProducts => 'إضافة من المنتجات';
+
+  @override
+  String get addManualItem => 'إضافة عنصر يدوي';
+
+  @override
+  String get customerSelection => 'اختيار العميل';
+
+  @override
+  String get noCustomerSelected => 'لم يتم اختيار عميل';
+
+  @override
+  String get invoiceUpdatedSuccessfully => 'تم تحديث الفاتورة بنجاح';
+
+  @override
+  String get errorUpdatingInvoice => 'خطأ في تحديث الفاتورة';
+
+  @override
   String get errorLoadingUsers => 'خطأ في تحميل المستخدمين';
 
   @override
@@ -525,9 +684,6 @@ class SAr extends S {
   String get categoriesAppbar => 'فئات المنتجات';
 
   @override
-  String get searchProducts => 'البحث في المنتجات...';
-
-  @override
   String get category => 'الفئة';
 
   @override
@@ -538,9 +694,6 @@ class SAr extends S {
 
   @override
   String get outOfStock => 'نفدت الكمية';
-
-  @override
-  String get noProductsFound => 'لا توجد منتجات';
 
   @override
   String get viewDetails => 'عرض التفاصيل';
@@ -555,9 +708,6 @@ class SAr extends S {
   String deleteProductConfirmation(String name) {
     return 'هل أنت متأكد من حذف المنتج \"$name\"؟';
   }
-
-  @override
-  String get quantity => 'الكمية';
 
   @override
   String get noName => 'بدون اسم';
@@ -594,12 +744,6 @@ class SAr extends S {
 
   @override
   String get errorDeletingCategory => 'خطأ في حذف الفئة';
-
-  @override
-  String get price => 'السعر';
-
-  @override
-  String get sku => 'رمز المنتج';
 
   @override
   String get barcode => 'الباركود';
@@ -750,9 +894,6 @@ class SAr extends S {
   String get apply => 'تطبيق';
 
   @override
-  String get noCustomersFound => 'لا يوجد عملاء';
-
-  @override
   String get noCustomersFoundMessage => 'اضغط على زر الإضافة لإنشاء عميل جديد';
 
   @override
@@ -777,13 +918,13 @@ class SAr extends S {
   String get customerNameRequired => 'اسم العميل مطلوب';
 
   @override
-  String get customerEmail => 'بريد العميل';
+  String get customerEmail => 'البريد الإلكتروني';
 
   @override
-  String get customerPhone => 'هاتف العميل';
+  String get customerPhone => 'رقم الهاتف';
 
   @override
-  String get customerAddress => 'عنوان العميل';
+  String get customerAddress => 'العنوان';
 
   @override
   String get customerTaxNumber => 'الرقم الضريبي';
@@ -861,15 +1002,9 @@ class SAr extends S {
   String get edit => 'تعديل';
 
   @override
-  String get addNewCustomer => 'إضافة عميل جديد';
-
-  @override
   String errorOccurred(Object error) {
     return 'حدث خطأ $error';
   }
-
-  @override
-  String get searchCustomers => 'البحث في العملاء...';
 
   @override
   String get company => 'الشركة';
@@ -963,7 +1098,7 @@ class SAr extends S {
   String get paymentMethod => 'طريقة الدفع';
 
   @override
-  String get cash => 'نقدي';
+  String get cash => 'نقداً';
 
   @override
   String get creditCard => 'بطاقة ائتمان';
@@ -1107,9 +1242,6 @@ class SAr extends S {
   String get settings => 'الإعدادات';
 
   @override
-  String get companyName => 'اسم الشركة';
-
-  @override
   String get companyEmail => 'بريد الشركة';
 
   @override
@@ -1186,9 +1318,6 @@ class SAr extends S {
 
   @override
   String get companyAddressRequired => 'عنوان الشركة مطلوب';
-
-  @override
-  String get enterCompanyName => 'أدخل اسم الشركة';
 
   @override
   String get enterCompanyEmail => 'أدخل بريد الشركة';
@@ -1403,7 +1532,7 @@ class SAr extends S {
   String get openingMap => 'جاري فتح الخريطة';
 
   @override
-  String get ok => 'موافق';
+  String get ok => 'حسناً';
 
   @override
   String get phoneNumberInvalid => 'رقم الهاتف غير صحيح';
@@ -1462,13 +1591,7 @@ class SAr extends S {
   }
 
   @override
-  String get errorLoadingProducts => 'حدث خطأ أثناء تحميل المنتجات';
-
-  @override
   String get errorLoadingProduct => 'حدث خطأ أثناء تحميل بيانات المنتج';
-
-  @override
-  String get errorCreatingProduct => 'حدث خطأ أثناء إنشاء المنتج';
 
   @override
   String get noCategoriesToDelete => 'لا توجد فئات للحذف';
@@ -1602,13 +1725,7 @@ class SAr extends S {
   String get screenDimensionsPerformance => 'أبعاد الشاشة والأداء';
 
   @override
-  String get enterProductName => 'أدخل اسم المنتج';
-
-  @override
   String get enterProductDescription => 'أدخل وصف المنتج';
-
-  @override
-  String get enterQuantity => 'أدخل الكمية';
 
   @override
   String get pieceKgMeter => 'قطعة، كيلو، متر...';
@@ -1648,9 +1765,6 @@ class SAr extends S {
 
   @override
   String get enterPostalCode => 'أدخل الرمز البريدي';
-
-  @override
-  String get enterAddress => 'أدخل العنوان';
 
   @override
   String get enterDetailedAddress => 'أدخل العنوان التفصيلي';
@@ -1724,7 +1838,7 @@ class SAr extends S {
   String get paidInvoices => '8 مدفوعة';
 
   @override
-  String get totalAmount => 'المجموع الكلي';
+  String get totalAmount => 'المبلغ الإجمالي';
 
   @override
   String get thisMonth => 'هذا الشهر';
@@ -1882,12 +1996,6 @@ class SAr extends S {
 
   @override
   String get pressAddToCreateClient => 'اضغط على زر الإضافة لإنشاء عميل جديد';
-
-  @override
-  String get address => 'العنوان';
-
-  @override
-  String get companyInformation => 'معلومات الشركة';
 
   @override
   String get taxNumber => 'الرقم الضريبي';
@@ -2059,9 +2167,6 @@ class SAr extends S {
   String get allCustomers => 'جميع العملاء';
 
   @override
-  String get items => 'العناصر';
-
-  @override
   String get paid => 'مدفوعة';
 
   @override
@@ -2077,7 +2182,7 @@ class SAr extends S {
   String get card => 'بطاقة';
 
   @override
-  String get total => 'الإجمالي';
+  String get total => 'المجموع الكلي';
 
   @override
   String get subtotal => 'المجموع الفرعي';
@@ -2087,9 +2192,6 @@ class SAr extends S {
 
   @override
   String get noItems => 'لا توجد عناصر';
-
-  @override
-  String get addItemsToInvoice => 'إضافة عناصر للفاتورة';
 
   @override
   String get qty => 'الكمية';
@@ -2252,10 +2354,10 @@ class SAr extends S {
   String get selectDate => 'اختر التاريخ';
 
   @override
-  String get enterCustomerEmail => 'أدخل بريد العميل الإلكتروني';
+  String get enterCustomerEmail => 'أدخل البريد الإلكتروني';
 
   @override
-  String get enterCustomerPhone => 'أدخل هاتف العميل';
+  String get enterCustomerPhone => 'أدخل رقم الهاتف';
 
   @override
   String get enterSubtotal => 'أدخل المجموع الفرعي';
@@ -2318,7 +2420,7 @@ class SAr extends S {
   String get testingConnection => 'جاري اختبار الاتصال...';
 
   @override
-  String get taxAmount => 'الضريبة';
+  String get taxAmount => 'مبلغ الضريبة';
 
   @override
   String get enterDescription => 'أدخل الوصف';
@@ -2514,10 +2616,7 @@ class SAr extends S {
   }
 
   @override
-  String get invoiceItems => 'عناصر الفاتورة';
-
-  @override
-  String get itemName => 'الاسم';
+  String get itemName => 'اسم العنصر';
 
   @override
   String get itemQuantity => 'الكمية';
@@ -2572,4 +2671,389 @@ class SAr extends S {
   String loadingProductDetails(String name) {
     return 'جاري تحميل تفاصيل المنتج...';
   }
+
+  @override
+  String get createNewInvoiceStepper => 'إنشاء فاتورة جديدة';
+
+  @override
+  String get invoiceBasicInfo => 'معلومات الفاتورة';
+
+  @override
+  String get reviewCalculations => 'مراجعة الحسابات';
+
+  @override
+  String get invoiceCreationHelp =>
+      'هذا النموذج يساعدك في إنشاء فاتورة جديدة خطوة بخطوة:\n\n1. معلومات الفاتورة: اختر الإجراء وطريقة الدفع والحالة\n2. اختيار العميل: اختر عميل موجود أو أضف عميل جديد\n3. عناصر الفاتورة: أضف العناصر والكميات والأسعار\n4. مراجعة الحسابات: راجع التفاصيل النهائية قبل الحفظ';
+
+  @override
+  String get invoiceCreatedSuccessfully => 'تم إنشاء الفاتورة بنجاح';
+
+  @override
+  String errorCreatingInvoice(String error) {
+    return 'خطأ: $error';
+  }
+
+  @override
+  String get fillRequiredFieldsBasicInfo =>
+      'يرجى ملء جميع الحقول المطلوبة في معلومات الفاتورة';
+
+  @override
+  String get selectOrAddCustomer => 'يرجى اختيار عميل أو إدخال بيانات العميل';
+
+  @override
+  String get addAtLeastOneItem => 'يرجى إضافة عنصر واحد على الأقل';
+
+  @override
+  String get actionRequired => 'الإجراء مطلوب';
+
+  @override
+  String get paymentMethodRequired => 'طريقة الدفع مطلوبة';
+
+  @override
+  String get statusRequired => 'حالة الفاتورة مطلوبة';
+
+  @override
+  String get customerRequired => 'يرجى اختيار عميل أو إدخال بيانات العميل';
+
+  @override
+  String get itemsRequired => 'يرجى إضافة عنصر واحد على الأقل';
+
+  @override
+  String get action => 'الإجراء';
+
+  @override
+  String get saveOnly => 'حفظ فقط';
+
+  @override
+  String get saveAndSend => 'حفظ وإرسال';
+
+  @override
+  String get invoiceStatus => 'حالة الفاتورة';
+
+  @override
+  String get sent => 'مرسلة';
+
+  @override
+  String get invoiceDescription => 'وصف الفاتورة';
+
+  @override
+  String get enterInvoiceDescription => 'أدخل وصف الفاتورة (اختياري)';
+
+  @override
+  String get customerType => 'نوع العميل';
+
+  @override
+  String get existingCustomer => 'عميل موجود';
+
+  @override
+  String get newCustomer => 'عميل جديد';
+
+  @override
+  String get enterCustomerAddress => 'أدخل العنوان';
+
+  @override
+  String get addItem => 'إضافة عنصر';
+
+  @override
+  String get addFirstItem => 'أضف أول عنصر';
+
+  @override
+  String get taxPercent => 'نسبة الضريبة';
+
+  @override
+  String get enterItemName => 'أدخل اسم العنصر';
+
+  @override
+  String get enterDiscount => 'أدخل الخصم';
+
+  @override
+  String get enterTaxPercent => 'أدخل نسبة الضريبة';
+
+  @override
+  String get enterTotal => 'أدخل المجموع';
+
+  @override
+  String get removeItem => 'حذف العنصر';
+
+  @override
+  String get editItem => 'تعديل العنصر';
+
+  @override
+  String get invoiceInfo => 'معلومات الفاتورة';
+
+  @override
+  String get customerInfo => 'معلومات العميل';
+
+  @override
+  String get itemsInfo => 'معلومات العناصر';
+
+  @override
+  String get financialInfo => 'المعلومات المالية';
+
+  @override
+  String get actionType => 'نوع الإجراء';
+
+  @override
+  String get paymentMethodType => 'نوع طريقة الدفع';
+
+  @override
+  String get statusType => 'نوع الحالة';
+
+  @override
+  String get issueDateValue => 'تاريخ الإصدار';
+
+  @override
+  String get descriptionValue => 'الوصف';
+
+  @override
+  String get customerNameValue => 'اسم العميل';
+
+  @override
+  String get customerEmailValue => 'البريد الإلكتروني';
+
+  @override
+  String get customerPhoneValue => 'رقم الهاتف';
+
+  @override
+  String get customerAddressValue => 'العنوان';
+
+  @override
+  String get itemDiscount => 'الخصم';
+
+  @override
+  String get itemTax => 'الضريبة';
+
+  @override
+  String get clearSearch => 'مسح البحث';
+
+  @override
+  String get loadMore => 'تحميل المزيد';
+
+  @override
+  String get dashboard => 'لوحة التحكم';
+
+  @override
+  String get statistics => 'الإحصائيات';
+
+  @override
+  String get totalInvoices => 'إجمالي الفواتير';
+
+  @override
+  String get newInvoices => 'فواتير جديدة';
+
+  @override
+  String get totalSales => 'إجمالي المبيعات';
+
+  @override
+  String get totalExpenses => 'إجمالي المصروفات';
+
+  @override
+  String get monthlyExpenses => 'مصروفات هذا الشهر';
+
+  @override
+  String get totalCustomers => 'إجمالي العملاء';
+
+  @override
+  String get newCustomers => 'عملاء جدد';
+
+  @override
+  String get totalProducts => 'إجمالي المنتجات';
+
+  @override
+  String get newProducts => 'منتجات جديدة';
+
+  @override
+  String get netProfit => 'صافي الربح';
+
+  @override
+  String get salesGrowth => 'نمو المبيعات';
+
+  @override
+  String get profitGrowth => 'نمو الأرباح';
+
+  @override
+  String get topSellingProducts => 'المنتجات الأكثر مبيعاً';
+
+  @override
+  String get loadingDashboard => 'جاري تحميل لوحة التحكم...';
+
+  @override
+  String get errorLoadingDashboard => 'خطأ في تحميل لوحة التحكم';
+
+  @override
+  String get dashboardError => 'خطأ في تحميل البيانات';
+
+  @override
+  String get dashboardErrorMessage => 'حدث خطأ أثناء تحميل بيانات لوحة التحكم';
+
+  @override
+  String get noDataAvailable => 'لا توجد بيانات متاحة';
+
+  @override
+  String get currency => 'دينار';
+
+  @override
+  String get growth => 'نمو';
+
+  @override
+  String get decrease => 'انخفاض';
+
+  @override
+  String get increase => 'زيادة';
+
+  @override
+  String get newThisMonth => 'جديد هذا الشهر';
+
+  @override
+  String get productsInStock => 'منتجات في المخزون';
+
+  @override
+  String get salesDistribution => 'توزيع المبيعات';
+
+  @override
+  String get invoiceStatistics => 'إحصائيات الفواتير';
+
+  @override
+  String get allInvoices => 'جميع الفواتير';
+
+  @override
+  String get regularInvoices => 'الفواتير العادية';
+
+  @override
+  String get monthlySalesStatistics => 'إحصائيات المبيعات الشهرية';
+
+  @override
+  String get salesCategories => 'فئات المبيعات';
+
+  @override
+  String get firstCategory => 'فئة أولى';
+
+  @override
+  String get uncategorized => 'غير مصنف';
+
+  @override
+  String get printOptions => 'خيارات الطباعة';
+
+  @override
+  String get thermalPrint => 'طباعة حرارية';
+
+  @override
+  String get thermalPrintDesc => 'للطابعات الحرارية - 80mm';
+
+  @override
+  String get pdfPrint => 'طباعة PDF';
+
+  @override
+  String get pdfPrintDesc => 'عرض وحفظ PDF';
+
+  @override
+  String get printerStatus => 'حالة الطابعة';
+
+  @override
+  String get printerConnected => 'متصل بالطابعة';
+
+  @override
+  String get printerDisconnected => 'غير متصل بالطابعة';
+
+  @override
+  String get checkingConnection => 'جاري فحص الاتصال...';
+
+  @override
+  String get searchingPrinter => 'جاري البحث عن الطابعة...';
+
+  @override
+  String get printReceipt => 'طباعة الإيصال';
+
+  @override
+  String get retryConnection => 'إعادة فحص';
+
+  @override
+  String get pdfPreview => 'معاينة PDF';
+
+  @override
+  String get savePDF => 'حفظ PDF';
+
+  @override
+  String get generatingPDF => 'جاري إنشاء PDF...';
+
+  @override
+  String get pdfGenerated => 'تم إنشاء PDF بنجاح';
+
+  @override
+  String get pdfSaved => 'تم حفظ PDF بنجاح';
+
+  @override
+  String get printError => 'خطأ في الطباعة';
+
+  @override
+  String get connectionError => 'خطأ في الاتصال';
+
+  @override
+  String get thermalReceipt => 'إيصال حرارية';
+
+  @override
+  String get thankYou => 'شكراً لتعاملكم معنا';
+
+  @override
+  String get printSuccess => 'تمت الطباعة بنجاح';
+
+  @override
+  String get printFailed => 'فشلت الطباعة';
+
+  @override
+  String get pdfError => 'خطأ في إنشاء PDF';
+
+  @override
+  String get saveError => 'خطأ في حفظ PDF';
+
+  @override
+  String get printSettings => 'إعدادات الطباعة';
+
+  @override
+  String get paperSize => 'حجم الورق';
+
+  @override
+  String get printerName => 'اسم الطابعة';
+
+  @override
+  String get connectionType => 'نوع الاتصال';
+
+  @override
+  String get bluetooth => 'بلوتوث';
+
+  @override
+  String get usb => 'USB';
+
+  @override
+  String get network => 'شبكة';
+
+  @override
+  String get selectPrinter => 'اختر الطابعة';
+
+  @override
+  String get noPrintersFound => 'لم يتم العثور على طابعات';
+
+  @override
+  String get refreshPrinters => 'تحديث الطابعات';
+
+  @override
+  String get printerSettings => 'إعدادات الطابعة';
+
+  @override
+  String get testPrint => 'طباعة تجريبية';
+
+  @override
+  String get printQuality => 'جودة الطباعة';
+
+  @override
+  String get high => 'عالية';
+
+  @override
+  String get medium => 'متوسطة';
+
+  @override
+  String get low => 'منخفضة';
+
+  @override
+  String get searchExpenses => '....البحث عن المصروفات';
 }

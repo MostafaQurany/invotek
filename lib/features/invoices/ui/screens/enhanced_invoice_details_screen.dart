@@ -19,7 +19,6 @@ import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dial
 import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/qr_code_dialog.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -446,7 +445,7 @@ class _EnhancedInvoiceDetailsScreenState
           SliverToBoxAdapter(child: SizedBox(height: 100.h)),
         ],
       ),
-      //   floatingActionButton: _buildFloatingActionButton(invoice),
+      floatingActionButton: _buildFloatingActionButton(invoice),
     );
   }
 
@@ -706,13 +705,21 @@ class _EnhancedInvoiceDetailsScreenState
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: const Icon(Icons.delete, color: AppColors.error),
-            title: Text(S.of(context).deleteInvoice),
+            leading: const Icon(Icons.print, color: AppColors.warning),
+            title: Text(S.of(context).printInvoice),
             onTap: () {
               Navigator.pop(context);
-              _deleteInvoice(invoice);
+              _showPrintOptions(invoice);
             },
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.delete, color: AppColors.error),
+          //   title: Text(S.of(context).deleteInvoice),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     _deleteInvoice(invoice);
+          //   },
+          // ),
           // ListTile(
           //   leading: const Icon(Icons.copy, color: AppColors.primary),
           //   title: Text('تكرار الفاتورة'),
@@ -721,22 +728,22 @@ class _EnhancedInvoiceDetailsScreenState
           //     _duplicateInvoice(invoice);
           //   },
           // ),
-          ListTile(
-            leading: const Icon(Icons.download, color: AppColors.success),
-            title: Text(S.of(context).downloadPDF),
-            onTap: () {
-              Navigator.pop(context);
-              _downloadPDF(invoice);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.refresh, color: AppColors.primary),
-            title: Text(S.of(context).refreshData),
-            onTap: () {
-              Navigator.pop(context);
-              context.read<InvoicesCubit>().getInvoiceById(widget.invoiceId);
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.download, color: AppColors.success),
+          //   title: Text(S.of(context).downloadPDF),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     _downloadPDF(invoice);
+          //   },
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.refresh, color: AppColors.primary),
+          //   title: Text(S.of(context).refreshData),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     context.read<InvoicesCubit>().getInvoiceById(widget.invoiceId);
+          //   },
+          // ),
         ],
       ),
     );
@@ -1033,5 +1040,60 @@ class _EnhancedInvoiceDetailsScreenState
     buffer.writeln(separator);
 
     return buffer.toString();
+  }
+  // ==================== Print Feature ====================
+
+  Widget _buildFloatingActionButton(InvoiceModel invoice) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Print Button
+        FloatingActionButton(
+          heroTag: "print_${invoice.id}",
+          onPressed: () => _showPrintOptions(invoice),
+          backgroundColor: AppColors.warning,
+          tooltip: S.of(context).printInvoice,
+          child: const Icon(Icons.print, color: Colors.white),
+        ),
+        SizedBox(height: 8.h),
+
+        // // Send Invoice Button
+        // FloatingActionButton(
+        //   heroTag: "send_${invoice.id}",
+        //   onPressed: () => _sendInvoice(invoice),
+        //   backgroundColor: AppColors.success,
+        //   tooltip: 'إرسال الفاتورة',
+        //   child: const Icon(Icons.send, color: Colors.white),
+        // ),
+        // SizedBox(height: 8.h),
+
+        // // Edit Invoice Button
+        // FloatingActionButton(
+        //   heroTag: "edit_${invoice.id}",
+        //   onPressed: () => _editInvoice(invoice),
+        //   backgroundColor: AppColors.primary,
+        //   tooltip: 'تعديل الفاتورة',
+        //   child: const Icon(Icons.edit, color: Colors.white),
+        // ),
+        // SizedBox(height: 8.h),
+
+        // // More Options Button
+        // FloatingActionButton(
+        //   heroTag: "more_${invoice.id}",
+        //   onPressed: () => _showMoreOptions(invoice),
+        //   backgroundColor: AppColors.surface,
+        //   tooltip: 'المزيد',
+        //   child: const Icon(Icons.more_vert, color: AppColors.textPrimary),
+        // ),
+      ],
+    );
+  }
+
+  void _showPrintOptions(InvoiceModel invoice) {
+    Navigator.pushNamed(
+      context,
+      AppRoutes.printOptionsRoute,
+      arguments: invoice,
+    );
   }
 }

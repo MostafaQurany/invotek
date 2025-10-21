@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ExpensesHeaderWidget extends StatefulWidget {
@@ -143,6 +144,22 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
               ],
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.white.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: IconButton(
+              onPressed: () {
+                ExpensesCubit.get(context).loadFirstPage(refresh: true);
+                ExpenseCategoriesCubit.get(
+                  context,
+                ).loadFirstPage(refresh: true);
+              },
+              icon: Icon(Icons.refresh, color: AppColors.white, size: 24.sp),
+              padding: EdgeInsets.all(8.w),
+            ),
+          ),
         ],
       ),
     );
@@ -158,7 +175,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
             child: CommonSearchBarExtensions.expensesSearch(
               controller: widget.searchController,
               onChanged: widget.onSearchChanged,
-              hintText: 'Search expenses...',
+              hintText: S.of(context).searchExpenses,
             ),
           ),
 
@@ -198,24 +215,24 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
 
         child: Row(
           children: [
-            // Status Filter
-            Expanded(
-              child: _buildFilterDropdown(
-                value: widget.selectedStatus,
-                items: const [
-                  DropdownMenuItem(
-                    value: 'all_status',
-                    child: Text('All Status'),
-                  ),
-                  DropdownMenuItem(value: 'active', child: Text('Active')),
-                  DropdownMenuItem(value: 'inactive', child: Text('Inactive')),
-                ],
-                onChanged: widget.onStatusChanged,
-                hint: S.of(context).status,
-              ),
-            ),
+            // // Status Filter
+            // Expanded(
+            //   child: _buildFilterDropdown(
+            //     value: widget.selectedStatus,
+            //     items: const [
+            //       DropdownMenuItem(
+            //         value: 'all_status',
+            //         child: Text('All Status'),
+            //       ),
+            //       DropdownMenuItem(value: 'active', child: Text('Active')),
+            //       DropdownMenuItem(value: 'inactive', child: Text('Inactive')),
+            //     ],
+            //     onChanged: widget.onStatusChanged,
+            //     hint: S.of(context).status,
+            //   ),
+            // ),
 
-            SizedBox(width: 12.w),
+            // SizedBox(width: 12.w),
 
             // Category Filter
             Expanded(

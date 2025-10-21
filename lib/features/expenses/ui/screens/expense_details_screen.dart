@@ -51,9 +51,9 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                   _buildPaymentInfoCard(expense),
                   SizedBox(height: 16.h),
                   _buildAdditionalInfoCard(expense),
-                  SizedBox(height: 16.h),
-                  _buildMetadataCard(expense),
-                  SizedBox(height: 100.h), // Space for bottom actions
+                  // SizedBox(height: 16.h),
+                  // _buildMetadataCard(expense),
+                  SizedBox(height: 50.h), // Space for bottom actions
                 ],
               ),
             ),

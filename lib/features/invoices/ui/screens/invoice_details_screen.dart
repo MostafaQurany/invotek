@@ -16,6 +16,7 @@ import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dial
 import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/item_details_dialog.dart';
+import 'package:invotek/features/printing/ui/screens/print_options_screen.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoiceDetailsScreen extends StatefulWidget {
@@ -144,9 +145,18 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Print Button
+        FloatingActionButton(
+          heroTag: "print_${widget.invoice.id}",
+          onPressed: _showPrintOptions,
+          backgroundColor: AppColors.warning,
+          child: const Icon(Icons.print, color: Colors.white),
+        ),
+        SizedBox(height: 8.h),
+
         // Send Invoice Button
         FloatingActionButton(
-          heroTag: "send",
+          heroTag: "send_${widget.invoice.id}",
           onPressed: _sendInvoice,
           backgroundColor: AppColors.success,
           child: const Icon(Icons.send, color: Colors.white),
@@ -155,7 +165,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
 
         // Edit Invoice Button
         FloatingActionButton(
-          heroTag: "edit",
+          heroTag: "edit_${widget.invoice.id}",
           onPressed: _editInvoice,
           backgroundColor: AppColors.primary,
           child: const Icon(Icons.edit, color: Colors.white),
@@ -164,7 +174,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
 
         // More Options Button
         FloatingActionButton(
-          heroTag: "more",
+          heroTag: "more_${widget.invoice.id}",
           onPressed: _showMoreOptions,
           backgroundColor: AppColors.surface,
           child: const Icon(Icons.more_vert, color: AppColors.textPrimary),
@@ -180,20 +190,6 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
         builder: (context) => EditInvoiceScreen(invoice: widget.invoice),
       ),
     );
-  }
-
-  void _shareInvoice() {
-    // TODO: Implement share functionality
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('مشاركة الفاتورة')));
-  }
-
-  void _printInvoice() {
-    // TODO: Implement print functionality
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text('طباعة الفاتورة')));
   }
 
   void _showStatusOptions() {
@@ -255,11 +251,11 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: const Icon(Icons.delete, color: AppColors.error),
-            title: Text(S.of(context).deleteInvoice),
+            leading: const Icon(Icons.print, color: AppColors.warning),
+            title: Text(S.of(context).printInvoice),
             onTap: () {
               Navigator.pop(context);
-              _deleteInvoice();
+              _showPrintOptions();
             },
           ),
           ListTile(
@@ -276,6 +272,14 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
             onTap: () {
               Navigator.pop(context);
               _downloadPDF();
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.delete, color: AppColors.error),
+            title: Text(S.of(context).deleteInvoice),
+            onTap: () {
+              Navigator.pop(context);
+              _deleteInvoice();
             },
           ),
         ],
@@ -303,5 +307,14 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
 
   void _downloadPDF() {
     // TODO: Implement PDF download
+  }
+
+  void _showPrintOptions() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => PrintOptionsScreen(invoice: widget.invoice),
+      ),
+    );
   }
 }

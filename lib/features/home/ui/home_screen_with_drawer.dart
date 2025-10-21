@@ -4,7 +4,6 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/providers/app_providers.dart';
 import 'package:invotek/core/routes/app_routes.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
 import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
@@ -98,78 +97,6 @@ class HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
     );
   }
 
-  Widget _buildUnifiedAppBar(BuildContext context, NavigationState state) {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          // Menu Button
-          IconButton(
-            onPressed: () {
-              ZoomDrawer.of(context)?.toggle();
-            },
-            icon: const Icon(Icons.menu, color: AppColors.white, size: 24),
-          ),
-          // Title
-          Expanded(
-            child: Text(
-              _getScreenTitle(state.currentRoute),
-              style: const TextStyle(
-                color: AppColors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          // Spacer for symmetry
-          const SizedBox(width: 48),
-        ],
-      ),
-    );
-  }
-
-  String _getScreenTitle(String route) {
-    switch (route) {
-      case '/home':
-        return 'الرئيسية';
-      case AppRoutes.usersPermissionsRoute:
-        return 'إدارة المستخدمين والصلاحيات';
-      case AppRoutes.usersListRoute:
-        return 'قائمة المستخدمين';
-      case AppRoutes.managePermissionsRoute:
-        return 'إدارة الصلاحيات';
-      case '/customers':
-      case '/customers/list':
-        return 'إدارة العملاء';
-      case '/products/list':
-        return 'قائمة المنتجات';
-      case '/products/categories':
-        return 'فئات المنتجات';
-      case '/expenses':
-      case '/expenses/list':
-        return 'قائمة المصروفات';
-      case '/expenses/categories':
-        return 'فئات المصروفات';
-      case AppRoutes.invoicesListRoute:
-        return 'قائمة الفواتير';
-      case AppRoutes.settingsRoute:
-        return 'الإعدادات';
-      default:
-        return 'Invotek';
-    }
-  }
-
   Widget _buildScreenForRoute(String route, dynamic arguments) {
     switch (route) {
       case AppRoutes.usersPermissionsRoute:
@@ -187,34 +114,32 @@ class HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
           route: route,
           child: const ManagePermissionsScreenWithProvider(),
         );
-      case '/clients/list':
+      case AppRoutes.clientsListRoute:
         return KeepAliveScreenWrapper(
           route: route,
           child: const ClientsListScreenWithProvider(),
         );
-      case '/customers':
-      case '/customers/list':
+      case AppRoutes.customersListRoute:
         return KeepAliveScreenWrapper(
           route: route,
           child: const CustomersListScreenWithProvider(),
         );
-      case '/products/list':
+      case AppRoutes.productsListRoute:
         return KeepAliveScreenWrapper(
           route: route,
           child: const ProductsListScreenWithProvider(),
         );
-      case '/products/categories':
+      case AppRoutes.categoriesListRoute:
         return KeepAliveScreenWrapper(
           route: route,
           child: const CategoriesListScreenWithProvider(),
         );
-      case '/expenses':
-      case '/expenses/list':
+      case AppRoutes.expensesListRoute:
         return KeepAliveScreenWrapper(
           route: route,
           child: const ExpensesListScreenWithProvider(),
         );
-      case '/expenses/categories':
+      case AppRoutes.expenseCategoriesListRoute:
         return KeepAliveScreenWrapper(
           route: route,
           child: const ExpenseCategoriesListScreenWithProvider(),
@@ -229,7 +154,7 @@ class HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
           route: route,
           child: const InvoicesListScreenWithProvider(),
         );
-      case '/home':
+      case AppRoutes.homeRoute:
       default:
         return KeepAliveScreenWrapper(route: route, child: const HomeScreen());
     }

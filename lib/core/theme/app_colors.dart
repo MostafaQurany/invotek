@@ -30,10 +30,10 @@ class AppColors {
 
   // Buttons and UI
   static const Color button = secondary;
-  static const Color error = Colors.red;
-  static const Color success = Color(0xFF4CAF50);
-  static const Color warning = Color(0xFFFF9800);
-  static const Color info = Color(0xFF2196F3);
+  static const Color error = Color(0xFFEF4444);
+  static const Color success = Color(0xFF10B981);
+  static const Color warning = Color(0xFFF59E0B);
+  static const Color info = Color(0xFF3B82F6);
 
   // basic
   static const Color white = Colors.white;
@@ -42,7 +42,7 @@ class AppColors {
   static final Color greyDark = Colors.grey[800] ?? Colors.grey;
   static final Color greyLight = Colors.grey[300] ?? Colors.grey;
   static final Color grey = Colors.grey;
-  
+
   // Border colors
   static const Color border = Color(0xFFE5E7EB);
 

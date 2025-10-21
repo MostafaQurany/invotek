@@ -46,6 +46,9 @@ class CategoryNameField extends StatelessWidget {
 
         // Text Field
         TextFormField(
+          onTapOutside: (event) {
+            FocusScope.of(context).unfocus();
+          },
           controller: controller,
           onChanged: onChanged,
           decoration: InputDecoration(

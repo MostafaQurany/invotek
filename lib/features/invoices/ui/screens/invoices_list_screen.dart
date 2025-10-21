@@ -8,8 +8,8 @@ import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoices_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/lists/invoices_state_builder.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
-import 'package:invotek/features/invoices/ui/screens/add_invoice_screen.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class InvoicesListScreen extends StatefulWidget {
   const InvoicesListScreen({super.key});
@@ -85,9 +85,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   }
 
   void _onStatusChanged(String? status) {
-    setState(() {
-      _selectedStatus = status;
-    });
+    if (mounted) {
+      setState(() {
+        _selectedStatus = status;
+      });
+    }
     context.read<InvoicesCubit>().loadFirstPage(
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: status == 'all' ? null : status,
@@ -99,9 +101,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   }
 
   void _onPaymentMethodChanged(String? paymentMethod) {
-    setState(() {
-      _selectedPaymentMethod = paymentMethod;
-    });
+    if (mounted) {
+      setState(() {
+        _selectedPaymentMethod = paymentMethod;
+      });
+    }
     context.read<InvoicesCubit>().loadFirstPage(
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: _selectedStatus == 'all' ? null : _selectedStatus,
@@ -111,9 +115,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   }
 
   void _onCustomerChanged(String? customer) {
-    setState(() {
-      _selectedCustomer = customer;
-    });
+    if (mounted) {
+      setState(() {
+        _selectedCustomer = customer;
+      });
+    }
     context.read<InvoicesCubit>().loadFirstPage(
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: _selectedStatus == 'all' ? null : _selectedStatus,
@@ -137,7 +143,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   }
 
   void _onInvoiceTap(InvoiceModel invoice) {
-    if (!_isNavigating) {
+    if (!_isNavigating && mounted) {
       setState(() {
         _isNavigating = true;
       });
@@ -146,9 +152,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
         AppRoutes.enhancedInvoiceDetailsRoute,
         arguments: invoice.id?.toString() ?? '0',
       ).then((_) {
-        setState(() {
-          _isNavigating = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
       });
     }
   }
@@ -158,7 +166,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   }
 
   void _onInvoiceEdit(InvoiceModel invoice) {
-    if (!_isNavigating) {
+    if (!_isNavigating && mounted) {
       setState(() {
         _isNavigating = true;
       });
@@ -168,9 +176,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
           builder: (context) => EditInvoiceScreen(invoice: invoice),
         ),
       ).then((_) {
-        setState(() {
-          _isNavigating = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
       });
     }
   }
@@ -188,17 +198,18 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   }
 
   void _onAddInvoice() {
-    if (!_isNavigating) {
+    if (!_isNavigating && mounted) {
       setState(() {
         _isNavigating = true;
       });
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AddInvoiceScreen()),
-      ).then((_) {
-        setState(() {
-          _isNavigating = false;
-        });
+      Navigator.pushNamed(context, AppRoutes.invoiceCreationStepperRoute).then((
+        _,
+      ) {
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+        }
       });
     }
   }
@@ -247,14 +258,68 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _onAddInvoice,
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        icon: const Icon(Icons.add),
-        label: Text(
-          'إضافة فاتورة',
-          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // FloatingActionButton(
+          //   heroTag: "print_all",
+          //   onPressed: _showPrintAllOptions,
+          //   backgroundColor: AppColors.warning,
+          //   child: const Icon(Icons.print, color: Colors.white),
+          // ),
+          // SizedBox(height: 8.h),
+          FloatingActionButton.extended(
+            heroTag: "add_invoice",
+            onPressed: _onAddInvoice,
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+            icon: const Icon(Icons.add),
+            label: Text(
+              S.of(context).addInvoice,
+              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPrintAllOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'خيارات الطباعة',
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            SizedBox(height: 20.h),
+            ListTile(
+              leading: Icon(Icons.receipt, color: AppColors.primary),
+              title: Text('طباعة جميع الفواتير حرارياً'),
+              subtitle: Text('طباعة جميع الفواتير على الطابعة الحرارية'),
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: Implement print all thermal
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.picture_as_pdf, color: AppColors.success),
+              title: Text('إنشاء PDF لجميع الفواتير'),
+              subtitle: Text('إنشاء ملف PDF يحتوي على جميع الفواتير'),
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: Implement print all PDF
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -17,6 +17,7 @@ import 'package:invotek/features/customers/data/models/response/delete_customer_
 import 'package:invotek/features/customers/data/models/response/get_all_customers_response.dart';
 import 'package:invotek/features/customers/data/models/response/get_customer_by_id_response.dart';
 import 'package:invotek/features/customers/data/models/response/update_customer_response.dart';
+import 'package:invotek/features/expenses/data/models/expense_api_model.dart';
 import 'package:invotek/features/expenses/data/models/request/create_expense_request.dart';
 import 'package:invotek/features/expenses/data/models/request/update_expense_request.dart';
 import 'package:invotek/features/expenses/data/models/request/create_expense_category_request.dart';
@@ -46,6 +47,7 @@ import 'package:invotek/features/products/data/models/product_api_model.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
 import 'package:invotek/features/products/data/models/response/product/product_responses.dart';
+import 'package:invotek/features/home/data/models/dashboard_models.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
@@ -190,7 +192,7 @@ abstract class ApiClient {
   );
 
   @PUT(ApiConstants.updateExpense)
-  Future<UpdateExpenseResponse> updateExpense(
+  Future<ExpenseApiModel> updateExpense(
     @Path('id') int id,
     @Body() UpdateExpenseRequest request,
   );
@@ -309,4 +311,8 @@ abstract class ApiClient {
   // حالة التكامل الضريبي | Tax integration status
   @GET(ApiConstants.taxIntegrationStatus)
   Future<GetTaxIntegrationStatus> getTaxIntegrationStatus();
+
+  // Dashboard
+  @GET(ApiConstants.dashboard)
+  Future<DashboardResponse> getDashboard();
 }

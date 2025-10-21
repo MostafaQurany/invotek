@@ -25,6 +25,7 @@ class ErrorWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(24.w),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Error Icon
@@ -117,6 +118,7 @@ class EmptyWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(24.w),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Empty Icon
@@ -209,6 +211,7 @@ class SuccessWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(24.w),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Success Icon

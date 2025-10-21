@@ -54,32 +54,32 @@ class CreateInvoiceRequest {
 
 @JsonSerializable()
 class CreateInvoiceItemRequest {
-  final String name;
-  final String quantity;
-  final String price;
-  final String discount;
+  final String? name;
+  final String? quantity;
+  final String? price;
+  final String? discount;
   @JsonKey(name: 'tax_percent')
-  final String taxPercent;
+  final String? taxPercent;
   @JsonKey(name: 'tax_amount')
-  final String taxAmount;
-  final String total;
+  final String? taxAmount;
+  final String? total;
   @JsonKey(name: 'product_name')
   final String? productName;
   @JsonKey(name: 'product_description')
-  final String? productDescription;
+  final String?  productDescription;
   @JsonKey(name: 'product_category')
   final String? productCategory;
   @JsonKey(name: 'product_id')
   final String? productId;
 
   CreateInvoiceItemRequest({
-    required this.name,
-    required this.quantity,
-    required this.price,
-    required this.discount,
-    required this.taxPercent,
-    required this.taxAmount,
-    required this.total,
+     this.name,
+     this.quantity,
+     this.price,
+     this.discount,
+     this.taxPercent,
+     this.taxAmount,
+     this.total,
     this.productName,
     this.productDescription,
     this.productCategory,

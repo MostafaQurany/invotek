@@ -117,12 +117,7 @@ class ExpensesRepository {
           attachment: attachment,
         ),
       );
-      if (response.data == null) {
-        return ApiResult.failure(
-          ApiErrorHandler.handleError(Exception('Expense not found')),
-        );
-      }
-      return ApiResult.success(_convertToExpenseModel(response.data!));
+      return ApiResult.success(_convertToExpenseModel(response));
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }

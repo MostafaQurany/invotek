@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/widgets/states/expenses_empty_state.dart';
@@ -47,24 +49,35 @@ class ExpensesStateBuilder extends StatelessWidget {
                   ExpensesEmptyState(onAddExpense: onAddExpense),
           loading:
               (expenses, selectedExpense, currentPage, totalPages, message) =>
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        SizedBox(height: 16),
-                        Text(
-                          message == 'loading_more'
-                              ? S.of(context).loadingMore
-                              : S.of(context).loadingExpenses,
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontSize: 14,
+                  Container(
+                    height: 0.9.sh,
+                    decoration: BoxDecoration(
+                      color: AppColors.whiteGray,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(28.r),
+                        topRight: Radius.circular(28.r),
+                      ),
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        children: [
+                          CircularProgressIndicator(
+                            color: Theme.of(context).primaryColor,
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 16),
+                          Text(
+                            message == 'loading_more'
+                                ? S.of(context).loadingMore
+                                : S.of(context).loadingExpenses,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
           loaded: (expenses, selectedExpense, currentPage, totalPages) {
