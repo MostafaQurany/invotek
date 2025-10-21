@@ -1,4 +1,3 @@
-import 'package:invotek/core/utils/data_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'customer_api_model.g.dart';

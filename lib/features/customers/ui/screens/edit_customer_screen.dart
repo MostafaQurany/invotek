@@ -5,7 +5,6 @@ import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/demo/entit/customer_model.dart';
-import 'package:invotek/features/customers/ui/widgets/forms/customer_form.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class EditCustomerScreen extends StatefulWidget {
@@ -96,7 +95,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen>
                 (customers, selectedCustomer, currentPage, totalPages, error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(s.errorOccurred(error)),
+                      content: Text(S.current.errorOccurred(error)),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -499,7 +498,7 @@ class _EditCustomerScreenState extends State<EditCustomerScreen>
         ),
         SizedBox(height: 8.h),
         DropdownButtonFormField<String>(
-          value: widget.customer.status ?? 'active',
+          initialValue: widget.customer.status ?? 'active',
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.flag_outlined,

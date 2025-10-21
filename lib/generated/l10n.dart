@@ -260,10 +260,10 @@ class S {
     );
   }
 
-  /// `Network connection error. Please check your connection and try again.`
+  /// `Network error`
   String get networkError {
     return Intl.message(
-      'Network connection error. Please check your connection and try again.',
+      'Network error',
       name: 'networkError',
       desc: '',
       args: [],
@@ -1530,6 +1530,536 @@ class S {
     );
   }
 
+  /// `Cannot Edit Invoice`
+  String get cannotEditInvoice {
+    return Intl.message(
+      'Cannot Edit Invoice',
+      name: 'cannotEditInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Already Sent`
+  String get invoiceAlreadySent {
+    return Intl.message(
+      'Invoice Already Sent',
+      name: 'invoiceAlreadySent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot edit sent invoices`
+  String get cannotEditSentInvoice {
+    return Intl.message(
+      'Cannot edit sent invoices',
+      name: 'cannotEditSentInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data`
+  String get noData {
+    return Intl.message(
+      'No data',
+      name: 'noData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Customer`
+  String get selectCustomer {
+    return Intl.message(
+      'Select Customer',
+      name: 'selectCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search customers`
+  String get searchCustomers {
+    return Intl.message(
+      'Search customers',
+      name: 'searchCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading customers...`
+  String get loadingCustomers {
+    return Intl.message(
+      'Loading customers...',
+      name: 'loadingCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading customers`
+  String get errorLoadingCustomers {
+    return Intl.message(
+      'Error loading customers',
+      name: 'errorLoadingCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No customers found`
+  String get noCustomersFound {
+    return Intl.message(
+      'No customers found',
+      name: 'noCustomersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No customers match your search`
+  String get noCustomersMatchSearch {
+    return Intl.message(
+      'No customers match your search',
+      name: 'noCustomersMatchSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add first customer`
+  String get addFirstCustomer {
+    return Intl.message(
+      'Add first customer',
+      name: 'addFirstCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try a different search`
+  String get tryDifferentSearch {
+    return Intl.message(
+      'Try a different search',
+      name: 'tryDifferentSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Customer`
+  String get addNewCustomer {
+    return Intl.message(
+      'Add New Customer',
+      name: 'addNewCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Information`
+  String get companyInformation {
+    return Intl.message(
+      'Company Information',
+      name: 'companyInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company Name`
+  String get companyName {
+    return Intl.message(
+      'Company Name',
+      name: 'companyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company name`
+  String get enterCompanyName {
+    return Intl.message(
+      'Enter company name',
+      name: 'enterCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message(
+      'Address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter address`
+  String get enterAddress {
+    return Intl.message(
+      'Enter address',
+      name: 'enterAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error creating customer`
+  String get errorCreatingCustomer {
+    return Intl.message(
+      'Error creating customer',
+      name: 'errorCreatingCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Product`
+  String get selectProduct {
+    return Intl.message(
+      'Select Product',
+      name: 'selectProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search products...`
+  String get searchProducts {
+    return Intl.message(
+      'Search products...',
+      name: 'searchProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading products...`
+  String get loadingProducts {
+    return Intl.message(
+      'Loading products...',
+      name: 'loadingProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading products`
+  String get errorLoadingProducts {
+    return Intl.message(
+      'Error loading products',
+      name: 'errorLoadingProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No products found`
+  String get noProductsFound {
+    return Intl.message(
+      'No products found',
+      name: 'noProductsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No products match search`
+  String get noProductsMatchSearch {
+    return Intl.message(
+      'No products match search',
+      name: 'noProductsMatchSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add first product`
+  String get addFirstProduct {
+    return Intl.message(
+      'Add first product',
+      name: 'addFirstProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Product`
+  String get addNewProduct {
+    return Intl.message(
+      'Add New Product',
+      name: 'addNewProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Name`
+  String get productName {
+    return Intl.message(
+      'Product Name',
+      name: 'productName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter product name`
+  String get enterProductName {
+    return Intl.message(
+      'Enter product name',
+      name: 'enterProductName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SKU`
+  String get sku {
+    return Intl.message(
+      'SKU',
+      name: 'sku',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter SKU`
+  String get enterSku {
+    return Intl.message(
+      'Enter SKU',
+      name: 'enterSku',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pricing Information`
+  String get pricingInformation {
+    return Intl.message(
+      'Pricing Information',
+      name: 'pricingInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get price {
+    return Intl.message(
+      'Price',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter price`
+  String get enterPrice {
+    return Intl.message(
+      'Enter price',
+      name: 'enterPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price is required`
+  String get priceRequired {
+    return Intl.message(
+      'Price is required',
+      name: 'priceRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid price`
+  String get invalidPrice {
+    return Intl.message(
+      'Invalid price',
+      name: 'invalidPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity`
+  String get quantity {
+    return Intl.message(
+      'Quantity',
+      name: 'quantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter quantity`
+  String get enterQuantity {
+    return Intl.message(
+      'Enter quantity',
+      name: 'enterQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity is required`
+  String get quantityRequired {
+    return Intl.message(
+      'Quantity is required',
+      name: 'quantityRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid quantity`
+  String get invalidQuantity {
+    return Intl.message(
+      'Invalid quantity',
+      name: 'invalidQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error creating product`
+  String get errorCreatingProduct {
+    return Intl.message(
+      'Error creating product',
+      name: 'errorCreatingProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Items`
+  String get invoiceItems {
+    return Intl.message(
+      'Invoice Items',
+      name: 'invoiceItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Items`
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No items added yet`
+  String get noItemsAdded {
+    return Intl.message(
+      'No items added yet',
+      name: 'noItemsAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add items to invoice`
+  String get addItemsToInvoice {
+    return Intl.message(
+      'Add items to invoice',
+      name: 'addItemsToInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manual Item`
+  String get manualItem {
+    return Intl.message(
+      'Manual Item',
+      name: 'manualItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discount`
+  String get discount {
+    return Intl.message(
+      'Discount',
+      name: 'discount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add from Products`
+  String get addFromProducts {
+    return Intl.message(
+      'Add from Products',
+      name: 'addFromProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Manual Item`
+  String get addManualItem {
+    return Intl.message(
+      'Add Manual Item',
+      name: 'addManualItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Selection`
+  String get customerSelection {
+    return Intl.message(
+      'Customer Selection',
+      name: 'customerSelection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No customer selected`
+  String get noCustomerSelected {
+    return Intl.message(
+      'No customer selected',
+      name: 'noCustomerSelected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice updated successfully`
+  String get invoiceUpdatedSuccessfully {
+    return Intl.message(
+      'Invoice updated successfully',
+      name: 'invoiceUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error updating invoice`
+  String get errorUpdatingInvoice {
+    return Intl.message(
+      'Error updating invoice',
+      name: 'errorUpdatingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Error loading users`
   String get errorLoadingUsers {
     return Intl.message(
@@ -1720,16 +2250,6 @@ class S {
     );
   }
 
-  /// `Search products...`
-  String get searchProducts {
-    return Intl.message(
-      'Search products...',
-      name: 'searchProducts',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Category`
   String get category {
     return Intl.message(
@@ -1765,16 +2285,6 @@ class S {
     return Intl.message(
       'Out of Stock',
       name: 'outOfStock',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No products found`
-  String get noProductsFound {
-    return Intl.message(
-      'No products found',
-      name: 'noProductsFound',
       desc: '',
       args: [],
     );
@@ -1817,16 +2327,6 @@ class S {
       name: 'deleteProductConfirmation',
       desc: '',
       args: [name],
-    );
-  }
-
-  /// `Quantity`
-  String get quantity {
-    return Intl.message(
-      'Quantity',
-      name: 'quantity',
-      desc: '',
-      args: [],
     );
   }
 
@@ -1945,26 +2445,6 @@ class S {
     return Intl.message(
       'Error deleting category',
       name: 'errorDeletingCategory',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Price`
-  String get price {
-    return Intl.message(
-      'Price',
-      name: 'price',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `SKU`
-  String get sku {
-    return Intl.message(
-      'SKU',
-      name: 'sku',
       desc: '',
       args: [],
     );
@@ -2460,16 +2940,6 @@ class S {
     );
   }
 
-  /// `No customers found`
-  String get noCustomersFound {
-    return Intl.message(
-      'No customers found',
-      name: 'noCustomersFound',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Press the add button to create a new customer`
   String get noCustomersFoundMessage {
     return Intl.message(
@@ -2560,10 +3030,10 @@ class S {
     );
   }
 
-  /// `Phone Number`
+  /// `Phone`
   String get customerPhone {
     return Intl.message(
-      'Phone Number',
+      'Phone',
       name: 'customerPhone',
       desc: '',
       args: [],
@@ -2810,33 +3280,13 @@ class S {
     );
   }
 
-  /// `Add New Customer`
-  String get addNewCustomer {
-    return Intl.message(
-      'Add New Customer',
-      name: 'addNewCustomer',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Error: {error}`
+  /// `An error occurred: {error}`
   String errorOccurred(Object error) {
     return Intl.message(
-      'Error: $error',
+      'An error occurred: $error',
       name: 'errorOccurred',
       desc: '',
       args: [error],
-    );
-  }
-
-  /// `Search customers...`
-  String get searchCustomers {
-    return Intl.message(
-      'Search customers...',
-      name: 'searchCustomers',
-      desc: '',
-      args: [],
     );
   }
 
@@ -3580,16 +4030,6 @@ class S {
     );
   }
 
-  /// `Company Name`
-  String get companyName {
-    return Intl.message(
-      'Company Name',
-      name: 'companyName',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Company Email`
   String get companyEmail {
     return Intl.message(
@@ -3720,10 +4160,10 @@ class S {
     );
   }
 
-  /// `Expenses & Categories Management`
+  /// `Expenses & Categories`
   String get expensesManagement {
     return Intl.message(
-      'Expenses & Categories Management',
+      'Expenses & Categories',
       name: 'expensesManagement',
       desc: '',
       args: [],
@@ -3845,16 +4285,6 @@ class S {
     return Intl.message(
       'Company address is required',
       name: 'companyAddressRequired',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter company name`
-  String get enterCompanyName {
-    return Intl.message(
-      'Enter company name',
-      name: 'enterCompanyName',
       desc: '',
       args: [],
     );
@@ -4730,31 +5160,11 @@ class S {
     );
   }
 
-  /// `Error loading products`
-  String get errorLoadingProducts {
-    return Intl.message(
-      'Error loading products',
-      name: 'errorLoadingProducts',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Error loading product data`
   String get errorLoadingProduct {
     return Intl.message(
       'Error loading product data',
       name: 'errorLoadingProduct',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Error creating product`
-  String get errorCreatingProduct {
-    return Intl.message(
-      'Error creating product',
-      name: 'errorCreatingProduct',
       desc: '',
       args: [],
     );
@@ -5150,31 +5560,11 @@ class S {
     );
   }
 
-  /// `Enter product name`
-  String get enterProductName {
-    return Intl.message(
-      'Enter product name',
-      name: 'enterProductName',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Enter product description`
   String get enterProductDescription {
     return Intl.message(
       'Enter product description',
       name: 'enterProductDescription',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter quantity`
-  String get enterQuantity {
-    return Intl.message(
-      'Enter quantity',
-      name: 'enterQuantity',
       desc: '',
       args: [],
     );
@@ -5305,16 +5695,6 @@ class S {
     return Intl.message(
       'Enter postal code',
       name: 'enterPostalCode',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter client address`
-  String get enterAddress {
-    return Intl.message(
-      'Enter client address',
-      name: 'enterAddress',
       desc: '',
       args: [],
     );
@@ -5550,10 +5930,10 @@ class S {
     );
   }
 
-  /// `SAR 15,420`
+  /// `Total Amount`
   String get totalAmount {
     return Intl.message(
-      'SAR 15,420',
+      'Total Amount',
       name: 'totalAmount',
       desc: '',
       args: [],
@@ -6080,26 +6460,6 @@ class S {
     );
   }
 
-  /// `Address`
-  String get address {
-    return Intl.message(
-      'Address',
-      name: 'address',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Company Information`
-  String get companyInformation {
-    return Intl.message(
-      'Company Information',
-      name: 'companyInformation',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Tax Number`
   String get taxNumber {
     return Intl.message(
@@ -6465,6 +6825,2888 @@ class S {
     return Intl.message(
       'Loading users...',
       name: 'loadingUsers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign in failed`
+  String get signInFailed {
+    return Intl.message(
+      'Sign in failed',
+      name: 'signInFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login cancelled`
+  String get loginCancelled {
+    return Intl.message(
+      'Login cancelled',
+      name: 'loginCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to get user data`
+  String get failedToGetUserData {
+    return Intl.message(
+      'Failed to get user data',
+      name: 'failedToGetUserData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login error`
+  String get loginError {
+    return Intl.message(
+      'Login error',
+      name: 'loginError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Play services not available`
+  String get playServicesNotAvailable {
+    return Intl.message(
+      'Play services not available',
+      name: 'playServicesNotAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Google sign in error`
+  String get googleSignInError {
+    return Intl.message(
+      'Google sign in error',
+      name: 'googleSignInError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Invoice`
+  String get addInvoice {
+    return Intl.message(
+      'Add Invoice',
+      name: 'addInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoices`
+  String get invoices {
+    return Intl.message(
+      'Invoices',
+      name: 'invoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search in invoices...`
+  String get searchInInvoices {
+    return Intl.message(
+      'Search in invoices...',
+      name: 'searchInInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Payment Methods`
+  String get allPaymentMethods {
+    return Intl.message(
+      'All Payment Methods',
+      name: 'allPaymentMethods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer`
+  String get customer {
+    return Intl.message(
+      'Customer',
+      name: 'customer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Customers`
+  String get allCustomers {
+    return Intl.message(
+      'All Customers',
+      name: 'allCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid`
+  String get paid {
+    return Intl.message(
+      'Paid',
+      name: 'paid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get pending {
+    return Intl.message(
+      'Pending',
+      name: 'pending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overdue`
+  String get overdue {
+    return Intl.message(
+      'Overdue',
+      name: 'overdue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Draft`
+  String get draft {
+    return Intl.message(
+      'Draft',
+      name: 'draft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Card`
+  String get card {
+    return Intl.message(
+      'Card',
+      name: 'card',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message(
+      'Total',
+      name: 'total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subtotal`
+  String get subtotal {
+    return Intl.message(
+      'Subtotal',
+      name: 'subtotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax`
+  String get tax {
+    return Intl.message(
+      'Tax',
+      name: 'tax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No items`
+  String get noItems {
+    return Intl.message(
+      'No items',
+      name: 'noItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Qty`
+  String get qty {
+    return Intl.message(
+      'Qty',
+      name: 'qty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search items...`
+  String get searchItems {
+    return Intl.message(
+      'Search items...',
+      name: 'searchItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Less`
+  String get showLess {
+    return Intl.message(
+      'Show Less',
+      name: 'showLess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show All Items ({count})`
+  String showAllItems(Object count) {
+    return Intl.message(
+      'Show All Items ($count)',
+      name: 'showAllItems',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Payment`
+  String get payment {
+    return Intl.message(
+      'Payment',
+      name: 'payment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Details`
+  String get paymentDetails {
+    return Intl.message(
+      'Payment Details',
+      name: 'paymentDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark as Paid`
+  String get markAsPaid {
+    return Intl.message(
+      'Mark as Paid',
+      name: 'markAsPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get send {
+    return Intl.message(
+      'Send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duplicate`
+  String get duplicate {
+    return Intl.message(
+      'Duplicate',
+      name: 'duplicate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download PDF`
+  String get downloadPDF {
+    return Intl.message(
+      'Download PDF',
+      name: 'downloadPDF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No invoices`
+  String get noInvoices {
+    return Intl.message(
+      'No invoices',
+      name: 'noInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Press the add button to create a new invoice`
+  String get noInvoicesDescription {
+    return Intl.message(
+      'Press the add button to create a new invoice',
+      name: 'noInvoicesDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add First Invoice`
+  String get addFirstInvoice {
+    return Intl.message(
+      'Add First Invoice',
+      name: 'addFirstInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Invoice Confirmation`
+  String get deleteInvoiceConfirmation {
+    return Intl.message(
+      'Delete Invoice Confirmation',
+      name: 'deleteInvoiceConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this invoice? This action cannot be undone.`
+  String get deleteInvoiceWarning {
+    return Intl.message(
+      'Are you sure you want to delete this invoice? This action cannot be undone.',
+      name: 'deleteInvoiceWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Method`
+  String get sendMethod {
+    return Intl.message(
+      'Send Method',
+      name: 'sendMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SMS`
+  String get sms {
+    return Intl.message(
+      'SMS',
+      name: 'sms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email Details`
+  String get emailDetails {
+    return Intl.message(
+      'Email Details',
+      name: 'emailDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subject`
+  String get subject {
+    return Intl.message(
+      'Subject',
+      name: 'subject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter subject`
+  String get enterSubject {
+    return Intl.message(
+      'Enter subject',
+      name: 'enterSubject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message`
+  String get message {
+    return Intl.message(
+      'Message',
+      name: 'message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter message`
+  String get enterMessage {
+    return Intl.message(
+      'Enter message',
+      name: 'enterMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Include PDF`
+  String get includePDF {
+    return Intl.message(
+      'Include PDF',
+      name: 'includePDF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Date`
+  String get paymentDate {
+    return Intl.message(
+      'Payment Date',
+      name: 'paymentDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Notes`
+  String get addNotes {
+    return Intl.message(
+      'Add Notes',
+      name: 'addNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Help`
+  String get invoiceHelp {
+    return Intl.message(
+      'Invoice Help',
+      name: 'invoiceHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating Invoices`
+  String get creatingInvoices {
+    return Intl.message(
+      'Creating Invoices',
+      name: 'creatingInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1. Enter basic customer information`
+  String get createInvoiceStep1 {
+    return Intl.message(
+      '1. Enter basic customer information',
+      name: 'createInvoiceStep1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2. Add items and quantities`
+  String get createInvoiceStep2 {
+    return Intl.message(
+      '2. Add items and quantities',
+      name: 'createInvoiceStep2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3. Set payment method and date`
+  String get createInvoiceStep3 {
+    return Intl.message(
+      '3. Set payment method and date',
+      name: 'createInvoiceStep3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `4. Review and save the invoice`
+  String get createInvoiceStep4 {
+    return Intl.message(
+      '4. Review and save the invoice',
+      name: 'createInvoiceStep4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Managing Invoices`
+  String get managingInvoices {
+    return Intl.message(
+      'Managing Invoices',
+      name: 'managingInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1. Use search and filters to find invoices`
+  String get manageInvoiceStep1 {
+    return Intl.message(
+      '1. Use search and filters to find invoices',
+      name: 'manageInvoiceStep1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2. Tap on invoice to view details`
+  String get manageInvoiceStep2 {
+    return Intl.message(
+      '2. Tap on invoice to view details',
+      name: 'manageInvoiceStep2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3. Use buttons to edit or delete`
+  String get manageInvoiceStep3 {
+    return Intl.message(
+      '3. Use buttons to edit or delete',
+      name: 'manageInvoiceStep3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `4. Send invoice to customer when needed`
+  String get manageInvoiceStep4 {
+    return Intl.message(
+      '4. Send invoice to customer when needed',
+      name: 'manageInvoiceStep4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Methods`
+  String get paymentMethods {
+    return Intl.message(
+      'Payment Methods',
+      name: 'paymentMethods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash`
+  String get paymentMethodCash {
+    return Intl.message(
+      'Cash',
+      name: 'paymentMethodCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Credit Card`
+  String get paymentMethodCard {
+    return Intl.message(
+      'Credit Card',
+      name: 'paymentMethodCard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bank Transfer`
+  String get paymentMethodBank {
+    return Intl.message(
+      'Bank Transfer',
+      name: 'paymentMethodBank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check`
+  String get paymentMethodCheck {
+    return Intl.message(
+      'Check',
+      name: 'paymentMethodCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Integration`
+  String get taxIntegration {
+    return Intl.message(
+      'Tax Integration',
+      name: 'taxIntegration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1. Enable tax integration`
+  String get taxIntegrationStep1 {
+    return Intl.message(
+      '1. Enable tax integration',
+      name: 'taxIntegrationStep1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2. Enter company tax information`
+  String get taxIntegrationStep2 {
+    return Intl.message(
+      '2. Enter company tax information',
+      name: 'taxIntegrationStep2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3. Test connection and save settings`
+  String get taxIntegrationStep3 {
+    return Intl.message(
+      '3. Test connection and save settings',
+      name: 'taxIntegrationStep3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Details`
+  String get invoiceDetails {
+    return Intl.message(
+      'Invoice Details',
+      name: 'invoiceDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Information`
+  String get customerInformation {
+    return Intl.message(
+      'Customer Information',
+      name: 'customerInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount Information`
+  String get amountInformation {
+    return Intl.message(
+      'Amount Information',
+      name: 'amountInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Number`
+  String get invoiceNumber {
+    return Intl.message(
+      'Invoice Number',
+      name: 'invoiceNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter invoice number`
+  String get enterInvoiceNumber {
+    return Intl.message(
+      'Enter invoice number',
+      name: 'enterInvoiceNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issue Date`
+  String get issueDate {
+    return Intl.message(
+      'Issue Date',
+      name: 'issueDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Date`
+  String get selectDate {
+    return Intl.message(
+      'Select Date',
+      name: 'selectDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter email`
+  String get enterCustomerEmail {
+    return Intl.message(
+      'Enter email',
+      name: 'enterCustomerEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone number`
+  String get enterCustomerPhone {
+    return Intl.message(
+      'Enter phone number',
+      name: 'enterCustomerPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter subtotal`
+  String get enterSubtotal {
+    return Intl.message(
+      'Enter subtotal',
+      name: 'enterSubtotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter tax amount`
+  String get enterTaxAmount {
+    return Intl.message(
+      'Enter tax amount',
+      name: 'enterTaxAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Integration Settings`
+  String get taxIntegrationSettings {
+    return Intl.message(
+      'Tax Integration Settings',
+      name: 'taxIntegrationSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Configure Tax Integration`
+  String get configureTaxIntegration {
+    return Intl.message(
+      'Configure Tax Integration',
+      name: 'configureTaxIntegration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Tax Integration`
+  String get enableTaxIntegration {
+    return Intl.message(
+      'Enable Tax Integration',
+      name: 'enableTaxIntegration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Type`
+  String get taxType {
+    return Intl.message(
+      'Tax Type',
+      name: 'taxType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VAT`
+  String get vat {
+    return Intl.message(
+      'VAT',
+      name: 'vat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Tax`
+  String get salesTax {
+    return Intl.message(
+      'Sales Tax',
+      name: 'salesTax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Country`
+  String get country {
+    return Intl.message(
+      'Country',
+      name: 'country',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saudi Arabia`
+  String get saudiArabia {
+    return Intl.message(
+      'Saudi Arabia',
+      name: 'saudiArabia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `United Arab Emirates`
+  String get uae {
+    return Intl.message(
+      'United Arab Emirates',
+      name: 'uae',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Kuwait`
+  String get kuwait {
+    return Intl.message(
+      'Kuwait',
+      name: 'kuwait',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test Connection`
+  String get testConnection {
+    return Intl.message(
+      'Test Connection',
+      name: 'testConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VAT Number`
+  String get vatNumber {
+    return Intl.message(
+      'VAT Number',
+      name: 'vatNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter VAT number`
+  String get enterVatNumber {
+    return Intl.message(
+      'Enter VAT number',
+      name: 'enterVatNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get city {
+    return Intl.message(
+      'City',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Postal Code`
+  String get postalCode {
+    return Intl.message(
+      'Postal Code',
+      name: 'postalCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Information`
+  String get contactInformation {
+    return Intl.message(
+      'Contact Information',
+      name: 'contactInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter phone`
+  String get enterPhone {
+    return Intl.message(
+      'Enter phone',
+      name: 'enterPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Testing connection...`
+  String get testingConnection {
+    return Intl.message(
+      'Testing connection...',
+      name: 'testingConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Amount`
+  String get taxAmount {
+    return Intl.message(
+      'Tax Amount',
+      name: 'taxAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter description`
+  String get enterDescription {
+    return Intl.message(
+      'Enter description',
+      name: 'enterDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search invoices...`
+  String get searchInvoices {
+    return Intl.message(
+      'Search invoices...',
+      name: 'searchInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading invoice details...`
+  String get loadingInvoiceDetails {
+    return Intl.message(
+      'Loading invoice details...',
+      name: 'loadingInvoiceDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading invoice`
+  String get errorLoadingInvoice {
+    return Intl.message(
+      'Error loading invoice',
+      name: 'errorLoadingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No invoice data available`
+  String get noInvoiceData {
+    return Intl.message(
+      'No invoice data available',
+      name: 'noInvoiceData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Number: {number}`
+  String invoiceNumberLabel(String number) {
+    return Intl.message(
+      'Invoice Number: $number',
+      name: 'invoiceNumberLabel',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Share Invoice`
+  String get shareInvoice {
+    return Intl.message(
+      'Share Invoice',
+      name: 'shareInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Invoice`
+  String get printInvoice {
+    return Intl.message(
+      'Print Invoice',
+      name: 'printInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Duplicate Invoice`
+  String get duplicateInvoice {
+    return Intl.message(
+      'Duplicate Invoice',
+      name: 'duplicateInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View QR Code`
+  String get viewQRCode {
+    return Intl.message(
+      'View QR Code',
+      name: 'viewQRCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Tax UID`
+  String get viewTaxUID {
+    return Intl.message(
+      'View Tax UID',
+      name: 'viewTaxUID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Status`
+  String get updateStatus {
+    return Intl.message(
+      'Update Status',
+      name: 'updateStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Status`
+  String get changeStatus {
+    return Intl.message(
+      'Change Status',
+      name: 'changeStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `More Options`
+  String get moreOptions {
+    return Intl.message(
+      'More Options',
+      name: 'moreOptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh Data`
+  String get refreshData {
+    return Intl.message(
+      'Refresh Data',
+      name: 'refreshData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice details copied to clipboard`
+  String get invoiceCopiedToClipboard {
+    return Intl.message(
+      'Invoice details copied to clipboard',
+      name: 'invoiceCopiedToClipboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice details copied for printing`
+  String get invoiceCopiedForPrinting {
+    return Intl.message(
+      'Invoice details copied for printing',
+      name: 'invoiceCopiedForPrinting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice sent successfully`
+  String get invoiceSentSuccessfully {
+    return Intl.message(
+      'Invoice sent successfully',
+      name: 'invoiceSentSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice deleted successfully`
+  String get invoiceDeletedSuccessfully {
+    return Intl.message(
+      'Invoice deleted successfully',
+      name: 'invoiceDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice status updated to: {status}`
+  String invoiceStatusUpdated(String status) {
+    return Intl.message(
+      'Invoice status updated to: $status',
+      name: 'invoiceStatusUpdated',
+      desc: '',
+      args: [status],
+    );
+  }
+
+  /// `File saved to: {path}`
+  String fileSavedSuccessfully(String path) {
+    return Intl.message(
+      'File saved to: $path',
+      name: 'fileSavedSuccessfully',
+      desc: '',
+      args: [path],
+    );
+  }
+
+  /// `No QR code available for this invoice`
+  String get noQRCodeAvailable {
+    return Intl.message(
+      'No QR code available for this invoice',
+      name: 'noQRCodeAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tax UID available for this invoice`
+  String get noTaxUIDAvailable {
+    return Intl.message(
+      'No tax UID available for this invoice',
+      name: 'noTaxUIDAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax UID copied`
+  String get taxUIDCopied {
+    return Intl.message(
+      'Tax UID copied',
+      name: 'taxUIDCopied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Number: {number}\nCustomer: {customer}\nDate: {date}\nAmount: {amount} SAR\nStatus: {status}\n\nCreated by Invotek App`
+  String shareInvoiceText(String number, String customer, String date,
+      String amount, String status) {
+    return Intl.message(
+      'Invoice Number: $number\nCustomer: $customer\nDate: $date\nAmount: $amount SAR\nStatus: $status\n\nCreated by Invotek App',
+      name: 'shareInvoiceText',
+      desc: '',
+      args: [number, customer, date, amount, status],
+    );
+  }
+
+  /// `Invoice\n{separator}\nInvoice Number: {number}\nDate: {date}\nStatus: {status}\n\nCustomer Information:\nName: {customer}\n{contact}\n\nInvoice Items:\n{items}\n\nTotals:\nSubtotal: {subtotal} SAR\n{tax}\nTotal: {total} SAR\n\n{separator}\nThank you for your business\nThis invoice was created by Invotek App\n{separator}`
+  String printInvoiceText(
+      String separator,
+      String number,
+      String date,
+      String status,
+      String customer,
+      String contact,
+      String items,
+      String subtotal,
+      String tax,
+      String total) {
+    return Intl.message(
+      'Invoice\n$separator\nInvoice Number: $number\nDate: $date\nStatus: $status\n\nCustomer Information:\nName: $customer\n$contact\n\nInvoice Items:\n$items\n\nTotals:\nSubtotal: $subtotal SAR\n$tax\nTotal: $total SAR\n\n$separator\nThank you for your business\nThis invoice was created by Invotek App\n$separator',
+      name: 'printInvoiceText',
+      desc: '',
+      args: [
+        separator,
+        number,
+        date,
+        status,
+        customer,
+        contact,
+        items,
+        subtotal,
+        tax,
+        total
+      ],
+    );
+  }
+
+  /// `Paid`
+  String get statusPaid {
+    return Intl.message(
+      'Paid',
+      name: 'statusPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get statusPending {
+    return Intl.message(
+      'Pending',
+      name: 'statusPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overdue`
+  String get statusOverdue {
+    return Intl.message(
+      'Overdue',
+      name: 'statusOverdue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Draft`
+  String get statusDraft {
+    return Intl.message(
+      'Draft',
+      name: 'statusDraft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item Details`
+  String get itemDetails {
+    return Intl.message(
+      'Item Details',
+      name: 'itemDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Payment Method`
+  String get changePaymentMethod {
+    return Intl.message(
+      'Change Payment Method',
+      name: 'changePaymentMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Creating file...`
+  String get creatingFile {
+    return Intl.message(
+      'Creating file...',
+      name: 'creatingFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sending invoice...`
+  String get sendingInvoice {
+    return Intl.message(
+      'Sending invoice...',
+      name: 'sendingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Deleting invoice...`
+  String get deletingInvoice {
+    return Intl.message(
+      'Deleting invoice...',
+      name: 'deletingInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updating status...`
+  String get updatingStatus {
+    return Intl.message(
+      'Updating status...',
+      name: 'updatingStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to share invoice: {error}`
+  String errorSharingInvoice(String error) {
+    return Intl.message(
+      'Failed to share invoice: $error',
+      name: 'errorSharingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to print invoice: {error}`
+  String errorPrintingInvoice(String error) {
+    return Intl.message(
+      'Failed to print invoice: $error',
+      name: 'errorPrintingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to send invoice: {error}`
+  String errorSendingInvoice(String error) {
+    return Intl.message(
+      'Failed to send invoice: $error',
+      name: 'errorSendingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to delete invoice: {error}`
+  String errorDeletingInvoice(String error) {
+    return Intl.message(
+      'Failed to delete invoice: $error',
+      name: 'errorDeletingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to create file: {error}`
+  String errorCreatingFile(String error) {
+    return Intl.message(
+      'Failed to create file: $error',
+      name: 'errorCreatingFile',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Failed to update status: {error}`
+  String errorUpdatingStatus(String error) {
+    return Intl.message(
+      'Failed to update status: $error',
+      name: 'errorUpdatingStatus',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Duplicate invoice {number}`
+  String duplicateInvoiceMessage(String number) {
+    return Intl.message(
+      'Duplicate invoice $number',
+      name: 'duplicateInvoiceMessage',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `View customer details: {name}`
+  String viewCustomerDetails(String name) {
+    return Intl.message(
+      'View customer details: $name',
+      name: 'viewCustomerDetails',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `View item details: {name}`
+  String viewItemDetails(String name) {
+    return Intl.message(
+      'View item details: $name',
+      name: 'viewItemDetails',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Change payment method for invoice {number}`
+  String changePaymentMethodForInvoice(String number) {
+    return Intl.message(
+      'Change payment method for invoice $number',
+      name: 'changePaymentMethodForInvoice',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Tax UID`
+  String get taxUID {
+    return Intl.message(
+      'Tax UID',
+      name: 'taxUID',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax UID for invoice {number}:`
+  String taxUIDForInvoice(String number) {
+    return Intl.message(
+      'Tax UID for invoice $number:',
+      name: 'taxUIDForInvoice',
+      desc: '',
+      args: [number],
+    );
+  }
+
+  /// `Item Name`
+  String get itemName {
+    return Intl.message(
+      'Item Name',
+      name: 'itemName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity`
+  String get itemQuantity {
+    return Intl.message(
+      'Quantity',
+      name: 'itemQuantity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price`
+  String get itemPrice {
+    return Intl.message(
+      'Price',
+      name: 'itemPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get itemTotal {
+    return Intl.message(
+      'Total',
+      name: 'itemTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thank you for your business`
+  String get thankYouMessage {
+    return Intl.message(
+      'Thank you for your business',
+      name: 'thankYouMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This invoice was created by Invotek App`
+  String get createdByInvotek {
+    return Intl.message(
+      'This invoice was created by Invotek App',
+      name: 'createdByInvotek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `=`
+  String get separator {
+    return Intl.message(
+      '=',
+      name: 'separator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `-`
+  String get itemSeparator {
+    return Intl.message(
+      '-',
+      name: 'itemSeparator',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name\t\tQuantity\tPrice\tTotal`
+  String get itemHeader {
+    return Intl.message(
+      'Name\t\tQuantity\tPrice\tTotal',
+      name: 'itemHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{name}\t\t{quantity}\t{price}\t{total}`
+  String itemRow(String name, String quantity, String price, String total) {
+    return Intl.message(
+      '$name\t\t$quantity\t$price\t$total',
+      name: 'itemRow',
+      desc: '',
+      args: [name, quantity, price, total],
+    );
+  }
+
+  /// `Tax: {amount} SAR`
+  String taxLine(String amount) {
+    return Intl.message(
+      'Tax: $amount SAR',
+      name: 'taxLine',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Subtotal: {amount} SAR`
+  String subtotalLine(String amount) {
+    return Intl.message(
+      'Subtotal: $amount SAR',
+      name: 'subtotalLine',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Total: {amount} SAR`
+  String totalLine(String amount) {
+    return Intl.message(
+      'Total: $amount SAR',
+      name: 'totalLine',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Invoice_{number}_{timestamp}`
+  String fileName(String number, String timestamp) {
+    return Intl.message(
+      'Invoice_${number}_$timestamp',
+      name: 'fileName',
+      desc: '',
+      args: [number, timestamp],
+    );
+  }
+
+  /// `Loading product details...`
+  String loadingProductDetails(String name) {
+    return Intl.message(
+      'Loading product details...',
+      name: 'loadingProductDetails',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Create New Invoice`
+  String get createNewInvoiceStepper {
+    return Intl.message(
+      'Create New Invoice',
+      name: 'createNewInvoiceStepper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Information`
+  String get invoiceBasicInfo {
+    return Intl.message(
+      'Invoice Information',
+      name: 'invoiceBasicInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review Calculations`
+  String get reviewCalculations {
+    return Intl.message(
+      'Review Calculations',
+      name: 'reviewCalculations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This form helps you create a new invoice step by step:\n\n1. Invoice Information: Choose action, payment method, and status\n2. Select Customer: Choose existing customer or add new one\n3. Invoice Items: Add items, quantities, and prices\n4. Review Calculations: Review final details before saving`
+  String get invoiceCreationHelp {
+    return Intl.message(
+      'This form helps you create a new invoice step by step:\n\n1. Invoice Information: Choose action, payment method, and status\n2. Select Customer: Choose existing customer or add new one\n3. Invoice Items: Add items, quantities, and prices\n4. Review Calculations: Review final details before saving',
+      name: 'invoiceCreationHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice created successfully`
+  String get invoiceCreatedSuccessfully {
+    return Intl.message(
+      'Invoice created successfully',
+      name: 'invoiceCreatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error: {error}`
+  String errorCreatingInvoice(String error) {
+    return Intl.message(
+      'Error: $error',
+      name: 'errorCreatingInvoice',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Please fill all required fields in Invoice Information`
+  String get fillRequiredFieldsBasicInfo {
+    return Intl.message(
+      'Please fill all required fields in Invoice Information',
+      name: 'fillRequiredFieldsBasicInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a customer or enter customer data`
+  String get selectOrAddCustomer {
+    return Intl.message(
+      'Please select a customer or enter customer data',
+      name: 'selectOrAddCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please add at least one item`
+  String get addAtLeastOneItem {
+    return Intl.message(
+      'Please add at least one item',
+      name: 'addAtLeastOneItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action is required`
+  String get actionRequired {
+    return Intl.message(
+      'Action is required',
+      name: 'actionRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment method is required`
+  String get paymentMethodRequired {
+    return Intl.message(
+      'Payment method is required',
+      name: 'paymentMethodRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice status is required`
+  String get statusRequired {
+    return Intl.message(
+      'Invoice status is required',
+      name: 'statusRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select a customer or enter customer data`
+  String get customerRequired {
+    return Intl.message(
+      'Please select a customer or enter customer data',
+      name: 'customerRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please add at least one item`
+  String get itemsRequired {
+    return Intl.message(
+      'Please add at least one item',
+      name: 'itemsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action`
+  String get action {
+    return Intl.message(
+      'Action',
+      name: 'action',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Only`
+  String get saveOnly {
+    return Intl.message(
+      'Save Only',
+      name: 'saveOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save and Send`
+  String get saveAndSend {
+    return Intl.message(
+      'Save and Send',
+      name: 'saveAndSend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Status`
+  String get invoiceStatus {
+    return Intl.message(
+      'Invoice Status',
+      name: 'invoiceStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sent`
+  String get sent {
+    return Intl.message(
+      'Sent',
+      name: 'sent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Description`
+  String get invoiceDescription {
+    return Intl.message(
+      'Invoice Description',
+      name: 'invoiceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter invoice description (optional)`
+  String get enterInvoiceDescription {
+    return Intl.message(
+      'Enter invoice description (optional)',
+      name: 'enterInvoiceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Type`
+  String get customerType {
+    return Intl.message(
+      'Customer Type',
+      name: 'customerType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Existing Customer`
+  String get existingCustomer {
+    return Intl.message(
+      'Existing Customer',
+      name: 'existingCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Customer`
+  String get newCustomer {
+    return Intl.message(
+      'New Customer',
+      name: 'newCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter address`
+  String get enterCustomerAddress {
+    return Intl.message(
+      'Enter address',
+      name: 'enterCustomerAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Item`
+  String get addItem {
+    return Intl.message(
+      'Add Item',
+      name: 'addItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add First Item`
+  String get addFirstItem {
+    return Intl.message(
+      'Add First Item',
+      name: 'addFirstItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Percent`
+  String get taxPercent {
+    return Intl.message(
+      'Tax Percent',
+      name: 'taxPercent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter item name`
+  String get enterItemName {
+    return Intl.message(
+      'Enter item name',
+      name: 'enterItemName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter discount`
+  String get enterDiscount {
+    return Intl.message(
+      'Enter discount',
+      name: 'enterDiscount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter tax percent`
+  String get enterTaxPercent {
+    return Intl.message(
+      'Enter tax percent',
+      name: 'enterTaxPercent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter total`
+  String get enterTotal {
+    return Intl.message(
+      'Enter total',
+      name: 'enterTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove Item`
+  String get removeItem {
+    return Intl.message(
+      'Remove Item',
+      name: 'removeItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Item`
+  String get editItem {
+    return Intl.message(
+      'Edit Item',
+      name: 'editItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Information`
+  String get invoiceInfo {
+    return Intl.message(
+      'Invoice Information',
+      name: 'invoiceInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Information`
+  String get customerInfo {
+    return Intl.message(
+      'Customer Information',
+      name: 'customerInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Items Information`
+  String get itemsInfo {
+    return Intl.message(
+      'Items Information',
+      name: 'itemsInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Financial Information`
+  String get financialInfo {
+    return Intl.message(
+      'Financial Information',
+      name: 'financialInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Action Type`
+  String get actionType {
+    return Intl.message(
+      'Action Type',
+      name: 'actionType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Method Type`
+  String get paymentMethodType {
+    return Intl.message(
+      'Payment Method Type',
+      name: 'paymentMethodType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status Type`
+  String get statusType {
+    return Intl.message(
+      'Status Type',
+      name: 'statusType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issue Date`
+  String get issueDateValue {
+    return Intl.message(
+      'Issue Date',
+      name: 'issueDateValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get descriptionValue {
+    return Intl.message(
+      'Description',
+      name: 'descriptionValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Name`
+  String get customerNameValue {
+    return Intl.message(
+      'Customer Name',
+      name: 'customerNameValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get customerEmailValue {
+    return Intl.message(
+      'Email',
+      name: 'customerEmailValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone`
+  String get customerPhoneValue {
+    return Intl.message(
+      'Phone',
+      name: 'customerPhoneValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get customerAddressValue {
+    return Intl.message(
+      'Address',
+      name: 'customerAddressValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discount`
+  String get itemDiscount {
+    return Intl.message(
+      'Discount',
+      name: 'itemDiscount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax`
+  String get itemTax {
+    return Intl.message(
+      'Tax',
+      name: 'itemTax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear Search`
+  String get clearSearch {
+    return Intl.message(
+      'Clear Search',
+      name: 'clearSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Load More`
+  String get loadMore {
+    return Intl.message(
+      'Load More',
+      name: 'loadMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard`
+  String get dashboard {
+    return Intl.message(
+      'Dashboard',
+      name: 'dashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Statistics`
+  String get statistics {
+    return Intl.message(
+      'Statistics',
+      name: 'statistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Invoices`
+  String get totalInvoices {
+    return Intl.message(
+      'Total Invoices',
+      name: 'totalInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Invoices`
+  String get newInvoices {
+    return Intl.message(
+      'New Invoices',
+      name: 'newInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Sales`
+  String get totalSales {
+    return Intl.message(
+      'Total Sales',
+      name: 'totalSales',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Expenses`
+  String get totalExpenses {
+    return Intl.message(
+      'Total Expenses',
+      name: 'totalExpenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Expenses`
+  String get monthlyExpenses {
+    return Intl.message(
+      'Monthly Expenses',
+      name: 'monthlyExpenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Customers`
+  String get totalCustomers {
+    return Intl.message(
+      'Total Customers',
+      name: 'totalCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Customers`
+  String get newCustomers {
+    return Intl.message(
+      'New Customers',
+      name: 'newCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Products`
+  String get totalProducts {
+    return Intl.message(
+      'Total Products',
+      name: 'totalProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Products`
+  String get newProducts {
+    return Intl.message(
+      'New Products',
+      name: 'newProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Net Profit`
+  String get netProfit {
+    return Intl.message(
+      'Net Profit',
+      name: 'netProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Growth`
+  String get salesGrowth {
+    return Intl.message(
+      'Sales Growth',
+      name: 'salesGrowth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profit Growth`
+  String get profitGrowth {
+    return Intl.message(
+      'Profit Growth',
+      name: 'profitGrowth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top Selling Products`
+  String get topSellingProducts {
+    return Intl.message(
+      'Top Selling Products',
+      name: 'topSellingProducts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading Dashboard...`
+  String get loadingDashboard {
+    return Intl.message(
+      'Loading Dashboard...',
+      name: 'loadingDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading dashboard`
+  String get errorLoadingDashboard {
+    return Intl.message(
+      'Error loading dashboard',
+      name: 'errorLoadingDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dashboard Error`
+  String get dashboardError {
+    return Intl.message(
+      'Dashboard Error',
+      name: 'dashboardError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while loading dashboard data`
+  String get dashboardErrorMessage {
+    return Intl.message(
+      'An error occurred while loading dashboard data',
+      name: 'dashboardErrorMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No data available`
+  String get noDataAvailable {
+    return Intl.message(
+      'No data available',
+      name: 'noDataAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dinar`
+  String get currency {
+    return Intl.message(
+      'Dinar',
+      name: 'currency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Growth`
+  String get growth {
+    return Intl.message(
+      'Growth',
+      name: 'growth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Decrease`
+  String get decrease {
+    return Intl.message(
+      'Decrease',
+      name: 'decrease',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Increase`
+  String get increase {
+    return Intl.message(
+      'Increase',
+      name: 'increase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New This Month`
+  String get newThisMonth {
+    return Intl.message(
+      'New This Month',
+      name: 'newThisMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Products in Stock`
+  String get productsInStock {
+    return Intl.message(
+      'Products in Stock',
+      name: 'productsInStock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Distribution`
+  String get salesDistribution {
+    return Intl.message(
+      'Sales Distribution',
+      name: 'salesDistribution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Statistics`
+  String get invoiceStatistics {
+    return Intl.message(
+      'Invoice Statistics',
+      name: 'invoiceStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All Invoices`
+  String get allInvoices {
+    return Intl.message(
+      'All Invoices',
+      name: 'allInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Regular Invoices`
+  String get regularInvoices {
+    return Intl.message(
+      'Regular Invoices',
+      name: 'regularInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Monthly Sales Statistics`
+  String get monthlySalesStatistics {
+    return Intl.message(
+      'Monthly Sales Statistics',
+      name: 'monthlySalesStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sales Categories`
+  String get salesCategories {
+    return Intl.message(
+      'Sales Categories',
+      name: 'salesCategories',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Category`
+  String get firstCategory {
+    return Intl.message(
+      'First Category',
+      name: 'firstCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uncategorized`
+  String get uncategorized {
+    return Intl.message(
+      'Uncategorized',
+      name: 'uncategorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Options`
+  String get printOptions {
+    return Intl.message(
+      'Print Options',
+      name: 'printOptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thermal Print`
+  String get thermalPrint {
+    return Intl.message(
+      'Thermal Print',
+      name: 'thermalPrint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `For thermal printers - 80mm`
+  String get thermalPrintDesc {
+    return Intl.message(
+      'For thermal printers - 80mm',
+      name: 'thermalPrintDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDF Print`
+  String get pdfPrint {
+    return Intl.message(
+      'PDF Print',
+      name: 'pdfPrint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View and save PDF`
+  String get pdfPrintDesc {
+    return Intl.message(
+      'View and save PDF',
+      name: 'pdfPrintDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Printer Status`
+  String get printerStatus {
+    return Intl.message(
+      'Printer Status',
+      name: 'printerStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connected to printer`
+  String get printerConnected {
+    return Intl.message(
+      'Connected to printer',
+      name: 'printerConnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disconnected from printer`
+  String get printerDisconnected {
+    return Intl.message(
+      'Disconnected from printer',
+      name: 'printerDisconnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checking connection...`
+  String get checkingConnection {
+    return Intl.message(
+      'Checking connection...',
+      name: 'checkingConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Searching for printer...`
+  String get searchingPrinter {
+    return Intl.message(
+      'Searching for printer...',
+      name: 'searchingPrinter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Receipt`
+  String get printReceipt {
+    return Intl.message(
+      'Print Receipt',
+      name: 'printReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry Connection`
+  String get retryConnection {
+    return Intl.message(
+      'Retry Connection',
+      name: 'retryConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDF Preview`
+  String get pdfPreview {
+    return Intl.message(
+      'PDF Preview',
+      name: 'pdfPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save PDF`
+  String get savePDF {
+    return Intl.message(
+      'Save PDF',
+      name: 'savePDF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Generating PDF...`
+  String get generatingPDF {
+    return Intl.message(
+      'Generating PDF...',
+      name: 'generatingPDF',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDF generated successfully`
+  String get pdfGenerated {
+    return Intl.message(
+      'PDF generated successfully',
+      name: 'pdfGenerated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDF saved successfully`
+  String get pdfSaved {
+    return Intl.message(
+      'PDF saved successfully',
+      name: 'pdfSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print error`
+  String get printError {
+    return Intl.message(
+      'Print error',
+      name: 'printError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection error`
+  String get connectionError {
+    return Intl.message(
+      'Connection error',
+      name: 'connectionError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thermal Receipt`
+  String get thermalReceipt {
+    return Intl.message(
+      'Thermal Receipt',
+      name: 'thermalReceipt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thank you for your business`
+  String get thankYou {
+    return Intl.message(
+      'Thank you for your business',
+      name: 'thankYou',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print successful`
+  String get printSuccess {
+    return Intl.message(
+      'Print successful',
+      name: 'printSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print failed`
+  String get printFailed {
+    return Intl.message(
+      'Print failed',
+      name: 'printFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PDF generation error`
+  String get pdfError {
+    return Intl.message(
+      'PDF generation error',
+      name: 'pdfError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save error`
+  String get saveError {
+    return Intl.message(
+      'Save error',
+      name: 'saveError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Settings`
+  String get printSettings {
+    return Intl.message(
+      'Print Settings',
+      name: 'printSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paper Size`
+  String get paperSize {
+    return Intl.message(
+      'Paper Size',
+      name: 'paperSize',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Printer Name`
+  String get printerName {
+    return Intl.message(
+      'Printer Name',
+      name: 'printerName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection Type`
+  String get connectionType {
+    return Intl.message(
+      'Connection Type',
+      name: 'connectionType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth`
+  String get bluetooth {
+    return Intl.message(
+      'Bluetooth',
+      name: 'bluetooth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `USB`
+  String get usb {
+    return Intl.message(
+      'USB',
+      name: 'usb',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network`
+  String get network {
+    return Intl.message(
+      'Network',
+      name: 'network',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Printer`
+  String get selectPrinter {
+    return Intl.message(
+      'Select Printer',
+      name: 'selectPrinter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No printers found`
+  String get noPrintersFound {
+    return Intl.message(
+      'No printers found',
+      name: 'noPrintersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh Printers`
+  String get refreshPrinters {
+    return Intl.message(
+      'Refresh Printers',
+      name: 'refreshPrinters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Printer Settings`
+  String get printerSettings {
+    return Intl.message(
+      'Printer Settings',
+      name: 'printerSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test Print`
+  String get testPrint {
+    return Intl.message(
+      'Test Print',
+      name: 'testPrint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Quality`
+  String get printQuality {
+    return Intl.message(
+      'Print Quality',
+      name: 'printQuality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `High`
+  String get high {
+    return Intl.message(
+      'High',
+      name: 'high',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medium`
+  String get medium {
+    return Intl.message(
+      'Medium',
+      name: 'medium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low`
+  String get low {
+    return Intl.message(
+      'Low',
+      name: 'low',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `.... Search expenses`
+  String get searchExpenses {
+    return Intl.message(
+      '.... Search expenses',
+      name: 'searchExpenses',
       desc: '',
       args: [],
     );

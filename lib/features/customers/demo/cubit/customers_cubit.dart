@@ -83,6 +83,7 @@ class CustomersCubit extends Cubit<CustomersState> {
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   bool get hasMore => _currentPage < _totalPages;
+  bool get isLoadingPage => _isLoadingPage;
 
   Future<void> loadFirstPage({
     bool refresh = false,
@@ -94,7 +95,14 @@ class CustomersCubit extends Cubit<CustomersState> {
     if (_isLoadingPage) return;
     _isLoadingPage = true;
 
-    if (refresh) {
+    // Check if search parameters changed
+    final searchChanged = _lastSearch != search;
+    final statusChanged = _lastStatus != status;
+    final companyChanged = _lastCompany != company;
+    final shouldRefresh =
+        refresh || searchChanged || statusChanged || companyChanged;
+
+    if (shouldRefresh) {
       _customers.clear();
       _currentPage = 1;
       _totalPages = 1;
@@ -105,7 +113,7 @@ class CustomersCubit extends Cubit<CustomersState> {
         customers: _customers,
         currentPage: _currentPage,
         totalPages: _totalPages,
-        message: refresh ? 'refreshing' : 'loading',
+        message: shouldRefresh ? 'refreshing' : 'loading',
       ),
     );
 
@@ -114,7 +122,7 @@ class CustomersCubit extends Cubit<CustomersState> {
     _lastCompany = company;
     _pageSize = limit ?? _pageSize;
 
-    final result = await _repository.getCustomers(
+    final result = await _repository.getCustomersWithPagination(
       search: _lastSearch,
       status: _lastStatus,
       company: _lastCompany,
@@ -123,12 +131,17 @@ class CustomersCubit extends Cubit<CustomersState> {
     );
 
     result.when(
-      success: (data) {
-        _customers
-          ..clear()
-          ..addAll(data);
-        _currentPage = 1;
-        _totalPages = data.length < _pageSize ? 1 : 2; // heuristic
+      success: (paginationResult) {
+        if (shouldRefresh) {
+          _customers.clear();
+        }
+        _customers.addAll(
+          paginationResult.customers
+              .map((c) => _convertToCustomerModel(c))
+              .toList(),
+        );
+        _currentPage = paginationResult.currentPage;
+        _totalPages = paginationResult.totalPages;
         emit(
           CustomersState.loaded(
             customers: _customers,
@@ -156,17 +169,11 @@ class CustomersCubit extends Cubit<CustomersState> {
     if (_isLoadingPage || !hasMore) return;
     _isLoadingPage = true;
 
-    emit(
-      CustomersState.loading(
-        customers: _customers,
-        currentPage: _currentPage,
-        totalPages: _totalPages,
-        message: 'loading_more',
-      ),
-    );
+    // Don't emit loading state for next page to avoid UI flicker
+    // Just keep the current state and add new data
 
     final nextPage = _currentPage + 1;
-    final result = await _repository.getCustomers(
+    final result = await _repository.getCustomersWithPagination(
       search: _lastSearch,
       status: _lastStatus,
       company: _lastCompany,
@@ -175,12 +182,16 @@ class CustomersCubit extends Cubit<CustomersState> {
     );
 
     result.when(
-      success: (data) {
-        _customers.addAll(data);
-        _currentPage = nextPage;
-        if (data.isEmpty || data.length < _pageSize) {
-          _totalPages = _currentPage;
-        }
+      success: (paginationResult) {
+        // Only add new customers, don't clear existing ones
+        final newCustomers = paginationResult.customers
+            .map((c) => _convertToCustomerModel(c))
+            .toList();
+
+        _customers.addAll(newCustomers);
+        _currentPage = paginationResult.currentPage;
+        _totalPages = paginationResult.totalPages;
+
         emit(
           CustomersState.loaded(
             customers: _customers,
@@ -388,6 +399,68 @@ class CustomersCubit extends Cubit<CustomersState> {
           ),
         );
       },
+    );
+  }
+
+  Future<void> getCustomerById(int id) async {
+    emit(
+      CustomersState.loading(
+        customers: _customers,
+        selectedCustomer: null,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'loading_customer',
+      ),
+    );
+
+    final result = await _repository.getCustomerById(id);
+
+    result.when(
+      success: (customer) {
+        emit(
+          CustomersState.loaded(
+            customers: _customers,
+            selectedCustomer: customer,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+          ),
+        );
+      },
+      failure: (error) {
+        emit(
+          CustomersState.failure(
+            customers: _customers,
+            selectedCustomer: null,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            error: error,
+          ),
+        );
+      },
+    );
+  }
+
+  // Search customers
+  Future<void> searchCustomers(String query) async {
+    await loadFirstPage(search: query.isEmpty ? null : query, refresh: true);
+  }
+
+  // Clear search and reload all customers
+  Future<void> clearSearch() async {
+    await loadFirstPage(search: null, refresh: true);
+  }
+
+  // Convert API model to CustomerModel
+  CustomerModel _convertToCustomerModel(dynamic apiCustomer) {
+    return CustomerModel(
+      id: apiCustomer.id,
+      name: apiCustomer.name ?? '',
+      email: apiCustomer.email ?? '',
+      phone: apiCustomer.phone,
+      address: apiCustomer.address,
+      status: apiCustomer.status ?? 'active',
+      updatedAt: apiCustomer.updatedAt,
+      createdAt: apiCustomer.createdAt,
     );
   }
 }

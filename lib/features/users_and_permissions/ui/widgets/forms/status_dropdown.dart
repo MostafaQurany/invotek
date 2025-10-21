@@ -33,7 +33,7 @@ class StatusDropdown extends StatelessWidget {
         border: Border.all(color: AppColors.grey.withOpacity(0.2), width: 1),
       ),
       child: DropdownButtonFormField<String>(
-        value: value,
+        initialValue: value,
         onChanged: onChanged,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(

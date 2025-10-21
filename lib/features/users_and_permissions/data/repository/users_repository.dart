@@ -108,18 +108,14 @@ class UsersRepository {
       final response = await _dataSource.createUser(request);
 
       // Check if we have data (successful creation) or error message
-      if (response != null) {
-        try {
-          return ApiResult.success(null);
-        } catch (parseError) {
-          print('Error parsing user data: $parseError');
-          print('Response data: ${response}');
-          return ApiResult.failure(S.current.errorParsingUserData);
-        }
-      } else {
-        return ApiResult.failure("Error Happen ");
+      try {
+        return ApiResult.success(null);
+      } catch (parseError) {
+        print('Error parsing user data: $parseError');
+        print('Response data: $response');
+        return ApiResult.failure(S.current.errorParsingUserData);
       }
-    } catch (e) {
+        } catch (e) {
       print('Error in createUser: $e');
       return ApiResult.failure(S.current.errorCreatingUser);
     }

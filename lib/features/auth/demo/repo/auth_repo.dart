@@ -1,6 +1,5 @@
 import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/services/storage_service.dart';
-import 'dart:convert';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
@@ -35,7 +34,7 @@ class AuthRepo {
         },
       );
       return response;
-    } catch (e, stackTrace) {
+    } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
@@ -64,7 +63,7 @@ class AuthRepo {
       );
 
       return response;
-    } catch (e, stackTrace) {
+    } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
@@ -76,7 +75,7 @@ class AuthRepo {
         return userData;
       }
       return null;
-    } catch (e, stackTrace) {
+    } catch (e) {
       return null;
     }
   }

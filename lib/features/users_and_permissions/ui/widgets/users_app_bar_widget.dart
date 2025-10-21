@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 
 class UsersAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onMenuPressed;
@@ -19,10 +20,7 @@ class UsersAppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       elevation: 1,
       toolbarHeight: 70.h,
-      leading: IconButton(
-        icon: Icon(Icons.menu, color: AppColors.primary, size: 24.sp),
-        onPressed: onMenuPressed,
-      ),
+      leading: const CommonMenuButton(),
       title: Image(image: AssetImage(AppImages.logoGreen), height: 34.h),
       centerTitle: false,
       actions: [

@@ -56,6 +56,20 @@ dependencies:
   package_info_plus: ^8.0.2
   url_launcher: ^6.3.1
   get: ^4.6.6
+  google_sign_in: ^7.2.0
+  # New dependencies for enhanced invoice features
+  share_plus: ^7.2.1
+  printing: ^5.11.1
+  pdf: ^3.10.4
+  qr_flutter: ^4.1.0
+  # Printing packages
+  quick_print: ^1.0.0
+  flutter_net_printer: ^1.0.0
+  permission_handler: ^11.0.1
+
+  # SUNMI Printer Support
+  sunmi_printer_plus: ^4.1.1
+  flutter_pos_printer_platform_image_3_sdt: ^1.2.12
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -107,6 +121,15 @@ flutter:
           weight: 300
         - asset: assets/fonts/MontserratAlternates/MontserratAlternates-ExtraBold.ttf
           weight: 800
+    - family: NotoSansArabic
+      fonts:
+        - asset: assets/fonts/NotoSansArabic/NotoSansArabic-Regular.ttf
+        - asset: assets/fonts/NotoSansArabic/NotoSansArabic-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSansArabic/NotoSansArabic-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/NotoSansArabic/NotoSansArabic-Light.ttf
+          weight: 300
 
 # flutter_intl configuration
 flutter_intl:

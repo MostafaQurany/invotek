@@ -61,11 +61,8 @@ class ProductsRepository {
     try {
       final response = await _apiClient.getProductById(id);
 
-      if (response.data != null) {
-        final product = _convertToProductModel(response.data!);
-        return ApiResult.success(product);
-      }
-      return ApiResult.failure('حدث خطأ أثناء تحميل بيانات المنتج');
+      final product = _convertToProductModel(response);
+      return ApiResult.success(product);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }

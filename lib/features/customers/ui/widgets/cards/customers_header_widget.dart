@@ -320,7 +320,7 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
         ],
       ),
       child: DropdownButtonFormField<String>(
-        value: options.any((option) => option.value == value)
+        initialValue: options.any((option) => option.value == value)
             ? value
             : options.isNotEmpty
             ? options.first.value

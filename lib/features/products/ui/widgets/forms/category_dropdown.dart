@@ -118,7 +118,7 @@ class CategoryDropdown extends StatelessWidget {
             ),
             SizedBox(height: 8.h),
             DropdownButtonFormField<String>(
-              value: effectiveValue,
+              initialValue: effectiveValue,
               isExpanded: true,
               decoration: InputDecoration(
                 prefixIcon: Icon(

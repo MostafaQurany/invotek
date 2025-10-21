@@ -155,6 +155,60 @@
   "enterPassword": "أدخل كلمة المرور",
   "phoneNumber": "رقم الهاتف",
   "noDataReceived": "لم يتم استلام بيانات من الخادم",
+  "cannotEditInvoice": "لا يمكن تعديل الفاتورة",
+  "invoiceAlreadySent": "تم إرسال الفاتورة بالفعل",
+  "cannotEditSentInvoice": "لا يمكن تعديل الفواتير المرسلة",
+  "noData": "لا توجد بيانات",
+  "selectCustomer": "اختيار العميل",
+  "searchCustomers": "البحث في العملاء",
+  "loadingCustomers": "جاري تحميل العملاء...",
+  "errorLoadingCustomers": "خطأ في تحميل العملاء",
+  "retry": "إعادة المحاولة",
+  "noCustomersFound": "لا توجد عملاء",
+  "noCustomersMatchSearch": "لا توجد عملاء تطابق البحث",
+  "addFirstCustomer": "أضف أول عميل",
+  "tryDifferentSearch": "جرب بحث مختلف",
+  "addNewCustomer": "إضافة عميل جديد",
+  "companyInformation": "معلومات الشركة",
+  "companyName": "اسم الشركة",
+  "enterCompanyName": "أدخل اسم الشركة",
+  "address": "العنوان",
+  "enterAddress": "أدخل العنوان",
+  "errorCreatingCustomer": "خطأ في إنشاء العميل",
+  "selectProduct": "اختيار المنتج",
+  "searchProducts": "البحث في المنتجات",
+  "loadingProducts": "جاري تحميل المنتجات...",
+  "errorLoadingProducts": "خطأ في تحميل المنتجات",
+  "noProductsFound": "لا توجد منتجات",
+  "noProductsMatchSearch": "لا توجد منتجات تطابق البحث",
+  "addFirstProduct": "أضف أول منتج",
+  "addNewProduct": "إضافة منتج جديد",
+  "productName": "اسم المنتج",
+  "enterProductName": "أدخل اسم المنتج",
+  "sku": "رمز المنتج",
+  "enterSku": "أدخل رمز المنتج",
+  "pricingInformation": "معلومات التسعير",
+  "price": "السعر",
+  "enterPrice": "أدخل السعر",
+  "priceRequired": "السعر مطلوب",
+  "invalidPrice": "سعر غير صحيح",
+  "quantity": "الكمية",
+  "enterQuantity": "أدخل الكمية",
+  "quantityRequired": "الكمية مطلوبة",
+  "invalidQuantity": "كمية غير صحيحة",
+  "errorCreatingProduct": "خطأ في إنشاء المنتج",
+  "invoiceItems": "عناصر الفاتورة",
+  "items": "عناصر",
+  "noItemsAdded": "لم يتم إضافة عناصر",
+  "addItemsToInvoice": "أضف عناصر للفاتورة",
+  "manualItem": "عنصر يدوي",
+  "discount": "الخصم",
+  "addFromProducts": "إضافة من المنتجات",
+  "addManualItem": "إضافة عنصر يدوي",
+  "customerSelection": "اختيار العميل",
+  "noCustomerSelected": "لم يتم اختيار عميل",
+  "invoiceUpdatedSuccessfully": "تم تحديث الفاتورة بنجاح",
+  "errorUpdatingInvoice": "خطأ في تحديث الفاتورة",
   "errorLoadingUsers": "خطأ في تحميل المستخدمين",
   "userNotFound": "المستخدم غير موجود",
   "failedToUpdateUser": "فشل في تحديث المستخدم",
@@ -462,7 +516,7 @@
   "productsManagement": "إدارة المنتجات وفئاتها",
   "productsList": "قائمة المنتجات",
   "productCategories": "فئات المنتجات",
-  "expensesManagement": "إدارة المصروفات وفئاتها",
+  "expensesManagement": "المصروفات وفئاتها",
   "expensesList": "قائمة المصروفات",
   "expenseCategories": "فئات المصروفات",
   "taxInvoices": "الفواتير الضريبية",
@@ -807,5 +861,671 @@
   "passwordsDoNotMatch": "كلمة المرور غير متطابقة",
   "thisField": "هذا الحقل",
   "search": "البحث...",
-  "loadingUsers": "جاري تحميل المستخدمين..."
+  "loadingUsers": "جاري تحميل المستخدمين...",
+  "signInWithGoogle": "تسجيل الدخول بالجوجل",
+  "signInFailed": "فشل تسجيل الدخول",
+  "loginCancelled": "تم الإلغاء",
+  "failedToGetUserData": "فشل في الحصول على بيانات المستخدم",
+  "loginError": "خطأ في تسجيل الدخول",
+  "networkError": "خطأ في الإتصال بالشبكة",
+  "playServicesNotAvailable": "خطأ في الخدمات المتاحة",
+  "signInWithGoogle": "تسجيل الدخول بالجوجل",
+  "googleSignInError": "خطأ في تسجيل الدخول بالجوجل",
+  "addInvoice": "إضافة فاتورة",
+  "invoices": "الفواتير",
+  "searchInInvoices": "البحث في الفواتير...",
+  "allPaymentMethods": "جميع طرق الدفع",
+  "customer": "العميل",
+  "allCustomers": "جميع العملاء",
+  "items": "العناصر",
+  "paid": "مدفوعة",
+  "pending": "معلقة",
+  "overdue": "متأخرة",
+  "draft": "مسودة",
+  "card": "بطاقة",
+  "total": "الإجمالي",
+  "subtotal": "المجموع الفرعي",
+  "tax": "الضريبة",
+  "noItems": "لا توجد عناصر",
+  "addItemsToInvoice": "إضافة عناصر للفاتورة",
+  "qty": "الكمية",
+  "price": "السعر",
+  "description": "الوصف",
+  "searchItems": "البحث في العناصر...",
+  "showLess": "إظهار أقل",
+  "showAllItems": "إظهار جميع العناصر ({count})",
+  "@showAllItems": {
+    "count": {
+      "type": "int"
+    }
+  },
+  "payment": "الدفع",
+  "paymentDetails": "تفاصيل الدفع",
+  "markAsPaid": "تحديد كمدفوعة",
+  "send": "إرسال",
+  "duplicate": "نسخ",
+  "downloadPDF": "تحميل PDF",
+  "noInvoices": "لا توجد فواتير",
+  "noInvoicesDescription": "اضغط على زر الإضافة لإنشاء فاتورة جديدة",
+  "addFirstInvoice": "إضافة أول فاتورة",
+  "errorOccurred": "حدث خطأ",
+  "deleteInvoiceConfirmation": "تأكيد حذف الفاتورة",
+  "deleteInvoiceWarning": "هل أنت متأكد من حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء.",
+  "sendMethod": "طريقة الإرسال",
+  "sms": "رسالة نصية",
+  "emailDetails": "تفاصيل البريد الإلكتروني",
+  "subject": "الموضوع",
+  "enterSubject": "أدخل الموضوع",
+  "message": "الرسالة",
+  "enterMessage": "أدخل الرسالة",
+  "includePDF": "تضمين PDF",
+  "paymentDate": "تاريخ الدفع",
+  "addNotes": "إضافة ملاحظات",
+  "invoiceHelp": "مساعدة الفواتير",
+  "creatingInvoices": "إنشاء الفواتير",
+  "createInvoiceStep1": "1. أدخل معلومات العميل الأساسية",
+  "createInvoiceStep2": "2. أضف العناصر والكميات",
+  "createInvoiceStep3": "3. حدد طريقة الدفع والتاريخ",
+  "createInvoiceStep4": "4. راجع الفاتورة واحفظها",
+  "managingInvoices": "إدارة الفواتير",
+  "manageInvoiceStep1": "1. استخدم البحث والفلترة للعثور على الفواتير",
+  "manageInvoiceStep2": "2. اضغط على الفاتورة لعرض التفاصيل",
+  "manageInvoiceStep3": "3. استخدم الأزرار للتحرير أو الحذف",
+  "manageInvoiceStep4": "4. أرسل الفاتورة للعميل عند الحاجة",
+  "paymentMethods": "طرق الدفع",
+  "paymentMethodCash": "نقدي",
+  "paymentMethodCard": "بطاقة ائتمان",
+  "paymentMethodBank": "تحويل بنكي",
+  "paymentMethodCheck": "شيك",
+  "taxIntegration": "التكامل الضريبي",
+  "taxIntegrationStep1": "1. قم بتفعيل التكامل الضريبي",
+  "taxIntegrationStep2": "2. أدخل معلومات الشركة الضريبية",
+  "taxIntegrationStep3": "3. اختبر الاتصال واحفظ الإعدادات",
+  "createNewInvoice": "إنشاء فاتورة جديدة",
+  "invoiceDetails": "تفاصيل الفاتورة",
+  "customerInformation": "معلومات العميل",
+  "amountInformation": "معلومات المبلغ",
+  "invoiceNumber": "رقم الفاتورة",
+  "enterInvoiceNumber": "أدخل رقم الفاتورة",
+  "issueDate": "تاريخ الإصدار",
+  "selectDate": "اختر التاريخ",
+  "enterCustomerEmail": "أدخل بريد العميل الإلكتروني",
+  "enterCustomerPhone": "أدخل هاتف العميل",
+  "enterSubtotal": "أدخل المجموع الفرعي",
+  "enterTaxAmount": "أدخل مبلغ الضريبة",
+  "taxIntegrationSettings": "إعدادات التكامل الضريبي",
+  "configureTaxIntegration": "تكوين التكامل الضريبي",
+  "enableTaxIntegration": "تفعيل التكامل الضريبي",
+  "taxType": "نوع الضريبة",
+  "vat": "ضريبة القيمة المضافة",
+  "salesTax": "ضريبة المبيعات",
+  "country": "البلد",
+  "saudiArabia": "المملكة العربية السعودية",
+  "uae": "دولة الإمارات العربية المتحدة",
+  "kuwait": "دولة الكويت",
+  "testConnection": "اختبار الاتصال",
+  "companyInformation": "معلومات الشركة",
+  "taxNumber": "الرقم الضريبي",
+  "enterTaxNumber": "أدخل الرقم الضريبي",
+  "vatNumber": "رقم ضريبة القيمة المضافة",
+  "enterVatNumber": "أدخل رقم ضريبة القيمة المضافة",
+  "address": "العنوان",
+  "enterAddress": "أدخل العنوان",
+  "city": "المدينة",
+  "enterCity": "أدخل المدينة",
+  "postalCode": "الرمز البريدي",
+  "enterPostalCode": "أدخل الرمز البريدي",
+  "contactInformation": "معلومات الاتصال",
+  "phone": "الهاتف",
+  "enterPhone": "أدخل الهاتف",
+  "email": "البريد الإلكتروني",
+  "enterEmail": "أدخل البريد الإلكتروني",
+  "testingConnection": "جاري اختبار الاتصال...",
+  "errorOccurred": "حدث خطأ {error}",
+  "taxAmount": "مبلغ الضريبة",
+  "enterTaxAmount": "أدخل مبلغ الضريبة",
+  "total": "الإجمالي",
+  "paymentMethod": "طريقة الدفع",
+  "cash": "نقدي",
+  "bankTransfer": "تحويل بنكي",
+  "check": "شيك",
+  "enterDescription": "أدخل الوصف",
+  "searchInvoices": "البحث في الفواتير...",
+  "invoiceDetails": "تفاصيل الفاتورة",
+  "loadingInvoiceDetails": "جاري تحميل تفاصيل الفاتورة...",
+  "invoiceNumber": "رقم الفاتورة",
+  "errorLoadingInvoice": "خطأ في تحميل الفاتورة",
+  "retry": "إعادة المحاولة",
+  "noInvoiceData": "لا توجد بيانات للفاتورة",
+  "invoiceNumberLabel": "رقم الفاتورة: {number}",
+  "@invoiceNumberLabel": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "shareInvoice": "مشاركة الفاتورة",
+  "printInvoice": "طباعة الفاتورة",
+  "sendInvoice": "إرسال الفاتورة",
+  "downloadPDF": "تحميل PDF",
+  "deleteInvoice": "حذف الفاتورة",
+  "duplicateInvoice": "تكرار الفاتورة",
+  "viewQRCode": "عرض رمز QR",
+  "viewTaxUID": "عرض معرف الضريبة",
+  "updateStatus": "تحديث الحالة",
+  "markAsPaid": "تحديد كمدفوعة",
+  "changeStatus": "تغيير الحالة",
+  "moreOptions": "خيارات إضافية",
+  "refreshData": "تحديث البيانات",
+  "invoiceCopiedToClipboard": "تم نسخ تفاصيل الفاتورة إلى الحافظة",
+  "invoiceCopiedForPrinting": "تم نسخ تفاصيل الفاتورة للطباعة",
+  "invoiceSentSuccessfully": "تم إرسال الفاتورة بنجاح",
+  "invoiceDeletedSuccessfully": "تم حذف الفاتورة بنجاح",
+  "invoiceStatusUpdated": "تم تحديث حالة الفاتورة إلى: {status}",
+  "@invoiceStatusUpdated": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSavedSuccessfully": "تم حفظ الملف في: {path}",
+  "@fileSavedSuccessfully": {
+    "placeholders": {
+      "path": {
+        "type": "String"
+      }
+    }
+  },
+  "noQRCodeAvailable": "لا يوجد رمز QR متاح لهذه الفاتورة",
+  "noTaxUIDAvailable": "لا يوجد معرف ضريبة متاح لهذه الفاتورة",
+  "taxUIDCopied": "تم نسخ معرف الضريبة",
+  "shareInvoiceText": "فاتورة رقم: {number}\nالعميل: {customer}\nالتاريخ: {date}\nالمبلغ: {amount} ر.س\nالحالة: {status}\n\nتم إنشاؤها بواسطة تطبيق Invotek",
+  "@shareInvoiceText": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "customer": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "printInvoiceText": "فاتورة\n{separator}\nرقم الفاتورة: {number}\nالتاريخ: {date}\nالحالة: {status}\n\nبيانات العميل:\nالاسم: {customer}\n{contact}\n\nعناصر الفاتورة:\n{items}\n\nالمجاميع:\nالمجموع الفرعي: {subtotal} ر.س\n{tax}\nالمجموع الكلي: {total} ر.س\n\n{separator}\nشكراً لتعاملكم معنا\nتم إنشاء هذه الفاتورة بواسطة تطبيق Invotek\n{separator}",
+  "@printInvoiceText": {
+    "placeholders": {
+      "separator": {
+        "type": "String"
+      },
+      "number": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      },
+      "customer": {
+        "type": "String"
+      },
+      "contact": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      },
+      "subtotal": {
+        "type": "String"
+      },
+      "tax": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "statusPaid": "مدفوعة",
+  "statusPending": "معلقة",
+  "statusOverdue": "متأخرة",
+  "statusDraft": "مسودة",
+  "customerDetails": "تفاصيل العميل",
+  "itemDetails": "تفاصيل العنصر",
+  "changePaymentMethod": "تغيير طريقة الدفع",
+  "loading": "جاري التحميل...",
+  "creatingFile": "جاري إنشاء ملف...",
+  "sendingInvoice": "جاري إرسال الفاتورة...",
+  "deletingInvoice": "جاري حذف الفاتورة...",
+  "updatingStatus": "جاري تحديث الحالة...",
+  "errorSharingInvoice": "فشل في مشاركة الفاتورة: {error}",
+  "@errorSharingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorPrintingInvoice": "فشل في طباعة الفاتورة: {error}",
+  "@errorPrintingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorSendingInvoice": "فشل في إرسال الفاتورة: {error}",
+  "@errorSendingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorDeletingInvoice": "فشل في حذف الفاتورة: {error}",
+  "@errorDeletingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorCreatingFile": "فشل في إنشاء الملف: {error}",
+  "@errorCreatingFile": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "errorUpdatingStatus": "فشل في تحديث الحالة: {error}",
+  "@errorUpdatingStatus": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "duplicateInvoiceMessage": "تكرار الفاتورة {number}",
+  "@duplicateInvoiceMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "viewCustomerDetails": "عرض تفاصيل العميل: {name}",
+  "@viewCustomerDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "viewItemDetails": "عرض تفاصيل العنصر: {name}",
+  "@viewItemDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "changePaymentMethodForInvoice": "تغيير طريقة الدفع للفاتورة {number}",
+  "@changePaymentMethodForInvoice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "taxUID": "معرف الضريبة",
+  "taxUIDForInvoice": "معرف الضريبة للفاتورة {number}:",
+  "@taxUIDForInvoice": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "copy": "نسخ",
+  "close": "إغلاق",
+  "customerName": "اسم العميل",
+  "customerEmail": "بريد العميل",
+  "customerPhone": "هاتف العميل",
+  "customerAddress": "عنوان العميل",
+  "invoiceItems": "عناصر الفاتورة",
+  "itemName": "الاسم",
+  "itemQuantity": "الكمية",
+  "itemPrice": "السعر",
+  "itemTotal": "المجموع",
+  "subtotal": "المجموع الفرعي",
+  "taxAmount": "الضريبة",
+  "totalAmount": "المجموع الكلي",
+  "thankYouMessage": "شكراً لتعاملكم معنا",
+  "createdByInvotek": "تم إنشاء هذه الفاتورة بواسطة تطبيق Invotek",
+  "separator": "=",
+  "itemSeparator": "-",
+  "itemHeader": "الاسم\t\tالكمية\tالسعر\tالمجموع",
+  "itemRow": "{name}\t\t{quantity}\t{price}\t{total}",
+  "@itemRow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "taxLine": "الضريبة: {amount} ر.س",
+  "@taxLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subtotalLine": "المجموع الفرعي: {amount} ر.س",
+  "@subtotalLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "totalLine": "المجموع الكلي: {amount} ر.س",
+  "@totalLine": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "fileName": "فاتورة_{number}_{timestamp}",
+  "@fileName": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "timestamp": {
+        "type": "String"
+      }
+    }
+  },
+  "loadingProductDetails": "جاري تحميل تفاصيل المنتج...",
+  "@loadingProductDetails": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "createNewInvoiceStepper": "إنشاء فاتورة جديدة",
+  "invoiceBasicInfo": "معلومات الفاتورة",
+  "selectCustomer": "اختيار العميل",
+  "invoiceItems": "عناصر الفاتورة",
+  "reviewCalculations": "مراجعة الحسابات",
+  "cancel": "إلغاء",
+  "previous": "السابق",
+  "next": "التالي",
+  "createInvoice": "إنشاء الفاتورة",
+  "help": "مساعدة",
+  "invoiceCreationHelp": "هذا النموذج يساعدك في إنشاء فاتورة جديدة خطوة بخطوة:\n\n1. معلومات الفاتورة: اختر الإجراء وطريقة الدفع والحالة\n2. اختيار العميل: اختر عميل موجود أو أضف عميل جديد\n3. عناصر الفاتورة: أضف العناصر والكميات والأسعار\n4. مراجعة الحسابات: راجع التفاصيل النهائية قبل الحفظ",
+  "ok": "حسناً",
+  "invoiceCreatedSuccessfully": "تم إنشاء الفاتورة بنجاح",
+  "errorCreatingInvoice": "خطأ: {error}",
+  "@errorCreatingInvoice": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "fillRequiredFieldsBasicInfo": "يرجى ملء جميع الحقول المطلوبة في معلومات الفاتورة",
+  "selectOrAddCustomer": "يرجى اختيار عميل أو إدخال بيانات العميل",
+  "addAtLeastOneItem": "يرجى إضافة عنصر واحد على الأقل",
+  "actionRequired": "الإجراء مطلوب",
+  "paymentMethodRequired": "طريقة الدفع مطلوبة",
+  "statusRequired": "حالة الفاتورة مطلوبة",
+  "customerRequired": "يرجى اختيار عميل أو إدخال بيانات العميل",
+  "itemsRequired": "يرجى إضافة عنصر واحد على الأقل",
+  "action": "الإجراء",
+  "saveOnly": "حفظ فقط",
+  "saveAndSend": "حفظ وإرسال",
+  "paymentMethod": "طريقة الدفع",
+  "cash": "نقداً",
+  "card": "بطاقة",
+  "bankTransfer": "تحويل بنكي",
+  "check": "شيك",
+  "invoiceStatus": "حالة الفاتورة",
+  "draft": "مسودة",
+  "sent": "مرسلة",
+  "paid": "مدفوعة",
+  "issueDate": "تاريخ الإصدار",
+  "invoiceDescription": "وصف الفاتورة",
+  "enterInvoiceDescription": "أدخل وصف الفاتورة (اختياري)",
+  "customerType": "نوع العميل",
+  "existingCustomer": "عميل موجود",
+  "newCustomer": "عميل جديد",
+  "selectCustomer": "اختيار العميل",
+  "addNewCustomer": "إضافة عميل جديد",
+  "customerName": "اسم العميل",
+  "customerEmail": "البريد الإلكتروني",
+  "customerPhone": "رقم الهاتف",
+  "customerAddress": "العنوان",
+  "enterCustomerName": "أدخل اسم العميل",
+  "enterCustomerEmail": "أدخل البريد الإلكتروني",
+  "enterCustomerPhone": "أدخل رقم الهاتف",
+  "enterCustomerAddress": "أدخل العنوان",
+  "invoiceItems": "عناصر الفاتورة",
+  "addItem": "إضافة عنصر",
+  "noItemsAdded": "لم يتم إضافة أي عناصر بعد",
+  "addFirstItem": "أضف أول عنصر",
+  "itemName": "اسم العنصر",
+  "quantity": "الكمية",
+  "price": "السعر",
+  "discount": "الخصم",
+  "taxPercent": "نسبة الضريبة",
+  "taxAmount": "مبلغ الضريبة",
+  "total": "المجموع",
+  "enterItemName": "أدخل اسم العنصر",
+  "enterQuantity": "أدخل الكمية",
+  "enterPrice": "أدخل السعر",
+  "enterDiscount": "أدخل الخصم",
+  "enterTaxPercent": "أدخل نسبة الضريبة",
+  "enterTaxAmount": "أدخل مبلغ الضريبة",
+  "enterTotal": "أدخل المجموع",
+  "removeItem": "حذف العنصر",
+  "editItem": "تعديل العنصر",
+  "invoiceInfo": "معلومات الفاتورة",
+  "customerInfo": "معلومات العميل",
+  "itemsInfo": "معلومات العناصر",
+  "financialInfo": "المعلومات المالية",
+  "subtotal": "المجموع الفرعي",
+  "totalAmount": "المبلغ الإجمالي",
+  "actionType": "نوع الإجراء",
+  "paymentMethodType": "نوع طريقة الدفع",
+  "statusType": "نوع الحالة",
+  "issueDateValue": "تاريخ الإصدار",
+  "descriptionValue": "الوصف",
+  "customerNameValue": "اسم العميل",
+  "customerEmailValue": "البريد الإلكتروني",
+  "customerPhoneValue": "رقم الهاتف",
+  "customerAddressValue": "العنوان",
+  "itemDetails": "تفاصيل العنصر",
+  "itemQuantity": "الكمية",
+  "itemPrice": "السعر",
+  "itemDiscount": "الخصم",
+  "itemTax": "الضريبة",
+  "itemTotal": "المجموع",
+  "loadingMore": "جاري تحميل المزيد...",
+  "searchCustomers": "البحث عن العملاء",
+  "loadingCustomers": "جاري تحميل العملاء...",
+  "errorLoadingCustomers": "خطأ في تحميل العملاء",
+  "retry": "إعادة المحاولة",
+  "noCustomersFound": "لا توجد عملاء",
+  "noCustomersMatchSearch": "لا توجد عملاء يطابقون البحث",
+  "addFirstCustomer": "أضف أول عميل",
+  "tryDifferentSearch": "جرب بحث مختلف",
+  "clearSearch": "مسح البحث",
+  "loadMore": "تحميل المزيد",
+  "dashboard": "لوحة التحكم",
+  "statistics": "الإحصائيات",
+  "totalInvoices": "إجمالي الفواتير",
+  "newInvoices": "فواتير جديدة",
+  "taxInvoices": "الفواتير الضريبية",
+  "returnedInvoices": "الفواتير المرتجعة",
+  "totalSales": "إجمالي المبيعات",
+  "totalExpenses": "إجمالي المصروفات",
+  "monthlyExpenses": "مصروفات هذا الشهر",
+  "totalCustomers": "إجمالي العملاء",
+  "newCustomers": "عملاء جدد",
+  "totalProducts": "إجمالي المنتجات",
+  "newProducts": "منتجات جديدة",
+  "netProfit": "صافي الربح",
+  "salesGrowth": "نمو المبيعات",
+  "profitGrowth": "نمو الأرباح",
+  "topSellingProducts": "المنتجات الأكثر مبيعاً",
+  "quickActions": "الإجراءات السريعة",
+  "createInvoice": "إنشاء فاتورة",
+  "addCustomer": "إضافة عميل",
+  "addProduct": "إضافة منتج",
+  "addExpense": "إضافة مصروف",
+  "loadingDashboard": "جاري تحميل لوحة التحكم...",
+  "errorLoadingDashboard": "خطأ في تحميل لوحة التحكم",
+  "retry": "إعادة المحاولة",
+  "dashboardError": "خطأ في تحميل البيانات",
+  "dashboardErrorMessage": "حدث خطأ أثناء تحميل بيانات لوحة التحكم",
+  "noDataAvailable": "لا توجد بيانات متاحة",
+  "refreshData": "تحديث البيانات",
+  "lastUpdated": "آخر تحديث",
+  "currency": "دينار",
+  "growth": "نمو",
+  "decrease": "انخفاض",
+  "increase": "زيادة",
+  "thisMonth": "هذا الشهر",
+  "newThisMonth": "جديد هذا الشهر",
+  "productsInStock": "منتجات في المخزون",
+  "salesDistribution": "توزيع المبيعات",
+  "invoiceStatistics": "إحصائيات الفواتير",
+  "allInvoices": "جميع الفواتير",
+  "regularInvoices": "الفواتير العادية",
+  "monthlySalesStatistics": "إحصائيات المبيعات الشهرية",
+  "salesCategories": "فئات المبيعات",
+  "firstCategory": "فئة أولى",
+  "uncategorized": "غير مصنف",
+  "printInvoice": "طباعة الفاتورة",
+  "printOptions": "خيارات الطباعة",
+  "thermalPrint": "طباعة حرارية",
+  "thermalPrintDesc": "للطابعات الحرارية - 80mm",
+  "pdfPrint": "طباعة PDF",
+  "pdfPrintDesc": "عرض وحفظ PDF",
+  "printerStatus": "حالة الطابعة",
+  "printerConnected": "متصل بالطابعة الحرارية",
+  "printerDisconnected": "غير متصل بالطابعة",
+  "checkingConnection": "جاري فحص الاتصال...",
+  "searchingPrinter": "جاري البحث عن الطابعة...",
+  "printReceipt": "طباعة الإيصال",
+  "retryConnection": "إعادة فحص",
+  "pdfPreview": "معاينة PDF",
+  "savePDF": "حفظ PDF",
+  "downloadPDF": "تحميل PDF",
+  "generatingPDF": "جاري إنشاء PDF...",
+  "pdfGenerated": "تم إنشاء PDF بنجاح",
+  "pdfSaved": "تم حفظ PDF بنجاح",
+  "printError": "خطأ في الطباعة",
+  "connectionError": "خطأ في الاتصال",
+  "thermalReceipt": "إيصال حرارية",
+  "invoiceNumber": "رقم الفاتورة",
+  "issueDate": "تاريخ الإصدار",
+  "customer": "العميل",
+  "subtotal": "المجموع الفرعي",
+  "tax": "الضريبة",
+  "discount": "الخصم",
+  "total": "المجموع الكلي",
+  "thankYou": "شكراً لتعاملكم معنا",
+  "printSuccess": "تمت الطباعة بنجاح",
+  "printFailed": "فشلت الطباعة",
+  "pdfError": "خطأ في إنشاء PDF",
+  "saveError": "خطأ في حفظ PDF",
+  "printSettings": "إعدادات الطباعة",
+  "paperSize": "حجم الورق",
+  "printerName": "اسم الطابعة",
+  "connectionType": "نوع الاتصال",
+  "bluetooth": "بلوتوث",
+  "usb": "USB",
+  "network": "شبكة",
+  "selectPrinter": "اختر الطابعة",
+  "noPrintersFound": "لم يتم العثور على طابعات",
+  "refreshPrinters": "تحديث الطابعات",
+  "printerSettings": "إعدادات الطابعة",
+  "testPrint": "طباعة تجريبية",
+  "printQuality": "جودة الطباعة",
+  "high": "عالية",
+  "medium": "متوسطة",
+  "low": "منخفضة",
+  "printInvoice": "طباعة الفاتورة",
+  "printOptions": "خيارات الطباعة",
+  "thermalPrint": "طباعة حرارية",
+  "thermalPrintDesc": "للطابعات الحرارية - 80mm",
+  "pdfPrint": "طباعة PDF",
+  "pdfPrintDesc": "عرض وحفظ PDF",
+  "printerStatus": "حالة الطابعة",
+  "printerConnected": "متصل بالطابعة",
+  "printerDisconnected": "غير متصل بالطابعة",
+  "checkingConnection": "جاري فحص الاتصال...",
+  "searchingPrinter": "جاري البحث عن الطابعة...",
+  "printReceipt": "طباعة الإيصال",
+  "retryConnection": "إعادة فحص",
+  "pdfPreview": "معاينة PDF",
+  "savePDF": "حفظ PDF",
+  "downloadPDF": "تحميل PDF",
+  "generatingPDF": "جاري إنشاء PDF...",
+  "pdfGenerated": "تم إنشاء PDF بنجاح",
+  "pdfSaved": "تم حفظ PDF بنجاح",
+  "printError": "خطأ في الطباعة",
+  "connectionError": "خطأ في الاتصال",
+  "thermalReceipt": "إيصال حرارية",
+  "invoiceNumber": "رقم الفاتورة",
+  "issueDate": "تاريخ الإصدار",
+  "customer": "العميل",
+  "subtotal": "المجموع الفرعي",
+  "tax": "الضريبة",
+  "discount": "الخصم",
+  "total": "المجموع الكلي",
+  "thankYou": "شكراً لتعاملكم معنا",
+  "printSuccess": "تمت الطباعة بنجاح",
+  "printFailed": "فشلت الطباعة",
+  "pdfError": "خطأ في إنشاء PDF",
+  "saveError": "خطأ في حفظ PDF",
+  "printSettings": "إعدادات الطباعة",
+  "paperSize": "حجم الورق",
+  "printerName": "اسم الطابعة",
+  "connectionType": "نوع الاتصال",
+  "bluetooth": "بلوتوث",
+  "usb": "USB",
+  "network": "شبكة",
+  "selectPrinter": "اختر الطابعة",
+  "noPrintersFound": "لم يتم العثور على طابعات",
+  "refreshPrinters": "تحديث الطابعات",
+  "printerSettings": "إعدادات الطابعة",
+  "testPrint": "طباعة تجريبية",
+  "printQuality": "جودة الطباعة" , 
+  "searchExpenses": "....البحث عن المصروفات"
 }

@@ -25,7 +25,7 @@ class CommonFilterRow extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -47,7 +47,7 @@ class CommonFilterRow extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 DropdownButtonFormField<String>(
-                  value: filter.selectedValue,
+                  initialValue: filter.selectedValue,
                   onChanged: filter.onChanged,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(

@@ -73,8 +73,7 @@ class SEn extends S {
   String get validationError => 'Please check the entered data';
 
   @override
-  String get networkError =>
-      'Network connection error. Please check your connection and try again.';
+  String get networkError => 'Network error';
 
   @override
   String get serverError => 'Server error. Please try again later.';
@@ -467,6 +466,165 @@ class SEn extends S {
   String get noDataReceived => 'No data received from server';
 
   @override
+  String get cannotEditInvoice => 'Cannot Edit Invoice';
+
+  @override
+  String get invoiceAlreadySent => 'Invoice Already Sent';
+
+  @override
+  String get cannotEditSentInvoice => 'Cannot edit sent invoices';
+
+  @override
+  String get noData => 'No data';
+
+  @override
+  String get selectCustomer => 'Select Customer';
+
+  @override
+  String get searchCustomers => 'Search customers';
+
+  @override
+  String get loadingCustomers => 'Loading customers...';
+
+  @override
+  String get errorLoadingCustomers => 'Error loading customers';
+
+  @override
+  String get noCustomersFound => 'No customers found';
+
+  @override
+  String get noCustomersMatchSearch => 'No customers match your search';
+
+  @override
+  String get addFirstCustomer => 'Add first customer';
+
+  @override
+  String get tryDifferentSearch => 'Try a different search';
+
+  @override
+  String get addNewCustomer => 'Add New Customer';
+
+  @override
+  String get companyInformation => 'Company Information';
+
+  @override
+  String get companyName => 'Company Name';
+
+  @override
+  String get enterCompanyName => 'Enter company name';
+
+  @override
+  String get address => 'Address';
+
+  @override
+  String get enterAddress => 'Enter address';
+
+  @override
+  String get errorCreatingCustomer => 'Error creating customer';
+
+  @override
+  String get selectProduct => 'Select Product';
+
+  @override
+  String get searchProducts => 'Search products...';
+
+  @override
+  String get loadingProducts => 'Loading products...';
+
+  @override
+  String get errorLoadingProducts => 'Error loading products';
+
+  @override
+  String get noProductsFound => 'No products found';
+
+  @override
+  String get noProductsMatchSearch => 'No products match search';
+
+  @override
+  String get addFirstProduct => 'Add first product';
+
+  @override
+  String get addNewProduct => 'Add New Product';
+
+  @override
+  String get productName => 'Product Name';
+
+  @override
+  String get enterProductName => 'Enter product name';
+
+  @override
+  String get sku => 'SKU';
+
+  @override
+  String get enterSku => 'Enter SKU';
+
+  @override
+  String get pricingInformation => 'Pricing Information';
+
+  @override
+  String get price => 'Price';
+
+  @override
+  String get enterPrice => 'Enter price';
+
+  @override
+  String get priceRequired => 'Price is required';
+
+  @override
+  String get invalidPrice => 'Invalid price';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get enterQuantity => 'Enter quantity';
+
+  @override
+  String get quantityRequired => 'Quantity is required';
+
+  @override
+  String get invalidQuantity => 'Invalid quantity';
+
+  @override
+  String get errorCreatingProduct => 'Error creating product';
+
+  @override
+  String get invoiceItems => 'Invoice Items';
+
+  @override
+  String get items => 'Items';
+
+  @override
+  String get noItemsAdded => 'No items added yet';
+
+  @override
+  String get addItemsToInvoice => 'Add items to invoice';
+
+  @override
+  String get manualItem => 'Manual Item';
+
+  @override
+  String get discount => 'Discount';
+
+  @override
+  String get addFromProducts => 'Add from Products';
+
+  @override
+  String get addManualItem => 'Add Manual Item';
+
+  @override
+  String get customerSelection => 'Customer Selection';
+
+  @override
+  String get noCustomerSelected => 'No customer selected';
+
+  @override
+  String get invoiceUpdatedSuccessfully => 'Invoice updated successfully';
+
+  @override
+  String get errorUpdatingInvoice => 'Error updating invoice';
+
+  @override
   String get errorLoadingUsers => 'Error loading users';
 
   @override
@@ -527,9 +685,6 @@ class SEn extends S {
   String get categoriesAppbar => 'Product Categories';
 
   @override
-  String get searchProducts => 'Search products...';
-
-  @override
   String get category => 'Category';
 
   @override
@@ -540,9 +695,6 @@ class SEn extends S {
 
   @override
   String get outOfStock => 'Out of Stock';
-
-  @override
-  String get noProductsFound => 'No products found';
 
   @override
   String get viewDetails => 'View Details';
@@ -557,9 +709,6 @@ class SEn extends S {
   String deleteProductConfirmation(String name) {
     return 'Are you sure you want to delete product \"$name\"?';
   }
-
-  @override
-  String get quantity => 'Quantity';
 
   @override
   String get noName => 'No name';
@@ -596,12 +745,6 @@ class SEn extends S {
 
   @override
   String get errorDeletingCategory => 'Error deleting category';
-
-  @override
-  String get price => 'Price';
-
-  @override
-  String get sku => 'SKU';
 
   @override
   String get barcode => 'Barcode';
@@ -754,9 +897,6 @@ class SEn extends S {
   String get apply => 'Apply';
 
   @override
-  String get noCustomersFound => 'No customers found';
-
-  @override
   String get noCustomersFoundMessage =>
       'Press the add button to create a new customer';
 
@@ -785,7 +925,7 @@ class SEn extends S {
   String get customerEmail => 'Email';
 
   @override
-  String get customerPhone => 'Phone Number';
+  String get customerPhone => 'Phone';
 
   @override
   String get customerAddress => 'Address';
@@ -866,15 +1006,9 @@ class SEn extends S {
   String get edit => 'Edit';
 
   @override
-  String get addNewCustomer => 'Add New Customer';
-
-  @override
   String errorOccurred(Object error) {
-    return 'Error: $error';
+    return 'An error occurred: $error';
   }
-
-  @override
-  String get searchCustomers => 'Search customers...';
 
   @override
   String get company => 'Company';
@@ -1115,9 +1249,6 @@ class SEn extends S {
   String get settings => 'Settings';
 
   @override
-  String get companyName => 'Company Name';
-
-  @override
   String get companyEmail => 'Company Email';
 
   @override
@@ -1157,7 +1288,7 @@ class SEn extends S {
   String get productsCategoriesManagement => 'Products and Categories';
 
   @override
-  String get expensesManagement => 'Expenses & Categories Management';
+  String get expensesManagement => 'Expenses & Categories';
 
   @override
   String get supportEmail => 'Support Email';
@@ -1194,9 +1325,6 @@ class SEn extends S {
 
   @override
   String get companyAddressRequired => 'Company address is required';
-
-  @override
-  String get enterCompanyName => 'Enter company name';
 
   @override
   String get enterCompanyEmail => 'Enter company email';
@@ -1474,13 +1602,7 @@ class SEn extends S {
   }
 
   @override
-  String get errorLoadingProducts => 'Error loading products';
-
-  @override
   String get errorLoadingProduct => 'Error loading product data';
-
-  @override
-  String get errorCreatingProduct => 'Error creating product';
 
   @override
   String get noCategoriesToDelete => 'No categories to delete';
@@ -1617,13 +1739,7 @@ class SEn extends S {
   String get screenDimensionsPerformance => 'Screen dimensions and performance';
 
   @override
-  String get enterProductName => 'Enter product name';
-
-  @override
   String get enterProductDescription => 'Enter product description';
-
-  @override
-  String get enterQuantity => 'Enter quantity';
 
   @override
   String get pieceKgMeter => 'piece, kg, meter...';
@@ -1663,9 +1779,6 @@ class SEn extends S {
 
   @override
   String get enterPostalCode => 'Enter postal code';
-
-  @override
-  String get enterAddress => 'Enter client address';
 
   @override
   String get enterDetailedAddress => 'Enter detailed address';
@@ -1739,7 +1852,7 @@ class SEn extends S {
   String get paidInvoices => '8 Paid';
 
   @override
-  String get totalAmount => 'SAR 15,420';
+  String get totalAmount => 'Total Amount';
 
   @override
   String get thisMonth => 'This Month';
@@ -1901,12 +2014,6 @@ class SEn extends S {
   String get pressAddToCreateClient => 'Press add button to create new client';
 
   @override
-  String get address => 'Address';
-
-  @override
-  String get companyInformation => 'Company Information';
-
-  @override
   String get taxNumber => 'Tax Number';
 
   @override
@@ -2037,4 +2144,934 @@ class SEn extends S {
 
   @override
   String get loadingUsers => 'Loading users...';
+
+  @override
+  String get signInFailed => 'Sign in failed';
+
+  @override
+  String get loginCancelled => 'Login cancelled';
+
+  @override
+  String get failedToGetUserData => 'Failed to get user data';
+
+  @override
+  String get loginError => 'Login error';
+
+  @override
+  String get playServicesNotAvailable => 'Play services not available';
+
+  @override
+  String get googleSignInError => 'Google sign in error';
+
+  @override
+  String get addInvoice => 'Add Invoice';
+
+  @override
+  String get invoices => 'Invoices';
+
+  @override
+  String get searchInInvoices => 'Search in invoices...';
+
+  @override
+  String get allPaymentMethods => 'All Payment Methods';
+
+  @override
+  String get customer => 'Customer';
+
+  @override
+  String get allCustomers => 'All Customers';
+
+  @override
+  String get paid => 'Paid';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get overdue => 'Overdue';
+
+  @override
+  String get draft => 'Draft';
+
+  @override
+  String get card => 'Card';
+
+  @override
+  String get total => 'Total';
+
+  @override
+  String get subtotal => 'Subtotal';
+
+  @override
+  String get tax => 'Tax';
+
+  @override
+  String get noItems => 'No items';
+
+  @override
+  String get qty => 'Qty';
+
+  @override
+  String get searchItems => 'Search items...';
+
+  @override
+  String get showLess => 'Show Less';
+
+  @override
+  String showAllItems(Object count) {
+    return 'Show All Items ($count)';
+  }
+
+  @override
+  String get payment => 'Payment';
+
+  @override
+  String get paymentDetails => 'Payment Details';
+
+  @override
+  String get markAsPaid => 'Mark as Paid';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get duplicate => 'Duplicate';
+
+  @override
+  String get downloadPDF => 'Download PDF';
+
+  @override
+  String get noInvoices => 'No invoices';
+
+  @override
+  String get noInvoicesDescription =>
+      'Press the add button to create a new invoice';
+
+  @override
+  String get addFirstInvoice => 'Add First Invoice';
+
+  @override
+  String get deleteInvoiceConfirmation => 'Delete Invoice Confirmation';
+
+  @override
+  String get deleteInvoiceWarning =>
+      'Are you sure you want to delete this invoice? This action cannot be undone.';
+
+  @override
+  String get sendMethod => 'Send Method';
+
+  @override
+  String get sms => 'SMS';
+
+  @override
+  String get emailDetails => 'Email Details';
+
+  @override
+  String get subject => 'Subject';
+
+  @override
+  String get enterSubject => 'Enter subject';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String get enterMessage => 'Enter message';
+
+  @override
+  String get includePDF => 'Include PDF';
+
+  @override
+  String get paymentDate => 'Payment Date';
+
+  @override
+  String get addNotes => 'Add Notes';
+
+  @override
+  String get invoiceHelp => 'Invoice Help';
+
+  @override
+  String get creatingInvoices => 'Creating Invoices';
+
+  @override
+  String get createInvoiceStep1 => '1. Enter basic customer information';
+
+  @override
+  String get createInvoiceStep2 => '2. Add items and quantities';
+
+  @override
+  String get createInvoiceStep3 => '3. Set payment method and date';
+
+  @override
+  String get createInvoiceStep4 => '4. Review and save the invoice';
+
+  @override
+  String get managingInvoices => 'Managing Invoices';
+
+  @override
+  String get manageInvoiceStep1 => '1. Use search and filters to find invoices';
+
+  @override
+  String get manageInvoiceStep2 => '2. Tap on invoice to view details';
+
+  @override
+  String get manageInvoiceStep3 => '3. Use buttons to edit or delete';
+
+  @override
+  String get manageInvoiceStep4 => '4. Send invoice to customer when needed';
+
+  @override
+  String get paymentMethods => 'Payment Methods';
+
+  @override
+  String get paymentMethodCash => 'Cash';
+
+  @override
+  String get paymentMethodCard => 'Credit Card';
+
+  @override
+  String get paymentMethodBank => 'Bank Transfer';
+
+  @override
+  String get paymentMethodCheck => 'Check';
+
+  @override
+  String get taxIntegration => 'Tax Integration';
+
+  @override
+  String get taxIntegrationStep1 => '1. Enable tax integration';
+
+  @override
+  String get taxIntegrationStep2 => '2. Enter company tax information';
+
+  @override
+  String get taxIntegrationStep3 => '3. Test connection and save settings';
+
+  @override
+  String get invoiceDetails => 'Invoice Details';
+
+  @override
+  String get customerInformation => 'Customer Information';
+
+  @override
+  String get amountInformation => 'Amount Information';
+
+  @override
+  String get invoiceNumber => 'Invoice Number';
+
+  @override
+  String get enterInvoiceNumber => 'Enter invoice number';
+
+  @override
+  String get issueDate => 'Issue Date';
+
+  @override
+  String get selectDate => 'Select Date';
+
+  @override
+  String get enterCustomerEmail => 'Enter email';
+
+  @override
+  String get enterCustomerPhone => 'Enter phone number';
+
+  @override
+  String get enterSubtotal => 'Enter subtotal';
+
+  @override
+  String get enterTaxAmount => 'Enter tax amount';
+
+  @override
+  String get taxIntegrationSettings => 'Tax Integration Settings';
+
+  @override
+  String get configureTaxIntegration => 'Configure Tax Integration';
+
+  @override
+  String get enableTaxIntegration => 'Enable Tax Integration';
+
+  @override
+  String get taxType => 'Tax Type';
+
+  @override
+  String get vat => 'VAT';
+
+  @override
+  String get salesTax => 'Sales Tax';
+
+  @override
+  String get country => 'Country';
+
+  @override
+  String get saudiArabia => 'Saudi Arabia';
+
+  @override
+  String get uae => 'United Arab Emirates';
+
+  @override
+  String get kuwait => 'Kuwait';
+
+  @override
+  String get testConnection => 'Test Connection';
+
+  @override
+  String get vatNumber => 'VAT Number';
+
+  @override
+  String get enterVatNumber => 'Enter VAT number';
+
+  @override
+  String get city => 'City';
+
+  @override
+  String get postalCode => 'Postal Code';
+
+  @override
+  String get contactInformation => 'Contact Information';
+
+  @override
+  String get enterPhone => 'Enter phone';
+
+  @override
+  String get testingConnection => 'Testing connection...';
+
+  @override
+  String get taxAmount => 'Tax Amount';
+
+  @override
+  String get enterDescription => 'Enter description';
+
+  @override
+  String get searchInvoices => 'Search invoices...';
+
+  @override
+  String get loadingInvoiceDetails => 'Loading invoice details...';
+
+  @override
+  String get errorLoadingInvoice => 'Error loading invoice';
+
+  @override
+  String get noInvoiceData => 'No invoice data available';
+
+  @override
+  String invoiceNumberLabel(String number) {
+    return 'Invoice Number: $number';
+  }
+
+  @override
+  String get shareInvoice => 'Share Invoice';
+
+  @override
+  String get printInvoice => 'Print Invoice';
+
+  @override
+  String get duplicateInvoice => 'Duplicate Invoice';
+
+  @override
+  String get viewQRCode => 'View QR Code';
+
+  @override
+  String get viewTaxUID => 'View Tax UID';
+
+  @override
+  String get updateStatus => 'Update Status';
+
+  @override
+  String get changeStatus => 'Change Status';
+
+  @override
+  String get moreOptions => 'More Options';
+
+  @override
+  String get refreshData => 'Refresh Data';
+
+  @override
+  String get invoiceCopiedToClipboard => 'Invoice details copied to clipboard';
+
+  @override
+  String get invoiceCopiedForPrinting => 'Invoice details copied for printing';
+
+  @override
+  String get invoiceSentSuccessfully => 'Invoice sent successfully';
+
+  @override
+  String get invoiceDeletedSuccessfully => 'Invoice deleted successfully';
+
+  @override
+  String invoiceStatusUpdated(String status) {
+    return 'Invoice status updated to: $status';
+  }
+
+  @override
+  String fileSavedSuccessfully(String path) {
+    return 'File saved to: $path';
+  }
+
+  @override
+  String get noQRCodeAvailable => 'No QR code available for this invoice';
+
+  @override
+  String get noTaxUIDAvailable => 'No tax UID available for this invoice';
+
+  @override
+  String get taxUIDCopied => 'Tax UID copied';
+
+  @override
+  String shareInvoiceText(
+    String number,
+    String customer,
+    String date,
+    String amount,
+    String status,
+  ) {
+    return 'Invoice Number: $number\nCustomer: $customer\nDate: $date\nAmount: $amount SAR\nStatus: $status\n\nCreated by Invotek App';
+  }
+
+  @override
+  String printInvoiceText(
+    String separator,
+    String number,
+    String date,
+    String status,
+    String customer,
+    String contact,
+    String items,
+    String subtotal,
+    String tax,
+    String total,
+  ) {
+    return 'Invoice\n$separator\nInvoice Number: $number\nDate: $date\nStatus: $status\n\nCustomer Information:\nName: $customer\n$contact\n\nInvoice Items:\n$items\n\nTotals:\nSubtotal: $subtotal SAR\n$tax\nTotal: $total SAR\n\n$separator\nThank you for your business\nThis invoice was created by Invotek App\n$separator';
+  }
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusOverdue => 'Overdue';
+
+  @override
+  String get statusDraft => 'Draft';
+
+  @override
+  String get itemDetails => 'Item Details';
+
+  @override
+  String get changePaymentMethod => 'Change Payment Method';
+
+  @override
+  String get creatingFile => 'Creating file...';
+
+  @override
+  String get sendingInvoice => 'Sending invoice...';
+
+  @override
+  String get deletingInvoice => 'Deleting invoice...';
+
+  @override
+  String get updatingStatus => 'Updating status...';
+
+  @override
+  String errorSharingInvoice(String error) {
+    return 'Failed to share invoice: $error';
+  }
+
+  @override
+  String errorPrintingInvoice(String error) {
+    return 'Failed to print invoice: $error';
+  }
+
+  @override
+  String errorSendingInvoice(String error) {
+    return 'Failed to send invoice: $error';
+  }
+
+  @override
+  String errorDeletingInvoice(String error) {
+    return 'Failed to delete invoice: $error';
+  }
+
+  @override
+  String errorCreatingFile(String error) {
+    return 'Failed to create file: $error';
+  }
+
+  @override
+  String errorUpdatingStatus(String error) {
+    return 'Failed to update status: $error';
+  }
+
+  @override
+  String duplicateInvoiceMessage(String number) {
+    return 'Duplicate invoice $number';
+  }
+
+  @override
+  String viewCustomerDetails(String name) {
+    return 'View customer details: $name';
+  }
+
+  @override
+  String viewItemDetails(String name) {
+    return 'View item details: $name';
+  }
+
+  @override
+  String changePaymentMethodForInvoice(String number) {
+    return 'Change payment method for invoice $number';
+  }
+
+  @override
+  String get taxUID => 'Tax UID';
+
+  @override
+  String taxUIDForInvoice(String number) {
+    return 'Tax UID for invoice $number:';
+  }
+
+  @override
+  String get itemName => 'Item Name';
+
+  @override
+  String get itemQuantity => 'Quantity';
+
+  @override
+  String get itemPrice => 'Price';
+
+  @override
+  String get itemTotal => 'Total';
+
+  @override
+  String get thankYouMessage => 'Thank you for your business';
+
+  @override
+  String get createdByInvotek => 'This invoice was created by Invotek App';
+
+  @override
+  String get separator => '=';
+
+  @override
+  String get itemSeparator => '-';
+
+  @override
+  String get itemHeader => 'Name\t\tQuantity\tPrice\tTotal';
+
+  @override
+  String itemRow(String name, String quantity, String price, String total) {
+    return '$name\t\t$quantity\t$price\t$total';
+  }
+
+  @override
+  String taxLine(String amount) {
+    return 'Tax: $amount SAR';
+  }
+
+  @override
+  String subtotalLine(String amount) {
+    return 'Subtotal: $amount SAR';
+  }
+
+  @override
+  String totalLine(String amount) {
+    return 'Total: $amount SAR';
+  }
+
+  @override
+  String fileName(String number, String timestamp) {
+    return 'Invoice_${number}_$timestamp';
+  }
+
+  @override
+  String loadingProductDetails(String name) {
+    return 'Loading product details...';
+  }
+
+  @override
+  String get createNewInvoiceStepper => 'Create New Invoice';
+
+  @override
+  String get invoiceBasicInfo => 'Invoice Information';
+
+  @override
+  String get reviewCalculations => 'Review Calculations';
+
+  @override
+  String get invoiceCreationHelp =>
+      'This form helps you create a new invoice step by step:\n\n1. Invoice Information: Choose action, payment method, and status\n2. Select Customer: Choose existing customer or add new one\n3. Invoice Items: Add items, quantities, and prices\n4. Review Calculations: Review final details before saving';
+
+  @override
+  String get invoiceCreatedSuccessfully => 'Invoice created successfully';
+
+  @override
+  String errorCreatingInvoice(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get fillRequiredFieldsBasicInfo =>
+      'Please fill all required fields in Invoice Information';
+
+  @override
+  String get selectOrAddCustomer =>
+      'Please select a customer or enter customer data';
+
+  @override
+  String get addAtLeastOneItem => 'Please add at least one item';
+
+  @override
+  String get actionRequired => 'Action is required';
+
+  @override
+  String get paymentMethodRequired => 'Payment method is required';
+
+  @override
+  String get statusRequired => 'Invoice status is required';
+
+  @override
+  String get customerRequired =>
+      'Please select a customer or enter customer data';
+
+  @override
+  String get itemsRequired => 'Please add at least one item';
+
+  @override
+  String get action => 'Action';
+
+  @override
+  String get saveOnly => 'Save Only';
+
+  @override
+  String get saveAndSend => 'Save and Send';
+
+  @override
+  String get invoiceStatus => 'Invoice Status';
+
+  @override
+  String get sent => 'Sent';
+
+  @override
+  String get invoiceDescription => 'Invoice Description';
+
+  @override
+  String get enterInvoiceDescription => 'Enter invoice description (optional)';
+
+  @override
+  String get customerType => 'Customer Type';
+
+  @override
+  String get existingCustomer => 'Existing Customer';
+
+  @override
+  String get newCustomer => 'New Customer';
+
+  @override
+  String get enterCustomerAddress => 'Enter address';
+
+  @override
+  String get addItem => 'Add Item';
+
+  @override
+  String get addFirstItem => 'Add First Item';
+
+  @override
+  String get taxPercent => 'Tax Percent';
+
+  @override
+  String get enterItemName => 'Enter item name';
+
+  @override
+  String get enterDiscount => 'Enter discount';
+
+  @override
+  String get enterTaxPercent => 'Enter tax percent';
+
+  @override
+  String get enterTotal => 'Enter total';
+
+  @override
+  String get removeItem => 'Remove Item';
+
+  @override
+  String get editItem => 'Edit Item';
+
+  @override
+  String get invoiceInfo => 'Invoice Information';
+
+  @override
+  String get customerInfo => 'Customer Information';
+
+  @override
+  String get itemsInfo => 'Items Information';
+
+  @override
+  String get financialInfo => 'Financial Information';
+
+  @override
+  String get actionType => 'Action Type';
+
+  @override
+  String get paymentMethodType => 'Payment Method Type';
+
+  @override
+  String get statusType => 'Status Type';
+
+  @override
+  String get issueDateValue => 'Issue Date';
+
+  @override
+  String get descriptionValue => 'Description';
+
+  @override
+  String get customerNameValue => 'Customer Name';
+
+  @override
+  String get customerEmailValue => 'Email';
+
+  @override
+  String get customerPhoneValue => 'Phone';
+
+  @override
+  String get customerAddressValue => 'Address';
+
+  @override
+  String get itemDiscount => 'Discount';
+
+  @override
+  String get itemTax => 'Tax';
+
+  @override
+  String get clearSearch => 'Clear Search';
+
+  @override
+  String get loadMore => 'Load More';
+
+  @override
+  String get dashboard => 'Dashboard';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get totalInvoices => 'Total Invoices';
+
+  @override
+  String get newInvoices => 'New Invoices';
+
+  @override
+  String get totalSales => 'Total Sales';
+
+  @override
+  String get totalExpenses => 'Total Expenses';
+
+  @override
+  String get monthlyExpenses => 'Monthly Expenses';
+
+  @override
+  String get totalCustomers => 'Total Customers';
+
+  @override
+  String get newCustomers => 'New Customers';
+
+  @override
+  String get totalProducts => 'Total Products';
+
+  @override
+  String get newProducts => 'New Products';
+
+  @override
+  String get netProfit => 'Net Profit';
+
+  @override
+  String get salesGrowth => 'Sales Growth';
+
+  @override
+  String get profitGrowth => 'Profit Growth';
+
+  @override
+  String get topSellingProducts => 'Top Selling Products';
+
+  @override
+  String get loadingDashboard => 'Loading Dashboard...';
+
+  @override
+  String get errorLoadingDashboard => 'Error loading dashboard';
+
+  @override
+  String get dashboardError => 'Dashboard Error';
+
+  @override
+  String get dashboardErrorMessage =>
+      'An error occurred while loading dashboard data';
+
+  @override
+  String get noDataAvailable => 'No data available';
+
+  @override
+  String get currency => 'Dinar';
+
+  @override
+  String get growth => 'Growth';
+
+  @override
+  String get decrease => 'Decrease';
+
+  @override
+  String get increase => 'Increase';
+
+  @override
+  String get newThisMonth => 'New This Month';
+
+  @override
+  String get productsInStock => 'Products in Stock';
+
+  @override
+  String get salesDistribution => 'Sales Distribution';
+
+  @override
+  String get invoiceStatistics => 'Invoice Statistics';
+
+  @override
+  String get allInvoices => 'All Invoices';
+
+  @override
+  String get regularInvoices => 'Regular Invoices';
+
+  @override
+  String get monthlySalesStatistics => 'Monthly Sales Statistics';
+
+  @override
+  String get salesCategories => 'Sales Categories';
+
+  @override
+  String get firstCategory => 'First Category';
+
+  @override
+  String get uncategorized => 'Uncategorized';
+
+  @override
+  String get printOptions => 'Print Options';
+
+  @override
+  String get thermalPrint => 'Thermal Print';
+
+  @override
+  String get thermalPrintDesc => 'For thermal printers - 80mm';
+
+  @override
+  String get pdfPrint => 'PDF Print';
+
+  @override
+  String get pdfPrintDesc => 'View and save PDF';
+
+  @override
+  String get printerStatus => 'Printer Status';
+
+  @override
+  String get printerConnected => 'Connected to printer';
+
+  @override
+  String get printerDisconnected => 'Disconnected from printer';
+
+  @override
+  String get checkingConnection => 'Checking connection...';
+
+  @override
+  String get searchingPrinter => 'Searching for printer...';
+
+  @override
+  String get printReceipt => 'Print Receipt';
+
+  @override
+  String get retryConnection => 'Retry Connection';
+
+  @override
+  String get pdfPreview => 'PDF Preview';
+
+  @override
+  String get savePDF => 'Save PDF';
+
+  @override
+  String get generatingPDF => 'Generating PDF...';
+
+  @override
+  String get pdfGenerated => 'PDF generated successfully';
+
+  @override
+  String get pdfSaved => 'PDF saved successfully';
+
+  @override
+  String get printError => 'Print error';
+
+  @override
+  String get connectionError => 'Connection error';
+
+  @override
+  String get thermalReceipt => 'Thermal Receipt';
+
+  @override
+  String get thankYou => 'Thank you for your business';
+
+  @override
+  String get printSuccess => 'Print successful';
+
+  @override
+  String get printFailed => 'Print failed';
+
+  @override
+  String get pdfError => 'PDF generation error';
+
+  @override
+  String get saveError => 'Save error';
+
+  @override
+  String get printSettings => 'Print Settings';
+
+  @override
+  String get paperSize => 'Paper Size';
+
+  @override
+  String get printerName => 'Printer Name';
+
+  @override
+  String get connectionType => 'Connection Type';
+
+  @override
+  String get bluetooth => 'Bluetooth';
+
+  @override
+  String get usb => 'USB';
+
+  @override
+  String get network => 'Network';
+
+  @override
+  String get selectPrinter => 'Select Printer';
+
+  @override
+  String get noPrintersFound => 'No printers found';
+
+  @override
+  String get refreshPrinters => 'Refresh Printers';
+
+  @override
+  String get printerSettings => 'Printer Settings';
+
+  @override
+  String get testPrint => 'Test Print';
+
+  @override
+  String get printQuality => 'Print Quality';
+
+  @override
+  String get high => 'High';
+
+  @override
+  String get medium => 'Medium';
+
+  @override
+  String get low => 'Low';
+
+  @override
+  String get searchExpenses => '.... Search expenses';
 }

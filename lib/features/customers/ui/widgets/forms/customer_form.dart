@@ -455,7 +455,7 @@ class _CustomerFormState extends State<CustomerForm> {
 
           // Status Field
           DropdownButtonFormField<String>(
-            value: _selectedStatus,
+            initialValue: _selectedStatus,
             decoration: InputDecoration(
               labelText: '${s.customerStatus} *',
               border: OutlineInputBorder(

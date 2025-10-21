@@ -25,6 +25,7 @@ class ExpensesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: expenses.length <= 4 ? 0.79.sh : null,
       decoration: BoxDecoration(
         color: AppColors.backgroundLight,
         borderRadius: BorderRadius.only(
@@ -101,8 +102,6 @@ class ExpensesList extends StatelessWidget {
               );
             },
           ),
-          // Bottom spacing for FAB
-          SizedBox(height: 80.h),
         ],
       ),
     );

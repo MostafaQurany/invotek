@@ -223,7 +223,7 @@ class _AddUserFormWidgetState extends State<AddUserFormWidget> {
     required ValueChanged<String> onChanged,
   }) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       items: items.map((String item) {
         return DropdownMenuItem<String>(value: item, child: Text(item));
       }).toList(),

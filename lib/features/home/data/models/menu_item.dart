@@ -49,26 +49,14 @@ class MenuItem {
     switch (titleKey) {
       case 'home':
         return s.home;
-      case 'users_permissions':
-        return s.usersManagement;
       case 'users_list':
         return s.usersList;
-      case 'add_user':
-        return s.addUser;
       case 'manage_permissions':
         return s.managePermissions;
-      case 'clients':
-        return s.clientsProductsTitle;
       case 'customers':
         return s.customersManagement;
       case 'products_categories':
         return s.productsCategoriesManagement;
-      case 'clients_list':
-        return s.clientsList;
-      case 'add_client':
-        return s.addClient;
-      case 'manage_products':
-        return s.manageProducts;
       case 'product_categories':
         return s.productCategories;
       case 'products_list':
@@ -77,30 +65,14 @@ class MenuItem {
         return s.expensesManagement;
       case 'expenses_list':
         return s.expensesList;
-      case 'add_expense':
-        return s.addExpense;
       case 'expense_categories':
         return s.expenseCategories;
       case 'tax_invoices':
         return s.taxInvoices;
       case 'invoices_list':
         return s.invoicesList;
-      case 'create_invoice':
-        return s.createInvoice;
-      case 'posted_invoices':
-        return s.postedInvoices;
       case 'returned_invoices':
         return s.returnedInvoices;
-      case 'reports':
-        return s.reports;
-      case 'sales_report':
-        return s.salesReport;
-      case 'expenses_report':
-        return s.expensesReport;
-      case 'customers_report':
-        return s.customersReport;
-      case 'products_report':
-        return s.productsReport;
       case 'settings':
         return s.settings;
       case 'company_settings':
@@ -116,14 +88,16 @@ class MenuItem {
 }
 
 class MenuData {
+  static double index = 0;
+
   static List<MenuItem> getMenuItems() {
     return [
       MenuItem(
         title: 'الرئيسية',
         titleKey: 'home',
         icon: Icons.home,
-        route: '/home',
-        isSelected: true,
+        route: AppRoutes.homeRoute,
+        isSelected: index == 0,
       ),
       MenuItem(
         title: 'إدارة المستخدمين والصلاحيات',
@@ -131,12 +105,14 @@ class MenuData {
         icon: Icons.people,
         route: AppRoutes.usersPermissionsRoute,
         hasSubItems: true,
+        isSelected: index == 1,
         subItems: [
           MenuItem(
             title: 'قائمة المستخدمين',
             titleKey: 'users_list',
             icon: Icons.list,
             route: AppRoutes.usersListRoute,
+            isSelected: index == 1.1,
           ),
 
           MenuItem(
@@ -144,64 +120,18 @@ class MenuData {
             titleKey: 'manage_permissions',
             icon: Icons.security,
             route: AppRoutes.managePermissionsRoute,
+            isSelected: index == 1.2,
           ),
         ],
       ),
 
-      // MenuItem(
-      //   title: 'العملاء',
-      //   titleKey: 'clients',
-      //   icon: Icons.inventory,
-      //   route: '/clients',
-      //   hasSubItems: true,
-      //   subItems: [
-      //     MenuItem(
-      //       title: 'قائمة العملاء',
-      //       titleKey: 'clients_list',
-      //       icon: Icons.people,
-      //       route: '/clients/list',
-      //     ),
-      //     MenuItem(
-      //       title: 'إضافة عميل جديد',
-      //       titleKey: 'add_client',
-      //       icon: Icons.person_add,
-      //       route: '/clients/add',
-      //     ),
-      //     MenuItem(
-      //       title: 'إدارة المنتجات',
-      //       titleKey: 'manage_products',
-      //       icon: Icons.inventory_2,
-      //       route: '/products',
-      //       hasSubItems: true,
-      //       subItems: [
-      //         MenuItem(
-      //           title: 'قائمة المنتجات',
-      //           titleKey: 'products_list',
-      //           icon: Icons.list,
-      //           route: '/products/list',
-      //         ),
-      //         MenuItem(
-      //           title: 'إضافة منتج جديد',
-      //           titleKey: 'add_product',
-      //           icon: Icons.add_box,
-      //           route: '/products/add',
-      //         ),
-      //       ],
-      //     ),
-      //     MenuItem(
-      //       title: 'فئات المنتجات',
-      //       titleKey: 'product_categories',
-      //       icon: Icons.category,
-      //       route: '/products/categories',
-      //     ),
-      //   ],
-      // ),
       MenuItem(
         title: 'إدارة العملاء',
         titleKey: 'customers',
         icon: Icons.people_outline,
-        route: '/customers/list',
+        route: AppRoutes.customersListRoute,
         hasSubItems: false,
+        isSelected: index == 2,
       ),
       MenuItem(
         title: 'إدارة المنتجات وفئاتها',
@@ -209,19 +139,22 @@ class MenuData {
         icon: Icons.inventory,
         route: '/products',
         hasSubItems: true,
+        isSelected: index == 3,
         subItems: [
           MenuItem(
             title: 'قائمة المنتجات',
             titleKey: 'products_list',
             icon: Icons.list,
-            route: '/products/list',
+            route: AppRoutes.productsListRoute,
+            isSelected: index == 3.1,
           ),
           // categories
           MenuItem(
             title: 'فئات المنتجات',
             titleKey: 'product_categories',
             icon: Icons.category,
-            route: '/products/categories',
+            route: AppRoutes.categoriesListRoute,
+            isSelected: index == 3.2,
           ),
         ],
       ),
@@ -231,18 +164,21 @@ class MenuData {
         icon: Icons.account_balance_wallet,
         route: '/expenses',
         hasSubItems: true,
+        isSelected: index == 4,
         subItems: [
           MenuItem(
             title: 'قائمة المصروفات',
             titleKey: 'expenses_list',
             icon: Icons.list,
-            route: '/expenses/list',
+            route: AppRoutes.expensesListRoute,
+            isSelected: index == 4.1,
           ),
           MenuItem(
             title: 'فئات المصروفات',
             titleKey: 'expense_categories',
             icon: Icons.category,
-            route: '/expenses/categories',
+            route: AppRoutes.expenseCategoriesListRoute,
+            isSelected: index == 4.2,
           ),
         ],
       ),
@@ -251,66 +187,29 @@ class MenuData {
         titleKey: 'tax_invoices',
         icon: Icons.receipt_long,
         route: '/invoices',
-        hasSubItems: false,
-        // subItems: [
-        //   MenuItem(
-        //     title: 'قائمة الفواتير',
-        //     titleKey: 'invoices_list',
-        //     icon: Icons.list,
-        //     route: '/invoices/list',
-        //   ),
-        //   MenuItem(
-        //     title: 'إنشاء فاتورة جديدة',
-        //     titleKey: 'create_invoice',
-        //     icon: Icons.add,
-        //     route: '/invoices/create',
-        //   ),
-        //   MenuItem(
-        //     title: 'الفواتير المعلنة',
-        //     titleKey: 'posted_invoices',
-        //     icon: Icons.check_circle,
-        //     route: '/invoices/posted',
-        //   ),
-        //   MenuItem(
-        //     title: 'الفواتير المرتجعة',
-        //     titleKey: 'returned_invoices',
-        //     icon: Icons.undo,
-        //     route: '/invoices/returned',
-        //   ),
-        // ],
-      ),
-      MenuItem(
-        title: 'التقارير',
-        titleKey: 'reports',
-        icon: Icons.analytics,
-        route: '/reports',
-        hasSubItems: false,
-        // subItems: [
-        //   MenuItem(
-        //     title: 'تقرير المبيعات',
-        //     titleKey: 'sales_report',
-        //     icon: Icons.trending_up,
-        //     route: '/reports/sales',
-        //   ),
-        //   MenuItem(
-        //     title: 'تقرير المصروفات',
-        //     titleKey: 'expenses_report',
-        //     icon: Icons.trending_down,
-        //     route: '/reports/expenses',
-        //   ),
-        //   MenuItem(
-        //     title: 'تقرير العملاء',
-        //     titleKey: 'customers_report',
-        //     icon: Icons.people,
-        //     route: '/reports/customers',
-        //   ),
-        //   MenuItem(
-        //     title: 'تقرير المنتجات',
-        //     titleKey: 'products_report',
-        //     icon: Icons.inventory,
-        //     route: '/reports/products',
-        //   ),
-        // ],
+        hasSubItems: true,
+        isSelected: index == 5,
+        subItems: [
+          MenuItem(
+            title: 'قائمة الفواتير',
+            titleKey: 'invoices_list',
+            icon: Icons.list,
+            route: AppRoutes.invoicesListRoute,
+            isSelected: index == 5.1,
+          ),
+          MenuItem(
+            title: 'الفواتير المرحله',
+            titleKey: 'posted_invoices',
+            icon: Icons.check_circle,
+            route: AppRoutes.postedInvoicesRoute,
+          ),
+          MenuItem(
+            title: 'الفواتير المرتجعة',
+            titleKey: 'returned_invoices',
+            icon: Icons.undo,
+            route: AppRoutes.returnedInvoicesRoute,
+          ),
+        ],
       ),
       MenuItem(
         title: 'الإعدادات',
@@ -318,26 +217,6 @@ class MenuData {
         icon: Icons.settings,
         route: AppRoutes.settingsRoute,
         hasSubItems: false,
-        // subItems: [
-        //   MenuItem(
-        //     title: 'إعدادات الشركة',
-        //     titleKey: 'company_settings',
-        //     icon: Icons.business,
-        //     route: '/settings/company',
-        //   ),
-        //   MenuItem(
-        //     title: 'إعدادات النظام',
-        //     titleKey: 'system_settings',
-        //     icon: Icons.settings_system_daydream,
-        //     route: '/settings/system',
-        //   ),
-        //   MenuItem(
-        //     title: 'النسخ الاحتياطي',
-        //     titleKey: 'backup',
-        //     icon: Icons.backup,
-        //     route: '/settings/backup',
-        //   ),
-        // ],
       ),
     ];
   }

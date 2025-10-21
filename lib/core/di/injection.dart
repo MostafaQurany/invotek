@@ -27,6 +27,8 @@ import 'package:invotek/features/users_and_permissions/data/data_source/users_pe
 import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
+import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -82,6 +84,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<ExpenseCategoriesRepository>(
     () => ExpenseCategoriesRepository(getIt<ApiClient>()),
   );
+  getIt.registerLazySingleton<InvoiceRepository>(
+    () => InvoiceRepository(apiClient: getIt<ApiClient>()),
+  );
 
   // Register cubits (use factory so each screen gets a fresh instance)
   getIt.registerFactory<LocalizationCubit>(() => LocalizationCubit());
@@ -107,6 +112,9 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton<ExpenseCategoriesCubit>(
     () => ExpenseCategoriesCubit(getIt<ExpenseCategoriesRepository>()),
+  );
+  getIt.registerLazySingleton<InvoicesCubit>(
+    () => InvoicesCubit(getIt<InvoiceRepository>()),
   );
 
   // Register theme provider

@@ -188,7 +188,7 @@ class _AddProductScreenState extends State<AddProductScreen>
                 (products, selectedProduct, currentPage, totalPages, error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(s.errorOccurred(error)),
+                      content: Text(S.of(context).errorOccurred(error)),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(

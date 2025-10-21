@@ -9,6 +9,7 @@ import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart
 import 'package:invotek/features/expenses/ui/screens/add_expense_category_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 
 class ExpenseCategoriesListScreen extends StatefulWidget {
   const ExpenseCategoriesListScreen({super.key});
@@ -87,28 +88,25 @@ class _ExpenseCategoriesListScreenState
           S.of(context).expenseCategories,
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        leading: IconButton.filled(
-          style: IconButton.styleFrom(
-            backgroundColor: AppColors.white,
-            shape: RoundedRectangleBorder(
+        leading: Padding(
+          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.3),
               borderRadius: BorderRadius.circular(12.r),
             ),
+            child: IconButton(
+              onPressed: () {
+                ZoomDrawer.of(context)?.toggle();
+              },
+              icon: Icon(
+                Icons.menu_rounded,
+                color: AppColors.white,
+                size: 24.sp,
+              ),
+              padding: EdgeInsets.all(8.w),
+            ),
           ),
-          onPressed: () {
-            try {
-              final zoomDrawer = ZoomDrawer.of(context);
-              if (zoomDrawer != null) {
-                zoomDrawer.toggle();
-              }
-            } catch (e) {
-              if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
-              } else {
-                Navigator.of(context).pushReplacementNamed('/home');
-              }
-            }
-          },
-          icon: Icon(Icons.menu, color: AppColors.primary),
         ),
         actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
         actions: [
