@@ -67,7 +67,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(clients: clients, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {
@@ -125,7 +125,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(clients: updatedClients, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {
@@ -186,7 +186,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(clients: updatedClients, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {
@@ -219,7 +219,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(clients: updatedClients, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {
@@ -249,7 +249,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(statistics: statistics, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {
@@ -282,7 +282,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(clients: updatedClients, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {
@@ -324,7 +324,7 @@ class ClientsCubit extends Cubit<ClientsState> {
           emit(state.copyWith(clients: updatedClients, isLoading: false));
         },
         failure: (error) {
-          emit(state.copyWith(error: error, isLoading: false));
+          emit(state.copyWith(error: error.message, isLoading: false));
         },
       );
     } catch (e) {

@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
-import 'package:invotek/features/auth/demo/repo/auth_repo.dart';
+import 'package:invotek/features/auth/domain/repo/auth_repo.dart';
 
 /// Performance optimizations for DI container
 class PerformanceOptimizations {

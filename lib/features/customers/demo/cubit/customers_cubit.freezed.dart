@@ -168,7 +168,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? error)?  initial,TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  loaded,TResult Function( List<CustomerModel> customers,  CustomerModel created,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<CustomerModel> customers,  CustomerModel updated,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<CustomerModel> customers,  int deletedId,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  loaded,TResult Function( List<CustomerModel> customers,  CustomerModel created,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<CustomerModel> customers,  CustomerModel updated,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<CustomerModel> customers,  int deletedId,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  Failure failure)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.error);case _LoadingCustomers() when loading != null:
@@ -177,7 +177,7 @@ return loaded(_that.customers,_that.selectedCustomer,_that.currentPage,_that.tot
 return createSuccess(_that.customers,_that.created,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _UpdateSuccessCustomers() when updateSuccess != null:
 return updateSuccess(_that.customers,_that.updated,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _DeleteSuccessCustomers() when deleteSuccess != null:
 return deleteSuccess(_that.customers,_that.deletedId,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _FailureCustomers() when failure != null:
-return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.failure);case _:
   return orElse();
 
 }
@@ -195,7 +195,7 @@ return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.to
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? error)  initial,required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  loaded,required TResult Function( List<CustomerModel> customers,  CustomerModel created,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<CustomerModel> customers,  CustomerModel updated,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<CustomerModel> customers,  int deletedId,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  Failure? error)  initial,required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  loaded,required TResult Function( List<CustomerModel> customers,  CustomerModel created,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<CustomerModel> customers,  CustomerModel updated,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<CustomerModel> customers,  int deletedId,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  Failure failure)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.error);case _LoadingCustomers():
@@ -204,7 +204,7 @@ return loaded(_that.customers,_that.selectedCustomer,_that.currentPage,_that.tot
 return createSuccess(_that.customers,_that.created,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _UpdateSuccessCustomers():
 return updateSuccess(_that.customers,_that.updated,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _DeleteSuccessCustomers():
 return deleteSuccess(_that.customers,_that.deletedId,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _FailureCustomers():
-return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.error);}
+return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.failure);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -218,7 +218,7 @@ return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.to
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? error)?  initial,TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<CustomerModel> customers,  CustomerModel created,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<CustomerModel> customers,  CustomerModel updated,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<CustomerModel> customers,  int deletedId,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<CustomerModel> customers,  CustomerModel created,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<CustomerModel> customers,  CustomerModel updated,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<CustomerModel> customers,  int deletedId,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<CustomerModel> customers,  CustomerModel? selectedCustomer,  int currentPage,  int totalPages,  Failure failure)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.error);case _LoadingCustomers() when loading != null:
@@ -227,7 +227,7 @@ return loaded(_that.customers,_that.selectedCustomer,_that.currentPage,_that.tot
 return createSuccess(_that.customers,_that.created,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _UpdateSuccessCustomers() when updateSuccess != null:
 return updateSuccess(_that.customers,_that.updated,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _DeleteSuccessCustomers() when deleteSuccess != null:
 return deleteSuccess(_that.customers,_that.deletedId,_that.selectedCustomer,_that.currentPage,_that.totalPages);case _FailureCustomers() when failure != null:
-return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.customers,_that.selectedCustomer,_that.currentPage,_that.totalPages,_that.failure);case _:
   return null;
 
 }
@@ -252,7 +252,7 @@ class _Initial implements CustomersState {
 @override final  CustomerModel? selectedCustomer;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String? error;
+ final  Failure? error;
 
 /// Create a copy of CustomersState
 /// with the given fields replaced by the non-null parameter values.
@@ -284,11 +284,11 @@ abstract mixin class _$InitialCopyWith<$Res> implements $CustomersStateCopyWith<
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- List<CustomerModel> customers, CustomerModel? selectedCustomer, int currentPage, int totalPages, String? error
+ List<CustomerModel> customers, CustomerModel? selectedCustomer, int currentPage, int totalPages, Failure? error
 });
 
 
-
+$FailureCopyWith<$Res>? get error;
 
 }
 /// @nodoc
@@ -308,11 +308,23 @@ as List<CustomerModel>,selectedCustomer: freezed == selectedCustomer ? _self.sel
 as CustomerModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,
+as Failure?,
   ));
 }
 
+/// Create a copy of CustomersState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res>? get error {
+    if (_self.error == null) {
+    return null;
+  }
 
+  return $FailureCopyWith<$Res>(_self.error!, (value) {
+    return _then(_self.copyWith(error: value));
+  });
+}
 }
 
 /// @nodoc
@@ -717,7 +729,7 @@ as int,
 
 
 class _FailureCustomers implements CustomersState {
-  const _FailureCustomers({final  List<CustomerModel> customers = const [], this.selectedCustomer, this.currentPage = 1, this.totalPages = 1, required this.error}): _customers = customers;
+  const _FailureCustomers({final  List<CustomerModel> customers = const [], this.selectedCustomer, this.currentPage = 1, this.totalPages = 1, required this.failure}): _customers = customers;
   
 
  final  List<CustomerModel> _customers;
@@ -730,7 +742,7 @@ class _FailureCustomers implements CustomersState {
 @override final  CustomerModel? selectedCustomer;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String error;
+ final  Failure failure;
 
 /// Create a copy of CustomersState
 /// with the given fields replaced by the non-null parameter values.
@@ -742,16 +754,16 @@ _$FailureCustomersCopyWith<_FailureCustomers> get copyWith => __$FailureCustomer
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureCustomers&&const DeepCollectionEquality().equals(other._customers, _customers)&&(identical(other.selectedCustomer, selectedCustomer) || other.selectedCustomer == selectedCustomer)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureCustomers&&const DeepCollectionEquality().equals(other._customers, _customers)&&(identical(other.selectedCustomer, selectedCustomer) || other.selectedCustomer == selectedCustomer)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_customers),selectedCustomer,currentPage,totalPages,error);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_customers),selectedCustomer,currentPage,totalPages,failure);
 
 @override
 String toString() {
-  return 'CustomersState.failure(customers: $customers, selectedCustomer: $selectedCustomer, currentPage: $currentPage, totalPages: $totalPages, error: $error)';
+  return 'CustomersState.failure(customers: $customers, selectedCustomer: $selectedCustomer, currentPage: $currentPage, totalPages: $totalPages, failure: $failure)';
 }
 
 
@@ -762,11 +774,11 @@ abstract mixin class _$FailureCustomersCopyWith<$Res> implements $CustomersState
   factory _$FailureCustomersCopyWith(_FailureCustomers value, $Res Function(_FailureCustomers) _then) = __$FailureCustomersCopyWithImpl;
 @override @useResult
 $Res call({
- List<CustomerModel> customers, CustomerModel? selectedCustomer, int currentPage, int totalPages, String error
+ List<CustomerModel> customers, CustomerModel? selectedCustomer, int currentPage, int totalPages, Failure failure
 });
 
 
-
+$FailureCopyWith<$Res> get failure;
 
 }
 /// @nodoc
@@ -779,18 +791,27 @@ class __$FailureCustomersCopyWithImpl<$Res>
 
 /// Create a copy of CustomersState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? customers = null,Object? selectedCustomer = freezed,Object? currentPage = null,Object? totalPages = null,Object? error = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? customers = null,Object? selectedCustomer = freezed,Object? currentPage = null,Object? totalPages = null,Object? failure = null,}) {
   return _then(_FailureCustomers(
 customers: null == customers ? _self._customers : customers // ignore: cast_nullable_to_non_nullable
 as List<CustomerModel>,selectedCustomer: freezed == selectedCustomer ? _self.selectedCustomer : selectedCustomer // ignore: cast_nullable_to_non_nullable
 as CustomerModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
-as int,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String,
+as int,failure: null == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure,
   ));
 }
 
-
+/// Create a copy of CustomersState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res> get failure {
+  
+  return $FailureCopyWith<$Res>(_self.failure, (value) {
+    return _then(_self.copyWith(failure: value));
+  });
+}
 }
 
 // dart format on

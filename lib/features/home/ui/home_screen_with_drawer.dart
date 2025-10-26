@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
-import 'package:invotek/core/providers/app_providers.dart';
 import 'package:invotek/core/routes/app_routes.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
 import 'package:invotek/features/home/data/models/navigation_state.dart';
@@ -28,9 +27,6 @@ class HomeScreenWithDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
-    // Initialize data for cubits that need initial loading
-    AppProviders.initializeData(context);
 
     return BlocBuilder<LocalizationCubit, LocalizationState>(
       builder: (context, state) {

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/core/utils/app_api_constants.dart';
 
 class ApiErrorHandler {
-  static String handleError(e) {
+  static Failure handleError(e) {
     if (e is DioException) {
       // Prefer server-provided message when available
       final serverMessage = _extractServerMessage(e.response);
@@ -11,31 +12,69 @@ class ApiErrorHandler {
         case DioExceptionType.connectionTimeout:
         case DioExceptionType.sendTimeout:
         case DioExceptionType.receiveTimeout:
-          return ApiErrors.timeoutError;
+          return Failure.timeout(message: ApiErrors.timeoutError);
         case DioExceptionType.badCertificate:
-          return ApiErrors.badRequestError;
+          return Failure.server(message: ApiErrors.badRequestError);
         case DioExceptionType.badResponse:
           // Map common HTTP status codes and fall back to server message
           final statusCode = e.response?.statusCode;
           if (statusCode != null) {
-            if (statusCode >= 500) return ApiErrors.internalServerError;
-            if (statusCode == 401) return ApiErrors.unauthorizedError;
-            if (statusCode == 403) return ApiErrors.forbiddenError;
-            if (statusCode == 404) return ApiErrors.notFoundError;
-            if (statusCode == 409) return ApiErrors.conflictError;
-            if (statusCode == 400) return ApiErrors.badRequestError;
-            if (statusCode == 204) return ApiErrors.noContent;
+            if (statusCode >= 500)
+              return Failure.server(
+                message: ApiErrors.internalServerError,
+                statusCode: statusCode,
+              );
+            if (statusCode == 401)
+              return Failure.unauthorized(message: ApiErrors.unauthorizedError);
+            if (statusCode == 403) {
+              // التحقق من رسالة خطأ الباقة
+              final serverMessage = _extractServerMessage(e.response);
+              if (serverMessage != null &&
+                  serverMessage.contains(
+                    'يرجى اختيار باقة للاستمرار في استخدام النظام',
+                  )) {
+                return Failure.subscriptionRequired(
+                  message: serverMessage,
+                  redirectUrl: _extractRedirectUrl(e.response),
+                );
+              }
+              return Failure.server(
+                message: ApiErrors.forbiddenError,
+                statusCode: statusCode,
+              );
+            }
+            if (statusCode == 404)
+              return Failure.server(
+                message: ApiErrors.notFoundError,
+                statusCode: statusCode,
+              );
+            if (statusCode == 409)
+              return Failure.server(
+                message: ApiErrors.conflictError,
+                statusCode: statusCode,
+              );
+            if (statusCode == 400)
+              return Failure.validation(message: ApiErrors.badRequestError);
+            if (statusCode == 204)
+              return Failure.server(
+                message: ApiErrors.noContent,
+                statusCode: statusCode,
+              );
           }
-          return serverMessage ?? ApiErrors.defaultError;
+          return Failure.server(
+            message: serverMessage ?? ApiErrors.defaultError,
+          );
         case DioExceptionType.cancel:
-          return 'Request cancelled';
+          return Failure.unknown(message: 'Request cancelled');
         case DioExceptionType.connectionError:
-          return ApiErrors.noInternetError;
+          return Failure.network(message: ApiErrors.noInternetError);
         case DioExceptionType.unknown:
-          return serverMessage ?? ApiErrors.unknownError;
+          return Failure.unknown(
+            message: serverMessage ?? ApiErrors.unknownError,
+          );
       }
     }
-    return e.toString();
+    return Failure.unknown(message: e.toString());
   }
 
   static String? _extractServerMessage(Response? response) {
@@ -58,6 +97,18 @@ class ApiErrorHandler {
       }
     } else if (data is String && data.trim().isNotEmpty) {
       return data;
+    }
+    return null;
+  }
+
+  static String? _extractRedirectUrl(Response? response) {
+    if (response == null) return null;
+    final data = response.data;
+    if (data is Map) {
+      final redirectUrl = data['redirect'];
+      if (redirectUrl is String && redirectUrl.trim().isNotEmpty) {
+        return redirectUrl;
+      }
     }
     return null;
   }

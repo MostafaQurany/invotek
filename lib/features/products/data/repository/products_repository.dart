@@ -1,6 +1,7 @@
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_client.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 import 'package:invotek/features/products/data/models/product_api_model.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
@@ -49,7 +50,9 @@ class ProductsRepository {
         return ApiResult.success(products);
       }
       return ApiResult.failure(
-        response.message ?? 'حدث خطأ أثناء تحميل المنتجات',
+        Failure.server(
+          message: response.message ?? 'حدث خطأ أثناء تحميل المنتجات',
+        ),
       );
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
@@ -148,7 +151,9 @@ class ProductsRepository {
         return ApiResult.success(product);
       }
 
-      return ApiResult.failure('حدث خطأ أثناء إنشاء المنتج');
+      return ApiResult.failure(
+        Failure.server(message: 'حدث خطأ أثناء إنشاء المنتج'),
+      );
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
@@ -214,7 +219,9 @@ class ProductsRepository {
         final product = _convertToProductModel(response.data!);
         return ApiResult.success(product);
       }
-      return ApiResult.failure('حدث خطأ أثناء تحديث المنتج');
+      return ApiResult.failure(
+        Failure.server(message: 'حدث خطأ أثناء تحديث المنتج'),
+      );
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }

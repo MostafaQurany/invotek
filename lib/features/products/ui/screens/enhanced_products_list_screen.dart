@@ -110,7 +110,7 @@ class _EnhancedProductsListScreenState
                         currentPage,
                         totalPages,
                         error,
-                      ) => _buildErrorState(error),
+                      ) => _buildErrorState(error.message),
                   createSuccess: (products, _, __, ___, ____) =>
                       _buildProductsList(products),
                   updateSuccess: (products, _, __, ___, ____) =>

@@ -168,7 +168,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)?  initial,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  Failure failure)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _LoadingInvoices() when loading != null:
@@ -177,7 +177,7 @@ return loaded(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.total
 return createSuccess(_that.invoices,_that.created,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _UpdateSuccessInvoices() when updateSuccess != null:
 return updateSuccess(_that.invoices,_that.updated,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _DeleteSuccessInvoices() when deleteSuccess != null:
 return deleteSuccess(_that.invoices,_that.deletedId,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _FailureInvoices() when failure != null:
-return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.failure);case _:
   return orElse();
 
 }
@@ -195,7 +195,7 @@ return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)  initial,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  loaded,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  Failure? error)  initial,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  loaded,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  Failure failure)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _LoadingInvoices():
@@ -204,7 +204,7 @@ return loaded(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.total
 return createSuccess(_that.invoices,_that.created,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _UpdateSuccessInvoices():
 return updateSuccess(_that.invoices,_that.updated,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _DeleteSuccessInvoices():
 return deleteSuccess(_that.invoices,_that.deletedId,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _FailureInvoices():
-return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);}
+return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.failure);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -218,7 +218,7 @@ return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? error)?  initial,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel created,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel updated,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<InvoiceModel> invoices,  int deletedId,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<InvoiceModel> invoices,  InvoiceModel? selectedInvoice,  int currentPage,  int totalPages,  Failure failure)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _LoadingInvoices() when loading != null:
@@ -227,7 +227,7 @@ return loaded(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.total
 return createSuccess(_that.invoices,_that.created,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _UpdateSuccessInvoices() when updateSuccess != null:
 return updateSuccess(_that.invoices,_that.updated,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _DeleteSuccessInvoices() when deleteSuccess != null:
 return deleteSuccess(_that.invoices,_that.deletedId,_that.selectedInvoice,_that.currentPage,_that.totalPages);case _FailureInvoices() when failure != null:
-return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.invoices,_that.selectedInvoice,_that.currentPage,_that.totalPages,_that.failure);case _:
   return null;
 
 }
@@ -252,7 +252,7 @@ class _Initial implements InvoicesState {
 @override final  InvoiceModel? selectedInvoice;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String? error;
+ final  Failure? error;
 
 /// Create a copy of InvoicesState
 /// with the given fields replaced by the non-null parameter values.
@@ -284,11 +284,11 @@ abstract mixin class _$InitialCopyWith<$Res> implements $InvoicesStateCopyWith<$
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- List<InvoiceModel> invoices, InvoiceModel? selectedInvoice, int currentPage, int totalPages, String? error
+ List<InvoiceModel> invoices, InvoiceModel? selectedInvoice, int currentPage, int totalPages, Failure? error
 });
 
 
-
+$FailureCopyWith<$Res>? get error;
 
 }
 /// @nodoc
@@ -308,11 +308,23 @@ as List<InvoiceModel>,selectedInvoice: freezed == selectedInvoice ? _self.select
 as InvoiceModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,
+as Failure?,
   ));
 }
 
+/// Create a copy of InvoicesState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res>? get error {
+    if (_self.error == null) {
+    return null;
+  }
 
+  return $FailureCopyWith<$Res>(_self.error!, (value) {
+    return _then(_self.copyWith(error: value));
+  });
+}
 }
 
 /// @nodoc
@@ -717,7 +729,7 @@ as int,
 
 
 class _FailureInvoices implements InvoicesState {
-  const _FailureInvoices({final  List<InvoiceModel> invoices = const [], this.selectedInvoice, this.currentPage = 1, this.totalPages = 1, required this.error}): _invoices = invoices;
+  const _FailureInvoices({final  List<InvoiceModel> invoices = const [], this.selectedInvoice, this.currentPage = 1, this.totalPages = 1, required this.failure}): _invoices = invoices;
   
 
  final  List<InvoiceModel> _invoices;
@@ -730,7 +742,7 @@ class _FailureInvoices implements InvoicesState {
 @override final  InvoiceModel? selectedInvoice;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String error;
+ final  Failure failure;
 
 /// Create a copy of InvoicesState
 /// with the given fields replaced by the non-null parameter values.
@@ -742,16 +754,16 @@ _$FailureInvoicesCopyWith<_FailureInvoices> get copyWith => __$FailureInvoicesCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureInvoices&&const DeepCollectionEquality().equals(other._invoices, _invoices)&&(identical(other.selectedInvoice, selectedInvoice) || other.selectedInvoice == selectedInvoice)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureInvoices&&const DeepCollectionEquality().equals(other._invoices, _invoices)&&(identical(other.selectedInvoice, selectedInvoice) || other.selectedInvoice == selectedInvoice)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_invoices),selectedInvoice,currentPage,totalPages,error);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_invoices),selectedInvoice,currentPage,totalPages,failure);
 
 @override
 String toString() {
-  return 'InvoicesState.failure(invoices: $invoices, selectedInvoice: $selectedInvoice, currentPage: $currentPage, totalPages: $totalPages, error: $error)';
+  return 'InvoicesState.failure(invoices: $invoices, selectedInvoice: $selectedInvoice, currentPage: $currentPage, totalPages: $totalPages, failure: $failure)';
 }
 
 
@@ -762,11 +774,11 @@ abstract mixin class _$FailureInvoicesCopyWith<$Res> implements $InvoicesStateCo
   factory _$FailureInvoicesCopyWith(_FailureInvoices value, $Res Function(_FailureInvoices) _then) = __$FailureInvoicesCopyWithImpl;
 @override @useResult
 $Res call({
- List<InvoiceModel> invoices, InvoiceModel? selectedInvoice, int currentPage, int totalPages, String error
+ List<InvoiceModel> invoices, InvoiceModel? selectedInvoice, int currentPage, int totalPages, Failure failure
 });
 
 
-
+$FailureCopyWith<$Res> get failure;
 
 }
 /// @nodoc
@@ -779,18 +791,27 @@ class __$FailureInvoicesCopyWithImpl<$Res>
 
 /// Create a copy of InvoicesState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? invoices = null,Object? selectedInvoice = freezed,Object? currentPage = null,Object? totalPages = null,Object? error = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? invoices = null,Object? selectedInvoice = freezed,Object? currentPage = null,Object? totalPages = null,Object? failure = null,}) {
   return _then(_FailureInvoices(
 invoices: null == invoices ? _self._invoices : invoices // ignore: cast_nullable_to_non_nullable
 as List<InvoiceModel>,selectedInvoice: freezed == selectedInvoice ? _self.selectedInvoice : selectedInvoice // ignore: cast_nullable_to_non_nullable
 as InvoiceModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
-as int,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String,
+as int,failure: null == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure,
   ));
 }
 
-
+/// Create a copy of InvoicesState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res> get failure {
+  
+  return $FailureCopyWith<$Res>(_self.failure, (value) {
+    return _then(_self.copyWith(failure: value));
+  });
+}
 }
 
 // dart format on

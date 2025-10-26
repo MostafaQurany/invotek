@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/routes/app_routes.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_loading_screen.dart';
 import 'package:invotek/features/auth/ui/auth_login_screen_body.dart';
 import 'package:invotek/features/auth/ui/auth_register_screen_body.dart';
+import 'package:invotek/features/auth/ui/auth_loading_home_data_screen.dart';
+import 'package:invotek/features/home/cubit/dashboard_cubit.dart';
 
 import '../../../core/utils/app_images.dart';
 import '../../../generated/l10n.dart';
 
-class AuthScreen extends StatelessWidget {
+class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
+
+  @override
+  State<AuthScreen> createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  bool _isLoadingDashboard = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,36 +31,101 @@ class AuthScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 15.h),
-          child: BlocConsumer<AuthCubit, AuthState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                successLogin: (data) => Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  AppRoutes.homeRoute,
-                  (route) => false,
-                ),
-                successRegister: (data) => Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  AppRoutes.homeRoute,
-                  (route) => false,
-                ),
-                orElse: () => false,
-              );
-            },
-            builder: (context, state) {
-              return state.maybeWhen(
-                loadingAuth: () => const AuthLoadingScreen(),
-                orElse: () => BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    if (context.read<AuthCubit>().isLoginScreen) {
-                      return const AuthLoginScreenBody();
-                    } else {
-                      return const AuthRegisterScreenBody();
+          child: MultiBlocListener(
+            listeners: [
+              // Listener للـ AuthCubit
+              BlocListener<AuthCubit, AuthState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    successLogin: (data) async {
+                      // بدلاً من الانتقال مباشرة، نبدأ بتحميل بيانات لوحة التحكم
+                      _isLoadingDashboard = true;
+                      setState(() {});
+                      await context.read<DashboardCubit>().loadDashboard();
+                    },
+                    successRegister: (data) async {
+                      // بدلاً من الانتقال مباشرة، نبدأ بتحميل بيانات لوحة التحكم
+                      _isLoadingDashboard = true;
+                      setState(() {});
+                      await context.read<DashboardCubit>().loadDashboard();
+                    },
+                    changeAuthScreenBody: (timestamp) {
+                      setState(() {});
+                    },
+                    orElse: () => false,
+                  );
+                },
+              ),
+              // Listener للـ DashboardCubit
+              BlocListener<DashboardCubit, DashboardState>(
+                listener: (context, state) {
+                  if (_isLoadingDashboard) {
+                    state.when(
+                      initial: () {},
+                      loading: () {},
+                      loaded: (data) {
+                        // بعد تحميل البيانات بنجاح، ننتقل للشاشة الرئيسية
+                        _isLoadingDashboard = false;
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.homeRoute,
+                          (route) => false,
+                        );
+                      },
+                      error: (message) {
+                        // في حالة فشل التحميل، ننتقل مباشرة
+                        _isLoadingDashboard = false;
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.homeRoute,
+                          (route) => false,
+                        );
+                      },
+                      subscriptionRequired: (message, redirectUrl) {
+                        // في حالة طلب الباقة، ننتقل مباشرة أيضاً
+                        _isLoadingDashboard = false;
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.homeRoute,
+                          (route) => false,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ],
+            child: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                return state.maybeWhen(
+                  loadingAuth: () => const AuthLoadingScreen(),
+                  orElse: () {
+                    // إذا كان يتم تحميل بيانات لوحة التحكم، نعرض شاشة التحميل
+                    if (_isLoadingDashboard) {
+                      return BlocBuilder<DashboardCubit, DashboardState>(
+                        builder: (context, dashboardState) {
+                          return AuthLoadingHomeDataScreen(
+                            dashboardState: dashboardState,
+                          );
+                        },
+                      );
                     }
+
+                    // وإلا نعرض شاشة تسجيل الدخول العادية
+                    return BlocBuilder<AuthCubit, AuthState>(
+                      builder: (context, state) {
+                        final authCubit = context.read<AuthCubit>();
+                        if (authCubit.isLoginScreen) {
+                          return const AuthLoginScreenBody();
+                        } else {
+                          return const AuthRegisterScreenBody();
+                        }
+                      },
+                    );
                   },
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

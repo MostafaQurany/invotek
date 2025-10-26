@@ -250,10 +250,10 @@ class S {
     );
   }
 
-  /// `Please check the entered data`
+  /// `Data validation error`
   String get validationError {
     return Intl.message(
-      'Please check the entered data',
+      'Data validation error',
       name: 'validationError',
       desc: '',
       args: [],
@@ -295,6 +295,326 @@ class S {
     return Intl.message(
       'An unexpected error occurred. Please try again.',
       name: 'unknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Local storage error`
+  String get cacheError {
+    return Intl.message(
+      'Local storage error',
+      name: 'cacheError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request timeout`
+  String get timeoutError {
+    return Intl.message(
+      'Request timeout',
+      name: 'timeoutError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized access`
+  String get unauthorizedError {
+    return Intl.message(
+      'Unauthorized access',
+      name: 'unauthorizedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading customers`
+  String get customersLoadError {
+    return Intl.message(
+      'Error loading customers',
+      name: 'customersLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network error - Customers`
+  String get customersNetworkError {
+    return Intl.message(
+      'Network error - Customers',
+      name: 'customersNetworkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation error - Customers`
+  String get customersValidationError {
+    return Intl.message(
+      'Validation error - Customers',
+      name: 'customersValidationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error - Customers`
+  String get customersUnknownError {
+    return Intl.message(
+      'Unknown error - Customers',
+      name: 'customersUnknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Timeout error - Customers`
+  String get customersTimeoutError {
+    return Intl.message(
+      'Timeout error - Customers',
+      name: 'customersTimeoutError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized error - Customers`
+  String get customersUnauthorizedError {
+    return Intl.message(
+      'Unauthorized error - Customers',
+      name: 'customersUnauthorizedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cache error - Customers`
+  String get customersCacheError {
+    return Intl.message(
+      'Cache error - Customers',
+      name: 'customersCacheError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading products`
+  String get productsLoadError {
+    return Intl.message(
+      'Error loading products',
+      name: 'productsLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network error - Products`
+  String get productsNetworkError {
+    return Intl.message(
+      'Network error - Products',
+      name: 'productsNetworkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation error - Products`
+  String get productsValidationError {
+    return Intl.message(
+      'Validation error - Products',
+      name: 'productsValidationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error - Products`
+  String get productsUnknownError {
+    return Intl.message(
+      'Unknown error - Products',
+      name: 'productsUnknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Timeout error - Products`
+  String get productsTimeoutError {
+    return Intl.message(
+      'Timeout error - Products',
+      name: 'productsTimeoutError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized error - Products`
+  String get productsUnauthorizedError {
+    return Intl.message(
+      'Unauthorized error - Products',
+      name: 'productsUnauthorizedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cache error - Products`
+  String get productsCacheError {
+    return Intl.message(
+      'Cache error - Products',
+      name: 'productsCacheError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading expenses`
+  String get expensesLoadError {
+    return Intl.message(
+      'Error loading expenses',
+      name: 'expensesLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network error - Expenses`
+  String get expensesNetworkError {
+    return Intl.message(
+      'Network error - Expenses',
+      name: 'expensesNetworkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation error - Expenses`
+  String get expensesValidationError {
+    return Intl.message(
+      'Validation error - Expenses',
+      name: 'expensesValidationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error - Expenses`
+  String get expensesUnknownError {
+    return Intl.message(
+      'Unknown error - Expenses',
+      name: 'expensesUnknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Timeout error - Expenses`
+  String get expensesTimeoutError {
+    return Intl.message(
+      'Timeout error - Expenses',
+      name: 'expensesTimeoutError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized error - Expenses`
+  String get expensesUnauthorizedError {
+    return Intl.message(
+      'Unauthorized error - Expenses',
+      name: 'expensesUnauthorizedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cache error - Expenses`
+  String get expensesCacheError {
+    return Intl.message(
+      'Cache error - Expenses',
+      name: 'expensesCacheError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading invoices`
+  String get invoicesLoadError {
+    return Intl.message(
+      'Error loading invoices',
+      name: 'invoicesLoadError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network error - Invoices`
+  String get invoicesNetworkError {
+    return Intl.message(
+      'Network error - Invoices',
+      name: 'invoicesNetworkError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation error - Invoices`
+  String get invoicesValidationError {
+    return Intl.message(
+      'Validation error - Invoices',
+      name: 'invoicesValidationError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error - Invoices`
+  String get invoicesUnknownError {
+    return Intl.message(
+      'Unknown error - Invoices',
+      name: 'invoicesUnknownError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Timeout error - Invoices`
+  String get invoicesTimeoutError {
+    return Intl.message(
+      'Timeout error - Invoices',
+      name: 'invoicesTimeoutError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unauthorized error - Invoices`
+  String get invoicesUnauthorizedError {
+    return Intl.message(
+      'Unauthorized error - Invoices',
+      name: 'invoicesUnauthorizedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cache error - Invoices`
+  String get invoicesCacheError {
+    return Intl.message(
+      'Cache error - Invoices',
+      name: 'invoicesCacheError',
       desc: '',
       args: [],
     );
@@ -1355,16 +1675,6 @@ class S {
     return Intl.message(
       'Press the add button to create a new user',
       name: 'addNewUserMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Retry`
-  String get retry {
-    return Intl.message(
-      'Retry',
-      name: 'retry',
       desc: '',
       args: [],
     );
@@ -4380,6 +4690,166 @@ class S {
     );
   }
 
+  /// `Account Settings`
+  String get accountSettings {
+    return Intl.message(
+      'Account Settings',
+      name: 'accountSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get changePassword {
+    return Intl.message(
+      'Change Password',
+      name: 'changePassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account`
+  String get deleteAccount {
+    return Intl.message(
+      'Delete Account',
+      name: 'deleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Password`
+  String get currentPassword {
+    return Intl.message(
+      'Current Password',
+      name: 'currentPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get newPassword {
+    return Intl.message(
+      'New Password',
+      name: 'newPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm New Password`
+  String get confirmNewPassword {
+    return Intl.message(
+      'Confirm New Password',
+      name: 'confirmNewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password changed successfully`
+  String get passwordChangedSuccessfully {
+    return Intl.message(
+      'Password changed successfully',
+      name: 'passwordChangedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Warning: Your account will be permanently deleted`
+  String get deleteAccountWarning {
+    return Intl.message(
+      'Warning: Your account will be permanently deleted',
+      name: 'deleteAccountWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter password to confirm`
+  String get enterPasswordToConfirm {
+    return Intl.message(
+      'Enter password to confirm',
+      name: 'enterPasswordToConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account deleted successfully`
+  String get accountDeletedSuccessfully {
+    return Intl.message(
+      'Account deleted successfully',
+      name: 'accountDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete your account?`
+  String get deleteAccountConfirmation {
+    return Intl.message(
+      'Are you sure you want to delete your account?',
+      name: 'deleteAccountConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to change your password?`
+  String get changePasswordConfirmation {
+    return Intl.message(
+      'Are you sure you want to change your password?',
+      name: 'changePasswordConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you absolutely sure you want to delete your account? This action cannot be undone`
+  String get deleteAccountFinalConfirmation {
+    return Intl.message(
+      'Are you absolutely sure you want to delete your account? This action cannot be undone',
+      name: 'deleteAccountFinalConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes, delete my account`
+  String get yesDeleteAccount {
+    return Intl.message(
+      'Yes, delete my account',
+      name: 'yesDeleteAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change Password`
+  String get changePasswordButton {
+    return Intl.message(
+      'Change Password',
+      name: 'changePasswordButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Account Permanently`
+  String get deleteAccountButton {
+    return Intl.message(
+      'Delete Account Permanently',
+      name: 'deleteAccountButton',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Or`
   String get or {
     return Intl.message(
@@ -5195,16 +5665,6 @@ class S {
     return Intl.message(
       'All Status',
       name: 'allStatus',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Password changed successfully`
-  String get passwordChangedSuccessfully {
-    return Intl.message(
-      'Password changed successfully',
-      name: 'passwordChangedSuccessfully',
       desc: '',
       args: [],
     );
@@ -9707,6 +10167,306 @@ class S {
     return Intl.message(
       '.... Search expenses',
       name: 'searchExpenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forget password?`
+  String get forgetPassword {
+    return Intl.message(
+      'Forget password?',
+      name: 'forgetPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot Password`
+  String get forgetPasswordTitle {
+    return Intl.message(
+      'Forgot Password',
+      name: 'forgetPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your email to send verification code`
+  String get forgetPasswordDesc {
+    return Intl.message(
+      'Enter your email to send verification code',
+      name: 'forgetPasswordDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Verification Code`
+  String get sendVerificationCode {
+    return Intl.message(
+      'Send Verification Code',
+      name: 'sendVerificationCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Code`
+  String get verifyCodeTitle {
+    return Intl.message(
+      'Verify Code',
+      name: 'verifyCodeTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter the code sent to {email}`
+  String verifyCodeDesc(Object email) {
+    return Intl.message(
+      'Enter the code sent to $email',
+      name: 'verifyCodeDesc',
+      desc: '',
+      args: [email],
+    );
+  }
+
+  /// `Enter Code`
+  String get enterCode {
+    return Intl.message(
+      'Enter Code',
+      name: 'enterCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify Code`
+  String get verifyCode {
+    return Intl.message(
+      'Verify Code',
+      name: 'verifyCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend Code`
+  String get resendCode {
+    return Intl.message(
+      'Resend Code',
+      name: 'resendCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend in {seconds} seconds`
+  String resendCodeIn(Object seconds) {
+    return Intl.message(
+      'Resend in $seconds seconds',
+      name: 'resendCodeIn',
+      desc: '',
+      args: [seconds],
+    );
+  }
+
+  /// `Code resent successfully`
+  String get codeResent {
+    return Intl.message(
+      'Code resent successfully',
+      name: 'codeResent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset Password`
+  String get resetPasswordTitle {
+    return Intl.message(
+      'Reset Password',
+      name: 'resetPasswordTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter your new password`
+  String get resetPasswordDesc {
+    return Intl.message(
+      'Enter your new password',
+      name: 'resetPasswordDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset Password`
+  String get resetPassword {
+    return Intl.message(
+      'Reset Password',
+      name: 'resetPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weak`
+  String get passwordStrengthWeak {
+    return Intl.message(
+      'Weak',
+      name: 'passwordStrengthWeak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Medium`
+  String get passwordStrengthMedium {
+    return Intl.message(
+      'Medium',
+      name: 'passwordStrengthMedium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Strong`
+  String get passwordStrengthStrong {
+    return Intl.message(
+      'Strong',
+      name: 'passwordStrengthStrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password reset successfully`
+  String get resetPasswordSuccess {
+    return Intl.message(
+      'Password reset successfully',
+      name: 'resetPasswordSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Access Denied`
+  String get accessDenied {
+    return Intl.message(
+      'Access Denied',
+      name: 'accessDenied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorry, you don't have permission to access {feature}`
+  String noPermissionMessage(Object feature) {
+    return Intl.message(
+      'Sorry, you don\'t have permission to access $feature',
+      name: 'noPermissionMessage',
+      desc: '',
+      args: [feature],
+    );
+  }
+
+  /// `Please contact the system administrator for access`
+  String get contactAdminForAccess {
+    return Intl.message(
+      'Please contact the system administrator for access',
+      name: 'contactAdminForAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paste Code`
+  String get pasteCode {
+    return Intl.message(
+      'Paste Code',
+      name: 'pasteCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid code`
+  String get invalidCode {
+    return Intl.message(
+      'Invalid code',
+      name: 'invalidCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code must be 6 digits`
+  String get codeMustBe6Digits {
+    return Intl.message(
+      'Code must be 6 digits',
+      name: 'codeMustBe6Digits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter verification code`
+  String get enterVerificationCode {
+    return Intl.message(
+      'Enter verification code',
+      name: 'enterVerificationCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check your email`
+  String get checkYourEmail {
+    return Intl.message(
+      'Check your email',
+      name: 'checkYourEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verification code sent to your email`
+  String get otpSentToEmail {
+    return Intl.message(
+      'Verification code sent to your email',
+      name: 'otpSentToEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy the code from email and paste here`
+  String get copyCodeFromEmail {
+    return Intl.message(
+      'Copy the code from email and paste here',
+      name: 'copyCodeFromEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dismiss`
+  String get dismiss {
+    return Intl.message(
+      'Dismiss',
+      name: 'dismiss',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back to Login Screen`
+  String get backToLoginScreen {
+    return Intl.message(
+      'Back to Login Screen',
+      name: 'backToLoginScreen',
       desc: '',
       args: [],
     );

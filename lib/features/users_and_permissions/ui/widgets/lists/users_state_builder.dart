@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/lists/users_list.dart';
@@ -87,7 +87,10 @@ class UsersStateBuilder extends StatelessWidget {
         }
 
         if (state is UsersListError) {
-          return UsersErrorState(message: state.message, onRetry: onRetry);
+          return UsersErrorState(
+            message: state.failure.message,
+            onRetry: onRetry,
+          );
         }
 
         if (state is UsersListLoaded) {

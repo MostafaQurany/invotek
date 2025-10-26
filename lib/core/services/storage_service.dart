@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/features/auth/data/models/permission_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
@@ -84,5 +85,24 @@ class StorageService {
 
   static Future<void> removeBool(String key) async {
     await _prefs?.remove(key);
+  }
+
+  // Permissions methods
+  static Future<void> savePermissions(UserPermissions permissions) async {
+    await _prefs?.setString(
+      'user_permissions',
+      jsonEncode(permissions.toJson()),
+    );
+  }
+
+  static UserPermissions? getPermissions() {
+    final permissionsData = _prefs?.getString('user_permissions');
+    return permissionsData != null
+        ? UserPermissions.fromJson(jsonDecode(permissionsData))
+        : null;
+  }
+
+  static Future<void> removePermissions() async {
+    await _prefs?.remove('user_permissions');
   }
 }

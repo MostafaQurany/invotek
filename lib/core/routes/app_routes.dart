@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/features/auth/ui/forget_password_screen.dart';
+import 'package:invotek/features/auth/ui/verify_otp_screen.dart';
+import 'package:invotek/features/auth/ui/reset_password_screen.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/screens/add_expense_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
@@ -43,9 +46,11 @@ import 'package:invotek/features/users_and_permissions/ui/screens/manage_permiss
 import 'package:invotek/features/users_and_permissions/ui/screens/user_details_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
 import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
+import 'package:invotek/features/settings/ui/screens/change_password_screen.dart';
+import 'package:invotek/features/settings/ui/screens/delete_account_screen.dart';
 
 class AppRoutes {
   static const String authRoute = '/auth';
@@ -58,7 +63,10 @@ class AppRoutes {
   static const String addClientRoute = '/clients/add';
   static const String editClientRoute = '/clients/edit';
   static const String clientDetailsRoute = '/clients/details';
-
+  // auth
+  static const String forgetPassword = '/forgetPassword';
+  static const String verifyOtp = '/verifyOtp';
+  static const String resetPassword = '/resetPassword';
   // Users & Permissions routes
   static const String usersPermissionsRoute = '/users-permissions';
   static const String userDetailsRoute = '/users/details';
@@ -113,9 +121,29 @@ class AppRoutes {
 
   // Settings routes
   static const String settingsRoute = '/settings';
+  static const String changePasswordRoute = '/change-password';
+  static const String deleteAccountRoute = '/delete-account';
+  static const String subscriptionPackagesRoute = '/subscription-packages';
 
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
+    forgetPassword: (context) => const ForgetPasswordScreen(),
+    verifyOtp: (context) {
+      final email = ModalRoute.of(context)?.settings.arguments as String?;
+      if (email == null) {
+        return const Scaffold(body: Center(child: Text('Email is required')));
+      }
+      return VerifyOtpScreen(email: email);
+    },
+    resetPassword: (context) {
+      final verifyToken = ModalRoute.of(context)?.settings.arguments as String?;
+      if (verifyToken == null) {
+        return const Scaffold(
+          body: Center(child: Text('Verify token is required')),
+        );
+      }
+      return ResetPasswordScreen(verifyToken: verifyToken);
+    },
     homeRoute: (context) => const HomeScreenWithDrawer(),
     onboardingRoute: (context) => const OnboardingScreen(),
     usersPermissionsRoute: (context) =>
@@ -139,6 +167,8 @@ class AppRoutes {
     invoiceCreationStepperRoute: (context) =>
         const InvoiceCreationStepperScreen(),
     settingsRoute: (context) => const SettingsScreen(),
+    changePasswordRoute: (context) => const ChangePasswordScreen(),
+    deleteAccountRoute: (context) => const DeleteAccountScreen(),
 
     // expenses routes
     addExpenseRoute: (context) => const AddExpenseScreenWithProvider(),
@@ -265,6 +295,37 @@ class AppRoutes {
           builder: (context) =>
               ExpenseDetailsScreenWithProvider(expense: expense),
         );
+
+      // Subscription packages route
+      case subscriptionPackagesRoute:
+        return MaterialPageRoute(
+          builder: (context) => Scaffold(
+            appBar: AppBar(title: Text('اختيار الباقة')),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.card_membership,
+                    size: 64,
+                    color: Colors.orange[800],
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'صفحة اختيار الباقات',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'سيتم تطوير هذه الصفحة قريباً',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+
       default:
         return null;
     }

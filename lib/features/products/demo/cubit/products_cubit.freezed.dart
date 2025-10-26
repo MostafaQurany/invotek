@@ -168,7 +168,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? error)?  initial,TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  loaded,TResult Function( List<ProductModel> products,  ProductModel created,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<ProductModel> products,  ProductModel updated,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<ProductModel> products,  int deletedId,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  loaded,TResult Function( List<ProductModel> products,  ProductModel created,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<ProductModel> products,  ProductModel updated,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<ProductModel> products,  int deletedId,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  Failure failure)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.error);case _LoadingProducts() when loading != null:
@@ -177,7 +177,7 @@ return loaded(_that.products,_that.selectedProduct,_that.currentPage,_that.total
 return createSuccess(_that.products,_that.created,_that.selectedProduct,_that.currentPage,_that.totalPages);case _UpdateSuccessProducts() when updateSuccess != null:
 return updateSuccess(_that.products,_that.updated,_that.selectedProduct,_that.currentPage,_that.totalPages);case _DeleteSuccessProducts() when deleteSuccess != null:
 return deleteSuccess(_that.products,_that.deletedId,_that.selectedProduct,_that.currentPage,_that.totalPages);case _FailureProducts() when failure != null:
-return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.failure);case _:
   return orElse();
 
 }
@@ -195,7 +195,7 @@ return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? error)  initial,required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  loaded,required TResult Function( List<ProductModel> products,  ProductModel created,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<ProductModel> products,  ProductModel updated,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<ProductModel> products,  int deletedId,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  Failure? error)  initial,required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  loaded,required TResult Function( List<ProductModel> products,  ProductModel created,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<ProductModel> products,  ProductModel updated,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<ProductModel> products,  int deletedId,  ProductModel? selectedProduct,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  Failure failure)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.error);case _LoadingProducts():
@@ -204,7 +204,7 @@ return loaded(_that.products,_that.selectedProduct,_that.currentPage,_that.total
 return createSuccess(_that.products,_that.created,_that.selectedProduct,_that.currentPage,_that.totalPages);case _UpdateSuccessProducts():
 return updateSuccess(_that.products,_that.updated,_that.selectedProduct,_that.currentPage,_that.totalPages);case _DeleteSuccessProducts():
 return deleteSuccess(_that.products,_that.deletedId,_that.selectedProduct,_that.currentPage,_that.totalPages);case _FailureProducts():
-return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.error);}
+return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.failure);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -218,7 +218,7 @@ return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? error)?  initial,TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<ProductModel> products,  ProductModel created,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<ProductModel> products,  ProductModel updated,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<ProductModel> products,  int deletedId,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<ProductModel> products,  ProductModel created,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<ProductModel> products,  ProductModel updated,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<ProductModel> products,  int deletedId,  ProductModel? selectedProduct,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<ProductModel> products,  ProductModel? selectedProduct,  int currentPage,  int totalPages,  Failure failure)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.error);case _LoadingProducts() when loading != null:
@@ -227,7 +227,7 @@ return loaded(_that.products,_that.selectedProduct,_that.currentPage,_that.total
 return createSuccess(_that.products,_that.created,_that.selectedProduct,_that.currentPage,_that.totalPages);case _UpdateSuccessProducts() when updateSuccess != null:
 return updateSuccess(_that.products,_that.updated,_that.selectedProduct,_that.currentPage,_that.totalPages);case _DeleteSuccessProducts() when deleteSuccess != null:
 return deleteSuccess(_that.products,_that.deletedId,_that.selectedProduct,_that.currentPage,_that.totalPages);case _FailureProducts() when failure != null:
-return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.products,_that.selectedProduct,_that.currentPage,_that.totalPages,_that.failure);case _:
   return null;
 
 }
@@ -252,7 +252,7 @@ class _Initial implements ProductsState {
 @override final  ProductModel? selectedProduct;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String? error;
+ final  Failure? error;
 
 /// Create a copy of ProductsState
 /// with the given fields replaced by the non-null parameter values.
@@ -284,11 +284,11 @@ abstract mixin class _$InitialCopyWith<$Res> implements $ProductsStateCopyWith<$
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- List<ProductModel> products, ProductModel? selectedProduct, int currentPage, int totalPages, String? error
+ List<ProductModel> products, ProductModel? selectedProduct, int currentPage, int totalPages, Failure? error
 });
 
 
-
+$FailureCopyWith<$Res>? get error;
 
 }
 /// @nodoc
@@ -308,11 +308,23 @@ as List<ProductModel>,selectedProduct: freezed == selectedProduct ? _self.select
 as ProductModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,
+as Failure?,
   ));
 }
 
+/// Create a copy of ProductsState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res>? get error {
+    if (_self.error == null) {
+    return null;
+  }
 
+  return $FailureCopyWith<$Res>(_self.error!, (value) {
+    return _then(_self.copyWith(error: value));
+  });
+}
 }
 
 /// @nodoc
@@ -717,7 +729,7 @@ as int,
 
 
 class _FailureProducts implements ProductsState {
-  const _FailureProducts({final  List<ProductModel> products = const [], this.selectedProduct, this.currentPage = 1, this.totalPages = 1, required this.error}): _products = products;
+  const _FailureProducts({final  List<ProductModel> products = const [], this.selectedProduct, this.currentPage = 1, this.totalPages = 1, required this.failure}): _products = products;
   
 
  final  List<ProductModel> _products;
@@ -730,7 +742,7 @@ class _FailureProducts implements ProductsState {
 @override final  ProductModel? selectedProduct;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String error;
+ final  Failure failure;
 
 /// Create a copy of ProductsState
 /// with the given fields replaced by the non-null parameter values.
@@ -742,16 +754,16 @@ _$FailureProductsCopyWith<_FailureProducts> get copyWith => __$FailureProductsCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureProducts&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.selectedProduct, selectedProduct) || other.selectedProduct == selectedProduct)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureProducts&&const DeepCollectionEquality().equals(other._products, _products)&&(identical(other.selectedProduct, selectedProduct) || other.selectedProduct == selectedProduct)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products),selectedProduct,currentPage,totalPages,error);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_products),selectedProduct,currentPage,totalPages,failure);
 
 @override
 String toString() {
-  return 'ProductsState.failure(products: $products, selectedProduct: $selectedProduct, currentPage: $currentPage, totalPages: $totalPages, error: $error)';
+  return 'ProductsState.failure(products: $products, selectedProduct: $selectedProduct, currentPage: $currentPage, totalPages: $totalPages, failure: $failure)';
 }
 
 
@@ -762,11 +774,11 @@ abstract mixin class _$FailureProductsCopyWith<$Res> implements $ProductsStateCo
   factory _$FailureProductsCopyWith(_FailureProducts value, $Res Function(_FailureProducts) _then) = __$FailureProductsCopyWithImpl;
 @override @useResult
 $Res call({
- List<ProductModel> products, ProductModel? selectedProduct, int currentPage, int totalPages, String error
+ List<ProductModel> products, ProductModel? selectedProduct, int currentPage, int totalPages, Failure failure
 });
 
 
-
+$FailureCopyWith<$Res> get failure;
 
 }
 /// @nodoc
@@ -779,18 +791,27 @@ class __$FailureProductsCopyWithImpl<$Res>
 
 /// Create a copy of ProductsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? products = null,Object? selectedProduct = freezed,Object? currentPage = null,Object? totalPages = null,Object? error = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? products = null,Object? selectedProduct = freezed,Object? currentPage = null,Object? totalPages = null,Object? failure = null,}) {
   return _then(_FailureProducts(
 products: null == products ? _self._products : products // ignore: cast_nullable_to_non_nullable
 as List<ProductModel>,selectedProduct: freezed == selectedProduct ? _self.selectedProduct : selectedProduct // ignore: cast_nullable_to_non_nullable
 as ProductModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
-as int,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String,
+as int,failure: null == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure,
   ));
 }
 
-
+/// Create a copy of ProductsState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res> get failure {
+  
+  return $FailureCopyWith<$Res>(_self.failure, (value) {
+    return _then(_self.copyWith(failure: value));
+  });
+}
 }
 
 // dart format on

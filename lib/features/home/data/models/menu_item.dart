@@ -11,6 +11,7 @@ class MenuItem {
   final Color? color;
   final bool hasSubItems;
   final List<MenuItem> subItems;
+  final String? permissionKey;
 
   const MenuItem({
     required this.title,
@@ -21,6 +22,7 @@ class MenuItem {
     this.color,
     this.hasSubItems = false,
     this.subItems = const [],
+    this.permissionKey,
   });
 
   MenuItem copyWith({
@@ -32,6 +34,7 @@ class MenuItem {
     Color? color,
     bool? hasSubItems,
     List<MenuItem>? subItems,
+    String? permissionKey,
   }) {
     return MenuItem(
       title: title ?? this.title,
@@ -42,6 +45,7 @@ class MenuItem {
       color: color ?? this.color,
       hasSubItems: hasSubItems ?? this.hasSubItems,
       subItems: subItems ?? this.subItems,
+      permissionKey: permissionKey ?? this.permissionKey,
     );
   }
 
@@ -98,6 +102,7 @@ class MenuData {
         icon: Icons.home,
         route: AppRoutes.homeRoute,
         isSelected: index == 0,
+        permissionKey: 'dashboard.view',
       ),
       MenuItem(
         title: 'إدارة المستخدمين والصلاحيات',
@@ -106,6 +111,7 @@ class MenuData {
         route: AppRoutes.usersPermissionsRoute,
         hasSubItems: true,
         isSelected: index == 1,
+        permissionKey: 'users.view',
         subItems: [
           MenuItem(
             title: 'قائمة المستخدمين',
@@ -113,6 +119,7 @@ class MenuData {
             icon: Icons.list,
             route: AppRoutes.usersListRoute,
             isSelected: index == 1.1,
+            permissionKey: 'users.view',
           ),
 
           MenuItem(
@@ -121,6 +128,7 @@ class MenuData {
             icon: Icons.security,
             route: AppRoutes.managePermissionsRoute,
             isSelected: index == 1.2,
+            permissionKey: 'roles.view',
           ),
         ],
       ),
@@ -132,6 +140,7 @@ class MenuData {
         route: AppRoutes.customersListRoute,
         hasSubItems: false,
         isSelected: index == 2,
+        permissionKey: 'customers.view',
       ),
       MenuItem(
         title: 'إدارة المنتجات وفئاتها',
@@ -140,6 +149,7 @@ class MenuData {
         route: '/products',
         hasSubItems: true,
         isSelected: index == 3,
+        permissionKey: 'products.view',
         subItems: [
           MenuItem(
             title: 'قائمة المنتجات',
@@ -147,6 +157,7 @@ class MenuData {
             icon: Icons.list,
             route: AppRoutes.productsListRoute,
             isSelected: index == 3.1,
+            permissionKey: 'products.view',
           ),
           // categories
           MenuItem(
@@ -155,6 +166,7 @@ class MenuData {
             icon: Icons.category,
             route: AppRoutes.categoriesListRoute,
             isSelected: index == 3.2,
+            permissionKey: 'product-categories.view',
           ),
         ],
       ),
@@ -165,6 +177,7 @@ class MenuData {
         route: '/expenses',
         hasSubItems: true,
         isSelected: index == 4,
+        permissionKey: 'expenses.view',
         subItems: [
           MenuItem(
             title: 'قائمة المصروفات',
@@ -172,6 +185,7 @@ class MenuData {
             icon: Icons.list,
             route: AppRoutes.expensesListRoute,
             isSelected: index == 4.1,
+            permissionKey: 'expenses.view',
           ),
           MenuItem(
             title: 'فئات المصروفات',
@@ -179,6 +193,7 @@ class MenuData {
             icon: Icons.category,
             route: AppRoutes.expenseCategoriesListRoute,
             isSelected: index == 4.2,
+            permissionKey: 'expense-categories.view',
           ),
         ],
       ),
@@ -189,6 +204,7 @@ class MenuData {
         route: '/invoices',
         hasSubItems: true,
         isSelected: index == 5,
+        permissionKey: 'tax-invoices.view',
         subItems: [
           MenuItem(
             title: 'قائمة الفواتير',
@@ -196,18 +212,21 @@ class MenuData {
             icon: Icons.list,
             route: AppRoutes.invoicesListRoute,
             isSelected: index == 5.1,
+            permissionKey: 'tax-invoices.view',
           ),
           MenuItem(
             title: 'الفواتير المرحله',
             titleKey: 'posted_invoices',
             icon: Icons.check_circle,
             route: AppRoutes.postedInvoicesRoute,
+            permissionKey: 'tax-invoices.sent',
           ),
           MenuItem(
             title: 'الفواتير المرتجعة',
             titleKey: 'returned_invoices',
             icon: Icons.undo,
             route: AppRoutes.returnedInvoicesRoute,
+            permissionKey: 'tax-invoices.returned',
           ),
         ],
       ),

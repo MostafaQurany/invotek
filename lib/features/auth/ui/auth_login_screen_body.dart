@@ -1,19 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/core/utils/screen_utils.dart';
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/widgets/email_auth_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/password_auth_text_field.dart';
-import 'dart:async';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../generated/l10n.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 
 class AuthLoginScreenBody extends StatefulWidget {
   const AuthLoginScreenBody({super.key});
@@ -67,13 +70,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                   );
                 },
                 errorAuth: (error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(error),
-                      backgroundColor: colorScheme.error,
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
+                  SnackBarHelper.showFailureSnackBar(context, error);
                 },
                 orElse: () {},
               );
@@ -161,6 +158,15 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                     PasswordAuthTextField(controller: _passwordController),
 
                     SizedBox(height: ScreenUtils.paddingLarge),
+
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.forgetPassword);
+                      },
+                      child: Text(S.of(context).forgetPassword),
+                    ),
                     // Sign in
                     SizedBox(
                       width: ScreenUtils.screenWidth,
@@ -187,8 +193,19 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                     // google Sign in
                     SignInWithGoogle(
                       iosClientId: "",
-                      serverClientId: "",
-                      onAllData: (accessToken, idToken, user) {},
+                      serverClientId:
+                          "453415325077-62ac8mt6d3tov4ovsdm3bum127qup82s.apps.googleusercontent.com",
+                      onAllData: (accessToken, idToken, user) {
+                        print("accessToken: $accessToken");
+                        print("idToken: $idToken");
+                        print("user: $user");
+                        if (idToken.isNotEmpty) {
+                          context.read<AuthCubit>().googleLogin(
+                            idToken,
+                            context,
+                          );
+                        }
+                      },
                     ),
 
                     SizedBox(height: ScreenUtils.paddingMedium),

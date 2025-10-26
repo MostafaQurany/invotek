@@ -2,6 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/data/models/requests/get_all_invoices_request.dart';
@@ -119,13 +120,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -180,13 +181,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -271,13 +272,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -351,13 +352,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -391,13 +392,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -428,13 +429,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -472,13 +473,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -508,13 +509,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -544,13 +545,13 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           InvoicesState.failure(
             invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },

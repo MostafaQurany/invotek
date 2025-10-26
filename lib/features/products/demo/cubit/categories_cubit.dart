@@ -119,7 +119,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: err,
+            error: err.message,
           ),
         );
       },
@@ -169,7 +169,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: err,
+            error: err.message,
           ),
         );
       },
@@ -215,7 +215,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: err,
+            error: err.message,
           ),
         );
       },
@@ -261,7 +261,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: err,
+            error: err.message,
           ),
         );
       },
@@ -298,7 +298,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: err,
+            error: err.message,
           ),
         );
       },

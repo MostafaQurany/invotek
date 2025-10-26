@@ -8,7 +8,7 @@ sealed class InvoicesState with _$InvoicesState {
     InvoiceModel? selectedInvoice,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    String? error,
+    Failure? error,
   }) = _Initial;
 
   const factory InvoicesState.loading({
@@ -55,6 +55,6 @@ sealed class InvoicesState with _$InvoicesState {
     InvoiceModel? selectedInvoice,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    required String error,
+    required Failure failure,
   }) = _FailureInvoices;
 }

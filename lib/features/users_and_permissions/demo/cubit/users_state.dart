@@ -1,5 +1,6 @@
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/data/models/responses/user_responses.dart';
+import 'package:invotek/core/error/failures.dart';
 
 // Base state class
 abstract class UsersState {
@@ -99,43 +100,43 @@ class BulkOperationCompleted extends UsersState {
 
 // Error states
 class UsersError extends UsersState {
-  final String message;
+  final Failure failure;
   final String operation;
-  const UsersError({required this.message, required this.operation});
+  const UsersError({required this.failure, required this.operation});
 }
 
 class UsersListError extends UsersState {
-  final String message;
-  const UsersListError({required this.message});
+  final Failure failure;
+  const UsersListError({required this.failure});
 }
 
 class UserCreationError extends UsersState {
-  final String message;
-  const UserCreationError({required this.message});
+  final Failure failure;
+  const UserCreationError({required this.failure});
 }
 
 class UserUpdateError extends UsersState {
-  final String message;
-  const UserUpdateError({required this.message});
+  final Failure failure;
+  const UserUpdateError({required this.failure});
 }
 
 class UserDeletionError extends UsersState {
-  final String message;
-  const UserDeletionError({required this.message});
+  final Failure failure;
+  const UserDeletionError({required this.failure});
 }
 
 class PasswordChangeError extends UsersState {
-  final String message;
-  const PasswordChangeError({required this.message});
+  final Failure failure;
+  const PasswordChangeError({required this.failure});
 }
 
 class StatisticsError extends UsersState {
-  final String message;
-  const StatisticsError({required this.message});
+  final Failure failure;
+  const StatisticsError({required this.failure});
 }
 
 class BulkOperationError extends UsersState {
-  final String message;
+  final Failure failure;
   final String operation;
-  const BulkOperationError({required this.message, required this.operation});
+  const BulkOperationError({required this.failure, required this.operation});
 }

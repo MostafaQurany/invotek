@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/expenses/data/repository/expenses_repository.dart';
 import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
 
@@ -13,7 +14,7 @@ sealed class ExpensesState with _$ExpensesState {
     ExpenseModel? selectedExpense,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    String? error,
+    Failure? error,
   }) = _Initial;
 
   const factory ExpensesState.loading({
@@ -60,7 +61,7 @@ sealed class ExpensesState with _$ExpensesState {
     ExpenseModel? selectedExpense,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    required String error,
+    required Failure failure,
   }) = _FailureExpenses;
 }
 
@@ -139,13 +140,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ExpensesState.failure(
             expenses: _expenses,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -193,13 +194,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ExpensesState.failure(
             expenses: _expenses,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -262,13 +263,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ExpensesState.failure(
             expenses: _expenses,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -327,13 +328,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ExpensesState.failure(
             expenses: _expenses,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -364,13 +365,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ExpensesState.failure(
             expenses: _expenses,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -400,13 +401,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ExpensesState.failure(
             expenses: _expenses,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },

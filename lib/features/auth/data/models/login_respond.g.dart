@@ -11,6 +11,7 @@ LoginRespond _$LoginRespondFromJson(Map<String, dynamic> json) => LoginRespond(
       ? null
       : LoginUser.fromJson(json['user'] as Map<String, dynamic>),
   token: json['token'] as String?,
+  roleId: (json['role_id'] as num?)?.toInt(),
   message: json['message'] as String?,
   errors: (json['errors'] as Map<String, dynamic>?)?.map(
     (k, e) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$LoginRespondToJson(LoginRespond instance) =>
     <String, dynamic>{
       'user': instance.user,
       'token': instance.token,
+      'role_id': instance.roleId,
       'message': instance.message,
       'errors': instance.errors,
     };

@@ -133,7 +133,7 @@ class ExpensesStateBuilder extends StatelessWidget {
               },
           failure:
               (expenses, selectedExpense, currentPage, totalPages, error) =>
-                  ExpensesErrorState(error: error, onRetry: onRetry),
+                  ExpensesErrorState(error: error.message, onRetry: onRetry),
         );
       },
     );

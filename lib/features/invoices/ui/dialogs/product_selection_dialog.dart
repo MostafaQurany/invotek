@@ -162,7 +162,7 @@ class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
                   _buildProductsListContent(products),
           failure:
               (products, selectedProduct, currentPage, totalPages, error) =>
-                  _buildErrorState(error),
+                  _buildErrorState(error.message),
         );
       },
     );
@@ -385,6 +385,3 @@ class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
     );
   }
 }
-
-
-

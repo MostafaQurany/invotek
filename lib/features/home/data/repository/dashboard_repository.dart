@@ -1,4 +1,6 @@
 import 'package:invotek/core/server/api_client.dart';
+import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/features/home/data/models/dashboard_models.dart';
 
 class DashboardRepository {
@@ -6,12 +8,19 @@ class DashboardRepository {
 
   DashboardRepository(this._apiClient);
 
-  Future<DashboardResponse> getDashboard() async {
+  Future<ApiResult<DashboardData>> getDashboard() async {
     try {
       final response = await _apiClient.getDashboard();
-      return response;
+      
+      if (response.success) {
+        return ApiResult.success(response.data);
+      } else {
+        return ApiResult.failure(
+          ApiErrorHandler.handleError(Exception('Failed to load dashboard data')),
+        );
+      }
     } catch (e) {
-      throw Exception('Failed to fetch dashboard data: $e');
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 }

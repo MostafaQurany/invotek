@@ -1,11 +1,12 @@
 import 'package:invotek/features/users_and_permissions/data/models/permission_model.dart';
+import 'package:invotek/core/error/failures.dart';
 
 class PermissionsState {
   final List<Permission> permissions;
   final List<Role> roles;
   final List<UserPermission> userPermissions;
   final bool isLoading;
-  final String? error;
+  final Failure? error;
   final Role? selectedRole;
 
   PermissionsState({
@@ -22,7 +23,7 @@ class PermissionsState {
     List<Role>? roles,
     List<UserPermission>? userPermissions,
     bool? isLoading,
-    String? error,
+    Failure? error,
     Role? selectedRole,
   }) {
     return PermissionsState(

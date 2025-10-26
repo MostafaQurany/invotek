@@ -201,7 +201,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
               ),
           failure:
               (customers, selectedCustomer, currentPage, totalPages, error) =>
-                  _buildErrorState(error),
+                  _buildErrorState(error.message),
         );
       },
     );

@@ -168,7 +168,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? error)?  initial,TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  loaded,TResult Function( List<ExpenseModel> expenses,  ExpenseModel created,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<ExpenseModel> expenses,  ExpenseModel updated,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<ExpenseModel> expenses,  int deletedId,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? message)?  loading,TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  loaded,TResult Function( List<ExpenseModel> expenses,  ExpenseModel created,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  createSuccess,TResult Function( List<ExpenseModel> expenses,  ExpenseModel updated,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  updateSuccess,TResult Function( List<ExpenseModel> expenses,  int deletedId,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  deleteSuccess,TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  Failure failure)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.error);case _LoadingExpenses() when loading != null:
@@ -177,7 +177,7 @@ return loaded(_that.expenses,_that.selectedExpense,_that.currentPage,_that.total
 return createSuccess(_that.expenses,_that.created,_that.selectedExpense,_that.currentPage,_that.totalPages);case _UpdateSuccessExpenses() when updateSuccess != null:
 return updateSuccess(_that.expenses,_that.updated,_that.selectedExpense,_that.currentPage,_that.totalPages);case _DeleteSuccessExpenses() when deleteSuccess != null:
 return deleteSuccess(_that.expenses,_that.deletedId,_that.selectedExpense,_that.currentPage,_that.totalPages);case _FailureExpenses() when failure != null:
-return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.failure);case _:
   return orElse();
 
 }
@@ -195,7 +195,7 @@ return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? error)  initial,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  loaded,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel created,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel updated,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<ExpenseModel> expenses,  int deletedId,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  Failure? error)  initial,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? message)  loading,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  loaded,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel created,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  createSuccess,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel updated,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  updateSuccess,required TResult Function( List<ExpenseModel> expenses,  int deletedId,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)  deleteSuccess,required TResult Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  Failure failure)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.error);case _LoadingExpenses():
@@ -204,7 +204,7 @@ return loaded(_that.expenses,_that.selectedExpense,_that.currentPage,_that.total
 return createSuccess(_that.expenses,_that.created,_that.selectedExpense,_that.currentPage,_that.totalPages);case _UpdateSuccessExpenses():
 return updateSuccess(_that.expenses,_that.updated,_that.selectedExpense,_that.currentPage,_that.totalPages);case _DeleteSuccessExpenses():
 return deleteSuccess(_that.expenses,_that.deletedId,_that.selectedExpense,_that.currentPage,_that.totalPages);case _FailureExpenses():
-return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.error);}
+return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.failure);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -218,7 +218,7 @@ return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.tota
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? error)?  initial,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel created,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel updated,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<ExpenseModel> expenses,  int deletedId,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  Failure? error)?  initial,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  String? message)?  loading,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  loaded,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel created,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  createSuccess,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel updated,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  updateSuccess,TResult? Function( List<ExpenseModel> expenses,  int deletedId,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages)?  deleteSuccess,TResult? Function( List<ExpenseModel> expenses,  ExpenseModel? selectedExpense,  int currentPage,  int totalPages,  Failure failure)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.error);case _LoadingExpenses() when loading != null:
@@ -227,7 +227,7 @@ return loaded(_that.expenses,_that.selectedExpense,_that.currentPage,_that.total
 return createSuccess(_that.expenses,_that.created,_that.selectedExpense,_that.currentPage,_that.totalPages);case _UpdateSuccessExpenses() when updateSuccess != null:
 return updateSuccess(_that.expenses,_that.updated,_that.selectedExpense,_that.currentPage,_that.totalPages);case _DeleteSuccessExpenses() when deleteSuccess != null:
 return deleteSuccess(_that.expenses,_that.deletedId,_that.selectedExpense,_that.currentPage,_that.totalPages);case _FailureExpenses() when failure != null:
-return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.error);case _:
+return failure(_that.expenses,_that.selectedExpense,_that.currentPage,_that.totalPages,_that.failure);case _:
   return null;
 
 }
@@ -252,7 +252,7 @@ class _Initial implements ExpensesState {
 @override final  ExpenseModel? selectedExpense;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String? error;
+ final  Failure? error;
 
 /// Create a copy of ExpensesState
 /// with the given fields replaced by the non-null parameter values.
@@ -284,11 +284,11 @@ abstract mixin class _$InitialCopyWith<$Res> implements $ExpensesStateCopyWith<$
   factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) _then) = __$InitialCopyWithImpl;
 @override @useResult
 $Res call({
- List<ExpenseModel> expenses, ExpenseModel? selectedExpense, int currentPage, int totalPages, String? error
+ List<ExpenseModel> expenses, ExpenseModel? selectedExpense, int currentPage, int totalPages, Failure? error
 });
 
 
-
+$FailureCopyWith<$Res>? get error;
 
 }
 /// @nodoc
@@ -308,11 +308,23 @@ as List<ExpenseModel>,selectedExpense: freezed == selectedExpense ? _self.select
 as ExpenseModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
 as int,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String?,
+as Failure?,
   ));
 }
 
+/// Create a copy of ExpensesState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res>? get error {
+    if (_self.error == null) {
+    return null;
+  }
 
+  return $FailureCopyWith<$Res>(_self.error!, (value) {
+    return _then(_self.copyWith(error: value));
+  });
+}
 }
 
 /// @nodoc
@@ -717,7 +729,7 @@ as int,
 
 
 class _FailureExpenses implements ExpensesState {
-  const _FailureExpenses({final  List<ExpenseModel> expenses = const [], this.selectedExpense, this.currentPage = 1, this.totalPages = 1, required this.error}): _expenses = expenses;
+  const _FailureExpenses({final  List<ExpenseModel> expenses = const [], this.selectedExpense, this.currentPage = 1, this.totalPages = 1, required this.failure}): _expenses = expenses;
   
 
  final  List<ExpenseModel> _expenses;
@@ -730,7 +742,7 @@ class _FailureExpenses implements ExpensesState {
 @override final  ExpenseModel? selectedExpense;
 @override@JsonKey() final  int currentPage;
 @override@JsonKey() final  int totalPages;
- final  String error;
+ final  Failure failure;
 
 /// Create a copy of ExpensesState
 /// with the given fields replaced by the non-null parameter values.
@@ -742,16 +754,16 @@ _$FailureExpensesCopyWith<_FailureExpenses> get copyWith => __$FailureExpensesCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureExpenses&&const DeepCollectionEquality().equals(other._expenses, _expenses)&&(identical(other.selectedExpense, selectedExpense) || other.selectedExpense == selectedExpense)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FailureExpenses&&const DeepCollectionEquality().equals(other._expenses, _expenses)&&(identical(other.selectedExpense, selectedExpense) || other.selectedExpense == selectedExpense)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&(identical(other.totalPages, totalPages) || other.totalPages == totalPages)&&(identical(other.failure, failure) || other.failure == failure));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_expenses),selectedExpense,currentPage,totalPages,error);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_expenses),selectedExpense,currentPage,totalPages,failure);
 
 @override
 String toString() {
-  return 'ExpensesState.failure(expenses: $expenses, selectedExpense: $selectedExpense, currentPage: $currentPage, totalPages: $totalPages, error: $error)';
+  return 'ExpensesState.failure(expenses: $expenses, selectedExpense: $selectedExpense, currentPage: $currentPage, totalPages: $totalPages, failure: $failure)';
 }
 
 
@@ -762,11 +774,11 @@ abstract mixin class _$FailureExpensesCopyWith<$Res> implements $ExpensesStateCo
   factory _$FailureExpensesCopyWith(_FailureExpenses value, $Res Function(_FailureExpenses) _then) = __$FailureExpensesCopyWithImpl;
 @override @useResult
 $Res call({
- List<ExpenseModel> expenses, ExpenseModel? selectedExpense, int currentPage, int totalPages, String error
+ List<ExpenseModel> expenses, ExpenseModel? selectedExpense, int currentPage, int totalPages, Failure failure
 });
 
 
-
+$FailureCopyWith<$Res> get failure;
 
 }
 /// @nodoc
@@ -779,18 +791,27 @@ class __$FailureExpensesCopyWithImpl<$Res>
 
 /// Create a copy of ExpensesState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? expenses = null,Object? selectedExpense = freezed,Object? currentPage = null,Object? totalPages = null,Object? error = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? expenses = null,Object? selectedExpense = freezed,Object? currentPage = null,Object? totalPages = null,Object? failure = null,}) {
   return _then(_FailureExpenses(
 expenses: null == expenses ? _self._expenses : expenses // ignore: cast_nullable_to_non_nullable
 as List<ExpenseModel>,selectedExpense: freezed == selectedExpense ? _self.selectedExpense : selectedExpense // ignore: cast_nullable_to_non_nullable
 as ExpenseModel?,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,totalPages: null == totalPages ? _self.totalPages : totalPages // ignore: cast_nullable_to_non_nullable
-as int,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as String,
+as int,failure: null == failure ? _self.failure : failure // ignore: cast_nullable_to_non_nullable
+as Failure,
   ));
 }
 
-
+/// Create a copy of ExpensesState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$FailureCopyWith<$Res> get failure {
+  
+  return $FailureCopyWith<$Res>(_self.failure, (value) {
+    return _then(_self.copyWith(failure: value));
+  });
+}
 }
 
 // dart format on

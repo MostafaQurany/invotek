@@ -142,7 +142,7 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            error: error.message,
           ),
         );
       },
@@ -195,7 +195,7 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            error: error.message,
           ),
         );
       },
@@ -255,7 +255,7 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            error: error.message,
           ),
         );
       },
@@ -312,7 +312,7 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            error: error.message,
           ),
         );
       },
@@ -349,7 +349,7 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            error: error.message,
           ),
         );
       },
@@ -385,7 +385,7 @@ class ExpenseCategoriesCubit extends Cubit<ExpenseCategoriesState> {
             categories: _categories,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            error: error.message,
           ),
         );
       },

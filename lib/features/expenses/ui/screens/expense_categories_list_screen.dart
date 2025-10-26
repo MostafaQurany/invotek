@@ -9,7 +9,6 @@ import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart
 import 'package:invotek/features/expenses/ui/screens/add_expense_category_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'package:invotek/core/widgets/common_menu_button.dart';
 
 class ExpenseCategoriesListScreen extends StatefulWidget {
   const ExpenseCategoriesListScreen({super.key});

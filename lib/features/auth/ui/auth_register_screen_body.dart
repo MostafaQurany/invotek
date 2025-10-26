@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/utils/app_images.dart';
+import 'package:invotek/core/utils/screen_utils.dart';
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/widgets/confirm_password_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/email_auth_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/name_auth_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/password_auth_text_field.dart';
 
-import '../../../generated/l10n.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class AuthRegisterScreenBody extends StatefulWidget {
   const AuthRegisterScreenBody({super.key});
@@ -64,17 +67,10 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
                 behavior: SnackBarBehavior.floating,
               ),
             );
-            // Navigate back to login
-            Navigator.pop(context);
+            // الـ listener في auth_screen سيتعامل مع التنقل للشاشة الرئيسية
           },
           errorRegister: (error) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(error),
-                backgroundColor: colorScheme.error,
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
+            SnackBarHelper.showFailureSnackBar(context, error);
           },
           orElse: () {},
         );
@@ -92,13 +88,32 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
                   Image(image: AssetImage(AppImages.logoGreen), width: 0.45.sw),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: TextButton(
-                      child: Text(
-                        S.of(context).arabic,
-                        style: Theme.of(context).textTheme.headlineSmall!
-                            .copyWith(decoration: TextDecoration.underline),
-                      ),
-                      onPressed: () {},
+                    child: BlocBuilder<LocalizationCubit, LocalizationState>(
+                      builder: (context, state) {
+                        return TextButton(
+                          child: Text(
+                            state.locale.languageCode == 'ar'
+                                ? S.of(context).english
+                                : S.of(context).arabic,
+                            style: Theme.of(context).textTheme.headlineSmall!
+                                .copyWith(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: ScreenUtils.fontSizeMedium,
+                                ),
+                          ),
+                          onPressed: () {
+                            if (state.locale.languageCode == 'ar') {
+                              context
+                                  .read<LocalizationCubit>()
+                                  .changeLanguageToEnglish();
+                            } else {
+                              context
+                                  .read<LocalizationCubit>()
+                                  .changeLanguageToArabic();
+                            }
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],

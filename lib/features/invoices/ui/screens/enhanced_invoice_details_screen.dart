@@ -9,10 +9,11 @@ import 'package:invotek/features/invoices/data/models/invoice_customer_model.dar
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_summary_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
-import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_payment_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_additional_info_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
@@ -103,7 +104,7 @@ class _EnhancedInvoiceDetailsScreenState
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(error),
+                        content: Text(S.of(context).errorOccurred(error)),
                         backgroundColor: AppColors.error,
                       ),
                     );
@@ -165,7 +166,7 @@ class _EnhancedInvoiceDetailsScreenState
                   },
               failure:
                   (invoices, selectedInvoice, currentPage, totalPages, error) {
-                    return _buildErrorState(error);
+                    return _buildErrorState(error.message);
                   },
             );
           },

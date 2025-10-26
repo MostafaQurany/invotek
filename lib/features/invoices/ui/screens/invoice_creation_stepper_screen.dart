@@ -11,6 +11,7 @@ import 'package:invotek/features/invoices/ui/widgets/stepper/customer_selection_
 import 'package:invotek/features/invoices/ui/widgets/stepper/items_selection_step.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_summary_step.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoiceCreationStepperScreen extends StatefulWidget {
@@ -100,16 +101,7 @@ class _InvoiceCreationStepperScreenState
                 },
             failure:
                 (invoices, selectedInvoice, currentPage, totalPages, error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(s.errorCreatingInvoice(error)),
-                      backgroundColor: AppColors.error,
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
-                  );
+                  SnackBarHelper.showFailureSnackBar(context, error);
                 },
             orElse: () {},
           );

@@ -4,7 +4,7 @@ import 'package:invotek/core/di/init_dependencies_map.dart';
 import 'package:invotek/core/widgets/loading_widgets.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
-import 'package:invotek/features/auth/demo/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_screen_header.dart';
 import 'package:invotek/features/auth/ui/widgets/confirm_password_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/email_auth_text_field.dart';

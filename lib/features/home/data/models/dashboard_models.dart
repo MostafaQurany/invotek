@@ -1,40 +1,70 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'dashboard_models.g.dart';
+
+@JsonSerializable()
 class DashboardResponse {
   final bool success;
   final DashboardData data;
 
   DashboardResponse({required this.success, required this.data});
 
-  factory DashboardResponse.fromJson(Map<String, dynamic> json) {
-    return DashboardResponse(
-      success: json['success'] ?? false,
-      data: DashboardData.fromJson(json['data'] ?? {}),
-    );
-  }
+  factory DashboardResponse.fromJson(Map<String, dynamic> json) =>
+      _$DashboardResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DashboardResponseToJson(this);
 }
 
+@JsonSerializable()
 class DashboardData {
+  // Basic counts and totals
+  @JsonKey(name: 'tax_invoices_count')
   final int taxInvoicesCount;
+  @JsonKey(name: 'tax_invoices_total')
   final String taxInvoicesTotal;
+  @JsonKey(name: 'invoices_count')
   final int invoicesCount;
+  @JsonKey(name: 'new_invoices_count')
   final int newInvoicesCount;
+  @JsonKey(name: 'returned_invoices_count')
   final int returnedInvoicesCount;
-  final double returnedInvoicesTotal;
+  @JsonKey(name: 'returned_invoices_total')
+  final int returnedInvoicesTotal;
+  @JsonKey(name: 'expenses_total')
   final String expensesTotal;
-  final double monthlyExpensesTotal;
+  @JsonKey(name: 'monthly_expenses_total')
+  final String monthlyExpensesTotal;
+  @JsonKey(name: 'customers_count')
   final int customersCount;
+  @JsonKey(name: 'new_customers_count')
   final int newCustomersCount;
+  @JsonKey(name: 'products_count')
   final int productsCount;
+  @JsonKey(name: 'new_products_count')
   final int newProductsCount;
+  @JsonKey(name: 'sales_total')
   final String salesTotal;
+  @JsonKey(name: 'sales_growth_percentage')
   final double salesGrowthPercentage;
+  @JsonKey(name: 'net_profit')
   final double netProfit;
+  @JsonKey(name: 'profit_growth_percentage')
   final double profitGrowthPercentage;
+
+  // Complex data structures
+  @JsonKey(name: 'top_products')
   final List<TopProduct> topProducts;
+  @JsonKey(name: 'sales_categories')
   final List<SalesCategory> salesCategories;
+  @JsonKey(name: 'monthly_labels')
   final List<String> monthlyLabels;
+  @JsonKey(name: 'monthly_sales_data')
   final List<double> monthlySalesData;
+  @JsonKey(name: 'monthly_invoices_data')
   final List<double> monthlyInvoicesData;
+  @JsonKey(name: 'monthly_tax_invoices_data')
   final List<double> monthlyTaxInvoicesData;
+  @JsonKey(name: 'monthly_returned_invoices_data')
   final List<double> monthlyReturnedInvoicesData;
 
   DashboardData({
@@ -63,67 +93,18 @@ class DashboardData {
     required this.monthlyReturnedInvoicesData,
   });
 
-  factory DashboardData.fromJson(Map<String, dynamic> json) {
-    return DashboardData(
-      taxInvoicesCount: json['tax_invoices_count'] ?? 0,
-      taxInvoicesTotal: json['tax_invoices_total']?.toString() ?? '0',
-      invoicesCount: json['invoices_count'] ?? 0,
-      newInvoicesCount: json['new_invoices_count'] ?? 0,
-      returnedInvoicesCount: json['returned_invoices_count'] ?? 0,
-      returnedInvoicesTotal: (json['returned_invoices_total'] ?? 0).toDouble(),
-      expensesTotal: json['expenses_total']?.toString() ?? '0',
-      monthlyExpensesTotal: (json['monthly_expenses_total'] ?? 0).toDouble(),
-      customersCount: json['customers_count'] ?? 0,
-      newCustomersCount: json['new_customers_count'] ?? 0,
-      productsCount: json['products_count'] ?? 0,
-      newProductsCount: json['new_products_count'] ?? 0,
-      salesTotal: json['sales_total']?.toString() ?? '0',
-      salesGrowthPercentage: (json['sales_growth_percentage'] ?? 0).toDouble(),
-      netProfit: (json['net_profit'] ?? 0).toDouble(),
-      profitGrowthPercentage: (json['profit_growth_percentage'] ?? 0)
-          .toDouble(),
-      topProducts:
-          (json['top_products'] as List<dynamic>?)
-              ?.map((item) => TopProduct.fromJson(item))
-              .toList() ??
-          [],
-      salesCategories:
-          (json['sales_categories'] as List<dynamic>?)
-              ?.map((item) => SalesCategory.fromJson(item))
-              .toList() ??
-          [],
-      monthlyLabels:
-          (json['monthly_labels'] as List<dynamic>?)
-              ?.map((item) => item.toString())
-              .toList() ??
-          [],
-      monthlySalesData:
-          (json['monthly_sales_data'] as List<dynamic>?)
-              ?.map<double>((item) => (item ?? 0).toDouble())
-              .toList() ??
-          <double>[],
-      monthlyInvoicesData:
-          (json['monthly_invoices_data'] as List<dynamic>?)
-              ?.map<double>((item) => (item ?? 0).toDouble())
-              .toList() ??
-          <double>[],
-      monthlyTaxInvoicesData:
-          (json['monthly_tax_invoices_data'] as List<dynamic>?)
-              ?.map<double>((item) => (item ?? 0).toDouble())
-              .toList() ??
-          <double>[],
-      monthlyReturnedInvoicesData:
-          (json['monthly_returned_invoices_data'] as List<dynamic>?)
-              ?.map<double>((item) => (item ?? 0).toDouble())
-              .toList() ??
-          <double>[],
-    );
-  }
+  factory DashboardData.fromJson(Map<String, dynamic> json) =>
+      _$DashboardDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DashboardDataToJson(this);
 }
 
+@JsonSerializable()
 class TopProduct {
   final Product? product;
-  final int totalQuantity;
+  @JsonKey(name: 'total_quantity')
+  final double totalQuantity;
+  @JsonKey(name: 'total_amount')
   final double totalAmount;
 
   TopProduct({
@@ -132,34 +113,44 @@ class TopProduct {
     required this.totalAmount,
   });
 
-  factory TopProduct.fromJson(Map<String, dynamic> json) {
-    return TopProduct(
-      product: json['product'] != null
-          ? Product.fromJson(json['product'])
-          : null,
-      totalQuantity: json['total_quantity'] ?? 0,
-      totalAmount: (json['total_amount'] ?? 0).toDouble(),
-    );
-  }
+  factory TopProduct.fromJson(Map<String, dynamic> json) =>
+      _$TopProductFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TopProductToJson(this);
 }
 
+@JsonSerializable()
 class Product {
   final int id;
+  @JsonKey(name: 'company_id')
   final int companyId;
+  @JsonKey(name: 'product_category_id')
   final int? productCategoryId;
   final String name;
   final String? sku;
   final String? description;
   final String price;
   final String? cost;
+  @JsonKey(name: 'tax_rate')
   final String taxRate;
+  @JsonKey(name: 'tax_rate_backup')
+  final String? taxRateBackup;
   final int quantity;
+  @JsonKey(name: 'quantity_backup')
+  final int? quantityBackup;
   final String? barcode;
   final String? unit;
+  @JsonKey(name: 'has_tax')
   final bool hasTax;
+  @JsonKey(name: 'is_active')
   final bool isActive;
+  @JsonKey(name: 'track_inventory')
   final bool trackInventory;
   final String status;
+  @JsonKey(name: 'created_at')
+  final String createdAt;
+  @JsonKey(name: 'updated_at')
+  final String updatedAt;
   final String? image;
 
   Product({
@@ -172,49 +163,36 @@ class Product {
     required this.price,
     this.cost,
     required this.taxRate,
+    this.taxRateBackup,
     required this.quantity,
+    this.quantityBackup,
     this.barcode,
     this.unit,
     required this.hasTax,
     required this.isActive,
     required this.trackInventory,
     required this.status,
+    required this.createdAt,
+    required this.updatedAt,
     this.image,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) {
-    return Product(
-      id: json['id'] ?? 0,
-      companyId: json['company_id'] ?? 0,
-      productCategoryId: json['product_category_id'],
-      name: json['name'] ?? '',
-      sku: json['sku'],
-      description: json['description'],
-      price: json['price']?.toString() ?? '0',
-      cost: json['cost']?.toString(),
-      taxRate: json['tax_rate']?.toString() ?? '0',
-      quantity: json['quantity'] ?? 0,
-      barcode: json['barcode'],
-      unit: json['unit'],
-      hasTax: json['has_tax'] ?? false,
-      isActive: json['is_active'] ?? false,
-      trackInventory: json['track_inventory'] ?? false,
-      status: json['status'] ?? '',
-      image: json['image'],
-    );
-  }
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ProductToJson(this);
 }
 
+@JsonSerializable()
 class SalesCategory {
   final String category;
+  @JsonKey(name: 'total_amount')
   final double totalAmount;
 
   SalesCategory({required this.category, required this.totalAmount});
 
-  factory SalesCategory.fromJson(Map<String, dynamic> json) {
-    return SalesCategory(
-      category: json['category'] ?? '',
-      totalAmount: (json['total_amount'] ?? 0).toDouble(),
-    );
-  }
+  factory SalesCategory.fromJson(Map<String, dynamic> json) =>
+      _$SalesCategoryFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SalesCategoryToJson(this);
 }

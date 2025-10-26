@@ -70,7 +70,7 @@ class SEn extends S {
   String get nameInvalid => 'Name must contain only letters';
 
   @override
-  String get validationError => 'Please check the entered data';
+  String get validationError => 'Data validation error';
 
   @override
   String get networkError => 'Network error';
@@ -83,6 +83,102 @@ class SEn extends S {
 
   @override
   String get unknownError => 'An unexpected error occurred. Please try again.';
+
+  @override
+  String get cacheError => 'Local storage error';
+
+  @override
+  String get timeoutError => 'Request timeout';
+
+  @override
+  String get unauthorizedError => 'Unauthorized access';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get customersLoadError => 'Error loading customers';
+
+  @override
+  String get customersNetworkError => 'Network error - Customers';
+
+  @override
+  String get customersValidationError => 'Validation error - Customers';
+
+  @override
+  String get customersUnknownError => 'Unknown error - Customers';
+
+  @override
+  String get customersTimeoutError => 'Timeout error - Customers';
+
+  @override
+  String get customersUnauthorizedError => 'Unauthorized error - Customers';
+
+  @override
+  String get customersCacheError => 'Cache error - Customers';
+
+  @override
+  String get productsLoadError => 'Error loading products';
+
+  @override
+  String get productsNetworkError => 'Network error - Products';
+
+  @override
+  String get productsValidationError => 'Validation error - Products';
+
+  @override
+  String get productsUnknownError => 'Unknown error - Products';
+
+  @override
+  String get productsTimeoutError => 'Timeout error - Products';
+
+  @override
+  String get productsUnauthorizedError => 'Unauthorized error - Products';
+
+  @override
+  String get productsCacheError => 'Cache error - Products';
+
+  @override
+  String get expensesLoadError => 'Error loading expenses';
+
+  @override
+  String get expensesNetworkError => 'Network error - Expenses';
+
+  @override
+  String get expensesValidationError => 'Validation error - Expenses';
+
+  @override
+  String get expensesUnknownError => 'Unknown error - Expenses';
+
+  @override
+  String get expensesTimeoutError => 'Timeout error - Expenses';
+
+  @override
+  String get expensesUnauthorizedError => 'Unauthorized error - Expenses';
+
+  @override
+  String get expensesCacheError => 'Cache error - Expenses';
+
+  @override
+  String get invoicesLoadError => 'Error loading invoices';
+
+  @override
+  String get invoicesNetworkError => 'Network error - Invoices';
+
+  @override
+  String get invoicesValidationError => 'Validation error - Invoices';
+
+  @override
+  String get invoicesUnknownError => 'Unknown error - Invoices';
+
+  @override
+  String get invoicesTimeoutError => 'Timeout error - Invoices';
+
+  @override
+  String get invoicesUnauthorizedError => 'Unauthorized error - Invoices';
+
+  @override
+  String get invoicesCacheError => 'Cache error - Invoices';
 
   @override
   String get loading => 'Loading...';
@@ -410,9 +506,6 @@ class SEn extends S {
 
   @override
   String get addNewUserMessage => 'Press the add button to create a new user';
-
-  @override
-  String get retry => 'Retry';
 
   @override
   String get deleteConfirmation => 'Delete Confirmation';
@@ -1354,6 +1447,58 @@ class SEn extends S {
   String get notificationsDisabled => 'Notifications disabled';
 
   @override
+  String get accountSettings => 'Account Settings';
+
+  @override
+  String get changePassword => 'Change Password';
+
+  @override
+  String get deleteAccount => 'Delete Account';
+
+  @override
+  String get currentPassword => 'Current Password';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get confirmNewPassword => 'Confirm New Password';
+
+  @override
+  String get passwordChangedSuccessfully => 'Password changed successfully';
+
+  @override
+  String get deleteAccountWarning =>
+      'Warning: Your account will be permanently deleted';
+
+  @override
+  String get enterPasswordToConfirm => 'Enter password to confirm';
+
+  @override
+  String get accountDeletedSuccessfully => 'Account deleted successfully';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Are you sure you want to delete your account?';
+
+  @override
+  String get changePasswordConfirmation =>
+      'Are you sure you want to change your password?';
+
+  @override
+  String get deleteAccountFinalConfirmation =>
+      'Are you absolutely sure you want to delete your account? This action cannot be undone';
+
+  @override
+  String get yesDeleteAccount => 'Yes, delete my account';
+
+  @override
+  String get changePasswordButton => 'Change Password';
+
+  @override
+  String get deleteAccountButton => 'Delete Account Permanently';
+
+  @override
   String get or => 'Or';
 
   @override
@@ -1613,9 +1758,6 @@ class SEn extends S {
 
   @override
   String get allStatus => 'All Status';
-
-  @override
-  String get passwordChangedSuccessfully => 'Password changed successfully';
 
   @override
   String get operationCompletedSuccessfully =>
@@ -3074,4 +3216,101 @@ class SEn extends S {
 
   @override
   String get searchExpenses => '.... Search expenses';
+
+  @override
+  String get forgetPassword => 'Forget password?';
+
+  @override
+  String get forgetPasswordTitle => 'Forgot Password';
+
+  @override
+  String get forgetPasswordDesc => 'Enter your email to send verification code';
+
+  @override
+  String get sendVerificationCode => 'Send Verification Code';
+
+  @override
+  String get verifyCodeTitle => 'Verify Code';
+
+  @override
+  String verifyCodeDesc(Object email) {
+    return 'Enter the code sent to $email';
+  }
+
+  @override
+  String get enterCode => 'Enter Code';
+
+  @override
+  String get verifyCode => 'Verify Code';
+
+  @override
+  String get resendCode => 'Resend Code';
+
+  @override
+  String resendCodeIn(Object seconds) {
+    return 'Resend in $seconds seconds';
+  }
+
+  @override
+  String get codeResent => 'Code resent successfully';
+
+  @override
+  String get resetPasswordTitle => 'Reset Password';
+
+  @override
+  String get resetPasswordDesc => 'Enter your new password';
+
+  @override
+  String get resetPassword => 'Reset Password';
+
+  @override
+  String get passwordStrengthWeak => 'Weak';
+
+  @override
+  String get passwordStrengthMedium => 'Medium';
+
+  @override
+  String get passwordStrengthStrong => 'Strong';
+
+  @override
+  String get resetPasswordSuccess => 'Password reset successfully';
+
+  @override
+  String get accessDenied => 'Access Denied';
+
+  @override
+  String noPermissionMessage(Object feature) {
+    return 'Sorry, you don\'t have permission to access $feature';
+  }
+
+  @override
+  String get contactAdminForAccess =>
+      'Please contact the system administrator for access';
+
+  @override
+  String get pasteCode => 'Paste Code';
+
+  @override
+  String get invalidCode => 'Invalid code';
+
+  @override
+  String get codeMustBe6Digits => 'Code must be 6 digits';
+
+  @override
+  String get enterVerificationCode => 'Enter verification code';
+
+  @override
+  String get checkYourEmail => 'Check your email';
+
+  @override
+  String get otpSentToEmail => 'Verification code sent to your email';
+
+  @override
+  String get copyCodeFromEmail => 'Copy the code from email and paste here';
+
+  @override
+  String get dismiss => 'Dismiss';
+
+  @override
+  String get backToLoginScreen => 'Back to Login Screen';
 }

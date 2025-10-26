@@ -1,7 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
-import 'package:invotek/features/customers/data/repository/customers_repository.dart';
+import 'package:invotek/core/error/failures.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customers.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.dart';
+import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
 import 'package:invotek/features/customers/demo/entit/customer_model.dart';
 
 part 'customers_cubit.freezed.dart';
@@ -13,7 +18,7 @@ sealed class CustomersState with _$CustomersState {
     CustomerModel? selectedCustomer,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    String? error,
+    Failure? error,
   }) = _Initial;
 
   const factory CustomersState.loading({
@@ -60,12 +65,17 @@ sealed class CustomersState with _$CustomersState {
     CustomerModel? selectedCustomer,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    required String error,
+    required Failure failure,
   }) = _FailureCustomers;
 }
 
 class CustomersCubit extends Cubit<CustomersState> {
-  final CustomersRepository _repository;
+  final GetCustomers _getCustomers;
+  final GetCustomerById _getCustomerById;
+  final CreateCustomer _createCustomer;
+  final UpdateCustomer _updateCustomer;
+  final DeleteCustomer _deleteCustomer;
+
   static CustomersCubit get(context) => BlocProvider.of(context);
 
   final List<CustomerModel> _customers = <CustomerModel>[];
@@ -77,7 +87,18 @@ class CustomersCubit extends Cubit<CustomersState> {
   int _pageSize = 20;
   bool _isLoadingPage = false;
 
-  CustomersCubit(this._repository) : super(const CustomersState.initial());
+  CustomersCubit({
+    required GetCustomers getCustomers,
+    required GetCustomerById getCustomerById,
+    required CreateCustomer createCustomer,
+    required UpdateCustomer updateCustomer,
+    required DeleteCustomer deleteCustomer,
+  }) : _getCustomers = getCustomers,
+       _getCustomerById = getCustomerById,
+       _createCustomer = createCustomer,
+       _updateCustomer = updateCustomer,
+       _deleteCustomer = deleteCustomer,
+       super(const CustomersState.initial());
 
   List<CustomerModel> get customers => List.unmodifiable(_customers);
   int get currentPage => _currentPage;
@@ -122,12 +143,14 @@ class CustomersCubit extends Cubit<CustomersState> {
     _lastCompany = company;
     _pageSize = limit ?? _pageSize;
 
-    final result = await _repository.getCustomersWithPagination(
-      search: _lastSearch,
-      status: _lastStatus,
-      company: _lastCompany,
-      page: 1,
-      limit: _pageSize,
+    final result = await _getCustomers(
+      GetCustomersParams(
+        search: _lastSearch,
+        status: _lastStatus,
+        company: _lastCompany,
+        page: 1,
+        limit: _pageSize,
+      ),
     );
 
     result.when(
@@ -150,13 +173,13 @@ class CustomersCubit extends Cubit<CustomersState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           CustomersState.failure(
             customers: _customers,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -173,12 +196,14 @@ class CustomersCubit extends Cubit<CustomersState> {
     // Just keep the current state and add new data
 
     final nextPage = _currentPage + 1;
-    final result = await _repository.getCustomersWithPagination(
-      search: _lastSearch,
-      status: _lastStatus,
-      company: _lastCompany,
-      page: nextPage,
-      limit: _pageSize,
+    final result = await _getCustomers(
+      GetCustomersParams(
+        search: _lastSearch,
+        status: _lastStatus,
+        company: _lastCompany,
+        page: nextPage,
+        limit: _pageSize,
+      ),
     );
 
     result.when(
@@ -200,13 +225,13 @@ class CustomersCubit extends Cubit<CustomersState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           CustomersState.failure(
             customers: _customers,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -251,21 +276,23 @@ class CustomersCubit extends Cubit<CustomersState> {
       ),
     );
 
-    final result = await _repository.createCustomer(
-      name: name,
-      email: email,
-      phone: phone,
-      address: address,
-      taxNumber: taxNumber,
-      notes: notes,
-      status: status,
-      companyName: companyName,
-      commercialRegister: commercialRegister,
-      city: city,
-      region: region,
-      postalCode: postalCode,
-      detailedAddress: detailedAddress,
-      responsiblePerson: responsiblePerson,
+    final result = await _createCustomer(
+      CreateCustomerParams(
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        taxNumber: taxNumber,
+        notes: notes,
+        status: status,
+        companyName: companyName,
+        commercialRegister: commercialRegister,
+        city: city,
+        region: region,
+        postalCode: postalCode,
+        detailedAddress: detailedAddress,
+        responsiblePerson: responsiblePerson,
+      ),
     );
 
     result.when(
@@ -280,13 +307,13 @@ class CustomersCubit extends Cubit<CustomersState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           CustomersState.failure(
             customers: _customers,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -312,15 +339,17 @@ class CustomersCubit extends Cubit<CustomersState> {
       ),
     );
 
-    final result = await _repository.updateCustomer(
-      id: id,
-      name: name,
-      email: email,
-      phone: phone,
-      address: address,
-      taxNumber: taxNumber,
-      notes: notes,
-      status: status,
+    final result = await _updateCustomer(
+      UpdateCustomerParams(
+        id: id,
+        name: name,
+        email: email,
+        phone: phone,
+        address: address,
+        taxNumber: taxNumber,
+        notes: notes,
+        status: status,
+      ),
     );
 
     result.when(
@@ -338,13 +367,13 @@ class CustomersCubit extends Cubit<CustomersState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           CustomersState.failure(
             customers: _customers,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -364,7 +393,7 @@ class CustomersCubit extends Cubit<CustomersState> {
       ),
     );
 
-    final result = await _repository.deleteCustomer(id);
+    final result = await _deleteCustomer(id);
 
     result.when(
       success: (_) {
@@ -388,14 +417,14 @@ class CustomersCubit extends Cubit<CustomersState> {
           '🎯 Emitted deleteSuccess state with ${_customers.length} customers',
         );
       },
-      failure: (error) {
-        print('❌ Delete API call failed: $error');
+      failure: (failure) {
+        print('❌ Delete API call failed: $failure');
         emit(
           CustomersState.failure(
             customers: _customers,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -413,7 +442,7 @@ class CustomersCubit extends Cubit<CustomersState> {
       ),
     );
 
-    final result = await _repository.getCustomerById(id);
+    final result = await _getCustomerById(id);
 
     result.when(
       success: (customer) {
@@ -426,14 +455,14 @@ class CustomersCubit extends Cubit<CustomersState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           CustomersState.failure(
             customers: _customers,
             selectedCustomer: null,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },

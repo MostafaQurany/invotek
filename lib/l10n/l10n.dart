@@ -220,7 +220,7 @@ abstract class S {
   /// No description provided for @validationError.
   ///
   /// In en, this message translates to:
-  /// **'Please check the entered data'**
+  /// **'Data validation error'**
   String get validationError;
 
   /// No description provided for @networkError.
@@ -246,6 +246,198 @@ abstract class S {
   /// In en, this message translates to:
   /// **'An unexpected error occurred. Please try again.'**
   String get unknownError;
+
+  /// No description provided for @cacheError.
+  ///
+  /// In en, this message translates to:
+  /// **'Local storage error'**
+  String get cacheError;
+
+  /// No description provided for @timeoutError.
+  ///
+  /// In en, this message translates to:
+  /// **'Request timeout'**
+  String get timeoutError;
+
+  /// No description provided for @unauthorizedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized access'**
+  String get unauthorizedError;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @customersLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading customers'**
+  String get customersLoadError;
+
+  /// No description provided for @customersNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error - Customers'**
+  String get customersNetworkError;
+
+  /// No description provided for @customersValidationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error - Customers'**
+  String get customersValidationError;
+
+  /// No description provided for @customersUnknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error - Customers'**
+  String get customersUnknownError;
+
+  /// No description provided for @customersTimeoutError.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout error - Customers'**
+  String get customersTimeoutError;
+
+  /// No description provided for @customersUnauthorizedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized error - Customers'**
+  String get customersUnauthorizedError;
+
+  /// No description provided for @customersCacheError.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache error - Customers'**
+  String get customersCacheError;
+
+  /// No description provided for @productsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading products'**
+  String get productsLoadError;
+
+  /// No description provided for @productsNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error - Products'**
+  String get productsNetworkError;
+
+  /// No description provided for @productsValidationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error - Products'**
+  String get productsValidationError;
+
+  /// No description provided for @productsUnknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error - Products'**
+  String get productsUnknownError;
+
+  /// No description provided for @productsTimeoutError.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout error - Products'**
+  String get productsTimeoutError;
+
+  /// No description provided for @productsUnauthorizedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized error - Products'**
+  String get productsUnauthorizedError;
+
+  /// No description provided for @productsCacheError.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache error - Products'**
+  String get productsCacheError;
+
+  /// No description provided for @expensesLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading expenses'**
+  String get expensesLoadError;
+
+  /// No description provided for @expensesNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error - Expenses'**
+  String get expensesNetworkError;
+
+  /// No description provided for @expensesValidationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error - Expenses'**
+  String get expensesValidationError;
+
+  /// No description provided for @expensesUnknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error - Expenses'**
+  String get expensesUnknownError;
+
+  /// No description provided for @expensesTimeoutError.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout error - Expenses'**
+  String get expensesTimeoutError;
+
+  /// No description provided for @expensesUnauthorizedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized error - Expenses'**
+  String get expensesUnauthorizedError;
+
+  /// No description provided for @expensesCacheError.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache error - Expenses'**
+  String get expensesCacheError;
+
+  /// No description provided for @invoicesLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading invoices'**
+  String get invoicesLoadError;
+
+  /// No description provided for @invoicesNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error - Invoices'**
+  String get invoicesNetworkError;
+
+  /// No description provided for @invoicesValidationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Validation error - Invoices'**
+  String get invoicesValidationError;
+
+  /// No description provided for @invoicesUnknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown error - Invoices'**
+  String get invoicesUnknownError;
+
+  /// No description provided for @invoicesTimeoutError.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeout error - Invoices'**
+  String get invoicesTimeoutError;
+
+  /// No description provided for @invoicesUnauthorizedError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unauthorized error - Invoices'**
+  String get invoicesUnauthorizedError;
+
+  /// No description provided for @invoicesCacheError.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache error - Invoices'**
+  String get invoicesCacheError;
 
   /// No description provided for @loading.
   ///
@@ -882,12 +1074,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Press the add button to create a new user'**
   String get addNewUserMessage;
-
-  /// No description provided for @retry.
-  ///
-  /// In en, this message translates to:
-  /// **'Retry'**
-  String get retry;
 
   /// No description provided for @deleteConfirmation.
   ///
@@ -2695,6 +2881,102 @@ abstract class S {
   /// **'Notifications disabled'**
   String get notificationsDisabled;
 
+  /// No description provided for @accountSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Settings'**
+  String get accountSettings;
+
+  /// No description provided for @changePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePassword;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// No description provided for @currentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Password'**
+  String get currentPassword;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @confirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm New Password'**
+  String get confirmNewPassword;
+
+  /// No description provided for @passwordChangedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChangedSuccessfully;
+
+  /// No description provided for @deleteAccountWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: Your account will be permanently deleted'**
+  String get deleteAccountWarning;
+
+  /// No description provided for @enterPasswordToConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter password to confirm'**
+  String get enterPasswordToConfirm;
+
+  /// No description provided for @accountDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Account deleted successfully'**
+  String get accountDeletedSuccessfully;
+
+  /// No description provided for @deleteAccountConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get deleteAccountConfirmation;
+
+  /// No description provided for @changePasswordConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to change your password?'**
+  String get changePasswordConfirmation;
+
+  /// No description provided for @deleteAccountFinalConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you absolutely sure you want to delete your account? This action cannot be undone'**
+  String get deleteAccountFinalConfirmation;
+
+  /// No description provided for @yesDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, delete my account'**
+  String get yesDeleteAccount;
+
+  /// No description provided for @changePasswordButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get changePasswordButton;
+
+  /// No description provided for @deleteAccountButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account Permanently'**
+  String get deleteAccountButton;
+
   /// No description provided for @or.
   ///
   /// In en, this message translates to:
@@ -3186,12 +3468,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'All Status'**
   String get allStatus;
-
-  /// No description provided for @passwordChangedSuccessfully.
-  ///
-  /// In en, this message translates to:
-  /// **'Password changed successfully'**
-  String get passwordChangedSuccessfully;
 
   /// No description provided for @operationCompletedSuccessfully.
   ///
@@ -5897,6 +6173,186 @@ abstract class S {
   /// In en, this message translates to:
   /// **'.... Search expenses'**
   String get searchExpenses;
+
+  /// No description provided for @forgetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget password?'**
+  String get forgetPassword;
+
+  /// No description provided for @forgetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgetPasswordTitle;
+
+  /// No description provided for @forgetPasswordDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email to send verification code'**
+  String get forgetPasswordDesc;
+
+  /// No description provided for @sendVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Verification Code'**
+  String get sendVerificationCode;
+
+  /// No description provided for @verifyCodeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Code'**
+  String get verifyCodeTitle;
+
+  /// No description provided for @verifyCodeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code sent to {email}'**
+  String verifyCodeDesc(Object email);
+
+  /// No description provided for @enterCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter Code'**
+  String get enterCode;
+
+  /// No description provided for @verifyCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Code'**
+  String get verifyCode;
+
+  /// No description provided for @resendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Code'**
+  String get resendCode;
+
+  /// No description provided for @resendCodeIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend in {seconds} seconds'**
+  String resendCodeIn(Object seconds);
+
+  /// No description provided for @codeResent.
+  ///
+  /// In en, this message translates to:
+  /// **'Code resent successfully'**
+  String get codeResent;
+
+  /// No description provided for @resetPasswordTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPasswordTitle;
+
+  /// No description provided for @resetPasswordDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your new password'**
+  String get resetPasswordDesc;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// No description provided for @passwordStrengthWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get passwordStrengthWeak;
+
+  /// No description provided for @passwordStrengthMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get passwordStrengthMedium;
+
+  /// No description provided for @passwordStrengthStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get passwordStrengthStrong;
+
+  /// No description provided for @resetPasswordSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully'**
+  String get resetPasswordSuccess;
+
+  /// No description provided for @accessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Access Denied'**
+  String get accessDenied;
+
+  /// No description provided for @noPermissionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorry, you don\'t have permission to access {feature}'**
+  String noPermissionMessage(Object feature);
+
+  /// No description provided for @contactAdminForAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Please contact the system administrator for access'**
+  String get contactAdminForAccess;
+
+  /// No description provided for @pasteCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste Code'**
+  String get pasteCode;
+
+  /// No description provided for @invalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid code'**
+  String get invalidCode;
+
+  /// No description provided for @codeMustBe6Digits.
+  ///
+  /// In en, this message translates to:
+  /// **'Code must be 6 digits'**
+  String get codeMustBe6Digits;
+
+  /// No description provided for @enterVerificationCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter verification code'**
+  String get enterVerificationCode;
+
+  /// No description provided for @checkYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your email'**
+  String get checkYourEmail;
+
+  /// No description provided for @otpSentToEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent to your email'**
+  String get otpSentToEmail;
+
+  /// No description provided for @copyCodeFromEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy the code from email and paste here'**
+  String get copyCodeFromEmail;
+
+  /// No description provided for @dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismiss;
+
+  /// No description provided for @backToLoginScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Login Screen'**
+  String get backToLoginScreen;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

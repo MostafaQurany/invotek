@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/generated/l10n.dart';
 
-class QuickActionsSection extends StatelessWidget {
+class QuickActionsSection extends StatefulWidget {
   const QuickActionsSection({super.key});
 
+  @override
+  State<QuickActionsSection> createState() => _QuickActionsSectionState();
+}
+
+class _QuickActionsSectionState extends State<QuickActionsSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,7 +36,14 @@ class QuickActionsSection extends StatelessWidget {
                 icon: Icons.receipt_long,
                 color: AppColors.primary,
                 onTap: () {
-                  Navigator.pushNamed(context, AppRoutes.invoicesListRoute);
+                  if (PermissionChecker.hasPermission(
+                    context,
+                    PermissionKeys.taxInvoicesCreate,
+                  )) {
+                    Navigator.pushNamed(context, AppRoutes.invoicesListRoute);
+                  } else {
+                    _showPermissionDeniedSnackBar('إنشاء فاتورة');
+                  }
                 },
               ),
             ),
@@ -40,9 +53,16 @@ class QuickActionsSection extends StatelessWidget {
                 context,
                 title: S.of(context).addCustomer,
                 icon: Icons.person_add,
-                color: AppColors.success,
+                color: AppColors.info,
                 onTap: () {
-                  Navigator.pushNamed(context, '/customers/list');
+                  if (PermissionChecker.hasPermission(
+                    context,
+                    PermissionKeys.customersCreate,
+                  )) {
+                    Navigator.pushNamed(context, '/customers/list');
+                  } else {
+                    _showPermissionDeniedSnackBar('إضافة عميل');
+                  }
                 },
               ),
             ),
@@ -56,9 +76,16 @@ class QuickActionsSection extends StatelessWidget {
                 context,
                 title: S.of(context).addProduct,
                 icon: Icons.add_shopping_cart,
-                color: AppColors.info,
+                color: Color(0xFF8B5CF6), // Purple color
                 onTap: () {
-                  Navigator.pushNamed(context, '/products/list');
+                  if (PermissionChecker.hasPermission(
+                    context,
+                    PermissionKeys.productsCreate,
+                  )) {
+                    Navigator.pushNamed(context, '/products/list');
+                  } else {
+                    _showPermissionDeniedSnackBar('إضافة منتج');
+                  }
                 },
               ),
             ),
@@ -68,15 +95,56 @@ class QuickActionsSection extends StatelessWidget {
                 context,
                 title: S.of(context).addExpense,
                 icon: Icons.account_balance_wallet,
-                color: AppColors.warning,
+                color: Color(0xFFF59E0B), // Orange color
                 onTap: () {
-                  Navigator.pushNamed(context, AppRoutes.addExpenseRoute);
+                  if (PermissionChecker.hasPermission(
+                    context,
+                    PermissionKeys.expensesCreate,
+                  )) {
+                    Navigator.pushNamed(context, AppRoutes.addExpenseRoute);
+                  } else {
+                    _showPermissionDeniedSnackBar('إضافة مصروف');
+                  }
                 },
               ),
             ),
           ],
         ),
       ],
+    );
+  }
+
+  void _showPermissionDeniedSnackBar(String featureName) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.lock_outline, color: Colors.white),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'غير مسموح',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'ليس لديك صلاحية للوصول إلى $featureName',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.error,
+        duration: const Duration(seconds: 4),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/features/users_and_permissions/data/models/permission_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_state.dart';
 
@@ -30,10 +31,7 @@ class PermissionsCubit extends Cubit<PermissionsState> {
     } catch (e) {
       if (isClosed) return;
       emit(
-        state.copyWith(
-          isLoading: false,
-          error: 'فشل في تحميل الأدوار والصلاحيات: $e',
-        ),
+        state.copyWith(isLoading: false, error: ApiErrorHandler.handleError(e)),
       );
     }
   }
@@ -62,10 +60,7 @@ class PermissionsCubit extends Cubit<PermissionsState> {
     } catch (e) {
       if (isClosed) return;
       emit(
-        state.copyWith(
-          isLoading: false,
-          error: 'فشل في تحميل صلاحيات المستخدم: $e',
-        ),
+        state.copyWith(isLoading: false, error: ApiErrorHandler.handleError(e)),
       );
     }
   }
@@ -92,7 +87,9 @@ class PermissionsCubit extends Cubit<PermissionsState> {
       emit(state.copyWith(roles: updatedRoles, isLoading: false));
     } catch (e) {
       if (isClosed) return;
-      emit(state.copyWith(isLoading: false, error: 'فشل في إضافة الدور: $e'));
+      emit(
+        state.copyWith(isLoading: false, error: ApiErrorHandler.handleError(e)),
+      );
     }
   }
 
@@ -114,7 +111,9 @@ class PermissionsCubit extends Cubit<PermissionsState> {
       emit(state.copyWith(roles: updatedRoles, isLoading: false));
     } catch (e) {
       if (isClosed) return;
-      emit(state.copyWith(isLoading: false, error: 'فشل في تحديث الدور: $e'));
+      emit(
+        state.copyWith(isLoading: false, error: ApiErrorHandler.handleError(e)),
+      );
     }
   }
 
@@ -136,7 +135,9 @@ class PermissionsCubit extends Cubit<PermissionsState> {
       emit(state.copyWith(roles: updatedRoles, isLoading: false));
     } catch (e) {
       if (isClosed) return;
-      emit(state.copyWith(isLoading: false, error: 'فشل في حذف الدور: $e'));
+      emit(
+        state.copyWith(isLoading: false, error: ApiErrorHandler.handleError(e)),
+      );
     }
   }
 
@@ -164,10 +165,7 @@ class PermissionsCubit extends Cubit<PermissionsState> {
     } catch (e) {
       if (isClosed) return;
       emit(
-        state.copyWith(
-          isLoading: false,
-          error: 'فشل في تحديث صلاحيات المستخدم: $e',
-        ),
+        state.copyWith(isLoading: false, error: ApiErrorHandler.handleError(e)),
       );
     }
   }

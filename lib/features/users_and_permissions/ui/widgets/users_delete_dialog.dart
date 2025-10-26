@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class UsersDeleteDialog extends StatelessWidget {

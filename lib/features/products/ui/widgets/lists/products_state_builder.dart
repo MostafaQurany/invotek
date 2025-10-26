@@ -120,7 +120,7 @@ class ProductsStateBuilder extends StatelessWidget {
               },
           failure: (products, selectedProduct, currentPage, totalPages, error) {
             if (products.isEmpty) {
-              return ProductsErrorState(error: error, onRetry: onRetry);
+              return ProductsErrorState(error: error.message, onRetry: onRetry);
             }
             return ProductsList(
               products: products,

@@ -1,5 +1,7 @@
+import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_result.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/core/error/failures.dart' as failures;
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
 import 'package:invotek/features/users_and_permissions/data/models/company_api_model.dart';
 import 'package:invotek/features/users_and_permissions/data/models/requests/user_requests.dart';
@@ -59,10 +61,12 @@ class UsersRepository {
 
         return ApiResult.success(users);
       } else {
-        return ApiResult.failure(S.current.noDataReceived);
+        return ApiResult.failure(
+          failures.Failure.server(message: S.current.noDataReceived),
+        );
       }
     } catch (e) {
-      return ApiResult.failure(S.current.errorLoadingUsers);
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -75,10 +79,14 @@ class UsersRepository {
         final user = _convertToUser(response.data!);
         return ApiResult.success(user);
       } else {
-        return ApiResult.failure(response.message ?? S.current.userNotFound);
+        return ApiResult.failure(
+          failures.Failure.server(
+            message: response.message ?? S.current.userNotFound,
+          ),
+        );
       }
     } catch (e) {
-      return ApiResult.failure(S.current.errorLoadingUsers);
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -113,11 +121,13 @@ class UsersRepository {
       } catch (parseError) {
         print('Error parsing user data: $parseError');
         print('Response data: $response');
-        return ApiResult.failure(S.current.errorParsingUserData);
+        return ApiResult.failure(
+          failures.Failure.server(message: S.current.errorParsingUserData),
+        );
       }
-        } catch (e) {
+    } catch (e) {
       print('Error in createUser: $e');
-      return ApiResult.failure(S.current.errorCreatingUser);
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -150,11 +160,13 @@ class UsersRepository {
         return ApiResult.success(user);
       } else {
         return ApiResult.failure(
-          response.message ?? S.current.failedToUpdateUser,
+          failures.Failure.server(
+            message: response.message ?? S.current.failedToUpdateUser,
+          ),
         );
       }
     } catch (e) {
-      return ApiResult.failure(S.current.errorLoadingUsers);
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
@@ -164,7 +176,9 @@ class UsersRepository {
       await _dataSource.deleteUser(id);
       return const ApiResult.success(null);
     } catch (e) {
-      return ApiResult.failure(S.current.errorDeletingUser);
+      return ApiResult.failure(
+        failures.Failure.server(message: S.current.errorDeletingUser),
+      );
     }
   }
 
@@ -231,11 +245,19 @@ class UsersRepository {
         id: apiUser.id,
         name: apiUser.name,
         email: apiUser.email,
-        phone: apiUser.phone,
-        role: apiUser.role,
+        googleId: apiUser.googleId,
+        emailVerifiedAt: apiUser.emailVerifiedAt,
         status: apiUser.status,
+        currentTeamId: apiUser.currentTeamId,
+        profilePhotoPath: apiUser.profilePhotoPath,
+        phone: apiUser.phone,
+        position: apiUser.position,
+        role: apiUser.role,
+        twoFactorConfirmedAt: apiUser.twoFactorConfirmedAt,
+        companyId: apiUser.companyId,
         createdAt: apiUser.createdAt.toIso8601String(),
         updatedAt: apiUser.updatedAt.toIso8601String(),
+        profilePhotoUrl: apiUser.profilePhotoUrl,
         company: apiUser.company != null
             ? _convertToCompany(apiUser.company!)
             : null,
@@ -264,7 +286,9 @@ class UsersRepository {
         adminId: apiCompany.adminId,
         createdAt: apiCompany.createdAt.toIso8601String(),
         updatedAt: apiCompany.updatedAt.toIso8601String(),
-        admin: null, // We'll handle this separately if needed
+        admin: apiCompany.admin != null
+            ? User.fromJson(apiCompany.admin!)
+            : null,
       );
     } catch (e) {
       print('Error converting CompanyApiModel to Company: $e');

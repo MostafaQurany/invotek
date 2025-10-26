@@ -7,10 +7,12 @@ part 'login_respond.g.dart';
 class LoginRespond {
   final LoginUser? user;
   final String? token;
+  @JsonKey(name: 'role_id')
+  final int? roleId;
   final String? message;
   final Map<String, List<String>>? errors;
 
-  LoginRespond({this.user, this.token, this.message, this.errors});
+  LoginRespond({this.user, this.token, this.roleId, this.message, this.errors});
 
   factory LoginRespond.fromJson(Map<String, dynamic> json) =>
       _$LoginRespondFromJson(json);

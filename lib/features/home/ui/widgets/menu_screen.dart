@@ -6,6 +6,9 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/home/data/models/menu_item.dart';
 import 'package:invotek/features/home/data/models/navigation_state.dart';
 import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
+import 'package:invotek/core/cubits/permissions_cubit.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -58,12 +61,12 @@ class _MenuScreenState extends State<MenuScreen> {
 
   Widget _buildMenuItems() {
     return BlocBuilder<NavigationCubit, NavigationState>(
-      builder: (context, state) {
+      builder: (context, navigationState) {
         return ListView.builder(
-          itemCount: state.menuItems.length,
+          itemCount: navigationState.menuItems.length,
           itemBuilder: (context, index) {
-            final item = state.menuItems[index];
-            return _buildMenuItem(item, index, state);
+            final item = navigationState.menuItems[index];
+            return _buildMenuItem(item, index, navigationState);
           },
         );
       },
@@ -144,6 +147,18 @@ class _MenuScreenState extends State<MenuScreen> {
         children: [
           Divider(color: Colors.white.withOpacity(0.3)),
           const SizedBox(height: 10),
+
+          // زر تسجيل الخروج
+          ListTile(
+            leading: Icon(Icons.logout, color: Colors.white, size: 24.sp),
+            title: Text(
+              S.of(context).logout,
+              style: TextStyle(color: Colors.white, fontSize: 14.sp),
+            ),
+            onTap: _showLogoutDialog,
+          ),
+
+          const SizedBox(height: 10),
           Text(
             'الإصدار 1.0.0',
             style: TextStyle(
@@ -162,6 +177,18 @@ class _MenuScreenState extends State<MenuScreen> {
       // إذا كان مغلق، افتح القائمة الفرعية
       context.read<NavigationCubit>().expandMenuItem(index);
     } else {
+      // التحقق من الصلاحية قبل التنقل
+      if (item.permissionKey != null) {
+        final hasPermission = context.read<PermissionsCubit>().hasPermission(
+          item.permissionKey!,
+        );
+
+        if (!hasPermission && !item.route.contains(AppRoutes.homeRoute)) {
+          _showPermissionDeniedSnackBar(item.getLocalizedTitle(S.of(context)));
+          return;
+        }
+      }
+
       // إغلاق جميع العناصر الموسعة عند التنقل
       context.read<NavigationCubit>().collapseAllItems();
       _navigateToScreen(item.route, index);
@@ -169,6 +196,17 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void _onSubMenuItemTap(MenuItem subItem, int parentIndex, int subIndex) {
+    // التحقق من الصلاحية قبل التنقل
+    if (subItem.permissionKey != null) {
+      final hasPermission = context.read<PermissionsCubit>().hasPermission(
+        subItem.permissionKey!,
+      );
+      if (!hasPermission) {
+        _showPermissionDeniedSnackBar(subItem.getLocalizedTitle(S.of(context)));
+        return;
+      }
+    }
+
     _navigateToScreen(subItem.route, parentIndex, subIndex);
   }
 
@@ -182,5 +220,79 @@ class _MenuScreenState extends State<MenuScreen> {
 
     // إغلاق الدرج
     ZoomDrawer.of(context)?.close();
+  }
+
+  void _showPermissionDeniedSnackBar(String featureName) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.lock_outline, color: Colors.white),
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'غير مسموح',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    'ليس لديك صلاحية للوصول إلى $featureName',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.error,
+        duration: const Duration(seconds: 4),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
+
+  void _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Text(S.of(context).logout),
+          content: Text('هل أنت متأكد من تسجيل الخروج؟'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: Text(S.of(context).cancel),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+                _performLogout();
+              },
+              child: Text(
+                S.of(context).logout,
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _performLogout() async {
+    // حذف التوكن وبيانات المستخدم من التخزين المحلي
+    await context.read<AuthCubit>().logout();
+
+    // التنقل إلى شاشة تسجيل الدخول وحذف جميع الشاشات السابقة
+    if (mounted) {
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil(AppRoutes.authRoute, (route) => false);
+    }
   }
 }

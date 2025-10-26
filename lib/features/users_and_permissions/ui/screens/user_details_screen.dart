@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_details_header.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_summary_card.dart';

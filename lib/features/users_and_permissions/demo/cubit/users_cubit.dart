@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_result.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -79,13 +80,13 @@ class UsersCubit extends Cubit<UsersState> {
             ),
           );
         },
-        failure: (error) {
-          emit(UsersListError(message: S.current.errorLoadingUsers));
+        failure: (failure) {
+          emit(UsersListError(failure: failure));
         },
       );
     } catch (e) {
       if (!isClosed) {
-        emit(UsersListError(message: S.current.errorLoadingUsers));
+        emit(UsersListError(failure: ApiErrorHandler.handleError(e)));
       }
     }
   }
@@ -176,10 +177,12 @@ class UsersCubit extends Cubit<UsersState> {
         success: (newUser) {
           emit(UserCreated());
         },
-        failure: (error) {
+        failure: (failure) {
           // Provide user-friendly error messages
-          String userFriendlyMessage = _getUserFriendlyErrorMessage(error);
-          emit(UserCreationError(message: userFriendlyMessage));
+          String userFriendlyMessage = _getUserFriendlyErrorMessage(
+            failure.message,
+          );
+          emit(UserCreationError(failure: failure));
         },
       );
     } catch (e) {
@@ -187,7 +190,7 @@ class UsersCubit extends Cubit<UsersState> {
         String userFriendlyMessage = _getUserFriendlyErrorMessage(
           'Error creating user: $e',
         );
-        emit(UserCreationError(message: userFriendlyMessage));
+        emit(UserCreationError(failure: ApiErrorHandler.handleError(e)));
       }
     }
   }
@@ -245,13 +248,15 @@ class UsersCubit extends Cubit<UsersState> {
           }).toList();
           emit(UserUpdated(user: updatedUser));
         },
-        failure: (error) {
-          emit(UserUpdateError(message: S.current.failedToUpdateUser));
+        failure: (failure) {
+          if (!isClosed) {
+            emit(UserUpdateError(failure: failure));
+          }
         },
       );
     } catch (e) {
       if (!isClosed) {
-        emit(UserUpdateError(message: S.current.failedToUpdateUser));
+        emit(UserUpdateError(failure: ApiErrorHandler.handleError(e)));
       }
     }
   }
@@ -271,13 +276,15 @@ class UsersCubit extends Cubit<UsersState> {
           _users = _users.where((user) => user.id != userId).toList();
           emit(UserDeleted(userId: userId));
         },
-        failure: (error) {
-          emit(UserDeletionError(message: S.current.errorDeletingUser));
+        failure: (failure) {
+          if (!isClosed) {
+            emit(UserDeletionError(failure: failure));
+          }
         },
       );
     } catch (e) {
       if (!isClosed) {
-        emit(UserDeletionError(message: S.current.errorDeletingUser));
+        emit(UserDeletionError(failure: ApiErrorHandler.handleError(e)));
       }
     }
   }

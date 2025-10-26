@@ -1,6 +1,7 @@
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_client.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
 import 'package:invotek/features/clients/data/models/client_api_model.dart';
 import 'package:invotek/features/clients/demo/data/mock_clients_data.dart';
@@ -67,7 +68,7 @@ class ClientsRepository {
         final client = _convertToClient(response.data);
         return ApiResult.success(client);
       } else {
-        return ApiResult.failure(response.message);
+        return ApiResult.failure(Failure.server(message: response.message));
       }
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));

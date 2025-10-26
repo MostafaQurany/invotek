@@ -310,23 +310,7 @@ class LanguageSelector extends StatelessWidget {
 - Review translations regularly
 - Test translations thoroughly
 
-## Common Commands
 
-### Localization Commands
-
-```bash
-# Generate localization files
-flutter gen-l10n
-
-# Extract strings for translation
-flutter pub run intl_utils:extract
-
-# Generate ARB files
-flutter pub run intl_utils:generate
-
-# Validate ARB files
-flutter pub run intl_utils:validate
-```
 
 ## File Organization
 
@@ -418,6 +402,6 @@ flutter pub run intl_utils:validate
 - [ ] Keep documentation updated
       description:
       globs:
-      alwaysApply: true
+      alwaysApply: false
 
 ---

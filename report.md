@@ -1,220 +1,35 @@
-# InvoTek – Technical Development Report
-
-## 🔐 Auth Module
-
-### الوضع الحالي:
-
-تم تنفيذ تسجيل الدخول وإنشاء الحساب باستخدام البريد الإلكتروني وكلمة المرور.
-التفعيل يتم من قِبل System Admin فقط.
-
-### المهام المتبقية:
-
-- إضافة تسجيل الدخول عبر Google
-- إضافة تسجيل الدخول عبر Apple
-- إضافة خاصية نسيان/إعادة تعيين كلمة المرور (Forgot/Reset Password)
-
-### الملاحظات:
-
-- لا يوجد حتى الآن تفعيل ذاتي للبريد الإلكتروني
-- مطلوب توسيع Authentication لتخزين الصلاحيات مع بيانات المستخدم عند الدخول
-
----
-
-## 🏠 Home Screen
-
-### الوضع الحالي:
-
-الواجهة موجودة ولكنها تحتاج تطوير شامل في التصميم والربط مع الـ APIs.
-
-### المهام المتبقية:
-
-- ربط الشاشة مع APIs الخاصة بـ (Dashboard Summary – Recent Invoices – Recent Expenses)
-- تنظيم المنطق (Logic) وفصل الـ UI عن البيانات
-- تحسين واجهات المستخدم (UI/UX)
-- إضافة Loading و Empty و Error States
-
-### الملاحظات:
-
-- لا يوجد فلترة في الصفحة
-- الأداء يحتاج تحسين لتجنب البطء أو الـ jank
-
----
-
-## 👥 User Management
-
-### الوضع الحالي:
-
-الهيكل العام للشاشة موجود ويعرض المستخدمين.
-
-### المهام المتبقية:
-
-- تفعيل Pagination في عرض المستخدمين
-- إصلاح البحث والفلترة (Search & Filter) لأنها لا تعمل حاليًا
-- إكمال تعديل المستخدم (Edit) من حيث الواجهة والمنطق والـAPI
-- عند الإضافة يجب إسناد Role للمستخدم مع صلاحياته
-
-### الملاحظات:
-
-- البحث والفلترة لا يعيدان نتائج صحيحة
-- لا توجد Pagination حقيقية
-- الأدوار غير مفعّلة بعد
-
----
-
-## 🔒 Roles & Permissions
-
-### الوضع الحالي:
-
-لم يتم تفعيل نظام الصلاحيات بشكل كامل.
-
-### المهام المتبقية:
-
-- تحميل الصلاحيات لكل مستخدم أثناء تسجيل الدخول
-- تطبيق الصلاحيات على جميع الشاشات والأزرار (Route & Action Guards)
-- إخفاء العناصر غير المسموح بها ومنع استدعاءات الـAPI غير المصرح بها
-- إعادة إنشاء الـ UI & UX
-
-### الملاحظات:
-
-- الصلاحيات يجب أن تُدمج مع عملية الـLogin مباشرة
-- أي طلب غير مصرح به يجب أن يُرجع 403 برسالة واضحة
-
----
-
-## 👨‍💼 Customers
-
-### الوضع الحالي:
-
-واجهة العملاء جاهزة، لكن الربط مع الـAPI غير مكتمل.
-
-### المهام المتبقية:
-
-- ربط الـAPI لإظهار الفواتير والأوامر المرتبطة بكل عميل مع created_by
-- إضافة Pagination و Search و Filters على القوائم
-- تفعيل تعديل بيانات العميل (Edit)
-
-### الملاحظات:
-
-- الواجهة تعمل، لكن لا توجد نتائج حقيقية من السيرفر
-- الفلترة غير مفعّلة
-- (ملاحظة: invoices and orders are not linked with customers from API)
-
----
-
-## 📦 Products
-
-### الوضع الحالي:
-
-واجهة المنتجات جاهزة جزئيًا.
-
-### المهام المتبقية:
-
-- إضافة Pagination
-- تنفيذ Add و Edit بالواجهة والمنطق والـAPI
-- تفعيل Filter لحالة المنتج (active – inactive)
-
-### الملاحظات:
-
-- لا توجد Pagination حقيقية حتى الآن
-- لم يتم تنفيذ واجهات الإضافة أو التعديل
-- الفلاتر مش شغال في من الـAPI
-
----
-
-## 🗂️ Product Categories
-
-### الوضع الحالي:
-
-شاشة التصنيفات موجودة وتعرض القائمة بشكل أساسي.
-
-### المهام المتبقية:
-
-- إضافة إمكانية اختيار أيقونة (Icon) ولون (Color) لكل تصنيف
-- حل مشكلة الـUpdate التي ترجع Error من الـAPI
-
-### الملاحظات:
-
-- عملية التحديث لا تعمل حاليًا وتعيد خطأ من السيرفر
-
----
-
-## 💸 Expenses
-
-### الوضع الحالي:
-
-كل العمليات مكتملة (Add / Edit / Delete / Search / Filter).
-
-### المهام المتبقية:
-
-- تنفيذ Pagination فقط
-
-### الملاحظات:
-
-- باقي العمليات تعمل بكفاءة
-
----
-
-## 🧾 Invoices
-
-### الوضع الحالي:
-
-واجهة عرض الفواتير موجودة لكن لا يمكن الإضافة أو التعديل بعد.
-
-### المهام المتبقية:
-
-- تنفيذ Add Invoice (UI + Logic)
-- تنفيذ Edit Invoice
-- تفعيل Search و Filters
-- إضافة خاصية الطباعة (Printing) بصيغة PDF (A4 + حراري 80mm)
-
-### الملاحظات:
-
-- يجب الالتزام بعدم تعديل الفواتير التي حالتها "مدفوعة"
-- الفلترة يجب أن تشمل الحالة، العميل، والتاريخ مش شغاله من الـAPI
-
----
-
-## ↩️ Returned Invoices
-
-### الوضع الحالي:
-
-غير منفذ بعد (لا UI ولا API).
-
----
-
-## 📤 Send Invoices
-
-### الوضع الحالي:
-
-غير منفذ بعد (لا UI ولا API).
-
----
-
-## ⚙️ Settings
-
-### الوضع الحالي:
-
-لم يبدأ تنفيذه بعد.
-
-### المهام المتبقية:
-
-- Company Profile (بيانات الشركة)
-- Localization (اللغة والعملة والمنطقة الزمنية)
-- Theme dark and light
-- Tax & Numbering (الإعدادات الضريبية وترقيم الفواتير)
-- delete account
-- profile update
-
-### الملاحظات:
-
-- يجب تطبيق صلاحيات على الوصول إلى إعدادات النظام (Admins فقط)
-
----
-
-## 📋 ملاحظات عامة
-
-- كل الشاشات التي تحتوي على قوائم يجب أن تدعم: Pagination + Search + Filter + Sort
-- الربط بالـAPI يجب أن يتم عبر Repository Layer مع معالجة الأخطاء والـRetry
-- التركيز في المرحلة القادمة على جعل التطبيق يعمل End-to-End لعملية الفواتير (إضافة – طباعة – إرسال)
-- دعم اللغة العربية يجب أن يكون افتراضيًا في كل الشاشات
-- اختبارات الوحدات (Unit Tests) ضرورية خاصة في منطق الحسابات والصلاحيات
+# Progress Report - Invotek Project
+
+## Completed Tasks
+
+### 1. Home Screen
+- Developed home screen with state management integration (Cubit)
+- Implemented navigation system between screens
+- Applied ZoomDrawer for side navigation
+
+### 2. Permissions & Roles System
+- Developed comprehensive permissions system with 68 different permission keys
+- Integrated permissions with side navigation (hide unauthorized elements)
+- Added notification messages for permission denials
+- Tested system locally (awaiting API integration)
+
+### 3. Account Management
+- Developed change password screen
+- Developed delete account screen
+- Developed OTP verification system with countdown timer
+- Integrated all operations with API
+
+## Current Status
+- All required features completed and tested locally
+- Ready for testing after API integration
+
+## Questions Requiring Clarification
+
+### 1. Company & Subscription System
+- When creating a new account, is a new company automatically created?
+- How are new users added to the company? Through invitations or direct registration?
+- Are subscriptions at company level?
+- Will subscription be handled through mobile for complete system or just show warning and lock system until subscription?
+
+### 2. API Integration
+- API needs to be deployed on server to continue development

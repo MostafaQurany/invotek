@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   flutter_net_printer
   flutter_pos_printer_platform_image_3_sdt
+  pdfx
   permission_handler_windows
   printing
   share_plus

@@ -70,7 +70,7 @@ class SAr extends S {
   String get nameInvalid => 'الاسم يجب أن يحتوي على أحرف فقط';
 
   @override
-  String get validationError => 'يرجى التحقق من صحة البيانات المدخلة';
+  String get validationError => 'خطأ في التحقق من البيانات';
 
   @override
   String get networkError => 'خطأ في الإتصال بالشبكة';
@@ -84,6 +84,102 @@ class SAr extends S {
 
   @override
   String get unknownError => 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get cacheError => 'خطأ في التخزين المحلي';
+
+  @override
+  String get timeoutError => 'انتهت مهلة الطلب';
+
+  @override
+  String get unauthorizedError => 'غير مصرح بالوصول';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get customersLoadError => 'خطأ في تحميل العملاء';
+
+  @override
+  String get customersNetworkError => 'خطأ في الشبكة - العملاء';
+
+  @override
+  String get customersValidationError => 'خطأ في التحقق - العملاء';
+
+  @override
+  String get customersUnknownError => 'خطأ غير معروف - العملاء';
+
+  @override
+  String get customersTimeoutError => 'انتهت مهلة الطلب - العملاء';
+
+  @override
+  String get customersUnauthorizedError => 'غير مصرح بالوصول - العملاء';
+
+  @override
+  String get customersCacheError => 'خطأ في التخزين - العملاء';
+
+  @override
+  String get productsLoadError => 'خطأ في تحميل المنتجات';
+
+  @override
+  String get productsNetworkError => 'خطأ في الشبكة - المنتجات';
+
+  @override
+  String get productsValidationError => 'خطأ في التحقق - المنتجات';
+
+  @override
+  String get productsUnknownError => 'خطأ غير معروف - المنتجات';
+
+  @override
+  String get productsTimeoutError => 'انتهت مهلة الطلب - المنتجات';
+
+  @override
+  String get productsUnauthorizedError => 'غير مصرح بالوصول - المنتجات';
+
+  @override
+  String get productsCacheError => 'خطأ في التخزين - المنتجات';
+
+  @override
+  String get expensesLoadError => 'خطأ في تحميل المصروفات';
+
+  @override
+  String get expensesNetworkError => 'خطأ في الشبكة - المصروفات';
+
+  @override
+  String get expensesValidationError => 'خطأ في التحقق - المصروفات';
+
+  @override
+  String get expensesUnknownError => 'خطأ غير معروف - المصروفات';
+
+  @override
+  String get expensesTimeoutError => 'انتهت مهلة الطلب - المصروفات';
+
+  @override
+  String get expensesUnauthorizedError => 'غير مصرح بالوصول - المصروفات';
+
+  @override
+  String get expensesCacheError => 'خطأ في التخزين - المصروفات';
+
+  @override
+  String get invoicesLoadError => 'خطأ في تحميل الفواتير';
+
+  @override
+  String get invoicesNetworkError => 'خطأ في الشبكة - الفواتير';
+
+  @override
+  String get invoicesValidationError => 'خطأ في التحقق - الفواتير';
+
+  @override
+  String get invoicesUnknownError => 'خطأ غير معروف - الفواتير';
+
+  @override
+  String get invoicesTimeoutError => 'انتهت مهلة الطلب - الفواتير';
+
+  @override
+  String get invoicesUnauthorizedError => 'غير مصرح بالوصول - الفواتير';
+
+  @override
+  String get invoicesCacheError => 'خطأ في التخزين - الفواتير';
 
   @override
   String get loading => 'جاري التحميل...';
@@ -409,9 +505,6 @@ class SAr extends S {
 
   @override
   String get addNewUserMessage => 'اضغط على زر الإضافة لإنشاء مستخدم جديد';
-
-  @override
-  String get retry => 'إعادة المحاولة';
 
   @override
   String get deleteConfirmation => 'تأكيد الحذف';
@@ -1347,6 +1440,55 @@ class SAr extends S {
   String get notificationsDisabled => 'تم إلغاء تفعيل الإشعارات';
 
   @override
+  String get accountSettings => 'إعدادات الحساب';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get currentPassword => 'كلمة المرور الحالية';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get confirmNewPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get passwordChangedSuccessfully => 'تم تغيير كلمة المرور بنجاح';
+
+  @override
+  String get deleteAccountWarning => 'تحذير: سيتم حذف حسابك نهائياً';
+
+  @override
+  String get enterPasswordToConfirm => 'أدخل كلمة المرور للتأكيد';
+
+  @override
+  String get accountDeletedSuccessfully => 'تم حذف الحساب بنجاح';
+
+  @override
+  String get deleteAccountConfirmation => 'هل أنت متأكد من حذف حسابك؟';
+
+  @override
+  String get changePasswordConfirmation => 'هل أنت متأكد من تغيير كلمة المرور؟';
+
+  @override
+  String get deleteAccountFinalConfirmation =>
+      'هل أنت متأكد تماماً من حذف حسابك؟ هذا الإجراء لا يمكن التراجع عنه';
+
+  @override
+  String get yesDeleteAccount => 'نعم، احذف حسابي';
+
+  @override
+  String get changePasswordButton => 'تغيير كلمة المرور';
+
+  @override
+  String get deleteAccountButton => 'حذف الحساب نهائياً';
+
+  @override
   String get or => 'أو';
 
   @override
@@ -1601,9 +1743,6 @@ class SAr extends S {
 
   @override
   String get allStatus => 'جميع الحالات';
-
-  @override
-  String get passwordChangedSuccessfully => 'تم تغيير كلمة المرور بنجاح';
 
   @override
   String get operationCompletedSuccessfully => 'تم إكمال العملية بنجاح';
@@ -3056,4 +3195,101 @@ class SAr extends S {
 
   @override
   String get searchExpenses => '....البحث عن المصروفات';
+
+  @override
+  String get forgetPassword => 'هل نسيت كلمة المرور ؟';
+
+  @override
+  String get forgetPasswordTitle => 'نسيت كلمة المرور';
+
+  @override
+  String get forgetPasswordDesc => 'أدخل بريدك الإلكتروني لإرسال كود التحقق';
+
+  @override
+  String get sendVerificationCode => 'إرسال كود التحقق';
+
+  @override
+  String get verifyCodeTitle => 'التحقق من الكود';
+
+  @override
+  String verifyCodeDesc(Object email) {
+    return 'أدخل الكود المرسل إلى $email';
+  }
+
+  @override
+  String get enterCode => 'أدخل الكود';
+
+  @override
+  String get verifyCode => 'تحقق من الكود';
+
+  @override
+  String get resendCode => 'إعادة إرسال الكود';
+
+  @override
+  String resendCodeIn(Object seconds) {
+    return 'إعادة الإرسال خلال $seconds ثانية';
+  }
+
+  @override
+  String get codeResent => 'تم إعادة إرسال الكود';
+
+  @override
+  String get resetPasswordTitle => 'إعادة تعيين كلمة المرور';
+
+  @override
+  String get resetPasswordDesc => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get resetPassword => 'إعادة تعيين';
+
+  @override
+  String get passwordStrengthWeak => 'ضعيفة';
+
+  @override
+  String get passwordStrengthMedium => 'متوسطة';
+
+  @override
+  String get passwordStrengthStrong => 'قوية';
+
+  @override
+  String get resetPasswordSuccess => 'تم إعادة تعيين كلمة المرور بنجاح';
+
+  @override
+  String get accessDenied => 'الوصول مرفوض';
+
+  @override
+  String noPermissionMessage(Object feature) {
+    return 'عذراً، ليس لديك صلاحية للوصول إلى $feature';
+  }
+
+  @override
+  String get contactAdminForAccess =>
+      'يرجى التواصل مع مدير النظام للحصول على الصلاحية';
+
+  @override
+  String get pasteCode => 'لصق الكود';
+
+  @override
+  String get invalidCode => 'الكود غير صحيح';
+
+  @override
+  String get codeMustBe6Digits => 'الكود يجب أن يكون 6 أرقام';
+
+  @override
+  String get enterVerificationCode => 'أدخل رمز التحقق';
+
+  @override
+  String get checkYourEmail => 'تحقق من بريدك الإلكتروني';
+
+  @override
+  String get otpSentToEmail => 'تم إرسال رمز التحقق إلى بريدك الإلكتروني';
+
+  @override
+  String get copyCodeFromEmail => 'انسخ الكود من البريد الإلكتروني والصقه هنا';
+
+  @override
+  String get dismiss => 'إغلاق';
+
+  @override
+  String get backToLoginScreen => 'العودة إلى شاشة التسجيل';
 }

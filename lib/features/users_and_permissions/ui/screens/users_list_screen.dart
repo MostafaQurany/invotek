@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/users_header_widget.dart';

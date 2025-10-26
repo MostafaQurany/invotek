@@ -9,6 +9,7 @@ import 'package:invotek/features/invoices/ui/widgets/cards/invoices_header_widge
 import 'package:invotek/features/invoices/ui/widgets/lists/invoices_state_builder.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoicesListScreen extends StatefulWidget {
@@ -261,22 +262,30 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // FloatingActionButton(
-          //   heroTag: "print_all",
-          //   onPressed: _showPrintAllOptions,
-          //   backgroundColor: AppColors.warning,
-          //   child: const Icon(Icons.print, color: Colors.white),
-          // ),
-          // SizedBox(height: 8.h),
-          FloatingActionButton.extended(
-            heroTag: "add_invoice",
-            onPressed: _onAddInvoice,
-            backgroundColor: AppColors.primary,
-            foregroundColor: Colors.white,
-            icon: const Icon(Icons.add),
-            label: Text(
-              S.of(context).addInvoice,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+          // زر الطباعة - يظهر فقط إذا كان لديه صلاحية
+          PermissionWidget(
+            permission: PermissionKeys.taxInvoicesPrint,
+            child: FloatingActionButton(
+              heroTag: "print_all",
+              onPressed: _showPrintAllOptions,
+              backgroundColor: AppColors.warning,
+              child: const Icon(Icons.print, color: Colors.white),
+            ),
+          ),
+          SizedBox(height: 8.h),
+          // زر إضافة الفاتورة - يظهر فقط إذا كان لديه صلاحية
+          PermissionWidget(
+            permission: PermissionKeys.taxInvoicesCreate,
+            child: FloatingActionButton.extended(
+              heroTag: "add_invoice",
+              onPressed: _onAddInvoice,
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              icon: const Icon(Icons.add),
+              label: Text(
+                S.of(context).addInvoice,
+                style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
+              ),
             ),
           ),
         ],

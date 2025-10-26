@@ -6,17 +6,8 @@ part 'google_login_request.g.dart';
 class GoogleLoginRequest {
   @JsonKey(name: 'id_token')
   final String idToken;
-  final String email;
-  final String name;
-  @JsonKey(name: "google_id")
-  final String googleId;
 
-  GoogleLoginRequest({
-    required this.idToken,
-    required this.email,
-    required this.name,
-    required this.googleId,
-  });
+  GoogleLoginRequest({required this.idToken});
 
   factory GoogleLoginRequest.fromJson(Map<String, dynamic> json) =>
       _$GoogleLoginRequestFromJson(json);

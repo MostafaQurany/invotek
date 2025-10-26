@@ -112,37 +112,49 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m42(name) => "Loading product details...";
 
-  static String m43(email) => "Opening email to ${email}";
+  static String m43(feature) =>
+      "Sorry, you don\'t have permission to access ${feature}";
 
-  static String m44(separator, number, date, status, customer, contact, items,
+  static String m44(email) => "Opening email to ${email}";
+
+  static String m45(separator, number, date, status, customer, contact, items,
           subtotal, tax, total) =>
       "Invoice\n${separator}\nInvoice Number: ${number}\nDate: ${date}\nStatus: ${status}\n\nCustomer Information:\nName: ${customer}\n${contact}\n\nInvoice Items:\n${items}\n\nTotals:\nSubtotal: ${subtotal} SAR\n${tax}\nTotal: ${total} SAR\n\n${separator}\nThank you for your business\nThis invoice was created by Invotek App\n${separator}";
 
-  static String m45(number, customer, date, amount, status) =>
+  static String m46(seconds) => "Resend in ${seconds} seconds";
+
+  static String m47(number, customer, date, amount, status) =>
       "Invoice Number: ${number}\nCustomer: ${customer}\nDate: ${date}\nAmount: ${amount} SAR\nStatus: ${status}\n\nCreated by Invotek App";
 
-  static String m46(count) => "Show All Items (${count})";
+  static String m48(count) => "Show All Items (${count})";
 
-  static String m47(status) => "Status: ${status}";
+  static String m49(status) => "Status: ${status}";
 
-  static String m48(amount) => "Subtotal: ${amount} SAR";
+  static String m50(amount) => "Subtotal: ${amount} SAR";
 
-  static String m49(amount) => "Tax: ${amount} SAR";
+  static String m51(amount) => "Tax: ${amount} SAR";
 
-  static String m50(number) => "Tax UID for invoice ${number}:";
+  static String m52(number) => "Tax UID for invoice ${number}:";
 
-  static String m51(amount) => "Total: ${amount} SAR";
+  static String m53(amount) => "Total: ${amount} SAR";
 
-  static String m52(name) => "View customer details: ${name}";
+  static String m54(email) => "Enter the code sent to ${email}";
 
-  static String m53(name) => "View item details: ${name}";
+  static String m55(name) => "View customer details: ${name}";
 
-  static String m54(name) => "Viewing invoices for ${name}";
+  static String m56(name) => "View item details: ${name}";
 
-  static String m55(name) => "Viewing orders for ${name}";
+  static String m57(name) => "Viewing invoices for ${name}";
+
+  static String m58(name) => "Viewing orders for ${name}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "accessDenied": MessageLookupByLibrary.simpleMessage("Access Denied"),
+        "accountDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Account deleted successfully"),
+        "accountSettings":
+            MessageLookupByLibrary.simpleMessage("Account Settings"),
         "accountant": MessageLookupByLibrary.simpleMessage("Accountant"),
         "accountantDescription": MessageLookupByLibrary.simpleMessage(
             "Manages invoices, expenses and financial reports"),
@@ -251,6 +263,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "available": MessageLookupByLibrary.simpleMessage("Available"),
         "backToCategories":
             MessageLookupByLibrary.simpleMessage("Back to Categories"),
+        "backToLoginScreen":
+            MessageLookupByLibrary.simpleMessage("Back to Login Screen"),
         "backup": MessageLookupByLibrary.simpleMessage("Backup"),
         "bankTransfer": MessageLookupByLibrary.simpleMessage("Bank Transfer"),
         "barcode": MessageLookupByLibrary.simpleMessage("Barcode"),
@@ -262,6 +276,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttonPressed":
             MessageLookupByLibrary.simpleMessage("Normal button pressed"),
         "buttons": MessageLookupByLibrary.simpleMessage("Buttons"),
+        "cacheError":
+            MessageLookupByLibrary.simpleMessage("Local storage error"),
         "calling": m3,
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "cannotEditInvoice":
@@ -298,11 +314,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "categoryUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Category updated successfully"),
         "centimeters": MessageLookupByLibrary.simpleMessage("cm"),
+        "changePassword":
+            MessageLookupByLibrary.simpleMessage("Change Password"),
+        "changePasswordButton":
+            MessageLookupByLibrary.simpleMessage("Change Password"),
+        "changePasswordConfirmation": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to change your password?"),
         "changePaymentMethod":
             MessageLookupByLibrary.simpleMessage("Change Payment Method"),
         "changePaymentMethodForInvoice": m4,
         "changeStatus": MessageLookupByLibrary.simpleMessage("Change Status"),
         "check": MessageLookupByLibrary.simpleMessage("Check"),
+        "checkYourEmail":
+            MessageLookupByLibrary.simpleMessage("Check your email"),
         "checkingConnection":
             MessageLookupByLibrary.simpleMessage("Checking connection..."),
         "chooseFeature": MessageLookupByLibrary.simpleMessage(
@@ -326,6 +350,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "clientsProductsTitle":
             MessageLookupByLibrary.simpleMessage("Clients and Products"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "codeMustBe6Digits":
+            MessageLookupByLibrary.simpleMessage("Code must be 6 digits"),
+        "codeResent":
+            MessageLookupByLibrary.simpleMessage("Code resent successfully"),
         "color": MessageLookupByLibrary.simpleMessage("Color"),
         "company": MessageLookupByLibrary.simpleMessage("Company"),
         "companyAddress":
@@ -357,6 +385,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmDeleteCustomer":
             MessageLookupByLibrary.simpleMessage("Confirm Delete"),
         "confirmDeleteCustomerMessage": m5,
+        "confirmNewPassword":
+            MessageLookupByLibrary.simpleMessage("Confirm New Password"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmPasswordRequired": MessageLookupByLibrary.simpleMessage(
@@ -367,6 +397,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Connection Type"),
         "constructionDevelopmentCompany": MessageLookupByLibrary.simpleMessage(
             "Construction & Development Company"),
+        "contactAdminForAccess": MessageLookupByLibrary.simpleMessage(
+            "Please contact the system administrator for access"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact Info"),
         "contactInformation":
             MessageLookupByLibrary.simpleMessage("Contact Information"),
@@ -383,6 +415,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "copiedToClipboard":
             MessageLookupByLibrary.simpleMessage("Copied to clipboard"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
+        "copyCodeFromEmail": MessageLookupByLibrary.simpleMessage(
+            "Copy the code from email and paste here"),
         "costPrice": MessageLookupByLibrary.simpleMessage("Cost Price"),
         "country": MessageLookupByLibrary.simpleMessage("Country"),
         "create": MessageLookupByLibrary.simpleMessage("Create"),
@@ -422,6 +456,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "creationDate": MessageLookupByLibrary.simpleMessage("Creation Date"),
         "creditCard": MessageLookupByLibrary.simpleMessage("Credit Card"),
         "currency": MessageLookupByLibrary.simpleMessage("Dinar"),
+        "currentPassword":
+            MessageLookupByLibrary.simpleMessage("Current Password"),
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "customerAdditionalInfo":
             MessageLookupByLibrary.simpleMessage("Additional Information"),
@@ -481,11 +517,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "customerType": MessageLookupByLibrary.simpleMessage("Customer Type"),
         "customerUpdatedSuccessfully": m7,
         "customers": MessageLookupByLibrary.simpleMessage("Customers"),
+        "customersCacheError":
+            MessageLookupByLibrary.simpleMessage("Cache error - Customers"),
         "customersList": MessageLookupByLibrary.simpleMessage("Customers List"),
+        "customersLoadError":
+            MessageLookupByLibrary.simpleMessage("Error loading customers"),
         "customersManagement":
             MessageLookupByLibrary.simpleMessage("Customers"),
+        "customersNetworkError":
+            MessageLookupByLibrary.simpleMessage("Network error - Customers"),
         "customersReport":
             MessageLookupByLibrary.simpleMessage("Customers Report"),
+        "customersTimeoutError":
+            MessageLookupByLibrary.simpleMessage("Timeout error - Customers"),
+        "customersUnauthorizedError": MessageLookupByLibrary.simpleMessage(
+            "Unauthorized error - Customers"),
+        "customersUnknownError":
+            MessageLookupByLibrary.simpleMessage("Unknown error - Customers"),
+        "customersValidationError": MessageLookupByLibrary.simpleMessage(
+            "Validation error - Customers"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "darkModeDisabled":
@@ -502,6 +552,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "debitCard": MessageLookupByLibrary.simpleMessage("Debit Card"),
         "decrease": MessageLookupByLibrary.simpleMessage("Decrease"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
+        "deleteAccountButton":
+            MessageLookupByLibrary.simpleMessage("Delete Account Permanently"),
+        "deleteAccountConfirmation": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete your account?"),
+        "deleteAccountFinalConfirmation": MessageLookupByLibrary.simpleMessage(
+            "Are you absolutely sure you want to delete your account? This action cannot be undone"),
+        "deleteAccountWarning": MessageLookupByLibrary.simpleMessage(
+            "Warning: Your account will be permanently deleted"),
         "deleteAllCategories":
             MessageLookupByLibrary.simpleMessage("Delete All Categories"),
         "deleteCategory":
@@ -547,6 +606,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deviceType": MessageLookupByLibrary.simpleMessage("Device Type"),
         "dimensions": MessageLookupByLibrary.simpleMessage("Dimensions"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
+        "dismiss": MessageLookupByLibrary.simpleMessage("Dismiss"),
         "dontHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("Don\'t have an account?"),
         "downloadPDF": MessageLookupByLibrary.simpleMessage("Download PDF"),
@@ -615,6 +675,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter client name"),
         "enterClientPhone":
             MessageLookupByLibrary.simpleMessage("Enter phone number"),
+        "enterCode": MessageLookupByLibrary.simpleMessage("Enter Code"),
         "enterCommercialRegister":
             MessageLookupByLibrary.simpleMessage("Enter commercial register"),
         "enterCompanyAddress":
@@ -662,6 +723,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterMessage": MessageLookupByLibrary.simpleMessage("Enter message"),
         "enterNotes": MessageLookupByLibrary.simpleMessage("Enter notes"),
         "enterPassword": MessageLookupByLibrary.simpleMessage("Enter password"),
+        "enterPasswordToConfirm":
+            MessageLookupByLibrary.simpleMessage("Enter password to confirm"),
         "enterPhone": MessageLookupByLibrary.simpleMessage("Enter phone"),
         "enterPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Enter phone number"),
@@ -697,6 +760,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please enter a valid quantity"),
         "enterVatNumber":
             MessageLookupByLibrary.simpleMessage("Enter VAT number"),
+        "enterVerificationCode":
+            MessageLookupByLibrary.simpleMessage("Enter verification code"),
         "enterWebsite": MessageLookupByLibrary.simpleMessage("Enter website"),
         "errorAddingCategory":
             MessageLookupByLibrary.simpleMessage("Error adding category"),
@@ -776,14 +841,28 @@ class MessageLookup extends MessageLookupByLibrary {
         "expenseUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Expense updated successfully"),
         "expenses": MessageLookupByLibrary.simpleMessage("Expenses"),
+        "expensesCacheError":
+            MessageLookupByLibrary.simpleMessage("Cache error - Expenses"),
         "expensesDesc": MessageLookupByLibrary.simpleMessage(
             "Expense categories & Expense management"),
         "expensesList": MessageLookupByLibrary.simpleMessage("Expenses List"),
+        "expensesLoadError":
+            MessageLookupByLibrary.simpleMessage("Error loading expenses"),
         "expensesManagement":
             MessageLookupByLibrary.simpleMessage("Expenses & Categories"),
+        "expensesNetworkError":
+            MessageLookupByLibrary.simpleMessage("Network error - Expenses"),
         "expensesReport":
             MessageLookupByLibrary.simpleMessage("Expenses Report"),
+        "expensesTimeoutError":
+            MessageLookupByLibrary.simpleMessage("Timeout error - Expenses"),
         "expensesTitle": MessageLookupByLibrary.simpleMessage("Expenses"),
+        "expensesUnauthorizedError": MessageLookupByLibrary.simpleMessage(
+            "Unauthorized error - Expenses"),
+        "expensesUnknownError":
+            MessageLookupByLibrary.simpleMessage("Unknown error - Expenses"),
+        "expensesValidationError":
+            MessageLookupByLibrary.simpleMessage("Validation error - Expenses"),
         "exportReports": MessageLookupByLibrary.simpleMessage("Export Reports"),
         "exportReportsDescription":
             MessageLookupByLibrary.simpleMessage("Ability to export reports"),
@@ -816,6 +895,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "financialServicesInstitution": MessageLookupByLibrary.simpleMessage(
             "Financial Services Institution"),
         "firstCategory": MessageLookupByLibrary.simpleMessage("First Category"),
+        "forgetPassword":
+            MessageLookupByLibrary.simpleMessage("Forget password?"),
+        "forgetPasswordDesc": MessageLookupByLibrary.simpleMessage(
+            "Enter your email to send verification code"),
+        "forgetPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("Forgot Password"),
         "formHelpDescription": MessageLookupByLibrary.simpleMessage(
             "This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information"),
         "formHelpTitle":
@@ -844,6 +929,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Interactive Card"),
         "interactiveCardDescription": MessageLookupByLibrary.simpleMessage(
             "This is an interactive card that can be pressed"),
+        "invalidCode": MessageLookupByLibrary.simpleMessage("Invalid code"),
         "invalidNumber": MessageLookupByLibrary.simpleMessage("Invalid number"),
         "invalidPrice": MessageLookupByLibrary.simpleMessage("Invalid price"),
         "invalidQuantity":
@@ -886,7 +972,21 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Invoice updated successfully"),
         "invoices": MessageLookupByLibrary.simpleMessage("Invoices"),
+        "invoicesCacheError":
+            MessageLookupByLibrary.simpleMessage("Cache error - Invoices"),
         "invoicesList": MessageLookupByLibrary.simpleMessage("Invoices List"),
+        "invoicesLoadError":
+            MessageLookupByLibrary.simpleMessage("Error loading invoices"),
+        "invoicesNetworkError":
+            MessageLookupByLibrary.simpleMessage("Network error - Invoices"),
+        "invoicesTimeoutError":
+            MessageLookupByLibrary.simpleMessage("Timeout error - Invoices"),
+        "invoicesUnauthorizedError": MessageLookupByLibrary.simpleMessage(
+            "Unauthorized error - Invoices"),
+        "invoicesUnknownError":
+            MessageLookupByLibrary.simpleMessage("Unknown error - Invoices"),
+        "invoicesValidationError":
+            MessageLookupByLibrary.simpleMessage("Validation error - Invoices"),
         "isActive": MessageLookupByLibrary.simpleMessage("Is Active"),
         "issueDate": MessageLookupByLibrary.simpleMessage("Issue Date"),
         "issueDateValue": MessageLookupByLibrary.simpleMessage("Issue Date"),
@@ -1014,6 +1114,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newCustomers": MessageLookupByLibrary.simpleMessage("New Customers"),
         "newExpense": MessageLookupByLibrary.simpleMessage("New Expense"),
         "newInvoices": MessageLookupByLibrary.simpleMessage("New Invoices"),
+        "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "newProducts": MessageLookupByLibrary.simpleMessage("New Products"),
         "newThisMonth": MessageLookupByLibrary.simpleMessage("New This Month"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
@@ -1048,6 +1149,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noItemsAdded":
             MessageLookupByLibrary.simpleMessage("No items added yet"),
         "noName": MessageLookupByLibrary.simpleMessage("No name"),
+        "noPermissionMessage": m43,
         "noPrintersFound":
             MessageLookupByLibrary.simpleMessage("No printers found"),
         "noProductsFound":
@@ -1105,12 +1207,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Welcome to Invotek"),
         "onboardingWelcomeDesc": MessageLookupByLibrary.simpleMessage(
             "Integrated system for electronic invoice management with integration with the Jordanian national billing system"),
-        "openingEmail": m43,
+        "openingEmail": m44,
         "openingMap": MessageLookupByLibrary.simpleMessage("Opening map"),
         "operationCompletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Operation completed successfully"),
         "or": MessageLookupByLibrary.simpleMessage("Or"),
         "other": MessageLookupByLibrary.simpleMessage("Other"),
+        "otpSentToEmail": MessageLookupByLibrary.simpleMessage(
+            "Verification code sent to your email"),
         "outOfStock": MessageLookupByLibrary.simpleMessage("Out of Stock"),
         "outlinedButton":
             MessageLookupByLibrary.simpleMessage("Outlined Button"),
@@ -1136,6 +1240,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Password is required"),
         "passwordShort": MessageLookupByLibrary.simpleMessage(
             "Password must be at least 6 characters"),
+        "passwordStrengthMedium":
+            MessageLookupByLibrary.simpleMessage("Medium"),
+        "passwordStrengthStrong":
+            MessageLookupByLibrary.simpleMessage("Strong"),
+        "passwordStrengthWeak": MessageLookupByLibrary.simpleMessage("Weak"),
         "passwordUppercase": MessageLookupByLibrary.simpleMessage(
             "Password must contain at least one uppercase letter"),
         "passwordWeak": MessageLookupByLibrary.simpleMessage(
@@ -1144,6 +1253,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
         "passwordsNotMatch":
             MessageLookupByLibrary.simpleMessage("Passwords do not match"),
+        "pasteCode": MessageLookupByLibrary.simpleMessage("Paste Code"),
         "payment": MessageLookupByLibrary.simpleMessage("Payment"),
         "paymentDate": MessageLookupByLibrary.simpleMessage("Payment Date"),
         "paymentDetails":
@@ -1212,7 +1322,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "printError": MessageLookupByLibrary.simpleMessage("Print error"),
         "printFailed": MessageLookupByLibrary.simpleMessage("Print failed"),
         "printInvoice": MessageLookupByLibrary.simpleMessage("Print Invoice"),
-        "printInvoiceText": m44,
+        "printInvoiceText": m45,
         "printOptions": MessageLookupByLibrary.simpleMessage("Print Options"),
         "printQuality": MessageLookupByLibrary.simpleMessage("Print Quality"),
         "printReceipt": MessageLookupByLibrary.simpleMessage("Print Receipt"),
@@ -1256,16 +1366,30 @@ class MessageLookup extends MessageLookupByLibrary {
         "productUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Product updated successfully"),
         "products": MessageLookupByLibrary.simpleMessage("Products"),
+        "productsCacheError":
+            MessageLookupByLibrary.simpleMessage("Cache error - Products"),
         "productsCategories": MessageLookupByLibrary.simpleMessage("Products"),
         "productsCategoriesManagement":
             MessageLookupByLibrary.simpleMessage("Products and Categories"),
         "productsInStock":
             MessageLookupByLibrary.simpleMessage("Products in Stock"),
         "productsList": MessageLookupByLibrary.simpleMessage("Products List"),
+        "productsLoadError":
+            MessageLookupByLibrary.simpleMessage("Error loading products"),
         "productsManagement": MessageLookupByLibrary.simpleMessage(
             "Products & Categories Management"),
+        "productsNetworkError":
+            MessageLookupByLibrary.simpleMessage("Network error - Products"),
         "productsReport":
             MessageLookupByLibrary.simpleMessage("Products Report"),
+        "productsTimeoutError":
+            MessageLookupByLibrary.simpleMessage("Timeout error - Products"),
+        "productsUnauthorizedError": MessageLookupByLibrary.simpleMessage(
+            "Unauthorized error - Products"),
+        "productsUnknownError":
+            MessageLookupByLibrary.simpleMessage("Unknown error - Products"),
+        "productsValidationError":
+            MessageLookupByLibrary.simpleMessage("Validation error - Products"),
         "profitGrowth": MessageLookupByLibrary.simpleMessage("Profit Growth"),
         "qty": MessageLookupByLibrary.simpleMessage("Qty"),
         "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
@@ -1300,6 +1424,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "reports": MessageLookupByLibrary.simpleMessage("Reports"),
         "requestedPageNotFound": MessageLookupByLibrary.simpleMessage(
             "The requested page was not found"),
+        "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
+        "resendCodeIn": m46,
+        "resetPassword": MessageLookupByLibrary.simpleMessage("Reset Password"),
+        "resetPasswordDesc":
+            MessageLookupByLibrary.simpleMessage("Enter your new password"),
+        "resetPasswordSuccess":
+            MessageLookupByLibrary.simpleMessage("Password reset successfully"),
+        "resetPasswordTitle":
+            MessageLookupByLibrary.simpleMessage("Reset Password"),
         "responsiveTexts":
             MessageLookupByLibrary.simpleMessage("Responsive Texts"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
@@ -1377,6 +1510,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sendInvoiceDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to send invoice to client"),
         "sendMethod": MessageLookupByLibrary.simpleMessage("Send Method"),
+        "sendVerificationCode":
+            MessageLookupByLibrary.simpleMessage("Send Verification Code"),
         "sendingInvoice":
             MessageLookupByLibrary.simpleMessage("Sending invoice..."),
         "sent": MessageLookupByLibrary.simpleMessage("Sent"),
@@ -1389,8 +1524,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsSavedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Settings saved successfully"),
         "shareInvoice": MessageLookupByLibrary.simpleMessage("Share Invoice"),
-        "shareInvoiceText": m45,
-        "showAllItems": m46,
+        "shareInvoiceText": m47,
+        "showAllItems": m48,
         "showLess": MessageLookupByLibrary.simpleMessage("Show Less"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
         "signInFailed": MessageLookupByLibrary.simpleMessage("Sign in failed"),
@@ -1407,7 +1542,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "state": MessageLookupByLibrary.simpleMessage("Status"),
         "statistics": MessageLookupByLibrary.simpleMessage("Statistics"),
         "status": MessageLookupByLibrary.simpleMessage("Status"),
-        "statusCategory": m47,
+        "statusCategory": m49,
         "statusDraft": MessageLookupByLibrary.simpleMessage("Draft"),
         "statusInfo": MessageLookupByLibrary.simpleMessage("Status Info"),
         "statusOverdue": MessageLookupByLibrary.simpleMessage("Overdue"),
@@ -1419,7 +1554,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subTitle": MessageLookupByLibrary.simpleMessage("Sub Title"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal"),
-        "subtotalLine": m48,
+        "subtotalLine": m50,
         "successText": MessageLookupByLibrary.simpleMessage("Success Text"),
         "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
         "supervisorDescription": MessageLookupByLibrary.simpleMessage(
@@ -1452,7 +1587,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Unposted invoices & Postpaid invoices & Returned invoices & Create a new invoice"),
         "taxInvoicesTitle":
             MessageLookupByLibrary.simpleMessage("Tax Invoices"),
-        "taxLine": m49,
+        "taxLine": m51,
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "taxPercent": MessageLookupByLibrary.simpleMessage("Tax Percent"),
         "taxRate": MessageLookupByLibrary.simpleMessage("Tax Rate"),
@@ -1460,7 +1595,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxType": MessageLookupByLibrary.simpleMessage("Tax Type"),
         "taxUID": MessageLookupByLibrary.simpleMessage("Tax UID"),
         "taxUIDCopied": MessageLookupByLibrary.simpleMessage("Tax UID copied"),
-        "taxUIDForInvoice": m50,
+        "taxUIDForInvoice": m52,
         "tekpart": MessageLookupByLibrary.simpleMessage("TekPart"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Terms of Use"),
         "termsOfUseComingSoon":
@@ -1486,6 +1621,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "thisFieldIsRequired":
             MessageLookupByLibrary.simpleMessage("This field is required"),
         "thisMonth": MessageLookupByLibrary.simpleMessage("This Month"),
+        "timeoutError": MessageLookupByLibrary.simpleMessage("Request timeout"),
         "title": MessageLookupByLibrary.simpleMessage("Title"),
         "titleIsRequired":
             MessageLookupByLibrary.simpleMessage("Title is required"),
@@ -1497,7 +1633,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Total Customers"),
         "totalExpenses": MessageLookupByLibrary.simpleMessage("Total Expenses"),
         "totalInvoices": MessageLookupByLibrary.simpleMessage("Total Invoices"),
-        "totalLine": m51,
+        "totalLine": m53,
         "totalProducts": MessageLookupByLibrary.simpleMessage("Total Products"),
         "totalSales": MessageLookupByLibrary.simpleMessage("Total Sales"),
         "tourismEntertainmentCompany": MessageLookupByLibrary.simpleMessage(
@@ -1515,6 +1651,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Try a different search"),
         "type": MessageLookupByLibrary.simpleMessage("Type"),
         "uae": MessageLookupByLibrary.simpleMessage("United Arab Emirates"),
+        "unauthorizedError":
+            MessageLookupByLibrary.simpleMessage("Unauthorized access"),
         "uncategorized": MessageLookupByLibrary.simpleMessage("Uncategorized"),
         "undefined": MessageLookupByLibrary.simpleMessage("Undefined"),
         "unit": MessageLookupByLibrary.simpleMessage("Unit"),
@@ -1558,17 +1696,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Control of clients and permissions"),
         "usersPermissionsTitle":
             MessageLookupByLibrary.simpleMessage("Users and Permissions"),
-        "validationError": MessageLookupByLibrary.simpleMessage(
-            "Please check the entered data"),
+        "validationError":
+            MessageLookupByLibrary.simpleMessage("Data validation error"),
         "vat": MessageLookupByLibrary.simpleMessage("VAT"),
         "vatNumber": MessageLookupByLibrary.simpleMessage("VAT Number"),
+        "verifyCode": MessageLookupByLibrary.simpleMessage("Verify Code"),
+        "verifyCodeDesc": m54,
+        "verifyCodeTitle": MessageLookupByLibrary.simpleMessage("Verify Code"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "viewAllInvoices":
             MessageLookupByLibrary.simpleMessage("View All Invoices"),
         "viewClients": MessageLookupByLibrary.simpleMessage("View Clients"),
         "viewClientsDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to view clients list"),
-        "viewCustomerDetails": m52,
+        "viewCustomerDetails": m55,
         "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
         "viewExpenses": MessageLookupByLibrary.simpleMessage("View Expenses"),
         "viewExpensesDescription": MessageLookupByLibrary.simpleMessage(
@@ -1576,7 +1717,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewInvoices": MessageLookupByLibrary.simpleMessage("View Invoices"),
         "viewInvoicesDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to view invoices list"),
-        "viewItemDetails": m53,
+        "viewItemDetails": m56,
         "viewPrivacyPolicy":
             MessageLookupByLibrary.simpleMessage("View privacy policy"),
         "viewProducts": MessageLookupByLibrary.simpleMessage("View Products"),
@@ -1598,8 +1739,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewUsers": MessageLookupByLibrary.simpleMessage("View Users"),
         "viewUsersDescription":
             MessageLookupByLibrary.simpleMessage("Ability to view users list"),
-        "viewingInvoices": m54,
-        "viewingOrders": m55,
+        "viewingInvoices": m57,
+        "viewingOrders": m58,
         "visitInvotekWebsite":
             MessageLookupByLibrary.simpleMessage("Visit Invotek website"),
         "website": MessageLookupByLibrary.simpleMessage("Website"),
@@ -1609,6 +1750,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Welcome to Invotek App"),
         "welcomeToInvotekApp":
             MessageLookupByLibrary.simpleMessage("Welcome to Invotek app"),
-        "yes": MessageLookupByLibrary.simpleMessage("Yes")
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "yesDeleteAccount":
+            MessageLookupByLibrary.simpleMessage("Yes, delete my account")
       };
 }

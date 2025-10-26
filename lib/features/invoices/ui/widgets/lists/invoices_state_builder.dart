@@ -158,7 +158,10 @@ class InvoicesStateBuilder extends StatelessWidget {
           failure: (invoices, selectedInvoice, currentPage, totalPages, error) {
             if (invoices.isEmpty) {
               return SliverToBoxAdapter(
-                child: InvoicesErrorState(error: error, onRetry: onRetry),
+                child: InvoicesErrorState(
+                  error: error.message,
+                  onRetry: onRetry,
+                ),
               );
             }
             return InvoicesList(

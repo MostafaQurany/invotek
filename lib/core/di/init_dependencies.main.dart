@@ -45,9 +45,19 @@ _authLayer() {
     return AuthDataSource(getIt<ApiClient>());
   });
 
+  // PermissionsDataSource - Singleton for better performance
+  getIt.registerLazySingleton<PermissionsDataSource>(() {
+    return PermissionsDataSource(getIt<ApiClient>());
+  });
+
+  // PermissionsRepo - Singleton for better performance
+  getIt.registerLazySingleton<PermissionsRepo>(() {
+    return PermissionsRepo(getIt<PermissionsDataSource>());
+  });
+
   // AuthRepo - Singleton for better performance
   getIt.registerLazySingleton<AuthRepo>(() {
-    return AuthRepo(getIt<AuthDataSource>());
+    return AuthRepo(getIt<AuthDataSource>(), getIt<PermissionsRepo>());
   });
 
   // AuthCubit - Factory for state management

@@ -1,9 +1,15 @@
 class ApiConstants {
+  // 
   static const String baserUrl = "https://demo.invotik.com/api/";
   static const String login = "login";
   static const String register = "register";
   static const String logOut = "logout";
-  static const String googleLogin = "auth/google/login";
+  static const String googleLogin = "auth/social/login/google";
+  static const String forgetPassword = "forgot-password";
+  static const String verifyCode = "verify-code";
+  static const String resetPassword = "reset-password";
+  static const String changePassword = "profile/change-password";
+  static const String deleteAccount = "profile/account";
 
   // products
   static const String products = "company/products";
@@ -54,7 +60,7 @@ class ApiConstants {
   static const String createUser = "users";
   static const String updateUser = "users/{id}";
   static const String deleteUser = "users/{id}";
-  static const String changePassword = "users/{id}/change-password";
+  static const String changePasswordUser = "users/{id}/change-password";
   static const String uploadAvatar = "users/{id}/avatar";
   static bool valid = false;
   // ===== INVOICES APIs =====
@@ -75,6 +81,9 @@ class ApiConstants {
 
   // Dashboard
   static const String dashboard = "company/dashboard";
+
+  // Permissions
+  static const String rolePermissions = "company/roles/{roleId}/permissions";
 }
 
 class ApiKey {

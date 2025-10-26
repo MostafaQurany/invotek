@@ -128,7 +128,10 @@ class CustomersStateBuilder extends StatelessWidget {
           failure:
               (customers, selectedCustomer, currentPage, totalPages, error) {
                 if (customers.isEmpty) {
-                  return CustomersErrorState(error: error, onRetry: onRetry);
+                  return CustomersErrorState(
+                    error: error.message,
+                    onRetry: onRetry,
+                  );
                 }
                 return CustomersList(
                   customers: customers,

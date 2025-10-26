@@ -8,8 +8,9 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/users_and_permissions/data/models/permission_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_state.dart';
-import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/core/widgets/common_menu_button.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ManagePermissionsScreen extends StatefulWidget {
   const ManagePermissionsScreen({super.key});
@@ -76,13 +77,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     return BlocListener<PermissionsCubit, PermissionsState>(
       listener: (context, state) {
         if (state.error != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.error!),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.error!);
           context.read<PermissionsCubit>().clearError();
         }
       },

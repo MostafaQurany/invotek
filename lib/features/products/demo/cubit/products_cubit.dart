@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
 import 'package:invotek/features/products/demo/entit/product_model.dart';
 
@@ -13,7 +14,7 @@ sealed class ProductsState with _$ProductsState {
     ProductModel? selectedProduct,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    String? error,
+    Failure? error,
   }) = _Initial;
 
   const factory ProductsState.loading({
@@ -60,7 +61,7 @@ sealed class ProductsState with _$ProductsState {
     ProductModel? selectedProduct,
     @Default(1) int currentPage,
     @Default(1) int totalPages,
-    required String error,
+    required Failure failure,
   }) = _FailureProducts;
 }
 
@@ -139,13 +140,13 @@ class ProductsCubit extends Cubit<ProductsState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ProductsState.failure(
             products: _products,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -193,13 +194,13 @@ class ProductsCubit extends Cubit<ProductsState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ProductsState.failure(
             products: _products,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -290,13 +291,13 @@ class ProductsCubit extends Cubit<ProductsState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ProductsState.failure(
             products: _products,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -383,13 +384,13 @@ class ProductsCubit extends Cubit<ProductsState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ProductsState.failure(
             products: _products,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -420,13 +421,13 @@ class ProductsCubit extends Cubit<ProductsState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ProductsState.failure(
             products: _products,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },
@@ -456,13 +457,13 @@ class ProductsCubit extends Cubit<ProductsState> {
           ),
         );
       },
-      failure: (error) {
+      failure: (failure) {
         emit(
           ProductsState.failure(
             products: _products,
             currentPage: _currentPage,
             totalPages: _totalPages,
-            error: error,
+            failure: failure,
           ),
         );
       },

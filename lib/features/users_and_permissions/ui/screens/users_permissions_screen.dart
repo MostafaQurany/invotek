@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:invotek/features/auth/demo/entit/user_model.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
@@ -10,7 +10,9 @@ import 'package:invotek/features/users_and_permissions/ui/widgets/users_delete_d
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_header_widget.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_list_widget.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_search_filter_widget.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_state_widgets.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UsersPermissionsScreen extends StatefulWidget {
   const UsersPermissionsScreen({super.key});
@@ -193,61 +195,19 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
     return BlocListener<UsersCubit, UsersState>(
       listener: (context, state) {
         if (state is UsersListError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is UserCreationError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is UserUpdateError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is UserDeletionError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is PasswordChangeError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is StatisticsError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is BulkOperationError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: colorScheme.error,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is UserCreated) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -354,7 +314,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
 
     if (state is UsersListError) {
       return UsersErrorWidget(
-        error: state.message,
+        error: state.failure.message,
         onRetry: () => context.read<UsersCubit>().loadUsers(page: 1, limit: 20),
       );
     }
