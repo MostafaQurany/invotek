@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
-import 'package:invotek/features/customers/demo/entit/customer_model.dart';
+import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
+import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/states/customers_empty_state.dart';
 import 'package:invotek/features/customers/ui/widgets/states/customers_error_state.dart';
 import 'package:invotek/features/customers/ui/widgets/lists/customers_list.dart';
@@ -17,6 +17,7 @@ class CustomersStateBuilder extends StatelessWidget {
   final String selectedCompany;
   final Function(String) onStatusChanged;
   final Function(String) onCompanyChanged;
+  final ScrollController? scrollController;
 
   const CustomersStateBuilder({
     super.key,
@@ -30,6 +31,7 @@ class CustomersStateBuilder extends StatelessWidget {
     required this.selectedCompany,
     required this.onStatusChanged,
     required this.onCompanyChanged,
+    this.scrollController,
   });
 
   @override
@@ -52,6 +54,8 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerView: onCustomerView,
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
+                  isLoadingMore: false,
+                  scrollController: scrollController,
                 );
               },
           loading:
@@ -66,6 +70,7 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
                   isLoadingMore: message == 'loading_more',
+                  scrollController: scrollController,
                 );
               },
           loaded: (customers, selectedCustomer, currentPage, totalPages) {
@@ -78,6 +83,8 @@ class CustomersStateBuilder extends StatelessWidget {
               onCustomerView: onCustomerView,
               onCustomerEdit: onCustomerEdit,
               onCustomerDelete: onCustomerDelete,
+              isLoadingMore: false,
+              scrollController: scrollController,
             );
           },
           createSuccess:
@@ -91,6 +98,8 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerView: onCustomerView,
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
+                  isLoadingMore: false,
+                  scrollController: scrollController,
                 );
               },
           updateSuccess:
@@ -104,6 +113,8 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerView: onCustomerView,
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
+                  isLoadingMore: false,
+                  scrollController: scrollController,
                 );
               },
           deleteSuccess:
@@ -123,6 +134,8 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerView: onCustomerView,
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
+                  isLoadingMore: false,
+                  scrollController: scrollController,
                 );
               },
           failure:
@@ -139,6 +152,8 @@ class CustomersStateBuilder extends StatelessWidget {
                   onCustomerView: onCustomerView,
                   onCustomerEdit: onCustomerEdit,
                   onCustomerDelete: onCustomerDelete,
+                  isLoadingMore: false,
+                  scrollController: scrollController,
                 );
               },
         );

@@ -3340,10 +3340,10 @@ class S {
     );
   }
 
-  /// `Phone`
+  /// `Phone Number`
   String get customerPhone {
     return Intl.message(
-      'Phone',
+      'Phone Number',
       name: 'customerPhone',
       desc: '',
       args: [],
@@ -3410,10 +3410,10 @@ class S {
     );
   }
 
-  /// `Customer Information`
+  /// `Basic Information`
   String get customerBasicInfo {
     return Intl.message(
-      'Customer Information',
+      'Basic Information',
       name: 'customerBasicInfo',
       desc: '',
       args: [],
@@ -3450,10 +3450,20 @@ class S {
     );
   }
 
-  /// `Commercial Register Number`
+  /// `Invalid phone number format`
+  String get phoneInvalid {
+    return Intl.message(
+      'Invalid phone number format',
+      name: 'phoneInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commercial Register`
   String get customerCommercialRegister {
     return Intl.message(
-      'Commercial Register Number',
+      'Commercial Register',
       name: 'customerCommercialRegister',
       desc: '',
       args: [],
@@ -3470,10 +3480,10 @@ class S {
     );
   }
 
-  /// `Region/Province`
+  /// `Region`
   String get customerRegion {
     return Intl.message(
-      'Region/Province',
+      'Region',
       name: 'customerRegion',
       desc: '',
       args: [],
@@ -3521,7 +3531,7 @@ class S {
   }
 
   /// `Customer "{name}" created successfully`
-  String customerCreatedSuccessfully(Object name) {
+  String customerCreatedSuccessfully(String name) {
     return Intl.message(
       'Customer "$name" created successfully',
       name: 'customerCreatedSuccessfully',
@@ -3531,7 +3541,7 @@ class S {
   }
 
   /// `Customer "{name}" updated successfully`
-  String customerUpdatedSuccessfully(Object name) {
+  String customerUpdatedSuccessfully(String name) {
     return Intl.message(
       'Customer "$name" updated successfully',
       name: 'customerUpdatedSuccessfully',
@@ -3550,10 +3560,10 @@ class S {
     );
   }
 
-  /// `Confirm Delete`
+  /// `Confirm Delete Customer`
   String get confirmDeleteCustomer {
     return Intl.message(
-      'Confirm Delete',
+      'Confirm Delete Customer',
       name: 'confirmDeleteCustomer',
       desc: '',
       args: [],
@@ -3561,7 +3571,7 @@ class S {
   }
 
   /// `Are you sure you want to delete customer "{name}"?`
-  String confirmDeleteCustomerMessage(Object name) {
+  String confirmDeleteCustomerMessage(String name) {
     return Intl.message(
       'Are you sure you want to delete customer "$name"?',
       name: 'confirmDeleteCustomerMessage',
@@ -7600,10 +7610,10 @@ class S {
     );
   }
 
-  /// `No invoices`
+  /// `No Invoices`
   String get noInvoices {
     return Intl.message(
-      'No invoices',
+      'No Invoices',
       name: 'noInvoices',
       desc: '',
       args: [],
@@ -9562,10 +9572,10 @@ class S {
     );
   }
 
-  /// `Loading Dashboard...`
+  /// `Loading dashboard data...`
   String get loadingDashboard {
     return Intl.message(
-      'Loading Dashboard...',
+      'Loading dashboard data...',
       name: 'loadingDashboard',
       desc: '',
       args: [],
@@ -9582,10 +9592,10 @@ class S {
     );
   }
 
-  /// `Dashboard Error`
+  /// `Error loading data`
   String get dashboardError {
     return Intl.message(
-      'Dashboard Error',
+      'Error loading data',
       name: 'dashboardError',
       desc: '',
       args: [],
@@ -10467,6 +10477,4336 @@ class S {
     return Intl.message(
       'Back to Login Screen',
       name: 'backToLoginScreen',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome back, 👋`
+  String get welcomeBack {
+    return Intl.message(
+      'Welcome back, 👋',
+      name: 'welcomeBack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome {name}, 👋`
+  String welcomeBackWithName(String name) {
+    return Intl.message(
+      'Welcome $name, 👋',
+      name: 'welcomeBackWithName',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Subscription Required`
+  String get subscriptionRequired {
+    return Intl.message(
+      'Subscription Required',
+      name: 'subscriptionRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You must choose a suitable subscription to use this feature`
+  String get subscriptionRequiredMessage {
+    return Intl.message(
+      'You must choose a suitable subscription to use this feature',
+      name: 'subscriptionRequiredMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose Subscription`
+  String get chooseSubscription {
+    return Intl.message(
+      'Choose Subscription',
+      name: 'chooseSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open subscription link`
+  String get cannotOpenSubscriptionLink {
+    return Intl.message(
+      'Cannot open subscription link',
+      name: 'cannotOpenSubscriptionLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No products sold yet`
+  String get noProductsSoldYet {
+    return Intl.message(
+      'No products sold yet',
+      name: 'noProductsSoldYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start creating your first invoices to see the top selling products`
+  String get noProductsSoldMessage {
+    return Intl.message(
+      'Start creating your first invoices to see the top selling products',
+      name: 'noProductsSoldMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Undefined Product`
+  String get undefinedProduct {
+    return Intl.message(
+      'Undefined Product',
+      name: 'undefinedProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Analytics`
+  String get customerAnalytics {
+    return Intl.message(
+      'Customer Analytics',
+      name: 'customerAnalytics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Invoices`
+  String get lastInvoices {
+    return Intl.message(
+      'Last Invoices',
+      name: 'lastInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 5 Invoices`
+  String get lastFiveInvoices {
+    return Intl.message(
+      'Last 5 Invoices',
+      name: 'lastFiveInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saudi Riyal`
+  String get saudiRiyal {
+    return Intl.message(
+      'Saudi Riyal',
+      name: 'saudiRiyal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading Invoices...`
+  String get loadingInvoices {
+    return Intl.message(
+      'Loading Invoices...',
+      name: 'loadingInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error Loading Invoices`
+  String get errorLoadingInvoices {
+    return Intl.message(
+      'Error Loading Invoices',
+      name: 'errorLoadingInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Amount`
+  String get invoiceAmount {
+    return Intl.message(
+      'Invoice Amount',
+      name: 'invoiceAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Date`
+  String get invoiceDate {
+    return Intl.message(
+      'Invoice Date',
+      name: 'invoiceDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid`
+  String get invoicePaid {
+    return Intl.message(
+      'Paid',
+      name: 'invoicePaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get invoicePending {
+    return Intl.message(
+      'Pending',
+      name: 'invoicePending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancelled`
+  String get invoiceCancelled {
+    return Intl.message(
+      'Cancelled',
+      name: 'invoiceCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Draft`
+  String get invoiceDraft {
+    return Intl.message(
+      'Draft',
+      name: 'invoiceDraft',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Overdue`
+  String get invoiceOverdue {
+    return Intl.message(
+      'Overdue',
+      name: 'invoiceOverdue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sent`
+  String get invoiceSent {
+    return Intl.message(
+      'Sent',
+      name: 'invoiceSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Returned`
+  String get invoiceReturned {
+    return Intl.message(
+      'Returned',
+      name: 'invoiceReturned',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get invoiceUnknown {
+    return Intl.message(
+      'Unknown',
+      name: 'invoiceUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `and {count} more invoices...`
+  String andMoreInvoices(int count) {
+    return Intl.message(
+      'and $count more invoices...',
+      name: 'andMoreInvoices',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Contact Information`
+  String get customerContactInfo {
+    return Intl.message(
+      'Contact Information',
+      name: 'customerContactInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account Status`
+  String get customerAccountStatus {
+    return Intl.message(
+      'Account Status',
+      name: 'customerAccountStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Actions`
+  String get customerQuickActions {
+    return Intl.message(
+      'Quick Actions',
+      name: 'customerQuickActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company`
+  String get customerCompany {
+    return Intl.message(
+      'Company',
+      name: 'customerCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get customerActive {
+    return Intl.message(
+      'Active',
+      name: 'customerActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive`
+  String get customerInactive {
+    return Intl.message(
+      'Inactive',
+      name: 'customerInactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created Date`
+  String get customerCreatedDate {
+    return Intl.message(
+      'Created Date',
+      name: 'customerCreatedDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Updated`
+  String get customerLastUpdated {
+    return Intl.message(
+      'Last Updated',
+      name: 'customerLastUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address Information`
+  String get customerAddressInfo {
+    return Intl.message(
+      'Address Information',
+      name: 'customerAddressInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Form Help`
+  String get customerFormHelp {
+    return Intl.message(
+      'Customer Form Help',
+      name: 'customerFormHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information`
+  String get customerFormHelpDescription {
+    return Intl.message(
+      'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information',
+      name: 'customerFormHelpDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error updating customer`
+  String get errorUpdatingCustomer {
+    return Intl.message(
+      'Error updating customer',
+      name: 'errorUpdatingCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error deleting customer`
+  String get errorDeletingCustomer {
+    return Intl.message(
+      'Error deleting customer',
+      name: 'errorDeletingCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading customer`
+  String get errorLoadingCustomer {
+    return Intl.message(
+      'Error loading customer',
+      name: 'errorLoadingCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is required`
+  String get customerEmailRequired {
+    return Intl.message(
+      'Email is required',
+      name: 'customerEmailRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address is required`
+  String get customerAddressRequired {
+    return Intl.message(
+      'Address is required',
+      name: 'customerAddressRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Company name is required`
+  String get customerCompanyRequired {
+    return Intl.message(
+      'Company name is required',
+      name: 'customerCompanyRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax number is required`
+  String get customerTaxNumberRequired {
+    return Intl.message(
+      'Tax number is required',
+      name: 'customerTaxNumberRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commercial register is required`
+  String get customerCommercialRegisterRequired {
+    return Intl.message(
+      'Commercial register is required',
+      name: 'customerCommercialRegisterRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City is required`
+  String get customerCityRequired {
+    return Intl.message(
+      'City is required',
+      name: 'customerCityRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Region is required`
+  String get customerRegionRequired {
+    return Intl.message(
+      'Region is required',
+      name: 'customerRegionRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Postal code is required`
+  String get customerPostalCodeRequired {
+    return Intl.message(
+      'Postal code is required',
+      name: 'customerPostalCodeRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detailed address is required`
+  String get customerDetailedAddressRequired {
+    return Intl.message(
+      'Detailed address is required',
+      name: 'customerDetailedAddressRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Responsible person is required`
+  String get customerResponsiblePersonRequired {
+    return Intl.message(
+      'Responsible person is required',
+      name: 'customerResponsiblePersonRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes are required`
+  String get customerNotesRequired {
+    return Intl.message(
+      'Notes are required',
+      name: 'customerNotesRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status is required`
+  String get customerStatusRequired {
+    return Intl.message(
+      'Status is required',
+      name: 'customerStatusRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter company name`
+  String get enterCustomerCompany {
+    return Intl.message(
+      'Enter company name',
+      name: 'enterCustomerCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter tax number`
+  String get enterCustomerTaxNumber {
+    return Intl.message(
+      'Enter tax number',
+      name: 'enterCustomerTaxNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter commercial register`
+  String get enterCustomerCommercialRegister {
+    return Intl.message(
+      'Enter commercial register',
+      name: 'enterCustomerCommercialRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter city`
+  String get enterCustomerCity {
+    return Intl.message(
+      'Enter city',
+      name: 'enterCustomerCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter region`
+  String get enterCustomerRegion {
+    return Intl.message(
+      'Enter region',
+      name: 'enterCustomerRegion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter postal code`
+  String get enterCustomerPostalCode {
+    return Intl.message(
+      'Enter postal code',
+      name: 'enterCustomerPostalCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter detailed address`
+  String get enterCustomerDetailedAddress {
+    return Intl.message(
+      'Enter detailed address',
+      name: 'enterCustomerDetailedAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter responsible person`
+  String get enterCustomerResponsiblePerson {
+    return Intl.message(
+      'Enter responsible person',
+      name: 'enterCustomerResponsiblePerson',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter notes`
+  String get enterCustomerNotes {
+    return Intl.message(
+      'Enter notes',
+      name: 'enterCustomerNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select customer status`
+  String get selectCustomerStatus {
+    return Intl.message(
+      'Select customer status',
+      name: 'selectCustomerStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Form`
+  String get customerFormTitle {
+    return Intl.message(
+      'Customer Form',
+      name: 'customerFormTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fill out the form below to add a new customer to the system`
+  String get customerFormDescription {
+    return Intl.message(
+      'Fill out the form below to add a new customer to the system',
+      name: 'customerFormDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Customer`
+  String get viewCustomer {
+    return Intl.message(
+      'View Customer',
+      name: 'viewCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Options`
+  String get customerOptions {
+    return Intl.message(
+      'Customer Options',
+      name: 'customerOptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Actions`
+  String get customerActions {
+    return Intl.message(
+      'Customer Actions',
+      name: 'customerActions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer List`
+  String get customerList {
+    return Intl.message(
+      'Customer List',
+      name: 'customerList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search Customers`
+  String get customerSearch {
+    return Intl.message(
+      'Search Customers',
+      name: 'customerSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Filters`
+  String get customerFilters {
+    return Intl.message(
+      'Customer Filters',
+      name: 'customerFilters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort Customers`
+  String get customerSort {
+    return Intl.message(
+      'Sort Customers',
+      name: 'customerSort',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Export Customers`
+  String get customerExport {
+    return Intl.message(
+      'Export Customers',
+      name: 'customerExport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Import Customers`
+  String get customerImport {
+    return Intl.message(
+      'Import Customers',
+      name: 'customerImport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Reports`
+  String get customerReports {
+    return Intl.message(
+      'Customer Reports',
+      name: 'customerReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Statistics`
+  String get customerStatistics {
+    return Intl.message(
+      'Customer Statistics',
+      name: 'customerStatistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Performance`
+  String get customerPerformance {
+    return Intl.message(
+      'Customer Performance',
+      name: 'customerPerformance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Satisfaction`
+  String get customerSatisfaction {
+    return Intl.message(
+      'Customer Satisfaction',
+      name: 'customerSatisfaction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Retention`
+  String get customerRetention {
+    return Intl.message(
+      'Customer Retention',
+      name: 'customerRetention',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Loyalty`
+  String get customerLoyalty {
+    return Intl.message(
+      'Customer Loyalty',
+      name: 'customerLoyalty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Value`
+  String get customerValue {
+    return Intl.message(
+      'Customer Value',
+      name: 'customerValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Lifetime Value`
+  String get customerLifetimeValue {
+    return Intl.message(
+      'Customer Lifetime Value',
+      name: 'customerLifetimeValue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Acquisition`
+  String get customerAcquisition {
+    return Intl.message(
+      'Customer Acquisition',
+      name: 'customerAcquisition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Conversion`
+  String get customerConversion {
+    return Intl.message(
+      'Customer Conversion',
+      name: 'customerConversion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Engagement`
+  String get customerEngagement {
+    return Intl.message(
+      'Customer Engagement',
+      name: 'customerEngagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Feedback`
+  String get customerFeedback {
+    return Intl.message(
+      'Customer Feedback',
+      name: 'customerFeedback',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Support`
+  String get customerSupport {
+    return Intl.message(
+      'Customer Support',
+      name: 'customerSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Service`
+  String get customerService {
+    return Intl.message(
+      'Customer Service',
+      name: 'customerService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Success`
+  String get customerSuccess {
+    return Intl.message(
+      'Customer Success',
+      name: 'customerSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Onboarding`
+  String get customerOnboarding {
+    return Intl.message(
+      'Customer Onboarding',
+      name: 'customerOnboarding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Training`
+  String get customerTraining {
+    return Intl.message(
+      'Customer Training',
+      name: 'customerTraining',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Documentation`
+  String get customerDocumentation {
+    return Intl.message(
+      'Customer Documentation',
+      name: 'customerDocumentation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Resources`
+  String get customerResources {
+    return Intl.message(
+      'Customer Resources',
+      name: 'customerResources',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Portal`
+  String get customerPortal {
+    return Intl.message(
+      'Customer Portal',
+      name: 'customerPortal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Dashboard`
+  String get customerDashboard {
+    return Intl.message(
+      'Customer Dashboard',
+      name: 'customerDashboard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Profile`
+  String get customerProfile {
+    return Intl.message(
+      'Customer Profile',
+      name: 'customerProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer History`
+  String get customerHistory {
+    return Intl.message(
+      'Customer History',
+      name: 'customerHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Transactions`
+  String get customerTransactions {
+    return Intl.message(
+      'Customer Transactions',
+      name: 'customerTransactions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Orders`
+  String get customerOrders {
+    return Intl.message(
+      'Customer Orders',
+      name: 'customerOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Invoices`
+  String get customerInvoices {
+    return Intl.message(
+      'Customer Invoices',
+      name: 'customerInvoices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Payments`
+  String get customerPayments {
+    return Intl.message(
+      'Customer Payments',
+      name: 'customerPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Credits`
+  String get customerCredits {
+    return Intl.message(
+      'Customer Credits',
+      name: 'customerCredits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Debits`
+  String get customerDebits {
+    return Intl.message(
+      'Customer Debits',
+      name: 'customerDebits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Balance`
+  String get customerBalance {
+    return Intl.message(
+      'Customer Balance',
+      name: 'customerBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Credit Limit`
+  String get customerCreditLimit {
+    return Intl.message(
+      'Credit Limit',
+      name: 'customerCreditLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Terms`
+  String get customerPaymentTerms {
+    return Intl.message(
+      'Payment Terms',
+      name: 'customerPaymentTerms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Discount`
+  String get customerDiscount {
+    return Intl.message(
+      'Customer Discount',
+      name: 'customerDiscount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Exempt`
+  String get customerTaxExempt {
+    return Intl.message(
+      'Tax Exempt',
+      name: 'customerTaxExempt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `VIP Customer`
+  String get customerVip {
+    return Intl.message(
+      'VIP Customer',
+      name: 'customerVip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Priority`
+  String get customerPriority {
+    return Intl.message(
+      'Customer Priority',
+      name: 'customerPriority',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Segment`
+  String get customerSegment {
+    return Intl.message(
+      'Customer Segment',
+      name: 'customerSegment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Category`
+  String get customerCategory {
+    return Intl.message(
+      'Customer Category',
+      name: 'customerCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Size`
+  String get customerSize {
+    return Intl.message(
+      'Customer Size',
+      name: 'customerSize',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Industry`
+  String get customerIndustry {
+    return Intl.message(
+      'Customer Industry',
+      name: 'customerIndustry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Location`
+  String get customerLocation {
+    return Intl.message(
+      'Customer Location',
+      name: 'customerLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Timezone`
+  String get customerTimezone {
+    return Intl.message(
+      'Timezone',
+      name: 'customerTimezone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Language`
+  String get customerLanguage {
+    return Intl.message(
+      'Customer Language',
+      name: 'customerLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Currency`
+  String get customerCurrency {
+    return Intl.message(
+      'Customer Currency',
+      name: 'customerCurrency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Preferences`
+  String get customerPreferences {
+    return Intl.message(
+      'Customer Preferences',
+      name: 'customerPreferences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Settings`
+  String get customerSettings {
+    return Intl.message(
+      'Customer Settings',
+      name: 'customerSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Notifications`
+  String get customerNotifications {
+    return Intl.message(
+      'Customer Notifications',
+      name: 'customerNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Alerts`
+  String get customerAlerts {
+    return Intl.message(
+      'Customer Alerts',
+      name: 'customerAlerts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Reminders`
+  String get customerReminders {
+    return Intl.message(
+      'Customer Reminders',
+      name: 'customerReminders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Follow-up`
+  String get customerFollowUp {
+    return Intl.message(
+      'Customer Follow-up',
+      name: 'customerFollowUp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Communication`
+  String get customerCommunication {
+    return Intl.message(
+      'Customer Communication',
+      name: 'customerCommunication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Meetings`
+  String get customerMeetings {
+    return Intl.message(
+      'Customer Meetings',
+      name: 'customerMeetings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Calls`
+  String get customerCalls {
+    return Intl.message(
+      'Customer Calls',
+      name: 'customerCalls',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Emails`
+  String get customerEmails {
+    return Intl.message(
+      'Customer Emails',
+      name: 'customerEmails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Messages`
+  String get customerMessages {
+    return Intl.message(
+      'Customer Messages',
+      name: 'customerMessages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Chats`
+  String get customerChats {
+    return Intl.message(
+      'Customer Chats',
+      name: 'customerChats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tickets`
+  String get customerTickets {
+    return Intl.message(
+      'Customer Tickets',
+      name: 'customerTickets',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Issues`
+  String get customerIssues {
+    return Intl.message(
+      'Customer Issues',
+      name: 'customerIssues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Complaints`
+  String get customerComplaints {
+    return Intl.message(
+      'Customer Complaints',
+      name: 'customerComplaints',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Requests`
+  String get customerRequests {
+    return Intl.message(
+      'Customer Requests',
+      name: 'customerRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Suggestions`
+  String get customerSuggestions {
+    return Intl.message(
+      'Customer Suggestions',
+      name: 'customerSuggestions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Reviews`
+  String get customerReviews {
+    return Intl.message(
+      'Customer Reviews',
+      name: 'customerReviews',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Ratings`
+  String get customerRatings {
+    return Intl.message(
+      'Customer Ratings',
+      name: 'customerRatings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Testimonials`
+  String get customerTestimonials {
+    return Intl.message(
+      'Customer Testimonials',
+      name: 'customerTestimonials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer References`
+  String get customerReferences {
+    return Intl.message(
+      'Customer References',
+      name: 'customerReferences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Recommendations`
+  String get customerRecommendations {
+    return Intl.message(
+      'Customer Recommendations',
+      name: 'customerRecommendations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Referrals`
+  String get customerReferrals {
+    return Intl.message(
+      'Customer Referrals',
+      name: 'customerReferrals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Partnerships`
+  String get customerPartnerships {
+    return Intl.message(
+      'Customer Partnerships',
+      name: 'customerPartnerships',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Contracts`
+  String get customerContracts {
+    return Intl.message(
+      'Customer Contracts',
+      name: 'customerContracts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Agreements`
+  String get customerAgreements {
+    return Intl.message(
+      'Customer Agreements',
+      name: 'customerAgreements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Terms`
+  String get customerTerms {
+    return Intl.message(
+      'Customer Terms',
+      name: 'customerTerms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Policies`
+  String get customerPolicies {
+    return Intl.message(
+      'Customer Policies',
+      name: 'customerPolicies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Procedures`
+  String get customerProcedures {
+    return Intl.message(
+      'Customer Procedures',
+      name: 'customerProcedures',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Guidelines`
+  String get customerGuidelines {
+    return Intl.message(
+      'Customer Guidelines',
+      name: 'customerGuidelines',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Standards`
+  String get customerStandards {
+    return Intl.message(
+      'Customer Standards',
+      name: 'customerStandards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Requirements`
+  String get customerRequirements {
+    return Intl.message(
+      'Customer Requirements',
+      name: 'customerRequirements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Specifications`
+  String get customerSpecifications {
+    return Intl.message(
+      'Customer Specifications',
+      name: 'customerSpecifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Expectations`
+  String get customerExpectations {
+    return Intl.message(
+      'Customer Expectations',
+      name: 'customerExpectations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Goals`
+  String get customerGoals {
+    return Intl.message(
+      'Customer Goals',
+      name: 'customerGoals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Objectives`
+  String get customerObjectives {
+    return Intl.message(
+      'Customer Objectives',
+      name: 'customerObjectives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Targets`
+  String get customerTargets {
+    return Intl.message(
+      'Customer Targets',
+      name: 'customerTargets',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Milestones`
+  String get customerMilestones {
+    return Intl.message(
+      'Customer Milestones',
+      name: 'customerMilestones',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Deadlines`
+  String get customerDeadlines {
+    return Intl.message(
+      'Customer Deadlines',
+      name: 'customerDeadlines',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Schedules`
+  String get customerSchedules {
+    return Intl.message(
+      'Customer Schedules',
+      name: 'customerSchedules',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Timelines`
+  String get customerTimelines {
+    return Intl.message(
+      'Customer Timelines',
+      name: 'customerTimelines',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Calendars`
+  String get customerCalendars {
+    return Intl.message(
+      'Customer Calendars',
+      name: 'customerCalendars',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Events`
+  String get customerEvents {
+    return Intl.message(
+      'Customer Events',
+      name: 'customerEvents',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Activities`
+  String get customerActivities {
+    return Intl.message(
+      'Customer Activities',
+      name: 'customerActivities',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tasks`
+  String get customerTasks {
+    return Intl.message(
+      'Customer Tasks',
+      name: 'customerTasks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Projects`
+  String get customerProjects {
+    return Intl.message(
+      'Customer Projects',
+      name: 'customerProjects',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Campaigns`
+  String get customerCampaigns {
+    return Intl.message(
+      'Customer Campaigns',
+      name: 'customerCampaigns',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Promotions`
+  String get customerPromotions {
+    return Intl.message(
+      'Customer Promotions',
+      name: 'customerPromotions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Offers`
+  String get customerOffers {
+    return Intl.message(
+      'Customer Offers',
+      name: 'customerOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Deals`
+  String get customerDeals {
+    return Intl.message(
+      'Customer Deals',
+      name: 'customerDeals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Sales`
+  String get customerSales {
+    return Intl.message(
+      'Customer Sales',
+      name: 'customerSales',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Revenue`
+  String get customerRevenue {
+    return Intl.message(
+      'Customer Revenue',
+      name: 'customerRevenue',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Profit`
+  String get customerProfit {
+    return Intl.message(
+      'Customer Profit',
+      name: 'customerProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Margin`
+  String get customerMargin {
+    return Intl.message(
+      'Customer Margin',
+      name: 'customerMargin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Cost`
+  String get customerCost {
+    return Intl.message(
+      'Customer Cost',
+      name: 'customerCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Expense`
+  String get customerExpense {
+    return Intl.message(
+      'Customer Expense',
+      name: 'customerExpense',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Investment`
+  String get customerInvestment {
+    return Intl.message(
+      'Customer Investment',
+      name: 'customerInvestment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Return`
+  String get customerReturn {
+    return Intl.message(
+      'Customer Return',
+      name: 'customerReturn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Risk`
+  String get customerRisk {
+    return Intl.message(
+      'Customer Risk',
+      name: 'customerRisk',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Opportunity`
+  String get customerOpportunity {
+    return Intl.message(
+      'Customer Opportunity',
+      name: 'customerOpportunity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Threat`
+  String get customerThreat {
+    return Intl.message(
+      'Customer Threat',
+      name: 'customerThreat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Strengths`
+  String get customerStrengths {
+    return Intl.message(
+      'Customer Strengths',
+      name: 'customerStrengths',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Weaknesses`
+  String get customerWeaknesses {
+    return Intl.message(
+      'Customer Weaknesses',
+      name: 'customerWeaknesses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Opportunities`
+  String get customerOpportunities {
+    return Intl.message(
+      'Customer Opportunities',
+      name: 'customerOpportunities',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Threats`
+  String get customerThreats {
+    return Intl.message(
+      'Customer Threats',
+      name: 'customerThreats',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Analysis`
+  String get customerAnalysis {
+    return Intl.message(
+      'Customer Analysis',
+      name: 'customerAnalysis',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Assessment`
+  String get customerAssessment {
+    return Intl.message(
+      'Customer Assessment',
+      name: 'customerAssessment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Evaluation`
+  String get customerEvaluation {
+    return Intl.message(
+      'Customer Evaluation',
+      name: 'customerEvaluation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Review`
+  String get customerReview {
+    return Intl.message(
+      'Customer Review',
+      name: 'customerReview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Audit`
+  String get customerAudit {
+    return Intl.message(
+      'Customer Audit',
+      name: 'customerAudit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Inspection`
+  String get customerInspection {
+    return Intl.message(
+      'Customer Inspection',
+      name: 'customerInspection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Verification`
+  String get customerVerification {
+    return Intl.message(
+      'Customer Verification',
+      name: 'customerVerification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Validation`
+  String get customerValidation {
+    return Intl.message(
+      'Customer Validation',
+      name: 'customerValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Authentication`
+  String get customerAuthentication {
+    return Intl.message(
+      'Customer Authentication',
+      name: 'customerAuthentication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Authorization`
+  String get customerAuthorization {
+    return Intl.message(
+      'Customer Authorization',
+      name: 'customerAuthorization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Permission`
+  String get customerPermission {
+    return Intl.message(
+      'Customer Permission',
+      name: 'customerPermission',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Access`
+  String get customerAccess {
+    return Intl.message(
+      'Customer Access',
+      name: 'customerAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Security`
+  String get customerSecurity {
+    return Intl.message(
+      'Customer Security',
+      name: 'customerSecurity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Privacy`
+  String get customerPrivacy {
+    return Intl.message(
+      'Customer Privacy',
+      name: 'customerPrivacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Confidentiality`
+  String get customerConfidentiality {
+    return Intl.message(
+      'Customer Confidentiality',
+      name: 'customerConfidentiality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Data`
+  String get customerData {
+    return Intl.message(
+      'Customer Data',
+      name: 'customerData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Records`
+  String get customerRecords {
+    return Intl.message(
+      'Customer Records',
+      name: 'customerRecords',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Files`
+  String get customerFiles {
+    return Intl.message(
+      'Customer Files',
+      name: 'customerFiles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Documents`
+  String get customerDocuments {
+    return Intl.message(
+      'Customer Documents',
+      name: 'customerDocuments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Archives`
+  String get customerArchives {
+    return Intl.message(
+      'Customer Archives',
+      name: 'customerArchives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Database`
+  String get customerDatabase {
+    return Intl.message(
+      'Customer Database',
+      name: 'customerDatabase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Repository`
+  String get customerRepository {
+    return Intl.message(
+      'Customer Repository',
+      name: 'customerRepository',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Storage`
+  String get customerStorage {
+    return Intl.message(
+      'Customer Storage',
+      name: 'customerStorage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Backup`
+  String get customerBackup {
+    return Intl.message(
+      'Customer Backup',
+      name: 'customerBackup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Recovery`
+  String get customerRecovery {
+    return Intl.message(
+      'Customer Recovery',
+      name: 'customerRecovery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Restore`
+  String get customerRestore {
+    return Intl.message(
+      'Customer Restore',
+      name: 'customerRestore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Migration`
+  String get customerMigration {
+    return Intl.message(
+      'Customer Migration',
+      name: 'customerMigration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Integration`
+  String get customerIntegration {
+    return Intl.message(
+      'Customer Integration',
+      name: 'customerIntegration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Synchronization`
+  String get customerSynchronization {
+    return Intl.message(
+      'Customer Synchronization',
+      name: 'customerSynchronization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Replication`
+  String get customerReplication {
+    return Intl.message(
+      'Customer Replication',
+      name: 'customerReplication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Distribution`
+  String get customerDistribution {
+    return Intl.message(
+      'Customer Distribution',
+      name: 'customerDistribution',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Deployment`
+  String get customerDeployment {
+    return Intl.message(
+      'Customer Deployment',
+      name: 'customerDeployment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Implementation`
+  String get customerImplementation {
+    return Intl.message(
+      'Customer Implementation',
+      name: 'customerImplementation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Installation`
+  String get customerInstallation {
+    return Intl.message(
+      'Customer Installation',
+      name: 'customerInstallation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Configuration`
+  String get customerConfiguration {
+    return Intl.message(
+      'Customer Configuration',
+      name: 'customerConfiguration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Customization`
+  String get customerCustomization {
+    return Intl.message(
+      'Customer Customization',
+      name: 'customerCustomization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Personalization`
+  String get customerPersonalization {
+    return Intl.message(
+      'Customer Personalization',
+      name: 'customerPersonalization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Localization`
+  String get customerLocalization {
+    return Intl.message(
+      'Customer Localization',
+      name: 'customerLocalization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Internationalization`
+  String get customerInternationalization {
+    return Intl.message(
+      'Customer Internationalization',
+      name: 'customerInternationalization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Translation`
+  String get customerTranslation {
+    return Intl.message(
+      'Customer Translation',
+      name: 'customerTranslation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Regionalization`
+  String get customerRegionalization {
+    return Intl.message(
+      'Customer Regionalization',
+      name: 'customerRegionalization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Globalization`
+  String get customerGlobalization {
+    return Intl.message(
+      'Customer Globalization',
+      name: 'customerGlobalization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Multilingual`
+  String get customerMultilingual {
+    return Intl.message(
+      'Customer Multilingual',
+      name: 'customerMultilingual',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Multicultural`
+  String get customerMulticultural {
+    return Intl.message(
+      'Customer Multicultural',
+      name: 'customerMulticultural',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Diversity`
+  String get customerDiversity {
+    return Intl.message(
+      'Customer Diversity',
+      name: 'customerDiversity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Inclusion`
+  String get customerInclusion {
+    return Intl.message(
+      'Customer Inclusion',
+      name: 'customerInclusion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Equity`
+  String get customerEquity {
+    return Intl.message(
+      'Customer Equity',
+      name: 'customerEquity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Fairness`
+  String get customerFairness {
+    return Intl.message(
+      'Customer Fairness',
+      name: 'customerFairness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Transparency`
+  String get customerTransparency {
+    return Intl.message(
+      'Customer Transparency',
+      name: 'customerTransparency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Accountability`
+  String get customerAccountability {
+    return Intl.message(
+      'Customer Accountability',
+      name: 'customerAccountability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Responsibility`
+  String get customerResponsibility {
+    return Intl.message(
+      'Customer Responsibility',
+      name: 'customerResponsibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Liability`
+  String get customerLiability {
+    return Intl.message(
+      'Customer Liability',
+      name: 'customerLiability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Obligation`
+  String get customerObligation {
+    return Intl.message(
+      'Customer Obligation',
+      name: 'customerObligation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Duty`
+  String get customerDuty {
+    return Intl.message(
+      'Customer Duty',
+      name: 'customerDuty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Commitment`
+  String get customerCommitment {
+    return Intl.message(
+      'Customer Commitment',
+      name: 'customerCommitment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Promise`
+  String get customerPromise {
+    return Intl.message(
+      'Customer Promise',
+      name: 'customerPromise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Guarantee`
+  String get customerGuarantee {
+    return Intl.message(
+      'Customer Guarantee',
+      name: 'customerGuarantee',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Warranty`
+  String get customerWarranty {
+    return Intl.message(
+      'Customer Warranty',
+      name: 'customerWarranty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Assurance`
+  String get customerAssurance {
+    return Intl.message(
+      'Customer Assurance',
+      name: 'customerAssurance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Confidence`
+  String get customerConfidence {
+    return Intl.message(
+      'Customer Confidence',
+      name: 'customerConfidence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Trust`
+  String get customerTrust {
+    return Intl.message(
+      'Customer Trust',
+      name: 'customerTrust',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Reliability`
+  String get customerReliability {
+    return Intl.message(
+      'Customer Reliability',
+      name: 'customerReliability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Dependability`
+  String get customerDependability {
+    return Intl.message(
+      'Customer Dependability',
+      name: 'customerDependability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Consistency`
+  String get customerConsistency {
+    return Intl.message(
+      'Customer Consistency',
+      name: 'customerConsistency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Stability`
+  String get customerStability {
+    return Intl.message(
+      'Customer Stability',
+      name: 'customerStability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Predictability`
+  String get customerPredictability {
+    return Intl.message(
+      'Customer Predictability',
+      name: 'customerPredictability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Flexibility`
+  String get customerFlexibility {
+    return Intl.message(
+      'Customer Flexibility',
+      name: 'customerFlexibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Adaptability`
+  String get customerAdaptability {
+    return Intl.message(
+      'Customer Adaptability',
+      name: 'customerAdaptability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Scalability`
+  String get customerScalability {
+    return Intl.message(
+      'Customer Scalability',
+      name: 'customerScalability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Sustainability`
+  String get customerSustainability {
+    return Intl.message(
+      'Customer Sustainability',
+      name: 'customerSustainability',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Growth`
+  String get customerGrowth {
+    return Intl.message(
+      'Customer Growth',
+      name: 'customerGrowth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Development`
+  String get customerDevelopment {
+    return Intl.message(
+      'Customer Development',
+      name: 'customerDevelopment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Improvement`
+  String get customerImprovement {
+    return Intl.message(
+      'Customer Improvement',
+      name: 'customerImprovement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Enhancement`
+  String get customerEnhancement {
+    return Intl.message(
+      'Customer Enhancement',
+      name: 'customerEnhancement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Optimization`
+  String get customerOptimization {
+    return Intl.message(
+      'Customer Optimization',
+      name: 'customerOptimization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Efficiency`
+  String get customerEfficiency {
+    return Intl.message(
+      'Customer Efficiency',
+      name: 'customerEfficiency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Effectiveness`
+  String get customerEffectiveness {
+    return Intl.message(
+      'Customer Effectiveness',
+      name: 'customerEffectiveness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Productivity`
+  String get customerProductivity {
+    return Intl.message(
+      'Customer Productivity',
+      name: 'customerProductivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Quality`
+  String get customerQuality {
+    return Intl.message(
+      'Customer Quality',
+      name: 'customerQuality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Excellence`
+  String get customerExcellence {
+    return Intl.message(
+      'Customer Excellence',
+      name: 'customerExcellence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Innovation`
+  String get customerInnovation {
+    return Intl.message(
+      'Customer Innovation',
+      name: 'customerInnovation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Creativity`
+  String get customerCreativity {
+    return Intl.message(
+      'Customer Creativity',
+      name: 'customerCreativity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Originality`
+  String get customerOriginality {
+    return Intl.message(
+      'Customer Originality',
+      name: 'customerOriginality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Uniqueness`
+  String get customerUniqueness {
+    return Intl.message(
+      'Customer Uniqueness',
+      name: 'customerUniqueness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Distinctiveness`
+  String get customerDistinctiveness {
+    return Intl.message(
+      'Customer Distinctiveness',
+      name: 'customerDistinctiveness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Specialization`
+  String get customerSpecialization {
+    return Intl.message(
+      'Customer Specialization',
+      name: 'customerSpecialization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Expertise`
+  String get customerExpertise {
+    return Intl.message(
+      'Customer Expertise',
+      name: 'customerExpertise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Knowledge`
+  String get customerKnowledge {
+    return Intl.message(
+      'Customer Knowledge',
+      name: 'customerKnowledge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Skills`
+  String get customerSkills {
+    return Intl.message(
+      'Customer Skills',
+      name: 'customerSkills',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Abilities`
+  String get customerAbilities {
+    return Intl.message(
+      'Customer Abilities',
+      name: 'customerAbilities',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Capabilities`
+  String get customerCapabilities {
+    return Intl.message(
+      'Customer Capabilities',
+      name: 'customerCapabilities',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Competencies`
+  String get customerCompetencies {
+    return Intl.message(
+      'Customer Competencies',
+      name: 'customerCompetencies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Qualifications`
+  String get customerQualifications {
+    return Intl.message(
+      'Customer Qualifications',
+      name: 'customerQualifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Credentials`
+  String get customerCredentials {
+    return Intl.message(
+      'Customer Credentials',
+      name: 'customerCredentials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Certifications`
+  String get customerCertifications {
+    return Intl.message(
+      'Customer Certifications',
+      name: 'customerCertifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Licenses`
+  String get customerLicenses {
+    return Intl.message(
+      'Customer Licenses',
+      name: 'customerLicenses',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Permits`
+  String get customerPermits {
+    return Intl.message(
+      'Customer Permits',
+      name: 'customerPermits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Approvals`
+  String get customerApprovals {
+    return Intl.message(
+      'Customer Approvals',
+      name: 'customerApprovals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Authorizations`
+  String get customerAuthorizations {
+    return Intl.message(
+      'Customer Authorizations',
+      name: 'customerAuthorizations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Endorsements`
+  String get customerEndorsements {
+    return Intl.message(
+      'Customer Endorsements',
+      name: 'customerEndorsements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Comments`
+  String get customerComments {
+    return Intl.message(
+      'Customer Comments',
+      name: 'customerComments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Ideas`
+  String get customerIdeas {
+    return Intl.message(
+      'Customer Ideas',
+      name: 'customerIdeas',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Proposals`
+  String get customerProposals {
+    return Intl.message(
+      'Customer Proposals',
+      name: 'customerProposals',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Plans`
+  String get customerPlans {
+    return Intl.message(
+      'Customer Plans',
+      name: 'customerPlans',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Strategies`
+  String get customerStrategies {
+    return Intl.message(
+      'Customer Strategies',
+      name: 'customerStrategies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tactics`
+  String get customerTactics {
+    return Intl.message(
+      'Customer Tactics',
+      name: 'customerTactics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Methods`
+  String get customerMethods {
+    return Intl.message(
+      'Customer Methods',
+      name: 'customerMethods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Approaches`
+  String get customerApproaches {
+    return Intl.message(
+      'Customer Approaches',
+      name: 'customerApproaches',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Techniques`
+  String get customerTechniques {
+    return Intl.message(
+      'Customer Techniques',
+      name: 'customerTechniques',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tools`
+  String get customerTools {
+    return Intl.message(
+      'Customer Tools',
+      name: 'customerTools',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Assets`
+  String get customerAssets {
+    return Intl.message(
+      'Customer Assets',
+      name: 'customerAssets',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Capital`
+  String get customerCapital {
+    return Intl.message(
+      'Customer Capital',
+      name: 'customerCapital',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Funding`
+  String get customerFunding {
+    return Intl.message(
+      'Customer Funding',
+      name: 'customerFunding',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Financing`
+  String get customerFinancing {
+    return Intl.message(
+      'Customer Financing',
+      name: 'customerFinancing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Budget`
+  String get customerBudget {
+    return Intl.message(
+      'Customer Budget',
+      name: 'customerBudget',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Price`
+  String get customerPrice {
+    return Intl.message(
+      'Customer Price',
+      name: 'customerPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Worth`
+  String get customerWorth {
+    return Intl.message(
+      'Customer Worth',
+      name: 'customerWorth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Benefit`
+  String get customerBenefit {
+    return Intl.message(
+      'Customer Benefit',
+      name: 'customerBenefit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Advantage`
+  String get customerAdvantage {
+    return Intl.message(
+      'Customer Advantage',
+      name: 'customerAdvantage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Gain`
+  String get customerGain {
+    return Intl.message(
+      'Customer Gain',
+      name: 'customerGain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Income`
+  String get customerIncome {
+    return Intl.message(
+      'Customer Income',
+      name: 'customerIncome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Earnings`
+  String get customerEarnings {
+    return Intl.message(
+      'Customer Earnings',
+      name: 'customerEarnings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Savings`
+  String get customerSavings {
+    return Intl.message(
+      'Customer Savings',
+      name: 'customerSavings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Wealth`
+  String get customerWealth {
+    return Intl.message(
+      'Customer Wealth',
+      name: 'customerWealth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Fortune`
+  String get customerFortune {
+    return Intl.message(
+      'Customer Fortune',
+      name: 'customerFortune',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Achievement`
+  String get customerAchievement {
+    return Intl.message(
+      'Customer Achievement',
+      name: 'customerAchievement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Accomplishment`
+  String get customerAccomplishment {
+    return Intl.message(
+      'Customer Accomplishment',
+      name: 'customerAccomplishment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Victory`
+  String get customerVictory {
+    return Intl.message(
+      'Customer Victory',
+      name: 'customerVictory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Triumph`
+  String get customerTriumph {
+    return Intl.message(
+      'Customer Triumph',
+      name: 'customerTriumph',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Win`
+  String get customerWin {
+    return Intl.message(
+      'Customer Win',
+      name: 'customerWin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Edge`
+  String get customerEdge {
+    return Intl.message(
+      'Customer Edge',
+      name: 'customerEdge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Superiority`
+  String get customerSuperiority {
+    return Intl.message(
+      'Customer Superiority',
+      name: 'customerSuperiority',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Perfection`
+  String get customerPerfection {
+    return Intl.message(
+      'Customer Perfection',
+      name: 'customerPerfection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Flawlessness`
+  String get customerFlawlessness {
+    return Intl.message(
+      'Customer Flawlessness',
+      name: 'customerFlawlessness',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Ideal`
+  String get customerIdeal {
+    return Intl.message(
+      'Customer Ideal',
+      name: 'customerIdeal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Optimal`
+  String get customerOptimal {
+    return Intl.message(
+      'Customer Optimal',
+      name: 'customerOptimal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Best`
+  String get customerBest {
+    return Intl.message(
+      'Customer Best',
+      name: 'customerBest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Top`
+  String get customerTop {
+    return Intl.message(
+      'Customer Top',
+      name: 'customerTop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Highest`
+  String get customerHighest {
+    return Intl.message(
+      'Customer Highest',
+      name: 'customerHighest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Maximum`
+  String get customerMaximum {
+    return Intl.message(
+      'Customer Maximum',
+      name: 'customerMaximum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Peak`
+  String get customerPeak {
+    return Intl.message(
+      'Customer Peak',
+      name: 'customerPeak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Summit`
+  String get customerSummit {
+    return Intl.message(
+      'Customer Summit',
+      name: 'customerSummit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Pinnacle`
+  String get customerPinnacle {
+    return Intl.message(
+      'Customer Pinnacle',
+      name: 'customerPinnacle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Crown`
+  String get customerCrown {
+    return Intl.message(
+      'Customer Crown',
+      name: 'customerCrown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Jewel`
+  String get customerJewel {
+    return Intl.message(
+      'Customer Jewel',
+      name: 'customerJewel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Gem`
+  String get customerGem {
+    return Intl.message(
+      'Customer Gem',
+      name: 'customerGem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Treasure`
+  String get customerTreasure {
+    return Intl.message(
+      'Customer Treasure',
+      name: 'customerTreasure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Gold`
+  String get customerGold {
+    return Intl.message(
+      'Customer Gold',
+      name: 'customerGold',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Diamond`
+  String get customerDiamond {
+    return Intl.message(
+      'Customer Diamond',
+      name: 'customerDiamond',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Pearl`
+  String get customerPearl {
+    return Intl.message(
+      'Customer Pearl',
+      name: 'customerPearl',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Ruby`
+  String get customerRuby {
+    return Intl.message(
+      'Customer Ruby',
+      name: 'customerRuby',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Emerald`
+  String get customerEmerald {
+    return Intl.message(
+      'Customer Emerald',
+      name: 'customerEmerald',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Sapphire`
+  String get customerSapphire {
+    return Intl.message(
+      'Customer Sapphire',
+      name: 'customerSapphire',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Amethyst`
+  String get customerAmethyst {
+    return Intl.message(
+      'Customer Amethyst',
+      name: 'customerAmethyst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Topaz`
+  String get customerTopaz {
+    return Intl.message(
+      'Customer Topaz',
+      name: 'customerTopaz',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Garnet`
+  String get customerGarnet {
+    return Intl.message(
+      'Customer Garnet',
+      name: 'customerGarnet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Opal`
+  String get customerOpal {
+    return Intl.message(
+      'Customer Opal',
+      name: 'customerOpal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Turquoise`
+  String get customerTurquoise {
+    return Intl.message(
+      'Customer Turquoise',
+      name: 'customerTurquoise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Coral`
+  String get customerCoral {
+    return Intl.message(
+      'Customer Coral',
+      name: 'customerCoral',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Jade`
+  String get customerJade {
+    return Intl.message(
+      'Customer Jade',
+      name: 'customerJade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Agate`
+  String get customerAgate {
+    return Intl.message(
+      'Customer Agate',
+      name: 'customerAgate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Onyx`
+  String get customerOnyx {
+    return Intl.message(
+      'Customer Onyx',
+      name: 'customerOnyx',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Quartz`
+  String get customerQuartz {
+    return Intl.message(
+      'Customer Quartz',
+      name: 'customerQuartz',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Crystal`
+  String get customerCrystal {
+    return Intl.message(
+      'Customer Crystal',
+      name: 'customerCrystal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Amber`
+  String get customerAmber {
+    return Intl.message(
+      'Customer Amber',
+      name: 'customerAmber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Jet`
+  String get customerJet {
+    return Intl.message(
+      'Customer Jet',
+      name: 'customerJet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Ivory`
+  String get customerIvory {
+    return Intl.message(
+      'Customer Ivory',
+      name: 'customerIvory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Bone`
+  String get customerBone {
+    return Intl.message(
+      'Customer Bone',
+      name: 'customerBone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Wood`
+  String get customerWood {
+    return Intl.message(
+      'Customer Wood',
+      name: 'customerWood',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Stone`
+  String get customerStone {
+    return Intl.message(
+      'Customer Stone',
+      name: 'customerStone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Rock`
+  String get customerRock {
+    return Intl.message(
+      'Customer Rock',
+      name: 'customerRock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Metal`
+  String get customerMetal {
+    return Intl.message(
+      'Customer Metal',
+      name: 'customerMetal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Iron`
+  String get customerIron {
+    return Intl.message(
+      'Customer Iron',
+      name: 'customerIron',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Steel`
+  String get customerSteel {
+    return Intl.message(
+      'Customer Steel',
+      name: 'customerSteel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Copper`
+  String get customerCopper {
+    return Intl.message(
+      'Customer Copper',
+      name: 'customerCopper',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Bronze`
+  String get customerBronze {
+    return Intl.message(
+      'Customer Bronze',
+      name: 'customerBronze',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Silver`
+  String get customerSilver {
+    return Intl.message(
+      'Customer Silver',
+      name: 'customerSilver',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Platinum`
+  String get customerPlatinum {
+    return Intl.message(
+      'Customer Platinum',
+      name: 'customerPlatinum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Titanium`
+  String get customerTitanium {
+    return Intl.message(
+      'Customer Titanium',
+      name: 'customerTitanium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Aluminum`
+  String get customerAluminum {
+    return Intl.message(
+      'Customer Aluminum',
+      name: 'customerAluminum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Zinc`
+  String get customerZinc {
+    return Intl.message(
+      'Customer Zinc',
+      name: 'customerZinc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Lead`
+  String get customerLead {
+    return Intl.message(
+      'Customer Lead',
+      name: 'customerLead',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tin`
+  String get customerTin {
+    return Intl.message(
+      'Customer Tin',
+      name: 'customerTin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Nickel`
+  String get customerNickel {
+    return Intl.message(
+      'Customer Nickel',
+      name: 'customerNickel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Chromium`
+  String get customerChromium {
+    return Intl.message(
+      'Customer Chromium',
+      name: 'customerChromium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Manganese`
+  String get customerManganese {
+    return Intl.message(
+      'Customer Manganese',
+      name: 'customerManganese',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Cobalt`
+  String get customerCobalt {
+    return Intl.message(
+      'Customer Cobalt',
+      name: 'customerCobalt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Vanadium`
+  String get customerVanadium {
+    return Intl.message(
+      'Customer Vanadium',
+      name: 'customerVanadium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tungsten`
+  String get customerTungsten {
+    return Intl.message(
+      'Customer Tungsten',
+      name: 'customerTungsten',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Molybdenum`
+  String get customerMolybdenum {
+    return Intl.message(
+      'Customer Molybdenum',
+      name: 'customerMolybdenum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tantalum`
+  String get customerTantalum {
+    return Intl.message(
+      'Customer Tantalum',
+      name: 'customerTantalum',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Niobium`
+  String get customerNiobium {
+    return Intl.message(
+      'Customer Niobium',
+      name: 'customerNiobium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Hafnium`
+  String get customerHafnium {
+    return Intl.message(
+      'Customer Hafnium',
+      name: 'customerHafnium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Zirconium`
+  String get customerZirconium {
+    return Intl.message(
+      'Customer Zirconium',
+      name: 'customerZirconium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Ruthenium`
+  String get customerRuthenium {
+    return Intl.message(
+      'Customer Ruthenium',
+      name: 'customerRuthenium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Rhodium`
+  String get customerRhodium {
+    return Intl.message(
+      'Customer Rhodium',
+      name: 'customerRhodium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Palladium`
+  String get customerPalladium {
+    return Intl.message(
+      'Customer Palladium',
+      name: 'customerPalladium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Osmium`
+  String get customerOsmium {
+    return Intl.message(
+      'Customer Osmium',
+      name: 'customerOsmium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Iridium`
+  String get customerIridium {
+    return Intl.message(
+      'Customer Iridium',
+      name: 'customerIridium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Rhenium`
+  String get customerRhenium {
+    return Intl.message(
+      'Customer Rhenium',
+      name: 'customerRhenium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Technetium`
+  String get customerTechnetium {
+    return Intl.message(
+      'Customer Technetium',
+      name: 'customerTechnetium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Promethium`
+  String get customerPromethium {
+    return Intl.message(
+      'Customer Promethium',
+      name: 'customerPromethium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Polonium`
+  String get customerPolonium {
+    return Intl.message(
+      'Customer Polonium',
+      name: 'customerPolonium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Astatine`
+  String get customerAstatine {
+    return Intl.message(
+      'Customer Astatine',
+      name: 'customerAstatine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Radon`
+  String get customerRadon {
+    return Intl.message(
+      'Customer Radon',
+      name: 'customerRadon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Francium`
+  String get customerFrancium {
+    return Intl.message(
+      'Customer Francium',
+      name: 'customerFrancium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Radium`
+  String get customerRadium {
+    return Intl.message(
+      'Customer Radium',
+      name: 'customerRadium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Actinium`
+  String get customerActinium {
+    return Intl.message(
+      'Customer Actinium',
+      name: 'customerActinium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Thorium`
+  String get customerThorium {
+    return Intl.message(
+      'Customer Thorium',
+      name: 'customerThorium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Protactinium`
+  String get customerProtactinium {
+    return Intl.message(
+      'Customer Protactinium',
+      name: 'customerProtactinium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Uranium`
+  String get customerUranium {
+    return Intl.message(
+      'Customer Uranium',
+      name: 'customerUranium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Neptunium`
+  String get customerNeptunium {
+    return Intl.message(
+      'Customer Neptunium',
+      name: 'customerNeptunium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Plutonium`
+  String get customerPlutonium {
+    return Intl.message(
+      'Customer Plutonium',
+      name: 'customerPlutonium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Americium`
+  String get customerAmericium {
+    return Intl.message(
+      'Customer Americium',
+      name: 'customerAmericium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Curium`
+  String get customerCurium {
+    return Intl.message(
+      'Customer Curium',
+      name: 'customerCurium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Berkelium`
+  String get customerBerkelium {
+    return Intl.message(
+      'Customer Berkelium',
+      name: 'customerBerkelium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Californium`
+  String get customerCalifornium {
+    return Intl.message(
+      'Customer Californium',
+      name: 'customerCalifornium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Einsteinium`
+  String get customerEinsteinium {
+    return Intl.message(
+      'Customer Einsteinium',
+      name: 'customerEinsteinium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Fermium`
+  String get customerFermium {
+    return Intl.message(
+      'Customer Fermium',
+      name: 'customerFermium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Mendelevium`
+  String get customerMendelevium {
+    return Intl.message(
+      'Customer Mendelevium',
+      name: 'customerMendelevium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Nobelium`
+  String get customerNobelium {
+    return Intl.message(
+      'Customer Nobelium',
+      name: 'customerNobelium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Lawrencium`
+  String get customerLawrencium {
+    return Intl.message(
+      'Customer Lawrencium',
+      name: 'customerLawrencium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Rutherfordium`
+  String get customerRutherfordium {
+    return Intl.message(
+      'Customer Rutherfordium',
+      name: 'customerRutherfordium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Dubnium`
+  String get customerDubnium {
+    return Intl.message(
+      'Customer Dubnium',
+      name: 'customerDubnium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Seaborgium`
+  String get customerSeaborgium {
+    return Intl.message(
+      'Customer Seaborgium',
+      name: 'customerSeaborgium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Bohrium`
+  String get customerBohrium {
+    return Intl.message(
+      'Customer Bohrium',
+      name: 'customerBohrium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Hassium`
+  String get customerHassium {
+    return Intl.message(
+      'Customer Hassium',
+      name: 'customerHassium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Meitnerium`
+  String get customerMeitnerium {
+    return Intl.message(
+      'Customer Meitnerium',
+      name: 'customerMeitnerium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Darmstadtium`
+  String get customerDarmstadtium {
+    return Intl.message(
+      'Customer Darmstadtium',
+      name: 'customerDarmstadtium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Roentgenium`
+  String get customerRoentgenium {
+    return Intl.message(
+      'Customer Roentgenium',
+      name: 'customerRoentgenium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Copernicium`
+  String get customerCopernicium {
+    return Intl.message(
+      'Customer Copernicium',
+      name: 'customerCopernicium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Nihonium`
+  String get customerNihonium {
+    return Intl.message(
+      'Customer Nihonium',
+      name: 'customerNihonium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Flerovium`
+  String get customerFlerovium {
+    return Intl.message(
+      'Customer Flerovium',
+      name: 'customerFlerovium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Moscovium`
+  String get customerMoscovium {
+    return Intl.message(
+      'Customer Moscovium',
+      name: 'customerMoscovium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Livermorium`
+  String get customerLivermorium {
+    return Intl.message(
+      'Customer Livermorium',
+      name: 'customerLivermorium',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tennessine`
+  String get customerTennessine {
+    return Intl.message(
+      'Customer Tennessine',
+      name: 'customerTennessine',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Oganesson`
+  String get customerOganesson {
+    return Intl.message(
+      'Customer Oganesson',
+      name: 'customerOganesson',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter Customers`
+  String get filterCustomers {
+    return Intl.message(
+      'Filter Customers',
+      name: 'filterCustomers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filters`
+  String get filters {
+    return Intl.message(
+      'Filters',
+      name: 'filters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort By`
+  String get sortBy {
+    return Intl.message(
+      'Sort By',
+      name: 'sortBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort Order`
+  String get sortOrder {
+    return Intl.message(
+      'Sort Order',
+      name: 'sortOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get sortByName {
+    return Intl.message(
+      'Name',
+      name: 'sortByName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get sortByEmail {
+    return Intl.message(
+      'Email',
+      name: 'sortByEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created Date`
+  String get sortByCreatedAt {
+    return Intl.message(
+      'Created Date',
+      name: 'sortByCreatedAt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Updated Date`
+  String get sortByUpdatedAt {
+    return Intl.message(
+      'Updated Date',
+      name: 'sortByUpdatedAt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ascending`
+  String get ascending {
+    return Intl.message(
+      'Ascending',
+      name: 'ascending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Descending`
+  String get descending {
+    return Intl.message(
+      'Descending',
+      name: 'descending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply Filters`
+  String get applyFilters {
+    return Intl.message(
+      'Apply Filters',
+      name: 'applyFilters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reset`
+  String get resetFilters {
+    return Intl.message(
+      'Reset',
+      name: 'resetFilters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get activeStatus {
+    return Intl.message(
+      'Active',
+      name: 'activeStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive`
+  String get inactiveStatus {
+    return Intl.message(
+      'Inactive',
+      name: 'inactiveStatus',
       desc: '',
       args: [],
     );

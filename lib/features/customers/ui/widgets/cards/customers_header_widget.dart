@@ -13,6 +13,7 @@ class CustomersHeaderWidget extends StatefulWidget {
   final String selectedCompany;
   final Function(String) onStatusChanged;
   final Function(String) onCompanyChanged;
+  final VoidCallback onFilterPressed;
 
   const CustomersHeaderWidget({
     super.key,
@@ -23,6 +24,7 @@ class CustomersHeaderWidget extends StatefulWidget {
     required this.selectedCompany,
     required this.onStatusChanged,
     required this.onCompanyChanged,
+    required this.onFilterPressed,
   });
 
   @override
@@ -33,7 +35,6 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _slideAnimation;
-  bool _showFilters = false;
 
   @override
   void initState() {
@@ -51,17 +52,6 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
   void dispose() {
     _animationController.dispose();
     super.dispose();
-  }
-
-  void _toggleFilters() {
-    setState(() {
-      _showFilters = !_showFilters;
-      if (_showFilters) {
-        _animationController.forward();
-      } else {
-        _animationController.reverse();
-      }
-    });
   }
 
   @override
@@ -151,7 +141,7 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  'Manage customers and contacts',
+                  s.customerManagement,
                   style: TextStyle(
                     color: AppColors.white.withOpacity(0.8),
                     fontSize: 14.sp,
@@ -198,18 +188,12 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
               ],
             ),
             child: IconButton(
-              icon: AnimatedRotation(
-                turns: _showFilters ? 0.5 : 0.0,
-                duration: Duration(milliseconds: 300),
-                child: Icon(
-                  Icons.filter_list,
-                  color: _showFilters
-                      ? AppColors.primary
-                      : AppColors.textSecondary,
-                  size: 20.sp,
-                ),
+              icon: Icon(
+                Icons.tune,
+                color: AppColors.textSecondary,
+                size: 20.sp,
               ),
-              onPressed: _toggleFilters,
+              onPressed: widget.onFilterPressed,
             ),
           ),
         ],

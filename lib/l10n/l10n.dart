@@ -2074,7 +2074,7 @@ abstract class S {
   /// No description provided for @customerPhone.
   ///
   /// In en, this message translates to:
-  /// **'Phone'**
+  /// **'Phone Number'**
   String get customerPhone;
 
   /// No description provided for @customerAddress.
@@ -2116,7 +2116,7 @@ abstract class S {
   /// No description provided for @customerBasicInfo.
   ///
   /// In en, this message translates to:
-  /// **'Customer Information'**
+  /// **'Basic Information'**
   String get customerBasicInfo;
 
   /// No description provided for @customerBasicInfoSection.
@@ -2137,10 +2137,16 @@ abstract class S {
   /// **'Phone number is required'**
   String get customerPhoneRequired;
 
+  /// No description provided for @phoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid phone number format'**
+  String get phoneInvalid;
+
   /// No description provided for @customerCommercialRegister.
   ///
   /// In en, this message translates to:
-  /// **'Commercial Register Number'**
+  /// **'Commercial Register'**
   String get customerCommercialRegister;
 
   /// No description provided for @customerCity.
@@ -2152,7 +2158,7 @@ abstract class S {
   /// No description provided for @customerRegion.
   ///
   /// In en, this message translates to:
-  /// **'Region/Province'**
+  /// **'Region'**
   String get customerRegion;
 
   /// No description provided for @customerPostalCode.
@@ -2183,13 +2189,13 @@ abstract class S {
   ///
   /// In en, this message translates to:
   /// **'Customer \"{name}\" created successfully'**
-  String customerCreatedSuccessfully(Object name);
+  String customerCreatedSuccessfully(String name);
 
   /// No description provided for @customerUpdatedSuccessfully.
   ///
   /// In en, this message translates to:
   /// **'Customer \"{name}\" updated successfully'**
-  String customerUpdatedSuccessfully(Object name);
+  String customerUpdatedSuccessfully(String name);
 
   /// No description provided for @customerDeletedSuccessfully.
   ///
@@ -2200,14 +2206,14 @@ abstract class S {
   /// No description provided for @confirmDeleteCustomer.
   ///
   /// In en, this message translates to:
-  /// **'Confirm Delete'**
+  /// **'Confirm Delete Customer'**
   String get confirmDeleteCustomer;
 
   /// No description provided for @confirmDeleteCustomerMessage.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete customer \"{name}\"?'**
-  String confirmDeleteCustomerMessage(Object name);
+  String confirmDeleteCustomerMessage(String name);
 
   /// No description provided for @view.
   ///
@@ -4630,7 +4636,7 @@ abstract class S {
   /// No description provided for @noInvoices.
   ///
   /// In en, this message translates to:
-  /// **'No invoices'**
+  /// **'No Invoices'**
   String get noInvoices;
 
   /// No description provided for @noInvoicesDescription.
@@ -5811,7 +5817,7 @@ abstract class S {
   /// No description provided for @loadingDashboard.
   ///
   /// In en, this message translates to:
-  /// **'Loading Dashboard...'**
+  /// **'Loading dashboard data...'**
   String get loadingDashboard;
 
   /// No description provided for @errorLoadingDashboard.
@@ -5823,7 +5829,7 @@ abstract class S {
   /// No description provided for @dashboardError.
   ///
   /// In en, this message translates to:
-  /// **'Dashboard Error'**
+  /// **'Error loading data'**
   String get dashboardError;
 
   /// No description provided for @dashboardErrorMessage.
@@ -6353,6 +6359,2604 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Back to Login Screen'**
   String get backToLoginScreen;
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, 👋'**
+  String get welcomeBack;
+
+  /// No description provided for @welcomeBackWithName.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome {name}, 👋'**
+  String welcomeBackWithName(String name);
+
+  /// No description provided for @subscriptionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Required'**
+  String get subscriptionRequired;
+
+  /// No description provided for @subscriptionRequiredMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You must choose a suitable subscription to use this feature'**
+  String get subscriptionRequiredMessage;
+
+  /// No description provided for @chooseSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose Subscription'**
+  String get chooseSubscription;
+
+  /// No description provided for @cannotOpenSubscriptionLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open subscription link'**
+  String get cannotOpenSubscriptionLink;
+
+  /// No description provided for @noProductsSoldYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No products sold yet'**
+  String get noProductsSoldYet;
+
+  /// No description provided for @noProductsSoldMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Start creating your first invoices to see the top selling products'**
+  String get noProductsSoldMessage;
+
+  /// No description provided for @undefinedProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Undefined Product'**
+  String get undefinedProduct;
+
+  /// No description provided for @customerAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Analytics'**
+  String get customerAnalytics;
+
+  /// No description provided for @lastInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Invoices'**
+  String get lastInvoices;
+
+  /// No description provided for @lastFiveInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 5 Invoices'**
+  String get lastFiveInvoices;
+
+  /// No description provided for @saudiRiyal.
+  ///
+  /// In en, this message translates to:
+  /// **'Saudi Riyal'**
+  String get saudiRiyal;
+
+  /// No description provided for @loadingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Invoices...'**
+  String get loadingInvoices;
+
+  /// No description provided for @errorLoadingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Invoices'**
+  String get errorLoadingInvoices;
+
+  /// No description provided for @invoiceAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Amount'**
+  String get invoiceAmount;
+
+  /// No description provided for @invoiceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Date'**
+  String get invoiceDate;
+
+  /// No description provided for @invoicePaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get invoicePaid;
+
+  /// No description provided for @invoicePending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get invoicePending;
+
+  /// No description provided for @invoiceCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get invoiceCancelled;
+
+  /// No description provided for @invoiceDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get invoiceDraft;
+
+  /// No description provided for @invoiceOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get invoiceOverdue;
+
+  /// No description provided for @invoiceSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get invoiceSent;
+
+  /// No description provided for @invoiceReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get invoiceReturned;
+
+  /// No description provided for @invoiceUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown'**
+  String get invoiceUnknown;
+
+  /// No description provided for @andMoreInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'and {count} more invoices...'**
+  String andMoreInvoices(int count);
+
+  /// No description provided for @customerContactInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Information'**
+  String get customerContactInfo;
+
+  /// No description provided for @customerAccountStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Status'**
+  String get customerAccountStatus;
+
+  /// No description provided for @customerQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get customerQuickActions;
+
+  /// No description provided for @customerCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Company'**
+  String get customerCompany;
+
+  /// No description provided for @customerActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get customerActive;
+
+  /// No description provided for @customerInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get customerInactive;
+
+  /// No description provided for @customerCreatedDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Created Date'**
+  String get customerCreatedDate;
+
+  /// No description provided for @customerLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get customerLastUpdated;
+
+  /// No description provided for @customerAddressInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Address Information'**
+  String get customerAddressInfo;
+
+  /// No description provided for @customerFormHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Form Help'**
+  String get customerFormHelp;
+
+  /// No description provided for @customerFormHelpDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information'**
+  String get customerFormHelpDescription;
+
+  /// No description provided for @errorUpdatingCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Error updating customer'**
+  String get errorUpdatingCustomer;
+
+  /// No description provided for @errorDeletingCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting customer'**
+  String get errorDeletingCustomer;
+
+  /// No description provided for @errorLoadingCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading customer'**
+  String get errorLoadingCustomer;
+
+  /// No description provided for @customerEmailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get customerEmailRequired;
+
+  /// No description provided for @customerAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is required'**
+  String get customerAddressRequired;
+
+  /// No description provided for @customerCompanyRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Company name is required'**
+  String get customerCompanyRequired;
+
+  /// No description provided for @customerTaxNumberRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax number is required'**
+  String get customerTaxNumberRequired;
+
+  /// No description provided for @customerCommercialRegisterRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Commercial register is required'**
+  String get customerCommercialRegisterRequired;
+
+  /// No description provided for @customerCityRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'City is required'**
+  String get customerCityRequired;
+
+  /// No description provided for @customerRegionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Region is required'**
+  String get customerRegionRequired;
+
+  /// No description provided for @customerPostalCodeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Postal code is required'**
+  String get customerPostalCodeRequired;
+
+  /// No description provided for @customerDetailedAddressRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Detailed address is required'**
+  String get customerDetailedAddressRequired;
+
+  /// No description provided for @customerResponsiblePersonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Responsible person is required'**
+  String get customerResponsiblePersonRequired;
+
+  /// No description provided for @customerNotesRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes are required'**
+  String get customerNotesRequired;
+
+  /// No description provided for @customerStatusRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Status is required'**
+  String get customerStatusRequired;
+
+  /// No description provided for @enterCustomerCompany.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter company name'**
+  String get enterCustomerCompany;
+
+  /// No description provided for @enterCustomerTaxNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter tax number'**
+  String get enterCustomerTaxNumber;
+
+  /// No description provided for @enterCustomerCommercialRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter commercial register'**
+  String get enterCustomerCommercialRegister;
+
+  /// No description provided for @enterCustomerCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter city'**
+  String get enterCustomerCity;
+
+  /// No description provided for @enterCustomerRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter region'**
+  String get enterCustomerRegion;
+
+  /// No description provided for @enterCustomerPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter postal code'**
+  String get enterCustomerPostalCode;
+
+  /// No description provided for @enterCustomerDetailedAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter detailed address'**
+  String get enterCustomerDetailedAddress;
+
+  /// No description provided for @enterCustomerResponsiblePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter responsible person'**
+  String get enterCustomerResponsiblePerson;
+
+  /// No description provided for @enterCustomerNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter notes'**
+  String get enterCustomerNotes;
+
+  /// No description provided for @selectCustomerStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Select customer status'**
+  String get selectCustomerStatus;
+
+  /// No description provided for @customerFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Form'**
+  String get customerFormTitle;
+
+  /// No description provided for @customerFormDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill out the form below to add a new customer to the system'**
+  String get customerFormDescription;
+
+  /// No description provided for @viewCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'View Customer'**
+  String get viewCustomer;
+
+  /// No description provided for @customerOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Options'**
+  String get customerOptions;
+
+  /// No description provided for @customerActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Actions'**
+  String get customerActions;
+
+  /// No description provided for @customerList.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer List'**
+  String get customerList;
+
+  /// No description provided for @customerSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Customers'**
+  String get customerSearch;
+
+  /// No description provided for @customerFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Filters'**
+  String get customerFilters;
+
+  /// No description provided for @customerSort.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Customers'**
+  String get customerSort;
+
+  /// No description provided for @customerExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Customers'**
+  String get customerExport;
+
+  /// No description provided for @customerImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Customers'**
+  String get customerImport;
+
+  /// No description provided for @customerReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reports'**
+  String get customerReports;
+
+  /// No description provided for @customerStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Statistics'**
+  String get customerStatistics;
+
+  /// No description provided for @customerPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Performance'**
+  String get customerPerformance;
+
+  /// No description provided for @customerSatisfaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Satisfaction'**
+  String get customerSatisfaction;
+
+  /// No description provided for @customerRetention.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Retention'**
+  String get customerRetention;
+
+  /// No description provided for @customerLoyalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Loyalty'**
+  String get customerLoyalty;
+
+  /// No description provided for @customerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Value'**
+  String get customerValue;
+
+  /// No description provided for @customerLifetimeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Lifetime Value'**
+  String get customerLifetimeValue;
+
+  /// No description provided for @customerAcquisition.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Acquisition'**
+  String get customerAcquisition;
+
+  /// No description provided for @customerConversion.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Conversion'**
+  String get customerConversion;
+
+  /// No description provided for @customerEngagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Engagement'**
+  String get customerEngagement;
+
+  /// No description provided for @customerFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Feedback'**
+  String get customerFeedback;
+
+  /// No description provided for @customerSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Support'**
+  String get customerSupport;
+
+  /// No description provided for @customerService.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Service'**
+  String get customerService;
+
+  /// No description provided for @customerSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Success'**
+  String get customerSuccess;
+
+  /// No description provided for @customerOnboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Onboarding'**
+  String get customerOnboarding;
+
+  /// No description provided for @customerTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Training'**
+  String get customerTraining;
+
+  /// No description provided for @customerDocumentation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Documentation'**
+  String get customerDocumentation;
+
+  /// No description provided for @customerResources.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Resources'**
+  String get customerResources;
+
+  /// No description provided for @customerPortal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Portal'**
+  String get customerPortal;
+
+  /// No description provided for @customerDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Dashboard'**
+  String get customerDashboard;
+
+  /// No description provided for @customerProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Profile'**
+  String get customerProfile;
+
+  /// No description provided for @customerHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer History'**
+  String get customerHistory;
+
+  /// No description provided for @customerTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Transactions'**
+  String get customerTransactions;
+
+  /// No description provided for @customerOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Orders'**
+  String get customerOrders;
+
+  /// No description provided for @customerInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Invoices'**
+  String get customerInvoices;
+
+  /// No description provided for @customerPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Payments'**
+  String get customerPayments;
+
+  /// No description provided for @customerCredits.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Credits'**
+  String get customerCredits;
+
+  /// No description provided for @customerDebits.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Debits'**
+  String get customerDebits;
+
+  /// No description provided for @customerBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Balance'**
+  String get customerBalance;
+
+  /// No description provided for @customerCreditLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Limit'**
+  String get customerCreditLimit;
+
+  /// No description provided for @customerPaymentTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Terms'**
+  String get customerPaymentTerms;
+
+  /// No description provided for @customerDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Discount'**
+  String get customerDiscount;
+
+  /// No description provided for @customerTaxExempt.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Exempt'**
+  String get customerTaxExempt;
+
+  /// No description provided for @customerVip.
+  ///
+  /// In en, this message translates to:
+  /// **'VIP Customer'**
+  String get customerVip;
+
+  /// No description provided for @customerPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Priority'**
+  String get customerPriority;
+
+  /// No description provided for @customerSegment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Segment'**
+  String get customerSegment;
+
+  /// No description provided for @customerCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Category'**
+  String get customerCategory;
+
+  /// No description provided for @customerSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Size'**
+  String get customerSize;
+
+  /// No description provided for @customerIndustry.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Industry'**
+  String get customerIndustry;
+
+  /// No description provided for @customerLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Location'**
+  String get customerLocation;
+
+  /// No description provided for @customerTimezone.
+  ///
+  /// In en, this message translates to:
+  /// **'Timezone'**
+  String get customerTimezone;
+
+  /// No description provided for @customerLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Language'**
+  String get customerLanguage;
+
+  /// No description provided for @customerCurrency.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Currency'**
+  String get customerCurrency;
+
+  /// No description provided for @customerPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Preferences'**
+  String get customerPreferences;
+
+  /// No description provided for @customerSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Settings'**
+  String get customerSettings;
+
+  /// No description provided for @customerNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Notifications'**
+  String get customerNotifications;
+
+  /// No description provided for @customerAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Alerts'**
+  String get customerAlerts;
+
+  /// No description provided for @customerReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reminders'**
+  String get customerReminders;
+
+  /// No description provided for @customerFollowUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Follow-up'**
+  String get customerFollowUp;
+
+  /// No description provided for @customerCommunication.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Communication'**
+  String get customerCommunication;
+
+  /// No description provided for @customerMeetings.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Meetings'**
+  String get customerMeetings;
+
+  /// No description provided for @customerCalls.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Calls'**
+  String get customerCalls;
+
+  /// No description provided for @customerEmails.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Emails'**
+  String get customerEmails;
+
+  /// No description provided for @customerMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Messages'**
+  String get customerMessages;
+
+  /// No description provided for @customerChats.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Chats'**
+  String get customerChats;
+
+  /// No description provided for @customerTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tickets'**
+  String get customerTickets;
+
+  /// No description provided for @customerIssues.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Issues'**
+  String get customerIssues;
+
+  /// No description provided for @customerComplaints.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Complaints'**
+  String get customerComplaints;
+
+  /// No description provided for @customerRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Requests'**
+  String get customerRequests;
+
+  /// No description provided for @customerSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Suggestions'**
+  String get customerSuggestions;
+
+  /// No description provided for @customerReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reviews'**
+  String get customerReviews;
+
+  /// No description provided for @customerRatings.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Ratings'**
+  String get customerRatings;
+
+  /// No description provided for @customerTestimonials.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Testimonials'**
+  String get customerTestimonials;
+
+  /// No description provided for @customerReferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer References'**
+  String get customerReferences;
+
+  /// No description provided for @customerRecommendations.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Recommendations'**
+  String get customerRecommendations;
+
+  /// No description provided for @customerReferrals.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Referrals'**
+  String get customerReferrals;
+
+  /// No description provided for @customerPartnerships.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Partnerships'**
+  String get customerPartnerships;
+
+  /// No description provided for @customerContracts.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Contracts'**
+  String get customerContracts;
+
+  /// No description provided for @customerAgreements.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Agreements'**
+  String get customerAgreements;
+
+  /// No description provided for @customerTerms.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Terms'**
+  String get customerTerms;
+
+  /// No description provided for @customerPolicies.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Policies'**
+  String get customerPolicies;
+
+  /// No description provided for @customerProcedures.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Procedures'**
+  String get customerProcedures;
+
+  /// No description provided for @customerGuidelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Guidelines'**
+  String get customerGuidelines;
+
+  /// No description provided for @customerStandards.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Standards'**
+  String get customerStandards;
+
+  /// No description provided for @customerRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Requirements'**
+  String get customerRequirements;
+
+  /// No description provided for @customerSpecifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Specifications'**
+  String get customerSpecifications;
+
+  /// No description provided for @customerExpectations.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Expectations'**
+  String get customerExpectations;
+
+  /// No description provided for @customerGoals.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Goals'**
+  String get customerGoals;
+
+  /// No description provided for @customerObjectives.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Objectives'**
+  String get customerObjectives;
+
+  /// No description provided for @customerTargets.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Targets'**
+  String get customerTargets;
+
+  /// No description provided for @customerMilestones.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Milestones'**
+  String get customerMilestones;
+
+  /// No description provided for @customerDeadlines.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Deadlines'**
+  String get customerDeadlines;
+
+  /// No description provided for @customerSchedules.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Schedules'**
+  String get customerSchedules;
+
+  /// No description provided for @customerTimelines.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Timelines'**
+  String get customerTimelines;
+
+  /// No description provided for @customerCalendars.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Calendars'**
+  String get customerCalendars;
+
+  /// No description provided for @customerEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Events'**
+  String get customerEvents;
+
+  /// No description provided for @customerActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Activities'**
+  String get customerActivities;
+
+  /// No description provided for @customerTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tasks'**
+  String get customerTasks;
+
+  /// No description provided for @customerProjects.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Projects'**
+  String get customerProjects;
+
+  /// No description provided for @customerCampaigns.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Campaigns'**
+  String get customerCampaigns;
+
+  /// No description provided for @customerPromotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Promotions'**
+  String get customerPromotions;
+
+  /// No description provided for @customerOffers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Offers'**
+  String get customerOffers;
+
+  /// No description provided for @customerDeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Deals'**
+  String get customerDeals;
+
+  /// No description provided for @customerSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Sales'**
+  String get customerSales;
+
+  /// No description provided for @customerRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Revenue'**
+  String get customerRevenue;
+
+  /// No description provided for @customerProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Profit'**
+  String get customerProfit;
+
+  /// No description provided for @customerMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Margin'**
+  String get customerMargin;
+
+  /// No description provided for @customerCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Cost'**
+  String get customerCost;
+
+  /// No description provided for @customerExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Expense'**
+  String get customerExpense;
+
+  /// No description provided for @customerInvestment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Investment'**
+  String get customerInvestment;
+
+  /// No description provided for @customerReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Return'**
+  String get customerReturn;
+
+  /// No description provided for @customerRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Risk'**
+  String get customerRisk;
+
+  /// No description provided for @customerOpportunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Opportunity'**
+  String get customerOpportunity;
+
+  /// No description provided for @customerThreat.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Threat'**
+  String get customerThreat;
+
+  /// No description provided for @customerStrengths.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Strengths'**
+  String get customerStrengths;
+
+  /// No description provided for @customerWeaknesses.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Weaknesses'**
+  String get customerWeaknesses;
+
+  /// No description provided for @customerOpportunities.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Opportunities'**
+  String get customerOpportunities;
+
+  /// No description provided for @customerThreats.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Threats'**
+  String get customerThreats;
+
+  /// No description provided for @customerAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Analysis'**
+  String get customerAnalysis;
+
+  /// No description provided for @customerAssessment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Assessment'**
+  String get customerAssessment;
+
+  /// No description provided for @customerEvaluation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Evaluation'**
+  String get customerEvaluation;
+
+  /// No description provided for @customerReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Review'**
+  String get customerReview;
+
+  /// No description provided for @customerAudit.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Audit'**
+  String get customerAudit;
+
+  /// No description provided for @customerInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Inspection'**
+  String get customerInspection;
+
+  /// No description provided for @customerVerification.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Verification'**
+  String get customerVerification;
+
+  /// No description provided for @customerValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Validation'**
+  String get customerValidation;
+
+  /// No description provided for @customerAuthentication.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Authentication'**
+  String get customerAuthentication;
+
+  /// No description provided for @customerAuthorization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Authorization'**
+  String get customerAuthorization;
+
+  /// No description provided for @customerPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Permission'**
+  String get customerPermission;
+
+  /// No description provided for @customerAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Access'**
+  String get customerAccess;
+
+  /// No description provided for @customerSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Security'**
+  String get customerSecurity;
+
+  /// No description provided for @customerPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Privacy'**
+  String get customerPrivacy;
+
+  /// No description provided for @customerConfidentiality.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Confidentiality'**
+  String get customerConfidentiality;
+
+  /// No description provided for @customerData.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Data'**
+  String get customerData;
+
+  /// No description provided for @customerRecords.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Records'**
+  String get customerRecords;
+
+  /// No description provided for @customerFiles.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Files'**
+  String get customerFiles;
+
+  /// No description provided for @customerDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Documents'**
+  String get customerDocuments;
+
+  /// No description provided for @customerArchives.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Archives'**
+  String get customerArchives;
+
+  /// No description provided for @customerDatabase.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Database'**
+  String get customerDatabase;
+
+  /// No description provided for @customerRepository.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Repository'**
+  String get customerRepository;
+
+  /// No description provided for @customerStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Storage'**
+  String get customerStorage;
+
+  /// No description provided for @customerBackup.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Backup'**
+  String get customerBackup;
+
+  /// No description provided for @customerRecovery.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Recovery'**
+  String get customerRecovery;
+
+  /// No description provided for @customerRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Restore'**
+  String get customerRestore;
+
+  /// No description provided for @customerMigration.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Migration'**
+  String get customerMigration;
+
+  /// No description provided for @customerIntegration.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Integration'**
+  String get customerIntegration;
+
+  /// No description provided for @customerSynchronization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Synchronization'**
+  String get customerSynchronization;
+
+  /// No description provided for @customerReplication.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Replication'**
+  String get customerReplication;
+
+  /// No description provided for @customerDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Distribution'**
+  String get customerDistribution;
+
+  /// No description provided for @customerDeployment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Deployment'**
+  String get customerDeployment;
+
+  /// No description provided for @customerImplementation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Implementation'**
+  String get customerImplementation;
+
+  /// No description provided for @customerInstallation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Installation'**
+  String get customerInstallation;
+
+  /// No description provided for @customerConfiguration.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Configuration'**
+  String get customerConfiguration;
+
+  /// No description provided for @customerCustomization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Customization'**
+  String get customerCustomization;
+
+  /// No description provided for @customerPersonalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Personalization'**
+  String get customerPersonalization;
+
+  /// No description provided for @customerLocalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Localization'**
+  String get customerLocalization;
+
+  /// No description provided for @customerInternationalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Internationalization'**
+  String get customerInternationalization;
+
+  /// No description provided for @customerTranslation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Translation'**
+  String get customerTranslation;
+
+  /// No description provided for @customerRegionalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Regionalization'**
+  String get customerRegionalization;
+
+  /// No description provided for @customerGlobalization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Globalization'**
+  String get customerGlobalization;
+
+  /// No description provided for @customerMultilingual.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Multilingual'**
+  String get customerMultilingual;
+
+  /// No description provided for @customerMulticultural.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Multicultural'**
+  String get customerMulticultural;
+
+  /// No description provided for @customerDiversity.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Diversity'**
+  String get customerDiversity;
+
+  /// No description provided for @customerInclusion.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Inclusion'**
+  String get customerInclusion;
+
+  /// No description provided for @customerEquity.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Equity'**
+  String get customerEquity;
+
+  /// No description provided for @customerFairness.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Fairness'**
+  String get customerFairness;
+
+  /// No description provided for @customerTransparency.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Transparency'**
+  String get customerTransparency;
+
+  /// No description provided for @customerAccountability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Accountability'**
+  String get customerAccountability;
+
+  /// No description provided for @customerResponsibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Responsibility'**
+  String get customerResponsibility;
+
+  /// No description provided for @customerLiability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Liability'**
+  String get customerLiability;
+
+  /// No description provided for @customerObligation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Obligation'**
+  String get customerObligation;
+
+  /// No description provided for @customerDuty.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Duty'**
+  String get customerDuty;
+
+  /// No description provided for @customerCommitment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Commitment'**
+  String get customerCommitment;
+
+  /// No description provided for @customerPromise.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Promise'**
+  String get customerPromise;
+
+  /// No description provided for @customerGuarantee.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Guarantee'**
+  String get customerGuarantee;
+
+  /// No description provided for @customerWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Warranty'**
+  String get customerWarranty;
+
+  /// No description provided for @customerAssurance.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Assurance'**
+  String get customerAssurance;
+
+  /// No description provided for @customerConfidence.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Confidence'**
+  String get customerConfidence;
+
+  /// No description provided for @customerTrust.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Trust'**
+  String get customerTrust;
+
+  /// No description provided for @customerReliability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Reliability'**
+  String get customerReliability;
+
+  /// No description provided for @customerDependability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Dependability'**
+  String get customerDependability;
+
+  /// No description provided for @customerConsistency.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Consistency'**
+  String get customerConsistency;
+
+  /// No description provided for @customerStability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Stability'**
+  String get customerStability;
+
+  /// No description provided for @customerPredictability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Predictability'**
+  String get customerPredictability;
+
+  /// No description provided for @customerFlexibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Flexibility'**
+  String get customerFlexibility;
+
+  /// No description provided for @customerAdaptability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Adaptability'**
+  String get customerAdaptability;
+
+  /// No description provided for @customerScalability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Scalability'**
+  String get customerScalability;
+
+  /// No description provided for @customerSustainability.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Sustainability'**
+  String get customerSustainability;
+
+  /// No description provided for @customerGrowth.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Growth'**
+  String get customerGrowth;
+
+  /// No description provided for @customerDevelopment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Development'**
+  String get customerDevelopment;
+
+  /// No description provided for @customerImprovement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Improvement'**
+  String get customerImprovement;
+
+  /// No description provided for @customerEnhancement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Enhancement'**
+  String get customerEnhancement;
+
+  /// No description provided for @customerOptimization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Optimization'**
+  String get customerOptimization;
+
+  /// No description provided for @customerEfficiency.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Efficiency'**
+  String get customerEfficiency;
+
+  /// No description provided for @customerEffectiveness.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Effectiveness'**
+  String get customerEffectiveness;
+
+  /// No description provided for @customerProductivity.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Productivity'**
+  String get customerProductivity;
+
+  /// No description provided for @customerQuality.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Quality'**
+  String get customerQuality;
+
+  /// No description provided for @customerExcellence.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Excellence'**
+  String get customerExcellence;
+
+  /// No description provided for @customerInnovation.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Innovation'**
+  String get customerInnovation;
+
+  /// No description provided for @customerCreativity.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Creativity'**
+  String get customerCreativity;
+
+  /// No description provided for @customerOriginality.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Originality'**
+  String get customerOriginality;
+
+  /// No description provided for @customerUniqueness.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Uniqueness'**
+  String get customerUniqueness;
+
+  /// No description provided for @customerDistinctiveness.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Distinctiveness'**
+  String get customerDistinctiveness;
+
+  /// No description provided for @customerSpecialization.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Specialization'**
+  String get customerSpecialization;
+
+  /// No description provided for @customerExpertise.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Expertise'**
+  String get customerExpertise;
+
+  /// No description provided for @customerKnowledge.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Knowledge'**
+  String get customerKnowledge;
+
+  /// No description provided for @customerSkills.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Skills'**
+  String get customerSkills;
+
+  /// No description provided for @customerAbilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Abilities'**
+  String get customerAbilities;
+
+  /// No description provided for @customerCapabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Capabilities'**
+  String get customerCapabilities;
+
+  /// No description provided for @customerCompetencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Competencies'**
+  String get customerCompetencies;
+
+  /// No description provided for @customerQualifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Qualifications'**
+  String get customerQualifications;
+
+  /// No description provided for @customerCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Credentials'**
+  String get customerCredentials;
+
+  /// No description provided for @customerCertifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Certifications'**
+  String get customerCertifications;
+
+  /// No description provided for @customerLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Licenses'**
+  String get customerLicenses;
+
+  /// No description provided for @customerPermits.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Permits'**
+  String get customerPermits;
+
+  /// No description provided for @customerApprovals.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Approvals'**
+  String get customerApprovals;
+
+  /// No description provided for @customerAuthorizations.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Authorizations'**
+  String get customerAuthorizations;
+
+  /// No description provided for @customerEndorsements.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Endorsements'**
+  String get customerEndorsements;
+
+  /// No description provided for @customerComments.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Comments'**
+  String get customerComments;
+
+  /// No description provided for @customerIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Ideas'**
+  String get customerIdeas;
+
+  /// No description provided for @customerProposals.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Proposals'**
+  String get customerProposals;
+
+  /// No description provided for @customerPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Plans'**
+  String get customerPlans;
+
+  /// No description provided for @customerStrategies.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Strategies'**
+  String get customerStrategies;
+
+  /// No description provided for @customerTactics.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tactics'**
+  String get customerTactics;
+
+  /// No description provided for @customerMethods.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Methods'**
+  String get customerMethods;
+
+  /// No description provided for @customerApproaches.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Approaches'**
+  String get customerApproaches;
+
+  /// No description provided for @customerTechniques.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Techniques'**
+  String get customerTechniques;
+
+  /// No description provided for @customerTools.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tools'**
+  String get customerTools;
+
+  /// No description provided for @customerAssets.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Assets'**
+  String get customerAssets;
+
+  /// No description provided for @customerCapital.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Capital'**
+  String get customerCapital;
+
+  /// No description provided for @customerFunding.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Funding'**
+  String get customerFunding;
+
+  /// No description provided for @customerFinancing.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Financing'**
+  String get customerFinancing;
+
+  /// No description provided for @customerBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Budget'**
+  String get customerBudget;
+
+  /// No description provided for @customerPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Price'**
+  String get customerPrice;
+
+  /// No description provided for @customerWorth.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Worth'**
+  String get customerWorth;
+
+  /// No description provided for @customerBenefit.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Benefit'**
+  String get customerBenefit;
+
+  /// No description provided for @customerAdvantage.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Advantage'**
+  String get customerAdvantage;
+
+  /// No description provided for @customerGain.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Gain'**
+  String get customerGain;
+
+  /// No description provided for @customerIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Income'**
+  String get customerIncome;
+
+  /// No description provided for @customerEarnings.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Earnings'**
+  String get customerEarnings;
+
+  /// No description provided for @customerSavings.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Savings'**
+  String get customerSavings;
+
+  /// No description provided for @customerWealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Wealth'**
+  String get customerWealth;
+
+  /// No description provided for @customerFortune.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Fortune'**
+  String get customerFortune;
+
+  /// No description provided for @customerAchievement.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Achievement'**
+  String get customerAchievement;
+
+  /// No description provided for @customerAccomplishment.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Accomplishment'**
+  String get customerAccomplishment;
+
+  /// No description provided for @customerVictory.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Victory'**
+  String get customerVictory;
+
+  /// No description provided for @customerTriumph.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Triumph'**
+  String get customerTriumph;
+
+  /// No description provided for @customerWin.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Win'**
+  String get customerWin;
+
+  /// No description provided for @customerEdge.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Edge'**
+  String get customerEdge;
+
+  /// No description provided for @customerSuperiority.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Superiority'**
+  String get customerSuperiority;
+
+  /// No description provided for @customerPerfection.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Perfection'**
+  String get customerPerfection;
+
+  /// No description provided for @customerFlawlessness.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Flawlessness'**
+  String get customerFlawlessness;
+
+  /// No description provided for @customerIdeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Ideal'**
+  String get customerIdeal;
+
+  /// No description provided for @customerOptimal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Optimal'**
+  String get customerOptimal;
+
+  /// No description provided for @customerBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Best'**
+  String get customerBest;
+
+  /// No description provided for @customerTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Top'**
+  String get customerTop;
+
+  /// No description provided for @customerHighest.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Highest'**
+  String get customerHighest;
+
+  /// No description provided for @customerMaximum.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Maximum'**
+  String get customerMaximum;
+
+  /// No description provided for @customerPeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Peak'**
+  String get customerPeak;
+
+  /// No description provided for @customerSummit.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Summit'**
+  String get customerSummit;
+
+  /// No description provided for @customerPinnacle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Pinnacle'**
+  String get customerPinnacle;
+
+  /// No description provided for @customerCrown.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Crown'**
+  String get customerCrown;
+
+  /// No description provided for @customerJewel.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Jewel'**
+  String get customerJewel;
+
+  /// No description provided for @customerGem.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Gem'**
+  String get customerGem;
+
+  /// No description provided for @customerTreasure.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Treasure'**
+  String get customerTreasure;
+
+  /// No description provided for @customerGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Gold'**
+  String get customerGold;
+
+  /// No description provided for @customerDiamond.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Diamond'**
+  String get customerDiamond;
+
+  /// No description provided for @customerPearl.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Pearl'**
+  String get customerPearl;
+
+  /// No description provided for @customerRuby.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Ruby'**
+  String get customerRuby;
+
+  /// No description provided for @customerEmerald.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Emerald'**
+  String get customerEmerald;
+
+  /// No description provided for @customerSapphire.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Sapphire'**
+  String get customerSapphire;
+
+  /// No description provided for @customerAmethyst.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Amethyst'**
+  String get customerAmethyst;
+
+  /// No description provided for @customerTopaz.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Topaz'**
+  String get customerTopaz;
+
+  /// No description provided for @customerGarnet.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Garnet'**
+  String get customerGarnet;
+
+  /// No description provided for @customerOpal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Opal'**
+  String get customerOpal;
+
+  /// No description provided for @customerTurquoise.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Turquoise'**
+  String get customerTurquoise;
+
+  /// No description provided for @customerCoral.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Coral'**
+  String get customerCoral;
+
+  /// No description provided for @customerJade.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Jade'**
+  String get customerJade;
+
+  /// No description provided for @customerAgate.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Agate'**
+  String get customerAgate;
+
+  /// No description provided for @customerOnyx.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Onyx'**
+  String get customerOnyx;
+
+  /// No description provided for @customerQuartz.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Quartz'**
+  String get customerQuartz;
+
+  /// No description provided for @customerCrystal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Crystal'**
+  String get customerCrystal;
+
+  /// No description provided for @customerAmber.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Amber'**
+  String get customerAmber;
+
+  /// No description provided for @customerJet.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Jet'**
+  String get customerJet;
+
+  /// No description provided for @customerIvory.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Ivory'**
+  String get customerIvory;
+
+  /// No description provided for @customerBone.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Bone'**
+  String get customerBone;
+
+  /// No description provided for @customerWood.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Wood'**
+  String get customerWood;
+
+  /// No description provided for @customerStone.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Stone'**
+  String get customerStone;
+
+  /// No description provided for @customerRock.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Rock'**
+  String get customerRock;
+
+  /// No description provided for @customerMetal.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Metal'**
+  String get customerMetal;
+
+  /// No description provided for @customerIron.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Iron'**
+  String get customerIron;
+
+  /// No description provided for @customerSteel.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Steel'**
+  String get customerSteel;
+
+  /// No description provided for @customerCopper.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Copper'**
+  String get customerCopper;
+
+  /// No description provided for @customerBronze.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Bronze'**
+  String get customerBronze;
+
+  /// No description provided for @customerSilver.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Silver'**
+  String get customerSilver;
+
+  /// No description provided for @customerPlatinum.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Platinum'**
+  String get customerPlatinum;
+
+  /// No description provided for @customerTitanium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Titanium'**
+  String get customerTitanium;
+
+  /// No description provided for @customerAluminum.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Aluminum'**
+  String get customerAluminum;
+
+  /// No description provided for @customerZinc.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Zinc'**
+  String get customerZinc;
+
+  /// No description provided for @customerLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Lead'**
+  String get customerLead;
+
+  /// No description provided for @customerTin.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tin'**
+  String get customerTin;
+
+  /// No description provided for @customerNickel.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Nickel'**
+  String get customerNickel;
+
+  /// No description provided for @customerChromium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Chromium'**
+  String get customerChromium;
+
+  /// No description provided for @customerManganese.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Manganese'**
+  String get customerManganese;
+
+  /// No description provided for @customerCobalt.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Cobalt'**
+  String get customerCobalt;
+
+  /// No description provided for @customerVanadium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Vanadium'**
+  String get customerVanadium;
+
+  /// No description provided for @customerTungsten.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tungsten'**
+  String get customerTungsten;
+
+  /// No description provided for @customerMolybdenum.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Molybdenum'**
+  String get customerMolybdenum;
+
+  /// No description provided for @customerTantalum.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tantalum'**
+  String get customerTantalum;
+
+  /// No description provided for @customerNiobium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Niobium'**
+  String get customerNiobium;
+
+  /// No description provided for @customerHafnium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Hafnium'**
+  String get customerHafnium;
+
+  /// No description provided for @customerZirconium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Zirconium'**
+  String get customerZirconium;
+
+  /// No description provided for @customerRuthenium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Ruthenium'**
+  String get customerRuthenium;
+
+  /// No description provided for @customerRhodium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Rhodium'**
+  String get customerRhodium;
+
+  /// No description provided for @customerPalladium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Palladium'**
+  String get customerPalladium;
+
+  /// No description provided for @customerOsmium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Osmium'**
+  String get customerOsmium;
+
+  /// No description provided for @customerIridium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Iridium'**
+  String get customerIridium;
+
+  /// No description provided for @customerRhenium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Rhenium'**
+  String get customerRhenium;
+
+  /// No description provided for @customerTechnetium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Technetium'**
+  String get customerTechnetium;
+
+  /// No description provided for @customerPromethium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Promethium'**
+  String get customerPromethium;
+
+  /// No description provided for @customerPolonium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Polonium'**
+  String get customerPolonium;
+
+  /// No description provided for @customerAstatine.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Astatine'**
+  String get customerAstatine;
+
+  /// No description provided for @customerRadon.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Radon'**
+  String get customerRadon;
+
+  /// No description provided for @customerFrancium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Francium'**
+  String get customerFrancium;
+
+  /// No description provided for @customerRadium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Radium'**
+  String get customerRadium;
+
+  /// No description provided for @customerActinium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Actinium'**
+  String get customerActinium;
+
+  /// No description provided for @customerThorium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Thorium'**
+  String get customerThorium;
+
+  /// No description provided for @customerProtactinium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Protactinium'**
+  String get customerProtactinium;
+
+  /// No description provided for @customerUranium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Uranium'**
+  String get customerUranium;
+
+  /// No description provided for @customerNeptunium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Neptunium'**
+  String get customerNeptunium;
+
+  /// No description provided for @customerPlutonium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Plutonium'**
+  String get customerPlutonium;
+
+  /// No description provided for @customerAmericium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Americium'**
+  String get customerAmericium;
+
+  /// No description provided for @customerCurium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Curium'**
+  String get customerCurium;
+
+  /// No description provided for @customerBerkelium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Berkelium'**
+  String get customerBerkelium;
+
+  /// No description provided for @customerCalifornium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Californium'**
+  String get customerCalifornium;
+
+  /// No description provided for @customerEinsteinium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Einsteinium'**
+  String get customerEinsteinium;
+
+  /// No description provided for @customerFermium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Fermium'**
+  String get customerFermium;
+
+  /// No description provided for @customerMendelevium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Mendelevium'**
+  String get customerMendelevium;
+
+  /// No description provided for @customerNobelium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Nobelium'**
+  String get customerNobelium;
+
+  /// No description provided for @customerLawrencium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Lawrencium'**
+  String get customerLawrencium;
+
+  /// No description provided for @customerRutherfordium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Rutherfordium'**
+  String get customerRutherfordium;
+
+  /// No description provided for @customerDubnium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Dubnium'**
+  String get customerDubnium;
+
+  /// No description provided for @customerSeaborgium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Seaborgium'**
+  String get customerSeaborgium;
+
+  /// No description provided for @customerBohrium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Bohrium'**
+  String get customerBohrium;
+
+  /// No description provided for @customerHassium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Hassium'**
+  String get customerHassium;
+
+  /// No description provided for @customerMeitnerium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Meitnerium'**
+  String get customerMeitnerium;
+
+  /// No description provided for @customerDarmstadtium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Darmstadtium'**
+  String get customerDarmstadtium;
+
+  /// No description provided for @customerRoentgenium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Roentgenium'**
+  String get customerRoentgenium;
+
+  /// No description provided for @customerCopernicium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Copernicium'**
+  String get customerCopernicium;
+
+  /// No description provided for @customerNihonium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Nihonium'**
+  String get customerNihonium;
+
+  /// No description provided for @customerFlerovium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Flerovium'**
+  String get customerFlerovium;
+
+  /// No description provided for @customerMoscovium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Moscovium'**
+  String get customerMoscovium;
+
+  /// No description provided for @customerLivermorium.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Livermorium'**
+  String get customerLivermorium;
+
+  /// No description provided for @customerTennessine.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tennessine'**
+  String get customerTennessine;
+
+  /// No description provided for @customerOganesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Oganesson'**
+  String get customerOganesson;
+
+  /// No description provided for @filterCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter Customers'**
+  String get filterCustomers;
+
+  /// No description provided for @filters.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get filters;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort By'**
+  String get sortBy;
+
+  /// No description provided for @sortOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Sort Order'**
+  String get sortOrder;
+
+  /// No description provided for @sortByName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get sortByName;
+
+  /// No description provided for @sortByEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get sortByEmail;
+
+  /// No description provided for @sortByCreatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created Date'**
+  String get sortByCreatedAt;
+
+  /// No description provided for @sortByUpdatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated Date'**
+  String get sortByUpdatedAt;
+
+  /// No description provided for @ascending.
+  ///
+  /// In en, this message translates to:
+  /// **'Ascending'**
+  String get ascending;
+
+  /// No description provided for @descending.
+  ///
+  /// In en, this message translates to:
+  /// **'Descending'**
+  String get descending;
+
+  /// No description provided for @applyFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply Filters'**
+  String get applyFilters;
+
+  /// No description provided for @resetFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get resetFilters;
+
+  /// No description provided for @activeStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get activeStatus;
+
+  /// No description provided for @inactiveStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactiveStatus;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

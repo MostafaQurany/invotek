@@ -11,74 +11,100 @@ class InvoicesEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverFillRemaining(
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.all(32.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Empty State Icon
-              Container(
-                width: 120.w,
-                height: 120.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(60.r),
-                ),
-                child: Icon(
-                  Icons.receipt_long_outlined,
-                  size: 60.sp,
-                  color: AppColors.primary,
-                ),
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(32.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Empty State Icon
+            Container(
+              width: 120.w,
+              height: 120.w,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(60.r),
               ),
-
-              SizedBox(height: 24.h),
-
-              // Title
-              Text(
-                S.of(context).noInvoices,
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
+              child: Icon(
+                Icons.receipt_long_outlined,
+                size: 60.sp,
+                color: AppColors.primary,
               ),
+            ),
 
-              SizedBox(height: 12.h),
+            SizedBox(height: 24.h),
 
-              // Description
-              Text(
-                S.of(context).noInvoicesDescription,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: AppColors.textSecondary,
-                  height: 1.5,
-                ),
+            // Title
+            Text(
+              S.of(context).noInvoices,
+              style: TextStyle(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
               ),
+            ),
 
-              SizedBox(height: 32.h),
+            SizedBox(height: 12.h),
 
-              // Action Buttons
-              Column(
-                children: [
-                  // Add Invoice Button
+            // Description
+            Text(
+              S.of(context).noInvoicesDescription,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: AppColors.textSecondary,
+                height: 1.5,
+              ),
+            ),
+
+            SizedBox(height: 32.h),
+
+            // Action Buttons
+            Column(
+              children: [
+                // Add Invoice Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: onAddInvoice,
+                    icon: Icon(Icons.add, size: 20.sp),
+                    label: Text(
+                      S.of(context).addFirstInvoice,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 16.h),
+
+                // Retry Button
+                if (onRetry != null)
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: onAddInvoice,
-                      icon: Icon(Icons.add, size: 20.sp),
+                    child: OutlinedButton.icon(
+                      onPressed: onRetry,
+                      icon: Icon(Icons.refresh, size: 20.sp),
                       label: Text(
-                        S.of(context).addFirstInvoice,
+                        S.of(context).retry,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                        side: BorderSide(color: AppColors.primary),
                         padding: EdgeInsets.symmetric(vertical: 16.h),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12.r),
@@ -86,37 +112,9 @@ class InvoicesEmptyState extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  SizedBox(height: 16.h),
-
-                  // Retry Button
-                  if (onRetry != null)
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: onRetry,
-                        icon: Icon(Icons.refresh, size: 20.sp),
-                        label: Text(
-                          S.of(context).retry,
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.primary,
-                          side: BorderSide(color: AppColors.primary),
-                          padding: EdgeInsets.symmetric(vertical: 16.h),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

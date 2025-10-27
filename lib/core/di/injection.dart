@@ -11,6 +11,7 @@ import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.da
 import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
 import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
 import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customer_invoices.dart';
 import 'package:invotek/features/products/domain/usecases/get_products.dart';
 import 'package:invotek/features/products/domain/usecases/get_product_by_id.dart';
 import 'package:invotek/features/products/domain/usecases/create_product.dart';
@@ -64,13 +65,11 @@ import 'package:invotek/features/products/data/repository/products_repository.da
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/features/customers/data/repository/customers_repository.dart';
-import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
+import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/expenses/data/repository/expenses_repository.dart';
 import 'package:invotek/features/expenses/data/repository/expense_categories_repository.dart';
 import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
-import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
-import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart'
     as OldPermissionsCubit;
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
@@ -154,6 +153,9 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton<DeleteCustomer>(
     () => DeleteCustomer(getIt<CustomersRepository>()),
+  );
+  getIt.registerLazySingleton<GetCustomerInvoices>(
+    () => GetCustomerInvoices(getIt<InvoiceRepository>()),
   );
 
   // Products Use Cases

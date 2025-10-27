@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invotek/features/customers/demo/entit/customer_model.dart';
+import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class DeleteCustomerDialog extends StatelessWidget {

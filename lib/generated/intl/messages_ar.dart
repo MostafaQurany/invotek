@@ -20,127 +20,131 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(version, build) => "الإصدار ${version} (Build ${build})";
+  static String m0(count) => "و ${count} فاتورة أخرى...";
 
-  static String m1(name) => "هل أنت متأكد من حذف \"${name}\"؟";
+  static String m1(version, build) => "الإصدار ${version} (Build ${build})";
 
-  static String m2(name) => "هل أنت متأكد من حذف العميل \"${name}\"؟";
+  static String m2(name) => "هل أنت متأكد من حذف \"${name}\"؟";
 
-  static String m3(phone) => "جاري الاتصال بـ ${phone}";
+  static String m3(name) => "هل أنت متأكد من حذف العميل \"${name}\"؟";
 
-  static String m4(number) => "تغيير طريقة الدفع للفاتورة ${number}";
+  static String m4(phone) => "جاري الاتصال بـ ${phone}";
 
-  static String m5(name) => "هل أنت متأكد من حذف العميل \"${name}\"?";
+  static String m5(number) => "تغيير طريقة الدفع للفاتورة ${number}";
 
-  static String m6(name) => "تم إنشاء العميل \"${name}\" بنجاح";
+  static String m6(name) => "هل أنت متأكد من حذف العميل \"${name}\"؟";
 
-  static String m7(name) => "تم تحديث العميل \"${name}\" بنجاح";
+  static String m7(name) => "تم إنشاء العميل \"${name}\" بنجاح";
 
-  static String m8(error) => "خطأ في تحويل البيانات: ${error}";
+  static String m8(name) => "تم تحديث العميل \"${name}\" بنجاح";
 
-  static String m9(name) => "هل أنت متأكد من حذف الفئة \"${name}\"؟";
+  static String m9(error) => "خطأ في تحويل البيانات: ${error}";
 
-  static String m10(name) => "هل أنت متأكد من حذف العميل \"${name}\"؟";
+  static String m10(name) => "هل أنت متأكد من حذف الفئة \"${name}\"؟";
 
-  static String m11(name) => "هل أنت متأكد من حذف المنتج \"${name}\"؟";
+  static String m11(name) => "هل أنت متأكد من حذف العميل \"${name}\"؟";
 
-  static String m12(name) => "هل أنت متأكد من حذف المستخدم ${name}؟";
+  static String m12(name) => "هل أنت متأكد من حذف المنتج \"${name}\"؟";
 
-  static String m13(number) => "تكرار الفاتورة ${number}";
+  static String m13(name) => "هل أنت متأكد من حذف المستخدم ${name}؟";
 
-  static String m14(name) => "قم بتعديل بيانات العميل \"${name}\"";
+  static String m14(number) => "تكرار الفاتورة ${number}";
 
-  static String m15(error) => "حدث خطأ أثناء إنشاء العميل: ${error}";
+  static String m15(name) => "قم بتعديل بيانات العميل \"${name}\"";
 
-  static String m16(error) => "فشل في إنشاء الملف: ${error}";
+  static String m16(error) => "حدث خطأ أثناء إنشاء العميل: ${error}";
 
-  static String m17(error) => "خطأ: ${error}";
+  static String m17(error) => "فشل في إنشاء الملف: ${error}";
 
-  static String m18(error) => "حدث خطأ أثناء حذف العميل: ${error}";
+  static String m18(error) => "خطأ: ${error}";
 
-  static String m19(error) => "حدث خطأ أثناء حذف العملاء: ${error}";
+  static String m19(error) => "حدث خطأ أثناء حذف العميل: ${error}";
 
-  static String m20(error) => "فشل في حذف الفاتورة: ${error}";
+  static String m20(error) => "حدث خطأ أثناء حذف العملاء: ${error}";
 
-  static String m21(error) => "حدث خطأ أثناء تحميل العملاء: ${error}";
+  static String m21(error) => "فشل في حذف الفاتورة: ${error}";
 
-  static String m22(error) => "حدث خطأ أثناء تحميل الإحصائيات: ${error}";
+  static String m22(error) => "حدث خطأ أثناء تحميل العملاء: ${error}";
 
-  static String m23(error) => "حدث خطأ: ${error}";
+  static String m23(error) => "حدث خطأ أثناء تحميل الإحصائيات: ${error}";
 
-  static String m24(error) => "حدث خطأ ${error}";
+  static String m24(error) => "حدث خطأ: ${error}";
 
-  static String m25(error) => "فشل في طباعة الفاتورة: ${error}";
+  static String m25(error) => "حدث خطأ ${error}";
 
-  static String m26(error) => "فشل في إرسال الفاتورة: ${error}";
+  static String m26(error) => "فشل في طباعة الفاتورة: ${error}";
 
-  static String m27(error) => "فشل في مشاركة الفاتورة: ${error}";
+  static String m27(error) => "فشل في إرسال الفاتورة: ${error}";
 
-  static String m28(error) => "حدث خطأ أثناء تحديث العميل: ${error}";
+  static String m28(error) => "فشل في مشاركة الفاتورة: ${error}";
 
-  static String m29(error) => "حدث خطأ أثناء تحديث حالة العملاء: ${error}";
+  static String m29(error) => "حدث خطأ أثناء تحديث العميل: ${error}";
 
-  static String m30(error) => "فشل في تحديث الحالة: ${error}";
+  static String m30(error) => "حدث خطأ أثناء تحديث حالة العملاء: ${error}";
 
-  static String m31(error) => "فشل في إضافة الدور: ${error}";
+  static String m31(error) => "فشل في تحديث الحالة: ${error}";
 
-  static String m32(error) => "فشل في حذف الدور: ${error}";
+  static String m32(error) => "فشل في إضافة الدور: ${error}";
 
-  static String m33(error) => "فشل في تحميل الأدوار والصلاحيات: ${error}";
+  static String m33(error) => "فشل في حذف الدور: ${error}";
 
-  static String m34(error) => "فشل في تحميل صلاحيات المستخدم: ${error}";
+  static String m34(error) => "فشل في تحميل الأدوار والصلاحيات: ${error}";
 
-  static String m35(error) => "فشل في تحديث الدور: ${error}";
+  static String m35(error) => "فشل في تحميل صلاحيات المستخدم: ${error}";
 
-  static String m36(error) => "فشل في تحديث صلاحيات المستخدم: ${error}";
+  static String m36(error) => "فشل في تحديث الدور: ${error}";
 
-  static String m37(number, timestamp) => "فاتورة_${number}_${timestamp}";
+  static String m37(error) => "فشل في تحديث صلاحيات المستخدم: ${error}";
 
-  static String m38(path) => "تم حفظ الملف في: ${path}";
+  static String m38(number, timestamp) => "فاتورة_${number}_${timestamp}";
 
-  static String m39(number) => "رقم الفاتورة: ${number}";
+  static String m39(path) => "تم حفظ الملف في: ${path}";
 
-  static String m40(status) => "تم تحديث حالة الفاتورة إلى: ${status}";
+  static String m40(number) => "رقم الفاتورة: ${number}";
 
-  static String m41(name, quantity, price, total) =>
+  static String m41(status) => "تم تحديث حالة الفاتورة إلى: ${status}";
+
+  static String m42(name, quantity, price, total) =>
       "${name}\t\t${quantity}\t${price}\t${total}";
 
-  static String m42(name) => "جاري تحميل تفاصيل المنتج...";
+  static String m43(name) => "جاري تحميل تفاصيل المنتج...";
 
-  static String m43(feature) => "عذراً، ليس لديك صلاحية للوصول إلى ${feature}";
+  static String m44(feature) => "عذراً، ليس لديك صلاحية للوصول إلى ${feature}";
 
-  static String m44(email) => "جاري فتح البريد الإلكتروني إلى ${email}";
+  static String m45(email) => "جاري فتح البريد الإلكتروني إلى ${email}";
 
-  static String m45(separator, number, date, status, customer, contact, items,
+  static String m46(separator, number, date, status, customer, contact, items,
           subtotal, tax, total) =>
       "فاتورة\n${separator}\nرقم الفاتورة: ${number}\nالتاريخ: ${date}\nالحالة: ${status}\n\nبيانات العميل:\nالاسم: ${customer}\n${contact}\n\nعناصر الفاتورة:\n${items}\n\nالمجاميع:\nالمجموع الفرعي: ${subtotal} ر.س\n${tax}\nالمجموع الكلي: ${total} ر.س\n\n${separator}\nشكراً لتعاملكم معنا\nتم إنشاء هذه الفاتورة بواسطة تطبيق Invotek\n${separator}";
 
-  static String m46(seconds) => "إعادة الإرسال خلال ${seconds} ثانية";
+  static String m47(seconds) => "إعادة الإرسال خلال ${seconds} ثانية";
 
-  static String m47(number, customer, date, amount, status) =>
+  static String m48(number, customer, date, amount, status) =>
       "فاتورة رقم: ${number}\nالعميل: ${customer}\nالتاريخ: ${date}\nالمبلغ: ${amount} ر.س\nالحالة: ${status}\n\nتم إنشاؤها بواسطة تطبيق Invotek";
 
-  static String m48(count) => "إظهار جميع العناصر (${count})";
+  static String m49(count) => "إظهار جميع العناصر (${count})";
 
-  static String m49(status) => "الحالة: ${status}";
+  static String m50(status) => "الحالة: ${status}";
 
-  static String m50(amount) => "المجموع الفرعي: ${amount} ر.س";
+  static String m51(amount) => "المجموع الفرعي: ${amount} ر.س";
 
-  static String m51(amount) => "الضريبة: ${amount} ر.س";
+  static String m52(amount) => "الضريبة: ${amount} ر.س";
 
-  static String m52(number) => "معرف الضريبة للفاتورة ${number}:";
+  static String m53(number) => "معرف الضريبة للفاتورة ${number}:";
 
-  static String m53(amount) => "المجموع الكلي: ${amount} ر.س";
+  static String m54(amount) => "المجموع الكلي: ${amount} ر.س";
 
-  static String m54(email) => "أدخل الكود المرسل إلى ${email}";
+  static String m55(email) => "أدخل الكود المرسل إلى ${email}";
 
-  static String m55(name) => "عرض تفاصيل العميل: ${name}";
+  static String m56(name) => "عرض تفاصيل العميل: ${name}";
 
-  static String m56(name) => "عرض تفاصيل العنصر: ${name}";
+  static String m57(name) => "عرض تفاصيل العنصر: ${name}";
 
-  static String m57(name) => "عرض الفواتير لـ ${name}";
+  static String m58(name) => "عرض الفواتير لـ ${name}";
 
-  static String m58(name) => "عرض الطلبات لـ ${name}";
+  static String m59(name) => "عرض الطلبات لـ ${name}";
+
+  static String m60(name) => "مرحباً ${name}، 👋";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -156,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "actionRequired": MessageLookupByLibrary.simpleMessage("الإجراء مطلوب"),
         "actionType": MessageLookupByLibrary.simpleMessage("نوع الإجراء"),
         "active": MessageLookupByLibrary.simpleMessage("نشط"),
+        "activeStatus": MessageLookupByLibrary.simpleMessage("نشط"),
         "add": MessageLookupByLibrary.simpleMessage("إضافة"),
         "addANewUser":
             MessageLookupByLibrary.simpleMessage("إضافة مستخدم جديد"),
@@ -242,14 +247,17 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("معلومات المبلغ"),
         "amountIsRequired":
             MessageLookupByLibrary.simpleMessage("المبلغ مطلوب"),
+        "andMoreInvoices": m0,
         "appInfo": MessageLookupByLibrary.simpleMessage("معلومات التطبيق"),
-        "appVersionWithBuild": m0,
+        "appVersionWithBuild": m1,
         "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+        "applyFilters": MessageLookupByLibrary.simpleMessage("تطبيق الفلاتر"),
         "applyTaxToProduct": MessageLookupByLibrary.simpleMessage(
             "تطبيق الضريبة على هذا المنتج"),
         "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
-        "areYouSureDelete": m1,
-        "areYouSureDeleteClient": m2,
+        "areYouSureDelete": m2,
+        "areYouSureDeleteClient": m3,
+        "ascending": MessageLookupByLibrary.simpleMessage("تصاعدي"),
         "authError": MessageLookupByLibrary.simpleMessage(
             "فشل في تسجيل الدخول. يرجى التحقق من البريد الإلكتروني وكلمة المرور."),
         "available": MessageLookupByLibrary.simpleMessage("متوفر"),
@@ -270,7 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "buttons": MessageLookupByLibrary.simpleMessage("الأزرار"),
         "cacheError":
             MessageLookupByLibrary.simpleMessage("خطأ في التخزين المحلي"),
-        "calling": m3,
+        "calling": m4,
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "cannotEditInvoice":
             MessageLookupByLibrary.simpleMessage("لا يمكن تعديل الفاتورة"),
@@ -278,6 +286,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكن تعديل الفواتير المرسلة"),
         "cannotOpenEmailApp": MessageLookupByLibrary.simpleMessage(
             "لا يمكن فتح تطبيق البريد الإلكتروني"),
+        "cannotOpenSubscriptionLink":
+            MessageLookupByLibrary.simpleMessage("لا يمكن فتح رابط الباقة"),
         "cannotOpenWebsite": MessageLookupByLibrary.simpleMessage(
             "لا يمكن فتح الموقع الإلكتروني"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
@@ -313,7 +323,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد من تغيير كلمة المرور؟"),
         "changePaymentMethod":
             MessageLookupByLibrary.simpleMessage("تغيير طريقة الدفع"),
-        "changePaymentMethodForInvoice": m4,
+        "changePaymentMethodForInvoice": m5,
         "changeStatus": MessageLookupByLibrary.simpleMessage("تغيير الحالة"),
         "check": MessageLookupByLibrary.simpleMessage("شيك"),
         "checkYourEmail":
@@ -322,6 +332,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جاري فحص الاتصال..."),
         "chooseFeature": MessageLookupByLibrary.simpleMessage(
             "اختر الميزة التي تريد إدارتها"),
+        "chooseSubscription":
+            MessageLookupByLibrary.simpleMessage("اختيار الباقة"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "clearFilters": MessageLookupByLibrary.simpleMessage("مسح المرشحات"),
         "clearSearch": MessageLookupByLibrary.simpleMessage("مسح البحث"),
@@ -373,8 +385,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تكوين التكامل الضريبي"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "confirmDeleteCustomer":
-            MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
-        "confirmDeleteCustomerMessage": m5,
+            MessageLookupByLibrary.simpleMessage("تأكيد حذف العميل"),
+        "confirmDeleteCustomerMessage": m6,
         "confirmNewPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
         "confirmPassword":
@@ -447,65 +459,700 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentPassword":
             MessageLookupByLibrary.simpleMessage("كلمة المرور الحالية"),
         "customer": MessageLookupByLibrary.simpleMessage("العميل"),
+        "customerAbilities":
+            MessageLookupByLibrary.simpleMessage("قدرات العميل"),
+        "customerAccess": MessageLookupByLibrary.simpleMessage("وصول العميل"),
+        "customerAccomplishment":
+            MessageLookupByLibrary.simpleMessage("إنجاز العميل"),
+        "customerAccountStatus":
+            MessageLookupByLibrary.simpleMessage("حالة الحساب"),
+        "customerAccountability":
+            MessageLookupByLibrary.simpleMessage("مساءلة العميل"),
+        "customerAchievement":
+            MessageLookupByLibrary.simpleMessage("إنجاز العميل"),
+        "customerAcquisition":
+            MessageLookupByLibrary.simpleMessage("اكتساب العملاء"),
+        "customerActinium":
+            MessageLookupByLibrary.simpleMessage("أكتينيوم العميل"),
+        "customerActions":
+            MessageLookupByLibrary.simpleMessage("إجراءات العميل"),
+        "customerActive": MessageLookupByLibrary.simpleMessage("نشط"),
+        "customerActivities":
+            MessageLookupByLibrary.simpleMessage("أنشطة العميل"),
+        "customerAdaptability":
+            MessageLookupByLibrary.simpleMessage("قابلية التكيف"),
         "customerAdditionalInfo":
             MessageLookupByLibrary.simpleMessage("معلومات إضافية"),
         "customerAddress": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "customerAddressInfo":
+            MessageLookupByLibrary.simpleMessage("معلومات العنوان"),
+        "customerAddressRequired":
+            MessageLookupByLibrary.simpleMessage("العنوان مطلوب"),
         "customerAddressValue": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "customerAdvantage":
+            MessageLookupByLibrary.simpleMessage("ميزة العميل"),
+        "customerAgate": MessageLookupByLibrary.simpleMessage("عقيق العميل"),
+        "customerAgreements":
+            MessageLookupByLibrary.simpleMessage("اتفاقيات العميل"),
+        "customerAlerts":
+            MessageLookupByLibrary.simpleMessage("تنبيهات العميل"),
+        "customerAluminum":
+            MessageLookupByLibrary.simpleMessage("ألومنيوم العميل"),
+        "customerAmber": MessageLookupByLibrary.simpleMessage("كهرمان العميل"),
+        "customerAmericium":
+            MessageLookupByLibrary.simpleMessage("أمريكيوم العميل"),
+        "customerAmethyst":
+            MessageLookupByLibrary.simpleMessage("أرجواني العميل"),
+        "customerAnalysis":
+            MessageLookupByLibrary.simpleMessage("تحليل العميل"),
+        "customerAnalytics":
+            MessageLookupByLibrary.simpleMessage("تحليلات العملاء"),
+        "customerApproaches":
+            MessageLookupByLibrary.simpleMessage("مناهج العميل"),
+        "customerApprovals":
+            MessageLookupByLibrary.simpleMessage("موافقات العميل"),
+        "customerArchives":
+            MessageLookupByLibrary.simpleMessage("أرشيف العميل"),
+        "customerAssessment":
+            MessageLookupByLibrary.simpleMessage("تقييم العميل"),
+        "customerAssets": MessageLookupByLibrary.simpleMessage("أصول العميل"),
+        "customerAssurance":
+            MessageLookupByLibrary.simpleMessage("تأكيد العميل"),
+        "customerAstatine":
+            MessageLookupByLibrary.simpleMessage("أستاتين العميل"),
+        "customerAudit": MessageLookupByLibrary.simpleMessage("تدقيق العميل"),
+        "customerAuthentication":
+            MessageLookupByLibrary.simpleMessage("مصادقة العميل"),
+        "customerAuthorization":
+            MessageLookupByLibrary.simpleMessage("تفويض العميل"),
+        "customerAuthorizations":
+            MessageLookupByLibrary.simpleMessage("تفويضات العميل"),
+        "customerBackup":
+            MessageLookupByLibrary.simpleMessage("نسخ احتياطي للعميل"),
+        "customerBalance": MessageLookupByLibrary.simpleMessage("رصيد العميل"),
         "customerBasicInfo":
-            MessageLookupByLibrary.simpleMessage("معلومات العميل"),
+            MessageLookupByLibrary.simpleMessage("المعلومات الأساسية"),
         "customerBasicInfoSection":
             MessageLookupByLibrary.simpleMessage("المعلومات الأساسية"),
+        "customerBenefit": MessageLookupByLibrary.simpleMessage("فائدة العميل"),
+        "customerBerkelium":
+            MessageLookupByLibrary.simpleMessage("بيركيليوم العميل"),
+        "customerBest": MessageLookupByLibrary.simpleMessage("أفضل العميل"),
+        "customerBohrium":
+            MessageLookupByLibrary.simpleMessage("بوريوم العميل"),
+        "customerBone": MessageLookupByLibrary.simpleMessage("عظم العميل"),
+        "customerBronze": MessageLookupByLibrary.simpleMessage("برونزي العميل"),
+        "customerBudget":
+            MessageLookupByLibrary.simpleMessage("ميزانية العميل"),
+        "customerCalendars":
+            MessageLookupByLibrary.simpleMessage("تقويمات العميل"),
+        "customerCalifornium":
+            MessageLookupByLibrary.simpleMessage("كاليفورنيوم العميل"),
+        "customerCalls": MessageLookupByLibrary.simpleMessage("مكالمات العميل"),
+        "customerCampaigns":
+            MessageLookupByLibrary.simpleMessage("حملات العميل"),
+        "customerCapabilities":
+            MessageLookupByLibrary.simpleMessage("إمكانيات العميل"),
+        "customerCapital":
+            MessageLookupByLibrary.simpleMessage("رأس مال العميل"),
+        "customerCategory": MessageLookupByLibrary.simpleMessage("فئة العميل"),
+        "customerCertifications":
+            MessageLookupByLibrary.simpleMessage("شهادات العميل"),
+        "customerChats": MessageLookupByLibrary.simpleMessage("محادثات العميل"),
+        "customerChromium": MessageLookupByLibrary.simpleMessage("كروم العميل"),
         "customerCity": MessageLookupByLibrary.simpleMessage("المدينة"),
+        "customerCityRequired":
+            MessageLookupByLibrary.simpleMessage("المدينة مطلوبة"),
+        "customerCobalt": MessageLookupByLibrary.simpleMessage("كوبالت العميل"),
+        "customerComments":
+            MessageLookupByLibrary.simpleMessage("تعليقات العميل"),
         "customerCommercialRegister":
-            MessageLookupByLibrary.simpleMessage("رقم السجل التجاري"),
+            MessageLookupByLibrary.simpleMessage("السجل التجاري"),
+        "customerCommercialRegisterRequired":
+            MessageLookupByLibrary.simpleMessage("السجل التجاري مطلوب"),
+        "customerCommitment":
+            MessageLookupByLibrary.simpleMessage("التزام العميل"),
+        "customerCommunication":
+            MessageLookupByLibrary.simpleMessage("تواصل العميل"),
+        "customerCompany": MessageLookupByLibrary.simpleMessage("الشركة"),
         "customerCompanyName":
             MessageLookupByLibrary.simpleMessage("اسم الشركة/المؤسسة"),
-        "customerCreatedSuccessfully": m6,
+        "customerCompanyRequired":
+            MessageLookupByLibrary.simpleMessage("اسم الشركة مطلوب"),
+        "customerCompetencies":
+            MessageLookupByLibrary.simpleMessage("كفاءات العميل"),
+        "customerComplaints":
+            MessageLookupByLibrary.simpleMessage("شكاوى العميل"),
+        "customerConfidence":
+            MessageLookupByLibrary.simpleMessage("ثقة العميل"),
+        "customerConfidentiality":
+            MessageLookupByLibrary.simpleMessage("سرية العميل"),
+        "customerConfiguration":
+            MessageLookupByLibrary.simpleMessage("تكوين العميل"),
+        "customerConsistency":
+            MessageLookupByLibrary.simpleMessage("اتساق العميل"),
+        "customerContactInfo":
+            MessageLookupByLibrary.simpleMessage("معلومات الاتصال"),
+        "customerContracts":
+            MessageLookupByLibrary.simpleMessage("عقود العميل"),
+        "customerConversion":
+            MessageLookupByLibrary.simpleMessage("تحويل العملاء"),
+        "customerCopernicium":
+            MessageLookupByLibrary.simpleMessage("كوبرنيسيوم العميل"),
+        "customerCopper": MessageLookupByLibrary.simpleMessage("نحاس العميل"),
+        "customerCoral": MessageLookupByLibrary.simpleMessage("مرجان العميل"),
+        "customerCost": MessageLookupByLibrary.simpleMessage("تكلفة العميل"),
+        "customerCreatedDate":
+            MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
+        "customerCreatedSuccessfully": m7,
+        "customerCreativity":
+            MessageLookupByLibrary.simpleMessage("إبداع العميل"),
+        "customerCredentials":
+            MessageLookupByLibrary.simpleMessage("أوراق اعتماد العميل"),
+        "customerCreditLimit":
+            MessageLookupByLibrary.simpleMessage("حد الائتمان"),
+        "customerCredits":
+            MessageLookupByLibrary.simpleMessage("ائتمانات العميل"),
+        "customerCrown": MessageLookupByLibrary.simpleMessage("تاج العميل"),
+        "customerCrystal":
+            MessageLookupByLibrary.simpleMessage("كريستال العميل"),
+        "customerCurium": MessageLookupByLibrary.simpleMessage("كوريوم العميل"),
+        "customerCurrency": MessageLookupByLibrary.simpleMessage("عملة العميل"),
+        "customerCustomization":
+            MessageLookupByLibrary.simpleMessage("تخصيص العميل"),
+        "customerDarmstadtium":
+            MessageLookupByLibrary.simpleMessage("دارمشتاتيوم العميل"),
+        "customerDashboard":
+            MessageLookupByLibrary.simpleMessage("لوحة تحكم العملاء"),
+        "customerData": MessageLookupByLibrary.simpleMessage("بيانات العميل"),
         "customerDataCopied": MessageLookupByLibrary.simpleMessage(
             "تم نسخ بيانات العميل إلى الحافظة"),
+        "customerDatabase":
+            MessageLookupByLibrary.simpleMessage("قاعدة بيانات العميل"),
+        "customerDeadlines":
+            MessageLookupByLibrary.simpleMessage("مواعيد العميل"),
+        "customerDeals": MessageLookupByLibrary.simpleMessage("صفقات العميل"),
+        "customerDebits":
+            MessageLookupByLibrary.simpleMessage("مديونيات العميل"),
         "customerDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف العميل بنجاح"),
+        "customerDependability":
+            MessageLookupByLibrary.simpleMessage("اعتمادية العميل"),
+        "customerDeployment":
+            MessageLookupByLibrary.simpleMessage("نشر العميل"),
         "customerDetailedAddress":
             MessageLookupByLibrary.simpleMessage("العنوان التفصيلي"),
+        "customerDetailedAddressRequired":
+            MessageLookupByLibrary.simpleMessage("العنوان التفصيلي مطلوب"),
         "customerDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل العميل"),
+        "customerDevelopment":
+            MessageLookupByLibrary.simpleMessage("تطوير العميل"),
+        "customerDiamond": MessageLookupByLibrary.simpleMessage("ماس العميل"),
+        "customerDiscount": MessageLookupByLibrary.simpleMessage("خصم العميل"),
+        "customerDistinctiveness":
+            MessageLookupByLibrary.simpleMessage("تميز العميل"),
+        "customerDistribution":
+            MessageLookupByLibrary.simpleMessage("توزيع العميل"),
+        "customerDiversity":
+            MessageLookupByLibrary.simpleMessage("تنوع العميل"),
+        "customerDocumentation":
+            MessageLookupByLibrary.simpleMessage("وثائق العملاء"),
+        "customerDocuments":
+            MessageLookupByLibrary.simpleMessage("وثائق العميل"),
+        "customerDubnium":
+            MessageLookupByLibrary.simpleMessage("دوبنيوم العميل"),
+        "customerDuty": MessageLookupByLibrary.simpleMessage("واجب العميل"),
+        "customerEarnings":
+            MessageLookupByLibrary.simpleMessage("أرباح العميل"),
+        "customerEdge": MessageLookupByLibrary.simpleMessage("ميزة العميل"),
+        "customerEffectiveness":
+            MessageLookupByLibrary.simpleMessage("فعالية العميل"),
+        "customerEfficiency":
+            MessageLookupByLibrary.simpleMessage("كفاءة العميل"),
+        "customerEinsteinium":
+            MessageLookupByLibrary.simpleMessage("أينشتاينيوم العميل"),
         "customerEmail":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "customerEmailRequired":
+            MessageLookupByLibrary.simpleMessage("البريد الإلكتروني مطلوب"),
         "customerEmailValue":
             MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "customerEmails": MessageLookupByLibrary.simpleMessage("رسائل العميل"),
+        "customerEmerald": MessageLookupByLibrary.simpleMessage("زمرد العميل"),
+        "customerEndorsements":
+            MessageLookupByLibrary.simpleMessage("تأييدات العميل"),
+        "customerEngagement":
+            MessageLookupByLibrary.simpleMessage("تفاعل العملاء"),
+        "customerEnhancement":
+            MessageLookupByLibrary.simpleMessage("تحسين العميل"),
+        "customerEquity": MessageLookupByLibrary.simpleMessage("إنصاف العميل"),
+        "customerEvaluation":
+            MessageLookupByLibrary.simpleMessage("تقييم العميل"),
+        "customerEvents": MessageLookupByLibrary.simpleMessage("أحداث العميل"),
+        "customerExcellence":
+            MessageLookupByLibrary.simpleMessage("تميز العميل"),
+        "customerExpectations":
+            MessageLookupByLibrary.simpleMessage("توقعات العميل"),
+        "customerExpense": MessageLookupByLibrary.simpleMessage("مصروف العميل"),
+        "customerExpertise":
+            MessageLookupByLibrary.simpleMessage("خبرة العميل"),
+        "customerExport": MessageLookupByLibrary.simpleMessage("تصدير العملاء"),
+        "customerFairness":
+            MessageLookupByLibrary.simpleMessage("عدالة العميل"),
+        "customerFeedback":
+            MessageLookupByLibrary.simpleMessage("ملاحظات العميل"),
+        "customerFermium":
+            MessageLookupByLibrary.simpleMessage("فيرميوم العميل"),
+        "customerFiles": MessageLookupByLibrary.simpleMessage("ملفات العميل"),
+        "customerFilters":
+            MessageLookupByLibrary.simpleMessage("مرشحات العملاء"),
+        "customerFinancing":
+            MessageLookupByLibrary.simpleMessage("تمويل العميل"),
+        "customerFlawlessness":
+            MessageLookupByLibrary.simpleMessage("كمال العميل"),
+        "customerFlerovium":
+            MessageLookupByLibrary.simpleMessage("فليروفيوم العميل"),
+        "customerFlexibility":
+            MessageLookupByLibrary.simpleMessage("مرونة العميل"),
+        "customerFollowUp":
+            MessageLookupByLibrary.simpleMessage("متابعة العميل"),
+        "customerFormDescription": MessageLookupByLibrary.simpleMessage(
+            "املأ النموذج أدناه لإضافة عميل جديد للنظام"),
+        "customerFormHelp":
+            MessageLookupByLibrary.simpleMessage("مساعدة نموذج العميل"),
+        "customerFormHelpDescription": MessageLookupByLibrary.simpleMessage(
+            "هذا النموذج مقسم إلى ثلاث خطوات:\n\n1. المعلومات الأساسية\n2. معلومات العنوان\n3. المعلومات الإضافية"),
+        "customerFormTitle":
+            MessageLookupByLibrary.simpleMessage("نموذج العميل"),
+        "customerFortune": MessageLookupByLibrary.simpleMessage("ثروة العميل"),
+        "customerFrancium":
+            MessageLookupByLibrary.simpleMessage("فرانسيوم العميل"),
+        "customerFunding": MessageLookupByLibrary.simpleMessage("تمويل العميل"),
+        "customerGain": MessageLookupByLibrary.simpleMessage("مكسب العميل"),
+        "customerGarnet": MessageLookupByLibrary.simpleMessage("العقيق العميل"),
+        "customerGem": MessageLookupByLibrary.simpleMessage("جوهرة العميل"),
+        "customerGlobalization":
+            MessageLookupByLibrary.simpleMessage("عولمة العميل"),
+        "customerGoals": MessageLookupByLibrary.simpleMessage("أهداف العميل"),
+        "customerGold": MessageLookupByLibrary.simpleMessage("ذهب العميل"),
+        "customerGrowth": MessageLookupByLibrary.simpleMessage("نمو العميل"),
+        "customerGuarantee":
+            MessageLookupByLibrary.simpleMessage("ضمان العميل"),
+        "customerGuidelines":
+            MessageLookupByLibrary.simpleMessage("إرشادات العميل"),
+        "customerHafnium":
+            MessageLookupByLibrary.simpleMessage("هافنيوم العميل"),
+        "customerHassium":
+            MessageLookupByLibrary.simpleMessage("هاسيوم العميل"),
+        "customerHighest": MessageLookupByLibrary.simpleMessage("أعلى العميل"),
+        "customerHistory": MessageLookupByLibrary.simpleMessage("تاريخ العميل"),
+        "customerIdeal": MessageLookupByLibrary.simpleMessage("مثالي العميل"),
+        "customerIdeas": MessageLookupByLibrary.simpleMessage("أفكار العميل"),
+        "customerImplementation":
+            MessageLookupByLibrary.simpleMessage("تنفيذ العميل"),
+        "customerImport":
+            MessageLookupByLibrary.simpleMessage("استيراد العملاء"),
+        "customerImprovement":
+            MessageLookupByLibrary.simpleMessage("تحسين العميل"),
+        "customerInactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
+        "customerInclusion":
+            MessageLookupByLibrary.simpleMessage("شمول العميل"),
+        "customerIncome": MessageLookupByLibrary.simpleMessage("دخل العميل"),
+        "customerIndustry":
+            MessageLookupByLibrary.simpleMessage("صناعة العميل"),
         "customerInfo": MessageLookupByLibrary.simpleMessage("معلومات العميل"),
         "customerInformation":
             MessageLookupByLibrary.simpleMessage("معلومات العميل"),
+        "customerInnovation":
+            MessageLookupByLibrary.simpleMessage("ابتكار العميل"),
+        "customerInspection":
+            MessageLookupByLibrary.simpleMessage("فحص العميل"),
+        "customerInstallation":
+            MessageLookupByLibrary.simpleMessage("تثبيت العميل"),
+        "customerIntegration":
+            MessageLookupByLibrary.simpleMessage("تكامل العميل"),
+        "customerInternationalization":
+            MessageLookupByLibrary.simpleMessage("عولمة العميل"),
+        "customerInvestment":
+            MessageLookupByLibrary.simpleMessage("استثمار العميل"),
+        "customerInvoices":
+            MessageLookupByLibrary.simpleMessage("فواتير العميل"),
+        "customerIridium":
+            MessageLookupByLibrary.simpleMessage("إيريديوم العميل"),
+        "customerIron": MessageLookupByLibrary.simpleMessage("حديد العميل"),
+        "customerIssues": MessageLookupByLibrary.simpleMessage("مشاكل العميل"),
+        "customerIvory": MessageLookupByLibrary.simpleMessage("عاج العميل"),
+        "customerJade": MessageLookupByLibrary.simpleMessage("يشم العميل"),
+        "customerJet": MessageLookupByLibrary.simpleMessage("جيت العميل"),
+        "customerJewel": MessageLookupByLibrary.simpleMessage("جوهرة العميل"),
+        "customerKnowledge":
+            MessageLookupByLibrary.simpleMessage("معرفة العميل"),
+        "customerLanguage": MessageLookupByLibrary.simpleMessage("لغة العميل"),
+        "customerLastUpdated":
+            MessageLookupByLibrary.simpleMessage("آخر تحديث"),
+        "customerLawrencium":
+            MessageLookupByLibrary.simpleMessage("لورنسيوم العميل"),
+        "customerLead": MessageLookupByLibrary.simpleMessage("رصاص العميل"),
+        "customerLiability":
+            MessageLookupByLibrary.simpleMessage("مسؤولية العميل"),
+        "customerLicenses":
+            MessageLookupByLibrary.simpleMessage("تراخيص العميل"),
+        "customerLifetimeValue":
+            MessageLookupByLibrary.simpleMessage("قيمة العميل مدى الحياة"),
+        "customerList": MessageLookupByLibrary.simpleMessage("قائمة العملاء"),
+        "customerLivermorium":
+            MessageLookupByLibrary.simpleMessage("ليفرموريوم العميل"),
+        "customerLocalization":
+            MessageLookupByLibrary.simpleMessage("محلية العميل"),
+        "customerLocation": MessageLookupByLibrary.simpleMessage("موقع العميل"),
+        "customerLoyalty": MessageLookupByLibrary.simpleMessage("ولاء العملاء"),
         "customerManagement":
             MessageLookupByLibrary.simpleMessage("إدارة العملاء"),
+        "customerManganese":
+            MessageLookupByLibrary.simpleMessage("منجنيز العميل"),
+        "customerMargin": MessageLookupByLibrary.simpleMessage("هامش العميل"),
+        "customerMaximum": MessageLookupByLibrary.simpleMessage("أقصى العميل"),
+        "customerMeetings":
+            MessageLookupByLibrary.simpleMessage("اجتماعات العميل"),
+        "customerMeitnerium":
+            MessageLookupByLibrary.simpleMessage("مايتنريوم العميل"),
+        "customerMendelevium":
+            MessageLookupByLibrary.simpleMessage("مندليفيوم العميل"),
+        "customerMessages":
+            MessageLookupByLibrary.simpleMessage("رسائل العميل"),
+        "customerMetal": MessageLookupByLibrary.simpleMessage("معدن العميل"),
+        "customerMethods": MessageLookupByLibrary.simpleMessage("طرق العميل"),
+        "customerMigration":
+            MessageLookupByLibrary.simpleMessage("هجرة العميل"),
+        "customerMilestones":
+            MessageLookupByLibrary.simpleMessage("معالم العميل"),
+        "customerMolybdenum":
+            MessageLookupByLibrary.simpleMessage("موليبدينوم العميل"),
+        "customerMoscovium":
+            MessageLookupByLibrary.simpleMessage("موسكوفيوم العميل"),
+        "customerMulticultural":
+            MessageLookupByLibrary.simpleMessage("متعدد الثقافات"),
+        "customerMultilingual":
+            MessageLookupByLibrary.simpleMessage("متعدد اللغات"),
         "customerName": MessageLookupByLibrary.simpleMessage("اسم العميل"),
         "customerNameRequired":
             MessageLookupByLibrary.simpleMessage("اسم العميل مطلوب"),
         "customerNameValue": MessageLookupByLibrary.simpleMessage("اسم العميل"),
+        "customerNeptunium":
+            MessageLookupByLibrary.simpleMessage("نيبتونيوم العميل"),
+        "customerNickel": MessageLookupByLibrary.simpleMessage("نيكل العميل"),
+        "customerNihonium":
+            MessageLookupByLibrary.simpleMessage("نيهونيوم العميل"),
+        "customerNiobium":
+            MessageLookupByLibrary.simpleMessage("نيوبيوم العميل"),
+        "customerNobelium":
+            MessageLookupByLibrary.simpleMessage("نوبليوم العميل"),
         "customerNotes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
+        "customerNotesRequired":
+            MessageLookupByLibrary.simpleMessage("الملاحظات مطلوبة"),
+        "customerNotifications":
+            MessageLookupByLibrary.simpleMessage("إشعارات العميل"),
+        "customerObjectives":
+            MessageLookupByLibrary.simpleMessage("أهداف العميل"),
+        "customerObligation":
+            MessageLookupByLibrary.simpleMessage("التزام العميل"),
+        "customerOffers": MessageLookupByLibrary.simpleMessage("عروض العميل"),
+        "customerOganesson":
+            MessageLookupByLibrary.simpleMessage("أوجانيسون العميل"),
+        "customerOnboarding":
+            MessageLookupByLibrary.simpleMessage("إعداد العملاء"),
+        "customerOnyx":
+            MessageLookupByLibrary.simpleMessage("عقيق أسود العميل"),
+        "customerOpal": MessageLookupByLibrary.simpleMessage("أوبال العميل"),
+        "customerOpportunities": MessageLookupByLibrary.simpleMessage("الفرص"),
+        "customerOpportunity":
+            MessageLookupByLibrary.simpleMessage("فرص العميل"),
+        "customerOptimal": MessageLookupByLibrary.simpleMessage("أمثل العميل"),
+        "customerOptimization":
+            MessageLookupByLibrary.simpleMessage("تحسين العميل"),
+        "customerOptions":
+            MessageLookupByLibrary.simpleMessage("خيارات العميل"),
+        "customerOrders": MessageLookupByLibrary.simpleMessage("طلبات العميل"),
+        "customerOriginality":
+            MessageLookupByLibrary.simpleMessage("أصالة العميل"),
+        "customerOsmium":
+            MessageLookupByLibrary.simpleMessage("أوزميوم العميل"),
+        "customerPalladium":
+            MessageLookupByLibrary.simpleMessage("بالاديوم العميل"),
+        "customerPartnerships":
+            MessageLookupByLibrary.simpleMessage("شراكات العميل"),
+        "customerPaymentTerms":
+            MessageLookupByLibrary.simpleMessage("شروط الدفع"),
+        "customerPayments":
+            MessageLookupByLibrary.simpleMessage("مدفوعات العميل"),
+        "customerPeak": MessageLookupByLibrary.simpleMessage("ذروة العميل"),
+        "customerPearl": MessageLookupByLibrary.simpleMessage("لؤلؤة العميل"),
+        "customerPerfection":
+            MessageLookupByLibrary.simpleMessage("كمال العميل"),
+        "customerPerformance":
+            MessageLookupByLibrary.simpleMessage("أداء العميل"),
+        "customerPermission":
+            MessageLookupByLibrary.simpleMessage("إذن العميل"),
+        "customerPermits":
+            MessageLookupByLibrary.simpleMessage("تصاريح العميل"),
+        "customerPersonalization":
+            MessageLookupByLibrary.simpleMessage("تخصيص العميل"),
         "customerPhone": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
         "customerPhoneRequired":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف مطلوب"),
         "customerPhoneValue":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+        "customerPinnacle": MessageLookupByLibrary.simpleMessage("قمة العميل"),
+        "customerPlans": MessageLookupByLibrary.simpleMessage("خطط العميل"),
+        "customerPlatinum":
+            MessageLookupByLibrary.simpleMessage("بلاتين العميل"),
+        "customerPlutonium":
+            MessageLookupByLibrary.simpleMessage("بلوتونيوم العميل"),
+        "customerPolicies":
+            MessageLookupByLibrary.simpleMessage("سياسات العميل"),
+        "customerPolonium":
+            MessageLookupByLibrary.simpleMessage("بولونيوم العميل"),
+        "customerPortal": MessageLookupByLibrary.simpleMessage("بوابة العملاء"),
         "customerPostalCode":
             MessageLookupByLibrary.simpleMessage("الرمز البريدي"),
-        "customerRegion":
-            MessageLookupByLibrary.simpleMessage("المنطقة/المحافظة"),
+        "customerPostalCodeRequired":
+            MessageLookupByLibrary.simpleMessage("الرمز البريدي مطلوب"),
+        "customerPredictability":
+            MessageLookupByLibrary.simpleMessage("قابلية التنبؤ بالعميل"),
+        "customerPreferences":
+            MessageLookupByLibrary.simpleMessage("تفضيلات العميل"),
+        "customerPrice": MessageLookupByLibrary.simpleMessage("سعر العميل"),
+        "customerPriority":
+            MessageLookupByLibrary.simpleMessage("أولوية العميل"),
+        "customerPrivacy":
+            MessageLookupByLibrary.simpleMessage("خصوصية العميل"),
+        "customerProcedures":
+            MessageLookupByLibrary.simpleMessage("إجراءات العميل"),
+        "customerProductivity":
+            MessageLookupByLibrary.simpleMessage("إنتاجية العميل"),
+        "customerProfile": MessageLookupByLibrary.simpleMessage("ملف العميل"),
+        "customerProfit": MessageLookupByLibrary.simpleMessage("ربح العميل"),
+        "customerProjects":
+            MessageLookupByLibrary.simpleMessage("مشاريع العميل"),
+        "customerPromethium":
+            MessageLookupByLibrary.simpleMessage("بروميثيوم العميل"),
+        "customerPromise": MessageLookupByLibrary.simpleMessage("وعد العميل"),
+        "customerPromotions":
+            MessageLookupByLibrary.simpleMessage("عروض العميل"),
+        "customerProposals":
+            MessageLookupByLibrary.simpleMessage("اقتراحات العميل"),
+        "customerProtactinium":
+            MessageLookupByLibrary.simpleMessage("بروتاكتينيوم العميل"),
+        "customerQualifications":
+            MessageLookupByLibrary.simpleMessage("مؤهلات العميل"),
+        "customerQuality": MessageLookupByLibrary.simpleMessage("جودة العميل"),
+        "customerQuartz": MessageLookupByLibrary.simpleMessage("كوارتز العميل"),
+        "customerQuickActions":
+            MessageLookupByLibrary.simpleMessage("الإجراءات السريعة"),
+        "customerRadium": MessageLookupByLibrary.simpleMessage("راديوم العميل"),
+        "customerRadon": MessageLookupByLibrary.simpleMessage("رادون العميل"),
+        "customerRatings":
+            MessageLookupByLibrary.simpleMessage("تقييمات العميل"),
+        "customerRecommendations":
+            MessageLookupByLibrary.simpleMessage("توصيات العميل"),
+        "customerRecords": MessageLookupByLibrary.simpleMessage("سجلات العميل"),
+        "customerRecovery":
+            MessageLookupByLibrary.simpleMessage("استرداد العميل"),
+        "customerReferences":
+            MessageLookupByLibrary.simpleMessage("مراجع العميل"),
+        "customerReferrals":
+            MessageLookupByLibrary.simpleMessage("إحالات العميل"),
+        "customerRegion": MessageLookupByLibrary.simpleMessage("المنطقة"),
+        "customerRegionRequired":
+            MessageLookupByLibrary.simpleMessage("المنطقة مطلوبة"),
+        "customerRegionalization":
+            MessageLookupByLibrary.simpleMessage("إقليمية العميل"),
+        "customerReliability":
+            MessageLookupByLibrary.simpleMessage("موثوقية العميل"),
+        "customerReminders":
+            MessageLookupByLibrary.simpleMessage("تذكيرات العميل"),
+        "customerReplication":
+            MessageLookupByLibrary.simpleMessage("نسخ العميل"),
+        "customerReports":
+            MessageLookupByLibrary.simpleMessage("تقارير العملاء"),
+        "customerRepository":
+            MessageLookupByLibrary.simpleMessage("مستودع العميل"),
+        "customerRequests":
+            MessageLookupByLibrary.simpleMessage("طلبات العميل"),
         "customerRequired": MessageLookupByLibrary.simpleMessage(
             "يرجى اختيار عميل أو إدخال بيانات العميل"),
+        "customerRequirements":
+            MessageLookupByLibrary.simpleMessage("متطلبات العميل"),
+        "customerResources":
+            MessageLookupByLibrary.simpleMessage("موارد العميل"),
+        "customerResponsibility":
+            MessageLookupByLibrary.simpleMessage("مسؤولية العميل"),
         "customerResponsiblePerson":
             MessageLookupByLibrary.simpleMessage("الشخص المسؤول"),
+        "customerResponsiblePersonRequired":
+            MessageLookupByLibrary.simpleMessage("الشخص المسؤول مطلوب"),
+        "customerRestore":
+            MessageLookupByLibrary.simpleMessage("استعادة العميل"),
+        "customerRetention":
+            MessageLookupByLibrary.simpleMessage("الاحتفاظ بالعملاء"),
+        "customerReturn": MessageLookupByLibrary.simpleMessage("عائد العميل"),
+        "customerRevenue":
+            MessageLookupByLibrary.simpleMessage("إيرادات العميل"),
+        "customerReview": MessageLookupByLibrary.simpleMessage("مراجعة العميل"),
+        "customerReviews":
+            MessageLookupByLibrary.simpleMessage("مراجعات العميل"),
+        "customerRhenium":
+            MessageLookupByLibrary.simpleMessage("رينيوم العميل"),
+        "customerRhodium":
+            MessageLookupByLibrary.simpleMessage("روديوم العميل"),
+        "customerRisk": MessageLookupByLibrary.simpleMessage("مخاطر العميل"),
+        "customerRock": MessageLookupByLibrary.simpleMessage("صخر العميل"),
+        "customerRoentgenium":
+            MessageLookupByLibrary.simpleMessage("رونتجينيوم العميل"),
+        "customerRuby": MessageLookupByLibrary.simpleMessage("ياقوت العميل"),
+        "customerRuthenium":
+            MessageLookupByLibrary.simpleMessage("روثينيوم العميل"),
+        "customerRutherfordium":
+            MessageLookupByLibrary.simpleMessage("رذرفورديوم العميل"),
+        "customerSales": MessageLookupByLibrary.simpleMessage("مبيعات العميل"),
+        "customerSapphire":
+            MessageLookupByLibrary.simpleMessage("ياقوت أزرق العميل"),
+        "customerSatisfaction":
+            MessageLookupByLibrary.simpleMessage("رضا العملاء"),
+        "customerSavings":
+            MessageLookupByLibrary.simpleMessage("مدخرات العميل"),
+        "customerScalability":
+            MessageLookupByLibrary.simpleMessage("قابلية التوسع"),
+        "customerSchedules":
+            MessageLookupByLibrary.simpleMessage("جداول العميل"),
+        "customerSeaborgium":
+            MessageLookupByLibrary.simpleMessage("سيبورغيوم العميل"),
+        "customerSearch":
+            MessageLookupByLibrary.simpleMessage("البحث في العملاء"),
+        "customerSecurity": MessageLookupByLibrary.simpleMessage("أمان العميل"),
+        "customerSegment": MessageLookupByLibrary.simpleMessage("قطاع العميل"),
         "customerSelection":
             MessageLookupByLibrary.simpleMessage("اختيار العميل"),
+        "customerService": MessageLookupByLibrary.simpleMessage("خدمة العملاء"),
+        "customerSettings":
+            MessageLookupByLibrary.simpleMessage("إعدادات العميل"),
+        "customerSilver": MessageLookupByLibrary.simpleMessage("فضة العميل"),
+        "customerSize": MessageLookupByLibrary.simpleMessage("حجم العميل"),
+        "customerSkills": MessageLookupByLibrary.simpleMessage("مهارات العميل"),
+        "customerSort": MessageLookupByLibrary.simpleMessage("ترتيب العملاء"),
+        "customerSpecialization":
+            MessageLookupByLibrary.simpleMessage("تخصص العميل"),
+        "customerSpecifications":
+            MessageLookupByLibrary.simpleMessage("مواصفات العميل"),
+        "customerStability":
+            MessageLookupByLibrary.simpleMessage("استقرار العميل"),
+        "customerStandards":
+            MessageLookupByLibrary.simpleMessage("معايير العميل"),
+        "customerStatistics":
+            MessageLookupByLibrary.simpleMessage("إحصائيات العملاء"),
         "customerStatus": MessageLookupByLibrary.simpleMessage("الحالة"),
         "customerStatusActive": MessageLookupByLibrary.simpleMessage("نشط"),
         "customerStatusInactive":
             MessageLookupByLibrary.simpleMessage("غير نشط"),
+        "customerStatusRequired":
+            MessageLookupByLibrary.simpleMessage("الحالة مطلوبة"),
+        "customerSteel": MessageLookupByLibrary.simpleMessage("صلب العميل"),
+        "customerStone": MessageLookupByLibrary.simpleMessage("حجر العميل"),
+        "customerStorage": MessageLookupByLibrary.simpleMessage("تخزين العميل"),
+        "customerStrategies":
+            MessageLookupByLibrary.simpleMessage("استراتيجيات العميل"),
+        "customerStrengths": MessageLookupByLibrary.simpleMessage("نقاط القوة"),
+        "customerSuccess": MessageLookupByLibrary.simpleMessage("نجاح العميل"),
+        "customerSuggestions":
+            MessageLookupByLibrary.simpleMessage("اقتراحات العميل"),
+        "customerSummit": MessageLookupByLibrary.simpleMessage("قمة العميل"),
+        "customerSuperiority":
+            MessageLookupByLibrary.simpleMessage("تفوق العميل"),
+        "customerSupport": MessageLookupByLibrary.simpleMessage("دعم العملاء"),
+        "customerSustainability":
+            MessageLookupByLibrary.simpleMessage("استدامة العميل"),
+        "customerSynchronization":
+            MessageLookupByLibrary.simpleMessage("مزامنة العميل"),
+        "customerTactics":
+            MessageLookupByLibrary.simpleMessage("تكتيكات العميل"),
+        "customerTantalum":
+            MessageLookupByLibrary.simpleMessage("تانتالوم العميل"),
+        "customerTargets": MessageLookupByLibrary.simpleMessage("أهداف العميل"),
+        "customerTasks": MessageLookupByLibrary.simpleMessage("مهام العميل"),
+        "customerTaxExempt":
+            MessageLookupByLibrary.simpleMessage("معفى من الضريبة"),
         "customerTaxNumber":
             MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
+        "customerTaxNumberRequired":
+            MessageLookupByLibrary.simpleMessage("الرقم الضريبي مطلوب"),
+        "customerTechnetium":
+            MessageLookupByLibrary.simpleMessage("تكنيتيوم العميل"),
+        "customerTechniques":
+            MessageLookupByLibrary.simpleMessage("تقنيات العميل"),
+        "customerTennessine":
+            MessageLookupByLibrary.simpleMessage("تينيسين العميل"),
+        "customerTerms": MessageLookupByLibrary.simpleMessage("شروط العميل"),
+        "customerTestimonials":
+            MessageLookupByLibrary.simpleMessage("شهادات العميل"),
+        "customerThorium":
+            MessageLookupByLibrary.simpleMessage("ثوريوم العميل"),
+        "customerThreat":
+            MessageLookupByLibrary.simpleMessage("تهديدات العميل"),
+        "customerThreats": MessageLookupByLibrary.simpleMessage("التهديدات"),
+        "customerTickets": MessageLookupByLibrary.simpleMessage("تذاكر العميل"),
+        "customerTimelines":
+            MessageLookupByLibrary.simpleMessage("الجدول الزمني"),
+        "customerTimezone":
+            MessageLookupByLibrary.simpleMessage("المنطقة الزمنية"),
+        "customerTin": MessageLookupByLibrary.simpleMessage("قصدير العميل"),
+        "customerTitanium":
+            MessageLookupByLibrary.simpleMessage("تيتانيوم العميل"),
+        "customerTools": MessageLookupByLibrary.simpleMessage("أدوات العميل"),
+        "customerTop": MessageLookupByLibrary.simpleMessage("أعلى العميل"),
+        "customerTopaz": MessageLookupByLibrary.simpleMessage("توباز العميل"),
+        "customerTraining":
+            MessageLookupByLibrary.simpleMessage("تدريب العملاء"),
+        "customerTransactions":
+            MessageLookupByLibrary.simpleMessage("معاملات العميل"),
+        "customerTranslation":
+            MessageLookupByLibrary.simpleMessage("ترجمة العميل"),
+        "customerTransparency":
+            MessageLookupByLibrary.simpleMessage("شفافية العميل"),
+        "customerTreasure": MessageLookupByLibrary.simpleMessage("كنز العميل"),
+        "customerTriumph":
+            MessageLookupByLibrary.simpleMessage("انتصار العميل"),
+        "customerTrust": MessageLookupByLibrary.simpleMessage("ثقة العميل"),
+        "customerTungsten":
+            MessageLookupByLibrary.simpleMessage("تنجستن العميل"),
+        "customerTurquoise":
+            MessageLookupByLibrary.simpleMessage("فيروز العميل"),
         "customerType": MessageLookupByLibrary.simpleMessage("نوع العميل"),
-        "customerUpdatedSuccessfully": m7,
+        "customerUniqueness":
+            MessageLookupByLibrary.simpleMessage("تفرد العميل"),
+        "customerUpdatedSuccessfully": m8,
+        "customerUranium":
+            MessageLookupByLibrary.simpleMessage("يورانيوم العميل"),
+        "customerValidation":
+            MessageLookupByLibrary.simpleMessage("التحقق من صحة العميل"),
+        "customerValue": MessageLookupByLibrary.simpleMessage("قيمة العميل"),
+        "customerVanadium":
+            MessageLookupByLibrary.simpleMessage("فاناديوم العميل"),
+        "customerVerification":
+            MessageLookupByLibrary.simpleMessage("التحقق من العميل"),
+        "customerVictory":
+            MessageLookupByLibrary.simpleMessage("انتصار العميل"),
+        "customerVip": MessageLookupByLibrary.simpleMessage("عميل مميز"),
+        "customerWarranty": MessageLookupByLibrary.simpleMessage("ضمان العميل"),
+        "customerWeaknesses":
+            MessageLookupByLibrary.simpleMessage("نقاط الضعف"),
+        "customerWealth": MessageLookupByLibrary.simpleMessage("ثروة العميل"),
+        "customerWin": MessageLookupByLibrary.simpleMessage("فوز العميل"),
+        "customerWood": MessageLookupByLibrary.simpleMessage("خشب العميل"),
+        "customerWorth": MessageLookupByLibrary.simpleMessage("قيمة العميل"),
+        "customerZinc": MessageLookupByLibrary.simpleMessage("زنك العميل"),
+        "customerZirconium":
+            MessageLookupByLibrary.simpleMessage("زركونيوم العميل"),
         "customers": MessageLookupByLibrary.simpleMessage("العملاء"),
         "customersCacheError":
             MessageLookupByLibrary.simpleMessage("خطأ في التخزين - العملاء"),
@@ -536,7 +1183,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل البيانات"),
         "dashboardErrorMessage": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء تحميل بيانات لوحة التحكم"),
-        "dataConversionError": m8,
+        "dataConversionError": m9,
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
         "debitCard": MessageLookupByLibrary.simpleMessage("بطاقة ائتمان"),
         "decrease": MessageLookupByLibrary.simpleMessage("انخفاض"),
@@ -553,14 +1200,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAllCategories":
             MessageLookupByLibrary.simpleMessage("حذف جميع الفئات"),
         "deleteCategory": MessageLookupByLibrary.simpleMessage("حذف الفئة"),
-        "deleteCategoryConfirmation": m9,
+        "deleteCategoryConfirmation": m10,
         "deleteClient": MessageLookupByLibrary.simpleMessage("حذف عميل"),
         "deleteClientDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية حذف العميل"),
         "deleteConfirmation":
             MessageLookupByLibrary.simpleMessage("تأكيد الحذف"),
         "deleteCustomer": MessageLookupByLibrary.simpleMessage("حذف العميل"),
-        "deleteCustomerConfirmation": m10,
+        "deleteCustomerConfirmation": m11,
         "deleteExpense": MessageLookupByLibrary.simpleMessage("حذف مصروف"),
         "deleteExpenseDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية حذف المصروف"),
@@ -572,11 +1219,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteInvoiceWarning": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من حذف هذه الفاتورة؟ لا يمكن التراجع عن هذا الإجراء."),
         "deleteProduct": MessageLookupByLibrary.simpleMessage("حذف منتج"),
-        "deleteProductConfirmation": m11,
+        "deleteProductConfirmation": m12,
         "deleteProductDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية حذف المنتج"),
         "deleteUser": MessageLookupByLibrary.simpleMessage("حذف مستخدم"),
-        "deleteUserConfirmation": m12,
+        "deleteUserConfirmation": m13,
         "deleteUserDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية حذف المستخدم"),
         "deleteUserPermanently":
@@ -584,6 +1231,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deletingInvoice":
             MessageLookupByLibrary.simpleMessage("جاري حذف الفاتورة..."),
         "department": MessageLookupByLibrary.simpleMessage("القسم"),
+        "descending": MessageLookupByLibrary.simpleMessage("تنازلي"),
         "description": MessageLookupByLibrary.simpleMessage("الوصف"),
         "descriptionHint": MessageLookupByLibrary.simpleMessage(
             "أضف المزيد من التفاصيل حول هذا المصروف"),
@@ -600,7 +1248,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duplicate": MessageLookupByLibrary.simpleMessage("نسخ"),
         "duplicateInvoice":
             MessageLookupByLibrary.simpleMessage("تكرار الفاتورة"),
-        "duplicateInvoiceMessage": m13,
+        "duplicateInvoiceMessage": m14,
         "easyInvoiceCustomerManagement": MessageLookupByLibrary.simpleMessage(
             "إدارة الفواتير والعملاء بسهولة"),
         "ecommerceInstitution":
@@ -608,7 +1256,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
         "editCategory": MessageLookupByLibrary.simpleMessage("تعديل الفئة"),
         "editClient": MessageLookupByLibrary.simpleMessage("تعديل العميل"),
-        "editClientData": m14,
+        "editClientData": m15,
         "editClientDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية تعديل بيانات العميل"),
         "editCustomer": MessageLookupByLibrary.simpleMessage("تعديل العميل"),
@@ -686,12 +1334,30 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل سعر التكلفة"),
         "enterCustomerAddress":
             MessageLookupByLibrary.simpleMessage("أدخل العنوان"),
+        "enterCustomerCity":
+            MessageLookupByLibrary.simpleMessage("أدخل المدينة"),
+        "enterCustomerCommercialRegister":
+            MessageLookupByLibrary.simpleMessage("أدخل السجل التجاري"),
+        "enterCustomerCompany":
+            MessageLookupByLibrary.simpleMessage("أدخل اسم الشركة"),
+        "enterCustomerDetailedAddress":
+            MessageLookupByLibrary.simpleMessage("أدخل العنوان التفصيلي"),
         "enterCustomerEmail":
             MessageLookupByLibrary.simpleMessage("أدخل البريد الإلكتروني"),
         "enterCustomerName":
             MessageLookupByLibrary.simpleMessage("أدخل اسم العميل"),
+        "enterCustomerNotes":
+            MessageLookupByLibrary.simpleMessage("أدخل الملاحظات"),
         "enterCustomerPhone":
             MessageLookupByLibrary.simpleMessage("أدخل رقم الهاتف"),
+        "enterCustomerPostalCode":
+            MessageLookupByLibrary.simpleMessage("أدخل الرمز البريدي"),
+        "enterCustomerRegion":
+            MessageLookupByLibrary.simpleMessage("أدخل المنطقة"),
+        "enterCustomerResponsiblePerson":
+            MessageLookupByLibrary.simpleMessage("أدخل الشخص المسؤول"),
+        "enterCustomerTaxNumber":
+            MessageLookupByLibrary.simpleMessage("أدخل الرقم الضريبي"),
         "enterDescription": MessageLookupByLibrary.simpleMessage("أدخل الوصف"),
         "enterDetailedAddress":
             MessageLookupByLibrary.simpleMessage("أدخل العنوان التفصيلي"),
@@ -761,57 +1427,65 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("خطأ في إضافة الفئة"),
         "errorAddingProduct":
             MessageLookupByLibrary.simpleMessage("خطأ في إضافة المنتج"),
-        "errorCreatingClient": m15,
+        "errorCreatingClient": m16,
         "errorCreatingCustomer":
             MessageLookupByLibrary.simpleMessage("خطأ في إنشاء العميل"),
-        "errorCreatingFile": m16,
-        "errorCreatingInvoice": m17,
+        "errorCreatingFile": m17,
+        "errorCreatingInvoice": m18,
         "errorCreatingProduct":
             MessageLookupByLibrary.simpleMessage("حدث خطأ أثناء إنشاء المنتج"),
         "errorCreatingUser": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء إنشاء المستخدم: \$e"),
         "errorDeletingCategory":
             MessageLookupByLibrary.simpleMessage("خطأ في حذف الفئة"),
-        "errorDeletingClient": m18,
-        "errorDeletingClients": m19,
-        "errorDeletingInvoice": m20,
+        "errorDeletingClient": m19,
+        "errorDeletingClients": m20,
+        "errorDeletingCustomer":
+            MessageLookupByLibrary.simpleMessage("خطأ في حذف العميل"),
+        "errorDeletingInvoice": m21,
         "errorDeletingProduct":
             MessageLookupByLibrary.simpleMessage("خطأ في حذف المنتج"),
         "errorDeletingUser":
             MessageLookupByLibrary.simpleMessage("خطأ في حذف المستخدم"),
         "errorLoadingCategories":
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل الفئات"),
-        "errorLoadingClients": m21,
+        "errorLoadingClients": m22,
+        "errorLoadingCustomer":
+            MessageLookupByLibrary.simpleMessage("خطأ في تحميل العميل"),
         "errorLoadingCustomers":
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل العملاء"),
         "errorLoadingDashboard":
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل لوحة التحكم"),
         "errorLoadingInvoice":
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل الفاتورة"),
+        "errorLoadingInvoices":
+            MessageLookupByLibrary.simpleMessage("خطأ في تحميل الفواتير"),
         "errorLoadingProduct": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء تحميل بيانات المنتج"),
         "errorLoadingProducts": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ أثناء تحميل المنتجات"),
-        "errorLoadingStatistics": m22,
+        "errorLoadingStatistics": m23,
         "errorLoadingUsers":
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل المستخدمين"),
-        "errorMessage": m23,
-        "errorOccurred": m24,
+        "errorMessage": m24,
+        "errorOccurred": m25,
         "errorParsingUserData": MessageLookupByLibrary.simpleMessage(
             "خطأ في معالجة بيانات المستخدم"),
-        "errorPrintingInvoice": m25,
-        "errorSendingInvoice": m26,
-        "errorSharingInvoice": m27,
+        "errorPrintingInvoice": m26,
+        "errorSendingInvoice": m27,
+        "errorSharingInvoice": m28,
         "errorText": MessageLookupByLibrary.simpleMessage("نص خطأ"),
         "errorUpdatingCategory":
             MessageLookupByLibrary.simpleMessage("خطأ في تحديث الفئة"),
-        "errorUpdatingClient": m28,
-        "errorUpdatingClientStatus": m29,
+        "errorUpdatingClient": m29,
+        "errorUpdatingClientStatus": m30,
+        "errorUpdatingCustomer":
+            MessageLookupByLibrary.simpleMessage("خطأ في تحديث العميل"),
         "errorUpdatingInvoice":
             MessageLookupByLibrary.simpleMessage("خطأ في تحديث الفاتورة"),
         "errorUpdatingProduct":
             MessageLookupByLibrary.simpleMessage("حدث خطأ أثناء تحديث المنتج"),
-        "errorUpdatingStatus": m30,
+        "errorUpdatingStatus": m31,
         "exampleEmail":
             MessageLookupByLibrary.simpleMessage("example@email.com"),
         "examplePhone": MessageLookupByLibrary.simpleMessage("0500000000"),
@@ -860,18 +1534,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "exportReports": MessageLookupByLibrary.simpleMessage("تصدير التقارير"),
         "exportReportsDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية تصدير التقارير"),
-        "failedToAddRole": m31,
-        "failedToDeleteRole": m32,
+        "failedToAddRole": m32,
+        "failedToDeleteRole": m33,
         "failedToGetUserData": MessageLookupByLibrary.simpleMessage(
             "فشل في الحصول على بيانات المستخدم"),
-        "failedToLoadRoles": m33,
-        "failedToLoadUserPermissions": m34,
-        "failedToUpdateRole": m35,
+        "failedToLoadRoles": m34,
+        "failedToLoadUserPermissions": m35,
+        "failedToUpdateRole": m36,
         "failedToUpdateUser":
             MessageLookupByLibrary.simpleMessage("فشل في تحديث المستخدم"),
-        "failedToUpdateUserPermissions": m36,
-        "fileName": m37,
-        "fileSavedSuccessfully": m38,
+        "failedToUpdateUserPermissions": m37,
+        "fileName": m38,
+        "fileSavedSuccessfully": m39,
         "fillAllRequiredFields": MessageLookupByLibrary.simpleMessage(
             "يرجى ملء جميع الحقول المطلوبة"),
         "fillFormToAddClient": MessageLookupByLibrary.simpleMessage(
@@ -880,6 +1554,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "يرجى ملء جميع الحقول المطلوبة في معلومات الفاتورة"),
         "fillTheFormBelowToAddANewUserTo": MessageLookupByLibrary.simpleMessage(
             "املأ النموذج أدناه لإضافة مستخدم جديد للنظام"),
+        "filterCustomers":
+            MessageLookupByLibrary.simpleMessage("فلترة العملاء"),
+        "filters": MessageLookupByLibrary.simpleMessage("الفلاتر"),
         "financialDetails":
             MessageLookupByLibrary.simpleMessage("التفاصيل المالية"),
         "financialInfo":
@@ -916,6 +1593,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "icon": MessageLookupByLibrary.simpleMessage("الأيقونة"),
         "inactive": MessageLookupByLibrary.simpleMessage("غير نشط"),
+        "inactiveStatus": MessageLookupByLibrary.simpleMessage("غير نشط"),
         "includePDF": MessageLookupByLibrary.simpleMessage("تضمين PDF"),
         "increase": MessageLookupByLibrary.simpleMessage("زيادة"),
         "inputFields": MessageLookupByLibrary.simpleMessage("حقول الإدخال"),
@@ -933,8 +1611,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إعدادات المخزون"),
         "invoiceAlreadySent":
             MessageLookupByLibrary.simpleMessage("تم إرسال الفاتورة بالفعل"),
+        "invoiceAmount": MessageLookupByLibrary.simpleMessage("مبلغ الفاتورة"),
         "invoiceBasicInfo":
             MessageLookupByLibrary.simpleMessage("معلومات الفاتورة"),
+        "invoiceCancelled": MessageLookupByLibrary.simpleMessage("ملغية"),
         "invoiceCopiedForPrinting": MessageLookupByLibrary.simpleMessage(
             "تم نسخ تفاصيل الفاتورة للطباعة"),
         "invoiceCopiedToClipboard": MessageLookupByLibrary.simpleMessage(
@@ -943,25 +1623,33 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم إنشاء الفاتورة بنجاح"),
         "invoiceCreationHelp": MessageLookupByLibrary.simpleMessage(
             "هذا النموذج يساعدك في إنشاء فاتورة جديدة خطوة بخطوة:\n\n1. معلومات الفاتورة: اختر الإجراء وطريقة الدفع والحالة\n2. اختيار العميل: اختر عميل موجود أو أضف عميل جديد\n3. عناصر الفاتورة: أضف العناصر والكميات والأسعار\n4. مراجعة الحسابات: راجع التفاصيل النهائية قبل الحفظ"),
+        "invoiceDate": MessageLookupByLibrary.simpleMessage("تاريخ الفاتورة"),
         "invoiceDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف الفاتورة بنجاح"),
         "invoiceDescription":
             MessageLookupByLibrary.simpleMessage("وصف الفاتورة"),
         "invoiceDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل الفاتورة"),
+        "invoiceDraft": MessageLookupByLibrary.simpleMessage("مسودة"),
         "invoiceHelp": MessageLookupByLibrary.simpleMessage("مساعدة الفواتير"),
         "invoiceInfo": MessageLookupByLibrary.simpleMessage("معلومات الفاتورة"),
         "invoiceItems": MessageLookupByLibrary.simpleMessage("عناصر الفاتورة"),
         "invoiceManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الفواتير"),
         "invoiceNumber": MessageLookupByLibrary.simpleMessage("رقم الفاتورة"),
-        "invoiceNumberLabel": m39,
+        "invoiceNumberLabel": m40,
+        "invoiceOverdue": MessageLookupByLibrary.simpleMessage("متأخرة"),
+        "invoicePaid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
+        "invoicePending": MessageLookupByLibrary.simpleMessage("معلقة"),
+        "invoiceReturned": MessageLookupByLibrary.simpleMessage("مرتجعة"),
+        "invoiceSent": MessageLookupByLibrary.simpleMessage("مرسلة"),
         "invoiceSentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الفاتورة بنجاح"),
         "invoiceStatistics":
             MessageLookupByLibrary.simpleMessage("إحصائيات الفواتير"),
         "invoiceStatus": MessageLookupByLibrary.simpleMessage("حالة الفاتورة"),
-        "invoiceStatusUpdated": m40,
+        "invoiceStatusUpdated": m41,
+        "invoiceUnknown": MessageLookupByLibrary.simpleMessage("غير محدد"),
         "invoiceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الفاتورة بنجاح"),
         "invoices": MessageLookupByLibrary.simpleMessage("الفواتير"),
@@ -990,7 +1678,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemName": MessageLookupByLibrary.simpleMessage("اسم العنصر"),
         "itemPrice": MessageLookupByLibrary.simpleMessage("السعر"),
         "itemQuantity": MessageLookupByLibrary.simpleMessage("الكمية"),
-        "itemRow": m41,
+        "itemRow": m42,
         "itemSeparator": MessageLookupByLibrary.simpleMessage("-"),
         "itemTax": MessageLookupByLibrary.simpleMessage("الضريبة"),
         "itemTotal": MessageLookupByLibrary.simpleMessage("المجموع"),
@@ -1007,6 +1695,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Language changed to English"),
         "largeResponsiveText":
             MessageLookupByLibrary.simpleMessage("نص متجاوب كبير"),
+        "lastFiveInvoices":
+            MessageLookupByLibrary.simpleMessage("آخر 5 فواتير"),
+        "lastInvoices": MessageLookupByLibrary.simpleMessage("آخر الفواتير"),
         "lastUpdated": MessageLookupByLibrary.simpleMessage("آخر تحديث"),
         "light": MessageLookupByLibrary.simpleMessage("فاتح"),
         "link": MessageLookupByLibrary.simpleMessage("رابط"),
@@ -1016,15 +1707,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "loadingCard": MessageLookupByLibrary.simpleMessage("بطاقة تحميل"),
         "loadingCustomers":
             MessageLookupByLibrary.simpleMessage("جاري تحميل العملاء..."),
-        "loadingDashboard":
-            MessageLookupByLibrary.simpleMessage("جاري تحميل لوحة التحكم..."),
+        "loadingDashboard": MessageLookupByLibrary.simpleMessage(
+            "جاري تحميل بيانات لوحة التحكم..."),
         "loadingExpenses":
             MessageLookupByLibrary.simpleMessage("جاري تحميل المصروفات..."),
         "loadingInvoiceDetails": MessageLookupByLibrary.simpleMessage(
             "جاري تحميل تفاصيل الفاتورة..."),
+        "loadingInvoices":
+            MessageLookupByLibrary.simpleMessage("جاري تحميل الفواتير..."),
         "loadingMore":
             MessageLookupByLibrary.simpleMessage("جاري تحميل المزيد..."),
-        "loadingProductDetails": m42,
+        "loadingProductDetails": m43,
         "loadingProducts":
             MessageLookupByLibrary.simpleMessage("جاري تحميل المنتجات..."),
         "loadingUsers":
@@ -1144,13 +1837,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "noItemsAdded":
             MessageLookupByLibrary.simpleMessage("لم يتم إضافة أي عناصر بعد"),
         "noName": MessageLookupByLibrary.simpleMessage("بدون اسم"),
-        "noPermissionMessage": m43,
+        "noPermissionMessage": m44,
         "noPrintersFound":
             MessageLookupByLibrary.simpleMessage("لم يتم العثور على طابعات"),
         "noProductsFound":
             MessageLookupByLibrary.simpleMessage("لا توجد منتجات"),
         "noProductsMatchSearch":
             MessageLookupByLibrary.simpleMessage("لا توجد منتجات تطابق البحث"),
+        "noProductsSoldMessage": MessageLookupByLibrary.simpleMessage(
+            "ابدأ بإنشاء فواتيرك الأولى لرؤية المنتجات الأكثر مبيعاً"),
+        "noProductsSoldYet":
+            MessageLookupByLibrary.simpleMessage("لا توجد منتجات مبيعة بعد"),
         "noQRCodeAvailable": MessageLookupByLibrary.simpleMessage(
             "لا يوجد رمز QR متاح لهذه الفاتورة"),
         "noRole": MessageLookupByLibrary.simpleMessage("بدون دور"),
@@ -1203,7 +1900,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مرحباً بك في Invotek"),
         "onboardingWelcomeDesc": MessageLookupByLibrary.simpleMessage(
             "نظام متكامل لإدارة الفواتير الإلكترونية مع التكامل مع نظام الفوترة الوطني الأردني"),
-        "openingEmail": m44,
+        "openingEmail": m45,
         "openingMap": MessageLookupByLibrary.simpleMessage("جاري فتح الخريطة"),
         "operationCompletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إكمال العملية بنجاح"),
@@ -1277,6 +1974,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "personalInformation":
             MessageLookupByLibrary.simpleMessage("المعلومات الشخصية"),
         "phone": MessageLookupByLibrary.simpleMessage("الهاتف"),
+        "phoneInvalid":
+            MessageLookupByLibrary.simpleMessage("تنسيق رقم الهاتف غير صحيح"),
         "phoneMaxLength": MessageLookupByLibrary.simpleMessage(
             "رقم الهاتف يجب أن يكون أقل من 15 رقم"),
         "phoneMinLength": MessageLookupByLibrary.simpleMessage(
@@ -1309,7 +2008,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "printError": MessageLookupByLibrary.simpleMessage("خطأ في الطباعة"),
         "printFailed": MessageLookupByLibrary.simpleMessage("فشلت الطباعة"),
         "printInvoice": MessageLookupByLibrary.simpleMessage("طباعة الفاتورة"),
-        "printInvoiceText": m45,
+        "printInvoiceText": m46,
         "printOptions": MessageLookupByLibrary.simpleMessage("خيارات الطباعة"),
         "printQuality": MessageLookupByLibrary.simpleMessage("جودة الطباعة"),
         "printReceipt": MessageLookupByLibrary.simpleMessage("طباعة الإيصال"),
@@ -1411,7 +2110,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestedPageNotFound":
             MessageLookupByLibrary.simpleMessage("الصفحة المطلوبة غير موجودة"),
         "resendCode": MessageLookupByLibrary.simpleMessage("إعادة إرسال الكود"),
-        "resendCodeIn": m46,
+        "resendCodeIn": m47,
+        "resetFilters": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
         "resetPassword": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
         "resetPasswordDesc":
             MessageLookupByLibrary.simpleMessage("أدخل كلمة المرور الجديدة"),
@@ -1438,6 +2138,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "salesTax": MessageLookupByLibrary.simpleMessage("ضريبة المبيعات"),
         "saudiArabia":
             MessageLookupByLibrary.simpleMessage("المملكة العربية السعودية"),
+        "saudiRiyal": MessageLookupByLibrary.simpleMessage("ريال سعودي"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "saveAndSend": MessageLookupByLibrary.simpleMessage("حفظ وإرسال"),
         "saveCategory": MessageLookupByLibrary.simpleMessage("حفظ الفئة"),
@@ -1481,6 +2182,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "اختيار الفئة المناسبة للمصروف"),
         "selectCategory": MessageLookupByLibrary.simpleMessage("إختار الفئة"),
         "selectCustomer": MessageLookupByLibrary.simpleMessage("اختيار العميل"),
+        "selectCustomerStatus":
+            MessageLookupByLibrary.simpleMessage("اختر حالة العميل"),
         "selectDate": MessageLookupByLibrary.simpleMessage("اختر التاريخ"),
         "selectOrAddCustomer": MessageLookupByLibrary.simpleMessage(
             "يرجى اختيار عميل أو إدخال بيانات العميل"),
@@ -1509,8 +2212,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsSavedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حفظ الإعدادات بنجاح"),
         "shareInvoice": MessageLookupByLibrary.simpleMessage("مشاركة الفاتورة"),
-        "shareInvoiceText": m47,
-        "showAllItems": m48,
+        "shareInvoiceText": m48,
+        "showAllItems": m49,
         "showLess": MessageLookupByLibrary.simpleMessage("إظهار أقل"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "signInFailed":
@@ -1523,11 +2226,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "smallText": MessageLookupByLibrary.simpleMessage("نص صغير"),
         "sms": MessageLookupByLibrary.simpleMessage("رسالة نصية"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage("حدث خطأ"),
+        "sortBy": MessageLookupByLibrary.simpleMessage("ترتيب حسب"),
+        "sortByCreatedAt":
+            MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
+        "sortByEmail":
+            MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
+        "sortByName": MessageLookupByLibrary.simpleMessage("الاسم"),
+        "sortByUpdatedAt":
+            MessageLookupByLibrary.simpleMessage("تاريخ التحديث"),
+        "sortOrder": MessageLookupByLibrary.simpleMessage("اتجاه الترتيب"),
         "startNow": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
         "state": MessageLookupByLibrary.simpleMessage("الحالة"),
         "statistics": MessageLookupByLibrary.simpleMessage("الإحصائيات"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),
-        "statusCategory": m49,
+        "statusCategory": m50,
         "statusDraft": MessageLookupByLibrary.simpleMessage("مسودة"),
         "statusInfo": MessageLookupByLibrary.simpleMessage("معلومات الحالة"),
         "statusOverdue": MessageLookupByLibrary.simpleMessage("متأخرة"),
@@ -1538,8 +2250,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "statusType": MessageLookupByLibrary.simpleMessage("نوع الحالة"),
         "subTitle": MessageLookupByLibrary.simpleMessage("عنوان فرعي"),
         "subject": MessageLookupByLibrary.simpleMessage("الموضوع"),
+        "subscriptionRequired":
+            MessageLookupByLibrary.simpleMessage("اختيار الباقة مطلوب"),
+        "subscriptionRequiredMessage": MessageLookupByLibrary.simpleMessage(
+            "يجب عليك اختيار باقة مناسبة لاستخدام هذه الميزة"),
         "subtotal": MessageLookupByLibrary.simpleMessage("المجموع الفرعي"),
-        "subtotalLine": m50,
+        "subtotalLine": m51,
         "successText": MessageLookupByLibrary.simpleMessage("نص نجاح"),
         "supervisor": MessageLookupByLibrary.simpleMessage("مشرف"),
         "supervisorDescription":
@@ -1574,7 +2290,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "الفواتير غير المعلنة والفواتير المدفوعة والفواتير المرتجعة وإنشاء فاتورة جديدة"),
         "taxInvoicesTitle":
             MessageLookupByLibrary.simpleMessage("الفواتير الضريبية"),
-        "taxLine": m51,
+        "taxLine": m52,
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "taxPercent": MessageLookupByLibrary.simpleMessage("نسبة الضريبة"),
         "taxRate": MessageLookupByLibrary.simpleMessage("نسبة الضريبة"),
@@ -1583,7 +2299,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxUID": MessageLookupByLibrary.simpleMessage("معرف الضريبة"),
         "taxUIDCopied":
             MessageLookupByLibrary.simpleMessage("تم نسخ معرف الضريبة"),
-        "taxUIDForInvoice": m52,
+        "taxUIDForInvoice": m53,
         "tekpart": MessageLookupByLibrary.simpleMessage("تك بارت"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "termsOfUseComingSoon":
@@ -1615,14 +2331,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "topSellingProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات الأكثر مبيعاً"),
         "total": MessageLookupByLibrary.simpleMessage("المجموع الكلي"),
-        "totalAmount": MessageLookupByLibrary.simpleMessage("المبلغ الإجمالي"),
+        "totalAmount": MessageLookupByLibrary.simpleMessage("إجمالي المبلغ"),
         "totalCustomers":
             MessageLookupByLibrary.simpleMessage("إجمالي العملاء"),
         "totalExpenses":
             MessageLookupByLibrary.simpleMessage("إجمالي المصروفات"),
         "totalInvoices":
             MessageLookupByLibrary.simpleMessage("إجمالي الفواتير"),
-        "totalLine": m53,
+        "totalLine": m54,
         "totalProducts":
             MessageLookupByLibrary.simpleMessage("إجمالي المنتجات"),
         "totalSales": MessageLookupByLibrary.simpleMessage("إجمالي المبيعات"),
@@ -1645,6 +2361,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("غير مصرح بالوصول"),
         "uncategorized": MessageLookupByLibrary.simpleMessage("غير مصنف"),
         "undefined": MessageLookupByLibrary.simpleMessage("غير محدد"),
+        "undefinedProduct":
+            MessageLookupByLibrary.simpleMessage("منتج غير محدد"),
         "unit": MessageLookupByLibrary.simpleMessage("الوحدة"),
         "unknownError": MessageLookupByLibrary.simpleMessage(
             "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."),
@@ -1693,7 +2411,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "vatNumber":
             MessageLookupByLibrary.simpleMessage("رقم ضريبة القيمة المضافة"),
         "verifyCode": MessageLookupByLibrary.simpleMessage("تحقق من الكود"),
-        "verifyCodeDesc": m54,
+        "verifyCodeDesc": m55,
         "verifyCodeTitle":
             MessageLookupByLibrary.simpleMessage("التحقق من الكود"),
         "view": MessageLookupByLibrary.simpleMessage("عرض"),
@@ -1702,7 +2420,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewClients": MessageLookupByLibrary.simpleMessage("عرض العملاء"),
         "viewClientsDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية عرض قائمة العملاء"),
-        "viewCustomerDetails": m55,
+        "viewCustomer": MessageLookupByLibrary.simpleMessage("عرض العميل"),
+        "viewCustomerDetails": m56,
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewExpenses": MessageLookupByLibrary.simpleMessage("عرض المصروفات"),
         "viewExpensesDescription":
@@ -1710,7 +2429,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewInvoices": MessageLookupByLibrary.simpleMessage("عرض الفواتير"),
         "viewInvoicesDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية عرض قائمة الفواتير"),
-        "viewItemDetails": m56,
+        "viewItemDetails": m57,
         "viewPrivacyPolicy":
             MessageLookupByLibrary.simpleMessage("اطلع على سياسة الخصوصية"),
         "viewProducts": MessageLookupByLibrary.simpleMessage("عرض المنتجات"),
@@ -1732,13 +2451,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewUsers": MessageLookupByLibrary.simpleMessage("عرض المستخدمين"),
         "viewUsersDescription": MessageLookupByLibrary.simpleMessage(
             "إمكانية عرض قائمة المستخدمين"),
-        "viewingInvoices": m57,
-        "viewingOrders": m58,
+        "viewingInvoices": m58,
+        "viewingOrders": m59,
         "visitInvotekWebsite":
             MessageLookupByLibrary.simpleMessage("زيارة موقع إنفوتك"),
         "website": MessageLookupByLibrary.simpleMessage("الموقع الإلكتروني"),
         "weight": MessageLookupByLibrary.simpleMessage("الوزن"),
         "welcome": MessageLookupByLibrary.simpleMessage("مرحباً!"),
+        "welcomeBack": MessageLookupByLibrary.simpleMessage("مرحباً بك، 👋"),
+        "welcomeBackWithName": m60,
         "welcomeToInvotek":
             MessageLookupByLibrary.simpleMessage("مرحباً بك في تطبيق Invotek"),
         "welcomeToInvotekApp":

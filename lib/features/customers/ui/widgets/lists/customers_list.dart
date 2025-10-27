@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/customers/demo/entit/customer_model.dart';
+import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/cards/customer_card.dart';
 
 class CustomersList extends StatelessWidget {
@@ -11,6 +11,7 @@ class CustomersList extends StatelessWidget {
   final Function(CustomerModel) onCustomerEdit;
   final Function(CustomerModel) onCustomerDelete;
   final bool isLoadingMore;
+  final ScrollController? scrollController;
 
   const CustomersList({
     super.key,
@@ -20,63 +21,18 @@ class CustomersList extends StatelessWidget {
     required this.onCustomerEdit,
     required this.onCustomerDelete,
     this.isLoadingMore = false,
+    this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 25.h),
-          // Customers Count Header
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Row(
-              children: [
-                Text(
-                  'Customers (${customers.length})',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Text(
-                    '${customers.length} Total',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15.h),
-          // Customers List - Using ListView.builder for memory efficiency
-          ListView.builder(
-            physics:
-                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
-            shrinkWrap: true, // Takes only the space it needs
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 35.h),
+        Expanded(
+          child: ListView.builder(
+            controller: scrollController,
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             itemCount: customers.length + (isLoadingMore ? 1 : 0),
             itemBuilder: (context, index) {
@@ -101,10 +57,8 @@ class CustomersList extends StatelessWidget {
               );
             },
           ),
-          // Bottom spacing for FAB
-          SizedBox(height: 80.h),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
