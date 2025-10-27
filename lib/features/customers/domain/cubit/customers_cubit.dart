@@ -7,7 +7,7 @@ import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.da
 import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
 import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
 import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
-import 'package:invotek/features/customers/demo/entit/customer_model.dart';
+import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 
 part 'customers_cubit.freezed.dart';
 
@@ -84,6 +84,8 @@ class CustomersCubit extends Cubit<CustomersState> {
   String? _lastSearch;
   String? _lastStatus;
   String? _lastCompany;
+  String? _lastSortBy;
+  String? _lastSortOrder;
   int _pageSize = 20;
   bool _isLoadingPage = false;
 
@@ -111,6 +113,8 @@ class CustomersCubit extends Cubit<CustomersState> {
     String? search,
     String? status,
     String? company,
+    String? sortBy,
+    String? sortOrder,
     int? limit,
   }) async {
     if (_isLoadingPage) return;
@@ -120,8 +124,15 @@ class CustomersCubit extends Cubit<CustomersState> {
     final searchChanged = _lastSearch != search;
     final statusChanged = _lastStatus != status;
     final companyChanged = _lastCompany != company;
+    final sortByChanged = _lastSortBy != sortBy;
+    final sortOrderChanged = _lastSortOrder != sortOrder;
     final shouldRefresh =
-        refresh || searchChanged || statusChanged || companyChanged;
+        refresh ||
+        searchChanged ||
+        statusChanged ||
+        companyChanged ||
+        sortByChanged ||
+        sortOrderChanged;
 
     if (shouldRefresh) {
       _customers.clear();
@@ -141,6 +152,8 @@ class CustomersCubit extends Cubit<CustomersState> {
     _lastSearch = search;
     _lastStatus = status;
     _lastCompany = company;
+    _lastSortBy = sortBy;
+    _lastSortOrder = sortOrder;
     _pageSize = limit ?? _pageSize;
 
     final result = await _getCustomers(
@@ -148,6 +161,8 @@ class CustomersCubit extends Cubit<CustomersState> {
         search: _lastSearch,
         status: _lastStatus,
         company: _lastCompany,
+        sortBy: _lastSortBy,
+        sortOrder: _lastSortOrder,
         page: 1,
         limit: _pageSize,
       ),
@@ -192,8 +207,16 @@ class CustomersCubit extends Cubit<CustomersState> {
     if (_isLoadingPage || !hasMore) return;
     _isLoadingPage = true;
 
-    // Don't emit loading state for next page to avoid UI flicker
-    // Just keep the current state and add new data
+    // Emit loading state for next page to show loading indicator
+    emit(
+      CustomersState.loading(
+        customers: _customers,
+        selectedCustomer: state.selectedCustomer,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'loading_more',
+      ),
+    );
 
     final nextPage = _currentPage + 1;
     final result = await _getCustomers(
@@ -201,6 +224,8 @@ class CustomersCubit extends Cubit<CustomersState> {
         search: _lastSearch,
         status: _lastStatus,
         company: _lastCompany,
+        sortBy: _lastSortBy,
+        sortOrder: _lastSortOrder,
         page: nextPage,
         limit: _pageSize,
       ),

@@ -143,8 +143,8 @@ abstract class ApiClient {
     @Query('company') String? company,
     @Query('page') int? page,
     @Query('limit') int? limit,
-    @Query('sortBy') String? sortBy,
-    @Query('sortOrder') String? sortOrder,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
   });
 
   @GET(ApiConstants.clientById)
@@ -183,8 +183,8 @@ abstract class ApiClient {
     @Query('company') String? company,
     @Query('page') int? page,
     @Query('limit') int? limit,
-    @Query('sortBy') String? sortBy,
-    @Query('sortOrder') String? sortOrder,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
   });
 
   @GET(ApiConstants.customerById)

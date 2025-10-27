@@ -2,7 +2,7 @@ import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/server/api_client.dart';
 
-import '../../demo/entit/customer_model.dart';
+import '../../domain/entit/customer_model.dart';
 import '../models/customer_api_model.dart';
 import '../models/request/create_customer_request.dart';
 import '../models/request/update_customer_request.dart';

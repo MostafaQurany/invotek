@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/customers/demo/entit/customer_model.dart';
+import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class CustomerCard extends StatelessWidget {
@@ -62,7 +62,7 @@ class CustomerCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withOpacity(0.09),
               blurRadius: 8,
               offset: Offset(0, 2),
             ),

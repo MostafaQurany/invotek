@@ -1035,7 +1035,7 @@ class SAr extends S {
   String get customerStatusInactive => 'غير نشط';
 
   @override
-  String get customerBasicInfo => 'معلومات العميل';
+  String get customerBasicInfo => 'المعلومات الأساسية';
 
   @override
   String get customerBasicInfoSection => 'المعلومات الأساسية';
@@ -1047,13 +1047,16 @@ class SAr extends S {
   String get customerPhoneRequired => 'رقم الهاتف مطلوب';
 
   @override
-  String get customerCommercialRegister => 'رقم السجل التجاري';
+  String get phoneInvalid => 'تنسيق رقم الهاتف غير صحيح';
+
+  @override
+  String get customerCommercialRegister => 'السجل التجاري';
 
   @override
   String get customerCity => 'المدينة';
 
   @override
-  String get customerRegion => 'المنطقة/المحافظة';
+  String get customerRegion => 'المنطقة';
 
   @override
   String get customerPostalCode => 'الرمز البريدي';
@@ -1068,12 +1071,12 @@ class SAr extends S {
   String get customerResponsiblePerson => 'الشخص المسؤول';
 
   @override
-  String customerCreatedSuccessfully(Object name) {
+  String customerCreatedSuccessfully(String name) {
     return 'تم إنشاء العميل \"$name\" بنجاح';
   }
 
   @override
-  String customerUpdatedSuccessfully(Object name) {
+  String customerUpdatedSuccessfully(String name) {
     return 'تم تحديث العميل \"$name\" بنجاح';
   }
 
@@ -1081,11 +1084,11 @@ class SAr extends S {
   String get customerDeletedSuccessfully => 'تم حذف العميل بنجاح';
 
   @override
-  String get confirmDeleteCustomer => 'تأكيد الحذف';
+  String get confirmDeleteCustomer => 'تأكيد حذف العميل';
 
   @override
-  String confirmDeleteCustomerMessage(Object name) {
-    return 'هل أنت متأكد من حذف العميل \"$name\"?';
+  String confirmDeleteCustomerMessage(String name) {
+    return 'هل أنت متأكد من حذف العميل \"$name\"؟';
   }
 
   @override
@@ -1977,7 +1980,7 @@ class SAr extends S {
   String get paidInvoices => '8 مدفوعة';
 
   @override
-  String get totalAmount => 'المبلغ الإجمالي';
+  String get totalAmount => 'إجمالي المبلغ';
 
   @override
   String get thisMonth => 'هذا الشهر';
@@ -3014,7 +3017,7 @@ class SAr extends S {
   String get topSellingProducts => 'المنتجات الأكثر مبيعاً';
 
   @override
-  String get loadingDashboard => 'جاري تحميل لوحة التحكم...';
+  String get loadingDashboard => 'جاري تحميل بيانات لوحة التحكم...';
 
   @override
   String get errorLoadingDashboard => 'خطأ في تحميل لوحة التحكم';
@@ -3292,4 +3295,1311 @@ class SAr extends S {
 
   @override
   String get backToLoginScreen => 'العودة إلى شاشة التسجيل';
+
+  @override
+  String get welcomeBack => 'مرحباً بك، 👋';
+
+  @override
+  String welcomeBackWithName(String name) {
+    return 'مرحباً $name، 👋';
+  }
+
+  @override
+  String get subscriptionRequired => 'اختيار الباقة مطلوب';
+
+  @override
+  String get subscriptionRequiredMessage =>
+      'يجب عليك اختيار باقة مناسبة لاستخدام هذه الميزة';
+
+  @override
+  String get chooseSubscription => 'اختيار الباقة';
+
+  @override
+  String get cannotOpenSubscriptionLink => 'لا يمكن فتح رابط الباقة';
+
+  @override
+  String get noProductsSoldYet => 'لا توجد منتجات مبيعة بعد';
+
+  @override
+  String get noProductsSoldMessage =>
+      'ابدأ بإنشاء فواتيرك الأولى لرؤية المنتجات الأكثر مبيعاً';
+
+  @override
+  String get undefinedProduct => 'منتج غير محدد';
+
+  @override
+  String get customerAnalytics => 'تحليلات العملاء';
+
+  @override
+  String get lastInvoices => 'آخر الفواتير';
+
+  @override
+  String get lastFiveInvoices => 'آخر 5 فواتير';
+
+  @override
+  String get saudiRiyal => 'ريال سعودي';
+
+  @override
+  String get loadingInvoices => 'جاري تحميل الفواتير...';
+
+  @override
+  String get errorLoadingInvoices => 'خطأ في تحميل الفواتير';
+
+  @override
+  String get invoiceAmount => 'مبلغ الفاتورة';
+
+  @override
+  String get invoiceDate => 'تاريخ الفاتورة';
+
+  @override
+  String get invoicePaid => 'مدفوعة';
+
+  @override
+  String get invoicePending => 'معلقة';
+
+  @override
+  String get invoiceCancelled => 'ملغية';
+
+  @override
+  String get invoiceDraft => 'مسودة';
+
+  @override
+  String get invoiceOverdue => 'متأخرة';
+
+  @override
+  String get invoiceSent => 'مرسلة';
+
+  @override
+  String get invoiceReturned => 'مرتجعة';
+
+  @override
+  String get invoiceUnknown => 'غير محدد';
+
+  @override
+  String andMoreInvoices(int count) {
+    return 'و $count فاتورة أخرى...';
+  }
+
+  @override
+  String get customerContactInfo => 'معلومات الاتصال';
+
+  @override
+  String get customerAccountStatus => 'حالة الحساب';
+
+  @override
+  String get customerQuickActions => 'الإجراءات السريعة';
+
+  @override
+  String get customerCompany => 'الشركة';
+
+  @override
+  String get customerActive => 'نشط';
+
+  @override
+  String get customerInactive => 'غير نشط';
+
+  @override
+  String get customerCreatedDate => 'تاريخ الإنشاء';
+
+  @override
+  String get customerLastUpdated => 'آخر تحديث';
+
+  @override
+  String get customerAddressInfo => 'معلومات العنوان';
+
+  @override
+  String get customerFormHelp => 'مساعدة نموذج العميل';
+
+  @override
+  String get customerFormHelpDescription =>
+      'هذا النموذج مقسم إلى ثلاث خطوات:\n\n1. المعلومات الأساسية\n2. معلومات العنوان\n3. المعلومات الإضافية';
+
+  @override
+  String get errorUpdatingCustomer => 'خطأ في تحديث العميل';
+
+  @override
+  String get errorDeletingCustomer => 'خطأ في حذف العميل';
+
+  @override
+  String get errorLoadingCustomer => 'خطأ في تحميل العميل';
+
+  @override
+  String get customerEmailRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get customerAddressRequired => 'العنوان مطلوب';
+
+  @override
+  String get customerCompanyRequired => 'اسم الشركة مطلوب';
+
+  @override
+  String get customerTaxNumberRequired => 'الرقم الضريبي مطلوب';
+
+  @override
+  String get customerCommercialRegisterRequired => 'السجل التجاري مطلوب';
+
+  @override
+  String get customerCityRequired => 'المدينة مطلوبة';
+
+  @override
+  String get customerRegionRequired => 'المنطقة مطلوبة';
+
+  @override
+  String get customerPostalCodeRequired => 'الرمز البريدي مطلوب';
+
+  @override
+  String get customerDetailedAddressRequired => 'العنوان التفصيلي مطلوب';
+
+  @override
+  String get customerResponsiblePersonRequired => 'الشخص المسؤول مطلوب';
+
+  @override
+  String get customerNotesRequired => 'الملاحظات مطلوبة';
+
+  @override
+  String get customerStatusRequired => 'الحالة مطلوبة';
+
+  @override
+  String get enterCustomerCompany => 'أدخل اسم الشركة';
+
+  @override
+  String get enterCustomerTaxNumber => 'أدخل الرقم الضريبي';
+
+  @override
+  String get enterCustomerCommercialRegister => 'أدخل السجل التجاري';
+
+  @override
+  String get enterCustomerCity => 'أدخل المدينة';
+
+  @override
+  String get enterCustomerRegion => 'أدخل المنطقة';
+
+  @override
+  String get enterCustomerPostalCode => 'أدخل الرمز البريدي';
+
+  @override
+  String get enterCustomerDetailedAddress => 'أدخل العنوان التفصيلي';
+
+  @override
+  String get enterCustomerResponsiblePerson => 'أدخل الشخص المسؤول';
+
+  @override
+  String get enterCustomerNotes => 'أدخل الملاحظات';
+
+  @override
+  String get selectCustomerStatus => 'اختر حالة العميل';
+
+  @override
+  String get customerFormTitle => 'نموذج العميل';
+
+  @override
+  String get customerFormDescription =>
+      'املأ النموذج أدناه لإضافة عميل جديد للنظام';
+
+  @override
+  String get viewCustomer => 'عرض العميل';
+
+  @override
+  String get customerOptions => 'خيارات العميل';
+
+  @override
+  String get customerActions => 'إجراءات العميل';
+
+  @override
+  String get customerList => 'قائمة العملاء';
+
+  @override
+  String get customerSearch => 'البحث في العملاء';
+
+  @override
+  String get customerFilters => 'مرشحات العملاء';
+
+  @override
+  String get customerSort => 'ترتيب العملاء';
+
+  @override
+  String get customerExport => 'تصدير العملاء';
+
+  @override
+  String get customerImport => 'استيراد العملاء';
+
+  @override
+  String get customerReports => 'تقارير العملاء';
+
+  @override
+  String get customerStatistics => 'إحصائيات العملاء';
+
+  @override
+  String get customerPerformance => 'أداء العميل';
+
+  @override
+  String get customerSatisfaction => 'رضا العملاء';
+
+  @override
+  String get customerRetention => 'الاحتفاظ بالعملاء';
+
+  @override
+  String get customerLoyalty => 'ولاء العملاء';
+
+  @override
+  String get customerValue => 'قيمة العميل';
+
+  @override
+  String get customerLifetimeValue => 'قيمة العميل مدى الحياة';
+
+  @override
+  String get customerAcquisition => 'اكتساب العملاء';
+
+  @override
+  String get customerConversion => 'تحويل العملاء';
+
+  @override
+  String get customerEngagement => 'تفاعل العملاء';
+
+  @override
+  String get customerFeedback => 'ملاحظات العميل';
+
+  @override
+  String get customerSupport => 'دعم العملاء';
+
+  @override
+  String get customerService => 'خدمة العملاء';
+
+  @override
+  String get customerSuccess => 'نجاح العميل';
+
+  @override
+  String get customerOnboarding => 'إعداد العملاء';
+
+  @override
+  String get customerTraining => 'تدريب العملاء';
+
+  @override
+  String get customerDocumentation => 'وثائق العملاء';
+
+  @override
+  String get customerResources => 'موارد العميل';
+
+  @override
+  String get customerPortal => 'بوابة العملاء';
+
+  @override
+  String get customerDashboard => 'لوحة تحكم العملاء';
+
+  @override
+  String get customerProfile => 'ملف العميل';
+
+  @override
+  String get customerHistory => 'تاريخ العميل';
+
+  @override
+  String get customerTransactions => 'معاملات العميل';
+
+  @override
+  String get customerOrders => 'طلبات العميل';
+
+  @override
+  String get customerInvoices => 'فواتير العميل';
+
+  @override
+  String get customerPayments => 'مدفوعات العميل';
+
+  @override
+  String get customerCredits => 'ائتمانات العميل';
+
+  @override
+  String get customerDebits => 'مديونيات العميل';
+
+  @override
+  String get customerBalance => 'رصيد العميل';
+
+  @override
+  String get customerCreditLimit => 'حد الائتمان';
+
+  @override
+  String get customerPaymentTerms => 'شروط الدفع';
+
+  @override
+  String get customerDiscount => 'خصم العميل';
+
+  @override
+  String get customerTaxExempt => 'معفى من الضريبة';
+
+  @override
+  String get customerVip => 'عميل مميز';
+
+  @override
+  String get customerPriority => 'أولوية العميل';
+
+  @override
+  String get customerSegment => 'قطاع العميل';
+
+  @override
+  String get customerCategory => 'فئة العميل';
+
+  @override
+  String get customerSize => 'حجم العميل';
+
+  @override
+  String get customerIndustry => 'صناعة العميل';
+
+  @override
+  String get customerLocation => 'موقع العميل';
+
+  @override
+  String get customerTimezone => 'المنطقة الزمنية';
+
+  @override
+  String get customerLanguage => 'لغة العميل';
+
+  @override
+  String get customerCurrency => 'عملة العميل';
+
+  @override
+  String get customerPreferences => 'تفضيلات العميل';
+
+  @override
+  String get customerSettings => 'إعدادات العميل';
+
+  @override
+  String get customerNotifications => 'إشعارات العميل';
+
+  @override
+  String get customerAlerts => 'تنبيهات العميل';
+
+  @override
+  String get customerReminders => 'تذكيرات العميل';
+
+  @override
+  String get customerFollowUp => 'متابعة العميل';
+
+  @override
+  String get customerCommunication => 'تواصل العميل';
+
+  @override
+  String get customerMeetings => 'اجتماعات العميل';
+
+  @override
+  String get customerCalls => 'مكالمات العميل';
+
+  @override
+  String get customerEmails => 'رسائل العميل';
+
+  @override
+  String get customerMessages => 'رسائل العميل';
+
+  @override
+  String get customerChats => 'محادثات العميل';
+
+  @override
+  String get customerTickets => 'تذاكر العميل';
+
+  @override
+  String get customerIssues => 'مشاكل العميل';
+
+  @override
+  String get customerComplaints => 'شكاوى العميل';
+
+  @override
+  String get customerRequests => 'طلبات العميل';
+
+  @override
+  String get customerSuggestions => 'اقتراحات العميل';
+
+  @override
+  String get customerReviews => 'مراجعات العميل';
+
+  @override
+  String get customerRatings => 'تقييمات العميل';
+
+  @override
+  String get customerTestimonials => 'شهادات العميل';
+
+  @override
+  String get customerReferences => 'مراجع العميل';
+
+  @override
+  String get customerRecommendations => 'توصيات العميل';
+
+  @override
+  String get customerReferrals => 'إحالات العميل';
+
+  @override
+  String get customerPartnerships => 'شراكات العميل';
+
+  @override
+  String get customerContracts => 'عقود العميل';
+
+  @override
+  String get customerAgreements => 'اتفاقيات العميل';
+
+  @override
+  String get customerTerms => 'شروط العميل';
+
+  @override
+  String get customerPolicies => 'سياسات العميل';
+
+  @override
+  String get customerProcedures => 'إجراءات العميل';
+
+  @override
+  String get customerGuidelines => 'إرشادات العميل';
+
+  @override
+  String get customerStandards => 'معايير العميل';
+
+  @override
+  String get customerRequirements => 'متطلبات العميل';
+
+  @override
+  String get customerSpecifications => 'مواصفات العميل';
+
+  @override
+  String get customerExpectations => 'توقعات العميل';
+
+  @override
+  String get customerGoals => 'أهداف العميل';
+
+  @override
+  String get customerObjectives => 'أهداف العميل';
+
+  @override
+  String get customerTargets => 'أهداف العميل';
+
+  @override
+  String get customerMilestones => 'معالم العميل';
+
+  @override
+  String get customerDeadlines => 'مواعيد العميل';
+
+  @override
+  String get customerSchedules => 'جداول العميل';
+
+  @override
+  String get customerTimelines => 'الجدول الزمني';
+
+  @override
+  String get customerCalendars => 'تقويمات العميل';
+
+  @override
+  String get customerEvents => 'أحداث العميل';
+
+  @override
+  String get customerActivities => 'أنشطة العميل';
+
+  @override
+  String get customerTasks => 'مهام العميل';
+
+  @override
+  String get customerProjects => 'مشاريع العميل';
+
+  @override
+  String get customerCampaigns => 'حملات العميل';
+
+  @override
+  String get customerPromotions => 'عروض العميل';
+
+  @override
+  String get customerOffers => 'عروض العميل';
+
+  @override
+  String get customerDeals => 'صفقات العميل';
+
+  @override
+  String get customerSales => 'مبيعات العميل';
+
+  @override
+  String get customerRevenue => 'إيرادات العميل';
+
+  @override
+  String get customerProfit => 'ربح العميل';
+
+  @override
+  String get customerMargin => 'هامش العميل';
+
+  @override
+  String get customerCost => 'تكلفة العميل';
+
+  @override
+  String get customerExpense => 'مصروف العميل';
+
+  @override
+  String get customerInvestment => 'استثمار العميل';
+
+  @override
+  String get customerReturn => 'عائد العميل';
+
+  @override
+  String get customerRisk => 'مخاطر العميل';
+
+  @override
+  String get customerOpportunity => 'فرص العميل';
+
+  @override
+  String get customerThreat => 'تهديدات العميل';
+
+  @override
+  String get customerStrengths => 'نقاط القوة';
+
+  @override
+  String get customerWeaknesses => 'نقاط الضعف';
+
+  @override
+  String get customerOpportunities => 'الفرص';
+
+  @override
+  String get customerThreats => 'التهديدات';
+
+  @override
+  String get customerAnalysis => 'تحليل العميل';
+
+  @override
+  String get customerAssessment => 'تقييم العميل';
+
+  @override
+  String get customerEvaluation => 'تقييم العميل';
+
+  @override
+  String get customerReview => 'مراجعة العميل';
+
+  @override
+  String get customerAudit => 'تدقيق العميل';
+
+  @override
+  String get customerInspection => 'فحص العميل';
+
+  @override
+  String get customerVerification => 'التحقق من العميل';
+
+  @override
+  String get customerValidation => 'التحقق من صحة العميل';
+
+  @override
+  String get customerAuthentication => 'مصادقة العميل';
+
+  @override
+  String get customerAuthorization => 'تفويض العميل';
+
+  @override
+  String get customerPermission => 'إذن العميل';
+
+  @override
+  String get customerAccess => 'وصول العميل';
+
+  @override
+  String get customerSecurity => 'أمان العميل';
+
+  @override
+  String get customerPrivacy => 'خصوصية العميل';
+
+  @override
+  String get customerConfidentiality => 'سرية العميل';
+
+  @override
+  String get customerData => 'بيانات العميل';
+
+  @override
+  String get customerRecords => 'سجلات العميل';
+
+  @override
+  String get customerFiles => 'ملفات العميل';
+
+  @override
+  String get customerDocuments => 'وثائق العميل';
+
+  @override
+  String get customerArchives => 'أرشيف العميل';
+
+  @override
+  String get customerDatabase => 'قاعدة بيانات العميل';
+
+  @override
+  String get customerRepository => 'مستودع العميل';
+
+  @override
+  String get customerStorage => 'تخزين العميل';
+
+  @override
+  String get customerBackup => 'نسخ احتياطي للعميل';
+
+  @override
+  String get customerRecovery => 'استرداد العميل';
+
+  @override
+  String get customerRestore => 'استعادة العميل';
+
+  @override
+  String get customerMigration => 'هجرة العميل';
+
+  @override
+  String get customerIntegration => 'تكامل العميل';
+
+  @override
+  String get customerSynchronization => 'مزامنة العميل';
+
+  @override
+  String get customerReplication => 'نسخ العميل';
+
+  @override
+  String get customerDistribution => 'توزيع العميل';
+
+  @override
+  String get customerDeployment => 'نشر العميل';
+
+  @override
+  String get customerImplementation => 'تنفيذ العميل';
+
+  @override
+  String get customerInstallation => 'تثبيت العميل';
+
+  @override
+  String get customerConfiguration => 'تكوين العميل';
+
+  @override
+  String get customerCustomization => 'تخصيص العميل';
+
+  @override
+  String get customerPersonalization => 'تخصيص العميل';
+
+  @override
+  String get customerLocalization => 'محلية العميل';
+
+  @override
+  String get customerInternationalization => 'عولمة العميل';
+
+  @override
+  String get customerTranslation => 'ترجمة العميل';
+
+  @override
+  String get customerRegionalization => 'إقليمية العميل';
+
+  @override
+  String get customerGlobalization => 'عولمة العميل';
+
+  @override
+  String get customerMultilingual => 'متعدد اللغات';
+
+  @override
+  String get customerMulticultural => 'متعدد الثقافات';
+
+  @override
+  String get customerDiversity => 'تنوع العميل';
+
+  @override
+  String get customerInclusion => 'شمول العميل';
+
+  @override
+  String get customerEquity => 'إنصاف العميل';
+
+  @override
+  String get customerFairness => 'عدالة العميل';
+
+  @override
+  String get customerTransparency => 'شفافية العميل';
+
+  @override
+  String get customerAccountability => 'مساءلة العميل';
+
+  @override
+  String get customerResponsibility => 'مسؤولية العميل';
+
+  @override
+  String get customerLiability => 'مسؤولية العميل';
+
+  @override
+  String get customerObligation => 'التزام العميل';
+
+  @override
+  String get customerDuty => 'واجب العميل';
+
+  @override
+  String get customerCommitment => 'التزام العميل';
+
+  @override
+  String get customerPromise => 'وعد العميل';
+
+  @override
+  String get customerGuarantee => 'ضمان العميل';
+
+  @override
+  String get customerWarranty => 'ضمان العميل';
+
+  @override
+  String get customerAssurance => 'تأكيد العميل';
+
+  @override
+  String get customerConfidence => 'ثقة العميل';
+
+  @override
+  String get customerTrust => 'ثقة العميل';
+
+  @override
+  String get customerReliability => 'موثوقية العميل';
+
+  @override
+  String get customerDependability => 'اعتمادية العميل';
+
+  @override
+  String get customerConsistency => 'اتساق العميل';
+
+  @override
+  String get customerStability => 'استقرار العميل';
+
+  @override
+  String get customerPredictability => 'قابلية التنبؤ بالعميل';
+
+  @override
+  String get customerFlexibility => 'مرونة العميل';
+
+  @override
+  String get customerAdaptability => 'قابلية التكيف';
+
+  @override
+  String get customerScalability => 'قابلية التوسع';
+
+  @override
+  String get customerSustainability => 'استدامة العميل';
+
+  @override
+  String get customerGrowth => 'نمو العميل';
+
+  @override
+  String get customerDevelopment => 'تطوير العميل';
+
+  @override
+  String get customerImprovement => 'تحسين العميل';
+
+  @override
+  String get customerEnhancement => 'تحسين العميل';
+
+  @override
+  String get customerOptimization => 'تحسين العميل';
+
+  @override
+  String get customerEfficiency => 'كفاءة العميل';
+
+  @override
+  String get customerEffectiveness => 'فعالية العميل';
+
+  @override
+  String get customerProductivity => 'إنتاجية العميل';
+
+  @override
+  String get customerQuality => 'جودة العميل';
+
+  @override
+  String get customerExcellence => 'تميز العميل';
+
+  @override
+  String get customerInnovation => 'ابتكار العميل';
+
+  @override
+  String get customerCreativity => 'إبداع العميل';
+
+  @override
+  String get customerOriginality => 'أصالة العميل';
+
+  @override
+  String get customerUniqueness => 'تفرد العميل';
+
+  @override
+  String get customerDistinctiveness => 'تميز العميل';
+
+  @override
+  String get customerSpecialization => 'تخصص العميل';
+
+  @override
+  String get customerExpertise => 'خبرة العميل';
+
+  @override
+  String get customerKnowledge => 'معرفة العميل';
+
+  @override
+  String get customerSkills => 'مهارات العميل';
+
+  @override
+  String get customerAbilities => 'قدرات العميل';
+
+  @override
+  String get customerCapabilities => 'إمكانيات العميل';
+
+  @override
+  String get customerCompetencies => 'كفاءات العميل';
+
+  @override
+  String get customerQualifications => 'مؤهلات العميل';
+
+  @override
+  String get customerCredentials => 'أوراق اعتماد العميل';
+
+  @override
+  String get customerCertifications => 'شهادات العميل';
+
+  @override
+  String get customerLicenses => 'تراخيص العميل';
+
+  @override
+  String get customerPermits => 'تصاريح العميل';
+
+  @override
+  String get customerApprovals => 'موافقات العميل';
+
+  @override
+  String get customerAuthorizations => 'تفويضات العميل';
+
+  @override
+  String get customerEndorsements => 'تأييدات العميل';
+
+  @override
+  String get customerComments => 'تعليقات العميل';
+
+  @override
+  String get customerIdeas => 'أفكار العميل';
+
+  @override
+  String get customerProposals => 'اقتراحات العميل';
+
+  @override
+  String get customerPlans => 'خطط العميل';
+
+  @override
+  String get customerStrategies => 'استراتيجيات العميل';
+
+  @override
+  String get customerTactics => 'تكتيكات العميل';
+
+  @override
+  String get customerMethods => 'طرق العميل';
+
+  @override
+  String get customerApproaches => 'مناهج العميل';
+
+  @override
+  String get customerTechniques => 'تقنيات العميل';
+
+  @override
+  String get customerTools => 'أدوات العميل';
+
+  @override
+  String get customerAssets => 'أصول العميل';
+
+  @override
+  String get customerCapital => 'رأس مال العميل';
+
+  @override
+  String get customerFunding => 'تمويل العميل';
+
+  @override
+  String get customerFinancing => 'تمويل العميل';
+
+  @override
+  String get customerBudget => 'ميزانية العميل';
+
+  @override
+  String get customerPrice => 'سعر العميل';
+
+  @override
+  String get customerWorth => 'قيمة العميل';
+
+  @override
+  String get customerBenefit => 'فائدة العميل';
+
+  @override
+  String get customerAdvantage => 'ميزة العميل';
+
+  @override
+  String get customerGain => 'مكسب العميل';
+
+  @override
+  String get customerIncome => 'دخل العميل';
+
+  @override
+  String get customerEarnings => 'أرباح العميل';
+
+  @override
+  String get customerSavings => 'مدخرات العميل';
+
+  @override
+  String get customerWealth => 'ثروة العميل';
+
+  @override
+  String get customerFortune => 'ثروة العميل';
+
+  @override
+  String get customerAchievement => 'إنجاز العميل';
+
+  @override
+  String get customerAccomplishment => 'إنجاز العميل';
+
+  @override
+  String get customerVictory => 'انتصار العميل';
+
+  @override
+  String get customerTriumph => 'انتصار العميل';
+
+  @override
+  String get customerWin => 'فوز العميل';
+
+  @override
+  String get customerEdge => 'ميزة العميل';
+
+  @override
+  String get customerSuperiority => 'تفوق العميل';
+
+  @override
+  String get customerPerfection => 'كمال العميل';
+
+  @override
+  String get customerFlawlessness => 'كمال العميل';
+
+  @override
+  String get customerIdeal => 'مثالي العميل';
+
+  @override
+  String get customerOptimal => 'أمثل العميل';
+
+  @override
+  String get customerBest => 'أفضل العميل';
+
+  @override
+  String get customerTop => 'أعلى العميل';
+
+  @override
+  String get customerHighest => 'أعلى العميل';
+
+  @override
+  String get customerMaximum => 'أقصى العميل';
+
+  @override
+  String get customerPeak => 'ذروة العميل';
+
+  @override
+  String get customerSummit => 'قمة العميل';
+
+  @override
+  String get customerPinnacle => 'قمة العميل';
+
+  @override
+  String get customerCrown => 'تاج العميل';
+
+  @override
+  String get customerJewel => 'جوهرة العميل';
+
+  @override
+  String get customerGem => 'جوهرة العميل';
+
+  @override
+  String get customerTreasure => 'كنز العميل';
+
+  @override
+  String get customerGold => 'ذهب العميل';
+
+  @override
+  String get customerDiamond => 'ماس العميل';
+
+  @override
+  String get customerPearl => 'لؤلؤة العميل';
+
+  @override
+  String get customerRuby => 'ياقوت العميل';
+
+  @override
+  String get customerEmerald => 'زمرد العميل';
+
+  @override
+  String get customerSapphire => 'ياقوت أزرق العميل';
+
+  @override
+  String get customerAmethyst => 'أرجواني العميل';
+
+  @override
+  String get customerTopaz => 'توباز العميل';
+
+  @override
+  String get customerGarnet => 'العقيق العميل';
+
+  @override
+  String get customerOpal => 'أوبال العميل';
+
+  @override
+  String get customerTurquoise => 'فيروز العميل';
+
+  @override
+  String get customerCoral => 'مرجان العميل';
+
+  @override
+  String get customerJade => 'يشم العميل';
+
+  @override
+  String get customerAgate => 'عقيق العميل';
+
+  @override
+  String get customerOnyx => 'عقيق أسود العميل';
+
+  @override
+  String get customerQuartz => 'كوارتز العميل';
+
+  @override
+  String get customerCrystal => 'كريستال العميل';
+
+  @override
+  String get customerAmber => 'كهرمان العميل';
+
+  @override
+  String get customerJet => 'جيت العميل';
+
+  @override
+  String get customerIvory => 'عاج العميل';
+
+  @override
+  String get customerBone => 'عظم العميل';
+
+  @override
+  String get customerWood => 'خشب العميل';
+
+  @override
+  String get customerStone => 'حجر العميل';
+
+  @override
+  String get customerRock => 'صخر العميل';
+
+  @override
+  String get customerMetal => 'معدن العميل';
+
+  @override
+  String get customerIron => 'حديد العميل';
+
+  @override
+  String get customerSteel => 'صلب العميل';
+
+  @override
+  String get customerCopper => 'نحاس العميل';
+
+  @override
+  String get customerBronze => 'برونزي العميل';
+
+  @override
+  String get customerSilver => 'فضة العميل';
+
+  @override
+  String get customerPlatinum => 'بلاتين العميل';
+
+  @override
+  String get customerTitanium => 'تيتانيوم العميل';
+
+  @override
+  String get customerAluminum => 'ألومنيوم العميل';
+
+  @override
+  String get customerZinc => 'زنك العميل';
+
+  @override
+  String get customerLead => 'رصاص العميل';
+
+  @override
+  String get customerTin => 'قصدير العميل';
+
+  @override
+  String get customerNickel => 'نيكل العميل';
+
+  @override
+  String get customerChromium => 'كروم العميل';
+
+  @override
+  String get customerManganese => 'منجنيز العميل';
+
+  @override
+  String get customerCobalt => 'كوبالت العميل';
+
+  @override
+  String get customerVanadium => 'فاناديوم العميل';
+
+  @override
+  String get customerTungsten => 'تنجستن العميل';
+
+  @override
+  String get customerMolybdenum => 'موليبدينوم العميل';
+
+  @override
+  String get customerTantalum => 'تانتالوم العميل';
+
+  @override
+  String get customerNiobium => 'نيوبيوم العميل';
+
+  @override
+  String get customerHafnium => 'هافنيوم العميل';
+
+  @override
+  String get customerZirconium => 'زركونيوم العميل';
+
+  @override
+  String get customerRuthenium => 'روثينيوم العميل';
+
+  @override
+  String get customerRhodium => 'روديوم العميل';
+
+  @override
+  String get customerPalladium => 'بالاديوم العميل';
+
+  @override
+  String get customerOsmium => 'أوزميوم العميل';
+
+  @override
+  String get customerIridium => 'إيريديوم العميل';
+
+  @override
+  String get customerRhenium => 'رينيوم العميل';
+
+  @override
+  String get customerTechnetium => 'تكنيتيوم العميل';
+
+  @override
+  String get customerPromethium => 'بروميثيوم العميل';
+
+  @override
+  String get customerPolonium => 'بولونيوم العميل';
+
+  @override
+  String get customerAstatine => 'أستاتين العميل';
+
+  @override
+  String get customerRadon => 'رادون العميل';
+
+  @override
+  String get customerFrancium => 'فرانسيوم العميل';
+
+  @override
+  String get customerRadium => 'راديوم العميل';
+
+  @override
+  String get customerActinium => 'أكتينيوم العميل';
+
+  @override
+  String get customerThorium => 'ثوريوم العميل';
+
+  @override
+  String get customerProtactinium => 'بروتاكتينيوم العميل';
+
+  @override
+  String get customerUranium => 'يورانيوم العميل';
+
+  @override
+  String get customerNeptunium => 'نيبتونيوم العميل';
+
+  @override
+  String get customerPlutonium => 'بلوتونيوم العميل';
+
+  @override
+  String get customerAmericium => 'أمريكيوم العميل';
+
+  @override
+  String get customerCurium => 'كوريوم العميل';
+
+  @override
+  String get customerBerkelium => 'بيركيليوم العميل';
+
+  @override
+  String get customerCalifornium => 'كاليفورنيوم العميل';
+
+  @override
+  String get customerEinsteinium => 'أينشتاينيوم العميل';
+
+  @override
+  String get customerFermium => 'فيرميوم العميل';
+
+  @override
+  String get customerMendelevium => 'مندليفيوم العميل';
+
+  @override
+  String get customerNobelium => 'نوبليوم العميل';
+
+  @override
+  String get customerLawrencium => 'لورنسيوم العميل';
+
+  @override
+  String get customerRutherfordium => 'رذرفورديوم العميل';
+
+  @override
+  String get customerDubnium => 'دوبنيوم العميل';
+
+  @override
+  String get customerSeaborgium => 'سيبورغيوم العميل';
+
+  @override
+  String get customerBohrium => 'بوريوم العميل';
+
+  @override
+  String get customerHassium => 'هاسيوم العميل';
+
+  @override
+  String get customerMeitnerium => 'مايتنريوم العميل';
+
+  @override
+  String get customerDarmstadtium => 'دارمشتاتيوم العميل';
+
+  @override
+  String get customerRoentgenium => 'رونتجينيوم العميل';
+
+  @override
+  String get customerCopernicium => 'كوبرنيسيوم العميل';
+
+  @override
+  String get customerNihonium => 'نيهونيوم العميل';
+
+  @override
+  String get customerFlerovium => 'فليروفيوم العميل';
+
+  @override
+  String get customerMoscovium => 'موسكوفيوم العميل';
+
+  @override
+  String get customerLivermorium => 'ليفرموريوم العميل';
+
+  @override
+  String get customerTennessine => 'تينيسين العميل';
+
+  @override
+  String get customerOganesson => 'أوجانيسون العميل';
+
+  @override
+  String get filterCustomers => 'فلترة العملاء';
+
+  @override
+  String get filters => 'الفلاتر';
+
+  @override
+  String get sortBy => 'ترتيب حسب';
+
+  @override
+  String get sortOrder => 'اتجاه الترتيب';
+
+  @override
+  String get sortByName => 'الاسم';
+
+  @override
+  String get sortByEmail => 'البريد الإلكتروني';
+
+  @override
+  String get sortByCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String get sortByUpdatedAt => 'تاريخ التحديث';
+
+  @override
+  String get ascending => 'تصاعدي';
+
+  @override
+  String get descending => 'تنازلي';
+
+  @override
+  String get applyFilters => 'تطبيق الفلاتر';
+
+  @override
+  String get resetFilters => 'إعادة تعيين';
+
+  @override
+  String get activeStatus => 'نشط';
+
+  @override
+  String get inactiveStatus => 'غير نشط';
 }

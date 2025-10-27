@@ -55,7 +55,7 @@ class CustomersErrorWidget extends StatelessWidget {
       ),
       subscriptionRequired: (message, redirectUrl) => FailureWidget(
         failure: failure,
-        customTitle: 'اختيار الباقة مطلوب',
+        customTitle: S.of(context).subscriptionRequired,
         customMessage: message,
         customAction: redirectUrl != null
             ? () async {
@@ -77,7 +77,7 @@ class CustomersErrorWidget extends StatelessWidget {
                   AppRoutes.subscriptionPackagesRoute,
                 );
               },
-        customActionText: 'اختيار الباقة',
+        customActionText: S.of(context).chooseSubscription,
       ),
     );
   }

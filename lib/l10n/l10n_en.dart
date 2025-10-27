@@ -1018,7 +1018,7 @@ class SEn extends S {
   String get customerEmail => 'Email';
 
   @override
-  String get customerPhone => 'Phone';
+  String get customerPhone => 'Phone Number';
 
   @override
   String get customerAddress => 'Address';
@@ -1039,7 +1039,7 @@ class SEn extends S {
   String get customerStatusInactive => 'Inactive';
 
   @override
-  String get customerBasicInfo => 'Customer Information';
+  String get customerBasicInfo => 'Basic Information';
 
   @override
   String get customerBasicInfoSection => 'Basic Information';
@@ -1051,13 +1051,16 @@ class SEn extends S {
   String get customerPhoneRequired => 'Phone number is required';
 
   @override
-  String get customerCommercialRegister => 'Commercial Register Number';
+  String get phoneInvalid => 'Invalid phone number format';
+
+  @override
+  String get customerCommercialRegister => 'Commercial Register';
 
   @override
   String get customerCity => 'City';
 
   @override
-  String get customerRegion => 'Region/Province';
+  String get customerRegion => 'Region';
 
   @override
   String get customerPostalCode => 'Postal Code';
@@ -1072,12 +1075,12 @@ class SEn extends S {
   String get customerResponsiblePerson => 'Responsible Person';
 
   @override
-  String customerCreatedSuccessfully(Object name) {
+  String customerCreatedSuccessfully(String name) {
     return 'Customer \"$name\" created successfully';
   }
 
   @override
-  String customerUpdatedSuccessfully(Object name) {
+  String customerUpdatedSuccessfully(String name) {
     return 'Customer \"$name\" updated successfully';
   }
 
@@ -1085,10 +1088,10 @@ class SEn extends S {
   String get customerDeletedSuccessfully => 'Customer deleted successfully';
 
   @override
-  String get confirmDeleteCustomer => 'Confirm Delete';
+  String get confirmDeleteCustomer => 'Confirm Delete Customer';
 
   @override
-  String confirmDeleteCustomerMessage(Object name) {
+  String confirmDeleteCustomerMessage(String name) {
     return 'Are you sure you want to delete customer \"$name\"?';
   }
 
@@ -2383,7 +2386,7 @@ class SEn extends S {
   String get downloadPDF => 'Download PDF';
 
   @override
-  String get noInvoices => 'No invoices';
+  String get noInvoices => 'No Invoices';
 
   @override
   String get noInvoicesDescription =>
@@ -3034,13 +3037,13 @@ class SEn extends S {
   String get topSellingProducts => 'Top Selling Products';
 
   @override
-  String get loadingDashboard => 'Loading Dashboard...';
+  String get loadingDashboard => 'Loading dashboard data...';
 
   @override
   String get errorLoadingDashboard => 'Error loading dashboard';
 
   @override
-  String get dashboardError => 'Dashboard Error';
+  String get dashboardError => 'Error loading data';
 
   @override
   String get dashboardErrorMessage =>
@@ -3313,4 +3316,1313 @@ class SEn extends S {
 
   @override
   String get backToLoginScreen => 'Back to Login Screen';
+
+  @override
+  String get welcomeBack => 'Welcome back, 👋';
+
+  @override
+  String welcomeBackWithName(String name) {
+    return 'Welcome $name, 👋';
+  }
+
+  @override
+  String get subscriptionRequired => 'Subscription Required';
+
+  @override
+  String get subscriptionRequiredMessage =>
+      'You must choose a suitable subscription to use this feature';
+
+  @override
+  String get chooseSubscription => 'Choose Subscription';
+
+  @override
+  String get cannotOpenSubscriptionLink => 'Cannot open subscription link';
+
+  @override
+  String get noProductsSoldYet => 'No products sold yet';
+
+  @override
+  String get noProductsSoldMessage =>
+      'Start creating your first invoices to see the top selling products';
+
+  @override
+  String get undefinedProduct => 'Undefined Product';
+
+  @override
+  String get customerAnalytics => 'Customer Analytics';
+
+  @override
+  String get lastInvoices => 'Last Invoices';
+
+  @override
+  String get lastFiveInvoices => 'Last 5 Invoices';
+
+  @override
+  String get saudiRiyal => 'Saudi Riyal';
+
+  @override
+  String get loadingInvoices => 'Loading Invoices...';
+
+  @override
+  String get errorLoadingInvoices => 'Error Loading Invoices';
+
+  @override
+  String get invoiceAmount => 'Invoice Amount';
+
+  @override
+  String get invoiceDate => 'Invoice Date';
+
+  @override
+  String get invoicePaid => 'Paid';
+
+  @override
+  String get invoicePending => 'Pending';
+
+  @override
+  String get invoiceCancelled => 'Cancelled';
+
+  @override
+  String get invoiceDraft => 'Draft';
+
+  @override
+  String get invoiceOverdue => 'Overdue';
+
+  @override
+  String get invoiceSent => 'Sent';
+
+  @override
+  String get invoiceReturned => 'Returned';
+
+  @override
+  String get invoiceUnknown => 'Unknown';
+
+  @override
+  String andMoreInvoices(int count) {
+    return 'and $count more invoices...';
+  }
+
+  @override
+  String get customerContactInfo => 'Contact Information';
+
+  @override
+  String get customerAccountStatus => 'Account Status';
+
+  @override
+  String get customerQuickActions => 'Quick Actions';
+
+  @override
+  String get customerCompany => 'Company';
+
+  @override
+  String get customerActive => 'Active';
+
+  @override
+  String get customerInactive => 'Inactive';
+
+  @override
+  String get customerCreatedDate => 'Created Date';
+
+  @override
+  String get customerLastUpdated => 'Last Updated';
+
+  @override
+  String get customerAddressInfo => 'Address Information';
+
+  @override
+  String get customerFormHelp => 'Customer Form Help';
+
+  @override
+  String get customerFormHelpDescription =>
+      'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information';
+
+  @override
+  String get errorUpdatingCustomer => 'Error updating customer';
+
+  @override
+  String get errorDeletingCustomer => 'Error deleting customer';
+
+  @override
+  String get errorLoadingCustomer => 'Error loading customer';
+
+  @override
+  String get customerEmailRequired => 'Email is required';
+
+  @override
+  String get customerAddressRequired => 'Address is required';
+
+  @override
+  String get customerCompanyRequired => 'Company name is required';
+
+  @override
+  String get customerTaxNumberRequired => 'Tax number is required';
+
+  @override
+  String get customerCommercialRegisterRequired =>
+      'Commercial register is required';
+
+  @override
+  String get customerCityRequired => 'City is required';
+
+  @override
+  String get customerRegionRequired => 'Region is required';
+
+  @override
+  String get customerPostalCodeRequired => 'Postal code is required';
+
+  @override
+  String get customerDetailedAddressRequired => 'Detailed address is required';
+
+  @override
+  String get customerResponsiblePersonRequired =>
+      'Responsible person is required';
+
+  @override
+  String get customerNotesRequired => 'Notes are required';
+
+  @override
+  String get customerStatusRequired => 'Status is required';
+
+  @override
+  String get enterCustomerCompany => 'Enter company name';
+
+  @override
+  String get enterCustomerTaxNumber => 'Enter tax number';
+
+  @override
+  String get enterCustomerCommercialRegister => 'Enter commercial register';
+
+  @override
+  String get enterCustomerCity => 'Enter city';
+
+  @override
+  String get enterCustomerRegion => 'Enter region';
+
+  @override
+  String get enterCustomerPostalCode => 'Enter postal code';
+
+  @override
+  String get enterCustomerDetailedAddress => 'Enter detailed address';
+
+  @override
+  String get enterCustomerResponsiblePerson => 'Enter responsible person';
+
+  @override
+  String get enterCustomerNotes => 'Enter notes';
+
+  @override
+  String get selectCustomerStatus => 'Select customer status';
+
+  @override
+  String get customerFormTitle => 'Customer Form';
+
+  @override
+  String get customerFormDescription =>
+      'Fill out the form below to add a new customer to the system';
+
+  @override
+  String get viewCustomer => 'View Customer';
+
+  @override
+  String get customerOptions => 'Customer Options';
+
+  @override
+  String get customerActions => 'Customer Actions';
+
+  @override
+  String get customerList => 'Customer List';
+
+  @override
+  String get customerSearch => 'Search Customers';
+
+  @override
+  String get customerFilters => 'Customer Filters';
+
+  @override
+  String get customerSort => 'Sort Customers';
+
+  @override
+  String get customerExport => 'Export Customers';
+
+  @override
+  String get customerImport => 'Import Customers';
+
+  @override
+  String get customerReports => 'Customer Reports';
+
+  @override
+  String get customerStatistics => 'Customer Statistics';
+
+  @override
+  String get customerPerformance => 'Customer Performance';
+
+  @override
+  String get customerSatisfaction => 'Customer Satisfaction';
+
+  @override
+  String get customerRetention => 'Customer Retention';
+
+  @override
+  String get customerLoyalty => 'Customer Loyalty';
+
+  @override
+  String get customerValue => 'Customer Value';
+
+  @override
+  String get customerLifetimeValue => 'Customer Lifetime Value';
+
+  @override
+  String get customerAcquisition => 'Customer Acquisition';
+
+  @override
+  String get customerConversion => 'Customer Conversion';
+
+  @override
+  String get customerEngagement => 'Customer Engagement';
+
+  @override
+  String get customerFeedback => 'Customer Feedback';
+
+  @override
+  String get customerSupport => 'Customer Support';
+
+  @override
+  String get customerService => 'Customer Service';
+
+  @override
+  String get customerSuccess => 'Customer Success';
+
+  @override
+  String get customerOnboarding => 'Customer Onboarding';
+
+  @override
+  String get customerTraining => 'Customer Training';
+
+  @override
+  String get customerDocumentation => 'Customer Documentation';
+
+  @override
+  String get customerResources => 'Customer Resources';
+
+  @override
+  String get customerPortal => 'Customer Portal';
+
+  @override
+  String get customerDashboard => 'Customer Dashboard';
+
+  @override
+  String get customerProfile => 'Customer Profile';
+
+  @override
+  String get customerHistory => 'Customer History';
+
+  @override
+  String get customerTransactions => 'Customer Transactions';
+
+  @override
+  String get customerOrders => 'Customer Orders';
+
+  @override
+  String get customerInvoices => 'Customer Invoices';
+
+  @override
+  String get customerPayments => 'Customer Payments';
+
+  @override
+  String get customerCredits => 'Customer Credits';
+
+  @override
+  String get customerDebits => 'Customer Debits';
+
+  @override
+  String get customerBalance => 'Customer Balance';
+
+  @override
+  String get customerCreditLimit => 'Credit Limit';
+
+  @override
+  String get customerPaymentTerms => 'Payment Terms';
+
+  @override
+  String get customerDiscount => 'Customer Discount';
+
+  @override
+  String get customerTaxExempt => 'Tax Exempt';
+
+  @override
+  String get customerVip => 'VIP Customer';
+
+  @override
+  String get customerPriority => 'Customer Priority';
+
+  @override
+  String get customerSegment => 'Customer Segment';
+
+  @override
+  String get customerCategory => 'Customer Category';
+
+  @override
+  String get customerSize => 'Customer Size';
+
+  @override
+  String get customerIndustry => 'Customer Industry';
+
+  @override
+  String get customerLocation => 'Customer Location';
+
+  @override
+  String get customerTimezone => 'Timezone';
+
+  @override
+  String get customerLanguage => 'Customer Language';
+
+  @override
+  String get customerCurrency => 'Customer Currency';
+
+  @override
+  String get customerPreferences => 'Customer Preferences';
+
+  @override
+  String get customerSettings => 'Customer Settings';
+
+  @override
+  String get customerNotifications => 'Customer Notifications';
+
+  @override
+  String get customerAlerts => 'Customer Alerts';
+
+  @override
+  String get customerReminders => 'Customer Reminders';
+
+  @override
+  String get customerFollowUp => 'Customer Follow-up';
+
+  @override
+  String get customerCommunication => 'Customer Communication';
+
+  @override
+  String get customerMeetings => 'Customer Meetings';
+
+  @override
+  String get customerCalls => 'Customer Calls';
+
+  @override
+  String get customerEmails => 'Customer Emails';
+
+  @override
+  String get customerMessages => 'Customer Messages';
+
+  @override
+  String get customerChats => 'Customer Chats';
+
+  @override
+  String get customerTickets => 'Customer Tickets';
+
+  @override
+  String get customerIssues => 'Customer Issues';
+
+  @override
+  String get customerComplaints => 'Customer Complaints';
+
+  @override
+  String get customerRequests => 'Customer Requests';
+
+  @override
+  String get customerSuggestions => 'Customer Suggestions';
+
+  @override
+  String get customerReviews => 'Customer Reviews';
+
+  @override
+  String get customerRatings => 'Customer Ratings';
+
+  @override
+  String get customerTestimonials => 'Customer Testimonials';
+
+  @override
+  String get customerReferences => 'Customer References';
+
+  @override
+  String get customerRecommendations => 'Customer Recommendations';
+
+  @override
+  String get customerReferrals => 'Customer Referrals';
+
+  @override
+  String get customerPartnerships => 'Customer Partnerships';
+
+  @override
+  String get customerContracts => 'Customer Contracts';
+
+  @override
+  String get customerAgreements => 'Customer Agreements';
+
+  @override
+  String get customerTerms => 'Customer Terms';
+
+  @override
+  String get customerPolicies => 'Customer Policies';
+
+  @override
+  String get customerProcedures => 'Customer Procedures';
+
+  @override
+  String get customerGuidelines => 'Customer Guidelines';
+
+  @override
+  String get customerStandards => 'Customer Standards';
+
+  @override
+  String get customerRequirements => 'Customer Requirements';
+
+  @override
+  String get customerSpecifications => 'Customer Specifications';
+
+  @override
+  String get customerExpectations => 'Customer Expectations';
+
+  @override
+  String get customerGoals => 'Customer Goals';
+
+  @override
+  String get customerObjectives => 'Customer Objectives';
+
+  @override
+  String get customerTargets => 'Customer Targets';
+
+  @override
+  String get customerMilestones => 'Customer Milestones';
+
+  @override
+  String get customerDeadlines => 'Customer Deadlines';
+
+  @override
+  String get customerSchedules => 'Customer Schedules';
+
+  @override
+  String get customerTimelines => 'Customer Timelines';
+
+  @override
+  String get customerCalendars => 'Customer Calendars';
+
+  @override
+  String get customerEvents => 'Customer Events';
+
+  @override
+  String get customerActivities => 'Customer Activities';
+
+  @override
+  String get customerTasks => 'Customer Tasks';
+
+  @override
+  String get customerProjects => 'Customer Projects';
+
+  @override
+  String get customerCampaigns => 'Customer Campaigns';
+
+  @override
+  String get customerPromotions => 'Customer Promotions';
+
+  @override
+  String get customerOffers => 'Customer Offers';
+
+  @override
+  String get customerDeals => 'Customer Deals';
+
+  @override
+  String get customerSales => 'Customer Sales';
+
+  @override
+  String get customerRevenue => 'Customer Revenue';
+
+  @override
+  String get customerProfit => 'Customer Profit';
+
+  @override
+  String get customerMargin => 'Customer Margin';
+
+  @override
+  String get customerCost => 'Customer Cost';
+
+  @override
+  String get customerExpense => 'Customer Expense';
+
+  @override
+  String get customerInvestment => 'Customer Investment';
+
+  @override
+  String get customerReturn => 'Customer Return';
+
+  @override
+  String get customerRisk => 'Customer Risk';
+
+  @override
+  String get customerOpportunity => 'Customer Opportunity';
+
+  @override
+  String get customerThreat => 'Customer Threat';
+
+  @override
+  String get customerStrengths => 'Customer Strengths';
+
+  @override
+  String get customerWeaknesses => 'Customer Weaknesses';
+
+  @override
+  String get customerOpportunities => 'Customer Opportunities';
+
+  @override
+  String get customerThreats => 'Customer Threats';
+
+  @override
+  String get customerAnalysis => 'Customer Analysis';
+
+  @override
+  String get customerAssessment => 'Customer Assessment';
+
+  @override
+  String get customerEvaluation => 'Customer Evaluation';
+
+  @override
+  String get customerReview => 'Customer Review';
+
+  @override
+  String get customerAudit => 'Customer Audit';
+
+  @override
+  String get customerInspection => 'Customer Inspection';
+
+  @override
+  String get customerVerification => 'Customer Verification';
+
+  @override
+  String get customerValidation => 'Customer Validation';
+
+  @override
+  String get customerAuthentication => 'Customer Authentication';
+
+  @override
+  String get customerAuthorization => 'Customer Authorization';
+
+  @override
+  String get customerPermission => 'Customer Permission';
+
+  @override
+  String get customerAccess => 'Customer Access';
+
+  @override
+  String get customerSecurity => 'Customer Security';
+
+  @override
+  String get customerPrivacy => 'Customer Privacy';
+
+  @override
+  String get customerConfidentiality => 'Customer Confidentiality';
+
+  @override
+  String get customerData => 'Customer Data';
+
+  @override
+  String get customerRecords => 'Customer Records';
+
+  @override
+  String get customerFiles => 'Customer Files';
+
+  @override
+  String get customerDocuments => 'Customer Documents';
+
+  @override
+  String get customerArchives => 'Customer Archives';
+
+  @override
+  String get customerDatabase => 'Customer Database';
+
+  @override
+  String get customerRepository => 'Customer Repository';
+
+  @override
+  String get customerStorage => 'Customer Storage';
+
+  @override
+  String get customerBackup => 'Customer Backup';
+
+  @override
+  String get customerRecovery => 'Customer Recovery';
+
+  @override
+  String get customerRestore => 'Customer Restore';
+
+  @override
+  String get customerMigration => 'Customer Migration';
+
+  @override
+  String get customerIntegration => 'Customer Integration';
+
+  @override
+  String get customerSynchronization => 'Customer Synchronization';
+
+  @override
+  String get customerReplication => 'Customer Replication';
+
+  @override
+  String get customerDistribution => 'Customer Distribution';
+
+  @override
+  String get customerDeployment => 'Customer Deployment';
+
+  @override
+  String get customerImplementation => 'Customer Implementation';
+
+  @override
+  String get customerInstallation => 'Customer Installation';
+
+  @override
+  String get customerConfiguration => 'Customer Configuration';
+
+  @override
+  String get customerCustomization => 'Customer Customization';
+
+  @override
+  String get customerPersonalization => 'Customer Personalization';
+
+  @override
+  String get customerLocalization => 'Customer Localization';
+
+  @override
+  String get customerInternationalization => 'Customer Internationalization';
+
+  @override
+  String get customerTranslation => 'Customer Translation';
+
+  @override
+  String get customerRegionalization => 'Customer Regionalization';
+
+  @override
+  String get customerGlobalization => 'Customer Globalization';
+
+  @override
+  String get customerMultilingual => 'Customer Multilingual';
+
+  @override
+  String get customerMulticultural => 'Customer Multicultural';
+
+  @override
+  String get customerDiversity => 'Customer Diversity';
+
+  @override
+  String get customerInclusion => 'Customer Inclusion';
+
+  @override
+  String get customerEquity => 'Customer Equity';
+
+  @override
+  String get customerFairness => 'Customer Fairness';
+
+  @override
+  String get customerTransparency => 'Customer Transparency';
+
+  @override
+  String get customerAccountability => 'Customer Accountability';
+
+  @override
+  String get customerResponsibility => 'Customer Responsibility';
+
+  @override
+  String get customerLiability => 'Customer Liability';
+
+  @override
+  String get customerObligation => 'Customer Obligation';
+
+  @override
+  String get customerDuty => 'Customer Duty';
+
+  @override
+  String get customerCommitment => 'Customer Commitment';
+
+  @override
+  String get customerPromise => 'Customer Promise';
+
+  @override
+  String get customerGuarantee => 'Customer Guarantee';
+
+  @override
+  String get customerWarranty => 'Customer Warranty';
+
+  @override
+  String get customerAssurance => 'Customer Assurance';
+
+  @override
+  String get customerConfidence => 'Customer Confidence';
+
+  @override
+  String get customerTrust => 'Customer Trust';
+
+  @override
+  String get customerReliability => 'Customer Reliability';
+
+  @override
+  String get customerDependability => 'Customer Dependability';
+
+  @override
+  String get customerConsistency => 'Customer Consistency';
+
+  @override
+  String get customerStability => 'Customer Stability';
+
+  @override
+  String get customerPredictability => 'Customer Predictability';
+
+  @override
+  String get customerFlexibility => 'Customer Flexibility';
+
+  @override
+  String get customerAdaptability => 'Customer Adaptability';
+
+  @override
+  String get customerScalability => 'Customer Scalability';
+
+  @override
+  String get customerSustainability => 'Customer Sustainability';
+
+  @override
+  String get customerGrowth => 'Customer Growth';
+
+  @override
+  String get customerDevelopment => 'Customer Development';
+
+  @override
+  String get customerImprovement => 'Customer Improvement';
+
+  @override
+  String get customerEnhancement => 'Customer Enhancement';
+
+  @override
+  String get customerOptimization => 'Customer Optimization';
+
+  @override
+  String get customerEfficiency => 'Customer Efficiency';
+
+  @override
+  String get customerEffectiveness => 'Customer Effectiveness';
+
+  @override
+  String get customerProductivity => 'Customer Productivity';
+
+  @override
+  String get customerQuality => 'Customer Quality';
+
+  @override
+  String get customerExcellence => 'Customer Excellence';
+
+  @override
+  String get customerInnovation => 'Customer Innovation';
+
+  @override
+  String get customerCreativity => 'Customer Creativity';
+
+  @override
+  String get customerOriginality => 'Customer Originality';
+
+  @override
+  String get customerUniqueness => 'Customer Uniqueness';
+
+  @override
+  String get customerDistinctiveness => 'Customer Distinctiveness';
+
+  @override
+  String get customerSpecialization => 'Customer Specialization';
+
+  @override
+  String get customerExpertise => 'Customer Expertise';
+
+  @override
+  String get customerKnowledge => 'Customer Knowledge';
+
+  @override
+  String get customerSkills => 'Customer Skills';
+
+  @override
+  String get customerAbilities => 'Customer Abilities';
+
+  @override
+  String get customerCapabilities => 'Customer Capabilities';
+
+  @override
+  String get customerCompetencies => 'Customer Competencies';
+
+  @override
+  String get customerQualifications => 'Customer Qualifications';
+
+  @override
+  String get customerCredentials => 'Customer Credentials';
+
+  @override
+  String get customerCertifications => 'Customer Certifications';
+
+  @override
+  String get customerLicenses => 'Customer Licenses';
+
+  @override
+  String get customerPermits => 'Customer Permits';
+
+  @override
+  String get customerApprovals => 'Customer Approvals';
+
+  @override
+  String get customerAuthorizations => 'Customer Authorizations';
+
+  @override
+  String get customerEndorsements => 'Customer Endorsements';
+
+  @override
+  String get customerComments => 'Customer Comments';
+
+  @override
+  String get customerIdeas => 'Customer Ideas';
+
+  @override
+  String get customerProposals => 'Customer Proposals';
+
+  @override
+  String get customerPlans => 'Customer Plans';
+
+  @override
+  String get customerStrategies => 'Customer Strategies';
+
+  @override
+  String get customerTactics => 'Customer Tactics';
+
+  @override
+  String get customerMethods => 'Customer Methods';
+
+  @override
+  String get customerApproaches => 'Customer Approaches';
+
+  @override
+  String get customerTechniques => 'Customer Techniques';
+
+  @override
+  String get customerTools => 'Customer Tools';
+
+  @override
+  String get customerAssets => 'Customer Assets';
+
+  @override
+  String get customerCapital => 'Customer Capital';
+
+  @override
+  String get customerFunding => 'Customer Funding';
+
+  @override
+  String get customerFinancing => 'Customer Financing';
+
+  @override
+  String get customerBudget => 'Customer Budget';
+
+  @override
+  String get customerPrice => 'Customer Price';
+
+  @override
+  String get customerWorth => 'Customer Worth';
+
+  @override
+  String get customerBenefit => 'Customer Benefit';
+
+  @override
+  String get customerAdvantage => 'Customer Advantage';
+
+  @override
+  String get customerGain => 'Customer Gain';
+
+  @override
+  String get customerIncome => 'Customer Income';
+
+  @override
+  String get customerEarnings => 'Customer Earnings';
+
+  @override
+  String get customerSavings => 'Customer Savings';
+
+  @override
+  String get customerWealth => 'Customer Wealth';
+
+  @override
+  String get customerFortune => 'Customer Fortune';
+
+  @override
+  String get customerAchievement => 'Customer Achievement';
+
+  @override
+  String get customerAccomplishment => 'Customer Accomplishment';
+
+  @override
+  String get customerVictory => 'Customer Victory';
+
+  @override
+  String get customerTriumph => 'Customer Triumph';
+
+  @override
+  String get customerWin => 'Customer Win';
+
+  @override
+  String get customerEdge => 'Customer Edge';
+
+  @override
+  String get customerSuperiority => 'Customer Superiority';
+
+  @override
+  String get customerPerfection => 'Customer Perfection';
+
+  @override
+  String get customerFlawlessness => 'Customer Flawlessness';
+
+  @override
+  String get customerIdeal => 'Customer Ideal';
+
+  @override
+  String get customerOptimal => 'Customer Optimal';
+
+  @override
+  String get customerBest => 'Customer Best';
+
+  @override
+  String get customerTop => 'Customer Top';
+
+  @override
+  String get customerHighest => 'Customer Highest';
+
+  @override
+  String get customerMaximum => 'Customer Maximum';
+
+  @override
+  String get customerPeak => 'Customer Peak';
+
+  @override
+  String get customerSummit => 'Customer Summit';
+
+  @override
+  String get customerPinnacle => 'Customer Pinnacle';
+
+  @override
+  String get customerCrown => 'Customer Crown';
+
+  @override
+  String get customerJewel => 'Customer Jewel';
+
+  @override
+  String get customerGem => 'Customer Gem';
+
+  @override
+  String get customerTreasure => 'Customer Treasure';
+
+  @override
+  String get customerGold => 'Customer Gold';
+
+  @override
+  String get customerDiamond => 'Customer Diamond';
+
+  @override
+  String get customerPearl => 'Customer Pearl';
+
+  @override
+  String get customerRuby => 'Customer Ruby';
+
+  @override
+  String get customerEmerald => 'Customer Emerald';
+
+  @override
+  String get customerSapphire => 'Customer Sapphire';
+
+  @override
+  String get customerAmethyst => 'Customer Amethyst';
+
+  @override
+  String get customerTopaz => 'Customer Topaz';
+
+  @override
+  String get customerGarnet => 'Customer Garnet';
+
+  @override
+  String get customerOpal => 'Customer Opal';
+
+  @override
+  String get customerTurquoise => 'Customer Turquoise';
+
+  @override
+  String get customerCoral => 'Customer Coral';
+
+  @override
+  String get customerJade => 'Customer Jade';
+
+  @override
+  String get customerAgate => 'Customer Agate';
+
+  @override
+  String get customerOnyx => 'Customer Onyx';
+
+  @override
+  String get customerQuartz => 'Customer Quartz';
+
+  @override
+  String get customerCrystal => 'Customer Crystal';
+
+  @override
+  String get customerAmber => 'Customer Amber';
+
+  @override
+  String get customerJet => 'Customer Jet';
+
+  @override
+  String get customerIvory => 'Customer Ivory';
+
+  @override
+  String get customerBone => 'Customer Bone';
+
+  @override
+  String get customerWood => 'Customer Wood';
+
+  @override
+  String get customerStone => 'Customer Stone';
+
+  @override
+  String get customerRock => 'Customer Rock';
+
+  @override
+  String get customerMetal => 'Customer Metal';
+
+  @override
+  String get customerIron => 'Customer Iron';
+
+  @override
+  String get customerSteel => 'Customer Steel';
+
+  @override
+  String get customerCopper => 'Customer Copper';
+
+  @override
+  String get customerBronze => 'Customer Bronze';
+
+  @override
+  String get customerSilver => 'Customer Silver';
+
+  @override
+  String get customerPlatinum => 'Customer Platinum';
+
+  @override
+  String get customerTitanium => 'Customer Titanium';
+
+  @override
+  String get customerAluminum => 'Customer Aluminum';
+
+  @override
+  String get customerZinc => 'Customer Zinc';
+
+  @override
+  String get customerLead => 'Customer Lead';
+
+  @override
+  String get customerTin => 'Customer Tin';
+
+  @override
+  String get customerNickel => 'Customer Nickel';
+
+  @override
+  String get customerChromium => 'Customer Chromium';
+
+  @override
+  String get customerManganese => 'Customer Manganese';
+
+  @override
+  String get customerCobalt => 'Customer Cobalt';
+
+  @override
+  String get customerVanadium => 'Customer Vanadium';
+
+  @override
+  String get customerTungsten => 'Customer Tungsten';
+
+  @override
+  String get customerMolybdenum => 'Customer Molybdenum';
+
+  @override
+  String get customerTantalum => 'Customer Tantalum';
+
+  @override
+  String get customerNiobium => 'Customer Niobium';
+
+  @override
+  String get customerHafnium => 'Customer Hafnium';
+
+  @override
+  String get customerZirconium => 'Customer Zirconium';
+
+  @override
+  String get customerRuthenium => 'Customer Ruthenium';
+
+  @override
+  String get customerRhodium => 'Customer Rhodium';
+
+  @override
+  String get customerPalladium => 'Customer Palladium';
+
+  @override
+  String get customerOsmium => 'Customer Osmium';
+
+  @override
+  String get customerIridium => 'Customer Iridium';
+
+  @override
+  String get customerRhenium => 'Customer Rhenium';
+
+  @override
+  String get customerTechnetium => 'Customer Technetium';
+
+  @override
+  String get customerPromethium => 'Customer Promethium';
+
+  @override
+  String get customerPolonium => 'Customer Polonium';
+
+  @override
+  String get customerAstatine => 'Customer Astatine';
+
+  @override
+  String get customerRadon => 'Customer Radon';
+
+  @override
+  String get customerFrancium => 'Customer Francium';
+
+  @override
+  String get customerRadium => 'Customer Radium';
+
+  @override
+  String get customerActinium => 'Customer Actinium';
+
+  @override
+  String get customerThorium => 'Customer Thorium';
+
+  @override
+  String get customerProtactinium => 'Customer Protactinium';
+
+  @override
+  String get customerUranium => 'Customer Uranium';
+
+  @override
+  String get customerNeptunium => 'Customer Neptunium';
+
+  @override
+  String get customerPlutonium => 'Customer Plutonium';
+
+  @override
+  String get customerAmericium => 'Customer Americium';
+
+  @override
+  String get customerCurium => 'Customer Curium';
+
+  @override
+  String get customerBerkelium => 'Customer Berkelium';
+
+  @override
+  String get customerCalifornium => 'Customer Californium';
+
+  @override
+  String get customerEinsteinium => 'Customer Einsteinium';
+
+  @override
+  String get customerFermium => 'Customer Fermium';
+
+  @override
+  String get customerMendelevium => 'Customer Mendelevium';
+
+  @override
+  String get customerNobelium => 'Customer Nobelium';
+
+  @override
+  String get customerLawrencium => 'Customer Lawrencium';
+
+  @override
+  String get customerRutherfordium => 'Customer Rutherfordium';
+
+  @override
+  String get customerDubnium => 'Customer Dubnium';
+
+  @override
+  String get customerSeaborgium => 'Customer Seaborgium';
+
+  @override
+  String get customerBohrium => 'Customer Bohrium';
+
+  @override
+  String get customerHassium => 'Customer Hassium';
+
+  @override
+  String get customerMeitnerium => 'Customer Meitnerium';
+
+  @override
+  String get customerDarmstadtium => 'Customer Darmstadtium';
+
+  @override
+  String get customerRoentgenium => 'Customer Roentgenium';
+
+  @override
+  String get customerCopernicium => 'Customer Copernicium';
+
+  @override
+  String get customerNihonium => 'Customer Nihonium';
+
+  @override
+  String get customerFlerovium => 'Customer Flerovium';
+
+  @override
+  String get customerMoscovium => 'Customer Moscovium';
+
+  @override
+  String get customerLivermorium => 'Customer Livermorium';
+
+  @override
+  String get customerTennessine => 'Customer Tennessine';
+
+  @override
+  String get customerOganesson => 'Customer Oganesson';
+
+  @override
+  String get filterCustomers => 'Filter Customers';
+
+  @override
+  String get filters => 'Filters';
+
+  @override
+  String get sortBy => 'Sort By';
+
+  @override
+  String get sortOrder => 'Sort Order';
+
+  @override
+  String get sortByName => 'Name';
+
+  @override
+  String get sortByEmail => 'Email';
+
+  @override
+  String get sortByCreatedAt => 'Created Date';
+
+  @override
+  String get sortByUpdatedAt => 'Updated Date';
+
+  @override
+  String get ascending => 'Ascending';
+
+  @override
+  String get descending => 'Descending';
+
+  @override
+  String get applyFilters => 'Apply Filters';
+
+  @override
+  String get resetFilters => 'Reset';
+
+  @override
+  String get activeStatus => 'Active';
+
+  @override
+  String get inactiveStatus => 'Inactive';
 }

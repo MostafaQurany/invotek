@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
-import 'package:invotek/features/customers/demo/cubit/customers_cubit.dart';
+import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
