@@ -23,12 +23,14 @@ class GetCustomerInvoices
 class GetCustomerInvoicesParams {
   final int customerId;
   final int? limit;
+  final int? page;
   final String? sortBy;
   final String? sortOrder;
 
   const GetCustomerInvoicesParams({
     required this.customerId,
-    this.limit = 5,
+    this.limit = 10,
+    this.page = 1,
     this.sortBy = 'updated_at',
     this.sortOrder = 'desc',
   });
@@ -38,6 +40,7 @@ class GetCustomerInvoicesParams {
     return GetAllInvoicesRequest(
       customerId: customerId.toString(),
       limit: limit?.toString(),
+      page: page?.toString(),
       sortBy: sortBy,
       sortOrder: sortOrder,
     );

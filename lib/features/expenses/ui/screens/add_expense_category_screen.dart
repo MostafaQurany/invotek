@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/ui/widgets/fields/category_name_field.dart';
 import 'package:invotek/features/expenses/ui/widgets/fields/category_description_field.dart';
 import 'package:invotek/features/expenses/ui/widgets/fields/icon_selection_field.dart';

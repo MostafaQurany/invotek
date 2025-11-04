@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/products/ui/widgets/cards/animated_card.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 
 class ProductInfoCard extends StatelessWidget {
   final ProductModel product;
@@ -16,118 +15,107 @@ class ProductInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedCard(
-      delay: Duration(milliseconds: 400),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.info_outline, color: AppColors.primary, size: 24.sp),
-              SizedBox(width: 12.w),
-              Text(
-                'Product Information',
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.info_outline, color: AppColors.primary, size: 24.sp),
+                SizedBox(width: 12.w),
+                Text(
+                  'Product Information',
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
+              ],
+            ),
+            SizedBox(height: 20.h),
 
-          // Description
-          if (product.description != null && product.description!.isNotEmpty)
+            // Description
+            if (product.description != null && product.description!.isNotEmpty)
+              _buildInfoTile(
+                icon: Icons.description_outlined,
+                label: 'Description',
+                value: product.description!,
+              ),
+
+            if (product.description != null && product.description!.isNotEmpty)
+              SizedBox(height: 16.h),
+
+            // Cost Price
             _buildInfoTile(
-              icon: Icons.description_outlined,
-              label: 'Description',
-              value: product.description!,
+              icon: Icons.attach_money_outlined,
+              label: 'Cost Price',
+              value: product.cost != null ? '${product.cost!}' : 'Not set',
             ),
 
-          if (product.description != null && product.description!.isNotEmpty)
             SizedBox(height: 16.h),
 
-          // Cost Price
-          _buildInfoTile(
-            icon: Icons.attach_money_outlined,
-            label: 'Cost Price',
-            value: product.cost != null ? 'SAR ${product.cost!}' : 'Not set',
-          ),
+            // Tax Rate
+            _buildInfoTile(
+              icon: Icons.percent_outlined,
+              label: 'Tax Rate',
+              value: '${product.taxRate ?? '0.0'}%',
+            ),
 
-          SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-          // Tax Rate
-          _buildInfoTile(
-            icon: Icons.percent_outlined,
-            label: 'Tax Rate',
-            value: '${product.taxRate ?? '0.0'}%',
-          ),
+            // Unit
+            _buildInfoTile(
+              icon: Icons.straighten_outlined,
+              label: 'Unit',
+              value: product.unit ?? 'Not specified',
+            ),
 
-          SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-          // Unit
-          _buildInfoTile(
-            icon: Icons.straighten_outlined,
-            label: 'Unit',
-            value: product.unit ?? 'Not specified',
-          ),
+            // Barcode
+            _buildInfoTile(
+              icon: Icons.qr_code_outlined,
+              label: 'Barcode',
+              value: product.barcode ?? 'Not set',
+              onAction: product.barcode != null
+                  ? () => onCopyToClipboard(product.barcode!)
+                  : null,
+              actionLabel: 'Copy',
+            ),
 
-          SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-          // Barcode
-          _buildInfoTile(
-            icon: Icons.qr_code_outlined,
-            label: 'Barcode',
-            value: product.barcode ?? 'Not set',
-            onAction: product.barcode != null
-                ? () => onCopyToClipboard(product.barcode!)
-                : null,
-            actionLabel: 'Copy',
-          ),
+            // Taxable
+            _buildInfoTile(
+              icon: Icons.receipt_outlined,
+              label: 'Taxable',
+              value: product.hasTax == true ? 'Yes' : 'No',
+              valueColor: product.hasTax == true
+                  ? AppColors.success
+                  : AppColors.greyDark,
+            ),
 
-          SizedBox(height: 16.h),
+            SizedBox(height: 16.h),
 
-          // Taxable
-          _buildInfoTile(
-            icon: Icons.receipt_outlined,
-            label: 'Taxable',
-            value: product.hasTax == true ? 'Yes' : 'No',
-            valueColor: product.hasTax == true
-                ? AppColors.success
-                : AppColors.greyDark,
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Track Inventory
-          _buildInfoTile(
-            icon: Icons.inventory_outlined,
-            label: 'Track Inventory',
-            value: product.trackInventory == true ? 'Yes' : 'No',
-            valueColor: product.trackInventory == true
-                ? AppColors.success
-                : AppColors.greyDark,
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Created Date
-          _buildInfoTile(
-            icon: Icons.calendar_today_outlined,
-            label: 'Created',
-            value: _formatDate(product.createdAt),
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Updated Date
-          _buildInfoTile(
-            icon: Icons.update_outlined,
-            label: 'Last Updated',
-            value: _formatDate(product.updatedAt),
-          ),
-        ],
+            // Track Inventory
+            _buildInfoTile(
+              icon: Icons.inventory_outlined,
+              label: 'Track Inventory',
+              value: product.trackInventory == true ? 'Yes' : 'No',
+              valueColor: product.trackInventory == true
+                  ? AppColors.success
+                  : AppColors.greyDark,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -189,10 +177,5 @@ class ProductInfoCard extends StatelessWidget {
           ),
       ],
     );
-  }
-
-  String _formatDate(DateTime? date) {
-    if (date == null) return 'Not available';
-    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
 }

@@ -1,5 +1,5 @@
 class ApiConstants {
-  // 
+  //
   static const String baserUrl = "https://demo.invotik.com/api/";
   static const String login = "login";
   static const String register = "register";
@@ -10,6 +10,11 @@ class ApiConstants {
   static const String resetPassword = "reset-password";
   static const String changePassword = "profile/change-password";
   static const String deleteAccount = "profile/account";
+  // profile
+  static const String profile = "profile"; // GET show, POST update
+  static const String profilePhoto = "profile/photo"; // POST multipart
+  // company settings
+  static const String companySettings = "company/settings"; // GET
 
   // products
   static const String products = "company/products";

@@ -75,10 +75,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor: colorScheme.surface,
-        elevation: 3,
         scrolledUnderElevation: 1,
         leading: IconButton(
           onPressed: () {
@@ -86,7 +84,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           },
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: colorScheme.onSurface,
+            color: AppColors.primary,
             size: 24.sp,
           ),
         ),

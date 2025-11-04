@@ -2230,8 +2230,8 @@ abstract class S {
   /// No description provided for @errorOccurred.
   ///
   /// In en, this message translates to:
-  /// **'An error occurred: {error}'**
-  String errorOccurred(Object error);
+  /// **'Error Occurred'**
+  String get errorOccurred;
 
   /// No description provided for @company.
   ///
@@ -8957,6 +8957,42 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Inactive'**
   String get inactiveStatus;
+
+  /// No description provided for @updatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated Successfully'**
+  String get updatedSuccessfully;
+
+  /// No description provided for @photoUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo Updated Successfully'**
+  String get photoUpdatedSuccessfully;
+
+  /// No description provided for @errorOccurredWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Occurred: {message}'**
+  String errorOccurredWithMessage(Object message);
+
+  /// No description provided for @updatePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Photo'**
+  String get updatePhoto;
+
+  /// No description provided for @position.
+  ///
+  /// In en, this message translates to:
+  /// **'Position'**
+  String get position;
+
+  /// No description provided for @fieldIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'{field} is required'**
+  String fieldIsRequired(String field);
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

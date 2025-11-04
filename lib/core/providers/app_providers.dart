@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
+import 'package:invotek/core/cubits/permissions_cubit.dart'
+    as CorePermissionsCubit;
 import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
-import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
-import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
-import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
-import 'package:invotek/core/cubits/permissions_cubit.dart'
-    as CorePermissionsCubit;
-import 'package:invotek/core/cubits/localization_cubit.dart';
-import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
-import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/features/home/cubit/dashboard_cubit.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/home/data/repository/dashboard_repository.dart';
-import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
+import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/settings/cubit/settings_cubit.dart';
-import 'package:invotek/features/settings/data/repository/settings_repository.dart';
 import 'package:invotek/features/settings/data/data_source/settings_data_source.dart';
+import 'package:invotek/features/settings/data/repository/settings_repository.dart';
+import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
+import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 
 /// Centralized provider for all cubits in the app
 class AppProviders {

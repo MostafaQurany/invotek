@@ -5,10 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
-import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
+import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
 import 'package:invotek/generated/l10n.dart';
 

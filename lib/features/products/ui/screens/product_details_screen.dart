@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/widgets/animated_entry_widget.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/products/ui/widgets/cards/product_details_header.dart';
-import 'package:invotek/features/products/ui/widgets/cards/product_summary_card.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/product_info_card.dart';
-import 'package:invotek/features/products/ui/widgets/cards/product_details_bottom_actions.dart';
+import 'package:invotek/features/products/ui/widgets/cards/product_summary_card.dart';
 import 'package:invotek/features/products/ui/widgets/dialogs/delete_product_dialog.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -26,57 +23,121 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     final product = widget.product;
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // Modern Header with Animation
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration.zero,
-              child: ProductDetailsHeader(
-                product: product,
-                onBack: () => Navigator.pop(context),
-                onEdit: () => _editProduct(),
-              ),
-            ),
+      backgroundColor: AppColors.whiteGray,
+      appBar: AppBar(
+        title: Text('Product Details'),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.textPrimary,
+        elevation: 0,
+        scrolledUnderElevation: 1,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.edit_outlined, color: AppColors.textPrimary),
+            onPressed: () => _editProduct(),
           ),
-
-          // Space with Animation
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 200),
-              child: SizedBox(height: 16.h),
-            ),
-          ),
-
-          // Content Cards with Staggered Animation
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: StaggeredAnimatedList(
-                staggerDelay: Duration(milliseconds: 150),
-                children: [
-                  ProductSummaryCard(product: product),
-                  SizedBox(height: 16.h),
-                  ProductInfoCard(
-                    product: product,
-                    onCopyToClipboard: _copyToClipboard,
-                  ),
-                  // SizedBox(height: 16.h),
-                  // ProductInsightsCard(product: product),
-                  SizedBox(height: 15.h), // Space for bottom actions
-                ],
-              ),
-            ),
-          ),
+          SizedBox(width: 8.w),
         ],
       ),
-
-      // Bottom Actions with Animation
-      bottomNavigationBar: AnimatedEntryWidget(
-        delay: Duration(milliseconds: 800),
-        child: ProductDetailsBottomActions(
-          onDelete: () => _showDeleteConfirmation(),
-          onEdit: () => _editProduct(),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ProductSummaryCard(product: product),
+            SizedBox(height: 16.h),
+            ProductInfoCard(
+              product: product,
+              onCopyToClipboard: _copyToClipboard,
+            ),
+            SizedBox(height: 80.h), // Space for bottom buttons
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: () => _showDeleteConfirmation(),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: AppColors.error),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.delete_outline,
+                        color: AppColors.error,
+                        size: 20.sp,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        'Delete',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.error,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 12.w),
+              Expanded(
+                flex: 2,
+                child: FilledButton(
+                  onPressed: () => _editProduct(),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.edit_outlined,
+                        color: AppColors.white,
+                        size: 20.sp,
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        'Edit Product',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -89,6 +150,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       SnackBar(
         content: Text('Copied to clipboard'),
         backgroundColor: AppColors.success,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
     );
   }
@@ -108,42 +173,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Navigator.pop(context, 'deleted'); // Go back to list with result
         },
       ),
-    );
-  }
-}
-
-// Convenience widget for staggered animations
-class StaggeredAnimatedList extends StatelessWidget {
-  final List<Widget> children;
-  final Duration staggerDelay;
-  final Duration animationDuration;
-  final Offset slideOffset;
-  final Curve curve;
-
-  const StaggeredAnimatedList({
-    super.key,
-    required this.children,
-    this.staggerDelay = const Duration(milliseconds: 100),
-    this.animationDuration = const Duration(milliseconds: 600),
-    this.slideOffset = const Offset(0, 0.3),
-    this.curve = Curves.easeOutCubic,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: children.asMap().entries.map((entry) {
-        final index = entry.key;
-        final child = entry.value;
-
-        return AnimatedEntryWidget(
-          delay: Duration(milliseconds: index * staggerDelay.inMilliseconds),
-          duration: animationDuration,
-          offset: slideOffset,
-          curve: curve,
-          child: child,
-        );
-      }).toList(),
     );
   }
 }

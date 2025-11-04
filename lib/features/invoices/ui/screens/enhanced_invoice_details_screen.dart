@@ -1,33 +1,33 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
-import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/core/widgets/error_widget.dart' as custom;
+import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/core/routes/app_routes.dart';
-import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
-import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
-import 'package:invotek/features/invoices/ui/widgets/cards/invoice_summary_card.dart';
-import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
-import 'package:invotek/core/utils/snackbar_helper.dart';
-import 'package:invotek/features/invoices/ui/widgets/cards/invoice_payment_card.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_additional_info_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_payment_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/cards/invoice_summary_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
-import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/qr_code_dialog.dart';
-import 'package:invotek/generated/l10n.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
+import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
+import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
-import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
+import 'package:invotek/generated/l10n.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// شاشة تفاصيل الفاتورة المحسنة مع دعم استدعاء API وإدارة الحالة
 class EnhancedInvoiceDetailsScreen extends StatefulWidget {
@@ -104,7 +104,7 @@ class _EnhancedInvoiceDetailsScreenState
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(S.of(context).errorOccurred(error)),
+                        content: Text(S.of(context).errorOccurredWithMessage(error.message)),
                         backgroundColor: AppColors.error,
                       ),
                     );

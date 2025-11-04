@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/animated_card.dart';
 
 class ProductInsightsCard extends StatelessWidget {

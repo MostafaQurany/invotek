@@ -16,6 +16,7 @@ class CreateCategory
     return await repository.createProductCategory(
       name: params.name,
       status: params.status,
+      description: params.description,
     );
   }
 }
@@ -23,6 +24,11 @@ class CreateCategory
 class CreateCategoryParams {
   final String name;
   final String? status;
+  final String? description;
 
-  const CreateCategoryParams({required this.name, this.status});
+  const CreateCategoryParams({
+    required this.name,
+    this.status,
+    this.description,
+  });
 }

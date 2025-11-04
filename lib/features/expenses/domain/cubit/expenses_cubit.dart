@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/expenses/data/repository/expenses_repository.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
 
 part 'expenses_cubit.freezed.dart';
 
@@ -75,6 +75,8 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   String? _lastSearch;
   String? _lastStatus;
   int? _lastCategoryId;
+  String? _lastSortBy;
+  String? _lastSortOrder;
   int _pageSize = 20;
   bool _isLoadingPage = false;
 
@@ -84,12 +86,15 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   bool get hasMore => _currentPage < _totalPages;
+  bool get isLoadingPage => _isLoadingPage;
 
   Future<void> loadFirstPage({
     bool refresh = false,
     String? search,
     String? status,
     int? categoryId,
+    String? sortBy,
+    String? sortOrder,
     int? limit,
   }) async {
     if (_isLoadingPage) return;
@@ -99,6 +104,8 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     _lastSearch = search;
     _lastStatus = status;
     _lastCategoryId = categoryId;
+    _lastSortBy = sortBy;
+    _lastSortOrder = sortOrder;
     _pageSize = limit ?? _pageSize;
 
     _expenses.clear();
@@ -114,24 +121,42 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       ),
     );
 
-    final result = await _repository.getExpenses(
+    final result = await _repository.getExpensesWithPagination(
       search: _lastSearch,
       status: _lastStatus,
       categoryId: _lastCategoryId,
       page: _currentPage,
       limit: _pageSize,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
     );
 
     result.when(
-      success: (pageExpenses) {
+      success: (pagination) {
+        final pageExpenses = pagination.expenses
+            .map(
+              (e) => ExpenseModel(
+                id: e.id,
+                companyId: e.companyId,
+                expenseCategoryId: e.expenseCategoryId,
+                title: e.title,
+                description: e.description,
+                amount: double.parse(e.amount),
+                expenseDate: e.expenseDate,
+                referenceNumber: e.referenceNumber,
+                paymentMethod: e.paymentMethod,
+                notes: e.notes,
+                attachment: e.attachment,
+                createdBy: e.createdBy.toString(),
+                createdAt: e.createdAt,
+                updatedAt: e.updatedAt,
+              ),
+            )
+            .toList();
+
         _expenses.addAll(pageExpenses);
-        // If repository can return pagination meta, wire it; otherwise estimate
-        // For now, keep totalPages as current when page not full
-        if (pageExpenses.length < _pageSize) {
-          _totalPages = _currentPage; // no more pages
-        } else {
-          _totalPages = _currentPage + 1; // optimistic next
-        }
+        _currentPage = pagination.currentPage;
+        _totalPages = pagination.totalPages;
         emit(
           ExpensesState.loaded(
             expenses: _expenses,
@@ -165,27 +190,46 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         expenses: _expenses,
         currentPage: _currentPage,
         totalPages: _totalPages,
-        message: 'loading_next',
+        message: 'loading_more',
       ),
     );
 
-    final result = await _repository.getExpenses(
+    final result = await _repository.getExpensesWithPagination(
       search: _lastSearch,
       status: _lastStatus,
       categoryId: _lastCategoryId,
       page: nextPage,
       limit: _pageSize,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
     );
 
     result.when(
-      success: (pageExpenses) {
-        _currentPage = nextPage;
+      success: (pagination) {
+        final pageExpenses = pagination.expenses
+            .map(
+              (e) => ExpenseModel(
+                id: e.id,
+                companyId: e.companyId,
+                expenseCategoryId: e.expenseCategoryId,
+                title: e.title,
+                description: e.description,
+                amount: double.parse(e.amount),
+                expenseDate: e.expenseDate,
+                referenceNumber: e.referenceNumber,
+                paymentMethod: e.paymentMethod,
+                notes: e.notes,
+                attachment: e.attachment,
+                createdBy: e.createdBy.toString(),
+                createdAt: e.createdAt,
+                updatedAt: e.updatedAt,
+              ),
+            )
+            .toList();
+
+        _currentPage = pagination.currentPage;
+        _totalPages = pagination.totalPages;
         _expenses.addAll(pageExpenses);
-        if (pageExpenses.length < _pageSize) {
-          _totalPages = _currentPage; // reached last page
-        } else {
-          _totalPages = _currentPage + 1; // optimistic next
-        }
         emit(
           ExpensesState.loaded(
             expenses: _expenses,
@@ -214,6 +258,8 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       search: _lastSearch,
       status: _lastStatus,
       categoryId: _lastCategoryId,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
       limit: _pageSize,
     );
   }

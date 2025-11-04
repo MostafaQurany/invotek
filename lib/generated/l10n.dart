@@ -3600,13 +3600,13 @@ class S {
     );
   }
 
-  /// `An error occurred: {error}`
-  String errorOccurred(Object error) {
+  /// `Error Occurred`
+  String get errorOccurred {
     return Intl.message(
-      'An error occurred: $error',
+      'Error Occurred',
       name: 'errorOccurred',
       desc: '',
-      args: [error],
+      args: [],
     );
   }
 
@@ -14809,6 +14809,66 @@ class S {
       name: 'inactiveStatus',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Updated Successfully`
+  String get updatedSuccessfully {
+    return Intl.message(
+      'Updated Successfully',
+      name: 'updatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Photo Updated Successfully`
+  String get photoUpdatedSuccessfully {
+    return Intl.message(
+      'Photo Updated Successfully',
+      name: 'photoUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error Occurred: {message}`
+  String errorOccurredWithMessage(Object message) {
+    return Intl.message(
+      'Error Occurred: $message',
+      name: 'errorOccurredWithMessage',
+      desc: '',
+      args: [message],
+    );
+  }
+
+  /// `Update Photo`
+  String get updatePhoto {
+    return Intl.message(
+      'Update Photo',
+      name: 'updatePhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Position`
+  String get position {
+    return Intl.message(
+      'Position',
+      name: 'position',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{field} is required`
+  String fieldIsRequired(String field) {
+    return Intl.message(
+      '$field is required',
+      name: 'fieldIsRequired',
+      desc: '',
+      args: [field],
     );
   }
 }

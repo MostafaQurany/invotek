@@ -6,11 +6,13 @@ import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen_with_provider.dart';
+import 'package:invotek/features/expenses/ui/screens/expenses_list_screen_with_provider.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/home/data/models/navigation_state.dart';
 import 'package:invotek/features/home/ui/home_screen.dart';
-import 'package:invotek/features/home/ui/widgets/menu_screen.dart';
-import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/home/ui/widgets/keep_alive_screen_wrapper.dart';
+import 'package:invotek/features/home/ui/widgets/menu_screen.dart';
 import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
 import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
@@ -18,8 +20,6 @@ import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
-import 'package:invotek/features/expenses/ui/screens/expenses_list_screen_with_provider.dart';
-import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen_with_provider.dart';
 
 class HomeScreenWithDrawer extends StatelessWidget {
   const HomeScreenWithDrawer({super.key});
@@ -110,11 +110,11 @@ class HomeScreenWithAppBarState extends State<HomeScreenWithAppBar> {
           route: route,
           child: const ManagePermissionsScreenWithProvider(),
         );
-      case AppRoutes.clientsListRoute:
-        return KeepAliveScreenWrapper(
-          route: route,
-          child: const ClientsListScreenWithProvider(),
-        );
+      // case AppRoutes.clientsListRoute:
+      //   return KeepAliveScreenWrapper(
+      //     route: route,
+      //     child: const ClientsListScreenWithProvider(),
+      //   );
       case AppRoutes.customersListRoute:
         return KeepAliveScreenWrapper(
           route: route,

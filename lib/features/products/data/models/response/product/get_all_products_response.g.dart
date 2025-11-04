@@ -19,6 +19,8 @@ GetAllProductsResponse _$GetAllProductsResponseFromJson(
   perPage: (json['per_page'] as num?)?.toInt(),
   to: (json['to'] as num?)?.toInt(),
   total: (json['total'] as num?)?.toInt(),
+  nextPageUrl: json['next_page_url'] as String?,
+  prevPageUrl: json['prev_page_url'] as String?,
 );
 
 Map<String, dynamic> _$GetAllProductsResponseToJson(
@@ -32,4 +34,6 @@ Map<String, dynamic> _$GetAllProductsResponseToJson(
   'per_page': instance.perPage,
   'to': instance.to,
   'total': instance.total,
+  'next_page_url': instance.nextPageUrl,
+  'prev_page_url': instance.prevPageUrl,
 };

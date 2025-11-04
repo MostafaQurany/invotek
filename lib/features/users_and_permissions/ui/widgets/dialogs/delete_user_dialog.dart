@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -109,24 +110,29 @@ class DeleteUserDialog extends StatelessWidget {
 
               // Delete Button
               Expanded(
-                child: FilledButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    onConfirm();
-                  },
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.error,
-                    foregroundColor: AppColors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
+                child: ModulePermissionWidget(
+                  module: 'users',
+                  action: 'delete',
+                  fallback: const SizedBox.shrink(),
+                  child: FilledButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      onConfirm();
+                    },
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.error,
+                      foregroundColor: AppColors.white,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    s.delete,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
+                    child: Text(
+                      s.delete,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

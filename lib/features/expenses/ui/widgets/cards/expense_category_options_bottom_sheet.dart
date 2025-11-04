@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
 
 class ExpenseCategoryOptionsBottomSheet extends StatelessWidget {
   final ExpenseCategoryModel category;

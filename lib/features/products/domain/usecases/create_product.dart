@@ -1,7 +1,7 @@
-import 'package:invotek/core/usecase/usecase.dart';
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/usecase/usecase.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 
 class CreateProduct implements UseCase<ProductModel, CreateProductParams> {
   final ProductsRepository repository;
@@ -12,80 +12,56 @@ class CreateProduct implements UseCase<ProductModel, CreateProductParams> {
   Future<ApiResult<ProductModel>> call(CreateProductParams params) async {
     return await repository.createProduct(
       name: params.name,
+      productCategoryId: params.productCategoryId,
+      sku: params.sku,
       description: params.description,
+      image: params.image,
       price: params.price,
       cost: params.cost,
+      taxRate: params.taxRate,
       quantity: params.quantity,
-      sku: params.sku,
       barcode: params.barcode,
       unit: params.unit,
-      taxRate: params.taxRate,
-      notes: params.notes,
-      brand: params.brand,
-      model: params.model,
-      weight: params.weight,
-      dimensions: params.dimensions,
-      color: params.color,
-      material: params.material,
-      minQuantity: params.minQuantity,
-      maxQuantity: params.maxQuantity,
-      isActive: params.isActive,
       hasTax: params.hasTax,
+      isActive: params.isActive,
       trackInventory: params.trackInventory,
       status: params.status,
-      categoryId: params.categoryId,
     );
   }
 }
 
 class CreateProductParams {
   final String name;
-  final String? description;
-  final String price;
-  final String? cost;
-  final int quantity;
+  final int? productCategoryId;
   final String? sku;
+  final String? description;
+  final String? image;
+  final double? price;
+  final double? cost;
+  final double? taxRate;
+  final int? quantity;
   final String? barcode;
   final String? unit;
-  final String? taxRate;
-  final String? notes;
-  final String? brand;
-  final String? model;
-  final String? weight;
-  final String? dimensions;
-  final String? color;
-  final String? material;
-  final int? minQuantity;
-  final int? maxQuantity;
-  final bool isActive;
-  final bool hasTax;
-  final bool trackInventory;
-  final String status;
-  final int? categoryId;
+  final bool? hasTax;
+  final bool? isActive;
+  final bool? trackInventory;
+  final String? status;
 
   const CreateProductParams({
     required this.name,
-    this.description,
-    required this.price,
-    this.cost,
-    required this.quantity,
+    this.productCategoryId,
     this.sku,
+    this.description,
+    this.image,
+    this.price,
+    this.cost,
+    this.taxRate,
+    this.quantity,
     this.barcode,
     this.unit,
-    this.taxRate,
-    this.notes,
-    this.brand,
-    this.model,
-    this.weight,
-    this.dimensions,
-    this.color,
-    this.material,
-    this.minQuantity,
-    this.maxQuantity,
-    this.isActive = true,
-    this.hasTax = false,
-    this.trackInventory = false,
-    this.status = 'active',
-    this.categoryId,
+    this.hasTax,
+    this.isActive,
+    this.trackInventory,
+    this.status,
   });
 }

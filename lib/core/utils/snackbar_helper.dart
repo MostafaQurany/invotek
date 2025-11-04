@@ -4,6 +4,12 @@ import 'package:invotek/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SnackBarHelper {
+  static void showSuccessSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.green),
+    );
+  }
+
   static void showFailureSnackBar(
     BuildContext context,
     Failure failure, {

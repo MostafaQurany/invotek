@@ -17,6 +17,10 @@ class GetAllProductsResponse {
   final int? perPage;
   final int? to;
   final int? total;
+  @JsonKey(name: 'next_page_url')
+  final String? nextPageUrl;
+  @JsonKey(name: 'prev_page_url')
+  final String? prevPageUrl;
 
   GetAllProductsResponse({
     this.message,
@@ -27,6 +31,8 @@ class GetAllProductsResponse {
     this.perPage,
     this.to,
     this.total,
+    this.nextPageUrl,
+    this.prevPageUrl,
   });
 
   factory GetAllProductsResponse.fromJson(Map<String, dynamic> json) =>

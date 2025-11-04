@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/ui/dialogs/dialogs.dart';
 import 'package:invotek/features/invoices/ui/models/invoice_item_model.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class EditableInvoiceItemsSection extends StatefulWidget {

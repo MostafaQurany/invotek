@@ -22,6 +22,9 @@ class CustomTextField extends StatelessWidget {
   final bool isRequired;
   final VoidCallback? onTap;
   final ValueChanged<String>? onChanged;
+  final FocusNode? focusNode;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onSubmitted;
 
   const CustomTextField({
     super.key,
@@ -43,6 +46,9 @@ class CustomTextField extends StatelessWidget {
     this.isRequired = false,
     this.onTap,
     this.onChanged,
+    this.focusNode,
+    this.textInputAction,
+    this.onSubmitted,
   });
 
   @override
@@ -98,7 +104,9 @@ class CustomTextField extends StatelessWidget {
           ),
           child: TextField(
             controller: controller,
+            focusNode: focusNode,
             keyboardType: keyboardType,
+            textInputAction: textInputAction ?? TextInputAction.next,
             inputFormatters: inputFormatters,
             obscureText: obscureText,
             readOnly: readOnly,
@@ -107,6 +115,7 @@ class CustomTextField extends StatelessWidget {
             maxLength: maxLength,
             onTap: onTap,
             onChanged: onChanged,
+            onSubmitted: onSubmitted,
             style: TextStyle(
               fontSize: 14.sp,
               color: AppColors.textPrimary,

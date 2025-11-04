@@ -1,83 +1,93 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
+import 'package:invotek/core/cubits/permissions_cubit.dart';
 import 'package:invotek/core/network/cache_module.dart';
 import 'package:invotek/core/network/cache_policies.dart';
 import 'package:invotek/core/server/api_client.dart';
 import 'package:invotek/core/server/api_factory.dart';
 import 'package:invotek/core/theme/theme_provider.dart';
-import 'package:invotek/features/customers/domain/usecases/get_customers.dart';
-import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.dart';
-import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
-import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
-import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
-import 'package:invotek/features/customers/domain/usecases/get_customer_invoices.dart';
-import 'package:invotek/features/products/domain/usecases/get_products.dart';
-import 'package:invotek/features/products/domain/usecases/get_product_by_id.dart';
-import 'package:invotek/features/products/domain/usecases/create_product.dart';
-import 'package:invotek/features/products/domain/usecases/update_product.dart';
-import 'package:invotek/features/products/domain/usecases/delete_product.dart';
-import 'package:invotek/features/products/domain/usecases/get_categories.dart';
-import 'package:invotek/features/products/domain/usecases/create_category.dart';
-import 'package:invotek/features/products/domain/usecases/update_category.dart';
-import 'package:invotek/features/products/domain/usecases/delete_category.dart';
-import 'package:invotek/features/expenses/domain/usecases/get_expenses.dart';
-import 'package:invotek/features/expenses/domain/usecases/get_expense_by_id.dart';
-import 'package:invotek/features/expenses/domain/usecases/create_expense.dart';
-import 'package:invotek/features/expenses/domain/usecases/update_expense.dart';
-import 'package:invotek/features/expenses/domain/usecases/delete_expense.dart';
-import 'package:invotek/features/expenses/domain/usecases/get_expense_categories.dart';
-import 'package:invotek/features/expenses/domain/usecases/create_expense_category.dart';
-import 'package:invotek/features/expenses/domain/usecases/update_expense_category.dart';
-import 'package:invotek/features/expenses/domain/usecases/delete_expense_category.dart';
-import 'package:invotek/features/invoices/domain/usecases/get_invoices.dart';
-import 'package:invotek/features/invoices/domain/usecases/get_invoice_by_id.dart';
-import 'package:invotek/features/invoices/domain/usecases/create_invoice.dart';
-import 'package:invotek/features/invoices/domain/usecases/update_invoice.dart';
-import 'package:invotek/features/invoices/domain/usecases/delete_invoice.dart';
-import 'package:invotek/features/auth/domain/usecases/login.dart';
-import 'package:invotek/features/auth/domain/usecases/register.dart';
-import 'package:invotek/features/auth/domain/usecases/google_login.dart';
-import 'package:invotek/features/auth/domain/usecases/forget_password.dart';
-import 'package:invotek/features/auth/domain/usecases/verify_code.dart';
-import 'package:invotek/features/auth/domain/usecases/reset_password.dart';
-import 'package:invotek/features/auth/domain/usecases/logout.dart';
-import 'package:invotek/features/users_and_permissions/domain/usecases/get_users.dart';
-import 'package:invotek/features/users_and_permissions/domain/usecases/get_user_by_id.dart';
-import 'package:invotek/features/users_and_permissions/domain/usecases/create_user.dart';
-import 'package:invotek/features/users_and_permissions/domain/usecases/update_user.dart';
-import 'package:invotek/features/users_and_permissions/domain/usecases/delete_user.dart';
-import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
-import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
-import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
+import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
+import 'package:invotek/features/auth/data/data_source/permissions_data_source.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/domain/repo/auth_repo.dart';
-import 'package:invotek/features/auth/data/data_source/auth_data_source.dart';
 import 'package:invotek/features/auth/domain/repo/permissions_repo.dart';
-import 'package:invotek/features/auth/data/data_source/permissions_data_source.dart';
-import 'package:invotek/core/cubits/permissions_cubit.dart';
+import 'package:invotek/features/auth/domain/usecases/forget_password.dart';
+import 'package:invotek/features/auth/domain/usecases/google_login.dart';
+import 'package:invotek/features/auth/domain/usecases/login.dart';
+import 'package:invotek/features/auth/domain/usecases/logout.dart';
+import 'package:invotek/features/auth/domain/usecases/register.dart';
+import 'package:invotek/features/auth/domain/usecases/reset_password.dart';
+import 'package:invotek/features/auth/domain/usecases/verify_code.dart';
 // Removed: old ClientsDataSource (now centralized in ApiClient)
 import 'package:invotek/features/clients/data/repository/clients_repository.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
+import 'package:invotek/features/customers/data/repository/customers_repository.dart';
+import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
+import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customer_invoices.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customers.dart';
+import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
+import 'package:invotek/features/expenses/data/repository/expense_categories_repository.dart';
+import 'package:invotek/features/expenses/data/repository/expenses_repository.dart';
+import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/domain/usecases/create_expense.dart';
+import 'package:invotek/features/expenses/domain/usecases/create_expense_category.dart';
+import 'package:invotek/features/expenses/domain/usecases/delete_expense.dart';
+import 'package:invotek/features/expenses/domain/usecases/delete_expense_category.dart';
+import 'package:invotek/features/expenses/domain/usecases/get_expense_by_id.dart';
+import 'package:invotek/features/expenses/domain/usecases/get_expense_categories.dart';
+import 'package:invotek/features/expenses/domain/usecases/get_expenses.dart';
+import 'package:invotek/features/expenses/domain/usecases/update_expense.dart';
+import 'package:invotek/features/expenses/domain/usecases/update_expense_category.dart';
+import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/usecases/create_invoice.dart';
+import 'package:invotek/features/invoices/domain/usecases/delete_invoice.dart';
+import 'package:invotek/features/invoices/domain/usecases/get_invoice_by_id.dart';
+import 'package:invotek/features/invoices/domain/usecases/get_invoices.dart';
+import 'package:invotek/features/invoices/domain/usecases/update_invoice.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 // Removed: old ProductsDataSource (now centralized in ApiClient)
 import 'package:invotek/features/products/data/repository/products_repository.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
-import 'package:invotek/features/customers/data/repository/customers_repository.dart';
-import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
-import 'package:invotek/features/expenses/data/repository/expenses_repository.dart';
-import 'package:invotek/features/expenses/data/repository/expense_categories_repository.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
-import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/usecases/create_category.dart';
+import 'package:invotek/features/products/domain/usecases/create_product.dart';
+import 'package:invotek/features/products/domain/usecases/delete_category.dart';
+import 'package:invotek/features/products/domain/usecases/delete_product.dart';
+import 'package:invotek/features/products/domain/usecases/get_categories.dart';
+import 'package:invotek/features/products/domain/usecases/get_product_by_id.dart';
+import 'package:invotek/features/products/domain/usecases/get_products.dart';
+import 'package:invotek/features/products/domain/usecases/update_category.dart';
+import 'package:invotek/features/products/domain/usecases/update_product.dart';
+import 'package:invotek/features/users_and_permissions/data/data_source/users_permissions_data_source.dart';
+import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart'
     as OldPermissionsCubit;
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
-import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
-import 'package:invotek/features/auth/data/data_source/permissions_data_source.dart';
-import 'package:invotek/features/auth/domain/repo/permissions_repo.dart';
-import 'package:invotek/core/cubits/permissions_cubit.dart';
+import 'package:invotek/features/users_and_permissions/domain/usecases/create_user.dart';
+import 'package:invotek/features/users_and_permissions/domain/usecases/delete_user.dart';
+import 'package:invotek/features/users_and_permissions/domain/usecases/get_user_by_id.dart';
+import 'package:invotek/features/users_and_permissions/domain/usecases/get_users.dart';
+import 'package:invotek/features/users_and_permissions/domain/usecases/update_user.dart';
+// Settings feature imports
+import 'package:invotek/features/settings/data/data_source/settings_data_source.dart';
+import 'package:invotek/features/settings/data/repository/settings_repository.dart';
+import 'package:invotek/features/settings/domain/repositories/settings_repository.dart' as SettingsDomain;
+import 'package:invotek/features/settings/domain/usecases/get_profile.dart';
+import 'package:invotek/features/settings/domain/usecases/update_profile.dart' as SettingsUpdateProfile;
+import 'package:invotek/features/settings/domain/usecases/change_password.dart' as SettingsChangePassword;
+import 'package:invotek/features/settings/domain/usecases/update_photo.dart';
+import 'package:invotek/features/settings/domain/usecases/delete_account.dart' as SettingsDeleteAccount;
+import 'package:invotek/features/settings/domain/usecases/get_company_settings.dart';
+import 'package:invotek/features/settings/cubit/profile_cubit.dart';
+import 'package:invotek/features/settings/cubit/update_profile_cubit.dart';
+import 'package:invotek/features/settings/cubit/photo_cubit.dart';
+import 'package:invotek/features/settings/cubit/company_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -110,6 +120,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<UsersPermissionsDataSource>(
     () => UsersPermissionsDataSource(getIt<Dio>()),
   );
+  getIt.registerLazySingleton<SettingsDataSource>(
+    () => SettingsDataSource(getIt<ApiClient>()),
+  );
 
   // Register repositories
   getIt.registerLazySingleton<AuthRepo>(
@@ -135,6 +148,9 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton<InvoiceRepository>(
     () => InvoiceRepository(apiClient: getIt<ApiClient>()),
+  );
+  getIt.registerLazySingleton<SettingsDomain.ISettingsRepository>(
+    () => SettingsRepository(getIt<SettingsDataSource>()),
   );
 
   // Register Use Cases
@@ -233,6 +249,32 @@ Future<void> configureDependencies() async {
     () => DeleteInvoice(getIt<InvoiceRepository>()),
   );
 
+  // Settings Use Cases
+  getIt.registerLazySingleton<GetProfile>(
+    () => GetProfile(getIt<SettingsDomain.ISettingsRepository>()),
+  );
+  getIt.registerLazySingleton<SettingsUpdateProfile.UpdateProfile>(
+    () => SettingsUpdateProfile.UpdateProfile(
+      getIt<SettingsDomain.ISettingsRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<SettingsChangePassword.ChangePassword>(
+    () => SettingsChangePassword.ChangePassword(
+      getIt<SettingsDomain.ISettingsRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<UpdatePhoto>(
+    () => UpdatePhoto(getIt<SettingsDomain.ISettingsRepository>()),
+  );
+  getIt.registerLazySingleton<SettingsDeleteAccount.DeleteAccount>(
+    () => SettingsDeleteAccount.DeleteAccount(
+      getIt<SettingsDomain.ISettingsRepository>(),
+    ),
+  );
+  getIt.registerLazySingleton<GetCompanySettings>(
+    () => GetCompanySettings(getIt<SettingsDomain.ISettingsRepository>()),
+  );
+
   // Auth Use Cases
   getIt.registerLazySingleton<Login>(() => Login(getIt<AuthRepo>()));
   getIt.registerLazySingleton<Register>(() => Register(getIt<AuthRepo>()));
@@ -300,6 +342,19 @@ Future<void> configureDependencies() async {
   );
   getIt.registerLazySingleton<InvoicesCubit>(
     () => InvoicesCubit(getIt<InvoiceRepository>()),
+  );
+  // Settings cubits
+  getIt.registerFactory<ProfileCubit>(
+    () => ProfileCubit(getProfileUseCase: getIt<GetProfile>()),
+  );
+  getIt.registerFactory<UpdateProfileCubit>(
+    () => UpdateProfileCubit(updateProfileUseCase: getIt<SettingsUpdateProfile.UpdateProfile>()),
+  );
+  getIt.registerFactory<PhotoCubit>(
+    () => PhotoCubit(updatePhotoUseCase: getIt<UpdatePhoto>()),
+  );
+  getIt.registerFactory<CompanyCubit>(
+    () => CompanyCubit(getCompanySettingsUseCase: getIt<GetCompanySettings>()),
   );
 
   // Permissions dependencies

@@ -8,21 +8,20 @@ class CreateUserRequest {
   final String name;
   final String email;
   final String password;
+  @JsonKey(name: 'password_confirmation')
+  final String passwordConfirmation;
   final String? phone;
-  final String role;
+  final String? position;
   final String status;
-  final String? address;
-  final String? notes;
 
   CreateUserRequest({
     required this.name,
     required this.email,
     required this.password,
+    required this.passwordConfirmation,
     this.phone,
-    required this.role,
+    this.position,
     required this.status,
-    this.address,
-    this.notes,
   });
 
   factory CreateUserRequest.fromJson(Map<String, dynamic> json) =>
@@ -36,19 +35,15 @@ class UpdateUserRequest {
   final String name;
   final String email;
   final String? phone;
-  final String role;
+  final String? position;
   final String status;
-  final String? address;
-  final String? notes;
 
   UpdateUserRequest({
     required this.name,
     required this.email,
     this.phone,
-    required this.role,
+    this.position,
     required this.status,
-    this.address,
-    this.notes,
   });
 
   factory UpdateUserRequest.fromJson(Map<String, dynamic> json) =>

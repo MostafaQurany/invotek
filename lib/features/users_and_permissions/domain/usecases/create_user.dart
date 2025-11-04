@@ -14,11 +14,10 @@ class CreateUser implements UseCase<void, CreateUserRequest> {
       name: params.name,
       email: params.email,
       password: params.password,
+      passwordConfirmation: params.passwordConfirmation,
       phone: params.phone,
-      role: params.role,
+      position: params.position,
       status: params.status,
-      address: params.address,
-      notes: params.notes,
     );
   }
 }

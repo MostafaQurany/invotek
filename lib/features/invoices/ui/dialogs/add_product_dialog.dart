@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class AddProductDialog extends StatefulWidget {
@@ -275,7 +275,7 @@ class _AddProductDialogState extends State<AddProductDialog> {
       // Create product using ProductsCubit
       await context.read<ProductsCubit>().createProduct(
         name: _nameController.text.trim(),
-        price: _priceController.text.trim(),
+        price: double.parse(_priceController.text.trim()),
         quantity: int.parse(_quantityController.text.trim()),
         sku: _skuController.text.trim().isNotEmpty
             ? _skuController.text.trim()
@@ -319,6 +319,3 @@ class _AddProductDialogState extends State<AddProductDialog> {
     }
   }
 }
-
-
-

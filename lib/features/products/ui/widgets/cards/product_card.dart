@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ProductCard extends StatelessWidget {
@@ -128,7 +128,7 @@ class ProductCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          'SAR ${_formatPrice(product.price)}',
+          '${_formatPrice(product.price)}',
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,

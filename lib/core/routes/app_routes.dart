@@ -1,56 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/injection.dart';
-import 'package:invotek/features/auth/ui/forget_password_screen.dart';
-import 'package:invotek/features/auth/ui/verify_otp_screen.dart';
-import 'package:invotek/features/auth/ui/reset_password_screen.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
-import 'package:invotek/features/expenses/ui/screens/add_expense_screen.dart';
-import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
-import 'package:invotek/features/expenses/ui/screens/expense_details_screen.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/ui/screens/add_invoice_screen_with_provider.dart';
-import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen_with_provider.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_details_screen_with_provider.dart';
-import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen_with_provider.dart';
-import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_creation_stepper_screen.dart';
-import 'package:invotek/features/printing/ui/screens/print_options_screen.dart';
-import 'package:invotek/features/printing/ui/screens/thermal_print_screen.dart';
-import 'package:invotek/features/printing/ui/screens/pdf_preview_screen.dart';
-import 'package:invotek/features/printing/ui/screens/printer_settings_screen.dart';
-import 'package:invotek/generated/l10n.dart';
-import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
+import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/auth/ui/auth_screen.dart';
+import 'package:invotek/features/auth/ui/forget_password_screen.dart';
+import 'package:invotek/features/auth/ui/reset_password_screen.dart';
+import 'package:invotek/features/auth/ui/verify_otp_screen.dart';
 import 'package:invotek/features/clients/ui/screens/add_client_screen.dart';
 import 'package:invotek/features/clients/ui/screens/client_details_screen.dart';
 import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
 import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
+import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/screens/add_customer_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customer_details_screen.dart';
 import 'package:invotek/features/customers/ui/screens/customers_list_screen.dart';
 import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
-import 'package:invotek/features/expenses/ui/screens/expenses_list_screen.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
+import 'package:invotek/features/expenses/ui/screens/add_expense_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/expense_categories_list_screen_with_provider.dart';
+import 'package:invotek/features/expenses/ui/screens/expense_details_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/expenses_list_screen.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
+import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/ui/screens/add_invoice_screen_with_provider.dart';
+import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen_with_provider.dart';
+import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen_with_provider.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_creation_stepper_screen.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_details_screen_with_provider.dart';
+import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/printing/ui/screens/pdf_preview_screen.dart';
+import 'package:invotek/features/printing/ui/screens/print_options_screen.dart';
+import 'package:invotek/features/printing/ui/screens/printer_settings_screen.dart';
+import 'package:invotek/features/printing/ui/screens/thermal_print_screen.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/screens/add_product_screen.dart';
+import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
 import 'package:invotek/features/products/ui/screens/edit_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
+import 'package:invotek/features/settings/ui/screens/change_password_screen.dart';
+import 'package:invotek/features/settings/ui/screens/delete_account_screen.dart';
+import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/edit_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/user_details_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
-import 'package:invotek/features/auth/domain/entit/user_model.dart';
-import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
-import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
-import 'package:invotek/features/settings/ui/screens/change_password_screen.dart';
-import 'package:invotek/features/settings/ui/screens/delete_account_screen.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class AppRoutes {
   static const String authRoute = '/auth';
@@ -152,7 +152,6 @@ class AppRoutes {
     addUserRoute: (context) => const AddUserScreenWithProvider(),
     managePermissionsRoute: (context) =>
         const ManagePermissionsScreenWithProvider(),
-    clientsListRoute: (context) => const ClientsListScreenWithProvider(),
     addClientRoute: (context) => const AddClientScreenWithProvider(),
     productsListRoute: (context) => const ProductsListScreenWithProvider(),
     addProductRoute: (context) => const AddProductScreenWithProvider(),

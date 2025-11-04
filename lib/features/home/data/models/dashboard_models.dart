@@ -33,7 +33,7 @@ class DashboardData {
   @JsonKey(name: 'expenses_total')
   final String expensesTotal;
   @JsonKey(name: 'monthly_expenses_total')
-  final String monthlyExpensesTotal;
+  final double monthlyExpensesTotal;
   @JsonKey(name: 'customers_count')
   final int customersCount;
   @JsonKey(name: 'new_customers_count')
@@ -93,8 +93,64 @@ class DashboardData {
     required this.monthlyReturnedInvoicesData,
   });
 
-  factory DashboardData.fromJson(Map<String, dynamic> json) =>
-      _$DashboardDataFromJson(json);
+  factory DashboardData.fromJson(Map<String, dynamic> json) {
+    double _toDouble(dynamic v) {
+      if (v == null) return 0.0;
+      if (v is num) return v.toDouble();
+      if (v is String) return double.tryParse(v) ?? 0.0;
+      return 0.0;
+    }
+
+    int _toInt(dynamic v) {
+      if (v == null) return 0;
+      if (v is num) return v.toInt();
+      if (v is String) return int.tryParse(v.split('.').first) ?? 0;
+      return 0;
+    }
+
+    final data = DashboardData(
+      taxInvoicesCount: _toInt(json['tax_invoices_count']),
+      taxInvoicesTotal: (json['tax_invoices_total'] ?? '').toString(),
+      invoicesCount: _toInt(json['invoices_count']),
+      newInvoicesCount: _toInt(json['new_invoices_count']),
+      returnedInvoicesCount: _toInt(json['returned_invoices_count']),
+      returnedInvoicesTotal: _toInt(json['returned_invoices_total']),
+      expensesTotal: (json['expenses_total'] ?? '').toString(),
+      monthlyExpensesTotal: _toDouble(json['monthly_expenses_total']),
+      customersCount: _toInt(json['customers_count']),
+      newCustomersCount: _toInt(json['new_customers_count']),
+      productsCount: _toInt(json['products_count']),
+      newProductsCount: _toInt(json['new_products_count']),
+      salesTotal: (json['sales_total'] ?? '').toString(),
+      salesGrowthPercentage: _toDouble(json['sales_growth_percentage']),
+      netProfit: _toDouble(json['net_profit']),
+      profitGrowthPercentage: _toDouble(json['profit_growth_percentage']),
+      topProducts: ((json['top_products'] as List?) ?? const [])
+          .map((e) => TopProduct.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      salesCategories: ((json['sales_categories'] as List?) ?? const [])
+          .map((e) => SalesCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      monthlyLabels: ((json['monthly_labels'] as List?) ?? const [])
+          .map((e) => e.toString())
+          .toList(),
+      monthlySalesData: ((json['monthly_sales_data'] as List?) ?? const [])
+          .map(_toDouble)
+          .toList(),
+      monthlyInvoicesData: ((json['monthly_invoices_data'] as List?) ?? const [])
+          .map(_toDouble)
+          .toList(),
+      monthlyTaxInvoicesData:
+          ((json['monthly_tax_invoices_data'] as List?) ?? const [])
+              .map(_toDouble)
+              .toList(),
+      monthlyReturnedInvoicesData:
+          ((json['monthly_returned_invoices_data'] as List?) ?? const [])
+              .map(_toDouble)
+              .toList(),
+    );
+    return data;
+  }
 
   Map<String, dynamic> toJson() => _$DashboardDataToJson(this);
 }

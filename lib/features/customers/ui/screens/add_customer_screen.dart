@@ -75,7 +75,9 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                 (customers, selectedCustomer, currentPage, totalPages, error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(S.current.errorOccurred(error)),
+                      content: Text(
+                        S.current.errorOccurredWithMessage(error.message),
+                      ),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(

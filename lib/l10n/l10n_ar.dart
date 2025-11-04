@@ -1098,9 +1098,7 @@ class SAr extends S {
   String get edit => 'تعديل';
 
   @override
-  String errorOccurred(Object error) {
-    return 'حدث خطأ $error';
-  }
+  String get errorOccurred => 'حدث خطأ';
 
   @override
   String get company => 'الشركة';
@@ -4602,4 +4600,26 @@ class SAr extends S {
 
   @override
   String get inactiveStatus => 'غير نشط';
+
+  @override
+  String get updatedSuccessfully => 'تم التحديث بنجاح';
+
+  @override
+  String get photoUpdatedSuccessfully => 'تم تحديث الصورة بنجاح';
+
+  @override
+  String errorOccurredWithMessage(Object message) {
+    return 'حدث خطأ: $message';
+  }
+
+  @override
+  String get updatePhoto => 'تحديث الصورة';
+
+  @override
+  String get position => 'الوظيفة';
+
+  @override
+  String fieldIsRequired(String field) {
+    return 'حقل $field مطلوب';
+  }
 }

@@ -42,7 +42,7 @@ class UsersRepository {
         role: role,
         status: status,
         page: page ?? 1,
-        limit: limit ?? 20,
+        perPage: limit ?? 20,
         sortBy: sortBy,
         sortOrder: sortOrder,
       );
@@ -95,22 +95,20 @@ class UsersRepository {
     required String name,
     required String email,
     required String password,
+    required String passwordConfirmation,
     String? phone,
-    required String role,
+    String? position,
     required String status,
-    String? address,
-    String? notes,
   }) async {
     try {
       final request = CreateUserRequest(
         name: name,
         email: email,
         password: password,
+        passwordConfirmation: passwordConfirmation,
         phone: phone,
-        role: role,
+        position: position,
         status: status,
-        address: address,
-        notes: notes,
       );
 
       final response = await _dataSource.createUser(request);
@@ -137,20 +135,16 @@ class UsersRepository {
     required String name,
     required String email,
     String? phone,
-    required String role,
+    String? position,
     required String status,
-    String? address,
-    String? notes,
   }) async {
     try {
       final request = UpdateUserRequest(
         name: name,
         email: email,
         phone: phone,
-        role: role,
+        position: position,
         status: status,
-        address: address,
-        notes: notes,
       );
 
       final response = await _dataSource.updateUser(id, request);
@@ -166,6 +160,7 @@ class UsersRepository {
         );
       }
     } catch (e) {
+      print('Error in updateUser repository: $e');
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }

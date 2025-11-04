@@ -19,9 +19,9 @@ abstract class UsersPermissionsDataSource {
     @Query('role') String? role,
     @Query('status') String? status,
     @Query('page') int? page,
-    @Query('limit') int? limit,
-    @Query('sortBy') String? sortBy,
-    @Query('sortOrder') String? sortOrder,
+    @Query('per_page') int? perPage,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
   });
 
   // Get user by ID

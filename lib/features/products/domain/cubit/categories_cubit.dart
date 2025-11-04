@@ -66,6 +66,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   final List<ProductCategoryApiModel> _categories = <ProductCategoryApiModel>[];
   int _currentPage = 1;
   int _totalPages = 1;
+  String? _lastSearch;
+  String? _lastStatus;
+  String? _lastSortBy;
+  String? _lastSortOrder;
   final int _pageSize = 50;
   bool _isLoadingPage = false;
 
@@ -76,35 +80,69 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   bool get hasMore => _currentPage < _totalPages;
+  bool get isLoadingPage => _isLoadingPage;
 
-  Future<void> loadFirstPage({bool refresh = false}) async {
+  Future<void> loadFirstPage({
+    bool refresh = false,
+    String? search,
+    String? status,
+    String? sortBy,
+    String? sortOrder,
+  }) async {
     if (_isLoadingPage) return;
-    if (_categories.isNotEmpty && !refresh) return;
     _isLoadingPage = true;
-    _categories.clear();
-    _currentPage = 1;
-    _totalPages = 1;
+
+    // Check if search parameters changed
+    final searchChanged = _lastSearch != search;
+    final statusChanged = _lastStatus != status;
+    final sortByChanged = _lastSortBy != sortBy;
+    final sortOrderChanged = _lastSortOrder != sortOrder;
+    final shouldRefresh =
+        refresh ||
+        searchChanged ||
+        statusChanged ||
+        sortByChanged ||
+        sortOrderChanged;
+
+    if (shouldRefresh) {
+      _categories.clear();
+      _currentPage = 1;
+      _totalPages = 1;
+    }
 
     emit(
       CategoriesState.loading(
         categories: _categories,
         currentPage: _currentPage,
         totalPages: _totalPages,
-        message: 'loading',
+        message: shouldRefresh ? 'refreshing' : 'loading',
       ),
     );
 
-    final ApiResult<List<ProductCategoryApiModel>> result = await _repository
-        .listProductCategories();
+    _lastSearch = search;
+    _lastStatus = status;
+    _lastSortBy = sortBy;
+    _lastSortOrder = sortOrder;
+
+    final ApiResult<ListProductCategoriesResponse> result =
+        await _repository.listProductCategoriesWithPagination(
+      search: _lastSearch,
+      status: _lastStatus,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
+      page: _currentPage,
+      limit: _pageSize,
+    );
 
     result.when(
-      success: (list) {
-        _categories.addAll(list);
-        if (list.length < _pageSize) {
-          _totalPages = _currentPage;
-        } else {
-          _totalPages = _currentPage + 1;
+      success: (response) {
+        final list = response.data ?? [];
+        if (shouldRefresh) {
+          _categories.clear();
         }
+        _categories.addAll(list);
+        _currentPage = response.currentPage ?? _currentPage;
+        _totalPages = response.lastPage ?? 1;
         emit(
           CategoriesState.loaded(
             categories: _categories,
@@ -138,23 +176,27 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         categories: _categories,
         currentPage: _currentPage,
         totalPages: _totalPages,
-        message: 'loading_next',
+        message: 'loading_more',
       ),
     );
 
-    // If server supports pagination, wire it here. For now reusing same call.
-    final ApiResult<List<ProductCategoryApiModel>> result = await _repository
-        .listProductCategories();
+    final ApiResult<ListProductCategoriesResponse> result =
+        await _repository.listProductCategoriesWithPagination(
+      search: _lastSearch,
+      status: _lastStatus,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
+      page: nextPage,
+      limit: _pageSize,
+    );
 
     result.when(
-      success: (list) {
-        _currentPage = nextPage;
+      success: (response) {
+        final list = response.data ?? [];
+        _currentPage = response.currentPage ?? nextPage;
+        _totalPages = response.lastPage ?? 1;
+        // Only add new categories, don't clear existing ones
         _categories.addAll(list);
-        if (list.length < _pageSize) {
-          _totalPages = _currentPage;
-        } else {
-          _totalPages = _currentPage + 1;
-        }
         emit(
           CategoriesState.loaded(
             categories: _categories,
@@ -179,10 +221,20 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   }
 
   Future<void> refresh() async {
-    await loadFirstPage();
+    await loadFirstPage(
+      refresh: true,
+      search: _lastSearch,
+      status: _lastStatus,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
+    );
   }
 
-  Future<void> createCategory(String name, {String? status}) async {
+  Future<void> createCategory(
+    String name, {
+    String? status,
+    String? description,
+  }) async {
     emit(
       CategoriesState.loading(
         categories: _categories,
@@ -195,6 +247,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     final result = await _repository.createProductCategory(
       name: name,
       status: status,
+      description: description,
     );
 
     result.when(
@@ -222,7 +275,12 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     );
   }
 
-  Future<void> updateCategory(int id, String name, {String? status}) async {
+  Future<void> updateCategory(
+    int id,
+    String name, {
+    String? status,
+    String? description,
+  }) async {
     emit(
       CategoriesState.loading(
         categories: _categories,
@@ -236,6 +294,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       id: id,
       name: name,
       status: status,
+      description: description,
     );
 
     result.when(

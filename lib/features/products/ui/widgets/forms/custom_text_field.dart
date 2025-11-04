@@ -60,7 +60,9 @@ class CustomTextField extends StatelessWidget {
           keyboardType: keyboardType,
           maxLines: maxLines,
           validator: validator,
-
+          onTapOutside: (event) {
+            FocusScope.of(context).unfocus();
+          },
           decoration: InputDecoration(
             hintText: hint,
 

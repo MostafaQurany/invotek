@@ -7,10 +7,10 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
-import 'package:invotek/features/users_and_permissions/ui/widgets/cards/users_header_widget.dart';
-import 'package:invotek/features/users_and_permissions/ui/widgets/lists/users_state_builder.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_options_bottom_sheet.dart';
+import 'package:invotek/features/users_and_permissions/ui/widgets/cards/users_header_widget.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/dialogs/delete_user_dialog.dart';
+import 'package:invotek/features/users_and_permissions/ui/widgets/lists/users_state_builder.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class UsersListScreen extends StatefulWidget {
@@ -40,6 +40,12 @@ class _UsersListScreenState extends State<UsersListScreen> {
     super.initState();
     _initializeOptions();
     _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    FocusScope.of(context).unfocus();
   }
 
   void _initializeOptions() {

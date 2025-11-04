@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/features/products/ui/widgets/lists/products_list.dart';
 import 'package:invotek/features/products/ui/widgets/states/products_empty_state.dart';
 import 'package:invotek/features/products/ui/widgets/states/products_error_state.dart';
-import 'package:invotek/features/products/ui/widgets/lists/products_list.dart';
 
 class ProductsStateBuilder extends StatelessWidget {
   final Function(ProductModel) onProductTap;
@@ -17,6 +17,7 @@ class ProductsStateBuilder extends StatelessWidget {
   final String selectedStatus;
   final Function(String) onCategoryChanged;
   final Function(String) onStatusChanged;
+  final ScrollController? scrollController;
 
   const ProductsStateBuilder({
     super.key,
@@ -30,6 +31,7 @@ class ProductsStateBuilder extends StatelessWidget {
     required this.selectedStatus,
     required this.onCategoryChanged,
     required this.onStatusChanged,
+    this.scrollController,
   });
 
   @override
@@ -51,6 +53,8 @@ class ProductsStateBuilder extends StatelessWidget {
               onProductView: onProductView,
               onProductEdit: onProductEdit,
               onProductDelete: onProductDelete,
+              scrollController: scrollController,
+              isLoadingMore: false,
             );
           },
           loading:
@@ -65,6 +69,7 @@ class ProductsStateBuilder extends StatelessWidget {
                   onProductEdit: onProductEdit,
                   onProductDelete: onProductDelete,
                   isLoadingMore: message == 'loading_more',
+                  scrollController: scrollController,
                 );
               },
           loaded: (products, selectedProduct, currentPage, totalPages) {
@@ -77,6 +82,8 @@ class ProductsStateBuilder extends StatelessWidget {
               onProductView: onProductView,
               onProductEdit: onProductEdit,
               onProductDelete: onProductDelete,
+              scrollController: scrollController,
+              isLoadingMore: false,
             );
           },
           createSuccess:
@@ -90,6 +97,8 @@ class ProductsStateBuilder extends StatelessWidget {
                   onProductView: onProductView,
                   onProductEdit: onProductEdit,
                   onProductDelete: onProductDelete,
+                  scrollController: scrollController,
+                  isLoadingMore: false,
                 );
               },
           updateSuccess:
@@ -102,6 +111,8 @@ class ProductsStateBuilder extends StatelessWidget {
                   onProductTap: onProductTap,
                   onProductView: onProductView,
                   onProductEdit: onProductEdit,
+                  scrollController: scrollController,
+                  isLoadingMore: false,
                   onProductDelete: onProductDelete,
                 );
               },
@@ -116,6 +127,8 @@ class ProductsStateBuilder extends StatelessWidget {
                   onProductView: onProductView,
                   onProductEdit: onProductEdit,
                   onProductDelete: onProductDelete,
+                  scrollController: scrollController,
+                  isLoadingMore: false,
                 );
               },
           failure: (products, selectedProduct, currentPage, totalPages, error) {
@@ -128,6 +141,8 @@ class ProductsStateBuilder extends StatelessWidget {
               onProductView: onProductView,
               onProductEdit: onProductEdit,
               onProductDelete: onProductDelete,
+              scrollController: scrollController,
+              isLoadingMore: false,
             );
           },
         );

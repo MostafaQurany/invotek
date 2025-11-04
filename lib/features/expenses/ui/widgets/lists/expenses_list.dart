@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/widgets/cards/expense_card.dart';
 
 class ExpensesList extends StatelessWidget {
@@ -11,6 +10,7 @@ class ExpensesList extends StatelessWidget {
   final Function(ExpenseModel) onExpenseEdit;
   final Function(ExpenseModel) onExpenseDelete;
   final bool isLoadingMore;
+  final ScrollController? scrollController;
 
   const ExpensesList({
     super.key,
@@ -20,64 +20,18 @@ class ExpensesList extends StatelessWidget {
     required this.onExpenseEdit,
     required this.onExpenseDelete,
     this.isLoadingMore = false,
+    this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: expenses.length <= 4 ? 0.79.sh : null,
-      decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 25.h),
-          // Expenses Count Header
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Row(
-              children: [
-                Text(
-                  'Expenses (${expenses.length})',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Text(
-                    '${expenses.length} Total',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15.h),
-          // Expenses List - Using ListView.builder for memory efficiency
-          ListView.builder(
-            physics:
-                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
-            shrinkWrap: true, // Takes only the space it needs
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 35.h),
+        Expanded(
+          child: ListView.builder(
+            controller: scrollController,
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             itemCount: expenses.length + (isLoadingMore ? 1 : 0),
             itemBuilder: (context, index) {
@@ -102,8 +56,8 @@ class ExpensesList extends StatelessWidget {
               );
             },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

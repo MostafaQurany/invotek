@@ -3,22 +3,19 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 // Removed unused: ApiResult
 import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/features/auth/data/models/forget_password_request.dart';
+import 'package:invotek/features/auth/data/models/forget_password_respond.dart';
 import 'package:invotek/features/auth/data/models/google_login_request.dart';
 import 'package:invotek/features/auth/data/models/google_login_respond.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
 import 'package:invotek/features/auth/data/models/login_respond.dart';
+import 'package:invotek/features/auth/data/models/permission_models.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
 import 'package:invotek/features/auth/data/models/register_respond.dart';
-import 'package:invotek/features/auth/data/models/forget_password_request.dart';
-import 'package:invotek/features/auth/data/models/forget_password_respond.dart';
-import 'package:invotek/features/auth/data/models/verify_code_request.dart';
-import 'package:invotek/features/auth/data/models/verify_code_response.dart';
 import 'package:invotek/features/auth/data/models/reset_password_request.dart';
 import 'package:invotek/features/auth/data/models/reset_password_response.dart';
-import 'package:invotek/features/settings/data/models/change_password_request.dart';
-import 'package:invotek/features/settings/data/models/change_password_response.dart';
-import 'package:invotek/features/settings/data/models/delete_account_request.dart';
-import 'package:invotek/features/settings/data/models/delete_account_response.dart';
+import 'package:invotek/features/auth/data/models/verify_code_request.dart';
+import 'package:invotek/features/auth/data/models/verify_code_response.dart';
 import 'package:invotek/features/clients/data/models/client_api_model.dart';
 import 'package:invotek/features/customers/data/models/request/create_customer_request.dart';
 import 'package:invotek/features/customers/data/models/request/update_customer_request.dart';
@@ -28,19 +25,20 @@ import 'package:invotek/features/customers/data/models/response/get_all_customer
 import 'package:invotek/features/customers/data/models/response/get_customer_by_id_response.dart';
 import 'package:invotek/features/customers/data/models/response/update_customer_response.dart';
 import 'package:invotek/features/expenses/data/models/expense_api_model.dart';
-import 'package:invotek/features/expenses/data/models/request/create_expense_request.dart';
-import 'package:invotek/features/expenses/data/models/request/update_expense_request.dart';
 import 'package:invotek/features/expenses/data/models/request/create_expense_category_request.dart';
+import 'package:invotek/features/expenses/data/models/request/create_expense_request.dart';
 import 'package:invotek/features/expenses/data/models/request/update_expense_category_request.dart';
-import 'package:invotek/features/expenses/data/models/response/get_all_expenses_response.dart';
+import 'package:invotek/features/expenses/data/models/request/update_expense_request.dart';
+import 'package:invotek/features/expenses/data/models/response/create_expense_category_response.dart';
 import 'package:invotek/features/expenses/data/models/response/create_expense_response.dart';
-import 'package:invotek/features/expenses/data/models/response/get_expense_by_id_response.dart';
+import 'package:invotek/features/expenses/data/models/response/delete_expense_category_response.dart';
 import 'package:invotek/features/expenses/data/models/response/delete_expense_response.dart';
 import 'package:invotek/features/expenses/data/models/response/get_all_expense_categories_response.dart';
-import 'package:invotek/features/expenses/data/models/response/create_expense_category_response.dart';
+import 'package:invotek/features/expenses/data/models/response/get_all_expenses_response.dart';
+import 'package:invotek/features/expenses/data/models/response/get_expense_by_id_response.dart';
 import 'package:invotek/features/expenses/data/models/response/get_expense_category_by_id_response.dart';
 import 'package:invotek/features/expenses/data/models/response/update_expense_category_response.dart';
-import 'package:invotek/features/expenses/data/models/response/delete_expense_category_response.dart';
+import 'package:invotek/features/home/data/models/dashboard_models.dart';
 import 'package:invotek/features/invoices/data/models/requests/activating_tax_integration_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
@@ -56,8 +54,13 @@ import 'package:invotek/features/products/data/models/product_api_model.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/data/models/request/product_requests.dart';
 import 'package:invotek/features/products/data/models/response/product/product_responses.dart';
-import 'package:invotek/features/home/data/models/dashboard_models.dart';
-import 'package:invotek/features/auth/data/models/permission_models.dart';
+import 'package:invotek/features/settings/data/models/change_password_request.dart';
+import 'package:invotek/features/settings/data/models/change_password_response.dart';
+import 'package:invotek/features/settings/data/models/company_settings_response.dart';
+import 'package:invotek/features/settings/data/models/delete_account_request.dart';
+import 'package:invotek/features/settings/data/models/delete_account_response.dart';
+import 'package:invotek/features/settings/data/models/profile_models.dart';
+import 'package:invotek/features/settings/data/models/update_profile_request.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
@@ -96,16 +99,31 @@ abstract class ApiClient {
     @Body() ChangePasswordRequest request,
   );
 
-  @DELETE(ApiConstants.deleteAccount)
+  @POST(ApiConstants.deleteAccount)
   Future<DeleteAccountResponse> deleteAccount(
     @Body() DeleteAccountRequest request,
   );
+
+  // Profile
+  @GET(ApiConstants.profile)
+  Future<ProfileResponse> getProfile();
+
+  @PUT(ApiConstants.profile)
+  Future<ProfileResponse> updateProfile(@Body() UpdateProfileRequest request);
+
+  @POST(ApiConstants.profilePhoto)
+  @MultiPart()
+  Future<ProfileResponse> updateProfilePhoto(@Part() File photo);
+
+  // Company Settings (read-only)
+  @GET(ApiConstants.companySettings)
+  Future<CompanySettingsResponse> getCompanySettings();
 
   // Products
   @GET(ApiConstants.products)
   Future<GetAllProductsResponse> getProducts({
     @Query('search') String? search,
-    @Query('category') String? category,
+    @Query('category_id') String? categoryId,
     @Query('status') String? status,
     @Query('brand') String? brand,
     @Query('min_price') double? minPrice,
@@ -116,6 +134,7 @@ abstract class ApiClient {
     @Query('sort_order') String? sortOrder,
     @Query('page') int? page,
     @Query('limit') int? limit,
+    @Query('per_page') int? perPage,
   });
 
   @GET(ApiConstants.productById)
@@ -268,8 +287,13 @@ abstract class ApiClient {
   // Product Categories
   @GET(ApiConstants.productCategories)
   Future<ListProductCategoriesResponse> listProductCategories({
+    @Query('search') String? search,
+    @Query('status') String? status,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
     @Query('page') int? page,
     @Query('limit') int? limit,
+    @Query('per_page') int? perPage,
   });
 
   @POST(ApiConstants.productCategories)

@@ -38,16 +38,13 @@ class ProductCategoryApiModel {
 class CreateProductCategoryRequest {
   final String name;
   final String? status;
-  final String? description;
-  final String? color;
-  final String? icon;
+  @JsonKey(name: 'descreption')
+  final String? descreption;
 
   CreateProductCategoryRequest({
     required this.name,
     this.status,
-    this.description,
-    this.color,
-    this.icon,
+    this.descreption,
   });
 
   factory CreateProductCategoryRequest.fromJson(Map<String, dynamic> json) =>
@@ -60,15 +57,11 @@ class UpdateProductCategoryRequest {
   final String name;
   final String? status;
   final String? description;
-  final String? color;
-  final String? icon;
 
   UpdateProductCategoryRequest({
     required this.name,
     this.status,
     this.description,
-    this.color,
-    this.icon,
   });
 
   factory UpdateProductCategoryRequest.fromJson(Map<String, dynamic> json) =>
@@ -78,16 +71,23 @@ class UpdateProductCategoryRequest {
 
 @JsonSerializable()
 class ListProductCategoriesResponse {
+  @JsonKey(name: 'current_page')
   final int? currentPage;
   final List<ProductCategoryApiModel>? data;
+  @JsonKey(name: 'first_page_url')
   final String? firstPageUrl;
   final int? from;
+  @JsonKey(name: 'last_page')
   final int? lastPage;
+  @JsonKey(name: 'last_page_url')
   final String? lastPageUrl;
   final List<dynamic>? links;
+  @JsonKey(name: 'next_page_url')
   final String? nextPageUrl;
   final String? path;
+  @JsonKey(name: 'per_page')
   final int? perPage;
+  @JsonKey(name: 'prev_page_url')
   final String? prevPageUrl;
   final int? to;
   final int? total;
@@ -117,8 +117,12 @@ class ListProductCategoriesResponse {
 class CreateProductCategoryResponse {
   final String name;
   final String? status;
+  @JsonKey(name: 'company_id')
   final int? companyId;
+  final String? description;
+  @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   final int? id;
 
@@ -126,6 +130,7 @@ class CreateProductCategoryResponse {
     required this.name,
     this.status,
     this.companyId,
+    this.description,
     this.updatedAt,
     this.createdAt,
     this.id,

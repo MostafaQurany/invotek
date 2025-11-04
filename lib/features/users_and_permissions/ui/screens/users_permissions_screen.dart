@@ -12,7 +12,6 @@ import 'package:invotek/features/users_and_permissions/ui/widgets/users_list_wid
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_search_filter_widget.dart';
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_state_widgets.dart';
-import 'package:invotek/generated/l10n.dart';
 
 class UsersPermissionsScreen extends StatefulWidget {
   const UsersPermissionsScreen({super.key});
@@ -72,7 +71,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
       context
           .read<UsersCubit>()
           .loadUsers(
-            search: _searchQuery,
+            search: _searchQuery.isEmpty ? null : _searchQuery,
             role: _roleFilter == 'all' ? null : _roleFilter,
             status: _statusFilter == 'all' ? null : _statusFilter,
             page: _currentPage + 1,
@@ -103,7 +102,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
     });
 
     context.read<UsersCubit>().loadUsers(
-      search: query,
+      search: query.isEmpty ? null : query,
       role: _roleFilter == 'all' ? null : _roleFilter,
       status: _statusFilter == 'all' ? null : _statusFilter,
       page: 1,
@@ -118,7 +117,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
     });
 
     context.read<UsersCubit>().loadUsers(
-      search: _searchQuery,
+      search: _searchQuery.isEmpty ? null : _searchQuery,
       role: _roleFilter == 'all' ? null : _roleFilter,
       status: status == 'all' ? null : status,
       page: 1,
@@ -133,7 +132,7 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
     });
 
     context.read<UsersCubit>().loadUsers(
-      search: _searchQuery,
+      search: _searchQuery.isEmpty ? null : _searchQuery,
       role: role == 'all' ? null : role,
       status: _statusFilter == 'all' ? null : _statusFilter,
       page: 1,

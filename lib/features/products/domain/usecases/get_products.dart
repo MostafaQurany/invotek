@@ -1,7 +1,7 @@
-import 'package:invotek/core/usecase/usecase.dart';
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/usecase/usecase.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 
 class GetProducts implements UseCase<List<ProductModel>, GetProductsParams> {
   final ProductsRepository repository;
@@ -12,7 +12,7 @@ class GetProducts implements UseCase<List<ProductModel>, GetProductsParams> {
   Future<ApiResult<List<ProductModel>>> call(GetProductsParams params) async {
     return await repository.getProducts(
       search: params.search,
-      category: params.category,
+      categoryId: params.categoryId,
       status: params.status,
       brand: params.brand,
       minPrice: params.minPrice,
@@ -23,13 +23,14 @@ class GetProducts implements UseCase<List<ProductModel>, GetProductsParams> {
       limit: params.limit,
       sortBy: params.sortBy,
       sortOrder: params.sortOrder,
+      perPage: params.perPage,
     );
   }
 }
 
 class GetProductsParams {
   final String? search;
-  final String? category;
+  final String? categoryId;
   final String? status;
   final String? brand;
   final double? minPrice;
@@ -40,10 +41,11 @@ class GetProductsParams {
   final int? limit;
   final String? sortBy;
   final String? sortOrder;
+  final int? perPage;
 
   const GetProductsParams({
     this.search,
-    this.category,
+    this.categoryId,
     this.status,
     this.brand,
     this.minPrice,
@@ -54,5 +56,6 @@ class GetProductsParams {
     this.limit,
     this.sortBy,
     this.sortOrder,
+    this.perPage,
   });
 }

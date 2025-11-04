@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
-import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ExpensesHeaderWidget extends StatefulWidget {
@@ -15,6 +15,11 @@ class ExpensesHeaderWidget extends StatefulWidget {
   final String selectedCategory;
   final Function(String) onStatusChanged;
   final Function(String) onCategoryChanged;
+  // Optional sorting controls
+  final String? selectedSortBy;
+  final String? selectedSortOrder;
+  final Function(String)? onSortByChanged;
+  final Function(String)? onSortOrderChanged;
 
   const ExpensesHeaderWidget({
     super.key,
@@ -25,6 +30,10 @@ class ExpensesHeaderWidget extends StatefulWidget {
     required this.selectedCategory,
     required this.onStatusChanged,
     required this.onCategoryChanged,
+    this.selectedSortBy,
+    this.selectedSortOrder,
+    this.onSortByChanged,
+    this.onSortOrderChanged,
   });
 
   @override
@@ -243,6 +252,47 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
                     },
                   ),
             ),
+
+            SizedBox(width: 12.w),
+
+            // Sort By
+            if (widget.onSortByChanged != null)
+              Expanded(
+                child: _buildFilterDropdown(
+                  value: widget.selectedSortBy ?? 'created_at',
+                  items: const [
+                    DropdownMenuItem(value: 'title', child: Text('Title')),
+                    DropdownMenuItem(value: 'amount', child: Text('Amount')),
+                    DropdownMenuItem(
+                      value: 'created_at',
+                      child: Text('Created At'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'updated_at',
+                      child: Text('Updated At'),
+                    ),
+                    DropdownMenuItem(value: 'date', child: Text('Date')),
+                  ],
+                  onChanged: widget.onSortByChanged!,
+                  hint: 'Sort by',
+                ),
+              ),
+
+            SizedBox(width: 12.w),
+
+            // Sort Order
+            if (widget.onSortOrderChanged != null)
+              Expanded(
+                child: _buildFilterDropdown(
+                  value: widget.selectedSortOrder ?? 'desc',
+                  items: const [
+                    DropdownMenuItem(value: 'asc', child: Text('ASC')),
+                    DropdownMenuItem(value: 'desc', child: Text('DESC')),
+                  ],
+                  onChanged: widget.onSortOrderChanged!,
+                  hint: 'Order',
+                ),
+              ),
           ],
         ),
       ),

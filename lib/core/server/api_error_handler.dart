@@ -19,13 +19,15 @@ class ApiErrorHandler {
           // Map common HTTP status codes and fall back to server message
           final statusCode = e.response?.statusCode;
           if (statusCode != null) {
-            if (statusCode >= 500)
+            if (statusCode >= 500) {
               return Failure.server(
                 message: ApiErrors.internalServerError,
                 statusCode: statusCode,
               );
-            if (statusCode == 401)
+            }
+            if (statusCode == 401) {
               return Failure.unauthorized(message: ApiErrors.unauthorizedError);
+            }
             if (statusCode == 403) {
               // التحقق من رسالة خطأ الباقة
               final serverMessage = _extractServerMessage(e.response);
@@ -43,23 +45,27 @@ class ApiErrorHandler {
                 statusCode: statusCode,
               );
             }
-            if (statusCode == 404)
+            if (statusCode == 404) {
               return Failure.server(
                 message: ApiErrors.notFoundError,
                 statusCode: statusCode,
               );
-            if (statusCode == 409)
+            }
+            if (statusCode == 409) {
               return Failure.server(
                 message: ApiErrors.conflictError,
                 statusCode: statusCode,
               );
-            if (statusCode == 400)
+            }
+            if (statusCode == 400) {
               return Failure.validation(message: ApiErrors.badRequestError);
-            if (statusCode == 204)
+            }
+            if (statusCode == 204) {
               return Failure.server(
                 message: ApiErrors.noContent,
                 statusCode: statusCode,
               );
+            }
           }
           return Failure.server(
             message: serverMessage ?? ApiErrors.defaultError,

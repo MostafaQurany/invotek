@@ -2,62 +2,45 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'update_product_request.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class UpdateProductRequest {
   final String name;
-  final String? description;
-  final String price;
-  final String? cost;
-  final int quantity;
+  @JsonKey(name: 'product_category_id')
+  final int? productCategoryId;
   final String? sku;
+  final String? description;
+  final String? image;
+  final double? price;
+  final double? cost;
+  @JsonKey(name: 'tax_rate')
+  final double? taxRate;
+  final int? quantity;
   final String? barcode;
   final String? unit;
-  @JsonKey(name: 'tax_rate')
-  final String? taxRate;
-  final String? notes;
-  final String? brand;
-  final String? model;
-  final String? weight;
-  final String? dimensions;
-  final String? color;
-  final String? material;
-  final int? minQuantity;
-  final int? maxQuantity;
-  @JsonKey(name: 'is_active')
-  final bool isActive;
   @JsonKey(name: 'has_tax')
-  final bool hasTax;
+  final bool? hasTax;
+  @JsonKey(name: 'is_active')
+  final bool? isActive;
   @JsonKey(name: 'track_inventory')
-  final bool trackInventory;
-  @JsonKey(name: 'status')
-  final String status;
-  @JsonKey(name: 'product_category_id')
-  final int? categoryId;
+  final bool? trackInventory;
+  final String? status;
 
   UpdateProductRequest({
     required this.name,
-    this.description,
-    required this.price,
-    this.cost,
-    required this.quantity,
+    this.productCategoryId,
     this.sku,
+    this.description,
+    this.image,
+    this.price,
+    this.cost,
+    this.taxRate,
+    this.quantity,
     this.barcode,
     this.unit,
-    this.taxRate,
-    this.notes,
-    this.brand,
-    this.model,
-    this.weight,
-    this.dimensions,
-    this.color,
-    this.material,
-    this.minQuantity,
-    this.maxQuantity,
-    this.isActive = true,
-    this.hasTax = false,
-    this.trackInventory = false,
-    this.status = 'active',
-    this.categoryId,
+    this.hasTax,
+    this.isActive,
+    this.trackInventory,
+    this.status,
   });
 
   factory UpdateProductRequest.fromJson(Map<String, dynamic> json) =>

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,12 +11,11 @@ import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/screens/add_customer_screen.dart';
 import 'package:invotek/features/customers/ui/screens/edit_customer_screen.dart';
-import 'package:invotek/features/customers/ui/widgets/cards/customers_header_widget.dart';
-import 'package:invotek/features/customers/ui/widgets/lists/customers_state_builder.dart';
 import 'package:invotek/features/customers/ui/widgets/cards/customer_options_bottom_sheet.dart';
+import 'package:invotek/features/customers/ui/widgets/cards/customers_header_widget.dart';
 import 'package:invotek/features/customers/ui/widgets/dialogs/delete_customer_dialog.dart';
+import 'package:invotek/features/customers/ui/widgets/lists/customers_state_builder.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'dart:async';
 
 class CustomersListScreen extends StatefulWidget {
   const CustomersListScreen({super.key});
@@ -50,6 +51,12 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       CustomersCubit.get(context).loadFirstPage(refresh: true);
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    FocusScope.of(context).unfocus();
   }
 
   void _initializeOptions() {

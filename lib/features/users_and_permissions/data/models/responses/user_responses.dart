@@ -58,8 +58,22 @@ class UserResponse {
 
   UserResponse({this.success, this.message, this.data});
 
-  factory UserResponse.fromJson(Map<String, dynamic> json) =>
-      _$UserResponseFromJson(json);
+  factory UserResponse.fromJson(Map<String, dynamic> json) {
+    // Check if the response is wrapped in a 'data' field (standard API response)
+    if (json.containsKey('data') && json['data'] is Map<String, dynamic>) {
+      return _$UserResponseFromJson(json);
+    }
+    // If not, the JSON itself is the User object (direct response)
+    // Try to parse it as UserApiModel directly
+    try {
+      return UserResponse(
+        data: UserApiModel.fromJson(json),
+      );
+    } catch (e) {
+      // If that fails, try the standard parsing
+      return _$UserResponseFromJson(json);
+    }
+  }
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }

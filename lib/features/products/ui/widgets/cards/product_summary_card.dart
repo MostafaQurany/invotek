@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
-import 'package:invotek/features/products/ui/widgets/cards/animated_card.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 
 class ProductSummaryCard extends StatelessWidget {
   final ProductModel product;
@@ -11,83 +10,90 @@ class ProductSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedCard(
-      delay: Duration(milliseconds: 200),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              // Product Icon/Avatar
-              Container(
-                width: 60.w,
-                height: 60.w,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(16.r),
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                // Product Icon/Avatar
+                Container(
+                  width: 60.w,
+                  height: 60.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: Icon(
+                    Icons.inventory_2_outlined,
+                    color: AppColors.primary,
+                    size: 32.sp,
+                  ),
                 ),
-                child: Icon(
-                  Icons.inventory_2_outlined,
-                  color: AppColors.primary,
-                  size: 32.sp,
+
+                SizedBox(width: 16.w),
+
+                // Product Info
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.name ?? 'Unnamed Product',
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      if (product.sku != null && product.sku!.isNotEmpty)
+                        Text(
+                          'SKU: ${product.sku!}',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: AppColors.greyDark,
+                          ),
+                        ),
+                      SizedBox(height: 8.h),
+                      _buildProductStatusChip(product.status ?? 'inactive'),
+                    ],
+                  ),
                 ),
-              ),
 
-              SizedBox(width: 16.w),
-
-              // Product Info
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                // Price and Quantity
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      product.name ?? 'Unnamed Product',
+                      product.price ?? '0.00',
                       style: TextStyle(
-                        fontSize: 20.sp,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimary,
+                        color: AppColors.primary,
                       ),
                     ),
                     SizedBox(height: 4.h),
-                    if (product.sku != null && product.sku!.isNotEmpty)
-                      Text(
-                        'SKU: ${product.sku!}',
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: AppColors.greyDark,
-                        ),
+                    Text(
+                      'Qty: ${product.quantity ?? 0}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.greyDark,
                       ),
-                    SizedBox(height: 8.h),
-                    _buildProductStatusChip(product.status ?? 'inactive'),
+                    ),
                   ],
                 ),
-              ),
-
-              // Price and Quantity
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    'SAR ${product.price ?? '0.00'}',
-                    style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    'Qty: ${product.quantity ?? 0}',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.greyDark,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

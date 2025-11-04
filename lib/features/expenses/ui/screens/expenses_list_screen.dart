@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/expenses/demo/cubit/expense_categories_cubit.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
-import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
-import 'package:invotek/features/expenses/ui/widgets/cards/expenses_header_widget.dart';
-import 'package:invotek/features/expenses/ui/widgets/lists/expenses_state_builder.dart';
-import 'package:invotek/features/expenses/ui/widgets/cards/expense_options_bottom_sheet.dart';
-import 'package:invotek/features/expenses/ui/widgets/dialogs/delete_expense_dialog.dart';
+import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
+import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
 import 'package:invotek/features/expenses/ui/screens/add_expense_screen.dart';
+import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/expense_details_screen.dart';
+import 'package:invotek/features/expenses/ui/widgets/cards/expense_options_bottom_sheet.dart';
+import 'package:invotek/features/expenses/ui/widgets/cards/expenses_header_widget.dart';
+import 'package:invotek/features/expenses/ui/widgets/dialogs/delete_expense_dialog.dart';
+import 'package:invotek/features/expenses/ui/widgets/lists/expenses_state_builder.dart';
 
 class ExpensesListScreen extends StatefulWidget {
   const ExpensesListScreen({super.key});
@@ -36,6 +36,9 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
 
   String? _selectedStatus;
   String? _selectedCategory;
+  String _selectedSortBy = 'created_at';
+  String _selectedSortOrder = 'desc';
+  bool _isLoadingNextPage = false;
   bool _isNavigating = false;
 
   @override
@@ -43,16 +46,31 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
     super.initState();
     _initializeOptions();
     _setupScrollListener();
+    ExpensesCubit.get(context).loadFirstPage();
+    ExpenseCategoriesCubit.get(context).loadFirstPage();
   }
 
   void _setupScrollListener() {
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 200) {
-        // Load more when user is 200 pixels from bottom
-        final expensesCubit = ExpensesCubit.get(context);
-        if (expensesCubit.hasMore) {
-          expensesCubit.loadNextPage();
+      if (!_scrollController.hasClients) return;
+
+      final position = _scrollController.position;
+      final pixels = position.pixels;
+      final maxScrollExtent = position.maxScrollExtent;
+
+      if (maxScrollExtent > 0 && pixels >= maxScrollExtent - 400) {
+        if (!_isLoadingNextPage && mounted) {
+          final cubit = ExpensesCubit.get(context);
+          if (!cubit.isLoadingPage) {
+            final currentPage = cubit.currentPage;
+            final totalPages = cubit.totalPages;
+            if (currentPage < totalPages) {
+              _isLoadingNextPage = true;
+              cubit.loadNextPage().whenComplete(() {
+                if (mounted) _isLoadingNextPage = false;
+              });
+            }
+          }
         }
       }
     });
@@ -96,35 +114,54 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
         },
         child: SafeArea(
           bottom: false,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                // Header Widget - Scrolls with content
-                ExpensesHeaderWidget(
-                  onMenuPressed: _handleMenuPressed,
-                  searchController: _searchController,
-                  onSearchChanged: (query) {
+          child: Column(
+            children: [
+              // Header Widget - Scrolls with content
+              ExpensesHeaderWidget(
+                onMenuPressed: _handleMenuPressed,
+                searchController: _searchController,
+                onSearchChanged: (query) {
+                  ExpensesCubit.get(context).loadFirstPage(
+                    refresh: true,
+                    search: query.isEmpty ? null : query,
+                    status: _selectedStatus == 'all_status'
+                        ? null
+                        : _selectedStatus,
+                    categoryId: _selectedCategory == 'all_category'
+                        ? null
+                        : int.tryParse(_selectedCategory ?? ''),
+                    sortBy: _selectedSortBy,
+                    sortOrder: _selectedSortOrder,
+                  );
+                },
+                selectedStatus: _selectedStatus ?? '',
+                selectedCategory: _selectedCategory ?? '',
+                onStatusChanged: _onStatusChanged,
+                onCategoryChanged: _onCategoryChanged,
+                selectedSortBy: _selectedSortBy,
+                selectedSortOrder: _selectedSortOrder,
+                onSortByChanged: _onSortByChanged,
+                onSortOrderChanged: _onSortOrderChanged,
+              ),
+
+              // Expenses List Content
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async {
                     ExpensesCubit.get(context).loadFirstPage(
                       refresh: true,
-                      search: query.isEmpty ? null : query,
+                      search: _searchController.text.isEmpty
+                          ? null
+                          : _searchController.text,
                       status: _selectedStatus == 'all_status'
                           ? null
                           : _selectedStatus,
                       categoryId: _selectedCategory == 'all_category'
                           ? null
                           : int.tryParse(_selectedCategory ?? ''),
+                      sortBy: _selectedSortBy,
+                      sortOrder: _selectedSortOrder,
                     );
-                  },
-                  selectedStatus: _selectedStatus ?? '',
-                  selectedCategory: _selectedCategory ?? '',
-                  onStatusChanged: _onStatusChanged,
-                  onCategoryChanged: _onCategoryChanged,
-                ),
-
-                // Expenses List Content
-                RefreshIndicator(
-                  onRefresh: () async {
-                    ExpensesCubit.get(context).loadFirstPage(refresh: true);
                     ExpenseCategoriesCubit.get(
                       context,
                     ).loadFirstPage(refresh: true);
@@ -141,10 +178,11 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
                     selectedCategory: _selectedCategory ?? '',
                     onStatusChanged: _onStatusChanged,
                     onCategoryChanged: _onCategoryChanged,
+                    scrollController: _scrollController,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -198,6 +236,8 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
       categoryId: _selectedCategory == 'all_category'
           ? null
           : int.tryParse(_selectedCategory ?? ''),
+      sortBy: _selectedSortBy,
+      sortOrder: _selectedSortOrder,
     );
   }
 
@@ -210,6 +250,40 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
       search: _searchController.text.isEmpty ? null : _searchController.text,
       status: _selectedStatus == 'all_status' ? null : _selectedStatus,
       categoryId: category == 'all_category' ? null : int.tryParse(category),
+      sortBy: _selectedSortBy,
+      sortOrder: _selectedSortOrder,
+    );
+  }
+
+  void _onSortByChanged(String sortBy) {
+    setState(() {
+      _selectedSortBy = sortBy;
+    });
+    ExpensesCubit.get(context).loadFirstPage(
+      refresh: true,
+      search: _searchController.text.isEmpty ? null : _searchController.text,
+      status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+      categoryId: _selectedCategory == 'all_category'
+          ? null
+          : int.tryParse(_selectedCategory ?? ''),
+      sortBy: _selectedSortBy,
+      sortOrder: _selectedSortOrder,
+    );
+  }
+
+  void _onSortOrderChanged(String sortOrder) {
+    setState(() {
+      _selectedSortOrder = sortOrder;
+    });
+    ExpensesCubit.get(context).loadFirstPage(
+      refresh: true,
+      search: _searchController.text.isEmpty ? null : _searchController.text,
+      status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+      categoryId: _selectedCategory == 'all_category'
+          ? null
+          : int.tryParse(_selectedCategory ?? ''),
+      sortBy: _selectedSortBy,
+      sortOrder: _selectedSortOrder,
     );
   }
 

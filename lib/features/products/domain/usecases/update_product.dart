@@ -1,7 +1,7 @@
-import 'package:invotek/core/usecase/usecase.dart';
 import 'package:invotek/core/server/api_result.dart';
+import 'package:invotek/core/usecase/usecase.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 
 class UpdateProduct implements UseCase<ProductModel, UpdateProductParams> {
   final ProductsRepository repository;
@@ -14,27 +14,16 @@ class UpdateProduct implements UseCase<ProductModel, UpdateProductParams> {
       id: params.id,
       name: params.name,
       description: params.description,
-      price: params.price,
-      cost: params.cost,
-      quantity: params.quantity,
+      price: double.parse(params.price),
+      cost: double.parse(params.cost ?? '0'),
+      quantity: int.parse(params.quantity.toString()),
       sku: params.sku,
       barcode: params.barcode,
       unit: params.unit,
-      taxRate: params.taxRate,
-      notes: params.notes,
-      brand: params.brand,
-      model: params.model,
-      weight: params.weight,
-      dimensions: params.dimensions,
-      color: params.color,
-      material: params.material,
-      minQuantity: params.minQuantity,
-      maxQuantity: params.maxQuantity,
+      taxRate: params.taxRate != null ? double.parse(params.taxRate!) : 0,
       isActive: params.isActive,
-      hasTax: params.hasTax,
       trackInventory: params.trackInventory,
       status: params.status,
-      categoryId: params.categoryId,
     );
   }
 }

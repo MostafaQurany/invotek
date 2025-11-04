@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/expenses/demo/cubit/expenses_cubit.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_model.dart';
+import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
+import 'package:invotek/features/expenses/ui/widgets/lists/expenses_list.dart';
 import 'package:invotek/features/expenses/ui/widgets/states/expenses_empty_state.dart';
 import 'package:invotek/features/expenses/ui/widgets/states/expenses_error_state.dart';
-import 'package:invotek/features/expenses/ui/widgets/lists/expenses_list.dart';
-import 'package:invotek/generated/l10n.dart';
 
 class ExpensesStateBuilder extends StatelessWidget {
   final Function(ExpenseModel) onExpenseTap;
@@ -20,6 +19,7 @@ class ExpensesStateBuilder extends StatelessWidget {
   final String selectedCategory;
   final Function(String) onStatusChanged;
   final Function(String) onCategoryChanged;
+  final ScrollController? scrollController;
 
   const ExpensesStateBuilder({
     super.key,
@@ -33,109 +33,167 @@ class ExpensesStateBuilder extends StatelessWidget {
     required this.selectedCategory,
     required this.onStatusChanged,
     required this.onCategoryChanged,
+    this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ExpensesCubit, ExpensesState>(
-      builder: (context, state) {
-        print(
-          '🏗️ ExpensesStateBuilder building with state: ${state.runtimeType}',
-        );
+    return Expanded(
+      child: Container(
+        height: 0.775.sh,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColors.whiteGray,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28.r),
+            topRight: Radius.circular(28.r),
+          ),
+        ),
+        child: BlocBuilder<ExpensesCubit, ExpensesState>(
+          builder: (context, state) {
+            print(
+              '🏗️ ExpensesStateBuilder building with state: ${state.runtimeType}',
+            );
 
-        return state.when(
-          initial:
-              (expenses, selectedExpense, currentPage, totalPages, error) =>
-                  ExpensesEmptyState(onAddExpense: onAddExpense),
-          loading:
-              (expenses, selectedExpense, currentPage, totalPages, message) =>
-                  Container(
-                    height: 0.9.sh,
-                    decoration: BoxDecoration(
-                      color: AppColors.whiteGray,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(28.r),
-                        topRight: Radius.circular(28.r),
-                      ),
-                    ),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+            return state.when(
+              initial:
+                  (expenses, selectedExpense, currentPage, totalPages, error) {
+                    if (expenses.isEmpty)
+                      return ExpensesEmptyState(onAddExpense: onAddExpense);
+                    return ExpensesList(
+                      expenses: expenses,
+                      onExpenseTap: onExpenseTap,
+                      onExpenseView: onExpenseView,
+                      onExpenseEdit: onExpenseEdit,
+                      onExpenseDelete: onExpenseDelete,
+                      scrollController: scrollController,
+                      isLoadingMore: false,
+                    );
+                  },
 
-                        children: [
-                          CircularProgressIndicator(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            message == 'loading_more'
-                                ? S.of(context).loadingMore
-                                : S.of(context).loadingExpenses,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-          loaded: (expenses, selectedExpense, currentPage, totalPages) {
-            if (expenses.isEmpty) {
-              return ExpensesEmptyState(onAddExpense: onAddExpense);
-            }
-            return ExpensesList(
-              expenses: expenses,
-              onExpenseTap: onExpenseTap,
-              onExpenseView: onExpenseView,
-              onExpenseEdit: onExpenseEdit,
-              onExpenseDelete: onExpenseDelete,
+              loading:
+                  (
+                    expenses,
+                    selectedExpense,
+                    currentPage,
+                    totalPages,
+                    message,
+                  ) {
+                    if (expenses.isEmpty)
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      );
+                    return ExpensesList(
+                      expenses: expenses,
+                      onExpenseTap: onExpenseTap,
+                      onExpenseView: onExpenseView,
+                      onExpenseEdit: onExpenseEdit,
+                      onExpenseDelete: onExpenseDelete,
+                      scrollController: scrollController,
+                      isLoadingMore: message == 'loading_more',
+                    );
+                  },
+              loaded: (expenses, selectedExpense, currentPage, totalPages) {
+                if (expenses.isEmpty) {
+                  return ExpensesEmptyState(onAddExpense: onAddExpense);
+                }
+                return ExpensesList(
+                  expenses: expenses,
+                  onExpenseTap: onExpenseTap,
+                  onExpenseView: onExpenseView,
+                  onExpenseEdit: onExpenseEdit,
+                  onExpenseDelete: onExpenseDelete,
+                  isLoadingMore: false,
+                  scrollController: scrollController,
+                );
+              },
+              createSuccess:
+                  (
+                    expenses,
+                    created,
+                    selectedExpense,
+                    currentPage,
+                    totalPages,
+                  ) {
+                    if (expenses.isEmpty) {
+                      return ExpensesEmptyState(onAddExpense: onAddExpense);
+                    }
+                    return ExpensesList(
+                      expenses: expenses,
+                      onExpenseTap: onExpenseTap,
+                      onExpenseView: onExpenseView,
+                      onExpenseEdit: onExpenseEdit,
+                      isLoadingMore: false,
+                      onExpenseDelete: onExpenseDelete,
+                      scrollController: scrollController,
+                    );
+                  },
+              updateSuccess:
+                  (
+                    expenses,
+                    updated,
+                    selectedExpense,
+                    currentPage,
+                    totalPages,
+                  ) {
+                    if (expenses.isEmpty) {
+                      return ExpensesEmptyState(onAddExpense: onAddExpense);
+                    }
+                    return ExpensesList(
+                      expenses: expenses,
+                      onExpenseTap: onExpenseTap,
+                      onExpenseView: onExpenseView,
+                      isLoadingMore: false,
+                      onExpenseEdit: onExpenseEdit,
+                      onExpenseDelete: onExpenseDelete,
+                      scrollController: scrollController,
+                    );
+                  },
+              deleteSuccess:
+                  (
+                    expenses,
+                    deletedId,
+                    selectedExpense,
+                    currentPage,
+                    totalPages,
+                  ) {
+                    if (expenses.isEmpty) {
+                      return ExpensesEmptyState(onAddExpense: onAddExpense);
+                    }
+                    return ExpensesList(
+                      expenses: expenses,
+                      onExpenseTap: onExpenseTap,
+                      onExpenseView: onExpenseView,
+                      onExpenseEdit: onExpenseEdit,
+                      onExpenseDelete: onExpenseDelete,
+                      scrollController: scrollController,
+                      isLoadingMore: false,
+                    );
+                  },
+              failure:
+                  (expenses, selectedExpense, currentPage, totalPages, error) {
+                    if (expenses.isEmpty) {
+                      return ExpensesErrorState(
+                        error: error.message,
+                        onRetry: onRetry,
+                      );
+                    }
+                    return ExpensesList(
+                      expenses: expenses,
+                      onExpenseTap: onExpenseTap,
+                      onExpenseView: onExpenseView,
+                      onExpenseEdit: onExpenseEdit,
+                      onExpenseDelete: onExpenseDelete,
+                      scrollController: scrollController,
+                      isLoadingMore: false,
+                    );
+                  },
             );
           },
-          createSuccess:
-              (expenses, created, selectedExpense, currentPage, totalPages) {
-                if (expenses.isEmpty) {
-                  return ExpensesEmptyState(onAddExpense: onAddExpense);
-                }
-                return ExpensesList(
-                  expenses: expenses,
-                  onExpenseTap: onExpenseTap,
-                  onExpenseView: onExpenseView,
-                  onExpenseEdit: onExpenseEdit,
-                  onExpenseDelete: onExpenseDelete,
-                );
-              },
-          updateSuccess:
-              (expenses, updated, selectedExpense, currentPage, totalPages) {
-                if (expenses.isEmpty) {
-                  return ExpensesEmptyState(onAddExpense: onAddExpense);
-                }
-                return ExpensesList(
-                  expenses: expenses,
-                  onExpenseTap: onExpenseTap,
-                  onExpenseView: onExpenseView,
-                  onExpenseEdit: onExpenseEdit,
-                  onExpenseDelete: onExpenseDelete,
-                );
-              },
-          deleteSuccess:
-              (expenses, deletedId, selectedExpense, currentPage, totalPages) {
-                if (expenses.isEmpty) {
-                  return ExpensesEmptyState(onAddExpense: onAddExpense);
-                }
-                return ExpensesList(
-                  expenses: expenses,
-                  onExpenseTap: onExpenseTap,
-                  onExpenseView: onExpenseView,
-                  onExpenseEdit: onExpenseEdit,
-                  onExpenseDelete: onExpenseDelete,
-                );
-              },
-          failure:
-              (expenses, selectedExpense, currentPage, totalPages, error) =>
-                  ExpensesErrorState(error: error.message, onRetry: onRetry),
-        );
-      },
+        ),
+      ),
     );
   }
 }

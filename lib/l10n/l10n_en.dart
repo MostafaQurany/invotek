@@ -1102,9 +1102,7 @@ class SEn extends S {
   String get edit => 'Edit';
 
   @override
-  String errorOccurred(Object error) {
-    return 'An error occurred: $error';
-  }
+  String get errorOccurred => 'Error Occurred';
 
   @override
   String get company => 'Company';
@@ -4625,4 +4623,26 @@ class SEn extends S {
 
   @override
   String get inactiveStatus => 'Inactive';
+
+  @override
+  String get updatedSuccessfully => 'Updated Successfully';
+
+  @override
+  String get photoUpdatedSuccessfully => 'Photo Updated Successfully';
+
+  @override
+  String errorOccurredWithMessage(Object message) {
+    return 'Error Occurred: $message';
+  }
+
+  @override
+  String get updatePhoto => 'Update Photo';
+
+  @override
+  String get position => 'Position';
+
+  @override
+  String fieldIsRequired(String field) {
+    return '$field is required';
+  }
 }

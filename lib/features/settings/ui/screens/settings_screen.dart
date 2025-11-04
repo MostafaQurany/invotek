@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
+import '../../../../core/di/injection.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_theme.dart';
 import '../../../../generated/l10n.dart';
-import '../widgets/settings_card.dart';
-import '../widgets/company_settings_section.dart';
-import '../widgets/system_settings_section.dart';
-import '../widgets/app_info_section.dart';
+import '../../cubit/company_cubit.dart';
+import '../../cubit/photo_cubit.dart';
+import '../../cubit/profile_cubit.dart';
+import '../../cubit/update_profile_cubit.dart';
 import '../widgets/account_settings_section.dart';
+import '../widgets/company_settings_section.dart';
+import '../widgets/settings_card.dart';
+import '../widgets/system_settings_section.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -41,44 +46,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: AppColors.primary,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          children: [
-            // إعدادات الحساب
-            SettingsCard(
-              title: S.of(context).accountSettings,
-              icon: Icons.person,
-              child: const AccountSettingsSection(),
-            ),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<ProfileCubit>(create: (_) => getIt<ProfileCubit>()),
+          BlocProvider<UpdateProfileCubit>(
+            create: (_) => getIt<UpdateProfileCubit>(),
+          ),
+          BlocProvider<PhotoCubit>(create: (_) => getIt<PhotoCubit>()),
+          BlocProvider<CompanyCubit>(
+            create: (_) => getIt<CompanyCubit>()..load(),
+          ),
+        ],
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            children: [
+              // إعدادات الحساب
+              SettingsCard(
+                title: S.of(context).accountSettings,
+                icon: Icons.person,
+                child: const AccountSettingsSection(),
+              ),
 
-            SizedBox(height: 16.h),
+              SizedBox(height: 16.h),
 
-            // إعدادات الشركة
-            SettingsCard(
-              title: S.of(context).companySettings,
-              icon: Icons.business,
-              child: const CompanySettingsSection(),
-            ),
+              // إعدادات الشركة
+              SettingsCard(
+                title: S.of(context).companySettings,
+                icon: Icons.business,
+                child: const CompanySettingsSection(),
+              ),
 
-            SizedBox(height: 16.h),
+              SizedBox(height: 16.h),
 
-            // إعدادات النظام
-            SettingsCard(
-              title: S.of(context).systemSettings,
-              icon: Icons.settings,
-              child: const SystemSettingsSection(),
-            ),
+              // إعدادات النظام
+              SettingsCard(
+                title: S.of(context).systemSettings,
+                icon: Icons.settings,
+                child: const SystemSettingsSection(),
+              ),
 
-            SizedBox(height: 16.h),
+              //     SizedBox(height: 16.h),
 
-            // معلومات التطبيق
-            SettingsCard(
-              title: S.of(context).appInfo,
-              icon: Icons.info,
-              child: const AppInfoSection(),
-            ),
-          ],
+              // // معلومات التطبيق
+              // SettingsCard(
+              //   title: S.of(context).appInfo,
+              //   icon: Icons.info,
+              //   child: const AppInfoSection(),
+              // ),
+            ],
+          ),
         ),
       ),
     );

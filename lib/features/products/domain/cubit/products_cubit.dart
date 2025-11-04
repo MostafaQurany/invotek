@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/error/failures.dart';
+import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 
 part 'products_cubit.freezed.dart';
 
@@ -75,6 +75,8 @@ class ProductsCubit extends Cubit<ProductsState> {
   String? _lastSearch;
   String? _lastCategory;
   String? _lastStatus;
+  String? _lastSortBy;
+  String? _lastSortOrder;
   int _pageSize = 20;
   bool _isLoadingPage = false;
 
@@ -84,54 +86,103 @@ class ProductsCubit extends Cubit<ProductsState> {
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   bool get hasMore => _currentPage < _totalPages;
+  bool get isLoadingPage => _isLoadingPage;
 
   Future<void> loadFirstPage({
     bool refresh = false,
     String? search,
     String? category,
     String? status,
+    String? sortBy,
+    String? sortOrder,
     int? limit,
   }) async {
     if (_isLoadingPage) return;
-    if (_products.isNotEmpty && !refresh) return;
     _isLoadingPage = true;
 
-    _lastSearch = search;
-    _lastCategory = category;
-    _lastStatus = status;
-    _pageSize = limit ?? _pageSize;
+    // Check if search parameters changed
+    final searchChanged = _lastSearch != search;
+    final categoryChanged = _lastCategory != category;
+    final statusChanged = _lastStatus != status;
+    final sortByChanged = _lastSortBy != sortBy;
+    final sortOrderChanged = _lastSortOrder != sortOrder;
+    final shouldRefresh =
+        refresh ||
+        searchChanged ||
+        categoryChanged ||
+        statusChanged ||
+        sortByChanged ||
+        sortOrderChanged;
 
-    _products.clear();
-    _currentPage = 1;
-    _totalPages = 1;
+    if (shouldRefresh) {
+      _products.clear();
+      _currentPage = 1;
+      _totalPages = 1;
+    }
 
     emit(
       ProductsState.loading(
         products: _products,
         currentPage: _currentPage,
         totalPages: _totalPages,
-        message: 'loading',
+        message: shouldRefresh ? 'refreshing' : 'loading',
       ),
     );
 
-    final result = await _repository.getProducts(
+    _lastSearch = search;
+    _lastCategory = category;
+    _lastStatus = status;
+    _lastSortBy = sortBy;
+    _lastSortOrder = sortOrder;
+    _pageSize = limit ?? _pageSize;
+
+    final result = await _repository.getProductsWithPagination(
       search: _lastSearch,
-      category: _lastCategory,
+      categoryId: _lastCategory,
       status: _lastStatus,
-      page: _currentPage,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
+      page: 1,
       limit: _pageSize,
     );
 
     result.when(
-      success: (pageProducts) {
-        _products.addAll(pageProducts);
-        // If repository can return pagination meta, wire it; otherwise estimate
-        // For now, keep totalPages as current when page not full
-        if (pageProducts.length < _pageSize) {
-          _totalPages = _currentPage; // no more pages
-        } else {
-          _totalPages = _currentPage + 1; // optimistic next
+      success: (paginationResult) {
+        if (shouldRefresh) {
+          _products.clear();
         }
+        _products.addAll(
+          paginationResult.products
+              .map(
+                (apiProduct) => ProductModel(
+                  id: apiProduct.id,
+                  companyId: apiProduct.companyId,
+                  productCategoryId: apiProduct.productCategoryId,
+                  name: apiProduct.name,
+                  sku: apiProduct.sku,
+                  description: apiProduct.description,
+                  price: apiProduct.price,
+                  cost: apiProduct.cost,
+                  taxRate: apiProduct.taxRate,
+                  taxRateBackup: apiProduct.taxRateBackup,
+                  quantity: apiProduct.quantity,
+                  quantityBackup: apiProduct.quantityBackup,
+                  barcode: apiProduct.barcode,
+                  unit: apiProduct.unit,
+                  hasTax: apiProduct.hasTax,
+                  isActive: apiProduct.isActive,
+                  trackInventory: apiProduct.trackInventory,
+                  status: apiProduct.status,
+                  createdAt: apiProduct.createdAt,
+                  updatedAt: apiProduct.updatedAt,
+                  image: apiProduct.image,
+                ),
+              )
+              .toList(),
+        );
+        _currentPage = paginationResult.currentPage;
+        _totalPages = paginationResult.totalPages;
+
         emit(
           ProductsState.loaded(
             products: _products,
@@ -158,34 +209,64 @@ class ProductsCubit extends Cubit<ProductsState> {
   Future<void> loadNextPage() async {
     if (_isLoadingPage || !hasMore) return;
     _isLoadingPage = true;
-    final nextPage = _currentPage + 1;
 
+    // Emit loading state for next page to show loading indicator
     emit(
       ProductsState.loading(
         products: _products,
+        selectedProduct: state.selectedProduct,
         currentPage: _currentPage,
         totalPages: _totalPages,
-        message: 'loading_next',
+        message: 'loading_more',
       ),
     );
 
-    final result = await _repository.getProducts(
+    final nextPage = _currentPage + 1;
+    final result = await _repository.getProductsWithPagination(
       search: _lastSearch,
-      category: _lastCategory,
+      categoryId: _lastCategory,
       status: _lastStatus,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
       page: nextPage,
       limit: _pageSize,
     );
 
     result.when(
-      success: (pageProducts) {
-        _currentPage = nextPage;
-        _products.addAll(pageProducts);
-        if (pageProducts.length < _pageSize) {
-          _totalPages = _currentPage; // reached last page
-        } else {
-          _totalPages = _currentPage + 1; // optimistic next
-        }
+      success: (paginationResult) {
+        // Only add new products, don't clear existing ones
+        final newProducts = paginationResult.products
+            .map(
+              (apiProduct) => ProductModel(
+                id: apiProduct.id,
+                companyId: apiProduct.companyId,
+                productCategoryId: apiProduct.productCategoryId,
+                name: apiProduct.name,
+                sku: apiProduct.sku,
+                description: apiProduct.description,
+                price: apiProduct.price,
+                cost: apiProduct.cost,
+                taxRate: apiProduct.taxRate,
+                taxRateBackup: apiProduct.taxRateBackup,
+                quantity: apiProduct.quantity,
+                quantityBackup: apiProduct.quantityBackup,
+                barcode: apiProduct.barcode,
+                unit: apiProduct.unit,
+                hasTax: apiProduct.hasTax,
+                isActive: apiProduct.isActive,
+                trackInventory: apiProduct.trackInventory,
+                status: apiProduct.status,
+                createdAt: apiProduct.createdAt,
+                updatedAt: apiProduct.updatedAt,
+                image: apiProduct.image,
+              ),
+            )
+            .toList();
+
+        _products.addAll(newProducts);
+        _currentPage = paginationResult.currentPage;
+        _totalPages = paginationResult.totalPages;
+
         emit(
           ProductsState.loaded(
             products: _products,
@@ -211,38 +292,43 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   Future<void> refreshCurrentFilters() async {
     await loadFirstPage(
+      refresh: true,
       search: _lastSearch,
       category: _lastCategory,
       status: _lastStatus,
+      sortBy: _lastSortBy,
+      sortOrder: _lastSortOrder,
       limit: _pageSize,
     );
+  }
+
+  // Search products
+  Future<void> searchProducts(String query) async {
+    await loadFirstPage(search: query.isEmpty ? null : query, refresh: true);
+  }
+
+  // Clear search and reload all products
+  Future<void> clearSearch() async {
+    await loadFirstPage(search: null, refresh: true);
   }
 
   // Create product preserves cache
   Future<void> createProduct({
     required String name,
-    String? description,
-    required String price,
-    String? cost,
-    required int quantity,
+    int? productCategoryId,
     String? sku,
+    String? description,
+    String? image,
+    double? price,
+    double? cost,
+    double? taxRate,
+    int? quantity,
     String? barcode,
     String? unit,
-    String? taxRate,
-    String? notes,
-    String? brand,
-    String? model,
-    String? weight,
-    String? dimensions,
-    String? color,
-    String? material,
-    int? minQuantity,
-    int? maxQuantity,
-    bool isActive = true,
-    bool hasTax = false,
-    bool trackInventory = false,
-    String status = 'active',
-    int? categoryId,
+    bool? hasTax,
+    bool? isActive,
+    bool? trackInventory,
+    String? status,
   }) async {
     emit(
       ProductsState.loading(
@@ -255,28 +341,20 @@ class ProductsCubit extends Cubit<ProductsState> {
 
     final result = await _repository.createProduct(
       name: name,
+      productCategoryId: productCategoryId,
+      sku: sku,
       description: description,
+      image: image,
       price: price,
       cost: cost,
+      taxRate: taxRate,
       quantity: quantity,
-      sku: sku,
       barcode: barcode,
       unit: unit,
-      taxRate: taxRate,
-      notes: notes,
-      brand: brand,
-      model: model,
-      weight: weight,
-      dimensions: dimensions,
-      color: color,
-      material: material,
-      minQuantity: minQuantity,
-      maxQuantity: maxQuantity,
-      isActive: isActive,
       hasTax: hasTax,
+      isActive: isActive,
       trackInventory: trackInventory,
       status: status,
-      categoryId: categoryId,
     );
 
     result.when(
@@ -307,28 +385,20 @@ class ProductsCubit extends Cubit<ProductsState> {
   Future<void> updateProduct({
     required int id,
     required String name,
-    String? description,
-    required String price,
-    String? cost,
-    required int quantity,
+    int? productCategoryId,
     String? sku,
+    String? description,
+    String? image,
+    double? price,
+    double? cost,
+    double? taxRate,
+    int? quantity,
     String? barcode,
     String? unit,
-    String? taxRate,
-    String? notes,
-    String? brand,
-    String? model,
-    String? weight,
-    String? dimensions,
-    String? color,
-    String? material,
-    int? minQuantity,
-    int? maxQuantity,
-    bool isActive = true,
-    bool hasTax = false,
-    bool trackInventory = false,
-    String status = 'active',
-    int? categoryId,
+    bool? hasTax,
+    bool? isActive,
+    bool? trackInventory,
+    String? status,
   }) async {
     emit(
       ProductsState.loading(
@@ -342,28 +412,20 @@ class ProductsCubit extends Cubit<ProductsState> {
     final result = await _repository.updateProduct(
       id: id,
       name: name,
+      productCategoryId: productCategoryId,
+      sku: sku,
       description: description,
+      image: image,
       price: price,
       cost: cost,
+      taxRate: taxRate,
       quantity: quantity,
-      sku: sku,
       barcode: barcode,
       unit: unit,
-      taxRate: taxRate,
-      notes: notes,
-      brand: brand,
-      model: model,
-      weight: weight,
-      dimensions: dimensions,
-      color: color,
-      material: material,
-      minQuantity: minQuantity,
-      maxQuantity: maxQuantity,
-      isActive: isActive,
       hasTax: hasTax,
+      isActive: isActive,
       trackInventory: trackInventory,
       status: status,
-      categoryId: categoryId,
     );
 
     result.when(

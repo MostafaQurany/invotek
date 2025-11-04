@@ -4,11 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/widgets/common_search_bar.dart';
-import 'package:invotek/core/widgets/common_filter_row.dart';
 import 'package:invotek/core/widgets/common_extended_fab.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/core/widgets/common_filter_row.dart';
+import 'package:invotek/core/widgets/common_search_bar.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/enhanced_product_card.dart';
 import 'package:invotek/features/products/ui/widgets/dialogs/delete_product_dialog.dart';
 

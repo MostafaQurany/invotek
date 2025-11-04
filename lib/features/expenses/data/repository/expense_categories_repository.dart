@@ -2,7 +2,7 @@ import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/server/api_client.dart';
 
-import '../../demo/entit/expense_category_model.dart';
+import '../../domain/entit/expense_category_model.dart';
 import '../models/expense_category_api_model.dart';
 import '../models/request/create_expense_category_request.dart';
 import '../models/request/update_expense_category_request.dart';

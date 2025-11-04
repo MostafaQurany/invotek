@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/products/data/models/product_category_models.dart';
-import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
 import 'package:invotek/core/widgets/common_menu_button.dart';
+import 'package:invotek/features/products/data/models/product_category_models.dart';
+import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
 
 import '../../../../generated/l10n.dart';
 
@@ -25,6 +27,76 @@ class CategoriesListScreen extends StatefulWidget {
 }
 
 class _CategoriesListScreenState extends State<CategoriesListScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  bool _isLoadingNextPage = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CategoriesCubit>().loadFirstPage(refresh: true);
+    });
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    FocusScope.of(context).unfocus();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+
+    final position = _scrollController.position;
+    final pixels = position.pixels;
+    final maxScrollExtent = position.maxScrollExtent;
+
+    // Check if we're near the bottom (within 400 pixels)
+    if (maxScrollExtent > 0 && pixels >= maxScrollExtent - 400) {
+      if (!_isLoadingNextPage && mounted) {
+        final cubit = context.read<CategoriesCubit>();
+
+        // Check if loading or has more pages
+        if (!cubit.isLoadingPage && cubit.hasMore) {
+          _isLoadingNextPage = true;
+          cubit
+              .loadNextPage()
+              .then((_) {
+                if (mounted) {
+                  _isLoadingNextPage = false;
+                }
+              })
+              .catchError((error) {
+                if (mounted) {
+                  _isLoadingNextPage = false;
+                }
+              });
+        }
+      }
+    }
+  }
+
+  Timer? _debounceTimer;
+
+  void _onSearchChanged(String query) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      context.read<CategoriesCubit>().loadFirstPage(
+        refresh: true,
+        search: query.isEmpty ? null : query,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -37,7 +109,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
         elevation: 0,
         scrolledUnderElevation: 1,
         foregroundColor: AppColors.primary,
-        leading: const CommonMenuButton(),
+        leading: CommonMenuButton(color: AppColors.primary),
         actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
         actions: [
           IconButton.filled(
@@ -55,84 +127,118 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
           ),
         ],
       ),
-      body: BlocConsumer<CategoriesCubit, CategoriesState>(
-        listener: (context, state) {
-          final messenger = ScaffoldMessenger.of(context);
-          state.maybeWhen(
-            failure: (categories, currentPage, totalPages, error) {
-              messenger.hideCurrentSnackBar();
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(error),
-                  backgroundColor: AppColors.error,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 0),
+            child: TextField(
+              controller: _searchController,
+              onChanged: _onSearchChanged,
+              decoration: InputDecoration(
+                hintText: S.of(context).search,
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
-              );
-              context.read<CategoriesCubit>().clearError();
-            },
-            createSuccess: (categories, created, currentPage, totalPages) {
-              messenger.hideCurrentSnackBar();
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(S.of(context).categoryAddedSuccessfully),
-                  backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                ),
-              );
-            },
-            updateSuccess: (categories, updated, currentPage, totalPages) {
-              messenger.hideCurrentSnackBar();
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(S.of(context).categoryUpdatedSuccessfully),
-                  backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                ),
-              );
-            },
-            deleteSuccess: (categories, deletedId, currentPage, totalPages) {
-              messenger.hideCurrentSnackBar();
-              messenger.showSnackBar(
-                SnackBar(
-                  content: Text(S.of(context).categoryDeletedSuccessfully),
-                  backgroundColor: Colors.green,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                ),
-              );
-            },
-            orElse: () {},
-          );
-        },
-        builder: (context, state) {
-          return state.when(
-            initial: (categories, currentPage, totalPages, error) =>
-                _buildContent(context, categories, false),
-            loading: (categories, currentPage, totalPages, message) =>
-                _buildContent(context, categories, true),
-            loaded: (categories, currentPage, totalPages) =>
-                _buildContent(context, categories, false),
-            createSuccess: (categories, created, currentPage, totalPages) =>
-                _buildContent(context, categories, false),
-            updateSuccess: (categories, updated, currentPage, totalPages) =>
-                _buildContent(context, categories, false),
-            deleteSuccess: (categories, deletedId, currentPage, totalPages) =>
-                _buildContent(context, categories, false),
-            failure: (categories, currentPage, totalPages, error) =>
-                _buildContent(context, categories, false),
-          );
-        },
+                filled: true,
+                fillColor: Theme.of(context).colorScheme.surfaceContainer,
+              ),
+            ),
+          ),
+          Expanded(
+            child: BlocConsumer<CategoriesCubit, CategoriesState>(
+              listener: (context, state) {
+                final messenger = ScaffoldMessenger.of(context);
+                state.maybeWhen(
+                  failure: (categories, currentPage, totalPages, error) {
+                    messenger.hideCurrentSnackBar();
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(error),
+                        backgroundColor: AppColors.error,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                      ),
+                    );
+                    context.read<CategoriesCubit>().clearError();
+                  },
+                  createSuccess:
+                      (categories, created, currentPage, totalPages) {
+                        messenger.hideCurrentSnackBar();
+                        messenger.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              S.of(context).categoryAddedSuccessfully,
+                            ),
+                            backgroundColor: Colors.green,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                        );
+                      },
+                  updateSuccess:
+                      (categories, updated, currentPage, totalPages) {
+                        messenger.hideCurrentSnackBar();
+                        messenger.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              S.of(context).categoryUpdatedSuccessfully,
+                            ),
+                            backgroundColor: Colors.green,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                        );
+                      },
+                  deleteSuccess:
+                      (categories, deletedId, currentPage, totalPages) {
+                        messenger.hideCurrentSnackBar();
+                        messenger.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              S.of(context).categoryDeletedSuccessfully,
+                            ),
+                            backgroundColor: Colors.green,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                        );
+                      },
+                  orElse: () {},
+                );
+              },
+              builder: (context, state) {
+                return state.when(
+                  initial: (categories, currentPage, totalPages, error) =>
+                      _buildContent(context, categories, false, null),
+                  loading: (categories, currentPage, totalPages, message) =>
+                      _buildContent(context, categories, true, message),
+                  loaded: (categories, currentPage, totalPages) =>
+                      _buildContent(context, categories, false, null),
+                  createSuccess:
+                      (categories, created, currentPage, totalPages) =>
+                          _buildContent(context, categories, false, null),
+                  updateSuccess:
+                      (categories, updated, currentPage, totalPages) =>
+                          _buildContent(context, categories, false, null),
+                  deleteSuccess:
+                      (categories, deletedId, currentPage, totalPages) =>
+                          _buildContent(context, categories, false, null),
+                  failure: (categories, currentPage, totalPages, error) =>
+                      _buildContent(context, categories, false, null),
+                );
+              },
+            ),
+          ),
+        ],
       ),
       // floatingActionButton: FloatingActionButton.extended(
       //   onPressed: () =>
@@ -147,27 +253,43 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
     BuildContext context,
     List<ProductCategoryApiModel> categories,
     bool isLoading,
+    String? loadingMessage,
   ) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    if (isLoading) {
+    // Show full screen loader only when refreshing (first load)
+    if (isLoading && categories.isEmpty) {
       return Center(
         child: CircularProgressIndicator(color: colorScheme.primary),
       );
     }
 
-    if (categories.isEmpty) {
+    if (categories.isEmpty && !isLoading) {
       return _buildEmptyState(colorScheme);
     }
+
+    // Check if loading more (pagination)
+    final bool isLoadingMore = loadingMessage == 'loading_more';
 
     return RefreshIndicator(
       onRefresh: () async {
         context.read<CategoriesCubit>().loadFirstPage(refresh: true);
       },
       child: ListView.builder(
+        controller: _scrollController,
         padding: EdgeInsets.all(16.w),
-        itemCount: categories.length,
+        itemCount: categories.length + (isLoadingMore ? 1 : 0),
         itemBuilder: (context, index) {
+          // Show loading indicator at the end when loading more
+          if (index == categories.length && isLoadingMore) {
+            return Container(
+              padding: EdgeInsets.all(16.w),
+              child: Center(
+                child: CircularProgressIndicator(color: colorScheme.primary),
+              ),
+            );
+          }
+
           final category = categories[index];
           return _buildCategoryCard(category, colorScheme, context);
         },
@@ -290,58 +412,81 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
   void _showAddCategoryDialog(BuildContext context, CategoriesCubit cubit) {
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
-
+    final statues = TextEditingController(text: "active");
+    bool isActive = true;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        title: Text(S.of(context).addCategory),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: '${S.of(context).name} *',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
-              ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setLocalState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
             ),
-            SizedBox(height: 16.h),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: S.of(context).description,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+            title: Text(S.of(context).addCategory),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SwitchListTile(
+                  title: Text("Category State"),
+                  subtitle: Text("check if the category is active or inactive"),
+                  value: isActive,
+                  onChanged: (value) {
+                    setLocalState(() {
+                      isActive = value;
+                      statues.text = isActive ? "active" : "inactive";
+                    });
+                  },
+                  activeThumbColor: AppColors.primary,
                 ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
-              ),
-              maxLines: 3,
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    labelText: '${S.of(context).name} *',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    labelText: S.of(context).description,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                  ),
+                  maxLines: 3,
+                ),
+              ],
             ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(S.of(context).cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              if (nameController.text.trim().isNotEmpty) {
-                cubit.createCategory(nameController.text.trim());
-                Navigator.pop(context);
-              }
-            },
-            child: Text('Add'),
-          ),
-        ],
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(S.of(context).cancel),
+              ),
+              FilledButton(
+                onPressed: () {
+                  if (nameController.text.trim().isNotEmpty) {
+                    cubit.createCategory(
+                      nameController.text.trim(),
+                      status: statues.text,
+                      description: descriptionController.text.trim().isEmpty
+                          ? null
+                          : descriptionController.text.trim(),
+                    );
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Add'),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -355,61 +500,83 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
     final descriptionController = TextEditingController(
       text: category.description ?? '',
     );
+    final statues = TextEditingController(text: category.status ?? 'active');
+    bool isActive = (statues.text == 'active');
 
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        title: Text(S.of(context).editCategory),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: InputDecoration(
-                labelText: '${S.of(context).name} *',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
-              ),
+      builder: (context) => StatefulBuilder(
+        builder: (context, setLocalState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
             ),
-            SizedBox(height: 16.h),
-            TextField(
-              controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: S.of(context).description,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
+            title: Text(S.of(context).editCategory),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SwitchListTile(
+                  title: Text("Category State"),
+                  subtitle: Text("check if the category is active or inactive"),
+                  value: isActive,
+                  onChanged: (value) {
+                    setLocalState(() {
+                      isActive = value;
+                      statues.text = isActive ? 'active' : 'inactive';
+                    });
+                  },
+                  activeThumbColor: AppColors.primary,
                 ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
-              ),
-              maxLines: 3,
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(
+                    labelText: '${S.of(context).name} *',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+                TextField(
+                  controller: descriptionController,
+                  decoration: InputDecoration(
+                    labelText: S.of(context).description,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceContainer,
+                  ),
+                  maxLines: 3,
+                ),
+              ],
             ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(S.of(context).cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              if (nameController.text.trim().isNotEmpty) {
-                context.read<CategoriesCubit>().updateCategory(
-                  category.id,
-                  nameController.text.trim(),
-                );
-                Navigator.pop(context);
-              }
-            },
-            child: Text('Update'),
-          ),
-        ],
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(S.of(context).cancel),
+              ),
+              FilledButton(
+                onPressed: () {
+                  if (nameController.text.trim().isNotEmpty) {
+                    context.read<CategoriesCubit>().updateCategory(
+                      category.id,
+                      nameController.text.trim(),
+                      status: statues.text,
+                      description: descriptionController.text.trim().isEmpty
+                          ? null
+                          : descriptionController.text.trim(),
+                    );
+                    Navigator.pop(context);
+                  }
+                },
+                child: Text('Update'),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

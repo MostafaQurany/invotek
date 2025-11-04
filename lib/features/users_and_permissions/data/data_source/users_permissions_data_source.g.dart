@@ -25,7 +25,7 @@ class _UsersPermissionsDataSource implements UsersPermissionsDataSource {
     String? role,
     String? status,
     int? page,
-    int? limit,
+    int? perPage,
     String? sortBy,
     String? sortOrder,
   }) async {
@@ -35,9 +35,9 @@ class _UsersPermissionsDataSource implements UsersPermissionsDataSource {
       r'role': role,
       r'status': status,
       r'page': page,
-      r'limit': limit,
-      r'sortBy': sortBy,
-      r'sortOrder': sortOrder,
+      r'per_page': perPage,
+      r'sort_by': sortBy,
+      r'sort_order': sortOrder,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};

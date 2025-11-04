@@ -26,7 +26,7 @@ class CustomersErrorState extends StatelessWidget {
             color: Colors.red,
           ),
           SizedBox(height: 16.h),
-          Text(s.errorOccurred(error)),
+          Text(s.errorOccurredWithMessage(error)),
           SizedBox(height: 16.h),
           ElevatedButton(
             onPressed: onRetry,

@@ -37,7 +37,7 @@ class InvoicesErrorState extends StatelessWidget {
 
               // Title
               Text(
-                S.of(context).errorOccurred(error),
+                S.of(context).errorOccurredWithMessage(error),
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.w700,

@@ -70,7 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m24(error) => "حدث خطأ: ${error}";
 
-  static String m25(error) => "حدث خطأ ${error}";
+  static String m25(message) => "حدث خطأ: ${message}";
 
   static String m26(error) => "فشل في طباعة الفاتورة: ${error}";
 
@@ -96,55 +96,57 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m37(error) => "فشل في تحديث صلاحيات المستخدم: ${error}";
 
-  static String m38(number, timestamp) => "فاتورة_${number}_${timestamp}";
+  static String m38(field) => "حقل ${field} مطلوب";
 
-  static String m39(path) => "تم حفظ الملف في: ${path}";
+  static String m39(number, timestamp) => "فاتورة_${number}_${timestamp}";
 
-  static String m40(number) => "رقم الفاتورة: ${number}";
+  static String m40(path) => "تم حفظ الملف في: ${path}";
 
-  static String m41(status) => "تم تحديث حالة الفاتورة إلى: ${status}";
+  static String m41(number) => "رقم الفاتورة: ${number}";
 
-  static String m42(name, quantity, price, total) =>
+  static String m42(status) => "تم تحديث حالة الفاتورة إلى: ${status}";
+
+  static String m43(name, quantity, price, total) =>
       "${name}\t\t${quantity}\t${price}\t${total}";
 
-  static String m43(name) => "جاري تحميل تفاصيل المنتج...";
+  static String m44(name) => "جاري تحميل تفاصيل المنتج...";
 
-  static String m44(feature) => "عذراً، ليس لديك صلاحية للوصول إلى ${feature}";
+  static String m45(feature) => "عذراً، ليس لديك صلاحية للوصول إلى ${feature}";
 
-  static String m45(email) => "جاري فتح البريد الإلكتروني إلى ${email}";
+  static String m46(email) => "جاري فتح البريد الإلكتروني إلى ${email}";
 
-  static String m46(separator, number, date, status, customer, contact, items,
+  static String m47(separator, number, date, status, customer, contact, items,
           subtotal, tax, total) =>
       "فاتورة\n${separator}\nرقم الفاتورة: ${number}\nالتاريخ: ${date}\nالحالة: ${status}\n\nبيانات العميل:\nالاسم: ${customer}\n${contact}\n\nعناصر الفاتورة:\n${items}\n\nالمجاميع:\nالمجموع الفرعي: ${subtotal} ر.س\n${tax}\nالمجموع الكلي: ${total} ر.س\n\n${separator}\nشكراً لتعاملكم معنا\nتم إنشاء هذه الفاتورة بواسطة تطبيق Invotek\n${separator}";
 
-  static String m47(seconds) => "إعادة الإرسال خلال ${seconds} ثانية";
+  static String m48(seconds) => "إعادة الإرسال خلال ${seconds} ثانية";
 
-  static String m48(number, customer, date, amount, status) =>
+  static String m49(number, customer, date, amount, status) =>
       "فاتورة رقم: ${number}\nالعميل: ${customer}\nالتاريخ: ${date}\nالمبلغ: ${amount} ر.س\nالحالة: ${status}\n\nتم إنشاؤها بواسطة تطبيق Invotek";
 
-  static String m49(count) => "إظهار جميع العناصر (${count})";
+  static String m50(count) => "إظهار جميع العناصر (${count})";
 
-  static String m50(status) => "الحالة: ${status}";
+  static String m51(status) => "الحالة: ${status}";
 
-  static String m51(amount) => "المجموع الفرعي: ${amount} ر.س";
+  static String m52(amount) => "المجموع الفرعي: ${amount} ر.س";
 
-  static String m52(amount) => "الضريبة: ${amount} ر.س";
+  static String m53(amount) => "الضريبة: ${amount} ر.س";
 
-  static String m53(number) => "معرف الضريبة للفاتورة ${number}:";
+  static String m54(number) => "معرف الضريبة للفاتورة ${number}:";
 
-  static String m54(amount) => "المجموع الكلي: ${amount} ر.س";
+  static String m55(amount) => "المجموع الكلي: ${amount} ر.س";
 
-  static String m55(email) => "أدخل الكود المرسل إلى ${email}";
+  static String m56(email) => "أدخل الكود المرسل إلى ${email}";
 
-  static String m56(name) => "عرض تفاصيل العميل: ${name}";
+  static String m57(name) => "عرض تفاصيل العميل: ${name}";
 
-  static String m57(name) => "عرض تفاصيل العنصر: ${name}";
+  static String m58(name) => "عرض تفاصيل العنصر: ${name}";
 
-  static String m58(name) => "عرض الفواتير لـ ${name}";
+  static String m59(name) => "عرض الفواتير لـ ${name}";
 
-  static String m59(name) => "عرض الطلبات لـ ${name}";
+  static String m60(name) => "عرض الطلبات لـ ${name}";
 
-  static String m60(name) => "مرحباً ${name}، 👋";
+  static String m61(name) => "مرحباً ${name}، 👋";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -1468,7 +1470,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorLoadingUsers":
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل المستخدمين"),
         "errorMessage": m24,
-        "errorOccurred": m25,
+        "errorOccurred": MessageLookupByLibrary.simpleMessage("حدث خطأ"),
+        "errorOccurredWithMessage": m25,
         "errorParsingUserData": MessageLookupByLibrary.simpleMessage(
             "خطأ في معالجة بيانات المستخدم"),
         "errorPrintingInvoice": m26,
@@ -1544,8 +1547,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "failedToUpdateUser":
             MessageLookupByLibrary.simpleMessage("فشل في تحديث المستخدم"),
         "failedToUpdateUserPermissions": m37,
-        "fileName": m38,
-        "fileSavedSuccessfully": m39,
+        "fieldIsRequired": m38,
+        "fileName": m39,
+        "fileSavedSuccessfully": m40,
         "fillAllRequiredFields": MessageLookupByLibrary.simpleMessage(
             "يرجى ملء جميع الحقول المطلوبة"),
         "fillFormToAddClient": MessageLookupByLibrary.simpleMessage(
@@ -1637,7 +1641,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceManagement":
             MessageLookupByLibrary.simpleMessage("إدارة الفواتير"),
         "invoiceNumber": MessageLookupByLibrary.simpleMessage("رقم الفاتورة"),
-        "invoiceNumberLabel": m40,
+        "invoiceNumberLabel": m41,
         "invoiceOverdue": MessageLookupByLibrary.simpleMessage("متأخرة"),
         "invoicePaid": MessageLookupByLibrary.simpleMessage("مدفوعة"),
         "invoicePending": MessageLookupByLibrary.simpleMessage("معلقة"),
@@ -1648,7 +1652,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceStatistics":
             MessageLookupByLibrary.simpleMessage("إحصائيات الفواتير"),
         "invoiceStatus": MessageLookupByLibrary.simpleMessage("حالة الفاتورة"),
-        "invoiceStatusUpdated": m41,
+        "invoiceStatusUpdated": m42,
         "invoiceUnknown": MessageLookupByLibrary.simpleMessage("غير محدد"),
         "invoiceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الفاتورة بنجاح"),
@@ -1678,7 +1682,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemName": MessageLookupByLibrary.simpleMessage("اسم العنصر"),
         "itemPrice": MessageLookupByLibrary.simpleMessage("السعر"),
         "itemQuantity": MessageLookupByLibrary.simpleMessage("الكمية"),
-        "itemRow": m42,
+        "itemRow": m43,
         "itemSeparator": MessageLookupByLibrary.simpleMessage("-"),
         "itemTax": MessageLookupByLibrary.simpleMessage("الضريبة"),
         "itemTotal": MessageLookupByLibrary.simpleMessage("المجموع"),
@@ -1717,7 +1721,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جاري تحميل الفواتير..."),
         "loadingMore":
             MessageLookupByLibrary.simpleMessage("جاري تحميل المزيد..."),
-        "loadingProductDetails": m43,
+        "loadingProductDetails": m44,
         "loadingProducts":
             MessageLookupByLibrary.simpleMessage("جاري تحميل المنتجات..."),
         "loadingUsers":
@@ -1837,7 +1841,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noItemsAdded":
             MessageLookupByLibrary.simpleMessage("لم يتم إضافة أي عناصر بعد"),
         "noName": MessageLookupByLibrary.simpleMessage("بدون اسم"),
-        "noPermissionMessage": m44,
+        "noPermissionMessage": m45,
         "noPrintersFound":
             MessageLookupByLibrary.simpleMessage("لم يتم العثور على طابعات"),
         "noProductsFound":
@@ -1900,7 +1904,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مرحباً بك في Invotek"),
         "onboardingWelcomeDesc": MessageLookupByLibrary.simpleMessage(
             "نظام متكامل لإدارة الفواتير الإلكترونية مع التكامل مع نظام الفوترة الوطني الأردني"),
-        "openingEmail": m45,
+        "openingEmail": m46,
         "openingMap": MessageLookupByLibrary.simpleMessage("جاري فتح الخريطة"),
         "operationCompletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إكمال العملية بنجاح"),
@@ -1985,6 +1989,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف غير صحيح"),
         "phoneRequired":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف مطلوب"),
+        "photoUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الصورة بنجاح"),
         "piece": MessageLookupByLibrary.simpleMessage("قطعة"),
         "pieceKgMeter":
             MessageLookupByLibrary.simpleMessage("قطعة، كيلو، متر..."),
@@ -1994,6 +2000,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يرجى إدخال مبلغ صحيح"),
         "pleaseSelectCategory":
             MessageLookupByLibrary.simpleMessage("يرجى اختيار فئة"),
+        "position": MessageLookupByLibrary.simpleMessage("الوظيفة"),
         "postalCode": MessageLookupByLibrary.simpleMessage("الرمز البريدي"),
         "postedInvoices":
             MessageLookupByLibrary.simpleMessage("الفواتير المعلنة"),
@@ -2008,7 +2015,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "printError": MessageLookupByLibrary.simpleMessage("خطأ في الطباعة"),
         "printFailed": MessageLookupByLibrary.simpleMessage("فشلت الطباعة"),
         "printInvoice": MessageLookupByLibrary.simpleMessage("طباعة الفاتورة"),
-        "printInvoiceText": m46,
+        "printInvoiceText": m47,
         "printOptions": MessageLookupByLibrary.simpleMessage("خيارات الطباعة"),
         "printQuality": MessageLookupByLibrary.simpleMessage("جودة الطباعة"),
         "printReceipt": MessageLookupByLibrary.simpleMessage("طباعة الإيصال"),
@@ -2110,7 +2117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestedPageNotFound":
             MessageLookupByLibrary.simpleMessage("الصفحة المطلوبة غير موجودة"),
         "resendCode": MessageLookupByLibrary.simpleMessage("إعادة إرسال الكود"),
-        "resendCodeIn": m47,
+        "resendCodeIn": m48,
         "resetFilters": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
         "resetPassword": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
         "resetPasswordDesc":
@@ -2212,8 +2219,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsSavedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حفظ الإعدادات بنجاح"),
         "shareInvoice": MessageLookupByLibrary.simpleMessage("مشاركة الفاتورة"),
-        "shareInvoiceText": m48,
-        "showAllItems": m49,
+        "shareInvoiceText": m49,
+        "showAllItems": m50,
         "showLess": MessageLookupByLibrary.simpleMessage("إظهار أقل"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "signInFailed":
@@ -2239,7 +2246,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "state": MessageLookupByLibrary.simpleMessage("الحالة"),
         "statistics": MessageLookupByLibrary.simpleMessage("الإحصائيات"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),
-        "statusCategory": m50,
+        "statusCategory": m51,
         "statusDraft": MessageLookupByLibrary.simpleMessage("مسودة"),
         "statusInfo": MessageLookupByLibrary.simpleMessage("معلومات الحالة"),
         "statusOverdue": MessageLookupByLibrary.simpleMessage("متأخرة"),
@@ -2255,7 +2262,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionRequiredMessage": MessageLookupByLibrary.simpleMessage(
             "يجب عليك اختيار باقة مناسبة لاستخدام هذه الميزة"),
         "subtotal": MessageLookupByLibrary.simpleMessage("المجموع الفرعي"),
-        "subtotalLine": m51,
+        "subtotalLine": m52,
         "successText": MessageLookupByLibrary.simpleMessage("نص نجاح"),
         "supervisor": MessageLookupByLibrary.simpleMessage("مشرف"),
         "supervisorDescription":
@@ -2290,7 +2297,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "الفواتير غير المعلنة والفواتير المدفوعة والفواتير المرتجعة وإنشاء فاتورة جديدة"),
         "taxInvoicesTitle":
             MessageLookupByLibrary.simpleMessage("الفواتير الضريبية"),
-        "taxLine": m52,
+        "taxLine": m53,
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "taxPercent": MessageLookupByLibrary.simpleMessage("نسبة الضريبة"),
         "taxRate": MessageLookupByLibrary.simpleMessage("نسبة الضريبة"),
@@ -2299,7 +2306,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxUID": MessageLookupByLibrary.simpleMessage("معرف الضريبة"),
         "taxUIDCopied":
             MessageLookupByLibrary.simpleMessage("تم نسخ معرف الضريبة"),
-        "taxUIDForInvoice": m53,
+        "taxUIDForInvoice": m54,
         "tekpart": MessageLookupByLibrary.simpleMessage("تك بارت"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "termsOfUseComingSoon":
@@ -2338,7 +2345,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إجمالي المصروفات"),
         "totalInvoices":
             MessageLookupByLibrary.simpleMessage("إجمالي الفواتير"),
-        "totalLine": m54,
+        "totalLine": m55,
         "totalProducts":
             MessageLookupByLibrary.simpleMessage("إجمالي المنتجات"),
         "totalSales": MessageLookupByLibrary.simpleMessage("إجمالي المبيعات"),
@@ -2368,8 +2375,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateCategory": MessageLookupByLibrary.simpleMessage("تحديث الفئة"),
+        "updatePhoto": MessageLookupByLibrary.simpleMessage("تحديث الصورة"),
         "updateStatus": MessageLookupByLibrary.simpleMessage("تحديث الحالة"),
         "updatedAt": MessageLookupByLibrary.simpleMessage("تاريخ التحديث"),
+        "updatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم التحديث بنجاح"),
         "updatingStatus":
             MessageLookupByLibrary.simpleMessage("جاري تحديث الحالة..."),
         "usb": MessageLookupByLibrary.simpleMessage("USB"),
@@ -2411,7 +2421,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "vatNumber":
             MessageLookupByLibrary.simpleMessage("رقم ضريبة القيمة المضافة"),
         "verifyCode": MessageLookupByLibrary.simpleMessage("تحقق من الكود"),
-        "verifyCodeDesc": m55,
+        "verifyCodeDesc": m56,
         "verifyCodeTitle":
             MessageLookupByLibrary.simpleMessage("التحقق من الكود"),
         "view": MessageLookupByLibrary.simpleMessage("عرض"),
@@ -2421,7 +2431,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewClientsDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية عرض قائمة العملاء"),
         "viewCustomer": MessageLookupByLibrary.simpleMessage("عرض العميل"),
-        "viewCustomerDetails": m56,
+        "viewCustomerDetails": m57,
         "viewDetails": MessageLookupByLibrary.simpleMessage("عرض التفاصيل"),
         "viewExpenses": MessageLookupByLibrary.simpleMessage("عرض المصروفات"),
         "viewExpensesDescription":
@@ -2429,7 +2439,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewInvoices": MessageLookupByLibrary.simpleMessage("عرض الفواتير"),
         "viewInvoicesDescription":
             MessageLookupByLibrary.simpleMessage("إمكانية عرض قائمة الفواتير"),
-        "viewItemDetails": m57,
+        "viewItemDetails": m58,
         "viewPrivacyPolicy":
             MessageLookupByLibrary.simpleMessage("اطلع على سياسة الخصوصية"),
         "viewProducts": MessageLookupByLibrary.simpleMessage("عرض المنتجات"),
@@ -2451,15 +2461,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewUsers": MessageLookupByLibrary.simpleMessage("عرض المستخدمين"),
         "viewUsersDescription": MessageLookupByLibrary.simpleMessage(
             "إمكانية عرض قائمة المستخدمين"),
-        "viewingInvoices": m58,
-        "viewingOrders": m59,
+        "viewingInvoices": m59,
+        "viewingOrders": m60,
         "visitInvotekWebsite":
             MessageLookupByLibrary.simpleMessage("زيارة موقع إنفوتك"),
         "website": MessageLookupByLibrary.simpleMessage("الموقع الإلكتروني"),
         "weight": MessageLookupByLibrary.simpleMessage("الوزن"),
         "welcome": MessageLookupByLibrary.simpleMessage("مرحباً!"),
         "welcomeBack": MessageLookupByLibrary.simpleMessage("مرحباً بك، 👋"),
-        "welcomeBackWithName": m60,
+        "welcomeBackWithName": m61,
         "welcomeToInvotek":
             MessageLookupByLibrary.simpleMessage("مرحباً بك في تطبيق Invotek"),
         "welcomeToInvotekApp":

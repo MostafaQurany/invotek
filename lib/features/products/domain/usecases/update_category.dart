@@ -17,6 +17,7 @@ class UpdateCategory
       id: params.id,
       name: params.name,
       status: params.status,
+      description: params.description,
     );
   }
 }
@@ -25,10 +26,12 @@ class UpdateCategoryParams {
   final int id;
   final String name;
   final String? status;
+  final String? description;
 
   const UpdateCategoryParams({
     required this.id,
     required this.name,
     this.status,
+    this.description,
   });
 }

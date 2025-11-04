@@ -2,10 +2,11 @@ import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/server/api_client.dart';
 
-import '../../demo/entit/expense_model.dart';
+import '../../domain/entit/expense_model.dart';
 import '../models/expense_api_model.dart';
 import '../models/request/create_expense_request.dart';
 import '../models/request/update_expense_request.dart';
+import '../models/pagination_result.dart';
 
 class ExpensesRepository {
   final ApiClient _apiClient;
@@ -35,6 +36,33 @@ class ExpensesRepository {
       final data = response.data ?? [];
       final expenses = data.map((e) => _convertToExpenseModel(e)).toList();
       return ApiResult.success(expenses);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  Future<ApiResult<ExpensesPaginationResult>> getExpensesWithPagination({
+    String? search,
+    String? status,
+    int? categoryId,
+    int? page,
+    int? limit,
+    String? sortBy,
+    String? sortOrder,
+  }) async {
+    try {
+      final response = await _apiClient.getExpenses(
+        search: search,
+        status: status,
+        categoryId: categoryId,
+        page: page,
+        limit: limit,
+        sortBy: sortBy,
+        sortOrder: sortOrder,
+      );
+
+      final paginationResult = ExpensesPaginationResult.fromResponse(response);
+      return ApiResult.success(paginationResult);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }

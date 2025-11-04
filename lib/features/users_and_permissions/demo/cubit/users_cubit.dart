@@ -4,7 +4,6 @@ import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/data/repository/users_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
-import 'package:invotek/generated/l10n.dart';
 
 class UsersCubit extends Cubit<UsersState> {
   final UsersRepository _repository;
@@ -149,11 +148,10 @@ class UsersCubit extends Cubit<UsersState> {
     required String name,
     required String email,
     required String password,
+    required String passwordConfirmation,
     String? phone,
-    required String role,
+    String? position,
     required String status,
-    String? address,
-    String? notes,
   }) async {
     if (isClosed) return;
 
@@ -164,11 +162,10 @@ class UsersCubit extends Cubit<UsersState> {
         name: name,
         email: email,
         password: password,
+        passwordConfirmation: passwordConfirmation,
         phone: phone,
-        role: role,
+        position: position,
         status: status,
-        address: address,
-        notes: notes,
       );
 
       if (isClosed) return;
@@ -178,50 +175,24 @@ class UsersCubit extends Cubit<UsersState> {
           emit(UserCreated());
         },
         failure: (failure) {
-          // Provide user-friendly error messages
-          String userFriendlyMessage = _getUserFriendlyErrorMessage(
-            failure.message,
-          );
           emit(UserCreationError(failure: failure));
         },
       );
     } catch (e) {
       if (!isClosed) {
-        String userFriendlyMessage = _getUserFriendlyErrorMessage(
-          'Error creating user: $e',
-        );
         emit(UserCreationError(failure: ApiErrorHandler.handleError(e)));
       }
     }
   }
 
-  // Helper method to provide user-friendly error messages
-  String _getUserFriendlyErrorMessage(String error) {
-    if (error.contains('Error parsing user data') ||
-        error.contains(S.current.errorParsingUserData)) {
-      return S.current.errorParsingUserData;
-    } else if (error.contains('email')) {
-      return S.current.emailInvalid;
-    } else if (error.contains('password')) {
-      return S.current.passwordShort;
-    } else if (error.contains('network') || error.contains('connection')) {
-      return S.current.networkError;
-    } else if (error.contains('timeout')) {
-      return S.current.serverError;
-    } else {
-      return S.current.errorCreatingUser;
-    }
-  }
 
   Future<void> updateUser({
     required int id,
     required String name,
     required String email,
     String? phone,
-    required String role,
+    String? position,
     required String status,
-    String? address,
-    String? notes,
   }) async {
     if (isClosed) return;
 
@@ -233,10 +204,8 @@ class UsersCubit extends Cubit<UsersState> {
         name: name,
         email: email,
         phone: phone,
-        role: role,
+        position: position,
         status: status,
-        address: address,
-        notes: notes,
       );
 
       if (isClosed) return;

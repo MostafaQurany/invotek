@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/widgets/generic_search_and_filters.dart';
-import 'package:invotek/features/products/demo/cubit/categories_cubit.dart';
+import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 /// Products-specific search and filters widget using the generic component

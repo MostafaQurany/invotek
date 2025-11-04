@@ -6,6 +6,7 @@
 
 #include "generated_plugin_registrant.h"
 
+#include <file_selector_windows/file_selector_windows.h>
 #include <flutter_net_printer/flutter_net_printer_plugin_c_api.h>
 #include <flutter_pos_printer_platform_image_3_sdt/flutter_pos_printer_platform_plugin.h>
 #include <pdfx/pdfx_plugin.h>
@@ -15,6 +16,8 @@
 #include <url_launcher_windows/url_launcher_windows.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
+  FileSelectorWindowsRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FileSelectorWindows"));
   FlutterNetPrinterPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterNetPrinterPluginCApi"));
   FlutterPosPrinterPlatformPluginRegisterWithRegistrar(

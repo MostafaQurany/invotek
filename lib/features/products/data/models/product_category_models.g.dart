@@ -43,9 +43,7 @@ CreateProductCategoryRequest _$CreateProductCategoryRequestFromJson(
 ) => CreateProductCategoryRequest(
   name: json['name'] as String,
   status: json['status'] as String?,
-  description: json['description'] as String?,
-  color: json['color'] as String?,
-  icon: json['icon'] as String?,
+  descreption: json['descreption'] as String?,
 );
 
 Map<String, dynamic> _$CreateProductCategoryRequestToJson(
@@ -53,9 +51,7 @@ Map<String, dynamic> _$CreateProductCategoryRequestToJson(
 ) => <String, dynamic>{
   'name': instance.name,
   'status': instance.status,
-  'description': instance.description,
-  'color': instance.color,
-  'icon': instance.icon,
+  'descreption': instance.descreption,
 };
 
 UpdateProductCategoryRequest _$UpdateProductCategoryRequestFromJson(
@@ -64,8 +60,6 @@ UpdateProductCategoryRequest _$UpdateProductCategoryRequestFromJson(
   name: json['name'] as String,
   status: json['status'] as String?,
   description: json['description'] as String?,
-  color: json['color'] as String?,
-  icon: json['icon'] as String?,
 );
 
 Map<String, dynamic> _$UpdateProductCategoryRequestToJson(
@@ -74,26 +68,24 @@ Map<String, dynamic> _$UpdateProductCategoryRequestToJson(
   'name': instance.name,
   'status': instance.status,
   'description': instance.description,
-  'color': instance.color,
-  'icon': instance.icon,
 };
 
 ListProductCategoriesResponse _$ListProductCategoriesResponseFromJson(
   Map<String, dynamic> json,
 ) => ListProductCategoriesResponse(
-  currentPage: (json['currentPage'] as num?)?.toInt(),
+  currentPage: (json['current_page'] as num?)?.toInt(),
   data: (json['data'] as List<dynamic>?)
       ?.map((e) => ProductCategoryApiModel.fromJson(e as Map<String, dynamic>))
       .toList(),
-  firstPageUrl: json['firstPageUrl'] as String?,
+  firstPageUrl: json['first_page_url'] as String?,
   from: (json['from'] as num?)?.toInt(),
-  lastPage: (json['lastPage'] as num?)?.toInt(),
-  lastPageUrl: json['lastPageUrl'] as String?,
+  lastPage: (json['last_page'] as num?)?.toInt(),
+  lastPageUrl: json['last_page_url'] as String?,
   links: json['links'] as List<dynamic>?,
-  nextPageUrl: json['nextPageUrl'] as String?,
+  nextPageUrl: json['next_page_url'] as String?,
   path: json['path'] as String?,
-  perPage: (json['perPage'] as num?)?.toInt(),
-  prevPageUrl: json['prevPageUrl'] as String?,
+  perPage: (json['per_page'] as num?)?.toInt(),
+  prevPageUrl: json['prev_page_url'] as String?,
   to: (json['to'] as num?)?.toInt(),
   total: (json['total'] as num?)?.toInt(),
 );
@@ -101,17 +93,17 @@ ListProductCategoriesResponse _$ListProductCategoriesResponseFromJson(
 Map<String, dynamic> _$ListProductCategoriesResponseToJson(
   ListProductCategoriesResponse instance,
 ) => <String, dynamic>{
-  'currentPage': instance.currentPage,
+  'current_page': instance.currentPage,
   'data': instance.data,
-  'firstPageUrl': instance.firstPageUrl,
+  'first_page_url': instance.firstPageUrl,
   'from': instance.from,
-  'lastPage': instance.lastPage,
-  'lastPageUrl': instance.lastPageUrl,
+  'last_page': instance.lastPage,
+  'last_page_url': instance.lastPageUrl,
   'links': instance.links,
-  'nextPageUrl': instance.nextPageUrl,
+  'next_page_url': instance.nextPageUrl,
   'path': instance.path,
-  'perPage': instance.perPage,
-  'prevPageUrl': instance.prevPageUrl,
+  'per_page': instance.perPage,
+  'prev_page_url': instance.prevPageUrl,
   'to': instance.to,
   'total': instance.total,
 };
@@ -121,13 +113,14 @@ CreateProductCategoryResponse _$CreateProductCategoryResponseFromJson(
 ) => CreateProductCategoryResponse(
   name: json['name'] as String,
   status: json['status'] as String?,
-  companyId: (json['companyId'] as num?)?.toInt(),
-  updatedAt: json['updatedAt'] == null
+  companyId: (json['company_id'] as num?)?.toInt(),
+  description: json['description'] as String?,
+  updatedAt: json['updated_at'] == null
       ? null
-      : DateTime.parse(json['updatedAt'] as String),
-  createdAt: json['createdAt'] == null
+      : DateTime.parse(json['updated_at'] as String),
+  createdAt: json['created_at'] == null
       ? null
-      : DateTime.parse(json['createdAt'] as String),
+      : DateTime.parse(json['created_at'] as String),
   id: (json['id'] as num?)?.toInt(),
 );
 
@@ -136,9 +129,10 @@ Map<String, dynamic> _$CreateProductCategoryResponseToJson(
 ) => <String, dynamic>{
   'name': instance.name,
   'status': instance.status,
-  'companyId': instance.companyId,
-  'updatedAt': instance.updatedAt?.toIso8601String(),
-  'createdAt': instance.createdAt?.toIso8601String(),
+  'company_id': instance.companyId,
+  'description': instance.description,
+  'updated_at': instance.updatedAt?.toIso8601String(),
+  'created_at': instance.createdAt?.toIso8601String(),
   'id': instance.id,
 };
 

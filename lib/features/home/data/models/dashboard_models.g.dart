@@ -25,7 +25,7 @@ DashboardData _$DashboardDataFromJson(
   returnedInvoicesCount: (json['returned_invoices_count'] as num).toInt(),
   returnedInvoicesTotal: (json['returned_invoices_total'] as num).toInt(),
   expensesTotal: json['expenses_total'] as String,
-  monthlyExpensesTotal: json['monthly_expenses_total'] as String,
+  monthlyExpensesTotal: (json['monthly_expenses_total'] as num).toDouble(),
   customersCount: (json['customers_count'] as num).toInt(),
   newCustomersCount: (json['new_customers_count'] as num).toInt(),
   productsCount: (json['products_count'] as num).toInt(),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/products/demo/cubit/products_cubit.dart';
-import 'package:invotek/features/products/demo/entit/product_model.dart';
+import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
+import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/features/products/ui/widgets/dialogs/help_dialog.dart';
 import 'package:invotek/features/products/ui/widgets/forms/category_dropdown.dart';
+import 'package:invotek/features/products/ui/widgets/forms/custom_text_field.dart';
+import 'package:invotek/features/products/ui/widgets/forms/form_section_card.dart';
 import 'package:invotek/features/products/ui/widgets/forms/status_dropdown.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -28,12 +31,11 @@ class EditProductScreenWithProvider extends StatelessWidget {
   }
 }
 
-class _EditProductScreenState extends State<EditProductScreen>
-    with TickerProviderStateMixin {
-  late TabController _tabController;
-  int _currentTabIndex = 0;
+class _EditProductScreenState extends State<EditProductScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final Map<String, String> _validationErrors = {};
 
-  // Form Controllers
+  // Form controllers - only required fields
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late TextEditingController _priceController;
@@ -43,25 +45,17 @@ class _EditProductScreenState extends State<EditProductScreen>
   late TextEditingController _unitController;
   late TextEditingController _skuController;
   late TextEditingController _barcodeController;
+  late TextEditingController _imageController;
 
-  // Form State
-  String? _selectedCategoryId;
   String _selectedStatus = 'active';
+  String? _selectedCategoryId;
   bool _isActive = true;
   bool _hasTax = false;
   bool _trackInventory = false;
 
-  // Form Key for validation
-  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        _currentTabIndex = _tabController.index;
-      });
-    });
 
     // Initialize controllers with product data
     _nameController = TextEditingController(text: widget.product.name ?? '');
@@ -81,18 +75,28 @@ class _EditProductScreenState extends State<EditProductScreen>
     _barcodeController = TextEditingController(
       text: widget.product.barcode ?? '',
     );
+    _imageController = TextEditingController(text: widget.product.image ?? '');
 
-    // Initialize form state
+    // Initialize form state from product
     _selectedCategoryId = widget.product.productCategoryId?.toString();
     _selectedStatus = widget.product.status ?? 'active';
     _isActive = widget.product.isActive ?? true;
     _hasTax = widget.product.hasTax ?? false;
     _trackInventory = widget.product.trackInventory ?? false;
+
+    // Add listeners to trigger UI updates
+    _nameController.addListener(_onFieldChanged);
+    _priceController.addListener(_onFieldChanged);
+    _quantityController.addListener(_onFieldChanged);
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    // Remove listeners before disposing
+    _nameController.removeListener(_onFieldChanged);
+    _priceController.removeListener(_onFieldChanged);
+    _quantityController.removeListener(_onFieldChanged);
+
     _nameController.dispose();
     _descriptionController.dispose();
     _priceController.dispose();
@@ -102,7 +106,14 @@ class _EditProductScreenState extends State<EditProductScreen>
     _unitController.dispose();
     _skuController.dispose();
     _barcodeController.dispose();
+    _imageController.dispose();
     super.dispose();
+  }
+
+  void _onFieldChanged() {
+    setState(() {
+      // Trigger UI rebuild to update button state
+    });
   }
 
   @override
@@ -124,7 +135,10 @@ class _EditProductScreenState extends State<EditProductScreen>
         actions: [
           IconButton(
             icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
-            onPressed: () => _showHelpDialog(context),
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => const HelpDialog(),
+            ),
           ),
           SizedBox(width: 8.w),
         ],
@@ -160,7 +174,7 @@ class _EditProductScreenState extends State<EditProductScreen>
                 (products, selectedProduct, currentPage, totalPages, error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(S.current.errorOccurred(error)),
+                      content: Text(S.of(context).errorOccurredWithMessage(error.message)),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -171,572 +185,347 @@ class _EditProductScreenState extends State<EditProductScreen>
                 },
           );
         },
-        child: Column(
-          children: [
-            // Tab Bar
-            Container(
-              color: AppColors.white,
-              child: TabBar(
-                controller: _tabController,
-                indicatorColor: AppColors.primary,
-                labelColor: AppColors.primary,
-                unselectedLabelColor: AppColors.greyDark,
-                labelStyle: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14.sp,
-                ),
-                tabs: [
-                  Tab(text: s.basicInformation),
-                  Tab(text: s.pricing),
-                  Tab(text: s.inventory),
-                  Tab(text: s.productDetails),
-                ],
-              ),
-            ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // Form Content - Scrollable
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.all(16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Basic Information Section
+                      FormSectionCard(
+                        title: s.basicInformation,
+                        icon: Icons.inventory_2_outlined,
+                        children: [
+                          // Product Name
+                          CustomTextField(
+                            controller: _nameController,
+                            label: s.name,
+                            hint: 'Enter product name',
+                            icon: Icons.inventory_2,
+                            isRequired: true,
+                            errorText: _validationErrors['name'],
+                          ),
+                          SizedBox(height: 16.h),
 
-            // Form Content
-            Expanded(
-              child: Form(
-                key: _formKey,
-                child: TabBarView(
-                  controller: _tabController,
-                  physics:
-                      const NeverScrollableScrollPhysics(), // Disable swipe navigation
-                  children: [
-                    _buildBasicInfoTab(s),
-                    _buildPricingTab(s),
-                    _buildInventoryTab(s),
-                    _buildProductDetailsTab(s),
+                          // Description
+                          CustomTextField(
+                            controller: _descriptionController,
+                            label: s.description,
+                            hint: 'Enter product description',
+                            icon: Icons.description_outlined,
+                            maxLines: 3,
+                          ),
+                          SizedBox(height: 16.h),
+
+                          // Category and Status Row
+                          CategoryDropdown(
+                            selectedCategoryId: _selectedCategoryId,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedCategoryId = value;
+                              });
+                            },
+                            errorText: _validationErrors['category'],
+                          ),
+                          SizedBox(width: 16.h),
+                          StatusDropdown(
+                            selectedStatus: _selectedStatus,
+                            onChanged: (value) {
+                              if (value != null) {
+                                setState(() {
+                                  _selectedStatus = value;
+                                  if (value == 'active') {
+                                    _isActive = true;
+                                  } else {
+                                    _isActive = false;
+                                  }
+                                });
+                              }
+                            },
+                            errorText: _validationErrors['status'],
+                          ),
+                          SizedBox(height: 16.h),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Pricing Section
+                      FormSectionCard(
+                        title: s.pricing,
+                        icon: Icons.attach_money_outlined,
+                        children: [
+                          // Selling Price and Cost Price Row
+                          CustomTextField(
+                            controller: _priceController,
+                            label: s.sellingPrice,
+                            hint: 'Enter selling price',
+                            icon: Icons.sell_outlined,
+                            keyboardType: TextInputType.number,
+                            isRequired: true,
+                            errorText: _validationErrors['price'],
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomTextField(
+                            controller: _costController,
+                            label: s.costPrice,
+                            hint: 'Enter cost price',
+                            icon: Icons.account_balance_wallet_outlined,
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: 16.h),
+                          SwitchListTile(
+                            title: Text(s.productIsTaxable),
+                            subtitle: Text(s.applyTaxToProduct),
+                            value: _hasTax,
+                            onChanged: (value) {
+                              setState(() {
+                                _hasTax = value;
+                              });
+                            },
+                            activeThumbColor: AppColors.primary,
+                          ),
+                          SizedBox(height: 16.h),
+
+                          // Tax Rate
+                          if (_hasTax)
+                            CustomTextField(
+                              controller: _taxRateController,
+                              label: s.taxRate,
+                              hint: 'Enter tax rate percentage',
+                              icon: Icons.percent_outlined,
+                              keyboardType: TextInputType.number,
+                            ),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Inventory Section
+                      FormSectionCard(
+                        title: s.inventory,
+                        icon: Icons.inventory_outlined,
+                        children: [
+                          // Quantity and Unit Row
+                          CustomTextField(
+                            controller: _quantityController,
+                            label: s.quantity,
+                            hint: 'Enter quantity',
+                            icon: Icons.numbers_outlined,
+                            keyboardType: TextInputType.number,
+                            isRequired: true,
+                            errorText: _validationErrors['quantity'],
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomTextField(
+                            controller: _unitController,
+                            label: s.unit,
+                            hint: 'Enter unit (e.g., piece)',
+                            icon: Icons.straighten_outlined,
+                          ),
+                          SizedBox(height: 16.h),
+
+                          // SKU and Barcode Row
+                          CustomTextField(
+                            controller: _skuController,
+                            label: 'SKU',
+                            hint: 'Enter SKU',
+                            icon: Icons.qr_code_outlined,
+                          ),
+                          SizedBox(height: 16.h),
+                          CustomTextField(
+                            controller: _barcodeController,
+                            label: 'Barcode',
+                            hint: 'Enter barcode',
+                            icon: Icons.qr_code_2_outlined,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16.h),
+
+                      // Settings Section
+                      FormSectionCard(
+                        title: 'Settings',
+                        icon: Icons.settings_outlined,
+                        children: [
+                          Divider(height: 1),
+
+                          // Track Inventory Switch
+                          SwitchListTile(
+                            title: Text(s.trackInventory),
+                            subtitle: Text(s.trackAvailableProductQuantity),
+                            value: _trackInventory,
+                            onChanged: (value) {
+                              setState(() {
+                                _trackInventory = value;
+                              });
+                            },
+                            activeThumbColor: AppColors.primary,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 80.h), // Extra space for bottom button
+                    ],
+                  ),
+                ),
+              ),
+
+              // Bottom Action Button
+              Container(
+                padding: EdgeInsets.all(16.w),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, -2),
+                    ),
                   ],
                 ),
-              ),
-            ),
-
-            // Bottom Action Buttons
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -2),
+                child: FilledButton(
+                  onPressed: _isFormValid() ? _handleSubmit : null,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: _isFormValid()
+                        ? AppColors.primary
+                        : AppColors.grey.withOpacity(0.3),
+                    foregroundColor: _isFormValid()
+                        ? AppColors.white
+                        : AppColors.greyDark,
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
                   ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  // Cancel/Previous Button
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: _currentTabIndex == 0
-                          ? () =>
-                                Navigator.pop(context) // Cancel on first tab
-                          : () => _goToPreviousTab(), // Previous on other tabs
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        side: BorderSide(
-                          color: AppColors.grey.withOpacity(0.3),
-                        ),
-                      ),
-                      child: Text(
-                        _currentTabIndex == 0 ? s.cancel : 'Previous',
-                        style: TextStyle(
-                          color: AppColors.greyDark,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      s.save,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  SizedBox(width: 12.w),
-                  // Next/Save Button
-                  Expanded(
-                    flex: 2,
-                    child: FilledButton(
-                      onPressed: _currentTabIndex == 3
-                          ? _handleSubmit // Save on last tab
-                          : () => _goToNextTab(), // Next on other tabs
-                      style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: AppColors.white,
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: Text(
-                        _currentTabIndex == 3 ? s.editProduct : 'Next',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBasicInfoTab(S s) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            s.basicInformation,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 20.h),
-          _buildFormField(
-            controller: _nameController,
-            label: '${s.name} *',
-            hint: s.name,
-            icon: Icons.inventory_2_outlined,
-            isRequired: true,
-          ),
-          SizedBox(height: 16.h),
-          _buildFormField(
-            controller: _descriptionController,
-            label: s.description,
-            hint: s.description,
-            icon: Icons.description_outlined,
-            maxLines: 3,
-          ),
-          SizedBox(height: 16.h),
-          CategoryDropdown(
-            selectedCategoryId: _selectedCategoryId,
-            onChanged: (value) {
-              setState(() {
-                _selectedCategoryId = value;
-              });
-            },
-          ),
-          SizedBox(height: 16.h),
-          StatusDropdown(
-            selectedStatus: _selectedStatus,
-            onChanged: (value) {
-              setState(() {
-                _selectedStatus = value ?? 'active';
-              });
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPricingTab(S s) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            s.pricing,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 20.h),
-          _buildFormField(
-            controller: _priceController,
-            label: '${s.sellingPrice} *',
-            hint: s.sellingPrice,
-            icon: Icons.sell_outlined,
-            keyboardType: TextInputType.number,
-            isRequired: true,
-          ),
-          SizedBox(height: 16.h),
-          _buildFormField(
-            controller: _costController,
-            label: s.costPrice,
-            hint: s.costPrice,
-            icon: Icons.account_balance_wallet_outlined,
-            keyboardType: TextInputType.number,
-          ),
-          SizedBox(height: 16.h),
-          _buildFormField(
-            controller: _taxRateController,
-            label: s.taxRate,
-            hint: s.taxRate,
-            icon: Icons.percent_outlined,
-            keyboardType: TextInputType.number,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInventoryTab(S s) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            s.inventory,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 20.h),
-          _buildFormField(
-            controller: _quantityController,
-            label: '${s.quantity} *',
-            hint: s.quantity,
-            icon: Icons.numbers_outlined,
-            keyboardType: TextInputType.number,
-            isRequired: true,
-          ),
-          SizedBox(height: 16.h),
-          _buildFormField(
-            controller: _unitController,
-            label: s.unit,
-            hint: 'piece, kg, meter...',
-            icon: Icons.straighten_outlined,
-          ),
-          SizedBox(height: 16.h),
-          // Additional inventory fields can be added here if needed
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProductDetailsTab(S s) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            s.productDetails,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 20.h),
-          Row(
-            children: [
-              Expanded(
-                child: _buildFormField(
-                  controller: _skuController,
-                  label: s.productSku,
-                  hint: s.productSku,
-                  icon: Icons.qr_code_outlined,
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: _buildFormField(
-                  controller: _barcodeController,
-                  label: s.barcode,
-                  hint: s.barcode,
-                  icon: Icons.barcode_reader,
                 ),
               ),
             ],
           ),
-          SizedBox(height: 16.h),
-          // Additional product detail fields can be added here if needed
-          SizedBox(height: 20.h),
-          Text(
-            s.settings,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          SizedBox(height: 20.h),
-          SwitchListTile(
-            title: Text(s.productIsActive),
-            subtitle: Text(s.enableDisableProduct),
-            value: _isActive,
-            onChanged: (value) {
-              setState(() {
-                _isActive = value;
-              });
-            },
-            activeThumbColor: AppColors.primary,
-          ),
-          Divider(height: 1),
-          SwitchListTile(
-            title: Text(s.productIsTaxable),
-            subtitle: Text(s.applyTaxToProduct),
-            value: _hasTax,
-            onChanged: (value) {
-              setState(() {
-                _hasTax = value;
-              });
-            },
-            activeThumbColor: AppColors.primary,
-          ),
-          Divider(height: 1),
-          SwitchListTile(
-            title: Text(s.trackInventory),
-            subtitle: Text(s.trackAvailableProductQuantity),
-            value: _trackInventory,
-            onChanged: (value) {
-              setState(() {
-                _trackInventory = value;
-              });
-            },
-            activeThumbColor: AppColors.primary,
-          ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildFormField({
-    required TextEditingController controller,
-    required String label,
-    required String hint,
-    required IconData icon,
-    TextInputType? keyboardType,
-    int maxLines = 1,
-    bool isRequired = false,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
-              ),
-            ),
-            if (isRequired) ...[
-              SizedBox(width: 4.w),
-              Text(
-                '*',
-                style: TextStyle(
-                  color: AppColors.error,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ],
-        ),
-        SizedBox(height: 8.h),
-        TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          maxLines: maxLines,
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(
-              color: AppColors.greyDark.withOpacity(0.6),
-              fontSize: 14.sp,
-            ),
-            prefixIcon: Icon(icon, color: AppColors.primary, size: 20.sp),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.grey.withOpacity(0.3)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12.r),
-              borderSide: BorderSide(color: AppColors.primary, width: 2),
-            ),
-            filled: true,
-            fillColor: AppColors.white,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 16.h,
-            ),
-          ),
-          textDirection:
-              keyboardType == TextInputType.emailAddress ||
-                  keyboardType == TextInputType.phone ||
-                  keyboardType == TextInputType.number
-              ? TextDirection.ltr
-              : TextDirection.rtl,
-        ),
-      ],
-    );
-  }
-
-  void _showHelpDialog(BuildContext context) {
-    final s = S.of(context);
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Product Help'),
-        content: Text(
-          'This screen helps you edit product information. Navigate through tabs to update different sections.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(s.close),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _goToNextTab() {
-    if (_currentTabIndex < 3) {
-      _tabController.animateTo(_currentTabIndex + 1);
-    }
-  }
-
-  void _goToPreviousTab() {
-    if (_currentTabIndex > 0) {
-      _tabController.animateTo(_currentTabIndex - 1);
-    }
+  bool _isFormValid() {
+    return _nameController.text.trim().isNotEmpty &&
+        _selectedStatus.isNotEmpty &&
+        _priceController.text.trim().isNotEmpty &&
+        double.tryParse(_priceController.text.trim()) != null &&
+        _quantityController.text.trim().isNotEmpty &&
+        int.tryParse(_quantityController.text.trim()) != null;
   }
 
   void _handleSubmit() {
-    // Validate form if it exists
-    final formState = _formKey.currentState;
-    if (formState != null && !formState.validate()) {
-      // Show error message or scroll to first error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please fill in all required fields'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-        ),
-      );
+    if (!_validateForm()) {
       return;
-    }
-
-    // Validate required fields
-    if (_nameController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Product name is required'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-        ),
-      );
-      return;
-    }
-
-    if (_priceController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Product price is required'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-        ),
-      );
-      return;
-    }
-
-    if (_quantityController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Product quantity is required'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-        ),
-      );
-      return;
-    }
-
-    // Parse quantity
-    int? quantity;
-    try {
-      quantity = int.parse(_quantityController.text.trim());
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Please enter a valid quantity'),
-          backgroundColor: AppColors.error,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-          ),
-        ),
-      );
-      return;
-    }
-
-    // Parse category ID
-    int? categoryId;
-    if (_selectedCategoryId != null && _selectedCategoryId!.isNotEmpty) {
-      try {
-        categoryId = int.parse(_selectedCategoryId!);
-      } catch (e) {
-        // Category ID parsing failed, but it's optional
-        categoryId = null;
-      }
     }
 
     final cubit = ProductsCubit.get(context);
     cubit.updateProduct(
       id: widget.product.id ?? 0,
       name: _nameController.text.trim(),
-      description: _descriptionController.text.trim().isEmpty
-          ? null
-          : _descriptionController.text.trim(),
-      price: _priceController.text.trim(),
-      cost: _costController.text.trim().isEmpty
-          ? null
-          : _costController.text.trim(),
-      quantity: quantity,
+      productCategoryId: _selectedCategoryId != null
+          ? int.parse(_selectedCategoryId!)
+          : null,
       sku: _skuController.text.trim().isEmpty
           ? null
           : _skuController.text.trim(),
+      description: _descriptionController.text.trim().isEmpty
+          ? null
+          : _descriptionController.text.trim(),
+      image: _imageController.text.trim().isEmpty
+          ? null
+          : _imageController.text.trim(),
+      price: _priceController.text.trim().isEmpty
+          ? null
+          : double.tryParse(_priceController.text.trim()),
+      cost: _costController.text.trim().isEmpty
+          ? null
+          : double.tryParse(_costController.text.trim()),
+      taxRate: _taxRateController.text.trim().isEmpty
+          ? null
+          : double.tryParse(_taxRateController.text.trim()),
+      quantity: _quantityController.text.trim().isEmpty
+          ? null
+          : int.tryParse(_quantityController.text.trim()),
       barcode: _barcodeController.text.trim().isEmpty
           ? null
           : _barcodeController.text.trim(),
       unit: _unitController.text.trim().isEmpty
           ? null
           : _unitController.text.trim(),
-      taxRate: _taxRateController.text.trim().isEmpty
-          ? null
-          : _taxRateController.text.trim(),
-      isActive: _isActive,
       hasTax: _hasTax,
+      isActive: _isActive,
       trackInventory: _trackInventory,
       status: _selectedStatus,
-      categoryId: categoryId,
     );
+  }
+
+  bool _validateForm() {
+    setState(() {
+      _validationErrors.clear();
+    });
+
+    bool isValid = true;
+
+    // Validate name
+    if (_nameController.text.trim().isEmpty) {
+      _validationErrors['name'] = 'Product name is required';
+      isValid = false;
+    }
+
+    // Validate status
+    if (_selectedStatus.isEmpty) {
+      _validationErrors['status'] = 'Product status is required';
+      isValid = false;
+    }
+
+    // Validate price
+    if (_priceController.text.trim().isEmpty) {
+      _validationErrors['price'] = 'Selling price is required';
+      isValid = false;
+    } else if (double.tryParse(_priceController.text.trim()) == null) {
+      _validationErrors['price'] = 'Please enter a valid price';
+      isValid = false;
+    }
+
+    // Validate quantity
+    if (_quantityController.text.trim().isEmpty) {
+      _validationErrors['quantity'] = 'Quantity is required';
+      isValid = false;
+    } else if (int.tryParse(_quantityController.text.trim()) == null) {
+      _validationErrors['quantity'] = 'Please enter a valid quantity';
+      isValid = false;
+    }
+
+    if (!isValid) {
+      final firstError = _validationErrors.values.first;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(firstError),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+        ),
+      );
+    }
+
+    return isValid;
   }
 }

@@ -9,7 +9,10 @@ import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/domain/usecases/get_customer_invoices.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/widgets.dart';
+import 'package:invotek/features/customers/ui/screens/customer_invoices_list_screen.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CustomerDetailsScreen extends StatefulWidget {
   final CustomerModel customer;
@@ -21,6 +24,21 @@ class CustomerDetailsScreen extends StatefulWidget {
 }
 
 class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
+  late CustomerInvoicesCubit _customerInvoicesCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _customerInvoicesCubit = CustomerInvoicesCubit(getIt<GetCustomerInvoices>())
+      ..loadCustomerInvoices(widget.customer.id);
+  }
+
+  @override
+  void dispose() {
+    _customerInvoicesCubit.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final customer = widget.customer;
@@ -68,10 +86,8 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
                     formatDate: _formatDate,
                   ),
                   SizedBox(height: 16.h),
-                  BlocProvider(
-                    create: (context) =>
-                        CustomerInvoicesCubit(getIt<GetCustomerInvoices>())
-                          ..loadCustomerInvoices(customer.id),
+                  BlocProvider<CustomerInvoicesCubit>.value(
+                    value: _customerInvoicesCubit,
                     child: CustomerAnalyticsCard(customer: customer),
                   ),
                   SizedBox(height: 100.h), // Space for bottom actions
@@ -97,36 +113,89 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
     return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
 
-  void _makeCall() {
+  void _makeCall() async {
     if (widget.customer.phone != null) {
-      // Implement phone call functionality
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).calling(widget.customer.phone!)),
-          backgroundColor: AppColors.primary,
-        ),
-      );
+      // طلب إذن الاتصال
+      final permission = await Permission.phone.request();
+
+      if (permission.isGranted) {
+        final Uri phoneUri = Uri(scheme: 'tel', path: widget.customer.phone!);
+        try {
+          if (await canLaunchUrl(phoneUri)) {
+            await launchUrl(phoneUri);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('لا يمكن إجراء المكالمة'),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                S.of(context).errorOccurredWithMessage(e.toString()),
+              ),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      } else if (permission.isDenied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تم رفض إذن الاتصال'),
+            backgroundColor: AppColors.warning,
+          ),
+        );
+      } else if (permission.isPermanentlyDenied) {
+        // عرض dialog لتوجيه المستخدم لإعدادات التطبيق
+        _showPermissionDialog(
+          'إذن الاتصال مطلوب',
+          'يجب السماح بإذن الاتصال لاستخدام هذه الميزة. يرجى الذهاب إلى إعدادات التطبيق والسماح بإذن الاتصال.',
+        );
+      }
     }
   }
 
-  void _sendEmail() {
+  void _sendEmail() async {
     if (widget.customer.email.isNotEmpty) {
-      // Implement email functionality
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).openingEmail(widget.customer.email)),
-          backgroundColor: AppColors.primary,
-        ),
+      final Uri emailUri = Uri(
+        scheme: 'mailto',
+        path: widget.customer.email,
+        query: 'subject=${Uri.encodeComponent('مراسلة من تطبيق Invotek')}',
       );
+      try {
+        if (await canLaunchUrl(emailUri)) {
+          await launchUrl(emailUri);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('لا يمكن إرسال البريد الإلكتروني'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(S.of(context).errorOccurredWithMessage(e.toString())),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 
   void _viewInvoices() {
-    // Navigate to invoices
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(S.of(context).viewingInvoices(widget.customer.name)),
-        backgroundColor: AppColors.primary,
+    // استخدام الـ Cubit المحلي الموجود في الشاشة
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BlocProvider<CustomerInvoicesCubit>.value(
+          value: _customerInvoicesCubit,
+          child: CustomerInvoicesListScreen(customer: widget.customer),
+        ),
       ),
     );
   }
@@ -141,14 +210,55 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
     );
   }
 
-  void _openMap() {
-    // Implement map functionality
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(S.of(context).openingMap),
-        backgroundColor: AppColors.primary,
-      ),
-    );
+  void _openMap() async {
+    if (widget.customer.address != null &&
+        widget.customer.address!.isNotEmpty) {
+      // طلب إذن الموقع
+      final permission = await Permission.location.request();
+
+      if (permission.isGranted) {
+        final String encodedAddress = Uri.encodeComponent(
+          widget.customer.address!,
+        );
+        final Uri mapUri = Uri.parse(
+          'https://maps.google.com/maps?q=$encodedAddress',
+        );
+        try {
+          if (await canLaunchUrl(mapUri)) {
+            await launchUrl(mapUri, mode: LaunchMode.externalApplication);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('لا يمكن فتح الخريطة'),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                S.of(context).errorOccurredWithMessage(e.toString()),
+              ),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      } else if (permission.isDenied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('تم رفض إذن الموقع'),
+            backgroundColor: AppColors.warning,
+          ),
+        );
+      } else if (permission.isPermanentlyDenied) {
+        // عرض dialog لتوجيه المستخدم لإعدادات التطبيق
+        _showPermissionDialog(
+          'إذن الموقع مطلوب',
+          'يجب السماح بإذن الموقع لاستخدام هذه الميزة. يرجى الذهاب إلى إعدادات التطبيق والسماح بإذن الموقع.',
+        );
+      }
+    }
   }
 
   void _editCustomer() {
@@ -209,6 +319,39 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text(S.of(context).ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPermissionDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        title: Row(
+          children: [
+            Icon(Icons.warning_outlined, color: AppColors.warning),
+            SizedBox(width: 8.w),
+            Text(title),
+          ],
+        ),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(S.of(context).cancel),
+          ),
+          FilledButton(
+            onPressed: () {
+              Navigator.pop(context);
+              openAppSettings();
+            },
+            style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
+            child: Text('إعدادات التطبيق'),
           ),
         ],
       ),

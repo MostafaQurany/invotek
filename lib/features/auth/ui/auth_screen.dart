@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/auth/ui/auth_loading_screen.dart';
 import 'package:invotek/features/auth/ui/auth_login_screen_body.dart';
@@ -48,6 +49,14 @@ class _AuthScreenState extends State<AuthScreen> {
                       _isLoadingDashboard = true;
                       setState(() {});
                       await context.read<DashboardCubit>().loadDashboard();
+                    },
+                    errorAuth: (error) {
+                      _isLoadingDashboard = false;
+                      SnackBarHelper.showFailureSnackBar(context, error);
+                    },
+                    errorRegister: (error) {
+                      _isLoadingDashboard = false;
+                      SnackBarHelper.showFailureSnackBar(context, error);
                     },
                     changeAuthScreenBody: (timestamp) {
                       setState(() {});

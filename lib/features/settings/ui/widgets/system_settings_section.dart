@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../core/cubits/localization_cubit.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_theme.dart';
-import '../../../../core/cubits/localization_cubit.dart';
 import '../../../../generated/l10n.dart';
 
 class SystemSettingsSection extends StatefulWidget {
@@ -84,15 +85,14 @@ class _SystemSettingsSectionState extends State<SystemSettingsSection> {
 
         SizedBox(height: 8.h),
 
-        // إعدادات الثيم
-        _buildSwitchTile(
-          title: S.of(context).darkMode,
-          subtitle: S.of(context).enableDarkMode,
-          icon: Icons.dark_mode,
-          value: _isDarkMode,
-          onChanged: _saveThemeSetting,
-        ),
-
+        // // إعدادات الثيم
+        // _buildSwitchTile(
+        //   title: S.of(context).darkMode,
+        //   subtitle: S.of(context).enableDarkMode,
+        //   icon: Icons.dark_mode,
+        //   value: _isDarkMode,
+        //   onChanged: _saveThemeSetting,
+        // ),
         SizedBox(height: 8.h),
 
         // إعدادات الإشعارات

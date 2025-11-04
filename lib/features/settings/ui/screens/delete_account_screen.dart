@@ -75,8 +75,6 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: colorScheme.surface,
-        elevation: 3,
         scrolledUnderElevation: 1,
         leading: IconButton(
           onPressed: () {
@@ -84,14 +82,14 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
           },
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: colorScheme.onSurface,
+            color: AppColors.primary,
             size: 24.sp,
           ),
         ),
         title: Text(
           S.of(context).deleteAccount,
           style: AppTextTheme.textTheme.headlineMedium?.copyWith(
-            color: AppColors.onPrimary,
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
           ),
         ),

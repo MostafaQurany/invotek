@@ -2149,5 +2149,19 @@
   "applyFilters": "تطبيق الفلاتر",
   "resetFilters": "إعادة تعيين",
   "activeStatus": "نشط",
-  "inactiveStatus": "غير نشط"
+  "inactiveStatus": "غير نشط",
+  "updatedSuccessfully": "تم التحديث بنجاح",
+  "photoUpdatedSuccessfully": "تم تحديث الصورة بنجاح",
+  "errorOccurred": "حدث خطأ",
+  "errorOccurredWithMessage": "حدث خطأ: {message}",
+  "updatePhoto": "تحديث الصورة",
+  "position": "الوظيفة",
+  "fieldIsRequired": "حقل {field} مطلوب",
+  "@fieldIsRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  }
 }

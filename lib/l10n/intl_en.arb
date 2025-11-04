@@ -2148,5 +2148,20 @@
   "applyFilters": "Apply Filters",
   "resetFilters": "Reset",
   "activeStatus": "Active",
-  "inactiveStatus": "Inactive"
+  "inactiveStatus": "Inactive",
+  "updatedSuccessfully": "Updated Successfully",
+  "photoUpdatedSuccessfully": "Photo Updated Successfully",
+  "errorOccurred": "Error Occurred",
+  "errorOccurredWithMessage": "Error Occurred: {message}",
+  "updatePhoto": "Update Photo",
+  "position": "Position",
+  "updatedSuccessfully": "Updated Successfully",
+  "fieldIsRequired": "{field} is required",
+  "@fieldIsRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  }
 }

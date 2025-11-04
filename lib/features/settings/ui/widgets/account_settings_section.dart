@@ -3,6 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/theme/app_text_theme.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invotek/features/settings/cubit/profile_cubit.dart';
+import 'package:invotek/features/settings/cubit/update_profile_cubit.dart';
+import 'package:invotek/features/settings/cubit/photo_cubit.dart';
+import 'package:invotek/features/settings/ui/widgets/profile_form.dart';
 
 class AccountSettingsSection extends StatelessWidget {
   const AccountSettingsSection({super.key});
@@ -10,7 +15,25 @@ class AccountSettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Profile form
+        MultiBlocProvider(
+          providers: [
+            BlocProvider<ProfileCubit>(
+              create: (context) => context.read<ProfileCubit>(),
+            ),
+            BlocProvider<UpdateProfileCubit>(
+              create: (context) => context.read<UpdateProfileCubit>(),
+            ),
+            BlocProvider<PhotoCubit>(
+              create: (context) => context.read<PhotoCubit>(),
+            ),
+          ],
+          child: const ProfileForm(),
+        ),
+
+        SizedBox(height: 16.h),
         // Change Password
         _buildSettingTile(
           title: S.of(context).changePassword,

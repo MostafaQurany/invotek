@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
-import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/customer_invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
@@ -58,12 +58,17 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
 
           BlocBuilder<CustomerInvoicesCubit, CustomerInvoicesState>(
             builder: (context, state) {
-              return state.when(
-                initial: () => const SizedBox(),
-                loading: () => _buildLoadingState(),
-                loaded: (invoices) => _buildInvoicesList(invoices),
-                error: (failure) => _buildErrorState(failure),
-              );
+              if (state is CustomerInvoicesInitial) {
+                return const SizedBox();
+              } else if (state is CustomerInvoicesLoading) {
+                return _buildLoadingState();
+              } else if (state is CustomerInvoicesLoaded) {
+                return _buildInvoicesList(state.invoices, state.totalInvoices);
+              } else if (state is CustomerInvoicesError) {
+                return _buildErrorState(state.failure);
+              }else {
+                return SizedBox();
+              }
             },
           ),
         ],
@@ -97,7 +102,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
     );
   }
 
-  Widget _buildInvoicesList(List<InvoiceModel> invoices) {
+  Widget _buildInvoicesList(List<InvoiceModel> invoices, int totalInvoices) {
     if (invoices.isEmpty) {
       return SizedBox(
         height: 120.h,
@@ -123,29 +128,29 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
 
     return Column(
       children: [
-        // إحصائيات سريعة
-        Row(
-          children: [
-            Expanded(
-              child: _buildStatCard(
-                icon: Icons.receipt_long,
-                label: S.of(context).totalInvoices,
-                value: invoices.length.toString(),
-                subtitle: S.of(context).lastFiveInvoices,
-              ),
-            ),
-            SizedBox(width: 16.w),
-            Expanded(
-              child: _buildStatCard(
-                icon: Icons.paid,
-                label: S.of(context).totalAmount,
-                value: _calculateTotalAmount(invoices),
-                subtitle: S.of(context).saudiRiyal,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 16.h),
+        // // إحصائيات سريعة
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: _buildStatCard(
+        //         icon: Icons.receipt_long,
+        //         label: S.of(context).totalInvoices,
+        //         value: invoices.length.toString(),
+        //         subtitle: S.of(context).lastFiveInvoices,
+        //       ),
+        //     ),
+        //     SizedBox(width: 16.w),
+        //     Expanded(
+        //       child: _buildStatCard(
+        //         icon: Icons.paid,
+        //         label: S.of(context).totalAmount,
+        //         value: _calculateTotalAmount(invoices),
+        //         subtitle: S.of(context).saudiRiyal,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(height: 16.h),
 
         // قائمة الفواتير المختصرة
         ...invoices.take(5).map((invoice) => _buildInvoiceItem(invoice)),
@@ -154,7 +159,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
           Padding(
             padding: EdgeInsets.only(top: 8.h),
             child: Text(
-              S.of(context).andMoreInvoices(invoices.length - 5),
+              "The last 5 invoices",
               style: TextStyle(
                 color: AppColors.greyDark,
                 fontSize: 12.sp,

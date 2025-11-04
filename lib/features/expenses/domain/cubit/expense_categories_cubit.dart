@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/expenses/data/repository/expense_categories_repository.dart';
-import 'package:invotek/features/expenses/demo/entit/expense_category_model.dart';
+import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
 
 part 'expense_categories_cubit.freezed.dart';
 
