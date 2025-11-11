@@ -129,7 +129,7 @@ class QRCodeDialog extends StatelessWidget {
                               ),
                               SizedBox(height: 8.h),
                               Text(
-                                'رمز QR',
+                                S.of(context).invoicesQRCode,
                                 style: TextStyle(
                                   fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,
@@ -192,7 +192,7 @@ class QRCodeDialog extends StatelessWidget {
 
             // Info Text
             Text(
-              'يمكن مسح هذا الرمز للوصول إلى تفاصيل الفاتورة',
+              S.of(context).invoicesScanQRCodeMessage,
               style: TextStyle(fontSize: 12.sp, color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),

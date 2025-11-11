@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/core/widgets/error_widget.dart' as custom;
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
@@ -21,13 +18,14 @@ import 'package:invotek/features/invoices/ui/widgets/cards/invoice_summary_card.
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/qr_code_dialog.dart';
-import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/printing/ui/dialogs/invoice_print_dialog.dart';
 
 /// شاشة تفاصيل الفاتورة المحسنة مع دعم استدعاء API وإدارة الحالة
 class EnhancedInvoiceDetailsScreen extends StatefulWidget {
@@ -45,7 +43,6 @@ class _EnhancedInvoiceDetailsScreenState
   // إنشاء ProductsCubit محلي
   late ProductsCubit _productsCubit;
   bool _isLoadingProduct = false;
-  int? _loadingProductId;
 
   @override
   void initState() {
@@ -65,6 +62,55 @@ class _EnhancedInvoiceDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.view,
+    );
+
+    if (!hasViewPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.invoicesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.invoicesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       body: BlocListener<ProductsCubit, ProductsState>(
         bloc: _productsCubit,
@@ -78,7 +124,6 @@ class _EnhancedInvoiceDetailsScreenState
                 }
 
                 _isLoadingProduct = false;
-                _loadingProductId = null;
 
                 // الانتقال إلى شاشة تفاصيل المنتج
                 Navigator.push(
@@ -100,11 +145,12 @@ class _EnhancedInvoiceDetailsScreenState
                     }
 
                     _isLoadingProduct = false;
-                    _loadingProductId = null;
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(S.of(context).errorOccurredWithMessage(error.message)),
+                        content: Text(
+                          S.of(context).errorOccurredWithMessage(error.message),
+                        ),
                         backgroundColor: AppColors.error,
                       ),
                     );
@@ -324,121 +370,80 @@ class _EnhancedInvoiceDetailsScreenState
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Modern Header with Animation
+          // Header
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration.zero,
-              child: InvoiceDetailsHeaderWidget(
-                invoice: invoice,
-                onBack: () => Navigator.pop(context),
-                onEdit: () => _editInvoice(invoice),
-              ),
+            child: InvoiceDetailsHeaderWidget(
+              invoice: invoice,
+              onBack: () => Navigator.pop(context),
+              onEdit: () => _editInvoice(invoice),
             ),
           ),
 
-          // Space with Animation
+          // Space
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+
+          // Content Cards
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 200),
-              child: SizedBox(height: 16.h),
+            child: InvoiceSummaryCard(
+              invoice: invoice,
+              onStatusTap: () => _showStatusOptions(invoice),
             ),
           ),
 
-          // Content Cards with Staggered Animation
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 400),
-              child: InvoiceSummaryCard(
-                invoice: invoice,
-                onStatusTap: () => _showStatusOptions(invoice),
-              ),
+            child: InvoiceCustomerCard(
+              customer:
+                  invoice.customer ??
+                  InvoiceCustomerModel(
+                    id: 0,
+                    name:
+                        invoice.customerName ??
+                        S.of(context).invoicesCustomerName,
+                    email: S.of(context).invoicesCustomerEmail,
+                    phone: S.of(context).invoicesCustomerPhone,
+                    companyId: 0,
+                    taxNumber: "0",
+                    address: S.of(context).invoicesCustomerAddress,
+                    notes: S.of(context).invoicesCustomerNotes,
+                    status: "0",
+                    createdAt: "0",
+                    updatedAt: "0",
+                  ),
+              onCustomerTap: () => _viewCustomerDetails(invoice),
             ),
           ),
 
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 600),
-              child: SizedBox(height: 16.h),
+            child: InvoiceItemsCard(
+              items: invoice.items ?? [],
+              onItemTap: (item) {
+                _viewItemDetails(item);
+              },
             ),
           ),
 
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 800),
-              child: InvoiceCustomerCard(
-                customer:
-                    invoice.customer ??
-                    InvoiceCustomerModel(
-                      id: 0,
-                      name: invoice.customerName ?? "اسم العميل",
-                      email: "بريد العميل",
-                      phone: "هاتف العميل",
-                      companyId: 0,
-                      taxNumber: "0",
-                      address: "عنوان العميل",
-                      notes: "ملاحظات",
-                      status: "0",
-                      createdAt: "0",
-                      updatedAt: "0",
-                    ),
-                onCustomerTap: () => _viewCustomerDetails(invoice),
-              ),
-            ),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
 
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1000),
-              child: SizedBox(height: 16.h),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1200),
-              child: InvoiceItemsCard(
-                items: invoice.items ?? [],
-                onItemTap: (item) {
-                  _viewItemDetails(item);
-                },
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1400),
-              child: SizedBox(height: 16.h),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1600),
-              child: InvoicePaymentCard(
-                invoice: invoice,
-                onPaymentMethodTap: () => _changePaymentMethod(invoice),
-                onMarkPaid: () => _markAsPaid(invoice),
-              ),
+            child: InvoicePaymentCard(
+              invoice: invoice,
+              onPaymentMethodTap: () => _changePaymentMethod(invoice),
+              onMarkPaid: () => _markAsPaid(invoice),
             ),
           ),
 
           // Additional Information Card
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1800),
-              child: SizedBox(height: 16.h),
-            ),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
 
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 2000),
-              child: InvoiceAdditionalInfoCard(
-                invoice: invoice,
-                onQRCodeTap: () => _viewQRCode(invoice),
-                onTaxUIDTap: () => _viewTaxUID(invoice),
-              ),
+            child: InvoiceAdditionalInfoCard(
+              invoice: invoice,
+              onQRCodeTap: () => _viewQRCode(invoice),
+              onTaxUIDTap: () => _viewTaxUID(invoice),
             ),
           ),
 
@@ -584,7 +589,6 @@ class _EnhancedInvoiceDetailsScreenState
   void _viewItemDetails(dynamic item) {
     if (item.productId != null) {
       _isLoadingProduct = true;
-      _loadingProductId = item.productId;
 
       showDialog(
         context: context,
@@ -615,7 +619,7 @@ class _EnhancedInvoiceDetailsScreenState
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('لا يوجد معرف منتج متاح'),
+          content: Text(S.of(context).invoicesNoProductIdAvailable),
           backgroundColor: AppColors.warning,
         ),
       );
@@ -645,107 +649,6 @@ class _EnhancedInvoiceDetailsScreenState
           Navigator.pop(context);
           _updateStatus(invoice, 'paid');
         },
-      ),
-    );
-  }
-
-  void _sendInvoice(InvoiceModel invoice) {
-    showDialog(
-      context: context,
-      builder: (context) => SendInvoiceDialog(
-        invoice: invoice,
-        onSend: () async {
-          try {
-            // إظهار مؤشر تحميل
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => Center(child: CircularProgressIndicator()),
-            );
-
-            // استدعاء API لإرسال الفاتورة
-            // TODO: إضافة دالة sendInvoice في InvoicesCubit
-            await Future.delayed(Duration(seconds: 2)); // محاكاة API call
-
-            Navigator.pop(context); // إغلاق مؤشر التحميل
-            Navigator.pop(context); // إغلاق حوار الإرسال
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(S.of(context).invoiceSentSuccessfully),
-                backgroundColor: AppColors.success,
-              ),
-            );
-          } catch (e) {
-            Navigator.pop(context); // إغلاق مؤشر التحميل
-            Navigator.pop(context); // إغلاق حوار الإرسال
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(S.of(context).errorSendingInvoice(e.toString())),
-                backgroundColor: AppColors.error,
-              ),
-            );
-          }
-        },
-      ),
-    );
-  }
-
-  void _showMoreOptions(InvoiceModel invoice) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => _buildMoreOptionsBottomSheet(invoice),
-    );
-  }
-
-  Widget _buildMoreOptionsBottomSheet(InvoiceModel invoice) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.print, color: AppColors.warning),
-            title: Text(S.of(context).printInvoice),
-            onTap: () {
-              Navigator.pop(context);
-              _showPrintOptions(invoice);
-            },
-          ),
-          // ListTile(
-          //   leading: const Icon(Icons.delete, color: AppColors.error),
-          //   title: Text(S.of(context).deleteInvoice),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     _deleteInvoice(invoice);
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.copy, color: AppColors.primary),
-          //   title: Text('تكرار الفاتورة'),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     _duplicateInvoice(invoice);
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.download, color: AppColors.success),
-          //   title: Text(S.of(context).downloadPDF),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     _downloadPDF(invoice);
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.refresh, color: AppColors.primary),
-          //   title: Text(S.of(context).refreshData),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     context.read<InvoicesCubit>().getInvoiceById(widget.invoiceId);
-          //   },
-          // ),
-        ],
       ),
     );
   }
@@ -791,70 +694,6 @@ class _EnhancedInvoiceDetailsScreenState
         },
       ),
     );
-  }
-
-  void _duplicateInvoice(InvoiceModel invoice) {
-    // TODO: Implement duplicate invoice
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          S.of(context).duplicateInvoiceMessage(invoice.invoiceNumber ?? ''),
-        ),
-        backgroundColor: AppColors.primary,
-      ),
-    );
-  }
-
-  void _downloadPDF(InvoiceModel invoice) async {
-    try {
-      // إظهار مؤشر تحميل
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(),
-              SizedBox(height: 16.h),
-              Text(S.of(context).creatingFile),
-            ],
-          ),
-        ),
-      );
-
-      // إنشاء ملف نصي
-      final textContent = _buildPrintText(invoice);
-
-      // حفظ الملف
-      final directory = await getApplicationDocumentsDirectory();
-      final fileName = S
-          .of(context)
-          .fileName(
-            invoice.invoiceNumber ?? 'غير_محدد',
-            DateTime.now().millisecondsSinceEpoch.toString(),
-          );
-      final file = File('${directory.path}/$fileName');
-      await file.writeAsString(textContent);
-
-      Navigator.pop(context); // إغلاق مؤشر التحميل
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).fileSavedSuccessfully(file.path)),
-          backgroundColor: AppColors.success,
-        ),
-      );
-    } catch (e) {
-      Navigator.pop(context); // إغلاق مؤشر التحميل
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(S.of(context).errorCreatingFile(e.toString())),
-          backgroundColor: AppColors.error,
-        ),
-      );
-    }
   }
 
   void _viewQRCode(InvoiceModel invoice) {
@@ -972,89 +811,64 @@ class _EnhancedInvoiceDetailsScreenState
     }
   }
 
-  /// إنشاء نص للطباعة
-  String _buildPrintText(InvoiceModel invoice) {
-    final s = S.of(context);
-    final buffer = StringBuffer();
-
-    // Header
-    final separator = s.separator * 50;
-    buffer.writeln(separator);
-    buffer.writeln(s.invoiceDetails);
-    buffer.writeln(separator);
-    buffer.writeln(
-      '${s.invoiceNumber}: ${invoice.invoiceNumber ?? 'غير محدد'}',
-    );
-    buffer.writeln('${s.date}: ${invoice.issueDate ?? 'غير محدد'}');
-    buffer.writeln('${s.status}: ${_getStatusText(invoice.status ?? '')}');
-    buffer.writeln();
-
-    // Customer Information
-    buffer.writeln('${s.customerInformation}:');
-    buffer.writeln('${s.customerName}: ${invoice.customerName ?? 'غير محدد'}');
-    if (invoice.customer?.email?.isNotEmpty ?? false) {
-      buffer.writeln('${s.customerEmail}: ${invoice.customer!.email}');
-    }
-    if (invoice.customer?.phone?.isNotEmpty ?? false) {
-      buffer.writeln('${s.customerPhone}: ${invoice.customer!.phone}');
-    }
-    if (invoice.customer?.address?.isNotEmpty ?? false) {
-      buffer.writeln('${s.customerAddress}: ${invoice.customer!.address}');
-    }
-    buffer.writeln();
-
-    // Invoice Items
-    if (invoice.items?.isNotEmpty ?? false) {
-      buffer.writeln('${s.invoiceItems}:');
-      final itemSeparator = s.itemSeparator * 50;
-      buffer.writeln(itemSeparator);
-      buffer.writeln(s.itemHeader);
-      buffer.writeln(itemSeparator);
-
-      for (final item in invoice.items!) {
-        buffer.writeln(
-          s.itemRow(
-            item.name ?? '',
-            item.quantity?.toString() ?? '0',
-            item.price ?? '0.00',
-            item.total ?? '0.00',
-          ),
-        );
-      }
-      buffer.writeln();
-    }
-
-    // Totals
-    buffer.writeln('${s.amountInformation}:');
-    buffer.writeln(s.subtotalLine(invoice.subtotal ?? '0.00'));
-    if (double.tryParse(invoice.taxAmount ?? '0.00') != null &&
-        double.tryParse(invoice.taxAmount ?? '0.00')! > 0) {
-      buffer.writeln(s.taxLine(invoice.taxAmount ?? '0.00'));
-    }
-    buffer.writeln(s.totalLine(invoice.total ?? '0.00'));
-    buffer.writeln();
-
-    // Footer
-    buffer.writeln(separator);
-    buffer.writeln(s.thankYouMessage);
-    buffer.writeln(s.createdByInvotek);
-    buffer.writeln(separator);
-
-    return buffer.toString();
-  }
-  // ==================== Print Feature ====================
-
   Widget _buildFloatingActionButton(InvoiceModel invoice) {
+    final s = S.of(context);
+    final canDelete = invoice.status?.toLowerCase() == 'draft';
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.delete,
+    );
+    final hasPrintPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.print,
+    );
+
+    // استخدام hashCode من state لضمان تفرد heroTag
+    final uniqueId = hashCode;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Delete Button (only for draft invoices)
+        if (canDelete) ...[
+          Tooltip(
+            message: hasDeletePermission
+                ? s.deleteInvoice
+                : s.invoicesNoPermissionToAct,
+            child: FloatingActionButton(
+              heroTag: "delete_${invoice.id}_$uniqueId",
+              onPressed: hasDeletePermission
+                  ? () => _deleteInvoice(invoice)
+                  : null,
+              backgroundColor: hasDeletePermission
+                  ? AppColors.error
+                  : AppColors.grey.withOpacity(0.5),
+              child: Icon(
+                hasDeletePermission ? Icons.delete : Icons.lock_outline,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          SizedBox(height: 8.h),
+        ],
         // Print Button
-        FloatingActionButton(
-          heroTag: "print_${invoice.id}",
-          onPressed: () => _showPrintOptions(invoice),
-          backgroundColor: AppColors.warning,
-          tooltip: S.of(context).printInvoice,
-          child: const Icon(Icons.print, color: Colors.white),
+        Tooltip(
+          message: hasPrintPermission
+              ? s.printInvoice
+              : s.invoicesNoPermissionToAct,
+          child: FloatingActionButton(
+            heroTag: "print_${invoice.id}_$uniqueId",
+            onPressed: hasPrintPermission
+                ? () => _showPrintOptions(invoice)
+                : null,
+            backgroundColor: hasPrintPermission
+                ? AppColors.warning
+                : AppColors.grey.withOpacity(0.5),
+            child: Icon(
+              hasPrintPermission ? Icons.print : Icons.lock_outline,
+              color: Colors.white,
+            ),
+          ),
         ),
         SizedBox(height: 8.h),
 
@@ -1091,10 +905,10 @@ class _EnhancedInvoiceDetailsScreenState
   }
 
   void _showPrintOptions(InvoiceModel invoice) {
-    Navigator.pushNamed(
-      context,
-      AppRoutes.printOptionsRoute,
-      arguments: invoice,
+    // عرض dialog الطباعة مباشرة
+    showDialog(
+      context: context,
+      builder: (context) => InvoicePrintDialog(invoice: invoice),
     );
   }
 }

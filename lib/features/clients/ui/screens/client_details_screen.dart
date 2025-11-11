@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
 import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
+import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/clients/constants/clients_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class ClientDetailsScreen extends StatelessWidget {
   final Client client;
@@ -11,27 +15,93 @@ class ClientDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      ClientsPermissions.view,
+    );
+
+    if (!hasViewPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Text(s.clientsDetails),
+          backgroundColor: colorScheme.surface,
+          foregroundColor: colorScheme.onSurface,
+        ),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  size: 64.sp,
+                  color: colorScheme.error,
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  s.clientsNoPermissionToView,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  s.clientsNoPermissionToAct,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ClientsPermissions.edit,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      ClientsPermissions.delete,
+    );
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: const Text('تفاصيل العميل'),
+        title: Text(s.clientsDetails),
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
         scrolledUnderElevation: 1,
         elevation: 0,
         actions: [
-          IconButton(
-            icon: Icon(Icons.edit, color: colorScheme.onSurface),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditClientScreenWithProvider(client: client),
-                ),
-              );
-            },
+          PermissionWidget(
+            permission: ClientsPermissions.edit,
+            fallback: const SizedBox.shrink(),
+            child: IconButton(
+              icon: Icon(Icons.edit, color: colorScheme.onSurface),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        EditClientScreenWithProvider(client: client),
+                  ),
+                );
+              },
+              tooltip: hasEditPermission
+                  ? null
+                  : s.clientsNoPermissionToAct,
+            ),
           ),
         ],
       ),
@@ -41,31 +111,31 @@ class ClientDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Header Card
-            _buildHeaderCard(context),
+            _buildHeaderCard(context, s),
             SizedBox(height: 24.h),
 
             // Basic Information Section
-            _buildSectionTitle(context, 'المعلومات الأساسية'),
+            _buildSectionTitle(context, s.clientsBasicInfo),
             SizedBox(height: 16.h),
-            _buildInfoCard(context, [
-              _buildInfoRow(context, 'الاسم', client.name, Icons.person),
+            _buildInfoCard(context, s, [
+              _buildInfoRow(context, s.clientsName, client.name, Icons.person),
               _buildInfoRow(
                 context,
-                'البريد الإلكتروني',
+                s.clientsEmail,
                 client.email,
                 Icons.email,
               ),
               if (client.phone != null)
                 _buildInfoRow(
                   context,
-                  'رقم الهاتف',
+                  s.clientsPhone,
                   client.phone!,
                   Icons.phone,
                 ),
               if (client.address != null)
                 _buildInfoRow(
                   context,
-                  'العنوان',
+                  s.clientsAddress,
                   client.address!,
                   Icons.location_on,
                 ),
@@ -73,27 +143,27 @@ class ClientDetailsScreen extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // Company Information Section
-            _buildSectionTitle(context, 'معلومات الشركة'),
+            _buildSectionTitle(context, s.clientsCompanyInfo),
             SizedBox(height: 16.h),
-            _buildInfoCard(context, [
+            _buildInfoCard(context, s, [
               if (client.company != null)
                 _buildInfoRow(
                   context,
-                  'اسم الشركة',
+                  s.clientsCompanyName,
                   client.company!,
                   Icons.business,
                 ),
               if (client.taxNumber != null)
                 _buildInfoRow(
                   context,
-                  'الرقم الضريبي',
+                  s.clientsTaxNumber,
                   client.taxNumber!,
                   Icons.receipt,
                 ),
               if (client.website != null)
                 _buildInfoRow(
                   context,
-                  'الموقع الإلكتروني',
+                  s.clientsWebsite,
                   client.website!,
                   Icons.web,
                 ),
@@ -101,27 +171,27 @@ class ClientDetailsScreen extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // Contact Person Section
-            _buildSectionTitle(context, 'معلومات شخص الاتصال'),
+            _buildSectionTitle(context, s.clientsContactPersonInfo),
             SizedBox(height: 16.h),
-            _buildInfoCard(context, [
+            _buildInfoCard(context, s, [
               if (client.contactPerson != null)
                 _buildInfoRow(
                   context,
-                  'اسم شخص الاتصال',
+                  s.clientsContactPersonName,
                   client.contactPerson!,
                   Icons.contact_phone,
                 ),
               if (client.contactPhone != null)
                 _buildInfoRow(
                   context,
-                  'هاتف شخص الاتصال',
+                  s.clientsContactPersonPhone,
                   client.contactPhone!,
                   Icons.phone_android,
                 ),
               if (client.contactEmail != null)
                 _buildInfoRow(
                   context,
-                  'بريد شخص الاتصال',
+                  s.clientsContactPersonEmail,
                   client.contactEmail!,
                   Icons.email_outlined,
                 ),
@@ -129,41 +199,41 @@ class ClientDetailsScreen extends StatelessWidget {
             SizedBox(height: 24.h),
 
             // Additional Information Section
-            _buildSectionTitle(context, 'معلومات إضافية'),
+            _buildSectionTitle(context, s.clientsAdditionalInfo),
             SizedBox(height: 16.h),
-            _buildInfoCard(context, [
+            _buildInfoCard(context, s, [
               _buildInfoRow(
                 context,
-                'الحالة',
-                client.status == 'active' ? 'نشط' : 'غير نشط',
+                s.clientsStatus,
+                client.status == 'active' ? s.clientsActive : s.clientsInactive,
                 Icons.settings,
               ),
               _buildInfoRow(
                 context,
-                'تاريخ الإنشاء',
+                s.clientsCreatedAt,
                 _formatDate(client.createdAt),
                 Icons.calendar_today,
               ),
               _buildInfoRow(
                 context,
-                'آخر تحديث',
+                s.clientsUpdatedAt,
                 _formatDate(client.updatedAt),
                 Icons.update,
               ),
               if (client.notes != null)
-                _buildInfoRow(context, 'ملاحظات', client.notes!, Icons.note),
+                _buildInfoRow(context, s.clientsNotes, client.notes!, Icons.note),
             ]),
             SizedBox(height: 32.h),
 
             // Action Buttons
-            _buildActionButtons(context),
+            _buildActionButtons(context, s),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeaderCard(BuildContext context) {
+  Widget _buildHeaderCard(BuildContext context, S s) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -234,7 +304,9 @@ class ClientDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20.r),
                   ),
                   child: Text(
-                    client.status == 'active' ? 'نشط' : 'غير نشط',
+                    client.status == 'active' 
+                        ? s.clientsActive 
+                        : s.clientsInactive,
                     style: TextStyle(
                       color: colorScheme.onPrimary,
                       fontSize: 12.sp,
@@ -263,7 +335,7 @@ class ClientDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoCard(BuildContext context, List<Widget> children) {
+  Widget _buildInfoCard(BuildContext context, S s, List<Widget> children) {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
@@ -329,29 +401,51 @@ class ClientDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(BuildContext context) {
+  Widget _buildActionButtons(BuildContext context, S s) {
     final colorScheme = Theme.of(context).colorScheme;
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ClientsPermissions.edit,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      ClientsPermissions.delete,
+    );
 
     return Row(
       children: [
         // Edit Button
         Expanded(
-          child: FilledButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditClientScreenWithProvider(client: client),
+          child: PermissionWidget(
+            permission: ClientsPermissions.edit,
+            fallback: FilledButton.icon(
+              onPressed: null,
+              icon: Icon(Icons.lock),
+              label: Text(s.clientsEditAction),
+              style: FilledButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
-              );
-            },
-            icon: Icon(Icons.edit),
-            label: const Text('تعديل'),
-            style: FilledButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            child: FilledButton.icon(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        EditClientScreenWithProvider(client: client),
+                  ),
+                );
+              },
+              icon: Icon(Icons.edit),
+              label: Text(s.clientsEditAction),
+              style: FilledButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
               ),
             ),
           ),
@@ -360,17 +454,34 @@ class ClientDetailsScreen extends StatelessWidget {
 
         // Delete Button
         Expanded(
-          child: OutlinedButton.icon(
-            onPressed: () {
-              _showDeleteConfirmation(context);
-            },
-            icon: Icon(Icons.delete, color: colorScheme.error),
-            label: Text('حذف', style: TextStyle(color: colorScheme.error)),
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(color: colorScheme.error),
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+          child: PermissionWidget(
+            permission: ClientsPermissions.delete,
+            fallback: OutlinedButton.icon(
+              onPressed: null,
+              icon: Icon(Icons.lock, color: colorScheme.error),
+              label: Text(s.clientsDelete, 
+                  style: TextStyle(color: colorScheme.error)),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: colorScheme.error),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            ),
+            child: OutlinedButton.icon(
+              onPressed: () {
+                _showDeleteConfirmation(context);
+              },
+              icon: Icon(Icons.delete, color: colorScheme.error),
+              label: Text(s.clientsDelete, 
+                  style: TextStyle(color: colorScheme.error)),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: colorScheme.error),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
               ),
             ),
           ),
@@ -381,16 +492,17 @@ class ClientDetailsScreen extends StatelessWidget {
 
   void _showDeleteConfirmation(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تأكيد الحذف'),
-        content: Text('هل أنت متأكد من حذف العميل "${client.name}"؟'),
+        title: Text(s.clientsDeleteConfirmation),
+        content: Text(s.clientsDeleteConfirmationMessage(client.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: Text(s.clientsCancel),
           ),
           TextButton(
             onPressed: () {
@@ -399,7 +511,7 @@ class ClientDetailsScreen extends StatelessWidget {
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: colorScheme.error),
-            child: const Text('حذف'),
+            child: Text(s.clientsDelete),
           ),
         ],
       ),
@@ -407,11 +519,6 @@ class ClientDetailsScreen extends StatelessWidget {
   }
 
   String _formatDate(String dateString) {
-    try {
-      final date = DateTime.parse(dateString);
-      return '${date.day}/${date.month}/${date.year}';
-    } catch (e) {
-      return dateString;
-    }
+    return DateFormatter.apiStringToDisplayFormat(dateString) ?? dateString;
   }
 }

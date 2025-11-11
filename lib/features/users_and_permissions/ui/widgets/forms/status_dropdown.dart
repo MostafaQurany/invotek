@@ -23,7 +23,7 @@ class StatusDropdown extends StatelessWidget {
       {'value': 'all', 'label': s.allStatuses},
       {'value': 'active', 'label': s.active},
       {'value': 'inactive', 'label': s.inactive},
-      {'value': 'suspended', 'label': 'Suspended'},
+      {'value': 'suspended', 'label': s.suspended},
     ];
 
     return Container(
@@ -41,7 +41,7 @@ class StatusDropdown extends StatelessWidget {
             vertical: 12.h,
           ),
           border: InputBorder.none,
-          hintText: 'Select Status',
+          hintText: s.selectStatus,
           hintStyle: TextStyle(color: AppColors.grey, fontSize: 14.sp),
         ),
         style: TextStyle(

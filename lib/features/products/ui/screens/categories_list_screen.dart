@@ -3,8 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/core/widgets/common_menu_button.dart';
+import 'package:invotek/core/widgets/common_search_bar.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/features/products/constants/products_permissions.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
 
@@ -50,6 +56,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
   void dispose() {
     _searchController.dispose();
     _scrollController.dispose();
+    _debounceTimer?.cancel();
     super.dispose();
   }
 
@@ -90,6 +97,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
   void _onSearchChanged(String query) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
       context.read<CategoriesCubit>().loadFirstPage(
         refresh: true,
         search: query.isEmpty ? null : query,
@@ -100,49 +108,115 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
 
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
+    // Check permission for viewing categories
+    if (!PermissionChecker.hasPermission(
+      context,
+      ProductsPermissions.categoryView,
+    )) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(s.productCategories),
+          backgroundColor: AppColors.backgroundLight,
+          elevation: 1,
+          foregroundColor: AppColors.primary,
+          actions: [CommonMenuButton(color: AppColors.primary)],
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.lock_outline, size: 64.sp, color: AppColors.error),
+              SizedBox(height: 16.h),
+              Text(
+                s.productsNoPermissionToView,
+                style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                s.productsNoPermissionToAct,
+                style: TextStyle(fontSize: 14.sp, color: AppColors.greyDark),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundLight,
+        appBar: AppBar(
         title: Text(S.of(context).productCategories),
         backgroundColor: AppColors.backgroundLight,
-        elevation: 0,
+        elevation: 1,
         scrolledUnderElevation: 1,
         foregroundColor: AppColors.primary,
-        leading: CommonMenuButton(color: AppColors.primary),
-        actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
-        actions: [
-          IconButton.filled(
-            style: IconButton.styleFrom(
-              backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.onPrimary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
+        leading: IconButton.filled(
+          style: IconButton.styleFrom(
+            backgroundColor: colorScheme.primary,
+            foregroundColor: colorScheme.onPrimary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
             ),
-            icon: Icon(Icons.add, size: 18.sp),
-            onPressed: () {
-              _showAddCategoryDialog(context, context.read<CategoriesCubit>());
-            },
           ),
-        ],
+          icon: Icon(Icons.add, size: 18.sp),
+          onPressed:
+              PermissionChecker.hasPermission(
+                context,
+                ProductsPermissions.categoryCreate,
+              )
+              ? () {
+                  _showAddCategoryDialog(
+                    context,
+                    context.read<CategoriesCubit>(),
+                  );
+                }
+              : null,
+        ),
+        actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
+        actions: [CommonMenuButton(color: AppColors.primary)],
       ),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 0),
-            child: TextField(
+            child: CommonSearchBar(
               controller: _searchController,
+              hintText: S.of(context).search,
               onChanged: _onSearchChanged,
-              decoration: InputDecoration(
-                hintText: S.of(context).search,
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceContainer,
-              ),
             ),
           ),
           Expanded(
@@ -246,6 +320,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
       //   icon: const Icon(Icons.add),
       //   label: Text(S.of(context).addCategory),
       // ),
+      ),
     );
   }
 
@@ -309,7 +384,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
           ),
           SizedBox(height: 16.h),
           Text(
-            'No categories found',
+            S.of(context).productsNoCategoriesFound,
             style: TextStyle(fontSize: 16, color: colorScheme.onSurfaceVariant),
           ),
         ],
@@ -399,7 +474,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
                 children: [
                   Icon(Icons.delete, size: 18.sp, color: AppColors.error),
                   SizedBox(width: 8.w),
-                  Text('Delete Category'),
+                  Text(S.of(context).productsDeleteCategory),
                 ],
               ),
             ),
@@ -427,8 +502,10 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SwitchListTile(
-                  title: Text("Category State"),
-                  subtitle: Text("check if the category is active or inactive"),
+                  title: Text(S.of(context).productsCategoryState),
+                  subtitle: Text(
+                    S.of(context).productsCheckIfCategoryIsActiveOrInactive,
+                  ),
                   value: isActive,
                   onChanged: (value) {
                     setLocalState(() {
@@ -482,7 +559,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Add'),
+                child: Text(S.of(context).productsAdd),
               ),
             ],
           );
@@ -516,8 +593,10 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SwitchListTile(
-                  title: Text("Category State"),
-                  subtitle: Text("check if the category is active or inactive"),
+                  title: Text(S.of(context).productsCategoryState),
+                  subtitle: Text(
+                    S.of(context).productsCheckIfCategoryIsActiveOrInactive,
+                  ),
                   value: isActive,
                   onChanged: (value) {
                     setLocalState(() {
@@ -572,7 +651,7 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
                     Navigator.pop(context);
                   }
                 },
-                child: Text('Update'),
+                child: Text(S.of(context).productsUpdate),
               ),
             ],
           );
@@ -592,7 +671,9 @@ class _CategoriesListScreenState extends State<CategoriesListScreen> {
           borderRadius: BorderRadius.circular(16.r),
         ),
         title: Text(S.of(context).deleteConfirmation),
-        content: Text('Are you sure you want to delete "${category.name}"?'),
+        content: Text(
+          S.of(context).productsDeleteCategoryConfirmation(category.name),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
-import 'package:invotek/features/invoices/ui/dialogs/customer_selection_dialog.dart';
 import 'package:invotek/features/invoices/ui/dialogs/add_customer_dialog.dart';
+import 'package:invotek/features/invoices/ui/dialogs/customer_selection_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class CustomerSelectionStep extends StatefulWidget {
@@ -27,14 +27,14 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Customer Type Selection
-          _buildCustomerTypeSelection(s),
-          SizedBox(height: 20.h),
-
+          // // Customer Type Selection
+          // _buildCustomerTypeSelection(s),
+          // SizedBox(height: 20.h),
+          _buildExistingCustomerSelection(s),
           // Customer Selection Content
-          if (_customerType == 'existing') ...[
-            _buildExistingCustomerSelection(s),
-          ] else ...[
+          if (_customerType == 'existing')
+            ...[]
+          else ...[
             _buildNewCustomerForm(s),
           ],
         ],
@@ -104,7 +104,8 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep> {
         SizedBox(height: 12.h),
 
         // Selected Customer Display
-        if (widget.formController.selectedCustomerId != null)
+        if (widget.formController.selectedCustomerId != null ||
+            widget.formController.selectedCustomerName != null)
           _buildSelectedCustomerCard(s)
         else
           _buildSelectCustomerButton(s),
@@ -294,7 +295,11 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep> {
           _showAddCustomerDialog();
         },
       ),
-    );
+    ).then((value) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
   }
 
   void _showAddCustomerDialog() {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 
 class InvoiceFormController extends ChangeNotifier {
   // Form Controllers
@@ -48,7 +48,7 @@ class InvoiceFormController extends ChangeNotifier {
     actionController.text = selectedAction;
     paymentMethodController.text = selectedPaymentMethod;
     statusController.text = selectedStatus;
-    issueDateController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
+    issueDateController.text = DateFormatter.toApiFormat(selectedDate);
   }
 
   // Stepper Navigation
@@ -73,7 +73,7 @@ class InvoiceFormController extends ChangeNotifier {
   // Date Handling
   void onDateChanged(DateTime date) {
     selectedDate = date;
-    issueDateController.text = DateFormat('yyyy-MM-dd').format(date);
+    issueDateController.text = DateFormatter.toApiFormat(date);
     notifyListeners();
   }
 
@@ -186,6 +186,23 @@ class InvoiceFormController extends ChangeNotifier {
     totalController.text = total.toStringAsFixed(2);
   }
 
+  // Item quantity validation against available stock (if provided)
+  String? validateItemQuantities() {
+    for (final item in items) {
+      final parsedQty = double.tryParse(item.quantity) ?? 0.0;
+      if (parsedQty <= 0) {
+        return 'الكمية يجب أن تكون أكبر من الصفر';
+      }
+      if (item.availableQuantity != null) {
+        final max = item.availableQuantity!.toDouble();
+        if (parsedQty > max) {
+          return 'الكمية تتجاوز المخزون المتاح (${item.availableQuantity})';
+        }
+      }
+    }
+    return null;
+  }
+
   // Validation
   bool validateCurrentStep() {
     switch (currentStep) {
@@ -207,6 +224,13 @@ class InvoiceFormController extends ChangeNotifier {
 
   // Form Data for API
   Map<String, dynamic> toCreateInvoiceRequest() {
+    // Ensure issue_date is in English format (convert Arabic digits to English)
+    // Use toApiFormat to ensure English digits are always sent to API
+    final issueDate = DateFormatter.parseApiDate(issueDateController.text);
+    final formattedIssueDate = issueDate != null 
+        ? DateFormatter.toApiFormat(issueDate)
+        : DateFormatter.extractDateFromApiString(issueDateController.text) ?? issueDateController.text;
+    
     return {
       'customer_id': selectedCustomerId?.toString(),
       'customer_name': selectedCustomerName,
@@ -217,7 +241,7 @@ class InvoiceFormController extends ChangeNotifier {
       'tax_amount': taxAmountController.text,
       'discount': discountController.text,
       'total': totalController.text,
-      'issue_date': issueDateController.text,
+      'issue_date': formattedIssueDate,
       'status': selectedStatus,
       'description': descriptionController.text,
       'payment_method_code': selectedPaymentMethod,
@@ -258,6 +282,7 @@ class InvoiceItemData {
   final String? productName;
   final String? productDescription;
   final String? productCategory;
+  final int? availableQuantity; // optional, not sent to API
 
   InvoiceItemData({
     this.productId,
@@ -271,6 +296,7 @@ class InvoiceItemData {
     this.productName,
     this.productDescription,
     this.productCategory,
+    this.availableQuantity,
   });
 
   Map<String, dynamic> toJson() {

@@ -62,6 +62,8 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
         DropdownButtonFormField<String>(
           initialValue: widget.formController.selectedAction,
           decoration: InputDecoration(
+            fillColor: AppColors.white,
+
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -103,6 +105,8 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
         DropdownButtonFormField<String>(
           initialValue: widget.formController.selectedPaymentMethod,
           decoration: InputDecoration(
+            fillColor: AppColors.white,
+
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -149,6 +153,8 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
+            fillColor: AppColors.white,
+
             contentPadding: EdgeInsets.symmetric(
               horizontal: 12.w,
               vertical: 16.h,
@@ -185,6 +191,8 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
         TextFormField(
           controller: widget.formController.issueDateController,
           decoration: InputDecoration(
+            fillColor: AppColors.white,
+            filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
@@ -219,6 +227,9 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
         TextFormField(
           controller: widget.formController.descriptionController,
           decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.white,
+
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),

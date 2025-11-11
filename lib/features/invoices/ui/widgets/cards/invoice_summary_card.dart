@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -110,15 +112,10 @@ class InvoiceSummaryCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      NumberFormat.currency(
-                        symbol:
-                            context
-                                    .read<LocalizationCubit>()
-                                    .getCurrentLanguage() ==
-                                'ar'
-                            ? AppCurrency.currencyAr
-                            : AppCurrency.currencyEn,
-                      ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
+                      CurrencyFormatter.formatCurrencyString(
+                        invoice.total,
+                        context,
+                      ),
                       style: TextStyle(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w700,
@@ -145,16 +142,9 @@ class InvoiceSummaryCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            NumberFormat.currency(
-                              symbol:
-                                  context
-                                          .read<LocalizationCubit>()
-                                          .getCurrentLanguage() ==
-                                      'ar'
-                                  ? AppCurrency.currencyAr
-                                  : AppCurrency.currencyEn,
-                            ).format(
-                              double.tryParse(invoice.subtotal ?? '0.00') ?? 0,
+                            CurrencyFormatter.formatCurrencyString(
+                              invoice.subtotal,
+                              context,
                             ),
                             style: TextStyle(
                               fontSize: 14.sp,
@@ -180,9 +170,9 @@ class InvoiceSummaryCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              NumberFormat.currency(symbol: 'ر.س').format(
-                                double.tryParse(invoice.taxAmount ?? '0.00') ??
-                                    0,
+                              CurrencyFormatter.formatCurrencyString(
+                                invoice.taxAmount,
+                                context,
                               ),
                               style: TextStyle(
                                 fontSize: 14.sp,
@@ -373,11 +363,6 @@ class InvoiceSummaryCard extends StatelessWidget {
   }
 
   String _formatDate(String dateString) {
-    try {
-      final date = DateTime.parse(dateString);
-      return DateFormat('dd/MM/yyyy').format(date);
-    } catch (e) {
-      return dateString;
-    }
+    return DateFormatter.apiStringToDisplayFormat(dateString) ?? dateString;
   }
 }

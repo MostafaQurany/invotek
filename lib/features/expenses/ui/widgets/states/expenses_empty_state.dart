@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpensesEmptyState extends StatelessWidget {
   final VoidCallback onAddExpense;
@@ -9,6 +10,7 @@ class ExpensesEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Center(
       child: Padding(
         padding: EdgeInsets.all(32.w),
@@ -34,7 +36,7 @@ class ExpensesEmptyState extends StatelessWidget {
 
             // Title
             Text(
-              'No expenses yet',
+              s.expensesNoExpensesYet,
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
@@ -46,7 +48,7 @@ class ExpensesEmptyState extends StatelessWidget {
 
             // Description
             Text(
-              'Start tracking your business expenses by adding your first expense',
+              s.expensesStartTrackingExpenses,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.sp,
@@ -62,7 +64,7 @@ class ExpensesEmptyState extends StatelessWidget {
               onPressed: onAddExpense,
               icon: Icon(Icons.add, size: 20.sp),
               label: Text(
-                'Add First Expense',
+                s.expensesAddFirstExpense,
                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
               ),
               style: ElevatedButton.styleFrom(

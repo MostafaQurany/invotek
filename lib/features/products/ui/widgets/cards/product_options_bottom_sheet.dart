@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/products/constants/products_permissions.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -21,7 +23,7 @@ class ProductOptionsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(24.w),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -46,28 +48,50 @@ class ProductOptionsBottomSheet extends StatelessWidget {
   }
 
   Widget _buildOptions(BuildContext context) {
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      ProductsPermissions.view,
+    );
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ProductsPermissions.edit,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      ProductsPermissions.delete,
+    );
+
     return Column(
       children: [
         _buildOptionTile(
-          icon: Icons.visibility,
-          title: S.current.viewDetails,
-
-          color: AppColors.primary,
-          onTap: onViewDetails,
+          icon: hasViewPermission ? Icons.visibility : Icons.lock_outlined,
+          title: s.viewDetails,
+          color: hasViewPermission ? AppColors.primary : AppColors.greyDark,
+          onTap: hasViewPermission ? onViewDetails : null,
+          tooltip: hasViewPermission
+              ? s.viewDetails
+              : s.productsNoPermissionToAct,
         ),
         Divider(color: Colors.grey[300]),
         _buildOptionTile(
-          icon: Icons.edit,
-          title: S.current.editProduct,
-          color: AppColors.secondary,
-          onTap: onEdit,
+          icon: hasEditPermission ? Icons.edit : Icons.lock_outlined,
+          title: s.editProduct,
+          color: hasEditPermission ? AppColors.secondary : AppColors.greyDark,
+          onTap: hasEditPermission ? onEdit : null,
+          tooltip: hasEditPermission
+              ? s.editProduct
+              : s.productsNoPermissionToAct,
         ),
         Divider(color: Colors.grey[300]),
         _buildOptionTile(
-          icon: Icons.delete,
-          title: S.current.deleteProduct,
-          color: AppColors.error,
-          onTap: onDelete,
+          icon: hasDeletePermission ? Icons.delete : Icons.lock_outlined,
+          title: s.deleteProduct,
+          color: hasDeletePermission ? AppColors.error : AppColors.greyDark,
+          onTap: hasDeletePermission ? onDelete : null,
+          tooltip: hasDeletePermission
+              ? s.deleteProduct
+              : s.productsNoPermissionToAct,
         ),
       ],
     );
@@ -77,13 +101,19 @@ class ProductOptionsBottomSheet extends StatelessWidget {
     required IconData icon,
     required String title,
     required Color color,
-    required VoidCallback onTap,
+    required VoidCallback? onTap,
+    String? tooltip,
   }) {
-    return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(title),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      onTap: onTap,
+    return Tooltip(
+      message: tooltip ?? title,
+      child: ListTile(
+        leading: Icon(icon, color: color),
+        title: Text(title),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        onTap: onTap,
+      ),
     );
   }
 }

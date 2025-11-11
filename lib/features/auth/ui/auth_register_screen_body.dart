@@ -2,29 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
+import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/core/utils/app_images.dart';
-import 'package:invotek/core/utils/screen_utils.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/auth/data/models/register_request.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/ui/auth_login_screen_body.dart';
 import 'package:invotek/features/auth/ui/widgets/confirm_password_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/email_auth_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/name_auth_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/password_auth_text_field.dart';
-
-import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class AuthRegisterScreenBody extends StatefulWidget {
-  const AuthRegisterScreenBody({super.key});
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  AuthRegisterScreenBody({
+    super.key,
+    required this.nameController,
+    required this.emailController,
+  });
 
   @override
   State<AuthRegisterScreenBody> createState() => _AuthRegisterScreenBodyState();
 }
 
 class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -32,8 +36,6 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
@@ -42,8 +44,8 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
   void _handleRegister() {
     if (_formKey.currentState!.validate()) {
       final request = RegisterRequest(
-        name: _nameController.text,
-        email: _emailController.text,
+        name: widget.nameController.text,
+        email: widget.emailController.text,
         password: _passwordController.text,
         confirmPassword: _confirmPasswordController.text,
       );
@@ -81,25 +83,29 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image(image: AssetImage(AppImages.logoGreen), width: 0.45.sw),
+                  SizedBox(
+                    width: 120.w,
+                    child: Image(
+                      fit: BoxFit.fill,
+                      image: AssetImage(AppImages.logoGreen),
+                    ),
+                  ),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: BlocBuilder<LocalizationCubit, LocalizationState>(
                       builder: (context, state) {
                         return TextButton(
-                          child: Text(
-                            state.locale.languageCode == 'ar'
-                                ? S.of(context).english
-                                : S.of(context).arabic,
-                            style: Theme.of(context).textTheme.headlineSmall!
-                                .copyWith(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: ScreenUtils.fontSizeMedium,
-                                ),
+                          child: Image(
+                            height: 25.w,
+                            width: 25.w,
+                            image: AssetImage(
+                              state.locale.languageCode != 'ar'
+                                  ? AppImages.iraqFlag
+                                  : AppImages.englandFlag,
+                            ),
                           ),
                           onPressed: () {
                             if (state.locale.languageCode == 'ar') {
@@ -130,7 +136,7 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
               ),
               SizedBox(height: 5.h),
 
-              NameAuthTextField(controller: _nameController),
+              NameAuthTextField(controller: widget.nameController),
               SizedBox(height: 20.h),
               Text(
                 S.of(context).email,
@@ -140,7 +146,7 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
               ),
               SizedBox(height: 5.h),
 
-              EmailAuthTextField(controller: _emailController),
+              EmailAuthTextField(controller: widget.emailController),
 
               SizedBox(height: 20.h),
               Text(
@@ -192,8 +198,18 @@ class _AuthRegisterScreenBodyState extends State<AuthRegisterScreenBody> {
               SizedBox(height: 10.h),
 
               // google Sign in
-              SignInWithGoogle(),
-
+              SignInWithGoogle(
+                iosClientId: "",
+                serverClientId: ApiConstants.googleServerClientId,
+                onAllData: (accessToken, idToken, user) {
+                  print("accessToken: $accessToken");
+                  print("idToken: $idToken");
+                  print("user: $user");
+                  if (idToken.isNotEmpty) {
+                    context.read<AuthCubit>().googleLogin(idToken, context);
+                  }
+                },
+              ),
               SizedBox(height: 10.h),
 
               Row(
@@ -245,38 +261,6 @@ class OrDivider extends StatelessWidget {
         SizedBox(width: 20.w),
         Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
       ],
-    );
-  }
-}
-
-class SignInWithGoogle extends StatelessWidget {
-  const SignInWithGoogle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: colorScheme.surface,
-        foregroundColor: colorScheme.onSurface,
-      ),
-      onPressed: () {},
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image(image: AssetImage(AppImages.googleIcon), width: 20.w),
-          SizedBox(width: 20.w),
-          Text(
-            S.of(context).signInWithGoogle,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

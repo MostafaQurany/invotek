@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -128,7 +129,7 @@ class ProductCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
-          '${_formatPrice(product.price)}',
+          _formatPrice(product.price),
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,
@@ -201,8 +202,10 @@ class ProductCard extends StatelessWidget {
   }
 
   String _formatPrice(dynamic price) {
-    if (price == null) return '0.00';
-    if (price is num) return price.toStringAsFixed(2);
-    return price.toString();
+    if (price == null) return CurrencyFormatter.formatCurrency(0.0, null);
+    if (price is num) {
+      return CurrencyFormatter.formatCurrency(price.toDouble(), null);
+    }
+    return CurrencyFormatter.formatCurrencyString(price.toString(), null);
   }
 }

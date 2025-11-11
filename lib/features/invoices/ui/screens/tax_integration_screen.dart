@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/tax_integration_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/sections/tax_integration_form_section.dart';
 import 'package:invotek/features/invoices/ui/widgets/sections/tax_integration_bottom_actions.dart';
@@ -100,9 +104,39 @@ class _TaxIntegrationScreenState extends State<TaxIntegrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Form(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.background,
+        body: Form(
         key: _formKey,
         child: Column(
           children: [
@@ -142,6 +176,7 @@ class _TaxIntegrationScreenState extends State<TaxIntegrationScreen> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

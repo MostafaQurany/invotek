@@ -42,7 +42,7 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
                   )) {
                     Navigator.pushNamed(context, AppRoutes.invoicesListRoute);
                   } else {
-                    _showPermissionDeniedSnackBar('إنشاء فاتورة');
+                    _showPermissionDeniedSnackBar(S.of(context).createInvoice);
                   }
                 },
               ),
@@ -61,7 +61,7 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
                   )) {
                     Navigator.pushNamed(context, '/customers/list');
                   } else {
-                    _showPermissionDeniedSnackBar('إضافة عميل');
+                    _showPermissionDeniedSnackBar(S.of(context).addCustomer);
                   }
                 },
               ),
@@ -84,7 +84,7 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
                   )) {
                     Navigator.pushNamed(context, '/products/list');
                   } else {
-                    _showPermissionDeniedSnackBar('إضافة منتج');
+                    _showPermissionDeniedSnackBar(S.of(context).addProduct);
                   }
                 },
               ),
@@ -103,7 +103,7 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
                   )) {
                     Navigator.pushNamed(context, AppRoutes.addExpenseRoute);
                   } else {
-                    _showPermissionDeniedSnackBar('إضافة مصروف');
+                    _showPermissionDeniedSnackBar(S.of(context).addExpense);
                   }
                 },
               ),
@@ -115,25 +115,29 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
   }
 
   void _showPermissionDeniedSnackBar(String featureName) {
+    final s = S.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
             Icon(Icons.lock_outline, color: Colors.white),
-            SizedBox(width: 12),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'غير مسموح',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    s.homeAccessDenied,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
-                    'ليس لديك صلاحية للوصول إلى $featureName',
-                    style: TextStyle(fontSize: 12),
+                    s.homeNoPermissionToAccess(featureName),
+                    style: TextStyle(fontSize: 12.sp),
                   ),
                 ],
               ),
@@ -143,7 +147,9 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
         backgroundColor: AppColors.error,
         duration: const Duration(seconds: 4),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
     );
   }
@@ -158,7 +164,7 @@ class _QuickActionsSectionState extends State<QuickActionsSection> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        constraints: BoxConstraints(minHeight: 80.h, maxHeight: 100.h),
+        //  constraints: BoxConstraints(minHeight: 80.h, maxHeight: 100.h),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [color.withOpacity(0.1), color.withOpacity(0.05)],

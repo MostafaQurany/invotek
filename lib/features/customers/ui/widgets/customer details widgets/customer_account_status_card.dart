@@ -4,6 +4,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/customer_info_tile.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class CustomerAccountStatusCard extends StatelessWidget {
   final CustomerModel customer;
@@ -17,6 +18,7 @@ class CustomerAccountStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +32,7 @@ class CustomerAccountStatusCard extends StatelessWidget {
               ),
               SizedBox(width: 12.w),
               Text(
-                'Account Status',
+                s.customersAccountStatus,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -44,7 +46,7 @@ class CustomerAccountStatusCard extends StatelessWidget {
           // Status
           CustomerInfoTile(
             icon: Icons.flag_outlined,
-            label: 'Status',
+            label: s.status,
             value: customer.status.toUpperCase(),
             valueColor: customer.status.toLowerCase() == 'active'
                 ? AppColors.success
@@ -56,7 +58,7 @@ class CustomerAccountStatusCard extends StatelessWidget {
           // Created Date
           CustomerInfoTile(
             icon: Icons.calendar_today_outlined,
-            label: 'Created',
+            label: s.customersCreated,
             value: formatDate(customer.createdAt),
           ),
 
@@ -65,7 +67,7 @@ class CustomerAccountStatusCard extends StatelessWidget {
           // Last Updated
           CustomerInfoTile(
             icon: Icons.update_outlined,
-            label: 'Last Updated',
+            label: s.customersLastUpdated,
             value: formatDate(customer.updatedAt),
           ),
         ],

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_item.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -309,15 +310,7 @@ class _InvoiceItemsCardState extends State<InvoiceItemsCard> {
                     ),
                   ),
                   Text(
-                    NumberFormat.currency(
-                      symbol:
-                          context
-                                  .read<LocalizationCubit>()
-                                  .getCurrentLanguage() ==
-                              'ar'
-                          ? AppCurrency.currencyAr
-                          : AppCurrency.currencyEn,
-                    ).format(double.tryParse(item.total ?? '0.00') ?? 0),
+                    CurrencyFormatter.formatCurrencyString(item.total, context),
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
@@ -365,15 +358,10 @@ class _InvoiceItemsCardState extends State<InvoiceItemsCard> {
                   Expanded(
                     child: _buildDetailItem(
                       S.of(context).price,
-                      NumberFormat.currency(
-                        symbol:
-                            context
-                                    .read<LocalizationCubit>()
-                                    .getCurrentLanguage() ==
-                                'ar'
-                            ? AppCurrency.currencyAr
-                            : AppCurrency.currencyEn,
-                      ).format(double.tryParse(item.price ?? '0.00') ?? 0),
+                      CurrencyFormatter.formatCurrencyString(
+                        item.price,
+                        context,
+                      ),
                     ),
                   ),
                 ],
@@ -546,15 +534,7 @@ class _InvoiceItemsCardState extends State<InvoiceItemsCard> {
               Expanded(
                 flex: 2,
                 child: Text(
-                  NumberFormat.currency(
-                    symbol:
-                        context
-                                .read<LocalizationCubit>()
-                                .getCurrentLanguage() ==
-                            'ar'
-                        ? AppCurrency.currencyAr
-                        : AppCurrency.currencyEn,
-                  ).format(double.tryParse(item.price ?? '0.00') ?? 0),
+                  CurrencyFormatter.formatCurrencyString(item.price, context),
                   style: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w500,
@@ -584,15 +564,10 @@ class _InvoiceItemsCardState extends State<InvoiceItemsCard> {
                   children: [
                     Flexible(
                       child: Text(
-                        NumberFormat.currency(
-                          symbol:
-                              context
-                                      .read<LocalizationCubit>()
-                                      .getCurrentLanguage() ==
-                                  'ar'
-                              ? AppCurrency.currencyAr
-                              : AppCurrency.currencyEn,
-                        ).format(double.tryParse(item.total ?? '0.00') ?? 0),
+                        CurrencyFormatter.formatCurrencyString(
+                          item.total,
+                          context,
+                        ),
                         style: TextStyle(
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w600,

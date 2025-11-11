@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
@@ -11,6 +12,8 @@ import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_screen.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class ExpenseDetailsScreen extends StatefulWidget {
   final ExpenseModel expense;
@@ -25,6 +28,54 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final expense = widget.expense;
+    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      ExpensesPermissions.view,
+    );
+
+    if (!hasViewPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.expensesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.expensesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       body: CustomScrollView(
@@ -158,7 +209,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          expense.formattedAmount,
+                          CurrencyFormatter.formatCurrency(expense.amount, context),
                           style: TextStyle(
                             fontSize: 18.sp,
                             color: AppColors.white.withOpacity(0.8),
@@ -211,6 +262,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
   }
 
   Widget _buildBasicInfoCard(ExpenseModel expense) {
+    final s = S.of(context);
     return AnimatedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +272,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
               Icon(Icons.info_outline, color: AppColors.primary, size: 24.sp),
               SizedBox(width: 12.w),
               Text(
-                S.of(context).basicInformation,
+                s.basicInformation,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -234,10 +286,10 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           // Title
           _buildInfoTile(
             icon: Icons.title,
-            label: S.of(context).title,
+            label: s.title,
             value: expense.title,
             onAction: () => _copyToClipboard(expense.title),
-            actionLabel: 'Copy',
+            actionLabel: s.copy,
           ),
 
           SizedBox(height: 16.h),
@@ -246,10 +298,10 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           if (expense.description != null && expense.description!.isNotEmpty)
             _buildInfoTile(
               icon: Icons.description_outlined,
-              label: S.of(context).description,
+              label: s.description,
               value: expense.description!,
               onAction: () => _copyToClipboard(expense.description!),
-              actionLabel: 'Copy',
+              actionLabel: s.copy,
             ),
 
           if (expense.description != null && expense.description!.isNotEmpty)
@@ -260,7 +312,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
             builder: (context, state) {
               return _buildInfoTile(
                 icon: Icons.category_outlined,
-                label: S.of(context).category,
+                label: s.category,
                 value: _getCategoryName(state),
               );
             },
@@ -271,7 +323,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           // Date
           _buildInfoTile(
             icon: Icons.calendar_today_outlined,
-            label: S.of(context).date,
+            label: s.date,
             value: expense.formattedDate,
           ),
         ],
@@ -280,6 +332,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
   }
 
   Widget _buildFinancialInfoCard(ExpenseModel expense) {
+    final s = S.of(context);
     return AnimatedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -289,7 +342,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
               Icon(Icons.attach_money, color: AppColors.primary, size: 24.sp),
               SizedBox(width: 12.w),
               Text(
-                S.of(context).financialInformation,
+                s.financialInformation,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -303,11 +356,13 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           // Amount
           _buildInfoTile(
             icon: Icons.monetization_on_outlined,
-            label: S.of(context).amount,
-            value: expense.formattedAmount,
+            label: s.amount,
+            value: CurrencyFormatter.formatCurrency(expense.amount, context),
             valueColor: AppColors.primary,
-            onAction: () => _copyToClipboard(expense.formattedAmount),
-            actionLabel: 'Copy',
+            onAction: () => _copyToClipboard(
+              CurrencyFormatter.formatCurrency(expense.amount, context),
+            ),
+            actionLabel: s.copy,
           ),
 
           if (expense.referenceNumber != null &&
@@ -315,10 +370,10 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
             SizedBox(height: 16.h),
             _buildInfoTile(
               icon: Icons.receipt_outlined,
-              label: S.of(context).referenceNumber,
+              label: s.referenceNumber,
               value: expense.referenceNumber!,
               onAction: () => _copyToClipboard(expense.referenceNumber!),
-              actionLabel: 'Copy',
+              actionLabel: s.copy,
             ),
           ],
         ],
@@ -327,6 +382,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
   }
 
   Widget _buildPaymentInfoCard(ExpenseModel expense) {
+    final s = S.of(context);
     return AnimatedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,7 +392,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
               Icon(Icons.payment, color: AppColors.primary, size: 24.sp),
               SizedBox(width: 12.w),
               Text(
-                S.of(context).paymentInformation,
+                s.paymentInformation,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -349,7 +405,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
 
           _buildInfoTile(
             icon: Icons.credit_card_outlined,
-            label: S.of(context).paymentMethod,
+            label: s.paymentMethod,
             value: _formatPaymentMethod(expense.paymentMethod),
           ),
         ],
@@ -362,6 +418,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
       return const SizedBox.shrink();
     }
 
+    final s = S.of(context);
     return AnimatedCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -371,7 +428,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
               Icon(Icons.note_outlined, color: AppColors.primary, size: 24.sp),
               SizedBox(width: 12.w),
               Text(
-                S.of(context).additionalInformation,
+                s.additionalInformation,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -384,60 +441,11 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
 
           _buildInfoTile(
             icon: Icons.sticky_note_2_outlined,
-            label: S.of(context).notes,
+            label: s.notes,
             value: expense.notes!,
             onAction: () => _copyToClipboard(expense.notes!),
-            actionLabel: 'Copy',
+            actionLabel: s.copy,
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMetadataCard(ExpenseModel expense) {
-    return AnimatedCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.info, color: AppColors.primary, size: 24.sp),
-              SizedBox(width: 12.w),
-              Text(
-                S.of(context).metadata,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-
-          _buildInfoTile(
-            icon: Icons.person_outline,
-            label: S.of(context).createdBy,
-            value: expense.createdBy,
-          ),
-
-          if (expense.createdAt != null) ...[
-            SizedBox(height: 16.h),
-            _buildInfoTile(
-              icon: Icons.calendar_today_outlined,
-              label: S.of(context).createdAt,
-              value: _formatDateTime(expense.createdAt!),
-            ),
-          ],
-
-          if (expense.updatedAt != null) ...[
-            SizedBox(height: 16.h),
-            _buildInfoTile(
-              icon: Icons.update_outlined,
-              label: S.of(context).updatedAt,
-              value: _formatDateTime(expense.updatedAt!),
-            ),
-          ],
         ],
       ),
     );
@@ -503,6 +511,16 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
   }
 
   Widget _buildBottomActions() {
+    final s = S.of(context);
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ExpensesPermissions.edit,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      ExpensesPermissions.delete,
+    );
+
     return AnimatedEntryWidget(
       delay: Duration(milliseconds: 1400),
       child: Container(
@@ -521,66 +539,92 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           child: Row(
             children: [
               Expanded(
-                child: OutlinedButton(
-                  onPressed: () => _showDeleteConfirmation(),
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: AppColors.error),
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
+                child: Tooltip(
+                  message: hasDeletePermission
+                      ? ''
+                      : s.expensesNoPermissionToAct,
+                  child: OutlinedButton(
+                    onPressed: hasDeletePermission
+                        ? () => _showDeleteConfirmation()
+                        : null,
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: AppColors.error),
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      disabledForegroundColor:
+                          AppColors.error.withOpacity(0.5),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.delete_outline,
-                        color: AppColors.error,
-                        size: 20.sp,
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        S.of(context).delete,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.error,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          hasDeletePermission
+                              ? Icons.delete_outline
+                              : Icons.lock_outline,
+                          color: hasDeletePermission
+                              ? AppColors.error
+                              : AppColors.error.withOpacity(0.5),
+                          size: 20.sp,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 8.w),
+                        Text(
+                          s.delete,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: hasDeletePermission
+                                ? AppColors.error
+                                : AppColors.error.withOpacity(0.5),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
               SizedBox(width: 12.w),
               Expanded(
                 flex: 2,
-                child: FilledButton(
-                  onPressed: () => _navigateToEditExpense(context),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
+                child: Tooltip(
+                  message: hasEditPermission
+                      ? ''
+                      : s.expensesNoPermissionToAct,
+                  child: FilledButton(
+                    onPressed: hasEditPermission
+                        ? () => _navigateToEditExpense(context)
+                        : null,
+                    style: FilledButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: EdgeInsets.symmetric(vertical: 16.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      disabledBackgroundColor:
+                          AppColors.primary.withOpacity(0.5),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.edit_outlined,
-                        color: AppColors.white,
-                        size: 20.sp,
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        S.of(context).edit,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          hasEditPermission
+                              ? Icons.edit_outlined
+                              : Icons.lock_outline,
                           color: AppColors.white,
+                          size: 20.sp,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 8.w),
+                        Text(
+                          s.edit,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -599,33 +643,34 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
               (cat) => cat.id == widget.expense.expenseCategoryId,
               orElse: () => ExpenseCategoryModel(
                 id: widget.expense.expenseCategoryId,
-                name: 'Unknown Category',
+                name: S.of(context).expensesUnknownCategory,
                 status: 'active',
               ),
             );
             return category.name;
           },
         ) ??
-        'Loading...';
+        S.of(context).expensesLoading;
   }
 
   String _formatPaymentMethod(String paymentMethod) {
+    final s = S.of(context);
     switch (paymentMethod.toLowerCase()) {
       case 'cash':
-        return 'Cash';
+        return s.expensesPaymentMethodCash;
       case 'card':
-        return 'Credit/Debit Card';
+        return s.expensesPaymentMethodCard;
       case 'bank_transfer':
-        return 'Bank Transfer';
+        return s.expensesPaymentMethodBankTransfer;
       case 'check':
-        return 'Check';
+        return s.expensesPaymentMethodCheck;
       default:
         return paymentMethod;
     }
   }
 
   String _formatDateTime(DateTime dateTime) {
-    return DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
+    return DateFormatter.toDisplayDateTimeFormat(dateTime);
   }
 
   void _navigateToEditExpense(BuildContext context) {
@@ -643,7 +688,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Copied to clipboard'),
+        content: Text(S.of(context).expensesCopiedToClipboard),
         backgroundColor: AppColors.success,
       ),
     );
@@ -662,7 +707,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
         ),
         content: Text(
-          'Are you sure you want to delete ${widget.expense.title}? This action cannot be undone.',
+          S.of(context).expensesDeleteExpenseConfirmation(widget.expense.title),
           style: TextStyle(fontSize: 14.sp),
         ),
         actions: [
@@ -699,12 +744,12 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           ],
         ),
         content: Text(
-          'This screen shows detailed information about the expense including financial details, payment information, and metadata.',
+          S.of(context).expensesExpenseDetailsHelpDescription,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('OK'),
+            child: Text(S.of(context).ok),
           ),
         ],
       ),

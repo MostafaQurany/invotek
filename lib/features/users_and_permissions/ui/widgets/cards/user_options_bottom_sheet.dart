@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/features/users_and_permissions/constants/users_permissions.dart';
+import 'package:invotek/features/users_and_permissions/utils/user_deletion_helper.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UserOptionsBottomSheet extends StatelessWidget {
   final User user;
@@ -19,8 +23,24 @@ class UserOptionsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      UsersPermissions.view,
+    );
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      UsersPermissions.edit,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      UsersPermissions.delete,
+    );
+    final canDelete = UserDeletionHelper.canDeleteUser(user);
+    final isDeleteEnabled = hasDeletePermission && canDelete;
+
     return Container(
-      padding: EdgeInsets.fromLTRB(24.w, 20.h, 24.w, 32.h),
+      padding: EdgeInsets.fromLTRB(24.w, 0.h, 24.w, 32.h),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
@@ -29,19 +49,18 @@ class UserOptionsBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Handle Bar
-          Center(
-            child: Container(
-              width: 40.w,
-              height: 4.h,
-              decoration: BoxDecoration(
-                color: AppColors.grey.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(2.r),
-              ),
-            ),
-          ),
-
-          SizedBox(height: 24.h),
+          // // Handle Bar
+          // Center(
+          //   child: Container(
+          //     width: 40.w,
+          //     height: 4.h,
+          //     decoration: BoxDecoration(
+          //       color: AppColors.grey.withOpacity(0.3),
+          //       borderRadius: BorderRadius.circular(2.r),
+          //     ),
+          //   ),
+          // ),
+          //SizedBox(height: 24.h),
 
           // User Info Header
           Row(
@@ -70,7 +89,7 @@ class UserOptionsBottomSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.name ?? 'Unknown User',
+                      user.name ?? s.usersUnknownUser,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -79,7 +98,7 @@ class UserOptionsBottomSheet extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      user.email ?? 'No email',
+                      user.email ?? s.usersNoEmail,
                       style: TextStyle(fontSize: 14.sp, color: AppColors.grey),
                     ),
                   ],
@@ -92,30 +111,36 @@ class UserOptionsBottomSheet extends StatelessWidget {
 
           // Action Options
           _buildOptionItem(
-            icon: Icons.visibility_outlined,
-            title: 'View Details',
-            subtitle: 'View user details',
-            onTap: onViewDetails,
+            icon: hasViewPermission
+                ? Icons.visibility_outlined
+                : Icons.lock_outlined,
+            title: s.usersViewDetails,
+            subtitle: s.usersViewUserDetails,
+            onTap: hasViewPermission ? onViewDetails : null,
+            tooltip: hasViewPermission ? null : s.usersNoPermissionToAct,
           ),
 
           SizedBox(height: 8.h),
 
           _buildOptionItem(
-            icon: Icons.edit_outlined,
-            title: 'Edit User',
-            subtitle: 'Edit user information',
-            onTap: onEdit,
+            icon: hasEditPermission ? Icons.edit_outlined : Icons.lock_outlined,
+            title: s.usersEditUser,
+            subtitle: s.usersEditUserInformation,
+            onTap: hasEditPermission ? onEdit : null,
+            tooltip: hasEditPermission ? null : s.usersNoPermissionToAct,
           ),
 
-          SizedBox(height: 8.h),
-
-          _buildOptionItem(
-            icon: Icons.delete_outline,
-            title: 'Delete User',
-            subtitle: 'Delete user permanently',
-            onTap: onDelete,
-            isDestructive: true,
-          ),
+          // Delete Option - Only show if deletion is enabled
+          if (isDeleteEnabled) ...[
+            SizedBox(height: 8.h),
+            _buildOptionItem(
+              icon: Icons.delete_outline,
+              title: s.usersDeleteUser,
+              subtitle: s.usersDeleteUserPermanently,
+              onTap: onDelete,
+              isDestructive: true,
+            ),
+          ],
         ],
       ),
     );
@@ -125,13 +150,15 @@ class UserOptionsBottomSheet extends StatelessWidget {
     required IconData icon,
     required String title,
     required String subtitle,
-    required VoidCallback onTap,
+    required VoidCallback? onTap,
     bool isDestructive = false,
+    String? tooltip,
   }) {
     final color = isDestructive ? AppColors.error : AppColors.textPrimary;
-    final iconColor = isDestructive ? AppColors.error : AppColors.primary;
+    final iconColor = (isDestructive ? AppColors.error : AppColors.primary)
+        .withOpacity(onTap == null ? 0.5 : 1.0);
 
-    return InkWell(
+    Widget item = InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12.r),
       child: Container(
@@ -173,6 +200,12 @@ class UserOptionsBottomSheet extends StatelessWidget {
         ),
       ),
     );
+
+    if (tooltip != null && onTap == null) {
+      return Tooltip(message: tooltip, child: item);
+    }
+
+    return item;
   }
 
   String _getInitials(String name) {

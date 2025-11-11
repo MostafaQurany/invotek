@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ProductSummaryCard extends StatelessWidget {
   final ProductModel product;
@@ -10,6 +12,7 @@ class ProductSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -46,23 +49,26 @@ class ProductSummaryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        product.name ?? 'Unnamed Product',
+                        product.name ?? s.productsUnnamedProduct,
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
                         ),
+                        maxLines: 2,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 4.h),
-                      if (product.sku != null && product.sku!.isNotEmpty)
-                        Text(
-                          'SKU: ${product.sku!}',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.greyDark,
-                          ),
-                        ),
-                      SizedBox(height: 8.h),
+                      // if (product.sku != null && product.sku!.isNotEmpty)
+                      //   Text(
+                      //     'SKU: ${product.sku!}',
+                      //     style: TextStyle(
+                      //       fontSize: 14.sp,
+                      //       color: AppColors.greyDark,
+                      //     ),
+                      //   ),
+                      // SizedBox(height: 8.h),
                       _buildProductStatusChip(product.status ?? 'inactive'),
                     ],
                   ),
@@ -73,7 +79,10 @@ class ProductSummaryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      product.price ?? '0.00',
+                      CurrencyFormatter.formatCurrencyString(
+                        product.price,
+                        null,
+                      ),
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
@@ -82,7 +91,7 @@ class ProductSummaryCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      'Qty: ${product.quantity ?? 0}',
+                      '${s.productsQty}: ${product.quantity ?? 0}',
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.greyDark,

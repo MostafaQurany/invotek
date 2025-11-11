@@ -8,7 +8,6 @@ import 'package:invotek/features/auth/ui/reset_password_screen.dart';
 import 'package:invotek/features/auth/ui/verify_otp_screen.dart';
 import 'package:invotek/features/clients/ui/screens/add_client_screen.dart';
 import 'package:invotek/features/clients/ui/screens/client_details_screen.dart';
-import 'package:invotek/features/clients/ui/screens/clients_list_screen.dart';
 import 'package:invotek/features/clients/ui/screens/edit_client_screen.dart';
 import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
@@ -25,24 +24,25 @@ import 'package:invotek/features/expenses/ui/screens/expenses_list_screen.dart';
 import 'package:invotek/features/home/ui/home_screen_with_drawer.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/ui/screens/add_invoice_screen_with_provider.dart';
+import 'package:invotek/features/invoices/ui/screens/credit_invoices_list_screen.dart';
 import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoice_creation_stepper_screen.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_details_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
-import 'package:invotek/features/printing/ui/screens/pdf_preview_screen.dart';
-import 'package:invotek/features/printing/ui/screens/print_options_screen.dart';
 import 'package:invotek/features/printing/ui/screens/printer_settings_screen.dart';
-import 'package:invotek/features/printing/ui/screens/thermal_print_screen.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/screens/add_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';
 import 'package:invotek/features/products/ui/screens/edit_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/features/products/ui/screens/products_list_screen.dart';
+import 'package:invotek/features/settings/ui/screens/app_settings_screen.dart';
 import 'package:invotek/features/settings/ui/screens/change_password_screen.dart';
+import 'package:invotek/features/settings/ui/screens/company_settings_screen.dart';
 import 'package:invotek/features/settings/ui/screens/delete_account_screen.dart';
+import 'package:invotek/features/settings/ui/screens/edit_profile_screen.dart';
+import 'package:invotek/features/settings/ui/screens/profile_settings_screen.dart';
 import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/edit_user_screen.dart';
@@ -50,6 +50,10 @@ import 'package:invotek/features/users_and_permissions/ui/screens/manage_permiss
 import 'package:invotek/features/users_and_permissions/ui/screens/user_details_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_list_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/users_permissions_screen.dart';
+import 'package:invotek/features/notifications/ui/screens/notifications_list_screen.dart';
+import 'package:invotek/features/notifications/ui/screens/notification_details_screen.dart';
+import 'package:invotek/features/notifications/domain/entities/notification_entity.dart';
+import 'package:invotek/features/notifications/ui/cubit/notifications_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class AppRoutes {
@@ -104,6 +108,7 @@ class AppRoutes {
 
   // Invoices routes
   static const String invoicesListRoute = '/invoices/list';
+  static const String creditInvoicesListRoute = '/invoices/credit';
   static const String addInvoiceRoute = '/invoices/add';
   static const String invoiceCreationStepperRoute = '/invoices/create-stepper';
   static const String editInvoiceRoute = '/invoices/edit';
@@ -121,9 +126,17 @@ class AppRoutes {
 
   // Settings routes
   static const String settingsRoute = '/settings';
+  static const String appSettingsRoute = '/app-settings';
+  static const String companySettingsRoute = '/company-settings';
+  static const String profileSettingsRoute = '/profile-settings';
+  static const String editProfileRoute = '/edit-profile';
   static const String changePasswordRoute = '/change-password';
   static const String deleteAccountRoute = '/delete-account';
   static const String subscriptionPackagesRoute = '/subscription-packages';
+
+  // Notifications routes
+  static const String notificationsListRoute = '/notifications/list';
+  static const String notificationDetailsRoute = '/notifications/details';
 
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
@@ -162,15 +175,25 @@ class AppRoutes {
     expenseCategoriesListRoute: (context) =>
         const ExpenseCategoriesListScreenWithProvider(),
     invoicesListRoute: (context) => const InvoicesListScreenWithProvider(),
+    creditInvoicesListRoute: (context) =>
+        const CreditInvoicesListScreenWithProvider(),
     addInvoiceRoute: (context) => const AddInvoiceScreenWithProvider(),
     invoiceCreationStepperRoute: (context) =>
         const InvoiceCreationStepperScreen(),
     settingsRoute: (context) => const SettingsScreen(),
+    appSettingsRoute: (context) => const AppSettingsScreen(),
+    companySettingsRoute: (context) => const CompanySettingsScreen(),
+    profileSettingsRoute: (context) => const ProfileSettingsScreen(),
+    editProfileRoute: (context) => const EditProfileScreen(),
     changePasswordRoute: (context) => const ChangePasswordScreen(),
     deleteAccountRoute: (context) => const DeleteAccountScreen(),
 
     // expenses routes
     addExpenseRoute: (context) => const AddExpenseScreenWithProvider(),
+
+    // notifications routes
+    notificationsListRoute: (context) =>
+        const NotificationsListScreenWithProvider(),
   };
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -244,8 +267,9 @@ class AppRoutes {
       case invoiceDetailsRoute:
         final invoice = settings.arguments as InvoiceModel;
         return MaterialPageRoute(
-          builder: (context) =>
-              InvoiceDetailsScreenWithProvider(invoice: invoice),
+          builder: (context) => EnhancedInvoiceDetailsScreenWithProvider(
+            invoiceId: invoice.id?.toString() ?? '0',
+          ),
         );
       case enhancedInvoiceDetailsRoute:
         final invoiceId = settings.arguments as String;
@@ -255,25 +279,26 @@ class AppRoutes {
         );
 
       // Printing routes
-      case printOptionsRoute:
-        final invoice = settings.arguments as InvoiceModel;
-        return MaterialPageRoute(
-          builder: (context) => PrintOptionsScreen(invoice: invoice),
-        );
-      case thermalPrintRoute:
-        final invoice = settings.arguments as InvoiceModel;
-        return MaterialPageRoute(
-          builder: (context) => ThermalPrintScreen(invoice: invoice),
-        );
-      case pdfPreviewRoute:
-        final invoice = settings.arguments as InvoiceModel;
-        return MaterialPageRoute(
-          builder: (context) => PDFPreviewScreen(invoice: invoice),
-        );
       case printerSettingsRoute:
         return MaterialPageRoute(
           builder: (context) => const PrinterSettingsScreen(),
         );
+      // Old printing routes - disabled
+      // case printOptionsRoute:
+      //   final invoice = settings.arguments as InvoiceModel;
+      //   return MaterialPageRoute(
+      //     builder: (context) => PrintOptionsScreen(invoice: invoice),
+      //   );
+      // case thermalPrintRoute:
+      //   final invoice = settings.arguments as InvoiceModel;
+      //   return MaterialPageRoute(
+      //     builder: (context) => ThermalPrintScreen(invoice: invoice),
+      //   );
+      // case pdfPreviewRoute:
+      //   final invoice = settings.arguments as InvoiceModel;
+      //   return MaterialPageRoute(
+      //     builder: (context) => PDFPreviewScreen(invoice: invoice),
+      //   );
       // expenses routes
       case expensesListRoute:
         return MaterialPageRoute(
@@ -321,6 +346,18 @@ class AppRoutes {
                   ),
                 ],
               ),
+            ),
+          ),
+        );
+
+      // Notifications routes
+      case notificationDetailsRoute:
+        final notification = settings.arguments as NotificationEntity;
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+            value: getIt<NotificationsCubit>(),
+            child: NotificationDetailsScreen(
+              notification: notification,
             ),
           ),
         );

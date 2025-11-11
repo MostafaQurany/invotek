@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class PermissionsTab extends StatefulWidget {
   final User user;
@@ -77,6 +78,7 @@ class _PermissionsTabState extends State<PermissionsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return SingleChildScrollView(
       padding: EdgeInsets.all(20.w),
       child: Column(
@@ -117,7 +119,7 @@ class _PermissionsTabState extends State<PermissionsTab> {
                     ),
                     SizedBox(width: 12.w),
                     Text(
-                      'User Permissions',
+                      s.userPermissions,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -131,58 +133,58 @@ class _PermissionsTabState extends State<PermissionsTab> {
 
                 // Permissions Groups
                 _buildPermissionGroup(
-                  title: 'User Management',
+                  title: s.userManagement,
                   permissions: [
-                    {'key': 'view_users', 'label': 'View Users'},
-                    {'key': 'create_users', 'label': 'Create Users'},
-                    {'key': 'edit_users', 'label': 'Edit Users'},
-                    {'key': 'delete_users', 'label': 'Delete Users'},
+                    {'key': 'view_users', 'label': s.viewUsers},
+                    {'key': 'create_users', 'label': s.createUsers},
+                    {'key': 'edit_users', 'label': s.editUsers},
+                    {'key': 'delete_users', 'label': s.deleteUsers},
                   ],
                 ),
 
                 SizedBox(height: 24.h),
 
                 _buildPermissionGroup(
-                  title: 'Product Management',
+                  title: s.productManagement,
                   permissions: [
-                    {'key': 'view_products', 'label': 'View Products'},
-                    {'key': 'create_products', 'label': 'Create Products'},
-                    {'key': 'edit_products', 'label': 'Edit Products'},
-                    {'key': 'delete_products', 'label': 'Delete Products'},
+                    {'key': 'view_products', 'label': s.viewProducts},
+                    {'key': 'create_products', 'label': s.createProducts},
+                    {'key': 'edit_products', 'label': s.editProducts},
+                    {'key': 'delete_products', 'label': s.deleteProducts},
                   ],
                 ),
 
                 SizedBox(height: 24.h),
 
                 _buildPermissionGroup(
-                  title: 'Customer Management',
+                  title: s.customerManagement,
                   permissions: [
-                    {'key': 'view_customers', 'label': 'View Customers'},
-                    {'key': 'create_customers', 'label': 'Create Customers'},
-                    {'key': 'edit_customers', 'label': 'Edit Customers'},
-                    {'key': 'delete_customers', 'label': 'Delete Customers'},
+                    {'key': 'view_customers', 'label': s.viewCustomers},
+                    {'key': 'create_customers', 'label': s.createCustomers},
+                    {'key': 'edit_customers', 'label': s.editCustomers},
+                    {'key': 'delete_customers', 'label': s.deleteCustomers},
                   ],
                 ),
 
                 SizedBox(height: 24.h),
 
                 _buildPermissionGroup(
-                  title: 'Expense Management',
+                  title: s.expenseManagement,
                   permissions: [
-                    {'key': 'view_expenses', 'label': 'View Expenses'},
-                    {'key': 'create_expenses', 'label': 'Create Expenses'},
-                    {'key': 'edit_expenses', 'label': 'Edit Expenses'},
-                    {'key': 'delete_expenses', 'label': 'Delete Expenses'},
+                    {'key': 'view_expenses', 'label': s.viewExpenses},
+                    {'key': 'create_expenses', 'label': s.createExpenses},
+                    {'key': 'edit_expenses', 'label': s.editExpenses},
+                    {'key': 'delete_expenses', 'label': s.deleteExpenses},
                   ],
                 ),
 
                 SizedBox(height: 24.h),
 
                 _buildPermissionGroup(
-                  title: 'System Access',
+                  title: s.systemAccess,
                   permissions: [
-                    {'key': 'view_reports', 'label': 'View Reports'},
-                    {'key': 'manage_settings', 'label': 'Manage Settings'},
+                    {'key': 'view_reports', 'label': s.viewReports},
+                    {'key': 'manage_settings', 'label': s.manageSettings},
                   ],
                 ),
               ],

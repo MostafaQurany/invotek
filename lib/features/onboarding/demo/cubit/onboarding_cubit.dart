@@ -80,7 +80,6 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   // دالة لإعادة تعيين Onboarding (للاختبار)
   Future<void> resetOnboarding() async {
     try {
-      await StorageService.setFirstTime(true);
       await StorageService.removeBool('onboarding_completed');
     } catch (e) {
       emit(state.copyWith(error: e.toString()));

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
+import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class ExpenseOptionsBottomSheet extends StatelessWidget {
   final ExpenseModel expense;
@@ -69,7 +73,7 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        expense.description ?? 'No description',
+                        expense.description ?? S.of(context).expensesNoDescription,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -80,7 +84,7 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        expense.formattedAmount,
+                        CurrencyFormatter.formatCurrency(expense.amount, context),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.textSecondary,
@@ -96,23 +100,49 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
           SizedBox(height: 24.h),
 
           // Options
-          _buildOptionItem(
-            icon: Icons.visibility,
-            title: 'View Details',
-            onTap: onView,
-          ),
+          Builder(
+            builder: (context) {
+              final s = S.of(context);
+              final hasViewPermission = PermissionChecker.hasPermission(
+                context,
+                ExpensesPermissions.view,
+              );
+              final hasEditPermission = PermissionChecker.hasPermission(
+                context,
+                ExpensesPermissions.edit,
+              );
+              final hasDeletePermission = PermissionChecker.hasPermission(
+                context,
+                ExpensesPermissions.delete,
+              );
 
-          _buildOptionItem(
-            icon: Icons.edit,
-            title: 'Edit Expense',
-            onTap: onEdit,
-          ),
-
-          _buildOptionItem(
-            icon: Icons.delete,
-            title: 'Delete Expense',
-            onTap: onDelete,
-            isDestructive: true,
+              return Column(
+                children: [
+                  _buildOptionItem(
+                    icon: Icons.visibility,
+                    title: s.expensesViewDetails,
+                    onTap: hasViewPermission ? onView : null,
+                    hasPermission: hasViewPermission,
+                    permissionMessage: s.expensesNoPermissionToAct,
+                  ),
+                  _buildOptionItem(
+                    icon: Icons.edit,
+                    title: s.expensesEditExpense,
+                    onTap: hasEditPermission ? onEdit : null,
+                    hasPermission: hasEditPermission,
+                    permissionMessage: s.expensesNoPermissionToAct,
+                  ),
+                  _buildOptionItem(
+                    icon: Icons.delete,
+                    title: s.expensesDeleteExpense,
+                    onTap: hasDeletePermission ? onDelete : null,
+                    hasPermission: hasDeletePermission,
+                    permissionMessage: s.expensesNoPermissionToAct,
+                    isDestructive: true,
+                  ),
+                ],
+              );
+            },
           ),
 
           SizedBox(height: 20.h),
@@ -124,30 +154,40 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
   Widget _buildOptionItem({
     required IconData icon,
     required String title,
-    required VoidCallback onTap,
+    required VoidCallback? onTap,
+    required bool hasPermission,
+    required String permissionMessage,
     bool isDestructive = false,
   }) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 24.sp,
-              color: isDestructive ? AppColors.error : AppColors.primary,
-            ),
-            SizedBox(width: 16.w),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-                color: isDestructive ? AppColors.error : AppColors.textPrimary,
+    final color = isDestructive ? AppColors.error : AppColors.primary;
+    return Tooltip(
+      message: hasPermission ? '' : permissionMessage,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+          child: Row(
+            children: [
+              Icon(
+                hasPermission ? icon : Icons.lock_outline,
+                size: 24.sp,
+                color: hasPermission
+                    ? color
+                    : color.withOpacity(0.5),
               ),
-            ),
-          ],
+              SizedBox(width: 16.w),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: hasPermission
+                      ? (isDestructive ? AppColors.error : AppColors.textPrimary)
+                      : color.withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

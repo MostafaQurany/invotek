@@ -4,6 +4,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/customer_status_chip.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class CustomerDetailsHeader extends StatelessWidget {
   final CustomerModel customer;
@@ -19,6 +20,7 @@ class CustomerDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedEntryWidget(
       delay: Duration.zero,
       child: Container(
@@ -114,7 +116,7 @@ class CustomerDetailsHeader extends StatelessWidget {
                           ),
                           SizedBox(height: 8.h),
                           Text(
-                            customer.companyName ?? 'Company',
+                            customer.companyName ?? s.company,
                             style: TextStyle(
                               fontSize: 16.sp,
                               color: AppColors.white.withOpacity(0.8),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UserDetailsHeader extends StatelessWidget {
   final User user;
@@ -17,6 +18,7 @@ class UserDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -56,7 +58,7 @@ class UserDetailsHeader extends StatelessWidget {
                   // Title
                   Expanded(
                     child: Text(
-                      'User Details',
+                      s.userDetails,
                       style: TextStyle(
                         color: AppColors.white,
                         fontSize: 24.sp,
@@ -121,7 +123,7 @@ class UserDetailsHeader extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user.name ?? 'Unknown User',
+                          user.name ?? s.unknownUser,
                           style: TextStyle(
                             color: AppColors.white,
                             fontSize: 24.sp,
@@ -132,7 +134,7 @@ class UserDetailsHeader extends StatelessWidget {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          user.email ?? 'No email',
+                          user.email ?? s.noEmail,
                           style: TextStyle(
                             color: AppColors.white.withOpacity(0.8),
                             fontSize: 16.sp,

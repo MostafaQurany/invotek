@@ -50,7 +50,7 @@ class ProductDetailsTab extends StatelessWidget {
 
           // Settings Card
           FormSectionCard(
-            title: 'Settings',
+            title: s.productsSettings,
             icon: Icons.settings_outlined,
             children: [
               // Product Active Switch

@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
+import 'package:invotek/features/auth/ui/auth_loading_home_data_screen.dart';
 import 'package:invotek/features/auth/ui/auth_loading_screen.dart';
 import 'package:invotek/features/auth/ui/auth_login_screen_body.dart';
 import 'package:invotek/features/auth/ui/auth_register_screen_body.dart';
-import 'package:invotek/features/auth/ui/auth_loading_home_data_screen.dart';
 import 'package:invotek/features/home/cubit/dashboard_cubit.dart';
 
 import '../../../core/utils/app_images.dart';
@@ -22,6 +22,8 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   bool _isLoadingDashboard = false;
+  final nameTextController = TextEditingController();
+  final emailTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +54,12 @@ class _AuthScreenState extends State<AuthScreen> {
                     },
                     errorAuth: (error) {
                       _isLoadingDashboard = false;
+                      setState(() {}); // إعادة بناء الواجهة للعودة لشاشة تسجيل الدخول مع الحفاظ على القيم
                       SnackBarHelper.showFailureSnackBar(context, error);
                     },
                     errorRegister: (error) {
                       _isLoadingDashboard = false;
+                      setState(() {}); // إعادة بناء الواجهة للعودة لشاشة التسجيل مع الحفاظ على القيم
                       SnackBarHelper.showFailureSnackBar(context, error);
                     },
                     changeAuthScreenBody: (timestamp) {
@@ -125,9 +129,14 @@ class _AuthScreenState extends State<AuthScreen> {
                       builder: (context, state) {
                         final authCubit = context.read<AuthCubit>();
                         if (authCubit.isLoginScreen) {
-                          return const AuthLoginScreenBody();
+                          return AuthLoginScreenBody(
+                            emailController: emailTextController,
+                          );
                         } else {
-                          return const AuthRegisterScreenBody();
+                          return AuthRegisterScreenBody(
+                            emailController: emailTextController,
+                            nameController: nameTextController,
+                          );
                         }
                       },
                     );
@@ -299,38 +308,6 @@ class OrDivider extends StatelessWidget {
         SizedBox(width: 20.w),
         Expanded(child: Divider(thickness: 0.5, color: colorScheme.outline)),
       ],
-    );
-  }
-}
-
-class SignInWithGoogle extends StatelessWidget {
-  const SignInWithGoogle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: colorScheme.surface,
-        foregroundColor: colorScheme.onSurface,
-      ),
-      onPressed: () {},
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image(image: AssetImage(AppImages.googleIcon), width: 20.w),
-          SizedBox(width: 20.w),
-          Text(
-            S.of(context).signInWithGoogle,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

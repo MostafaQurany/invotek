@@ -5,9 +5,9 @@ part 'company_settings_response.g.dart';
 @JsonSerializable()
 class CompanySettingsResponse {
   final int id;
-  final String name;
-  final String email;
-  final String phone;
+  final String? name;
+  final String? email;
+  final String? phone;
   final String? address;
   @JsonKey(name: 'tax_merchant_code')
   final String? taxMerchantCode;
@@ -16,9 +16,9 @@ class CompanySettingsResponse {
   @JsonKey(name: 'tax_integration_active')
   final bool? taxIntegrationActive;
   final String? logo;
-  final String status;
+  final String? status;
   @JsonKey(name: 'admin_id')
-  final int adminId;
+  final int? adminId;
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @JsonKey(name: 'updated_at')
@@ -26,10 +26,10 @@ class CompanySettingsResponse {
 
   CompanySettingsResponse({
     required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.status,
+    this.name,
+    this.email,
+    this.phone,
+    this.status,
     required this.adminId,
     this.address,
     this.taxMerchantCode,
@@ -45,5 +45,3 @@ class CompanySettingsResponse {
 
   Map<String, dynamic> toJson() => _$CompanySettingsResponseToJson(this);
 }
-
-

@@ -7,8 +7,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/core/utils/screen_utils.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/auth/data/models/login_request.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
@@ -16,23 +18,21 @@ import 'package:invotek/features/auth/ui/widgets/email_auth_text_field.dart';
 import 'package:invotek/features/auth/ui/widgets/password_auth_text_field.dart';
 
 import '../../../generated/l10n.dart';
-import 'package:invotek/core/utils/snackbar_helper.dart';
 
 class AuthLoginScreenBody extends StatefulWidget {
-  const AuthLoginScreenBody({super.key});
+  final TextEditingController emailController;
+  AuthLoginScreenBody({super.key, required this.emailController});
 
   @override
   State<AuthLoginScreenBody> createState() => _AuthLoginScreenBodyState();
 }
 
 class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -40,7 +40,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
   void _handleLogin() {
     if (_formKey.currentState!.validate()) {
       final request = LoginRequest(
-        email: _emailController.text,
+        email: widget.emailController.text,
         password: _passwordController.text,
       );
       context.read<AuthCubit>().login(request, context);
@@ -56,7 +56,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
       backgroundColor: colorScheme.surface,
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 15.h),
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {
               state.maybeWhen(
@@ -81,13 +81,15 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: ScreenUtils.paddingLarge),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image(
-                          image: AssetImage(AppImages.logoGreen),
-                          width: ScreenUtils.responsiveWidthPercent(45),
+                        SizedBox(
+                          width: 120.w,
+                          child: Image(
+                            fit: BoxFit.fill,
+                            image: AssetImage(AppImages.logoGreen),
+                          ),
                         ),
                         Align(
                           alignment: AlignmentDirectional.centerEnd,
@@ -95,19 +97,14 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                               BlocBuilder<LocalizationCubit, LocalizationState>(
                                 builder: (context, state) {
                                   return TextButton(
-                                    child: Text(
-                                      state.locale.languageCode == 'ar'
-                                          ? S.of(context).english
-                                          : S.of(context).arabic,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall!
-                                          .copyWith(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontSize:
-                                                ScreenUtils.fontSizeMedium,
-                                          ),
+                                    child: Image(
+                                      height: 25.w,
+                                      width: 25.w,
+                                      image: AssetImage(
+                                        state.locale.languageCode != 'ar'
+                                            ? AppImages.iraqFlag
+                                            : AppImages.englandFlag,
+                                      ),
                                     ),
                                     onPressed: () {
                                       if (state.locale.languageCode == 'ar') {
@@ -143,7 +140,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                     ),
                     SizedBox(height: ScreenUtils.paddingSmall),
 
-                    EmailAuthTextField(controller: _emailController),
+                    EmailAuthTextField(controller: widget.emailController),
 
                     SizedBox(height: ScreenUtils.paddingMedium),
                     Text(
@@ -193,8 +190,7 @@ class _AuthLoginScreenBodyState extends State<AuthLoginScreenBody> {
                     // google Sign in
                     SignInWithGoogle(
                       iosClientId: "",
-                      serverClientId:
-                          "453415325077-62ac8mt6d3tov4ovsdm3bum127qup82s.apps.googleusercontent.com",
+                      serverClientId: ApiConstants.googleServerClientId,
                       onAllData: (accessToken, idToken, user) {
                         print("accessToken: $accessToken");
                         print("idToken: $idToken");
@@ -364,7 +360,8 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                       if (widget.showText) ...[
                         SizedBox(width: 12.w),
                         Text(
-                          widget.customText ?? 'Sign in with Google',
+                          widget.customText ??
+                              S.of(context).authSignInWithGoogle,
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w500,

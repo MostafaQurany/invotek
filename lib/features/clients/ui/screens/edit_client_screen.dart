@@ -5,6 +5,9 @@ import 'package:invotek/core/validation/validation.dart';
 import 'package:invotek/features/clients/demo/cubit/clients_cubit.dart';
 import 'package:invotek/features/clients/demo/entit/client_model.dart';
 import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/clients/constants/clients_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class EditClientScreen extends StatefulWidget {
   final Client client;
@@ -43,10 +46,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
   late final TextEditingController _contactEmailController;
   late final TextEditingController _notesController;
 
-  late String _selectedStatus;
+  String? _selectedStatus;
   bool _isLoading = false;
-
-  final List<String> _statuses = ['نشط', 'غير نشط'];
 
   @override
   void initState() {
@@ -81,7 +82,10 @@ class _EditClientScreenState extends State<EditClientScreen> {
     );
     _notesController = TextEditingController(text: widget.client.notes ?? '');
 
-    _selectedStatus = widget.client.status == 'active' ? 'نشط' : 'غير نشط';
+    final s = S.of(context);
+    _selectedStatus = widget.client.status == 'active' 
+        ? s.clientsActive 
+        : s.clientsInactive;
   }
 
   @override
@@ -103,11 +107,61 @@ class _EditClientScreenState extends State<EditClientScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ClientsPermissions.edit,
+    );
+
+    if (!hasEditPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Text(s.clientsEdit),
+          backgroundColor: colorScheme.surface,
+          foregroundColor: colorScheme.onSurface,
+        ),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  size: 64.sp,
+                  color: colorScheme.error,
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  s.clientsNoPermissionToView,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  s.clientsNoPermissionToAct,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: const Text('تعديل العميل'),
+        title: Text(s.clientsEdit),
         backgroundColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,
         scrolledUnderElevation: 1,
@@ -150,14 +204,14 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 SizedBox(height: 24.h),
 
                 // Basic Information Section
-                _buildSectionTitle('المعلومات الأساسية'),
+                _buildSectionTitle(s.clientsBasicInfo),
                 SizedBox(height: 16.h),
 
                 // Name Field
                 _buildTextField(
                   controller: _nameController,
-                  label: 'اسم العميل',
-                  hint: 'أدخل اسم العميل',
+                  label: s.clientsClientName,
+                  hint: s.clientsEnterClientName,
                   icon: Icons.person,
                   validator: (value) => Validation.validateName(value),
                 ),
@@ -166,8 +220,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Email Field
                 _buildTextField(
                   controller: _emailController,
-                  label: 'البريد الإلكتروني',
-                  hint: 'أدخل البريد الإلكتروني',
+                  label: s.clientsEmail,
+                  hint: s.clientsEnterEmail,
                   icon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) => Validation.validateEmail(value),
@@ -177,8 +231,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Phone Field
                 _buildTextField(
                   controller: _phoneController,
-                  label: 'رقم الهاتف',
-                  hint: 'أدخل رقم الهاتف',
+                  label: s.clientsPhone,
+                  hint: s.clientsEnterPhone,
                   icon: Icons.phone,
                   keyboardType: TextInputType.phone,
                   validator: (value) => Validation.validatePhone(value),
@@ -188,22 +242,22 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Address Field
                 _buildTextField(
                   controller: _addressController,
-                  label: 'العنوان',
-                  hint: 'أدخل عنوان العميل',
+                  label: s.clientsAddress,
+                  hint: s.clientsEnterAddress,
                   icon: Icons.location_on,
                   maxLines: 3,
                 ),
                 SizedBox(height: 24.h),
 
                 // Company Information Section
-                _buildSectionTitle('معلومات الشركة'),
+                _buildSectionTitle(s.clientsCompanyInfo),
                 SizedBox(height: 16.h),
 
                 // Company Field
                 _buildTextField(
                   controller: _companyController,
-                  label: 'اسم الشركة',
-                  hint: 'أدخل اسم الشركة',
+                  label: s.clientsCompanyName,
+                  hint: s.clientsEnterCompanyName,
                   icon: Icons.business,
                 ),
                 SizedBox(height: 16.h),
@@ -211,8 +265,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Tax Number Field
                 _buildTextField(
                   controller: _taxNumberController,
-                  label: 'الرقم الضريبي',
-                  hint: 'أدخل الرقم الضريبي',
+                  label: s.clientsTaxNumber,
+                  hint: s.clientsEnterTaxNumber,
                   icon: Icons.receipt,
                 ),
                 SizedBox(height: 16.h),
@@ -220,22 +274,22 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Website Field
                 _buildTextField(
                   controller: _websiteController,
-                  label: 'الموقع الإلكتروني',
-                  hint: 'أدخل الموقع الإلكتروني',
+                  label: s.clientsWebsite,
+                  hint: s.clientsEnterWebsite,
                   icon: Icons.web,
                   keyboardType: TextInputType.url,
                 ),
                 SizedBox(height: 24.h),
 
                 // Contact Person Section
-                _buildSectionTitle('معلومات شخص الاتصال'),
+                _buildSectionTitle(s.clientsContactPersonInfo),
                 SizedBox(height: 16.h),
 
                 // Contact Person Field
                 _buildTextField(
                   controller: _contactPersonController,
-                  label: 'اسم شخص الاتصال',
-                  hint: 'أدخل اسم شخص الاتصال',
+                  label: s.clientsContactPersonName,
+                  hint: s.clientsEnterContactPersonName,
                   icon: Icons.contact_phone,
                 ),
                 SizedBox(height: 16.h),
@@ -243,8 +297,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Contact Phone Field
                 _buildTextField(
                   controller: _contactPhoneController,
-                  label: 'هاتف شخص الاتصال',
-                  hint: 'أدخل هاتف شخص الاتصال',
+                  label: s.clientsContactPersonPhone,
+                  hint: s.clientsEnterContactPersonPhone,
                   icon: Icons.phone_android,
                   keyboardType: TextInputType.phone,
                 ),
@@ -253,22 +307,22 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Contact Email Field
                 _buildTextField(
                   controller: _contactEmailController,
-                  label: 'بريد شخص الاتصال',
-                  hint: 'أدخل بريد شخص الاتصال',
+                  label: s.clientsContactPersonEmail,
+                  hint: s.clientsEnterContactPersonEmail,
                   icon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: 24.h),
 
                 // Additional Information Section
-                _buildSectionTitle('معلومات إضافية'),
+                _buildSectionTitle(s.clientsAdditionalInfo),
                 SizedBox(height: 16.h),
 
                 // Status Dropdown
                 _buildDropdown(
-                  label: 'الحالة',
+                  label: s.clientsStatus,
                   value: _selectedStatus,
-                  items: _statuses,
+                  items: [s.clientsActive, s.clientsInactive],
                   onChanged: (value) {
                     setState(() => _selectedStatus = value!);
                   },
@@ -278,8 +332,8 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 // Notes Field
                 _buildTextField(
                   controller: _notesController,
-                  label: 'ملاحظات',
-                  hint: 'أدخل ملاحظات إضافية',
+                  label: s.clientsNotes,
+                  hint: s.clientsEnterNotes,
                   icon: Icons.note,
                   maxLines: 4,
                 ),
@@ -301,6 +355,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
 
   Widget _buildHeader() {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
 
     return Container(
       padding: EdgeInsets.all(16.w),
@@ -318,7 +373,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'تعديل العميل',
+                  s.clientsEdit,
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
@@ -327,7 +382,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  'قم بتعديل بيانات العميل "${widget.client.name}"',
+                  s.clientsEditDesc(widget.client.name),
                   style: TextStyle(
                     fontSize: 14.sp,
                     color: colorScheme.onSurfaceVariant,
@@ -387,7 +442,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
 
   Widget _buildDropdown({
     required String label,
-    required String value,
+    required String? value,
     required List<String> items,
     required ValueChanged<String?> onChanged,
   }) {
@@ -415,7 +470,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
 
   Widget _buildSubmitButton() {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final s = S.of(context);
     return FilledButton(
       onPressed: _isLoading ? null : _submitForm,
       style: FilledButton.styleFrom(
@@ -436,7 +491,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
               ),
             )
           : Text(
-              'حفظ التعديلات',
+              s.clientsSaveChanges,
               style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
             ),
     );
@@ -444,7 +499,7 @@ class _EditClientScreenState extends State<EditClientScreen> {
 
   Widget _buildCancelButton() {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final s = S.of(context);
     return OutlinedButton(
       onPressed: _isLoading ? null : () => Navigator.pop(context),
       style: OutlinedButton.styleFrom(
@@ -456,13 +511,14 @@ class _EditClientScreenState extends State<EditClientScreen> {
         ),
       ),
       child: Text(
-        'إلغاء',
+        s.clientsCancel,
         style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
       ),
     );
   }
 
   void _submitForm() {
+    final s = S.of(context);
     if (_formKey.currentState!.validate()) {
       try {
         context.read<ClientsCubit>().updateClient(
@@ -496,16 +552,17 @@ class _EditClientScreenState extends State<EditClientScreen> {
           notes: _notesController.text.trim().isEmpty
               ? null
               : _notesController.text.trim(),
-          status: _selectedStatus == 'نشط' ? 'active' : 'inactive',
+          status: _selectedStatus == s.clientsActive ? 'active' : 'inactive',
         );
       } catch (e) {
-        _showErrorSnackBar('حدث خطأ أثناء تحديث العميل: $e');
+        _showErrorSnackBar(s.clientsErrorUpdatingClient(e.toString()));
       }
     }
   }
 
   void _showErrorSnackBar(String error) {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -519,10 +576,11 @@ class _EditClientScreenState extends State<EditClientScreen> {
 
   void _showSuccessSnackBar() {
     final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('تم تحديث العميل بنجاح'),
+        content: Text(s.clientsClientUpdatedSuccess),
         backgroundColor: colorScheme.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),

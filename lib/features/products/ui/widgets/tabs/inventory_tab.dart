@@ -46,7 +46,7 @@ class InventoryTab extends StatelessWidget {
                     child: CustomTextField(
                       controller: quantityController,
                       label: s.quantity,
-                      hint: 'Enter quantity',
+                      hint: s.productsEnterQuantity,
                       icon: Icons.numbers_outlined,
                       keyboardType: TextInputType.number,
                       isRequired: true,
@@ -58,7 +58,7 @@ class InventoryTab extends StatelessWidget {
                     child: CustomTextField(
                       controller: unitController,
                       label: s.unit,
-                      hint: 'piece, kg, meter...',
+                      hint: s.productsUnitHint,
                       icon: Icons.straighten_outlined,
                     ),
                   ),
@@ -73,11 +73,29 @@ class InventoryTab extends StatelessWidget {
             title: s.productDetails,
             icon: Icons.info_outlined,
             children: [
-              CustomTextField(
-                controller: skuController,
-                label: s.productSku,
-                hint: 'Enter product SKU',
-                icon: Icons.qr_code_outlined,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      controller: skuController,
+                      label: s.productSku,
+                      hint: s.productsEnterProductSku,
+                      icon: Icons.qr_code_outlined,
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  // generate SKU button
+                  IconButton(
+                    onPressed: () {
+                      // generate uuid
+                      final uuid = Uuid().v4();
+                      skuController.text = uuid;
+                    },
+                    icon: Icon(Icons.qr_code_scanner, size: 45.sp),
+                  ),
+                ],
               ),
               SizedBox(height: 16.h),
               // SKU and Barcode Row
@@ -86,15 +104,15 @@ class InventoryTab extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: IgnorePointer(
-                      ignoring: true,
-                      child: CustomTextField(
-                        controller: barcodeController,
-                        label: s.barcode,
-                        hint: 'Enter barcode',
-                        icon: Icons.barcode_reader,
+                      child: IgnorePointer(
+                        ignoring: true,
+                        child: CustomTextField(
+                          controller: barcodeController,
+                          label: s.barcode,
+                          hint: s.productsEnterBarcode,
+                          icon: Icons.barcode_reader,
+                        ),
                       ),
-                    ),
                   ),
                   SizedBox(width: 12.w),
                   // generate barcode button

@@ -94,14 +94,14 @@ class DashboardData {
   });
 
   factory DashboardData.fromJson(Map<String, dynamic> json) {
-    double _toDouble(dynamic v) {
+    double toDouble(dynamic v) {
       if (v == null) return 0.0;
       if (v is num) return v.toDouble();
       if (v is String) return double.tryParse(v) ?? 0.0;
       return 0.0;
     }
 
-    int _toInt(dynamic v) {
+    int toInt(dynamic v) {
       if (v == null) return 0;
       if (v is num) return v.toInt();
       if (v is String) return int.tryParse(v.split('.').first) ?? 0;
@@ -109,22 +109,22 @@ class DashboardData {
     }
 
     final data = DashboardData(
-      taxInvoicesCount: _toInt(json['tax_invoices_count']),
+      taxInvoicesCount: toInt(json['tax_invoices_count']),
       taxInvoicesTotal: (json['tax_invoices_total'] ?? '').toString(),
-      invoicesCount: _toInt(json['invoices_count']),
-      newInvoicesCount: _toInt(json['new_invoices_count']),
-      returnedInvoicesCount: _toInt(json['returned_invoices_count']),
-      returnedInvoicesTotal: _toInt(json['returned_invoices_total']),
+      invoicesCount: toInt(json['invoices_count']),
+      newInvoicesCount: toInt(json['new_invoices_count']),
+      returnedInvoicesCount: toInt(json['returned_invoices_count']),
+      returnedInvoicesTotal: toInt(json['returned_invoices_total']),
       expensesTotal: (json['expenses_total'] ?? '').toString(),
-      monthlyExpensesTotal: _toDouble(json['monthly_expenses_total']),
-      customersCount: _toInt(json['customers_count']),
-      newCustomersCount: _toInt(json['new_customers_count']),
-      productsCount: _toInt(json['products_count']),
-      newProductsCount: _toInt(json['new_products_count']),
+      monthlyExpensesTotal: toDouble(json['monthly_expenses_total']),
+      customersCount: toInt(json['customers_count']),
+      newCustomersCount: toInt(json['new_customers_count']),
+      productsCount: toInt(json['products_count']),
+      newProductsCount: toInt(json['new_products_count']),
       salesTotal: (json['sales_total'] ?? '').toString(),
-      salesGrowthPercentage: _toDouble(json['sales_growth_percentage']),
-      netProfit: _toDouble(json['net_profit']),
-      profitGrowthPercentage: _toDouble(json['profit_growth_percentage']),
+      salesGrowthPercentage: toDouble(json['sales_growth_percentage']),
+      netProfit: toDouble(json['net_profit']),
+      profitGrowthPercentage: toDouble(json['profit_growth_percentage']),
       topProducts: ((json['top_products'] as List?) ?? const [])
           .map((e) => TopProduct.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -135,18 +135,18 @@ class DashboardData {
           .map((e) => e.toString())
           .toList(),
       monthlySalesData: ((json['monthly_sales_data'] as List?) ?? const [])
-          .map(_toDouble)
+          .map(toDouble)
           .toList(),
       monthlyInvoicesData: ((json['monthly_invoices_data'] as List?) ?? const [])
-          .map(_toDouble)
+          .map(toDouble)
           .toList(),
       monthlyTaxInvoicesData:
           ((json['monthly_tax_invoices_data'] as List?) ?? const [])
-              .map(_toDouble)
+              .map(toDouble)
               .toList(),
       monthlyReturnedInvoicesData:
           ((json['monthly_returned_invoices_data'] as List?) ?? const [])
-              .map(_toDouble)
+              .map(toDouble)
               .toList(),
     );
     return data;

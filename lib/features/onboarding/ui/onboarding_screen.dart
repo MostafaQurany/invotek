@@ -24,9 +24,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       child: BlocConsumer<OnboardingCubit, OnboardingState>(
         listener: (context, state) {
           if (state.isCompleted) {
+            // بعد إكمال onboarding، الانتقال دائماً إلى Login
             Navigator.pushNamedAndRemoveUntil(
               context,
-              AppRoutes.homeRoute,
+              AppRoutes.authRoute,
               (route) => false,
             );
           }

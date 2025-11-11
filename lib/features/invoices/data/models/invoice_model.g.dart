@@ -28,7 +28,7 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
   createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,
   companyId: (json['company_id'] as num?)?.toInt(),
-  customerId: (json['customer_id'] as num?)?.toInt(),
+  customerId: InvoiceModel._customerIdFromJson(json['customer_id']),
   items: (json['items'] as List<dynamic>?)
       ?.map((e) => InvoiceItem.fromJson(e as Map<String, dynamic>))
       .toList(),

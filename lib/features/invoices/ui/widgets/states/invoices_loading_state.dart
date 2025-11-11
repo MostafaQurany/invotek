@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class InvoicesLoadingState extends StatelessWidget {
   const InvoicesLoadingState({super.key});
@@ -23,7 +24,7 @@ class InvoicesLoadingState extends StatelessWidget {
 
             // Loading Text
             Text(
-              'Loading invoices...',
+              S.of(context).invoicesLoadingInvoices,
               style: TextStyle(
                 fontSize: 16.sp,
                 color: AppColors.textSecondary,

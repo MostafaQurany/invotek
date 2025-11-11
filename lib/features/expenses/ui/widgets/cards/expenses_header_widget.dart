@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ExpensesHeaderWidget extends StatefulWidget {
-  final VoidCallback onMenuPressed;
   final TextEditingController searchController;
   final Function(String) onSearchChanged;
   final String selectedStatus;
@@ -23,7 +24,6 @@ class ExpensesHeaderWidget extends StatefulWidget {
 
   const ExpensesHeaderWidget({
     super.key,
-    required this.onMenuPressed,
     required this.searchController,
     required this.onSearchChanged,
     required this.selectedStatus,
@@ -110,24 +110,17 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Row(
         children: [
-          // Menu Button
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: IconButton(
-              onPressed: widget.onMenuPressed,
+          if (ZoomDrawer.of(context) == null)
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: Icon(
-                Icons.menu_rounded,
+                Icons.arrow_back_ios_new_rounded,
                 color: AppColors.white,
-                size: 24.sp,
+                size: 26.sp,
               ),
-              padding: EdgeInsets.all(8.w),
             ),
-          ),
-          SizedBox(width: 16.w),
-
           // Title
           Expanded(
             child: Column(
@@ -143,7 +136,7 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  'Manage expenses and budgets',
+                  S.of(context).manageExpensesAndBudgets,
                   style: TextStyle(
                     color: AppColors.white.withOpacity(0.8),
                     fontSize: 14.sp,
@@ -153,22 +146,8 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: IconButton(
-              onPressed: () {
-                ExpensesCubit.get(context).loadFirstPage(refresh: true);
-                ExpenseCategoriesCubit.get(
-                  context,
-                ).loadFirstPage(refresh: true);
-              },
-              icon: Icon(Icons.refresh, color: AppColors.white, size: 24.sp),
-              padding: EdgeInsets.all(8.w),
-            ),
-          ),
+          if (ZoomDrawer.of(context) != null)
+            CommonMenuButton(color: AppColors.white),
         ],
       ),
     );
@@ -179,6 +158,23 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       child: Row(
         children: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(12.r),
+            ),
+            child: IconButton(
+              onPressed: () {
+                ExpensesCubit.get(context).loadFirstPage(refresh: true);
+                ExpenseCategoriesCubit.get(
+                  context,
+                ).loadFirstPage(refresh: true);
+              },
+              icon: Icon(Icons.refresh, color: AppColors.primary, size: 20.sp),
+            ),
+          ),
+          SizedBox(width: 8.w),
+
           // Search Bar
           Expanded(
             child: CommonSearchBarExtensions.expensesSearch(
@@ -260,21 +256,21 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
               Expanded(
                 child: _buildFilterDropdown(
                   value: widget.selectedSortBy ?? 'created_at',
-                  items: const [
-                    DropdownMenuItem(value: 'title', child: Text('Title')),
-                    DropdownMenuItem(value: 'amount', child: Text('Amount')),
+                  items: [
+                    DropdownMenuItem(value: 'title', child: Text(S.of(context).expensesSortByTitle)),
+                    DropdownMenuItem(value: 'amount', child: Text(S.of(context).expensesSortByAmount)),
                     DropdownMenuItem(
                       value: 'created_at',
-                      child: Text('Created At'),
+                      child: Text(S.of(context).expensesSortByCreatedAt),
                     ),
                     DropdownMenuItem(
                       value: 'updated_at',
-                      child: Text('Updated At'),
+                      child: Text(S.of(context).expensesSortByUpdatedAt),
                     ),
-                    DropdownMenuItem(value: 'date', child: Text('Date')),
+                    DropdownMenuItem(value: 'date', child: Text(S.of(context).expensesSortByDate)),
                   ],
                   onChanged: widget.onSortByChanged!,
-                  hint: 'Sort by',
+                  hint: S.of(context).expensesSortBy,
                 ),
               ),
 
@@ -285,12 +281,12 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
               Expanded(
                 child: _buildFilterDropdown(
                   value: widget.selectedSortOrder ?? 'desc',
-                  items: const [
-                    DropdownMenuItem(value: 'asc', child: Text('ASC')),
-                    DropdownMenuItem(value: 'desc', child: Text('DESC')),
+                  items: [
+                    DropdownMenuItem(value: 'asc', child: Text(S.of(context).expensesSortOrderAsc)),
+                    DropdownMenuItem(value: 'desc', child: Text(S.of(context).expensesSortOrderDesc)),
                   ],
                   onChanged: widget.onSortOrderChanged!,
-                  hint: 'Order',
+                  hint: S.of(context).expensesOrder,
                 ),
               ),
           ],
@@ -303,10 +299,11 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
     return state.whenOrNull(
           loaded: (categories, selectedCategory, currentPage, totalPages) {
             // Create dropdown items from categories
+            final s = S.of(context);
             final List<DropdownMenuItem<String>> categoryItems = [
-              const DropdownMenuItem(
+              DropdownMenuItem(
                 value: 'all_category',
-                child: Text('All Categories'),
+                child: Text(s.expensesAllCategories),
               ),
               ...categories.map(
                 (category) => DropdownMenuItem(
@@ -327,10 +324,10 @@ class _ExpensesHeaderWidgetState extends State<ExpensesHeaderWidget>
         // Fallback when categories are not loaded yet
         _buildFilterDropdown(
           value: widget.selectedCategory,
-          items: const [
+          items: [
             DropdownMenuItem(
               value: 'all_category',
-              child: Text('All Categories'),
+              child: Text(S.of(context).expensesAllCategories),
             ),
           ],
           onChanged: widget.onCategoryChanged,

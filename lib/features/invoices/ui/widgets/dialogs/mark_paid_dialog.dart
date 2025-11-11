@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -34,7 +35,7 @@ class _MarkPaidDialogState extends State<MarkPaidDialog> {
   }
 
   void _initializeControllers() {
-    _paymentDateController.text = _formatDate(_selectedDate);
+    _paymentDateController.text = DateFormatter.toDisplayFormat(_selectedDate);
     _paymentMethodController.text = _getPaymentMethodText(
       _selectedPaymentMethod,
     );
@@ -86,7 +87,7 @@ class _MarkPaidDialogState extends State<MarkPaidDialog> {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      widget.invoice.invoiceNumber ?? "Invoice Number",
+                      widget.invoice.invoiceNumber ?? S.of(context).invoicesInvoiceNumber,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
@@ -258,13 +259,9 @@ class _MarkPaidDialogState extends State<MarkPaidDialog> {
     if (date != null) {
       setState(() {
         _selectedDate = date;
-        _paymentDateController.text = _formatDate(date);
+        _paymentDateController.text = DateFormatter.toDisplayFormat(date);
       });
     }
-  }
-
-  String _formatDate(DateTime date) {
-    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
   }
 
   String _getPaymentMethodText(String paymentMethod) {

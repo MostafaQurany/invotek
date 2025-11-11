@@ -4,6 +4,8 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/users_and_permissions/constants/users_permissions.dart';
+import 'package:invotek/features/users_and_permissions/utils/user_deletion_helper.dart';
 
 class DeleteUserDialog extends StatelessWidget {
   final User user;
@@ -18,6 +20,8 @@ class DeleteUserDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final canDelete = UserDeletionHelper.canDeleteUser(user);
+    final errorMessage = UserDeletionHelper.getDeletionErrorMessage(user);
 
     return AlertDialog(
       backgroundColor: AppColors.white,
@@ -45,7 +49,7 @@ class DeleteUserDialog extends StatelessWidget {
 
           // Title
           Text(
-            'Delete User',
+            s.usersDeleteUser,
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,
@@ -66,15 +70,15 @@ class DeleteUserDialog extends StatelessWidget {
                 height: 1.5,
               ),
               children: [
-                TextSpan(text: 'Are you sure you want to delete user '),
+                TextSpan(text: '${s.usersAreYouSureYouWantToDeleteUser} '),
                 TextSpan(
-                  text: ' "${user.name ?? 'Unknown User'}" ',
+                  text: ' "${user.name ?? s.usersUnknownUser}" ',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                TextSpan(text: '? This action cannot be undone.'),
+                TextSpan(text: '? ${s.usersThisActionCannotBeUndone}'),
               ],
             ),
           ),
@@ -110,31 +114,56 @@ class DeleteUserDialog extends StatelessWidget {
 
               // Delete Button
               Expanded(
-                child: ModulePermissionWidget(
-                  module: 'users',
-                  action: 'delete',
-                  fallback: const SizedBox.shrink(),
-                  child: FilledButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      onConfirm();
-                    },
-                    style: FilledButton.styleFrom(
-                      backgroundColor: AppColors.error,
-                      foregroundColor: AppColors.white,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
+                child: Builder(
+                  builder: (context) {
+                    final hasDeletePermission = PermissionChecker.hasPermission(
+                      context,
+                      UsersPermissions.delete,
+                    );
+                    final isEnabled = hasDeletePermission && canDelete;
+                    
+                    String tooltipMessage;
+                    if (!isEnabled) {
+                      if (errorMessage != null) {
+                        tooltipMessage = errorMessage == 'usersCannotDeleteYourselfMessage'
+                            ? s.usersCannotDeleteYourselfMessage
+                            : s.usersCannotDeleteAdminMessage;
+                      } else {
+                        tooltipMessage = s.usersNoPermissionToAct;
+                      }
+                    } else {
+                      tooltipMessage = s.delete;
+                    }
+                    
+                    return Tooltip(
+                      message: tooltipMessage,
+                      child: FilledButton(
+                        onPressed: isEnabled
+                            ? () {
+                                Navigator.pop(context);
+                                onConfirm();
+                              }
+                            : null,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: isEnabled
+                              ? AppColors.error
+                              : AppColors.greyDark,
+                          foregroundColor: AppColors.white,
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                        ),
+                        child: Text(
+                          s.delete,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      s.delete,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ],

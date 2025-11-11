@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
 
 class ItemCard extends StatelessWidget {
@@ -70,7 +71,12 @@ class ItemCard extends StatelessWidget {
           Row(
             children: [
               Expanded(child: _buildDetailItem('الكمية', item.quantity)),
-              Expanded(child: _buildDetailItem('السعر', '${item.price} ريال')),
+              Expanded(
+                child: _buildDetailItem(
+                  'السعر',
+                  CurrencyFormatter.formatCurrencyString(item.price, context),
+                ),
+              ),
               Expanded(child: _buildDetailItem('الخصم', '${item.discount}%')),
             ],
           ),
@@ -85,13 +91,16 @@ class ItemCard extends StatelessWidget {
               Expanded(
                 child: _buildDetailItem(
                   'مبلغ الضريبة',
-                  '${item.taxAmount} ريال',
+                  CurrencyFormatter.formatCurrencyString(
+                    item.taxAmount,
+                    context,
+                  ),
                 ),
               ),
               Expanded(
                 child: _buildDetailItem(
                   'المجموع',
-                  '${item.total} ريال',
+                  CurrencyFormatter.formatCurrencyString(item.total, context),
                   isTotal: true,
                 ),
               ),

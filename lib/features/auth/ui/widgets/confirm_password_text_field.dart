@@ -4,6 +4,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_images.dart';
 import 'package:invotek/core/validation/validators.dart';
 import 'package:invotek/features/auth/ui/widgets/auth_text_filed.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ConfirmPasswordTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -45,7 +46,7 @@ class _ConfirmPasswordTextFieldState extends State<ConfirmPasswordTextField> {
     return AuthTextFiled(
       focusNode: focusNode,
       controller: widget.controller,
-      hint: "*************************",
+      hint: S.of(context).authConfirmPasswordHint,
       prefixIcon: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ImageIcon(

@@ -52,7 +52,7 @@ class UserInfoCard extends StatelessWidget {
               ),
               SizedBox(width: 12.w),
               Text(
-                'User Information',
+                s.userInformation,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -67,35 +67,35 @@ class UserInfoCard extends StatelessWidget {
           // User Information Items
           _buildInfoItem(
             label: s.fullName,
-            value: user.name ?? 'Not provided',
+            value: user.name ?? s.notProvided,
             icon: Icons.person,
           ),
           _buildInfoItem(
-            label: 'Email Address',
-            value: user.email ?? 'Not provided',
+            label: s.emailAddress,
+            value: user.email ?? s.notProvided,
             icon: Icons.email_outlined,
             isCopyable: true,
           ),
           _buildInfoItem(
             label: s.phoneNumber,
-            value: user.phone ?? 'Not provided',
+            value: user.phone ?? s.notProvided,
             icon: Icons.phone_outlined,
             isCopyable: true,
           ),
           _buildInfoItem(
-            label: 'User ID',
-            value: user.id?.toString() ?? 'Not available',
+            label: s.userId,
+            value: user.id?.toString() ?? s.notAvailable,
             icon: Icons.fingerprint,
             isCopyable: true,
           ),
           _buildInfoItem(
-            label: 'Department',
-            value: 'Not assigned',
+            label: s.department,
+            value: s.notAssigned,
             icon: Icons.business_outlined,
           ),
           _buildInfoItem(
-            label: 'Notes',
-            value: 'No notes available',
+            label: s.notes,
+            value: s.noNotesAvailable,
             icon: Icons.note_outlined,
             isMultiline: true,
           ),
@@ -160,19 +160,26 @@ class UserInfoCard extends StatelessWidget {
           ),
 
           // Copy Button
-          if (isCopyable && value != 'Not provided' && value != 'Not available')
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.primary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: IconButton(
-                onPressed: () => onCopyToClipboard(value),
-                icon: Icon(Icons.copy, size: 16.sp, color: AppColors.primary),
-                padding: EdgeInsets.all(4.w),
-                constraints: BoxConstraints(minWidth: 32.w, minHeight: 32.w),
-              ),
-            ),
+          Builder(
+            builder: (context) {
+              final s = S.of(context);
+              if (isCopyable && value != s.notProvided && value != s.notAvailable) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: IconButton(
+                    onPressed: () => onCopyToClipboard(value),
+                    icon: Icon(Icons.copy, size: 16.sp, color: AppColors.primary),
+                    padding: EdgeInsets.all(4.w),
+                    constraints: BoxConstraints(minWidth: 32.w, minHeight: 32.w),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -185,20 +186,32 @@ class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
           SizedBox(height: 12.h),
           _buildFinancialRow(
             s.subtotal,
-            '${widget.formController.subtotalController.text} ${context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn}',
+            CurrencyFormatter.formatCurrencyString(
+              widget.formController.subtotalController.text,
+              context,
+            ),
           ),
           _buildFinancialRow(
             s.taxAmount,
-            '${widget.formController.taxAmountController.text} ${context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn}',
+            CurrencyFormatter.formatCurrencyString(
+              widget.formController.taxAmountController.text,
+              context,
+            ),
           ),
           _buildFinancialRow(
             s.discount,
-            '${widget.formController.discountController.text} ${context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn}${context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn}',
+            CurrencyFormatter.formatCurrencyString(
+              widget.formController.discountController.text,
+              context,
+            ),
           ),
           const Divider(),
           _buildFinancialRow(
             s.totalAmount,
-            '${widget.formController.totalController.text} ${context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn}',
+            CurrencyFormatter.formatCurrencyString(
+              widget.formController.totalController.text,
+              context,
+            ),
             isTotal: true,
           ),
         ],
@@ -263,7 +276,10 @@ class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
           ),
           Expanded(
             child: Text(
-              '${item.total} ${context.read<LocalizationCubit>().getCurrentLanguage() == 'ar' ? AppCurrency.currencyAr : AppCurrency.currencyEn}',
+              CurrencyFormatter.formatCurrencyString(
+                item.total,
+                context,
+              ),
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,

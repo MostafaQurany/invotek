@@ -47,7 +47,7 @@ class UserSummaryCard extends StatelessWidget {
               ),
               SizedBox(width: 12.w),
               Text(
-                'User Summary',
+                s.userSummary,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class UserSummaryCard extends StatelessWidget {
               Expanded(
                 child: _buildSummaryItem(
                   title: s.status,
-                  value: user.status ?? 'Unknown',
+                  value: user.status ?? s.unknown,
                   icon: Icons.circle,
                   color: _getStatusColor(user.status ?? ''),
                 ),
@@ -77,7 +77,7 @@ class UserSummaryCard extends StatelessWidget {
               Expanded(
                 child: _buildSummaryItem(
                   title: s.role,
-                  value: user.role ?? 'Unknown',
+                  value: user.role ?? s.unknown,
                   icon: Icons.work_outline,
                   color: AppColors.primary,
                 ),
@@ -93,7 +93,7 @@ class UserSummaryCard extends StatelessWidget {
               Expanded(
                 child: _buildSummaryItem(
                   title: s.createdDate,
-                  value: user.createdAt ?? 'Unknown',
+                  value: user.createdAt ?? s.unknown,
                   icon: Icons.calendar_today_outlined,
                   color: AppColors.info,
                 ),
@@ -103,8 +103,8 @@ class UserSummaryCard extends StatelessWidget {
               // Last Login
               Expanded(
                 child: _buildSummaryItem(
-                  title: 'Last Login',
-                  value: 'Never',
+                  title: s.lastLogin,
+                  value: s.never,
                   icon: Icons.login_outlined,
                   color: AppColors.success,
                 ),

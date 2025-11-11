@@ -26,7 +26,12 @@ class CustomerFormBottomButtons extends StatelessWidget {
     final s = S.of(context);
 
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.only(
+        left: 16.w,
+        right: 16.w,
+        top: 16.w,
+        bottom: 16.w + MediaQuery.of(context).padding.bottom,
+      ),
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: [

@@ -11,6 +11,7 @@ import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_sum
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_info_card.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_details_bottom_actions.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/dialogs/delete_user_dialog.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UserDetailsScreen extends StatefulWidget {
   final User user;
@@ -73,6 +74,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         child: UserDetailsBottomActions(
           onDelete: () => _showDeleteConfirmation(),
           onEdit: () => _editUser(),
+          user: widget.user,
         ),
       ),
     );
@@ -83,7 +85,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Copied to clipboard'),
+        content: Text(S.of(context).usersCopiedToClipboard),
         backgroundColor: AppColors.success,
       ),
     );

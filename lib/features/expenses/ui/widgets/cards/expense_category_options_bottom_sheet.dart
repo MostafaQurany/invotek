@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpenseCategoryOptionsBottomSheet extends StatelessWidget {
   final ExpenseCategoryModel category;
@@ -80,7 +81,7 @@ class ExpenseCategoryOptionsBottomSheet extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        'Status: ${category.status.toUpperCase()}',
+                        '${S.of(context).expensesStatusLabel}: ${category.status.toUpperCase()}',
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.textSecondary,
@@ -96,23 +97,30 @@ class ExpenseCategoryOptionsBottomSheet extends StatelessWidget {
           SizedBox(height: 24.h),
 
           // Options
-          _buildOptionItem(
-            icon: Icons.visibility,
-            title: 'View Details',
-            onTap: onView,
-          ),
-
-          _buildOptionItem(
-            icon: Icons.edit,
-            title: 'Edit Category',
-            onTap: onEdit,
-          ),
-
-          _buildOptionItem(
-            icon: Icons.delete,
-            title: 'Delete Category',
-            onTap: onDelete,
-            isDestructive: true,
+          Builder(
+            builder: (context) {
+              final s = S.of(context);
+              return Column(
+                children: [
+                  _buildOptionItem(
+                    icon: Icons.visibility,
+                    title: s.expensesViewDetails,
+                    onTap: onView,
+                  ),
+                  _buildOptionItem(
+                    icon: Icons.edit,
+                    title: s.expensesEditCategory,
+                    onTap: onEdit,
+                  ),
+                  _buildOptionItem(
+                    icon: Icons.delete,
+                    title: s.expensesDeleteCategory,
+                    onTap: onDelete,
+                    isDestructive: true,
+                  ),
+                ],
+              );
+            },
           ),
 
           SizedBox(height: 20.h),

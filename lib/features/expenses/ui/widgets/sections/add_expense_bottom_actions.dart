@@ -18,7 +18,12 @@ class AddExpenseBottomActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.w),
+      padding: EdgeInsets.only(
+        left: 20.w,
+        right: 20.w,
+        top: 20.w,
+        bottom: 20.w + MediaQuery.of(context).padding.bottom,
+      ),
       decoration: BoxDecoration(
         color: AppColors.white,
         boxShadow: [

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class DeleteAllCategoriesScreen extends StatefulWidget {
   const DeleteAllCategoriesScreen({super.key});
@@ -30,10 +31,11 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
   }
 
   Future<void> _deleteAllCategories() async {
+    final s = S.of(context);
     if (_categories.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('No categories to delete'),
+          content: Text(s.expensesNoCategoriesToDelete),
           backgroundColor: AppColors.primary,
         ),
       );
@@ -64,7 +66,7 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('All categories deleted successfully'),
+        content: Text(s.expensesAllCategoriesDeletedSuccessfully),
         backgroundColor: AppColors.primary,
       ),
     );
@@ -72,9 +74,10 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delete All Categories'),
+        title: Text(s.expensesDeleteAllCategories),
         backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
       ),
@@ -84,7 +87,7 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Current Categories (${_categories.length})',
+              '${s.expensesCurrentCategories} (${_categories.length})',
               style: TextStyle(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
@@ -106,7 +109,7 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
                   ),
                 ),
                 child: Text(
-                  'No categories found. You can now start creating new ones!',
+                  s.expensesNoCategoriesFoundMessage,
                   style: TextStyle(
                     fontSize: 16.sp,
                     color: AppColors.textSecondary,
@@ -159,7 +162,7 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'Status: ${category.status}',
+                                  '${s.expensesStatusLabel}: ${category.status}',
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                     color: AppColors.textSecondary,
@@ -207,13 +210,13 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
                           ),
                           SizedBox(width: 12.w),
                           Text(
-                            'Deleting...',
+                            s.expensesDeleting,
                             style: TextStyle(fontSize: 16.sp),
                           ),
                         ],
                       )
                     : Text(
-                        'Delete All Categories (${_categories.length})',
+                        '${s.expensesDeleteAllCategoriesCount} (${_categories.length})',
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -235,7 +238,7 @@ class _DeleteAllCategoriesScreenState extends State<DeleteAllCategoriesScreen> {
                   ),
                 ),
                 child: Text(
-                  'Cancel',
+                  s.cancel,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,

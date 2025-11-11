@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/users_and_permissions/utils/user_deletion_helper.dart';
 
 class UserListItemWidget extends StatelessWidget {
   final User user;
@@ -19,6 +21,7 @@ class UserListItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Card(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
       elevation: 2,
@@ -53,7 +56,7 @@ class UserListItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.name ?? 'بدون اسم',
+                      user.name ?? s.usersNoName,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
@@ -62,7 +65,7 @@ class UserListItemWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      user.email ?? 'بدون بريد إلكتروني',
+                      user.email ?? s.usersNoEmail,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: Colors.grey[600],
@@ -81,10 +84,10 @@ class UserListItemWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Text(
-                            user.role ?? 'بدون دور',
+                            user.role != null ? _getLocalizedRole(context, user.role!) : s.usersNoRole,
                             style: TextStyle(
                               fontSize: 12.sp,
-                              color: _getRoleColor(user.role ?? 'مستخدم'),
+                              color: _getRoleColor(user.role),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -102,10 +105,10 @@ class UserListItemWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.r),
                           ),
                           child: Text(
-                            user.status ?? 'غير محدد',
+                            user.status != null ? _getLocalizedStatus(context, user.status!) : s.usersUndefined,
                             style: TextStyle(
                               fontSize: 12.sp,
-                              color: _getStatusColor(user.status ?? ''),
+                              color: _getStatusColor(user.status),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -130,7 +133,7 @@ class UserListItemWidget extends StatelessWidget {
                         ),
                         onPressed: onEdit,
                       ),
-                    if (onDelete != null && user.role != 'admin')
+                    if (onDelete != null && UserDeletionHelper.canDeleteUser(user))
                       IconButton(
                         icon: Icon(
                           Icons.delete,
@@ -150,29 +153,55 @@ class UserListItemWidget extends StatelessWidget {
 
   Color _getRoleColor(String? role) {
     if (role == null) return Colors.grey;
-    switch (role.toLowerCase()) {
-      case 'مدير':
-        return Colors.purple;
-      case 'محاسب':
-        return Colors.blue;
-      case 'مشرف':
-        return Colors.orange;
-      case 'مستخدم':
-        return Colors.green;
-      default:
-        return Colors.grey;
+    final roleLower = role.toLowerCase();
+    // Handle both Arabic and English role names
+    if (roleLower == 'مدير' || roleLower == 'admin') {
+      return Colors.purple;
+    } else if (roleLower == 'محاسب' || roleLower == 'accountant') {
+      return Colors.blue;
+    } else if (roleLower == 'مشرف' || roleLower == 'supervisor') {
+      return Colors.orange;
+    } else if (roleLower == 'مستخدم' || roleLower == 'user') {
+      return Colors.green;
     }
+    return Colors.grey;
   }
 
   Color _getStatusColor(String? status) {
     if (status == null) return Colors.grey;
-    switch (status.toLowerCase()) {
-      case 'نشط':
-        return Colors.green;
-      case 'غير نشط':
-        return Colors.red;
-      default:
-        return Colors.grey;
+    final statusLower = status.toLowerCase();
+    // Handle both Arabic and English status names
+    if (statusLower == 'نشط' || statusLower == 'active') {
+      return Colors.green;
+    } else if (statusLower == 'غير نشط' || statusLower == 'inactive') {
+      return Colors.red;
     }
+    return Colors.grey;
+  }
+
+  String _getLocalizedRole(BuildContext context, String role) {
+    final s = S.of(context);
+    final roleLower = role.toLowerCase();
+    if (roleLower == 'مدير' || roleLower == 'admin') {
+      return s.usersRoleAdmin;
+    } else if (roleLower == 'محاسب' || roleLower == 'accountant') {
+      return s.usersRoleAccountant;
+    } else if (roleLower == 'مشرف' || roleLower == 'supervisor') {
+      return s.usersRoleSupervisor;
+    } else if (roleLower == 'مستخدم' || roleLower == 'user') {
+      return s.usersRoleUser;
+    }
+    return role;
+  }
+
+  String _getLocalizedStatus(BuildContext context, String status) {
+    final s = S.of(context);
+    final statusLower = status.toLowerCase();
+    if (statusLower == 'نشط' || statusLower == 'active') {
+      return s.usersStatusActive;
+    } else if (statusLower == 'غير نشط' || statusLower == 'inactive') {
+      return s.usersStatusInactive;
+    }
+    return status;
   }
 }

@@ -17,6 +17,7 @@ class InvoicesErrorState extends StatelessWidget {
           padding: EdgeInsets.all(32.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Error Icon
               Container(
@@ -43,6 +44,7 @@ class InvoicesErrorState extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
                 ),
+                textAlign: TextAlign.center,
               ),
 
               SizedBox(height: 12.h),

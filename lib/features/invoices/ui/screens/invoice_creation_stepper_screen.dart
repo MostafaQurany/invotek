@@ -13,6 +13,9 @@ import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_summary_ste
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
 
 class InvoiceCreationStepperScreen extends StatefulWidget {
   const InvoiceCreationStepperScreen({super.key});
@@ -28,6 +31,7 @@ class _InvoiceCreationStepperScreenState
   late TabController _tabController;
   int _currentTabIndex = 0;
   final Map<String, String> _validationErrors = {};
+  List<bool> _completedTabs = [false, false, false, false];
 
   late InvoiceFormController _formController;
   late InvoicesCubit _cubit;
@@ -56,28 +60,84 @@ class _InvoiceCreationStepperScreenState
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final hasCreatePermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.create,
+    );
 
-    return Scaffold(
-      backgroundColor: AppColors.whiteGray,
-      appBar: AppBar(
-        title: Text(s.createNewInvoiceStepper),
-        backgroundColor: AppColors.white,
-        foregroundColor: AppColors.textPrimary,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
-            onPressed: () => _showHelpDialog(),
+    if (!hasCreatePermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.invoicesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.invoicesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
           ),
-          SizedBox(width: 8.w),
-        ],
-      ),
-      body: BlocListener<InvoicesCubit, InvoicesState>(
+        ),
+      );
+    }
+
+    return BlocBuilder<TaxIntegrationCubit, TaxIntegrationState>(
+      builder: (context, taxState) {
+        // التحقق من التكامل الضريبي
+        if (taxState is TaxIntegrationLoaded) {
+          if (!taxState.status.taxIntegrationActive) {
+            return _buildTaxIntegrationRequiredWidget(s);
+          }
+        }
+        
+        return Scaffold(
+          backgroundColor: AppColors.whiteGray,
+          appBar: AppBar(
+            title: Text(s.createNewInvoiceStepper),
+            backgroundColor: AppColors.white,
+            foregroundColor: AppColors.textPrimary,
+            elevation: 0,
+            scrolledUnderElevation: 1,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+              onPressed: () => Navigator.pop(context),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
+                onPressed: () => _showHelpDialog(),
+              ),
+              SizedBox(width: 8.w),
+            ],
+          ),
+          body: BlocListener<InvoicesCubit, InvoicesState>(
         bloc: _cubit,
         listener: (context, state) {
           state.maybeWhen(
@@ -111,24 +171,7 @@ class _InvoiceCreationStepperScreenState
             // Tab Bar
             Container(
               color: AppColors.white,
-              child: IgnorePointer(
-                child: TabBar(
-                  controller: _tabController,
-                  indicatorColor: AppColors.primary,
-                  labelColor: AppColors.primary,
-                  unselectedLabelColor: AppColors.greyDark,
-                  labelStyle: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14.sp,
-                  ),
-                  tabs: [
-                    Tab(text: s.invoiceBasicInfo),
-                    Tab(text: s.selectCustomer),
-                    Tab(text: s.invoiceItems),
-                    Tab(text: s.reviewCalculations),
-                  ],
-                ),
-              ),
+              child: _buildTabs(s),
             ),
 
             // Form Content
@@ -145,79 +188,164 @@ class _InvoiceCreationStepperScreenState
               ),
             ),
 
-            // Bottom Action Buttons
-            Container(
-              padding: EdgeInsets.all(16.w),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, -2),
+            // Bottom Action Buttons (rebuild on form changes)
+            AnimatedBuilder(
+              animation: _formController,
+              builder: (context, _) {
+                return Container(
+                  padding: EdgeInsets.only(
+                    left: 16.w,
+                    right: 16.w,
+                    top: 16.w,
+                    bottom: 16.w + MediaQuery.of(context).padding.bottom,
                   ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  // Cancel/Previous Button
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: _currentTabIndex == 0
-                          ? () => Navigator.pop(context)
-                          : () => _goToPreviousTab(),
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        side: BorderSide(
-                          color: AppColors.grey.withOpacity(0.3),
-                        ),
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, -2),
                       ),
-                      child: Text(
-                        _currentTabIndex == 0 ? s.cancel : s.previous,
-                        style: TextStyle(
-                          color: AppColors.greyDark,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
+                    ],
                   ),
-                  SizedBox(width: 12.w),
-                  // Next/Save Button
-                  Expanded(
-                    flex: 2,
-                    child: FilledButton(
-                      onPressed: _currentTabIndex == 3
-                          ? _handleSubmit
-                          : () => _goToNextTab(),
-                      style: FilledButton.styleFrom(
-                        backgroundColor: _isCurrentTabValid()
-                            ? AppColors.primary
-                            : AppColors.grey.withOpacity(0.3),
-                        foregroundColor: _isCurrentTabValid()
-                            ? AppColors.white
-                            : AppColors.greyDark,
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
+                  child: Row(
+                    children: [
+                      // Cancel/Previous Button
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: _currentTabIndex == 0
+                              ? () => Navigator.pop(context)
+                              : () => _goToPreviousTab(),
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                            side: BorderSide(
+                              color: AppColors.grey.withOpacity(0.3),
+                            ),
+                          ),
+                          child: Text(
+                            _currentTabIndex == 0 ? s.cancel : s.previous,
+                            style: TextStyle(
+                              color: AppColors.greyDark,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
-                      child: Text(
-                        _currentTabIndex == 3 ? s.createInvoice : s.next,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
+                      SizedBox(width: 12.w),
+                      // Next/Save Button
+                      Expanded(
+                        flex: 2,
+                        child: FilledButton(
+                          onPressed: _currentTabIndex == 3
+                              ? _handleSubmit
+                              : () => _goToNextTab(),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: _isCurrentTabValid()
+                                ? AppColors.primary
+                                : AppColors.grey.withOpacity(0.3),
+                            foregroundColor: _isCurrentTabValid()
+                                ? AppColors.white
+                                : AppColors.greyDark,
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                          child: Text(
+                            _currentTabIndex == 3 ? s.createInvoice : s.next,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
           ],
+        ),
+      ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTaxIntegrationRequiredWidget(S s) {
+    return Scaffold(
+      backgroundColor: AppColors.whiteGray,
+      appBar: AppBar(
+        title: Text(s.createNewInvoiceStepper),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.textPrimary,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  size: 64.sp,
+                  color: AppColors.error,
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  s.taxIntegrationNotActive,
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16.h),
+                Text(
+                  s.taxIntegrationNotActiveMessage,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: AppColors.textSecondary,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 32.h),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, AppRoutes.settingsRoute);
+                  },
+                  icon: Icon(Icons.settings, size: 20.sp),
+                  label: Text(s.goToSettings),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 16.h,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -226,6 +354,9 @@ class _InvoiceCreationStepperScreenState
   void _goToNextTab() {
     if (_currentTabIndex < 3) {
       if (_validateCurrentTab()) {
+        setState(() {
+          _completedTabs[_currentTabIndex] = true;
+        });
         _tabController.animateTo(_currentTabIndex + 1);
       }
     }
@@ -385,6 +516,12 @@ class _InvoiceCreationStepperScreenState
       isValid = false;
     }
 
+    final qtyError = _formController.validateItemQuantities();
+    if (qtyError != null) {
+      _validationErrors['items'] = qtyError;
+      isValid = false;
+    }
+
     return isValid;
   }
 
@@ -442,6 +579,86 @@ class _InvoiceCreationStepperScreenState
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTabs(S s) {
+    final visibleTabs = <Widget>[];
+    
+    for (int i = 0; i < 4; i++) {
+      // إخفاء التبويبات التي تأتي بعد التبويب الحالي
+      if (i > _currentTabIndex) {
+        continue;
+      }
+      
+      final isCurrentTab = i == _currentTabIndex;
+      
+      // تحديد اللون بناءً على الحالة
+      // التبويب الحالي: primary color
+      // التبويبات السابقة: gray color
+      final tabColor = isCurrentTab
+          ? AppColors.primary
+          : AppColors.greyDark;
+      
+      // تحديد النص
+      String tabText;
+      switch (i) {
+        case 0:
+          tabText = s.invoiceBasicInfo;
+          break;
+        case 1:
+          tabText = s.selectCustomer;
+          break;
+        case 2:
+          tabText = s.invoiceItems;
+          break;
+        case 3:
+          tabText = s.reviewCalculations;
+          break;
+        default:
+          tabText = '';
+      }
+      
+      visibleTabs.add(
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              // السماح بالانتقال للتبويبات السابقة فقط
+              if (i < _currentTabIndex) {
+                _tabController.animateTo(i);
+              }
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: isCurrentTab
+                        ? AppColors.primary
+                        : Colors.transparent,
+                    width: 2,
+                  ),
+                ),
+              ),
+              child: Text(
+                tabText,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: tabColor,
+                  fontWeight: isCurrentTab
+                      ? FontWeight.w600
+                      : FontWeight.w500,
+                  fontSize: 14.sp,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    
+    return Row(
+      children: visibleTabs,
     );
   }
 }

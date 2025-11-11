@@ -53,6 +53,8 @@ class MenuItem {
     switch (titleKey) {
       case 'home':
         return s.home;
+      case 'users_permissions':
+        return s.usersPermissionsTitle;
       case 'users_list':
         return s.usersList;
       case 'manage_permissions':
@@ -85,6 +87,8 @@ class MenuItem {
         return s.systemSettings;
       case 'backup':
         return s.backup;
+      case 'credit_invoices':
+        return s.creditInvoicesTitle;
       default:
         return title;
     }
@@ -108,29 +112,29 @@ class MenuData {
         title: 'إدارة المستخدمين والصلاحيات',
         titleKey: 'users_permissions',
         icon: Icons.people,
-        route: AppRoutes.usersPermissionsRoute,
-        hasSubItems: true,
+        route: AppRoutes.usersListRoute,
+        hasSubItems: false,
         isSelected: index == 1,
         permissionKey: 'users.view',
-        subItems: [
-          MenuItem(
-            title: 'قائمة المستخدمين',
-            titleKey: 'users_list',
-            icon: Icons.list,
-            route: AppRoutes.usersListRoute,
-            isSelected: index == 1.1,
-            permissionKey: 'users.view',
-          ),
-
-          MenuItem(
-            title: 'إدارة الصلاحيات',
-            titleKey: 'manage_permissions',
-            icon: Icons.security,
-            route: AppRoutes.managePermissionsRoute,
-            isSelected: index == 1.2,
-            permissionKey: 'roles.view',
-          ),
-        ],
+        // subItems: [
+        //   MenuItem(
+        //     title: 'قائمة المستخدمين',
+        //     titleKey: 'users_list',
+        //     icon: Icons.list,
+        //     route: AppRoutes.usersListRoute,
+        //     isSelected: index == 1.1,
+        //     permissionKey: 'users.view',
+        //   ),
+        //
+        //   MenuItem(
+        //     title: 'إدارة الصلاحيات',
+        //     titleKey: 'manage_permissions',
+        //     icon: Icons.security,
+        //     route: AppRoutes.managePermissionsRoute,
+        //     isSelected: index == 1.2,
+        //     permissionKey: 'roles.view',
+        //   ),
+        // ],
       ),
 
       MenuItem(
@@ -215,18 +219,12 @@ class MenuData {
             permissionKey: 'tax-invoices.view',
           ),
           MenuItem(
-            title: 'الفواتير المرحله',
-            titleKey: 'posted_invoices',
-            icon: Icons.check_circle,
-            route: AppRoutes.postedInvoicesRoute,
-            permissionKey: 'tax-invoices.sent',
-          ),
-          MenuItem(
-            title: 'الفواتير المرتجعة',
-            titleKey: 'returned_invoices',
-            icon: Icons.undo,
-            route: AppRoutes.returnedInvoicesRoute,
-            permissionKey: 'tax-invoices.returned',
+            title: 'الفواتير الآجلة',
+            titleKey: 'credit_invoices',
+            icon: Icons.receipt_long,
+            route: AppRoutes.creditInvoicesListRoute,
+            isSelected: index == 5.2,
+            permissionKey: 'tax-invoices.view',
           ),
         ],
       ),
@@ -236,6 +234,7 @@ class MenuData {
         icon: Icons.settings,
         route: AppRoutes.settingsRoute,
         hasSubItems: false,
+        permissionKey: 'dashboard.settings',
       ),
     ];
   }

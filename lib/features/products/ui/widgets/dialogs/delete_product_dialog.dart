@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/products/constants/products_permissions.dart';
 
 class DeleteProductDialog extends StatelessWidget {
   final ProductModel product;
@@ -15,6 +18,12 @@ class DeleteProductDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      ProductsPermissions.delete,
+    );
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       title: Row(
@@ -22,7 +31,7 @@ class DeleteProductDialog extends StatelessWidget {
           Icon(Icons.warning_outlined, color: AppColors.error, size: 24.sp),
           SizedBox(width: 8.w),
           Text(
-            'Delete Product',
+            s.deleteProduct,
             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
           ),
         ],
@@ -32,7 +41,7 @@ class DeleteProductDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Are you sure you want to delete this product?',
+            s.productsAreYouSureYouWantToDeleteThisProduct,
             style: TextStyle(fontSize: 14.sp),
           ),
           SizedBox(height: 8.h),
@@ -52,7 +61,7 @@ class DeleteProductDialog extends StatelessWidget {
                 SizedBox(width: 8.w),
                 Expanded(
                   child: Text(
-                    product.name ?? 'Unnamed Product',
+                    product.name ?? s.productsUnnamedProduct,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -65,7 +74,7 @@ class DeleteProductDialog extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            'This action cannot be undone.',
+            s.productsThisActionCannotBeUndone,
             style: TextStyle(fontSize: 12.sp, color: AppColors.greyDark),
           ),
         ],
@@ -74,15 +83,17 @@ class DeleteProductDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text(
-            'Cancel',
+            s.cancel,
             style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w500),
           ),
         ),
         FilledButton(
-          onPressed: () {
-            Navigator.pop(context);
-            onConfirm();
-          },
+          onPressed: hasDeletePermission
+              ? () {
+                  Navigator.pop(context);
+                  onConfirm();
+                }
+              : null,
           style: FilledButton.styleFrom(
             backgroundColor: AppColors.error,
             padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
@@ -90,12 +101,17 @@ class DeleteProductDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
             ),
           ),
-          child: Text(
-            'Delete',
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.white,
+          child: Tooltip(
+            message: hasDeletePermission
+                ? s.delete
+                : s.productsNoPermissionToAct,
+            child: Text(
+              s.delete,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.white,
+              ),
             ),
           ),
         ),

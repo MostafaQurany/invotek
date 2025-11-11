@@ -4,10 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
 import 'package:invotek/features/expenses/ui/screens/add_expense_category_screen.dart';
 import 'package:invotek/features/expenses/ui/screens/edit_expense_category_screen.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ExpenseCategoriesListScreen extends StatefulWidget {
@@ -38,10 +41,19 @@ class _ExpenseCategoriesListScreenState
   }
 
   void _navigateToAddCategory() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const AddExpenseCategoryScreen()),
-    );
+    PermissionChecker.hasPermission(
+          context,
+          ExpenseCategoriesPermissions.create,
+        )
+        ? () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddExpenseCategoryScreen(),
+              ),
+            );
+          }
+        : null;
   }
 
   void _navigateToEditCategory(ExpenseCategoryModel category) {
@@ -85,39 +97,71 @@ class _ExpenseCategoriesListScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundLight,
+        appBar: AppBar(
+        elevation: 1,
+        scrolledUnderElevation: 1,
         backgroundColor: AppColors.backgroundLight,
         title: Text(
           S.of(context).expenseCategories,
           style: TextStyle(fontWeight: FontWeight.w600),
         ),
-        leading: Padding(
-          padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
-          child: IconButton(
-            onPressed: () {
-              ZoomDrawer.of(context)?.toggle();
-            },
-            icon: Icon(
-              Icons.menu_rounded,
-              color: AppColors.primary,
-              size: 24.sp,
+        leading: IconButton.filled(
+          style: IconButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
             ),
-            padding: EdgeInsets.all(8.w),
           ),
+          onPressed: _navigateToAddCategory,
+          icon: Icon(Icons.add, color: AppColors.white, size: 18.sp),
         ),
         actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
         actions: [
-          IconButton.filled(
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
+            child: IconButton(
+              onPressed: () {
+                ZoomDrawer.of(context)?.toggle();
+              },
+              icon: Icon(
+                Icons.menu_rounded,
+                color: AppColors.primary,
+                size: 24.sp,
               ),
+              padding: EdgeInsets.all(8.w),
             ),
-            onPressed: _navigateToAddCategory,
-            icon: Icon(Icons.add, color: AppColors.white),
           ),
         ],
       ),
@@ -206,6 +250,7 @@ class _ExpenseCategoriesListScreenState
             );
           },
         ),
+      ),
       ),
     );
   }
@@ -345,20 +390,58 @@ class _ExpenseCategoriesListScreenState
                   color: AppColors.textSecondary,
                 ),
               ),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    onPressed: () => _navigateToEditCategory(category),
-                    icon: Icon(Icons.edit),
-                    color: AppColors.primary,
-                  ),
-                  IconButton(
-                    onPressed: () => _showDeleteConfirmation(category),
-                    icon: Icon(Icons.delete),
-                    color: AppColors.error,
-                  ),
-                ],
+              trailing: Builder(
+                builder: (context) {
+                  final s = S.of(context);
+                  final hasEditPermission = PermissionChecker.hasPermission(
+                    context,
+                    ExpenseCategoriesPermissions.edit,
+                  );
+                  final hasDeletePermission = PermissionChecker.hasPermission(
+                    context,
+                    ExpenseCategoriesPermissions.delete,
+                  );
+
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Tooltip(
+                        message: hasEditPermission
+                            ? ''
+                            : s.expensesNoPermissionToAct,
+                        child: IconButton(
+                          onPressed: hasEditPermission
+                              ? () => _navigateToEditCategory(category)
+                              : null,
+                          icon: Icon(
+                            hasEditPermission ? Icons.edit : Icons.lock_outline,
+                          ),
+                          color: hasEditPermission
+                              ? AppColors.primary
+                              : AppColors.primary.withOpacity(0.5),
+                        ),
+                      ),
+                      Tooltip(
+                        message: hasDeletePermission
+                            ? ''
+                            : s.expensesNoPermissionToAct,
+                        child: IconButton(
+                          onPressed: hasDeletePermission
+                              ? () => _showDeleteConfirmation(category)
+                              : null,
+                          icon: Icon(
+                            hasDeletePermission
+                                ? Icons.delete
+                                : Icons.lock_outline,
+                          ),
+                          color: hasDeletePermission
+                              ? AppColors.error
+                              : AppColors.error.withOpacity(0.5),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           );

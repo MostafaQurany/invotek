@@ -7,6 +7,8 @@ import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/forms/forms.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/customers/constants/customers_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class EditCustomerScreen extends StatefulWidget {
   final CustomerModel customer;
@@ -24,6 +26,56 @@ class _EditCustomerScreenState extends State<EditCustomerScreen> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      CustomersPermissions.edit,
+    );
+
+    if (!hasEditPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Text(s.editCustomer),
+          backgroundColor: colorScheme.surface,
+          foregroundColor: colorScheme.onSurface,
+        ),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  size: 64.sp,
+                  color: colorScheme.error,
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  s.customersNoPermissionToView,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  s.customersNoPermissionToAct,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       backgroundColor: AppColors.whiteGray,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpenseCategoriesEmptyState extends StatelessWidget {
   final VoidCallback onAddCategory;
@@ -9,6 +10,7 @@ class ExpenseCategoriesEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Container(
       decoration: BoxDecoration(
         color: AppColors.backgroundLight,
@@ -42,7 +44,7 @@ class ExpenseCategoriesEmptyState extends StatelessWidget {
       
               // Title
               Text(
-                'No categories yet',
+                s.expensesNoCategoriesYet,
                 style: TextStyle(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w600,
@@ -54,7 +56,7 @@ class ExpenseCategoriesEmptyState extends StatelessWidget {
       
               // Description
               Text(
-                'Create expense categories to organize your business expenses',
+                s.expensesCreateExpenseCategories,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14.sp,
@@ -70,7 +72,7 @@ class ExpenseCategoriesEmptyState extends StatelessWidget {
                 onPressed: onAddCategory,
                 icon: Icon(Icons.add, size: 20.sp),
                 label: Text(
-                  'Add First Category',
+                  s.expensesAddFirstCategory,
                   style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                 ),
                 style: ElevatedButton.styleFrom(

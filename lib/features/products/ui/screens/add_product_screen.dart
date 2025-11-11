@@ -9,6 +9,9 @@ import 'package:invotek/features/products/ui/widgets/forms/custom_text_field.dar
 import 'package:invotek/features/products/ui/widgets/forms/form_section_card.dart';
 import 'package:invotek/features/products/ui/widgets/forms/status_dropdown.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/products/constants/products_permissions.dart';
+import 'package:uuid/uuid.dart';
 
 class AddProductScreen extends StatefulWidget {
   const AddProductScreen({super.key});
@@ -100,6 +103,42 @@ class _AddProductScreenState extends State<AddProductScreen> {
   Widget build(BuildContext context) {
     final s = S.of(context);
 
+    // Check permission for creating products
+    if (!PermissionChecker.hasPermission(context, ProductsPermissions.create)) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(s.addProduct),
+          backgroundColor: AppColors.white,
+          foregroundColor: AppColors.textPrimary,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.lock_outline, size: 64.sp, color: AppColors.error),
+              SizedBox(height: 16.h),
+              Text(
+                s.productsNoPermissionToView,
+                style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                s.productsNoPermissionToAct,
+                style: TextStyle(fontSize: 14.sp, color: AppColors.greyDark),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.whiteGray,
       appBar: AppBar(
@@ -154,7 +193,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 (products, selectedProduct, currentPage, totalPages, error) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(S.of(context).errorOccurredWithMessage(error.message)),
+                      content: Text(
+                        S.of(context).errorOccurredWithMessage(error.message),
+                      ),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -185,7 +226,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           CustomTextField(
                             controller: _nameController,
                             label: s.name,
-                            hint: 'Enter product name',
+                            hint: s.productsEnterProductName,
                             icon: Icons.inventory_2,
                             isRequired: true,
                             errorText: _validationErrors['name'],
@@ -196,7 +237,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           CustomTextField(
                             controller: _descriptionController,
                             label: s.description,
-                            hint: 'Enter product description',
+                            hint: s.productsEnterProductDescription,
                             icon: Icons.description_outlined,
                             maxLines: 3,
                           ),
@@ -243,7 +284,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           CustomTextField(
                             controller: _priceController,
                             label: s.sellingPrice,
-                            hint: 'Enter selling price',
+                            hint: s.productsEnterSellingPrice,
                             icon: Icons.sell_outlined,
                             keyboardType: TextInputType.number,
                             isRequired: true,
@@ -253,14 +294,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           CustomTextField(
                             controller: _costController,
                             label: s.costPrice,
-                            hint: 'Enter cost price',
+                            hint: s.productsEnterCostPrice,
                             icon: Icons.account_balance_wallet_outlined,
                             keyboardType: TextInputType.number,
                           ),
                           SizedBox(height: 16.h),
                           SwitchListTile(
-                            title: Text(s.productIsTaxable),
-                            subtitle: Text(s.applyTaxToProduct),
+                            title: Text(s.productsProductIsTaxable),
+                            subtitle: Text(s.productsApplyTaxToProduct),
                             value: _hasTax,
                             onChanged: (value) {
                               setState(() {
@@ -276,7 +317,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             CustomTextField(
                               controller: _taxRateController,
                               label: s.taxRate,
-                              hint: 'Enter tax rate percentage',
+                              hint: s.productsEnterTaxRatePercentage,
                               icon: Icons.percent_outlined,
                               keyboardType: TextInputType.number,
                             ),
@@ -293,7 +334,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           CustomTextField(
                             controller: _quantityController,
                             label: s.quantity,
-                            hint: 'Enter quantity',
+                            hint: s.productsEnterQuantity,
                             icon: Icons.numbers_outlined,
                             keyboardType: TextInputType.number,
                             isRequired: true,
@@ -303,24 +344,60 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           CustomTextField(
                             controller: _unitController,
                             label: s.unit,
-                            hint: 'Enter unit (e.g., piece)',
+                            hint: s.productsEnterUnit,
                             icon: Icons.straighten_outlined,
                           ),
                           SizedBox(height: 16.h),
 
                           // SKU and Barcode Row
-                          CustomTextField(
-                            controller: _skuController,
-                            label: 'SKU',
-                            hint: 'Enter SKU',
-                            icon: Icons.qr_code_outlined,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: _skuController,
+                                  label: s.sku,
+                                  hint: s.productsEnterSKU,
+                                  icon: Icons.qr_code_outlined,
+                                ),
+                              ),
+                              SizedBox(width: 12.w),
+                              // generate SKU button
+                              IconButton(
+                                onPressed: () {
+                                  // generate uuid
+                                  final uuid = Uuid().v4();
+                                  _skuController.text = uuid;
+                                },
+                                icon: Icon(Icons.qr_code_scanner, size: 45.sp),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 16.h),
-                          CustomTextField(
-                            controller: _barcodeController,
-                            label: 'Barcode',
-                            hint: 'Enter barcode',
-                            icon: Icons.qr_code_2_outlined,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: CustomTextField(
+                                  controller: _barcodeController,
+                                  label: s.barcode,
+                                  hint: s.productsEnterBarcode,
+                                  icon: Icons.qr_code_2_outlined,
+                                ),
+                              ),
+                              SizedBox(width: 12.w),
+                              // generate barcode button
+                              IconButton(
+                                onPressed: () {
+                                  // generate uuid
+                                  final uuid = Uuid().v4();
+                                  _barcodeController.text = uuid;
+                                },
+                                icon: Icon(Icons.qr_code_scanner, size: 45.sp),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -328,7 +405,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
                       // Settings Section
                       FormSectionCard(
-                        title: 'Settings',
+                        title: s.productsSettings,
                         icon: Icons.settings_outlined,
                         children: [
                           Divider(height: 1),
@@ -336,7 +413,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           // Track Inventory Switch
                           SwitchListTile(
                             title: Text(s.trackInventory),
-                            subtitle: Text(s.trackAvailableProductQuantity),
+                            subtitle: Text(
+                              s.productsTrackAvailableProductQuantity,
+                            ),
                             value: _trackInventory,
                             onChanged: (value) {
                               setState(() {
@@ -355,7 +434,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
               // Bottom Action Button
               Container(
-                padding: EdgeInsets.all(16.w),
+                padding: EdgeInsets.only(
+                  left: 16.w,
+                  right: 16.w,
+                  top: 16.w,
+                  bottom: 16.w + MediaQuery.of(context).padding.bottom,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   boxShadow: [
@@ -455,6 +539,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   bool _validateForm() {
+    final s = S.of(context);
     setState(() {
       _validationErrors.clear();
     });
@@ -463,31 +548,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     // Validate name
     if (_nameController.text.trim().isEmpty) {
-      _validationErrors['name'] = 'Product name is required';
+      _validationErrors['name'] = s.productsProductNameRequired;
       isValid = false;
     }
 
     // Validate status
     if (_selectedStatus.isEmpty) {
-      _validationErrors['status'] = 'Product status is required';
+      _validationErrors['status'] = s.productsProductStatusRequired;
       isValid = false;
     }
 
     // Validate price
     if (_priceController.text.trim().isEmpty) {
-      _validationErrors['price'] = 'Selling price is required';
+      _validationErrors['price'] = s.productsSellingPriceRequired;
       isValid = false;
     } else if (double.tryParse(_priceController.text.trim()) == null) {
-      _validationErrors['price'] = 'Please enter a valid price';
+      _validationErrors['price'] = s.productsPleaseEnterValidPrice;
       isValid = false;
     }
 
     // Validate quantity
     if (_quantityController.text.trim().isEmpty) {
-      _validationErrors['quantity'] = 'Quantity is required';
+      _validationErrors['quantity'] = s.productsQuantityRequired;
       isValid = false;
     } else if (int.tryParse(_quantityController.text.trim()) == null) {
-      _validationErrors['quantity'] = 'Please enter a valid quantity';
+      _validationErrors['quantity'] = s.productsPleaseEnterValidQuantity;
       isValid = false;
     }
 

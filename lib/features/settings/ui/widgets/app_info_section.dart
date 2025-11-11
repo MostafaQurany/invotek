@@ -39,10 +39,11 @@ class _AppInfoSectionState extends State<AppInfoSection> {
   }
 
   void _launchSupportEmail() async {
+    final s = S.of(context);
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: 'support@invotek.com',
-      query: 'subject=دعم فني - تطبيق إنفوتك',
+      query: 'subject=${Uri.encodeComponent(s.settingsSupportEmailSubject)}',
     );
 
     if (await canLaunchUrl(emailUri)) {

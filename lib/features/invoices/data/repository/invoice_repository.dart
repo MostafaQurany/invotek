@@ -54,6 +54,37 @@ class InvoiceRepository {
     }
   }
 
+  /// الحصول على الفواتير الآجلة
+  Future<ApiResult<GetAllInvoicesResponse>> getCreditInvoices({
+    required GetAllInvoicesRequest request,
+  }) async {
+    try {
+      final response = await _apiClient.getCreditInvoices(
+        search: request.search,
+        status: request.status,
+        customerId: (request.customerId == null)
+            ? null
+            : int.parse(request.customerId!),
+        paymentMethod: request.paymentMethod,
+        dateFrom: request.dateFrom,
+        dateTo: request.dateTo,
+        page: (request.page == null) ? null : int.parse(request.page!),
+        limit: (request.limit == null) ? null : int.parse(request.limit!),
+        sortBy: request.sortBy,
+        sortOrder: request.sortOrder,
+        minAmount: (request.minAmount == null)
+            ? null
+            : double.parse(request.minAmount!),
+        maxAmount: (request.maxAmount == null)
+            ? null
+            : double.parse(request.maxAmount!),
+      );
+      return ApiResult.success(response);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
   /// الحصول على فاتورة واحدة
   Future<ApiResult<GetInvoiceResponse>> getInvoice({
     required GetInvoiceRequest request,

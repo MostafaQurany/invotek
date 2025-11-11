@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -430,11 +430,6 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
   }
 
   String _formatDate(String dateString) {
-    try {
-      final date = DateTime.parse(dateString);
-      return DateFormat('dd/MM/yyyy HH:mm').format(date);
-    } catch (e) {
-      return dateString;
-    }
+    return DateFormatter.apiStringToDisplayDateTimeFormat(dateString) ?? dateString;
   }
 }

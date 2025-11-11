@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_card.dart';
 
@@ -38,61 +37,51 @@ class UsersList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 25.h),
-          // Users Count Header
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-
-            child: Row(
-              children: [
-                Text(
-                  'Users (${users.length})',
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Text(
-                    '${users.length} Total',
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 15.h),
-          // Users List - Using ListView.builder for memory efficiency
-          ListView.builder(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 35.h),
+        // // Users Count Header
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 16.w),
+        //
+        //   child: Row(
+        //     children: [
+        //       Text(
+        //         'Users (${users.length})',
+        //         style: TextStyle(
+        //           fontSize: 18.sp,
+        //           fontWeight: FontWeight.w600,
+        //           color: AppColors.textPrimary,
+        //         ),
+        //       ),
+        //       const Spacer(),
+        //       Container(
+        //         padding: EdgeInsets.symmetric(
+        //           horizontal: 12.w,
+        //           vertical: 6.h,
+        //         ),
+        //         decoration: BoxDecoration(
+        //           color: AppColors.primary.withOpacity(0.1),
+        //           borderRadius: BorderRadius.circular(20.r),
+        //         ),
+        //         child: Text(
+        //           '${users.length} Total',
+        //           style: TextStyle(
+        //             fontSize: 12.sp,
+        //             fontWeight: FontWeight.w500,
+        //             color: AppColors.primary,
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        //SizedBox(height: 15.h),
+        // Users List - Using ListView.builder for memory efficiency
+        Expanded(
+          child: ListView.builder(
             controller: scrollController,
-            physics:
-                const NeverScrollableScrollPhysics(), // Parent SingleChildScrollView handles scrolling
-            shrinkWrap: true, // Takes only the space it needs
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             itemCount: users.length + (isLoadingMore ? 1 : 0),
             itemBuilder: (context, index) {
@@ -111,11 +100,8 @@ class UsersList extends StatelessWidget {
               );
             },
           ),
-
-          // Bottom spacing for FAB
-          SizedBox(height: 80.h),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -21,6 +21,7 @@ class UsersStateBuilder extends StatelessWidget {
   final String selectedStatus;
   final ValueChanged<String?> onRoleChanged;
   final ValueChanged<String?> onStatusChanged;
+  final ScrollController? scrollController;
 
   const UsersStateBuilder({
     super.key,
@@ -34,6 +35,7 @@ class UsersStateBuilder extends StatelessWidget {
     required this.selectedStatus,
     required this.onRoleChanged,
     required this.onStatusChanged,
+    this.scrollController,
   });
 
   @override
@@ -71,6 +73,7 @@ class UsersStateBuilder extends StatelessWidget {
 
         if (state is UsersListLoadingMore) {
           return UsersList(
+            scrollController: scrollController,
             users: state.users,
             onUserTap: onUserTap,
             onUserView: onUserView,
@@ -99,6 +102,7 @@ class UsersStateBuilder extends StatelessWidget {
           }
 
           return UsersList(
+            scrollController: scrollController,
             users: state.users,
             onUserTap: onUserTap,
             onUserView: onUserView,
@@ -119,6 +123,7 @@ class UsersStateBuilder extends StatelessWidget {
         }
 
         return UsersList(
+          scrollController: scrollController,
           users: users,
           onUserTap: onUserTap,
           onUserView: onUserView,

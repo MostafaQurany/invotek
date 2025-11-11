@@ -1,5 +1,9 @@
 // Settings Feature Exports
 export 'ui/screens/settings_screen.dart';
+export 'ui/screens/app_settings_screen.dart';
+export 'ui/screens/company_settings_screen.dart';
+export 'ui/screens/profile_settings_screen.dart';
+export 'ui/screens/edit_profile_screen.dart';
 export 'ui/screens/change_password_screen.dart';
 export 'ui/screens/delete_account_screen.dart';
 export 'ui/widgets/settings_card.dart';

@@ -5,8 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class InvoiceDetailsHeaderWidget extends StatelessWidget {
   final InvoiceModel invoice;
@@ -68,7 +71,8 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 2.h),
                     Text(
-                      invoice.invoiceNumber ?? "Invoice Number",
+                      invoice.invoiceNumber ??
+                          S.of(context).invoicesInvoiceNumber,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
@@ -82,18 +86,27 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
 
               // Action Buttons
               if (invoice.status != 'sent')
-                Row(
-                  children: [
-                    // Edit Button
-                    IconButton(
-                      onPressed: onEdit,
+                PermissionWidget(
+                  permission: InvoicesPermissions.edit,
+                  fallback: Tooltip(
+                    message: S.of(context).invoicesNoPermissionToAct,
+                    child: IconButton(
+                      onPressed: null,
                       icon: Icon(
-                        Icons.edit,
-                        color: AppColors.primary,
+                        Icons.lock_outline,
+                        color: AppColors.grey.withOpacity(0.5),
                         size: 20.sp,
                       ),
                     ),
-                  ],
+                  ),
+                  child: IconButton(
+                    onPressed: onEdit,
+                    icon: Icon(
+                      Icons.edit,
+                      color: AppColors.primary,
+                      size: 20.sp,
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -174,14 +187,10 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
               ),
               SizedBox(height: 2.h),
               Text(
-                NumberFormat.currency(
-                  symbol:
-                      context.read<LocalizationCubit>().getCurrentLanguage() ==
-                          'ar'
-                      ? AppCurrency.currencyAr
-                      : AppCurrency.currencyEn,
-                ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
-
+                CurrencyFormatter.formatCurrencyString(
+                  invoice.total,
+                  context,
+                ),
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,

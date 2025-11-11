@@ -9,6 +9,7 @@ import 'package:invotek/features/users_and_permissions/ui/widgets/tabs/basic_inf
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/users_and_permissions/constants/users_permissions.dart';
 
 class EditUserScreen extends StatefulWidget {
   final User user;
@@ -110,7 +111,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
       if (email.isNotEmpty) {
         final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
         if (!emailRegex.hasMatch(email)) {
-          _validationErrors['email'] = 'Please enter a valid email';
+          _validationErrors['email'] = S.of(context).usersPleaseEnterValidEmail;
         }
       }
     });
@@ -123,7 +124,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
     return Scaffold(
       backgroundColor: AppColors.whiteGray,
       appBar: AppBar(
-        title: Text('Edit User'),
+        title: Text(s.editUser),
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
@@ -133,11 +134,27 @@ class _EditUserScreenState extends State<EditUserScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: ModulePermissionWidget(
-        module: 'users',
-        action: 'edit',
+      body: PermissionWidget(
+        permission: UsersPermissions.edit,
         fallback: Center(
-          child: Text('You do not have permission to edit users'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.lock_outline, size: 64.sp, color: AppColors.error),
+              SizedBox(height: 16.h),
+              Text(
+                s.usersNoPermissionToView,
+                style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                s.usersNoPermissionToAct,
+                style: TextStyle(fontSize: 14.sp, color: AppColors.greyDark),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
         child: BlocListener<UsersCubit, UsersState>(
           listener: (context, state) {
@@ -146,7 +163,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               messenger.hideCurrentSnackBar();
               messenger.showSnackBar(
                 SnackBar(
-                  content: Text('User updated successfully'),
+                  content: Text(s.userUpdatedSuccessfully),
                   backgroundColor: AppColors.primary,
                   behavior: SnackBarBehavior.floating,
                   shape: RoundedRectangleBorder(
@@ -203,7 +220,12 @@ class _EditUserScreenState extends State<EditUserScreen> {
 
               // Bottom Action Buttons
               Container(
-                padding: EdgeInsets.all(16.w),
+                padding: EdgeInsets.only(
+                  left: 16.w,
+                  right: 16.w,
+                  top: 16.w,
+                  bottom: 16.w + MediaQuery.of(context).padding.bottom,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   boxShadow: [
@@ -319,18 +341,19 @@ class _EditUserScreenState extends State<EditUserScreen> {
 
     bool isValid = true;
 
+    final s = S.of(context);
     if (_nameController.text.trim().isEmpty) {
-      _validationErrors['name'] = 'Name is required';
+      _validationErrors['name'] = s.usersNameRequired;
       isValid = false;
     }
 
     if (_emailController.text.trim().isEmpty) {
-      _validationErrors['email'] = 'Email is required';
+      _validationErrors['email'] = s.usersEmailRequired;
       isValid = false;
     } else if (!RegExp(
       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
     ).hasMatch(_emailController.text.trim())) {
-      _validationErrors['email'] = 'Please enter a valid email';
+      _validationErrors['email'] = s.usersPleaseEnterValidEmail;
       isValid = false;
     }
 

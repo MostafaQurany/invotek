@@ -17,7 +17,7 @@ class HelpDialog extends StatelessWidget {
           Icon(Icons.help_outline, color: AppColors.primary, size: 24.sp),
           SizedBox(width: 12.w),
           Text(
-            'Product Help',
+            s.productsHelp,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -31,33 +31,32 @@ class HelpDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'This screen helps you add new products to your inventory. Here\'s what you need to know:',
+            s.productsHelpDescription,
             style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
           SizedBox(height: 16.h),
           _buildHelpItem(
             icon: Icons.inventory_2_outlined,
-            title: 'Basic Information',
-            description:
-                'Enter product name, description, category, and status.',
+            title: s.productsBasicInformation,
+            description: s.productsBasicInformationDescription,
           ),
           SizedBox(height: 12.h),
           _buildHelpItem(
             icon: Icons.attach_money_outlined,
-            title: 'Pricing',
-            description: 'Set selling price, cost price, and tax rate.',
+            title: s.productsPricing,
+            description: s.productsPricingDescription,
           ),
           SizedBox(height: 12.h),
           _buildHelpItem(
             icon: Icons.inventory_outlined,
-            title: 'Inventory',
-            description: 'Manage quantity, units, and stock levels.',
+            title: s.productsInventory,
+            description: s.productsInventoryDescription,
           ),
           SizedBox(height: 12.h),
           _buildHelpItem(
             icon: Icons.info_outlined,
-            title: 'Product Details',
-            description: 'Add SKU, barcode, brand, model, and other details.',
+            title: s.productsProductDetails,
+            description: s.productsProductDetailsDescription,
           ),
         ],
       ),

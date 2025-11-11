@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_details_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:invotek/features/invoices/ui/screens/invoice_details_screen.dart';
 
-class InvoiceDetailsScreenWithProvider extends StatelessWidget {
-  final dynamic invoice; // InvoiceModel
+// class InvoiceDetailsScreenWithProvider extends StatelessWidget {
+//   final dynamic invoice; // InvoiceModel
 
-  const InvoiceDetailsScreenWithProvider({super.key, required this.invoice});
+//   const InvoiceDetailsScreenWithProvider({super.key, required this.invoice});
 
-  @override
-  Widget build(BuildContext context) {
-    return InvoiceDetailsScreen(invoice: invoice);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return InvoiceDetailsScreen(invoice: invoice);
+//   }
+// }

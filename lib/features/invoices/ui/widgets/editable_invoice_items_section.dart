@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/ui/dialogs/dialogs.dart';
 import 'package:invotek/features/invoices/ui/models/invoice_item_model.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
@@ -377,7 +378,10 @@ class _EditableInvoiceItemsSectionState
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        item.calculatedTotal.toStringAsFixed(2),
+                        CurrencyFormatter.formatCurrency(
+                          item.calculatedTotal,
+                          context,
+                        ),
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w600,
@@ -517,7 +521,7 @@ class _EditableInvoiceItemsSectionState
                 ),
               ),
               Text(
-                subtotal.toStringAsFixed(2),
+                CurrencyFormatter.formatCurrency(subtotal, context),
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,

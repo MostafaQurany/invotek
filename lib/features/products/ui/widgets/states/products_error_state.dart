@@ -22,7 +22,7 @@ class ProductsErrorState extends StatelessWidget {
           Icon(Icons.error_outline, size: 80.sp, color: AppColors.error),
           SizedBox(height: 16.h),
           Text(
-            'Error Occurred',
+            S.of(context).productsErrorOccurred,
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w600,

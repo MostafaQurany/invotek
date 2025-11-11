@@ -4,6 +4,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/add_item_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/item_card.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/product_selection_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ItemsSelectionStep extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
 
           // Items List
           if (widget.formController.items.isEmpty)
-            _buildEmptyState(s)
+            Center(child: _buildEmptyState(s))
           else
             _buildItemsList(s),
         ],
@@ -40,28 +41,48 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
   }
 
   Widget _buildHeader(S s) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Text(
-            s.invoiceItems,
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
+        Text(
+          s.invoiceItems,
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
           ),
         ),
-        ElevatedButton.icon(
-          onPressed: () => _showAddItemDialog(),
-          icon: const Icon(Icons.add),
-          label: Text(s.addItem),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r),
+        SizedBox(height: 16.h),
+        // زر اختيار من المنتجات
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () => _openProductPicker(),
+                icon: const Icon(Icons.inventory_2_outlined),
+                label: Text(s.addFromProducts),
+                style: OutlinedButton.styleFrom(
+                  foregroundColor: AppColors.primary,
+                  side: BorderSide(color: AppColors.primary),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                ),
+              ),
             ),
-          ),
+            SizedBox(width: 8.w),
+            ElevatedButton.icon(
+              onPressed: () => _showAddItemDialog(),
+              icon: const Icon(Icons.add),
+              label: Text(s.addItem),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -71,7 +92,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
     return Container(
       padding: EdgeInsets.all(32.w),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: AppColors.border, style: BorderStyle.solid),
       ),
@@ -80,7 +101,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
           Icon(
             Icons.shopping_cart_outlined,
             size: 48.sp,
-            color: AppColors.textSecondary,
+            color: AppColors.white,
           ),
           SizedBox(height: 16.h),
           Text(
@@ -88,13 +109,13 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.w500,
-              color: AppColors.textSecondary,
+              color: AppColors.white,
             ),
           ),
           SizedBox(height: 8.h),
           Text(
             s.addFirstItem,
-            style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
+            style: TextStyle(fontSize: 14.sp, color: AppColors.white),
             textAlign: TextAlign.center,
           ),
         ],
@@ -238,5 +259,49 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
         ],
       ),
     );
+  }
+
+  Future<void> _openProductPicker() async {
+    final product = await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.9,
+        minChildSize: 0.6,
+        maxChildSize: 0.95,
+        expand: false,
+        builder: (context, scrollController) {
+          return ProductSelectionDialog(scrollController: scrollController);
+        },
+      ),
+    );
+
+    if (product != null) {
+      try {
+        final unitPrice = double.tryParse(product.price ?? '0') ?? 0.0;
+        final taxPercent = double.tryParse(product.taxRate ?? '0') ?? 0.0;
+        final qty = 1.0;
+        final taxAmount = (unitPrice * qty) * (taxPercent / 100);
+        final total = (unitPrice * qty) + taxAmount;
+
+        final item = InvoiceItemData(
+          productId: product.id,
+          name: product.name ?? 'منتج',
+          quantity: qty.toStringAsFixed(0),
+          price: unitPrice.toStringAsFixed(2),
+          discount: '0',
+          taxPercent: taxPercent.toStringAsFixed(2),
+          taxAmount: taxAmount.toStringAsFixed(2),
+          total: total.toStringAsFixed(2),
+          productName: product.name,
+          productDescription: product.description,
+          productCategory: product.productCategoryId?.toString(),
+          availableQuantity: product.quantity,
+        );
+
+        widget.formController.addItem(item);
+        setState(() {});
+      } catch (e) {}
+    }
   }
 }

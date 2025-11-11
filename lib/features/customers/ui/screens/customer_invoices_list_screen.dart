@@ -101,8 +101,8 @@ class _CustomerInvoicesListScreenState
           IconButton(
             onPressed: () => Navigator.pop(context),
             icon: Icon(
-              Icons.arrow_back_ios,
-              color: AppColors.textPrimary,
+              Icons.arrow_back_ios_new_outlined,
+              color: AppColors.white,
               size: 20.sp,
             ),
           ),
@@ -207,7 +207,7 @@ class _CustomerInvoicesListScreenState
             ),
             SizedBox(width: 12.w),
             Text(
-              'جاري تحميل المزيد...',
+              S.of(context).customersLoadingMore,
               style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
             ),
           ],
@@ -239,7 +239,7 @@ class _CustomerInvoicesListScreenState
             ),
             SizedBox(height: 8.h),
             Text(
-              'لا توجد فواتير لهذا العميل',
+              S.of(context).customersNoInvoicesForCustomer,
               style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
               textAlign: TextAlign.center,
             ),

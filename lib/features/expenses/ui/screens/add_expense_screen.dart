@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
@@ -10,6 +10,8 @@ import 'package:invotek/features/expenses/ui/widgets/headers/add_expense_header_
 import 'package:invotek/features/expenses/ui/widgets/sections/add_expense_form_section.dart';
 import 'package:invotek/features/expenses/ui/widgets/sections/add_expense_bottom_actions.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({super.key});
@@ -46,7 +48,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     _descriptionController = TextEditingController();
     _amountController = TextEditingController();
     _expenseDateController = TextEditingController(
-      text: DateFormat('yyyy-MM-dd').format(_selectedDate),
+      text: DateFormatter.toApiFormat(_selectedDate),
     );
     _referenceNumberController = TextEditingController();
     _notesController = TextEditingController();
@@ -100,6 +102,55 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasCreatePermission = PermissionChecker.hasPermission(
+      context,
+      ExpensesPermissions.create,
+    );
+
+    if (!hasCreatePermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.expensesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.expensesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocListener<ExpensesCubit, ExpensesState>(
@@ -139,8 +190,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   messenger.showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Error: $error',
-                      ), // TODO: Add to localization
+                        s.expensesErrorOccurred(error.toString()),
+                      ),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -208,7 +259,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _expenseDateController.text = DateFormat('yyyy-MM-dd').format(picked);
+        _expenseDateController.text = DateFormatter.toApiFormat(picked);
       });
     }
   }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/animated_card.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ProductInsightsCard extends StatelessWidget {
   final ProductModel product;
@@ -11,6 +12,7 @@ class ProductInsightsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedCard(
       delay: Duration(milliseconds: 600),
       child: Column(
@@ -25,7 +27,7 @@ class ProductInsightsCard extends StatelessWidget {
               ),
               SizedBox(width: 12.w),
               Text(
-                'Product Insights',
+                s.productsProductInsights,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w600,
@@ -41,18 +43,18 @@ class ProductInsightsCard extends StatelessWidget {
               Expanded(
                 child: _buildStatItem(
                   icon: Icons.receipt_long,
-                  label: 'Invoices',
+                  label: s.productsInvoices,
                   value: '8',
-                  subtitle: 'This Month',
+                  subtitle: s.productsThisMonth,
                 ),
               ),
               SizedBox(width: 16.w),
               Expanded(
                 child: _buildStatItem(
                   icon: Icons.people_outline,
-                  label: 'Customers',
+                  label: s.productsCustomers,
                   value: '12',
-                  subtitle: 'Bought This',
+                  subtitle: s.productsBoughtThis,
                 ),
               ),
             ],
@@ -65,18 +67,18 @@ class ProductInsightsCard extends StatelessWidget {
               Expanded(
                 child: _buildStatItem(
                   icon: Icons.trending_up,
-                  label: 'Sales',
+                  label: s.productsSales,
                   value: 'SAR 8,420',
-                  subtitle: 'This Month',
+                  subtitle: s.productsThisMonth,
                 ),
               ),
               SizedBox(width: 16.w),
               Expanded(
                 child: _buildStatItem(
                   icon: Icons.inventory_2,
-                  label: 'Stock',
+                  label: s.productsStock,
                   value: '${product.quantity ?? 0}',
-                  subtitle: 'Available',
+                  subtitle: s.productsAvailable,
                 ),
               ),
             ],

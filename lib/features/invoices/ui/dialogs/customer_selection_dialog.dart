@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,14 +29,16 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   Timer? _searchTimer;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
+    _scrollController.addListener(_onScroll);
     // Load customers when dialog opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CustomersCubit>().loadFirstPage();
+      context.read<CustomersCubit>().loadFirstPage(refresh: true);
     });
   }
 
@@ -43,6 +46,8 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
   void dispose() {
     _searchController.dispose();
     _searchTimer?.cancel();
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -60,6 +65,17 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
         context.read<CustomersCubit>().searchCustomers(_searchQuery);
       }
     });
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      final cubit = context.read<CustomersCubit>();
+      if (cubit.hasMore && !cubit.isLoadingPage) {
+        cubit.loadNextPage();
+      }
+    }
   }
 
   @override
@@ -165,18 +181,32 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
               (customers, selectedCustomer, currentPage, totalPages, error) =>
                   _buildCustomersListContent(
                     customers,
+                    selectedCustomer,
                     currentPage,
                     totalPages,
                   ),
           loading:
               (customers, selectedCustomer, currentPage, totalPages, message) =>
-                  _buildLoadingState(),
+                  (customers.isNotEmpty)
+                  ? _buildCustomersListContent(
+                      customers,
+                      selectedCustomer,
+                      currentPage,
+                      totalPages,
+                    )
+                  : _buildLoadingState(),
           loaded: (customers, selectedCustomer, currentPage, totalPages) =>
-              _buildCustomersListContent(customers, currentPage, totalPages),
+              _buildCustomersListContent(
+                customers,
+                selectedCustomer,
+                currentPage,
+                totalPages,
+              ),
           createSuccess:
               (customers, created, selectedCustomer, currentPage, totalPages) =>
                   _buildCustomersListContent(
                     customers,
+                    selectedCustomer,
                     currentPage,
                     totalPages,
                   ),
@@ -184,6 +214,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
               (customers, updated, selectedCustomer, currentPage, totalPages) =>
                   _buildCustomersListContent(
                     customers,
+                    selectedCustomer,
                     currentPage,
                     totalPages,
                   ),
@@ -196,6 +227,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
                 totalPages,
               ) => _buildCustomersListContent(
                 customers,
+                selectedCustomer,
                 currentPage,
                 totalPages,
               ),
@@ -209,6 +241,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
 
   Widget _buildCustomersListContent(
     List<CustomerModel> customers,
+    CustomerModel? selectedCustomer,
     int currentPage,
     int totalPages,
   ) {
@@ -216,32 +249,23 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
       return _buildEmptyState();
     }
 
-    return NotificationListener<ScrollNotification>(
-      onNotification: (ScrollNotification scrollInfo) {
-        // Load more when user is 100 pixels from the bottom
-        if (scrollInfo.metrics.pixels >=
-            scrollInfo.metrics.maxScrollExtent - 100) {
-          final cubit = context.read<CustomersCubit>();
-          if (cubit.hasMore && !cubit.isLoadingPage) {
-            cubit.loadNextPage();
-          }
+    final cubit = context.read<CustomersCubit>();
+    final hasMore = cubit.hasMore;
+    return ListView.builder(
+      controller: _scrollController,
+      itemCount: customers.length + (hasMore ? 1 : 0),
+      itemBuilder: (context, index) {
+        if (index == customers.length) {
+          // Show loading indicator for next page
+          return _buildLoadingMoreIndicator();
         }
-        return false;
+
+        final customer = customers[index];
+        final isSelected =
+            (selectedCustomer?.id == customer.id) ||
+            (widget.selectedCustomer?.id == customer.id);
+        return _buildCustomerItem(customer, isSelected);
       },
-      child: ListView.builder(
-        itemCount: customers.length + (currentPage < totalPages ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index == customers.length) {
-            // Show loading indicator for next page
-            return _buildLoadingMoreIndicator();
-          }
-
-          final customer = customers[index];
-          final isSelected = widget.selectedCustomer?.id == customer.id;
-
-          return _buildCustomerItem(customer, isSelected);
-        },
-      ),
     );
   }
 
@@ -258,6 +282,8 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
       ),
       child: ListTile(
         onTap: () {
+          // حدّث الاختيار في Cubit لضمان إعادة بناء الستايل فوراً
+          context.read<CustomersCubit>().selectCustomer(customer);
           widget.onCustomerSelected(customer);
           Navigator.pop(context);
         },

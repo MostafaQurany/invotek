@@ -56,10 +56,10 @@ class AuthLoadingHomeDataScreen extends StatelessWidget {
   String _getLoadingText() {
     return dashboardState.when(
       initial: () => S.current.loading,
-      loading: () => 'Loading dashboard data...',
-      loaded: (data) => 'Loading complete!',
-      error: (message) => 'Loading error',
-      subscriptionRequired: (message, redirectUrl) => 'Subscription required',
+      loading: () => S.current.authLoadingDashboard,
+      loaded: (data) => S.current.authLoadingComplete,
+      error: (message) => S.current.authLoadingError,
+      subscriptionRequired: (message, redirectUrl) => S.current.authSubscriptionRequired,
     );
   }
 
@@ -68,7 +68,7 @@ class AuthLoadingHomeDataScreen extends StatelessWidget {
       children: [
         _buildStep(
           context,
-          'Loading dashboard data...',
+          S.of(context).authLoadingDashboard,
           dashboardState.when(
             initial: () => false,
             loading: () => true,
@@ -80,7 +80,7 @@ class AuthLoadingHomeDataScreen extends StatelessWidget {
         SizedBox(height: 8.h),
         _buildStep(
           context,
-          'Loading statistics...',
+          S.of(context).authLoadingStatistics,
           dashboardState.when(
             initial: () => false,
             loading: () => false,
@@ -92,7 +92,7 @@ class AuthLoadingHomeDataScreen extends StatelessWidget {
         SizedBox(height: 8.h),
         _buildStep(
           context,
-          'Preparing home screen...',
+          S.of(context).authPreparingHome,
           dashboardState.when(
             initial: () => false,
             loading: () => false,

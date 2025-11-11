@@ -207,7 +207,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             SizedBox(width: 8.w),
                             Expanded(
                               child: Text(
-                                "انسخ الكود من البريد الإلكتروني والصقه هنا",
+                                S.of(context).authCopyCodeFromEmail,
                                 style: textTheme.bodySmall?.copyWith(
                                   color: colorScheme.onSurface,
                                 ),

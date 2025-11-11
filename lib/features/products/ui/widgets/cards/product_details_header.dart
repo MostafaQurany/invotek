@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ProductDetailsHeader extends StatelessWidget {
   final ProductModel product;
@@ -18,6 +19,7 @@ class ProductDetailsHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedEntryWidget(
       delay: Duration.zero,
       child: Container(
@@ -66,7 +68,7 @@ class ProductDetailsHeader extends StatelessWidget {
 
                 // Title
                 Text(
-                  'Product Details',
+                  s.productsProductDetails,
                   style: TextStyle(
                     fontSize: 28.sp,
                     fontWeight: FontWeight.bold,
@@ -77,7 +79,7 @@ class ProductDetailsHeader extends StatelessWidget {
                 SizedBox(height: 8.h),
 
                 Text(
-                  'View and manage product information',
+                  s.productsViewAndManageProductInformation,
                   style: TextStyle(
                     fontSize: 16.sp,
                     color: AppColors.white.withOpacity(0.8),

@@ -26,6 +26,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
   // Calculated values
   String _taxAmount = '0.00';
   String _total = '0.00';
+  int? _maxQuantity; // available stock if provided
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
     _taxPercentController.text = item.taxPercent;
     _taxAmount = item.taxAmount;
     _total = item.total;
+    _maxQuantity = item.availableQuantity;
   }
 
   void _initializeEmpty() {
@@ -173,6 +175,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               controller: _quantityController,
                               decoration: InputDecoration(
                                 labelText: 'الكمية',
+                                helperText: _maxQuantity != null
+                                    ? 'المتاح: $_maxQuantity'
+                                    : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
@@ -190,6 +195,10 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) <= 0) {
                                   return 'الكمية يجب أن تكون أكبر من صفر';
+                                }
+                                if (_maxQuantity != null &&
+                                    double.parse(value) > _maxQuantity!) {
+                                  return 'الكمية تتجاوز المخزون المتاح ($_maxQuantity)';
                                 }
                                 return null;
                               },
@@ -394,5 +403,3 @@ class _AddItemDialogState extends State<AddItemDialog> {
     );
   }
 }
-
-

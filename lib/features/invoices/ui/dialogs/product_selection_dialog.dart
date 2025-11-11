@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -25,16 +28,33 @@ class ProductSelectionDialog extends StatefulWidget {
 class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  final ScrollController _scrollController = ScrollController();
+  Timer? _searchTimer;
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_onSearchChanged);
+    _scrollController.addListener(_onScroll);
+    // تحميل الصفحة الأولى عند فتح الحوار
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        context.read<ProductsCubit>().loadFirstPage(
+          refresh: true,
+          status: 'active',
+          sortBy: 'created_at',
+          sortOrder: 'desc',
+        );
+      }
+    });
   }
 
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _searchTimer?.cancel();
     super.dispose();
   }
 
@@ -42,6 +62,28 @@ class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
     setState(() {
       _searchQuery = _searchController.text;
     });
+    // Debounce البحث لتقليل الطلبات
+    _searchTimer?.cancel();
+    _searchTimer = Timer(const Duration(milliseconds: 500), () {
+      context.read<ProductsCubit>().loadFirstPage(
+        refresh: true,
+        search: _searchQuery.isEmpty ? null : _searchQuery,
+        status: 'active',
+        sortBy: 'created_at',
+        sortOrder: 'desc',
+      );
+    });
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    if (position.pixels >= position.maxScrollExtent - 200) {
+      final cubit = context.read<ProductsCubit>();
+      if (cubit.hasMore && !cubit.isLoadingPage) {
+        cubit.loadNextPage();
+      }
+    }
   }
 
   @override
@@ -145,21 +187,27 @@ class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
         return state.when(
           initial:
               (products, selectedProduct, currentPage, totalPages, error) =>
-                  _buildProductsListContent(products),
+                  _buildProductsListContent(products, currentPage, totalPages),
           loading:
               (products, selectedProduct, currentPage, totalPages, message) =>
-                  _buildLoadingState(),
+                  products.isEmpty
+                  ? _buildLoadingState()
+                  : _buildProductsListContent(
+                      products,
+                      currentPage,
+                      totalPages,
+                    ),
           loaded: (products, selectedProduct, currentPage, totalPages) =>
-              _buildProductsListContent(products),
+              _buildProductsListContent(products, currentPage, totalPages),
           createSuccess:
               (products, created, selectedProduct, currentPage, totalPages) =>
-                  _buildProductsListContent(products),
+                  _buildProductsListContent(products, currentPage, totalPages),
           updateSuccess:
               (products, updated, selectedProduct, currentPage, totalPages) =>
-                  _buildProductsListContent(products),
+                  _buildProductsListContent(products, currentPage, totalPages),
           deleteSuccess:
               (products, deletedId, selectedProduct, currentPage, totalPages) =>
-                  _buildProductsListContent(products),
+                  _buildProductsListContent(products, currentPage, totalPages),
           failure:
               (products, selectedProduct, currentPage, totalPages, error) =>
                   _buildErrorState(error.message),
@@ -168,28 +216,75 @@ class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
     );
   }
 
-  Widget _buildProductsListContent(List<ProductModel> products) {
-    // Filter products based on search query
-    final filteredProducts = products.where((product) {
+  Widget _buildProductsListContent(
+    List<ProductModel> products,
+    int currentPage,
+    int totalPages,
+  ) {
+    // تصفية المنتجات: استبعاد الكمية 0 + فلترة البحث
+    final visibleProducts = products.where((p) {
+      final hasQty = (p.quantity ?? 0) > 0;
+      if (!hasQty) return false;
       if (_searchQuery.isEmpty) return true;
-      return product.name?.toLowerCase().contains(_searchQuery.toLowerCase()) ==
-              true ||
-          product.sku?.toLowerCase().contains(_searchQuery.toLowerCase()) ==
-              true;
+      final q = _searchQuery.toLowerCase();
+      final byName = (p.name ?? '').toLowerCase().contains(q);
+      final bySku = (p.sku ?? '').toLowerCase().contains(q);
+      return byName || bySku;
     }).toList();
 
-    if (filteredProducts.isEmpty) {
+    if (visibleProducts.isEmpty) {
       return _buildEmptyState();
     }
 
-    return ListView.builder(
-      itemCount: filteredProducts.length,
-      itemBuilder: (context, index) {
-        final product = filteredProducts[index];
-        final isSelected = widget.selectedProduct?.id == product.id;
+    final cubit = context.read<ProductsCubit>();
+    final hasMore = cubit.hasMore;
 
+    // تحميل تمهيدي إذا كانت القائمة قصيرة ولا تملأ الشاشة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients &&
+          _scrollController.position.maxScrollExtent < 100 &&
+          hasMore &&
+          !cubit.isLoadingPage) {
+        cubit.loadNextPage();
+      }
+    });
+
+    return ListView.builder(
+      key: const PageStorageKey<String>('product_selection_list'),
+      controller: _scrollController,
+      itemCount: visibleProducts.length + (hasMore ? 1 : 0),
+      itemBuilder: (context, index) {
+        if (index == visibleProducts.length) {
+          return _buildLoadingMoreIndicator();
+        }
+        final product = visibleProducts[index];
+        final isSelected = widget.selectedProduct?.id == product.id;
         return _buildProductItem(product, isSelected);
       },
+    );
+  }
+
+  Widget _buildLoadingMoreIndicator() {
+    return Padding(
+      padding: EdgeInsets.all(16.w),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 18.w,
+            height: 18.w,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: AppColors.primary,
+            ),
+          ),
+          SizedBox(width: 8.w),
+          Text(
+            S.of(context).loadingMore,
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 14.sp),
+          ),
+        ],
+      ),
     );
   }
 
@@ -244,7 +339,7 @@ class _ProductSelectionDialogState extends State<ProductSelectionDialog> {
               ),
             if (product.price?.isNotEmpty == true)
               Text(
-                '${S.of(context).price}: ${product.price}',
+                '${S.of(context).price}: ${CurrencyFormatter.formatCurrencyString(product.price, context)}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: AppColors.textSecondary,

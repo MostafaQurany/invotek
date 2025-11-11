@@ -59,7 +59,7 @@ class UsersEmptyState extends StatelessWidget {
 
               // Empty State Description
               Text(
-                'Start by adding your first user to the system',
+                s.startByAddingFirstUser,
                 style: TextStyle(
                   fontSize: 16.sp,
                   color: AppColors.grey,
@@ -86,7 +86,7 @@ class UsersEmptyState extends StatelessWidget {
                 ),
                 icon: Icon(Icons.add, size: 20.sp),
                 label: Text(
-                  'Add First User',
+                  s.addFirstUser,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,

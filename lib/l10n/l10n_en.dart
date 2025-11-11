@@ -199,7 +199,7 @@ class SEn extends S {
   String get registerSuccess => 'Registration successful! Please login.';
 
   @override
-  String get usersPermissions => 'Users and Permissions';
+  String get usersPermissions => 'Permissions';
 
   @override
   String get usersPermissionsDesc => 'Control of clients and permissions';
@@ -4645,4 +4645,1465 @@ class SEn extends S {
   String fieldIsRequired(String field) {
     return '$field is required';
   }
+
+  @override
+  String get activate => 'Activate';
+
+  @override
+  String get deactivate => 'Deactivate';
+
+  @override
+  String get taxMerchantCode => 'Tax Merchant Code';
+
+  @override
+  String get taxInvoiceType => 'Tax Invoice Type';
+
+  @override
+  String get noPermission => 'Not allowed';
+
+  @override
+  String get authLoadingDashboard => 'Loading dashboard data...';
+
+  @override
+  String get authLoadingComplete => 'Loading complete!';
+
+  @override
+  String get authLoadingError => 'Loading error';
+
+  @override
+  String get authSubscriptionRequired => 'Subscription required';
+
+  @override
+  String get authLoadingStatistics => 'Loading statistics...';
+
+  @override
+  String get authPreparingHome => 'Preparing home screen...';
+
+  @override
+  String get authCopyCodeFromEmail =>
+      'Copy the code from email and paste it here';
+
+  @override
+  String get authConfirmPasswordHint => 'Enter password confirmation';
+
+  @override
+  String get authSignInWithGoogle => 'Sign in with Google';
+
+  @override
+  String get clientsAddNew => 'Add New Client';
+
+  @override
+  String get clientsAddNewDesc =>
+      'Fill the form below to add a new client to the system';
+
+  @override
+  String get clientsEdit => 'Edit Client';
+
+  @override
+  String clientsEditDesc(String clientName) {
+    return 'Edit client data \"$clientName\"';
+  }
+
+  @override
+  String get clientsDetails => 'Client Details';
+
+  @override
+  String get clientsBasicInfo => 'Basic Information';
+
+  @override
+  String get clientsCompanyInfo => 'Company Information';
+
+  @override
+  String get clientsContactPersonInfo => 'Contact Person Information';
+
+  @override
+  String get clientsAdditionalInfo => 'Additional Information';
+
+  @override
+  String get clientsClientName => 'Client Name';
+
+  @override
+  String get clientsEnterClientName => 'Enter client name';
+
+  @override
+  String get clientsEnterEmail => 'Enter email';
+
+  @override
+  String get clientsEnterPhone => 'Enter phone number';
+
+  @override
+  String get clientsEnterAddress => 'Enter client address';
+
+  @override
+  String get clientsCompanyName => 'Company Name';
+
+  @override
+  String get clientsEnterCompanyName => 'Enter company name';
+
+  @override
+  String get clientsTaxNumber => 'Tax Number';
+
+  @override
+  String get clientsEnterTaxNumber => 'Enter tax number';
+
+  @override
+  String get clientsWebsite => 'Website';
+
+  @override
+  String get clientsEnterWebsite => 'Enter website';
+
+  @override
+  String get clientsContactPersonName => 'Contact Person Name';
+
+  @override
+  String get clientsEnterContactPersonName => 'Enter contact person name';
+
+  @override
+  String get clientsContactPersonPhone => 'Contact Person Phone';
+
+  @override
+  String get clientsEnterContactPersonPhone => 'Enter contact person phone';
+
+  @override
+  String get clientsContactPersonEmail => 'Contact Person Email';
+
+  @override
+  String get clientsEnterContactPersonEmail => 'Enter contact person email';
+
+  @override
+  String get clientsStatus => 'Status';
+
+  @override
+  String get clientsNotes => 'Notes';
+
+  @override
+  String get clientsEnterNotes => 'Enter additional notes';
+
+  @override
+  String get clientsActive => 'Active';
+
+  @override
+  String get clientsInactive => 'Inactive';
+
+  @override
+  String get clientsAll => 'All';
+
+  @override
+  String get clientsAddClient => 'Add Client';
+
+  @override
+  String get clientsSaveChanges => 'Save Changes';
+
+  @override
+  String get clientsCancel => 'Cancel';
+
+  @override
+  String get clientsEditAction => 'Edit';
+
+  @override
+  String get clientsDelete => 'Delete';
+
+  @override
+  String get clientsView => 'View';
+
+  @override
+  String get clientsDeleteConfirmation => 'Confirm Delete';
+
+  @override
+  String clientsDeleteConfirmationMessage(String clientName) {
+    return 'Are you sure you want to delete client \"$clientName\"?';
+  }
+
+  @override
+  String get clientsClientAddedSuccess => 'Client added successfully';
+
+  @override
+  String get clientsClientUpdatedSuccess => 'Client updated successfully';
+
+  @override
+  String clientsErrorCreatingClient(String error) {
+    return 'Error occurred while creating client: $error';
+  }
+
+  @override
+  String clientsErrorUpdatingClient(String error) {
+    return 'Error occurred while updating client: $error';
+  }
+
+  @override
+  String get clientsName => 'Name';
+
+  @override
+  String get clientsEmail => 'Email';
+
+  @override
+  String get clientsPhone => 'Phone';
+
+  @override
+  String get clientsAddress => 'Address';
+
+  @override
+  String get clientsCreatedAt => 'Created At';
+
+  @override
+  String get clientsUpdatedAt => 'Last Updated';
+
+  @override
+  String get clientsNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get clientsNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get clientsLockedAction => 'Locked Action';
+
+  @override
+  String get clientsSearchClients => 'Search clients...';
+
+  @override
+  String get clientsNoClientsFound => 'No clients found';
+
+  @override
+  String get clientsStartByAddingFirst =>
+      'Start by adding your first client to the system';
+
+  @override
+  String get clientsAddFirstClient => 'Add First Client';
+
+  @override
+  String get clientsTotal => 'Total';
+
+  @override
+  String clientsCount(int count) {
+    return 'Clients ($count)';
+  }
+
+  @override
+  String get customersNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get customersNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get customersLockedAction => 'Locked Action';
+
+  @override
+  String get customersCannotMakeCall => 'Cannot make call';
+
+  @override
+  String get customersCallPermissionDenied => 'Call permission denied';
+
+  @override
+  String get customersCallPermissionRequired => 'Call Permission Required';
+
+  @override
+  String get customersCallPermissionRequiredMessage =>
+      'You must allow call permission to use this feature. Please go to app settings and allow call permission.';
+
+  @override
+  String get customersCannotSendEmail => 'Cannot send email';
+
+  @override
+  String get customersEmailSubject => 'Message from Invotek App';
+
+  @override
+  String get customersCannotOpenMap => 'Cannot open map';
+
+  @override
+  String get customersLocationPermissionDenied => 'Location permission denied';
+
+  @override
+  String get customersLocationPermissionRequired =>
+      'Location Permission Required';
+
+  @override
+  String get customersLocationPermissionRequiredMessage =>
+      'You must allow location permission to use this feature. Please go to app settings and allow location permission.';
+
+  @override
+  String get customersAppSettings => 'App Settings';
+
+  @override
+  String get customersInvalidPhoneFormat => 'Invalid phone number format';
+
+  @override
+  String get customersDeleteAction => 'Delete';
+
+  @override
+  String get customersEditCustomerAction => 'Edit Customer';
+
+  @override
+  String get customersCustomerFormHelpDescription =>
+      'This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information';
+
+  @override
+  String get expensesNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get expensesNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get expensesLockedAction => 'Locked Action';
+
+  @override
+  String get expensesDeleteExpense => 'Delete Expense';
+
+  @override
+  String get expensesEditExpense => 'Edit Expense';
+
+  @override
+  String get expensesViewDetails => 'View Details';
+
+  @override
+  String expensesDeleteExpenseConfirmation(String expenseTitle) {
+    return 'Are you sure you want to delete expense \"$expenseTitle\"? This action cannot be undone.';
+  }
+
+  @override
+  String get expensesAreYouSureDeleteExpense =>
+      'Are you sure you want to delete this expense?';
+
+  @override
+  String get expensesThisActionCannotBeUndone =>
+      'This action cannot be undone.';
+
+  @override
+  String get expensesNoDescription => 'No description';
+
+  @override
+  String get expensesUnknownCategory => 'Unknown Category';
+
+  @override
+  String get expensesLoading => 'Loading...';
+
+  @override
+  String get expensesDeleteCategory => 'Delete Category';
+
+  @override
+  String get expensesAreYouSureDeleteCategory =>
+      'Are you sure you want to delete this expense category?';
+
+  @override
+  String expensesStatus(String status) {
+    return 'Status: $status';
+  }
+
+  @override
+  String get expensesCopiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String expensesErrorOccurred(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get expensesExpenseDetailsHelpDescription =>
+      'This screen shows detailed information about the expense including financial details, payment information, and metadata.';
+
+  @override
+  String get expensesExpenseDetailsHelpTitle => 'Help';
+
+  @override
+  String get homeNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get homeNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get homeLockedAction => 'Locked Action';
+
+  @override
+  String get homeLoadingDashboard => 'Loading dashboard data';
+
+  @override
+  String get homeAddNotificationsFeature => 'Add notifications feature here';
+
+  @override
+  String get homeAccessDenied => 'Access Denied';
+
+  @override
+  String homeNoPermissionToAccess(String featureName) {
+    return 'You don\'t have permission to access $featureName';
+  }
+
+  @override
+  String get homeAreYouSureLogout => 'Are you sure you want to logout?';
+
+  @override
+  String homeVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get homeAddNewCustomer => 'Add New Customer';
+
+  @override
+  String get homeCreateNewInvoice => 'Create New Invoice';
+
+  @override
+  String get homeViewAllInvoices => 'View All Invoices';
+
+  @override
+  String get homeDeviceInfo => 'Device Information';
+
+  @override
+  String homeWidth(String width) {
+    return 'Width: ${width}px';
+  }
+
+  @override
+  String homeHeight(String height) {
+    return 'Height: ${height}px';
+  }
+
+  @override
+  String homeDeviceType(String deviceType) {
+    return 'Device Type: $deviceType';
+  }
+
+  @override
+  String homePixelRatio(String ratio) {
+    return 'Pixel Ratio: $ratio';
+  }
+
+  @override
+  String get homeTablet => 'Tablet';
+
+  @override
+  String get homePhone => 'Phone';
+
+  @override
+  String get invoicesNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get invoicesNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get invoicesLockedAction => 'Locked Action';
+
+  @override
+  String get invoicesCannotDeleteNonDraft =>
+      'Cannot delete this invoice because it is not a draft';
+
+  @override
+  String get invoicesInvoiceNumber => 'Invoice Number';
+
+  @override
+  String get invoicesCustomerName => 'Customer Name';
+
+  @override
+  String get invoicesCustomerEmail => 'Customer Email';
+
+  @override
+  String get invoicesCustomerPhone => 'Customer Phone';
+
+  @override
+  String get invoicesCustomerAddress => 'Customer Address';
+
+  @override
+  String get invoicesCustomerNotes => 'Notes';
+
+  @override
+  String get invoicesNoProductIdAvailable => 'No product ID available';
+
+  @override
+  String get invoicesDuplicateInvoice => 'Duplicate Invoice';
+
+  @override
+  String get invoicesDownloadPDF => 'Download PDF';
+
+  @override
+  String get invoicesEmail => 'Email';
+
+  @override
+  String invoicesInvoiceNumberPlaceholder(String number) {
+    return 'Invoice $number';
+  }
+
+  @override
+  String get invoicesPleaseFindAttachedInvoice =>
+      'Please find attached your invoice.';
+
+  @override
+  String get invoicesDiscount => 'Discount';
+
+  @override
+  String get invoicesTaxPercentage => 'Tax Percentage';
+
+  @override
+  String get invoicesItemDetailsCopied => 'Item details copied to clipboard';
+
+  @override
+  String get invoicesItemDetails => 'Item Details:';
+
+  @override
+  String get invoicesItemNameLabel => 'Name:';
+
+  @override
+  String get invoicesItemDescriptionLabel => 'Description:';
+
+  @override
+  String get invoicesItemQuantityLabel => 'Quantity:';
+
+  @override
+  String get invoicesItemPriceLabel => 'Price:';
+
+  @override
+  String get invoicesItemDiscountLabel => 'Discount:';
+
+  @override
+  String get invoicesItemTaxPercentageLabel => 'Tax Percentage:';
+
+  @override
+  String get invoicesItemTaxAmountLabel => 'Tax Amount:';
+
+  @override
+  String get invoicesItemTotalLabel => 'Total:';
+
+  @override
+  String get invoicesProductInfo => 'Product Information:';
+
+  @override
+  String get invoicesProductNameLabel => 'Product Name:';
+
+  @override
+  String get invoicesQRCode => 'QR Code';
+
+  @override
+  String get invoicesScanQRCodeMessage =>
+      'You can scan this code to access invoice details';
+
+  @override
+  String get invoicesProductInformation => 'Product Information';
+
+  @override
+  String get invoicesFilterInvoices => 'Filter Invoices';
+
+  @override
+  String get invoicesStatus => 'Status';
+
+  @override
+  String get invoicesSortOrder => 'Sort Order';
+
+  @override
+  String get invoicesApply => 'Apply';
+
+  @override
+  String get invoicesAll => 'All';
+
+  @override
+  String get invoicesPending => 'Pending';
+
+  @override
+  String get invoicesSent => 'Sent';
+
+  @override
+  String get invoicesDescending => 'Descending';
+
+  @override
+  String get invoicesAscending => 'Ascending';
+
+  @override
+  String get invoicesLoadingMore => 'Loading more...';
+
+  @override
+  String get invoicesLoadingInvoices => 'Loading invoices...';
+
+  @override
+  String get productsNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get productsNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get productsSettings => 'Settings';
+
+  @override
+  String get productsEnterProductName => 'Enter product name';
+
+  @override
+  String get productsEnterProductDescription => 'Enter product description';
+
+  @override
+  String get productsEnterSellingPrice => 'Enter selling price';
+
+  @override
+  String get productsEnterCostPrice => 'Enter cost price';
+
+  @override
+  String get productsEnterTaxRatePercentage => 'Enter tax rate percentage';
+
+  @override
+  String get productsEnterQuantity => 'Enter quantity';
+
+  @override
+  String get productsEnterUnit => 'Enter unit (e.g., piece)';
+
+  @override
+  String get productsEnterSKU => 'Enter SKU';
+
+  @override
+  String get productsEnterBarcode => 'Enter barcode';
+
+  @override
+  String get productsProductNameRequired => 'Product name is required';
+
+  @override
+  String get productsProductStatusRequired => 'Product status is required';
+
+  @override
+  String get productsSellingPriceRequired => 'Selling price is required';
+
+  @override
+  String get productsPleaseEnterValidPrice => 'Please enter a valid price';
+
+  @override
+  String get productsQuantityRequired => 'Quantity is required';
+
+  @override
+  String get productsPleaseEnterValidQuantity =>
+      'Please enter a valid quantity';
+
+  @override
+  String get productsUnnamedProduct => 'Unnamed Product';
+
+  @override
+  String get productsThisActionCannotBeUndone =>
+      'This action cannot be undone.';
+
+  @override
+  String get productsCopiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get productsNoCategoriesFound => 'No categories found';
+
+  @override
+  String get productsDeleteCategory => 'Delete Category';
+
+  @override
+  String get productsCategoryState => 'Category State';
+
+  @override
+  String get productsCheckIfCategoryIsActiveOrInactive =>
+      'check if the category is active or inactive';
+
+  @override
+  String get productsAdd => 'Add';
+
+  @override
+  String get productsUpdate => 'Update';
+
+  @override
+  String productsDeleteCategoryConfirmation(String name) {
+    return 'Are you sure you want to delete category \"$name\"?';
+  }
+
+  @override
+  String get productsAreYouSureYouWantToDeleteThisProduct =>
+      'Are you sure you want to delete this product?';
+
+  @override
+  String get productsProductIsTaxable => 'Product is Taxable';
+
+  @override
+  String get productsApplyTaxToProduct => 'Apply tax to product';
+
+  @override
+  String get productsTrackAvailableProductQuantity =>
+      'Track available product quantity';
+
+  @override
+  String get settingsNoPermissionToView =>
+      'You don\'t have permission to view settings';
+
+  @override
+  String get settingsNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get settingsTaxIntegration => 'Tax Integration';
+
+  @override
+  String get settingsRetry => 'Retry';
+
+  @override
+  String get settingsUpdateStatus => 'Update Status';
+
+  @override
+  String get settingsStatus => 'Status';
+
+  @override
+  String get settingsActive => 'Active';
+
+  @override
+  String get settingsInactive => 'Inactive';
+
+  @override
+  String get settingsTaxInvoiceType => 'Tax Invoice Type';
+
+  @override
+  String get settingsTaxMerchantCode => 'Tax Merchant Code';
+
+  @override
+  String get settingsActivateIntegration => 'Activate Integration';
+
+  @override
+  String get settingsInvoiceType => 'Invoice Type';
+
+  @override
+  String get settingsIncome => 'Income';
+
+  @override
+  String get settingsVAT => 'VAT';
+
+  @override
+  String get settingsActivate => 'Activate';
+
+  @override
+  String get settingsDeactivate => 'Deactivate';
+
+  @override
+  String get settingsSupportEmailSubject => 'Technical Support - Invotek App';
+
+  @override
+  String get usersNoPermissionToView =>
+      'You don\'t have permission to view this content';
+
+  @override
+  String get usersNoPermissionToAct =>
+      'You don\'t have permission to perform this action';
+
+  @override
+  String get usersDeleteUser => 'Delete User';
+
+  @override
+  String get usersAreYouSureYouWantToDeleteUser =>
+      'Are you sure you want to delete user';
+
+  @override
+  String get usersThisActionCannotBeUndone => 'This action cannot be undone.';
+
+  @override
+  String get usersUnknownUser => 'Unknown User';
+
+  @override
+  String get usersNoEmail => 'No email';
+
+  @override
+  String get usersViewDetails => 'View Details';
+
+  @override
+  String get usersViewUserDetails => 'View user details';
+
+  @override
+  String get usersEditUser => 'Edit User';
+
+  @override
+  String get usersEditUserInformation => 'Edit user information';
+
+  @override
+  String get usersDeleteUserPermanently => 'Delete user permanently';
+
+  @override
+  String get usersCopiedToClipboard => 'Copied to clipboard';
+
+  @override
+  String get usersNameRequired => 'Name is required';
+
+  @override
+  String get usersEmailRequired => 'Email is required';
+
+  @override
+  String get usersPleaseEnterValidEmail => 'Please enter a valid email';
+
+  @override
+  String get usersPasswordRequired => 'Password is required';
+
+  @override
+  String get usersPasswordMustBeAtLeast6Characters =>
+      'Password must be at least 6 characters';
+
+  @override
+  String get usersPleaseConfirmYourPassword => 'Please confirm your password';
+
+  @override
+  String get usersPasswordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get usersManagePermissions => 'Manage Permissions';
+
+  @override
+  String get usersManageRolesAndPermissions => 'Manage roles and permissions';
+
+  @override
+  String get usersRoles => 'Roles';
+
+  @override
+  String get usersSelectModule => 'Select Module';
+
+  @override
+  String get usersModulePermissions => 'Permissions';
+
+  @override
+  String get usersNoPermissionsForThisModule =>
+      'No permissions for this module';
+
+  @override
+  String get usersTotalPermissions => 'Total Permissions';
+
+  @override
+  String get usersAddNewRole => 'Add New Role';
+
+  @override
+  String get usersRoleName => 'Role Name';
+
+  @override
+  String get usersRoleDescription => 'Role Description';
+
+  @override
+  String get usersAdd => 'Add';
+
+  @override
+  String get usersEditRole => 'Edit Role';
+
+  @override
+  String get usersConfirmDelete => 'Confirm Delete';
+
+  @override
+  String usersAreYouSureYouWantToDeleteRole(String name) {
+    return 'Are you sure you want to delete the role \"$name\"?';
+  }
+
+  @override
+  String get usersActive => 'Active';
+
+  @override
+  String get usersInactive => 'Inactive';
+
+  @override
+  String get usersModule => 'Module';
+
+  @override
+  String get usersUsers => 'Users';
+
+  @override
+  String get usersClients => 'Clients';
+
+  @override
+  String get usersProducts => 'Products';
+
+  @override
+  String get usersInvoices => 'Invoices';
+
+  @override
+  String get usersExpenses => 'Expenses';
+
+  @override
+  String get usersReports => 'Reports';
+
+  @override
+  String get usersSettings => 'Settings';
+
+  @override
+  String get creditInvoicesTitle => 'Credit Invoices';
+
+  @override
+  String get dinar => 'Dinar';
+
+  @override
+  String get manageExpensesAndBudgets => 'Manage expenses and budgets';
+
+  @override
+  String get enterPosition => 'Enter position';
+
+  @override
+  String get confirmPasswordPlaceholder => 'Confirm password';
+
+  @override
+  String get selectRole => 'Select Role';
+
+  @override
+  String get selectStatus => 'Select Status';
+
+  @override
+  String get searchUsers => 'Search users';
+
+  @override
+  String get usersManagementTitle => 'Users Management';
+
+  @override
+  String get manageUsersAndPermissions => 'Manage users and permissions';
+
+  @override
+  String get userDetails => 'User Details';
+
+  @override
+  String get unknownUser => 'Unknown User';
+
+  @override
+  String get notProvided => 'Not provided';
+
+  @override
+  String get notAvailable => 'Not available';
+
+  @override
+  String get notAssigned => 'Not assigned';
+
+  @override
+  String get noNotesAvailable => 'No notes available';
+
+  @override
+  String get userInformation => 'User Information';
+
+  @override
+  String get userSummary => 'User Summary';
+
+  @override
+  String get lastLogin => 'Last Login';
+
+  @override
+  String get never => 'Never';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
+  String get allRoles => 'All Roles';
+
+  @override
+  String get employee => 'Employee';
+
+  @override
+  String get viewer => 'Viewer';
+
+  @override
+  String get suspended => 'Suspended';
+
+  @override
+  String get startByAddingFirstUser =>
+      'Start by adding your first user to the system';
+
+  @override
+  String get addFirstUser => 'Add First User';
+
+  @override
+  String get userPermissions => 'User Permissions';
+
+  @override
+  String get createUsers => 'Create Users';
+
+  @override
+  String get editUsers => 'Edit Users';
+
+  @override
+  String get deleteUsers => 'Delete Users';
+
+  @override
+  String get createProducts => 'Create Products';
+
+  @override
+  String get editProducts => 'Edit Products';
+
+  @override
+  String get deleteProducts => 'Delete Products';
+
+  @override
+  String get viewCustomers => 'View Customers';
+
+  @override
+  String get createCustomers => 'Create Customers';
+
+  @override
+  String get editCustomers => 'Edit Customers';
+
+  @override
+  String get deleteCustomers => 'Delete Customers';
+
+  @override
+  String get createExpenses => 'Create Expenses';
+
+  @override
+  String get editExpenses => 'Edit Expenses';
+
+  @override
+  String get deleteExpenses => 'Delete Expenses';
+
+  @override
+  String get manageSettings => 'Manage Settings';
+
+  @override
+  String get profileInformation => 'Profile Information';
+
+  @override
+  String get enterDepartment => 'Enter department';
+
+  @override
+  String get accountStatus => 'Account Status';
+
+  @override
+  String get enableOrDisableUserAccount => 'Enable or disable user account';
+
+  @override
+  String get userCreatedSuccessfullyMessage => 'User created successfully';
+
+  @override
+  String get userUpdatedSuccessfullyMessage => 'User updated successfully';
+
+  @override
+  String get userDeletedSuccessfullyMessage => 'User deleted successfully';
+
+  @override
+  String get completedSuccessfully => 'completed successfully';
+
+  @override
+  String get usersNoName => 'No name';
+
+  @override
+  String get usersNoRole => 'No role';
+
+  @override
+  String get usersUndefined => 'Undefined';
+
+  @override
+  String get usersUnknownStatus => 'Unknown';
+
+  @override
+  String get usersRoleAdmin => 'Admin';
+
+  @override
+  String get usersRoleAccountant => 'Accountant';
+
+  @override
+  String get usersRoleUser => 'User';
+
+  @override
+  String get usersRoleSupervisor => 'Supervisor';
+
+  @override
+  String get usersStatusActive => 'Active';
+
+  @override
+  String get usersStatusInactive => 'Inactive';
+
+  @override
+  String get noStatus => 'No Status';
+
+  @override
+  String get noPhone => 'No Phone';
+
+  @override
+  String get taxIntegrationNotActive => 'Tax integration is not active';
+
+  @override
+  String get taxIntegrationNotActiveMessage =>
+      'You have not activated tax integration. Please activate it from settings if you have permission to do so';
+
+  @override
+  String get goToSettings => 'Go to Settings';
+
+  @override
+  String get customersUnnamedCustomer => 'Unnamed Customer';
+
+  @override
+  String get customersInactive => 'Inactive';
+
+  @override
+  String get customersCompanyTech => 'Advanced Technology Company';
+
+  @override
+  String get customersCompanyFinance => 'Financial Services Institution';
+
+  @override
+  String get customersCompanyConstruction =>
+      'Construction & Development Company';
+
+  @override
+  String get customersCompanyEducation => 'Modern Education Institution';
+
+  @override
+  String get customersCompanyTourism => 'Tourism & Entertainment Company';
+
+  @override
+  String get customersCompanyHealthcare => 'Healthcare Institution';
+
+  @override
+  String get customersCompanyTransport => 'Transport & Logistics Company';
+
+  @override
+  String get customersCompanyEcommerce => 'E-commerce Institution';
+
+  @override
+  String get customersLastFiveInvoices => 'The last 5 invoices';
+
+  @override
+  String get customersContactInformation => 'Contact Information';
+
+  @override
+  String get customersNotProvided => 'Not provided';
+
+  @override
+  String get customersCall => 'Call';
+
+  @override
+  String get customersMap => 'Map';
+
+  @override
+  String get customersAccountStatus => 'Account Status';
+
+  @override
+  String get customersCreated => 'Created';
+
+  @override
+  String get customersLastUpdated => 'Last Updated';
+
+  @override
+  String get customersLoadingMore => 'Loading more...';
+
+  @override
+  String get customersNoInvoicesForCustomer => 'No invoices for this customer';
+
+  @override
+  String get usersCannotDeleteAdmin => 'Cannot delete admin user';
+
+  @override
+  String get usersCannotDeleteYourself => 'Cannot delete your own account';
+
+  @override
+  String get usersCannotDeleteAdminMessage => 'Admin users cannot be deleted';
+
+  @override
+  String get usersCannotDeleteYourselfMessage =>
+      'You cannot delete your own account';
+
+  @override
+  String get productsHelp => 'Product Help';
+
+  @override
+  String get productsHelpDescription =>
+      'This screen helps you add new products to your inventory. Here\'s what you need to know:';
+
+  @override
+  String get productsBasicInformation => 'Basic Information';
+
+  @override
+  String get productsBasicInformationDescription =>
+      'Enter product name, description, category, and status.';
+
+  @override
+  String get productsPricing => 'Pricing';
+
+  @override
+  String get productsPricingDescription =>
+      'Set selling price, cost price, and tax rate.';
+
+  @override
+  String get productsInventory => 'Inventory';
+
+  @override
+  String get productsInventoryDescription =>
+      'Manage quantity, units, and stock levels.';
+
+  @override
+  String get productsProductDetails => 'Product Details';
+
+  @override
+  String get productsProductDetailsDescription =>
+      'Add SKU, barcode, brand, model, and other details.';
+
+  @override
+  String get subscriptionRequiredTitle => 'Subscription Required';
+
+  @override
+  String get subscriptionRequiredAction => 'Choose Package';
+
+  @override
+  String get productsProductInformation => 'Product Information';
+
+  @override
+  String get productsDescription => 'Description';
+
+  @override
+  String get productsCostPrice => 'Cost Price';
+
+  @override
+  String get productsNotSet => 'Not set';
+
+  @override
+  String get productsTaxRate => 'Tax Rate';
+
+  @override
+  String get productsUnit => 'Unit';
+
+  @override
+  String get productsNotSpecified => 'Not specified';
+
+  @override
+  String get productsTaxable => 'Taxable';
+
+  @override
+  String get productsYes => 'Yes';
+
+  @override
+  String get productsNo => 'No';
+
+  @override
+  String get productsTrackInventory => 'Track Inventory';
+
+  @override
+  String get productsBarcode => 'Barcode';
+
+  @override
+  String get productsTapToCopy => 'Tap to copy';
+
+  @override
+  String get productsSku => 'SKU';
+
+  @override
+  String get productsQuantity => 'Quantity';
+
+  @override
+  String get productsQty => 'Qty';
+
+  @override
+  String get productsEdit => 'Edit';
+
+  @override
+  String get productsDelete => 'Delete';
+
+  @override
+  String get productsCreateFirstProduct =>
+      'Create your first product to get started';
+
+  @override
+  String get productsErrorOccurred => 'Error Occurred';
+
+  @override
+  String get productsUnitHint => 'piece, kg, meter...';
+
+  @override
+  String get productsEnterProductSku => 'Enter product SKU';
+
+  @override
+  String get productsManageProductsAndInventory =>
+      'Manage products and inventory';
+
+  @override
+  String get productsViewAndManageProductInformation =>
+      'View and manage product information';
+
+  @override
+  String get productsEditProduct => 'Edit Product';
+
+  @override
+  String get productsProductInsights => 'Product Insights';
+
+  @override
+  String get productsInvoices => 'Invoices';
+
+  @override
+  String get productsThisMonth => 'This Month';
+
+  @override
+  String get productsCustomers => 'Customers';
+
+  @override
+  String get productsBoughtThis => 'Bought This';
+
+  @override
+  String get productsSales => 'Sales';
+
+  @override
+  String get productsStock => 'Stock';
+
+  @override
+  String get productsAvailable => 'Available';
+
+  @override
+  String get expensesPaymentMethodCash => 'Cash';
+
+  @override
+  String get expensesPaymentMethodCard => 'Credit/Debit Card';
+
+  @override
+  String get expensesPaymentMethodBankTransfer => 'Bank Transfer';
+
+  @override
+  String get expensesPaymentMethodCheck => 'Check';
+
+  @override
+  String get expensesNoCategoriesToDelete => 'No categories to delete';
+
+  @override
+  String get expensesAllCategoriesDeletedSuccessfully =>
+      'All categories deleted successfully';
+
+  @override
+  String get expensesDeleteAllCategories => 'Delete All Categories';
+
+  @override
+  String get expensesCurrentCategories => 'Current Categories';
+
+  @override
+  String get expensesNoCategoriesFoundMessage =>
+      'No categories found. You can now start creating new ones!';
+
+  @override
+  String get expensesStatusLabel => 'Status';
+
+  @override
+  String get expensesDeleting => 'Deleting...';
+
+  @override
+  String get expensesDeleteAllCategoriesCount => 'Delete All Categories';
+
+  @override
+  String get expensesSortByTitle => 'Title';
+
+  @override
+  String get expensesSortByAmount => 'Amount';
+
+  @override
+  String get expensesSortByCreatedAt => 'Created At';
+
+  @override
+  String get expensesSortByUpdatedAt => 'Updated At';
+
+  @override
+  String get expensesSortByDate => 'Date';
+
+  @override
+  String get expensesSortOrderAsc => 'ASC';
+
+  @override
+  String get expensesSortOrderDesc => 'DESC';
+
+  @override
+  String get expensesAllCategories => 'All Categories';
+
+  @override
+  String get expensesSortBy => 'Sort by';
+
+  @override
+  String get expensesOrder => 'Order';
+
+  @override
+  String get expensesAllStatus => 'All Status';
+
+  @override
+  String get expensesSearchCategories => 'Search categories...';
+
+  @override
+  String get expensesErrorPrefix => 'Error';
+
+  @override
+  String get expensesEditCategory => 'Edit Category';
+
+  @override
+  String get expensesNoExpensesYet => 'No expenses yet';
+
+  @override
+  String get expensesStartTrackingExpenses =>
+      'Start tracking your business expenses by adding your first expense';
+
+  @override
+  String get expensesAddFirstExpense => 'Add First Expense';
+
+  @override
+  String get expensesSomethingWentWrong => 'Something went wrong';
+
+  @override
+  String get expensesTryAgain => 'Try Again';
+
+  @override
+  String get expensesNoCategoriesYet => 'No categories yet';
+
+  @override
+  String get expensesCreateExpenseCategories =>
+      'Create expense categories to organize your business expenses';
+
+  @override
+  String get expensesAddFirstCategory => 'Add First Category';
+
+  @override
+  String get notificationsAll => 'All';
+
+  @override
+  String get notificationsRead => 'Read';
+
+  @override
+  String get notificationsUnread => 'Unread';
+
+  @override
+  String get notificationsTotal => 'Total';
+
+  @override
+  String get notificationsSearchHint => 'Search notifications...';
+
+  @override
+  String get notificationsDetails => 'Notification Details';
+
+  @override
+  String get notificationsMarkAsRead => 'Mark as Read';
+
+  @override
+  String get notificationsMarkAllAsRead => 'Mark All as Read';
+
+  @override
+  String get notificationsClearRead => 'Clear Read';
+
+  @override
+  String get notificationsDeleteNotification => 'Delete Notification';
+
+  @override
+  String get notificationsDeleteConfirmation =>
+      'Are you sure you want to delete this notification?';
+
+  @override
+  String get notificationsClearReadConfirmation =>
+      'Are you sure you want to delete all read notifications?';
+
+  @override
+  String get notificationsMarkAsReadSuccess =>
+      'Notification marked as read successfully';
+
+  @override
+  String get notificationsMarkAllAsReadSuccess =>
+      'All notifications marked as read successfully';
+
+  @override
+  String get notificationsDeleteSuccess => 'Notification deleted successfully';
+
+  @override
+  String get notificationsClearReadSuccess =>
+      'All read notifications cleared successfully';
+
+  @override
+  String get notificationsNoNotifications => 'No notifications';
+
+  @override
+  String get notificationsTypeInvoice => 'Invoice';
+
+  @override
+  String get notificationsTypePayment => 'Payment';
+
+  @override
+  String get notificationsTypeUserCreated => 'User Created';
+
+  @override
+  String get notificationsTypeSystem => 'System';
+
+  @override
+  String get notificationsAdditionalData => 'Additional Data';
 }

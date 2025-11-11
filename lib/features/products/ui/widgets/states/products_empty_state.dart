@@ -30,7 +30,7 @@ class ProductsEmptyState extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            'Create your first product to get started',
+            S.of(context).productsCreateFirstProduct,
             style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
           SizedBox(height: 24.h),

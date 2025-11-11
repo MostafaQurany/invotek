@@ -20,11 +20,11 @@ class RoleDropdown extends StatelessWidget {
     final s = S.of(context);
 
     final roles = [
-      {'value': 'all', 'label': 'All Roles'},
+      {'value': 'all', 'label': s.allRoles},
       {'value': 'admin', 'label': s.admin},
       {'value': 'manager', 'label': s.manager},
-      {'value': 'employee', 'label': 'Employee'},
-      {'value': 'viewer', 'label': 'Viewer'},
+      {'value': 'employee', 'label': s.employee},
+      {'value': 'viewer', 'label': s.viewer},
     ];
 
     return Container(
@@ -42,7 +42,7 @@ class RoleDropdown extends StatelessWidget {
             vertical: 12.h,
           ),
           border: InputBorder.none,
-          hintText: 'Select Role',
+          hintText: s.selectRole,
           hintStyle: TextStyle(color: AppColors.grey, fontSize: 14.sp),
         ),
         style: TextStyle(

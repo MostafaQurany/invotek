@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/core/cubits/permissions_cubit.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class HomeDashboardSectionShortcut extends StatefulWidget {
@@ -68,9 +67,10 @@ class _HomeDashboardSectionShortcutState
   void _onTap() {
     final permissionsCubit = context.read<PermissionsCubit>();
     final hasPermission = permissionsCubit.hasPermission(widget.permissionKey);
-    
+
     if (hasPermission) {
-      context.read<NavigationCubit>().navigateToRoute(widget.route);
+      // context.read<NavigationCubit>().navigateToRoute(widget.route);
+      Navigator.pushNamed(context, widget.route);
     } else {
       _showPermissionDeniedSnackBar();
     }
@@ -129,15 +129,16 @@ class _HomeDashboardSectionShortcutState
               child: BlocBuilder<PermissionsCubit, PermissionsState>(
                 builder: (context, state) {
                   final hasPermission = state.maybeWhen(
-                    loaded: (permissions) => permissions.hasPermission(widget.permissionKey),
+                    loaded: (permissions) =>
+                        permissions.hasPermission(widget.permissionKey),
                     orElse: () => true, // افتراضياً نعرض العنصر
                   );
-                  
+
                   return Container(
                     height: 55.h,
                     decoration: BoxDecoration(
-                      color: hasPermission 
-                          ? AppColors.primary 
+                      color: hasPermission
+                          ? AppColors.primary
                           : AppColors.primary.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(12.r),
                     ),
@@ -150,7 +151,7 @@ class _HomeDashboardSectionShortcutState
                             angle: 0.5236, // 30 degrees in radians
                             child: Icon(
                               widget.icon,
-                              color: hasPermission 
+                              color: hasPermission
                                   ? AppColors.white.withValues(alpha: 0.3)
                                   : AppColors.white.withValues(alpha: 0.2),
                               size: 40.sp,
@@ -161,8 +162,8 @@ class _HomeDashboardSectionShortcutState
                           child: Text(
                             widget.title,
                             style: TextStyle(
-                              color: hasPermission 
-                                  ? AppColors.white 
+                              color: hasPermission
+                                  ? AppColors.white
                                   : AppColors.white.withValues(alpha: 0.8),
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,

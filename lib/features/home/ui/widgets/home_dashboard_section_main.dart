@@ -80,6 +80,8 @@ class HomeDashboardSectionMain extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: AppColors.white,
               ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           Text(

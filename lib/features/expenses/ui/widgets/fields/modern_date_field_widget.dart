@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ModernDateFieldWidget extends StatelessWidget {
@@ -81,7 +81,7 @@ class ModernDateFieldWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 12.w),
                 Text(
-                  DateFormat('MMM dd, yyyy').format(selectedDate),
+                  DateFormatter.toMonthDateFormat(selectedDate),
                   style: TextStyle(
                     fontSize: 14.sp,
                     color: AppColors.textPrimary,

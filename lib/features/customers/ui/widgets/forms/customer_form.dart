@@ -204,7 +204,7 @@ class CustomerFormState extends State<CustomerForm> {
     }
 
     if (!RegExp(r'^[+]?[\d\s\-\(\)]{7,}$').hasMatch(value.trim())) {
-      return 'Invalid phone number format';
+      return S.of(context).customersInvalidPhoneFormat;
     }
 
     return null;

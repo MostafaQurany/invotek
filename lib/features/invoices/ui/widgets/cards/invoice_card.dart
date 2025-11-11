@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -55,7 +57,8 @@ class InvoiceCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            invoice.invoiceNumber ?? "Invoice Number",
+                            invoice.invoiceNumber ??
+                                S.of(context).invoicesInvoiceNumber,
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
@@ -64,7 +67,8 @@ class InvoiceCard extends StatelessWidget {
                           ),
                           SizedBox(height: 4.h),
                           Text(
-                            invoice.customerName ?? "Customer Name",
+                            invoice.customerName ??
+                                S.of(context).invoicesCustomerName,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.textSecondary,
@@ -98,9 +102,10 @@ class InvoiceCard extends StatelessWidget {
                           ),
                           SizedBox(height: 2.h),
                           Text(
-                            NumberFormat.currency(
-                              symbol: 'ر.س',
-                            ).format(double.tryParse(invoice.total ?? '0.00') ?? 0),
+                            CurrencyFormatter.formatCurrencyString(
+                              invoice.total,
+                              context,
+                            ),
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w600,
@@ -221,12 +226,7 @@ class InvoiceCard extends StatelessWidget {
   }
 
   String _formatDate(String dateString) {
-    try {
-      final date = DateTime.parse(dateString);
-      return DateFormat('dd/MM/yyyy').format(date);
-    } catch (e) {
-      return dateString;
-    }
+    return DateFormatter.apiStringToDisplayFormat(dateString) ?? dateString;
   }
 
   IconData _getPaymentMethodIcon(String paymentMethod) {

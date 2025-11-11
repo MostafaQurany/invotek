@@ -333,6 +333,23 @@ abstract class ApiClient {
     @Query('sort_order') String? sortOrder,
   });
 
+  // عرض الفواتير الآجلة | Credit Invoices
+  @GET(ApiConstants.creditInvoices)
+  Future<GetAllInvoicesResponse> getCreditInvoices({
+    @Query('search') String? search,
+    @Query('status') String? status,
+    @Query('customer_id') int? customerId,
+    @Query('payment_method') String? paymentMethod,
+    @Query('date_from') String? dateFrom,
+    @Query('date_to') String? dateTo,
+    @Query('min_amount') double? minAmount,
+    @Query('max_amount') double? maxAmount,
+    @Query('page') int? page,
+    @Query('limit') int? limit,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
+  });
+
   // عرض فاتورة | Show Invoice
   @GET(ApiConstants.invoiceById)
   Future<GetInvoiceResponse> getInvoiceById(@Path('id') int id);
@@ -376,4 +393,36 @@ abstract class ApiClient {
   // Permissions
   @GET(ApiConstants.rolePermissions)
   Future<PermissionsResponse> getRolePermissions(@Path('roleId') int roleId);
+
+  // Notifications
+  @GET(ApiConstants.notifications)
+  Future<dynamic> getNotifications({
+    @Query('search') String? search,
+    @Query('type') String? type,
+    @Query('is_read') bool? isRead,
+    @Query('date_from') String? dateFrom,
+    @Query('date_to') String? dateTo,
+    @Query('per_page') int? perPage,
+    @Query('sort_by') String? sortBy,
+    @Query('sort_order') String? sortOrder,
+    @Query('page') int? page,
+  });
+
+  @GET(ApiConstants.notificationStats)
+  Future<dynamic> getNotificationStats();
+
+  @GET(ApiConstants.notificationById)
+  Future<dynamic> getNotificationById(@Path('id') int id);
+
+  @POST(ApiConstants.markNotificationAsRead)
+  Future<dynamic> markNotificationAsRead(@Path('id') int id);
+
+  @POST(ApiConstants.markAllNotificationsAsRead)
+  Future<dynamic> markAllNotificationsAsRead();
+
+  @DELETE(ApiConstants.notificationById)
+  Future<dynamic> deleteNotification(@Path('id') int id);
+
+  @DELETE(ApiConstants.clearReadNotifications)
+  Future<dynamic> clearReadNotifications();
 }

@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/customers/constants/customers_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class CustomerOptionsBottomSheet extends StatelessWidget {
   final CustomerModel customer;
@@ -33,27 +35,47 @@ class CustomerOptionsBottomSheet extends StatelessWidget {
   }
 
   Widget _buildOptions(BuildContext context) {
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      CustomersPermissions.view,
+    );
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      CustomersPermissions.edit,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      CustomersPermissions.delete,
+    );
+
     return Column(
       children: [
         _buildOptionTile(
           icon: Icons.visibility,
-          title: S.of(context).viewDetails,
+          title: s.viewDetails,
           color: AppColors.primary,
-          onTap: onViewDetails,
+          onTap: hasViewPermission ? onViewDetails : null,
+          hasPermission: hasViewPermission,
+          permissionMessage: s.customersNoPermissionToAct,
         ),
         Divider(color: Colors.grey[300]),
         _buildOptionTile(
           icon: Icons.edit,
-          title: S.of(context).editCustomer,
+          title: s.editCustomer,
           color: AppColors.secondary,
-          onTap: onEdit,
+          onTap: hasEditPermission ? onEdit : null,
+          hasPermission: hasEditPermission,
+          permissionMessage: s.customersNoPermissionToAct,
         ),
         Divider(color: Colors.grey[300]),
         _buildOptionTile(
           icon: Icons.delete,
-          title: S.of(context).deleteCustomer,
+          title: s.deleteCustomer,
           color: AppColors.error,
-          onTap: onDelete,
+          onTap: hasDeletePermission ? onDelete : null,
+          hasPermission: hasDeletePermission,
+          permissionMessage: s.customersNoPermissionToAct,
         ),
       ],
     );
@@ -63,13 +85,27 @@ class CustomerOptionsBottomSheet extends StatelessWidget {
     required IconData icon,
     required String title,
     required Color color,
-    required VoidCallback onTap,
+    required VoidCallback? onTap,
+    required bool hasPermission,
+    required String permissionMessage,
   }) {
-    return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(title),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-      onTap: onTap,
+    return Tooltip(
+      message: hasPermission ? '' : permissionMessage,
+      child: ListTile(
+        leading: Icon(
+          hasPermission ? icon : Icons.lock_outline,
+          color: hasPermission ? color : color.withOpacity(0.5),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: hasPermission ? null : color.withOpacity(0.5),
+          ),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+        onTap: onTap,
+        enabled: hasPermission,
+      ),
     );
   }
 }

@@ -13,6 +13,8 @@ import 'package:invotek/features/expenses/ui/widgets/headers/edit_exoense_catego
 import 'package:invotek/features/expenses/ui/widgets/preview/category_preview_widget.dart';
 import 'package:invotek/features/expenses/ui/widgets/sections/add_category_bottom_actions.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class EditExpenseCategoryScreen extends StatefulWidget {
   final ExpenseCategoryModel category;
@@ -72,6 +74,55 @@ class _EditExpenseCategoryScreenState extends State<EditExpenseCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ExpenseCategoriesPermissions.edit,
+    );
+
+    if (!hasEditPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.expensesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.expensesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       body: BlocListener<ExpenseCategoriesCubit, ExpenseCategoriesState>(
@@ -110,7 +161,7 @@ class _EditExpenseCategoryScreenState extends State<EditExpenseCategoryScreen> {
                   messenger.hideCurrentSnackBar();
                   messenger.showSnackBar(
                     SnackBar(
-                      content: Text('Error: $error'),
+                      content: Text(s.expensesErrorOccurred(error.toString())),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(

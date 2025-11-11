@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invotek/core/widgets/app_loading_screen.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class AuthLoadingScreen extends StatelessWidget {
   const AuthLoadingScreen({super.key});
@@ -9,7 +10,7 @@ class AuthLoadingScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return AppLoadingScreen(
-      message: 'Loading...',
+      message: S.of(context).loading,
       indicatorColor: colorScheme.primary,
     );
   }

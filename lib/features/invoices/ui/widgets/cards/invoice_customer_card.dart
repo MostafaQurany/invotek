@@ -73,15 +73,15 @@ class InvoiceCustomerCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (onCustomerTap != null)
-                IconButton(
-                  onPressed: onCustomerTap,
-                  icon: Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.primary,
-                    size: 16.sp,
-                  ),
-                ),
+              // if (onCustomerTap != null)
+              //   IconButton(
+              //     onPressed: onCustomerTap,
+              //     icon: Icon(
+              //       Icons.arrow_forward_ios,
+              //       color: AppColors.primary,
+              //       size: 16.sp,
+              //     ),
+              //   ),
             ],
           ),
 
@@ -125,7 +125,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                 _buildDetailRow(
                   icon: Icons.receipt,
                   label: S.of(context).taxNumber,
-                  value: customer.taxNumber ?? "Customer Tax Number"  ,
+                  value: customer.taxNumber ?? "Customer Tax Number",
                 ),
             ],
           ),

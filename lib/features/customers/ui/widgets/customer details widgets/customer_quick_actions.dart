@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class CustomerQuickActions extends StatelessWidget {
   final VoidCallback onCall;
@@ -19,6 +20,7 @@ class CustomerQuickActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedEntryWidget(
       delay: Duration(milliseconds: 200),
       child: Container(
@@ -26,15 +28,15 @@ class CustomerQuickActions extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildActionButton(icon: Icons.phone, label: 'Call', onTap: onCall),
+            _buildActionButton(icon: Icons.phone, label: s.customersCall, onTap: onCall),
             _buildActionButton(
               icon: Icons.email,
-              label: 'Email',
+              label: s.email,
               onTap: onEmail,
             ),
             _buildActionButton(
               icon: Icons.receipt,
-              label: 'Invoices',
+              label: s.invoices,
               onTap: onInvoices,
             ),
             // _buildActionButton(

@@ -54,35 +54,35 @@ class CustomersFiltersSliver extends StatelessWidget {
                 FilterOptionExtensions.custom('all_company', s.all),
                 FilterOptionExtensions.custom(
                   'tech_company',
-                  'شركة التقنية المتقدمة',
+                  s.customersCompanyTech,
                 ),
                 FilterOptionExtensions.custom(
                   'finance_company',
-                  'مؤسسة الخدمات المالية',
+                  s.customersCompanyFinance,
                 ),
                 FilterOptionExtensions.custom(
                   'construction_company',
-                  'شركة البناء والتطوير',
+                  s.customersCompanyConstruction,
                 ),
                 FilterOptionExtensions.custom(
                   'education_company',
-                  'مؤسسة التعليم الحديث',
+                  s.customersCompanyEducation,
                 ),
                 FilterOptionExtensions.custom(
                   'tourism_company',
-                  'شركة السياحة والترفيه',
+                  s.customersCompanyTourism,
                 ),
                 FilterOptionExtensions.custom(
                   'healthcare_company',
-                  'مؤسسة الرعاية الصحية',
+                  s.customersCompanyHealthcare,
                 ),
                 FilterOptionExtensions.custom(
                   'transport_company',
-                  'شركة النقل واللوجستيات',
+                  s.customersCompanyTransport,
                 ),
                 FilterOptionExtensions.custom(
                   'ecommerce_company',
-                  'مؤسسة التجارة الإلكترونية',
+                  s.customersCompanyEcommerce,
                 ),
               ],
               onChanged: onCompanyChanged,

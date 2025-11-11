@@ -33,126 +33,165 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m5(number) => "Change payment method for invoice ${number}";
 
-  static String m6(name) =>
-      "Are you sure you want to delete customer \"${name}\"?";
+  static String m6(count) => "Clients (${count})";
 
-  static String m7(name) => "Customer \"${name}\" created successfully";
+  static String m7(clientName) =>
+      "Are you sure you want to delete client \"${clientName}\"?";
 
-  static String m8(name) => "Customer \"${name}\" updated successfully";
+  static String m8(clientName) => "Edit client data \"${clientName}\"";
 
-  static String m9(error) => "Data conversion error: ${error}";
+  static String m9(error) => "Error occurred while creating client: ${error}";
 
-  static String m10(name) =>
-      "Are you sure you want to delete category \"${name}\"?";
+  static String m10(error) => "Error occurred while updating client: ${error}";
 
   static String m11(name) =>
       "Are you sure you want to delete customer \"${name}\"?";
 
-  static String m12(name) =>
+  static String m12(name) => "Customer \"${name}\" created successfully";
+
+  static String m13(name) => "Customer \"${name}\" updated successfully";
+
+  static String m14(error) => "Data conversion error: ${error}";
+
+  static String m15(name) =>
+      "Are you sure you want to delete category \"${name}\"?";
+
+  static String m16(name) =>
+      "Are you sure you want to delete customer \"${name}\"?";
+
+  static String m17(name) =>
       "Are you sure you want to delete product \"${name}\"?";
 
-  static String m13(name) => "Are you sure you want to delete user ${name}?";
+  static String m18(name) => "Are you sure you want to delete user ${name}?";
 
-  static String m14(number) => "Duplicate invoice ${number}";
+  static String m19(number) => "Duplicate invoice ${number}";
 
-  static String m15(name) => "Edit client data for \"${name}\"";
+  static String m20(name) => "Edit client data for \"${name}\"";
 
-  static String m16(error) => "Error creating client: ${error}";
+  static String m21(error) => "Error creating client: ${error}";
 
-  static String m17(error) => "Failed to create file: ${error}";
+  static String m22(error) => "Failed to create file: ${error}";
 
-  static String m18(error) => "Error: ${error}";
+  static String m23(error) => "Error: ${error}";
 
-  static String m19(error) => "Error deleting client: ${error}";
+  static String m24(error) => "Error deleting client: ${error}";
 
-  static String m20(error) => "Error deleting clients: ${error}";
+  static String m25(error) => "Error deleting clients: ${error}";
 
-  static String m21(error) => "Failed to delete invoice: ${error}";
+  static String m26(error) => "Failed to delete invoice: ${error}";
 
-  static String m22(error) => "Error loading clients: ${error}";
+  static String m27(error) => "Error loading clients: ${error}";
 
-  static String m23(error) => "Error loading statistics: ${error}";
+  static String m28(error) => "Error loading statistics: ${error}";
 
-  static String m24(error) => "Error: ${error}";
+  static String m29(error) => "Error: ${error}";
 
-  static String m25(message) => "Error Occurred: ${message}";
+  static String m30(message) => "Error Occurred: ${message}";
 
-  static String m26(error) => "Failed to print invoice: ${error}";
+  static String m31(error) => "Failed to print invoice: ${error}";
 
-  static String m27(error) => "Failed to send invoice: ${error}";
+  static String m32(error) => "Failed to send invoice: ${error}";
 
-  static String m28(error) => "Failed to share invoice: ${error}";
+  static String m33(error) => "Failed to share invoice: ${error}";
 
-  static String m29(error) => "Error updating client: ${error}";
+  static String m34(error) => "Error updating client: ${error}";
 
-  static String m30(error) => "Error updating client status: ${error}";
+  static String m35(error) => "Error updating client status: ${error}";
 
-  static String m31(error) => "Failed to update status: ${error}";
+  static String m36(error) => "Failed to update status: ${error}";
 
-  static String m32(error) => "Failed to add role: ${error}";
+  static String m37(expenseTitle) =>
+      "Are you sure you want to delete expense \"${expenseTitle}\"? This action cannot be undone.";
 
-  static String m33(error) => "Failed to delete role: ${error}";
+  static String m38(error) => "Error: ${error}";
 
-  static String m34(error) => "Failed to load roles and permissions: ${error}";
+  static String m39(status) => "Status: ${status}";
 
-  static String m35(error) => "Failed to load user permissions: ${error}";
+  static String m40(error) => "Failed to add role: ${error}";
 
-  static String m36(error) => "Failed to update role: ${error}";
+  static String m41(error) => "Failed to delete role: ${error}";
 
-  static String m37(error) => "Failed to update user permissions: ${error}";
+  static String m42(error) => "Failed to load roles and permissions: ${error}";
 
-  static String m38(field) => "${field} is required";
+  static String m43(error) => "Failed to load user permissions: ${error}";
 
-  static String m39(number, timestamp) => "Invoice_${number}_${timestamp}";
+  static String m44(error) => "Failed to update role: ${error}";
 
-  static String m40(path) => "File saved to: ${path}";
+  static String m45(error) => "Failed to update user permissions: ${error}";
 
-  static String m41(number) => "Invoice Number: ${number}";
+  static String m46(field) => "${field} is required";
 
-  static String m42(status) => "Invoice status updated to: ${status}";
+  static String m47(number, timestamp) => "Invoice_${number}_${timestamp}";
 
-  static String m43(name, quantity, price, total) =>
+  static String m48(path) => "File saved to: ${path}";
+
+  static String m49(deviceType) => "Device Type: ${deviceType}";
+
+  static String m50(height) => "Height: ${height}px";
+
+  static String m51(featureName) =>
+      "You don\'t have permission to access ${featureName}";
+
+  static String m52(ratio) => "Pixel Ratio: ${ratio}";
+
+  static String m53(version) => "Version ${version}";
+
+  static String m54(width) => "Width: ${width}px";
+
+  static String m55(number) => "Invoice Number: ${number}";
+
+  static String m56(status) => "Invoice status updated to: ${status}";
+
+  static String m57(number) => "Invoice ${number}";
+
+  static String m58(name, quantity, price, total) =>
       "${name}\t\t${quantity}\t${price}\t${total}";
 
-  static String m44(name) => "Loading product details...";
+  static String m59(name) => "Loading product details...";
 
-  static String m45(feature) =>
+  static String m60(feature) =>
       "Sorry, you don\'t have permission to access ${feature}";
 
-  static String m46(email) => "Opening email to ${email}";
+  static String m61(email) => "Opening email to ${email}";
 
-  static String m47(separator, number, date, status, customer, contact, items,
+  static String m62(separator, number, date, status, customer, contact, items,
           subtotal, tax, total) =>
       "Invoice\n${separator}\nInvoice Number: ${number}\nDate: ${date}\nStatus: ${status}\n\nCustomer Information:\nName: ${customer}\n${contact}\n\nInvoice Items:\n${items}\n\nTotals:\nSubtotal: ${subtotal} SAR\n${tax}\nTotal: ${total} SAR\n\n${separator}\nThank you for your business\nThis invoice was created by Invotek App\n${separator}";
 
-  static String m48(seconds) => "Resend in ${seconds} seconds";
+  static String m63(name) =>
+      "Are you sure you want to delete category \"${name}\"?";
 
-  static String m49(number, customer, date, amount, status) =>
+  static String m64(seconds) => "Resend in ${seconds} seconds";
+
+  static String m65(number, customer, date, amount, status) =>
       "Invoice Number: ${number}\nCustomer: ${customer}\nDate: ${date}\nAmount: ${amount} SAR\nStatus: ${status}\n\nCreated by Invotek App";
 
-  static String m50(count) => "Show All Items (${count})";
+  static String m66(count) => "Show All Items (${count})";
 
-  static String m51(status) => "Status: ${status}";
+  static String m67(status) => "Status: ${status}";
 
-  static String m52(amount) => "Subtotal: ${amount} SAR";
+  static String m68(amount) => "Subtotal: ${amount} SAR";
 
-  static String m53(amount) => "Tax: ${amount} SAR";
+  static String m69(amount) => "Tax: ${amount} SAR";
 
-  static String m54(number) => "Tax UID for invoice ${number}:";
+  static String m70(number) => "Tax UID for invoice ${number}:";
 
-  static String m55(amount) => "Total: ${amount} SAR";
+  static String m71(amount) => "Total: ${amount} SAR";
 
-  static String m56(email) => "Enter the code sent to ${email}";
+  static String m72(name) =>
+      "Are you sure you want to delete the role \"${name}\"?";
 
-  static String m57(name) => "View customer details: ${name}";
+  static String m73(email) => "Enter the code sent to ${email}";
 
-  static String m58(name) => "View item details: ${name}";
+  static String m74(name) => "View customer details: ${name}";
 
-  static String m59(name) => "Viewing invoices for ${name}";
+  static String m75(name) => "View item details: ${name}";
 
-  static String m60(name) => "Viewing orders for ${name}";
+  static String m76(name) => "Viewing invoices for ${name}";
 
-  static String m61(name) => "Welcome ${name}, 👋";
+  static String m77(name) => "Viewing orders for ${name}";
+
+  static String m78(name) => "Welcome ${name}, 👋";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -161,6 +200,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Account deleted successfully"),
         "accountSettings":
             MessageLookupByLibrary.simpleMessage("Account Settings"),
+        "accountStatus": MessageLookupByLibrary.simpleMessage("Account Status"),
         "accountant": MessageLookupByLibrary.simpleMessage("Accountant"),
         "accountantDescription": MessageLookupByLibrary.simpleMessage(
             "Manages invoices, expenses and financial reports"),
@@ -168,6 +208,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "actionRequired":
             MessageLookupByLibrary.simpleMessage("Action is required"),
         "actionType": MessageLookupByLibrary.simpleMessage("Action Type"),
+        "activate": MessageLookupByLibrary.simpleMessage("Activate"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
         "activeStatus": MessageLookupByLibrary.simpleMessage("Active"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
@@ -197,6 +238,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addFirstItem": MessageLookupByLibrary.simpleMessage("Add First Item"),
         "addFirstProduct":
             MessageLookupByLibrary.simpleMessage("Add first product"),
+        "addFirstUser": MessageLookupByLibrary.simpleMessage("Add First User"),
         "addFromProducts":
             MessageLookupByLibrary.simpleMessage("Add from Products"),
         "addInvoice": MessageLookupByLibrary.simpleMessage("Add Invoice"),
@@ -245,6 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allInvoices": MessageLookupByLibrary.simpleMessage("All Invoices"),
         "allPaymentMethods":
             MessageLookupByLibrary.simpleMessage("All Payment Methods"),
+        "allRoles": MessageLookupByLibrary.simpleMessage("All Roles"),
         "allStatus": MessageLookupByLibrary.simpleMessage("All Status"),
         "allStatuses": MessageLookupByLibrary.simpleMessage("All Statuses"),
         "alreadyHaveAnAccount":
@@ -268,8 +311,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureDelete": m2,
         "areYouSureDeleteClient": m3,
         "ascending": MessageLookupByLibrary.simpleMessage("Ascending"),
+        "authConfirmPasswordHint":
+            MessageLookupByLibrary.simpleMessage("Enter password confirmation"),
+        "authCopyCodeFromEmail": MessageLookupByLibrary.simpleMessage(
+            "Copy the code from email and paste it here"),
         "authError": MessageLookupByLibrary.simpleMessage(
             "Login failed. Please check your email and password."),
+        "authLoadingComplete":
+            MessageLookupByLibrary.simpleMessage("Loading complete!"),
+        "authLoadingDashboard":
+            MessageLookupByLibrary.simpleMessage("Loading dashboard data..."),
+        "authLoadingError":
+            MessageLookupByLibrary.simpleMessage("Loading error"),
+        "authLoadingStatistics":
+            MessageLookupByLibrary.simpleMessage("Loading statistics..."),
+        "authPreparingHome":
+            MessageLookupByLibrary.simpleMessage("Preparing home screen..."),
+        "authSignInWithGoogle":
+            MessageLookupByLibrary.simpleMessage("Sign in with Google"),
+        "authSubscriptionRequired":
+            MessageLookupByLibrary.simpleMessage("Subscription required"),
         "available": MessageLookupByLibrary.simpleMessage("Available"),
         "backToCategories":
             MessageLookupByLibrary.simpleMessage("Back to Categories"),
@@ -354,15 +415,108 @@ class MessageLookup extends MessageLookupByLibrary {
         "clientName": MessageLookupByLibrary.simpleMessage("Client Name"),
         "clientUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Client updated successfully"),
+        "clientsActive": MessageLookupByLibrary.simpleMessage("Active"),
+        "clientsAddClient": MessageLookupByLibrary.simpleMessage("Add Client"),
+        "clientsAddFirstClient":
+            MessageLookupByLibrary.simpleMessage("Add First Client"),
+        "clientsAddNew": MessageLookupByLibrary.simpleMessage("Add New Client"),
+        "clientsAddNewDesc": MessageLookupByLibrary.simpleMessage(
+            "Fill the form below to add a new client to the system"),
+        "clientsAdditionalInfo":
+            MessageLookupByLibrary.simpleMessage("Additional Information"),
+        "clientsAddress": MessageLookupByLibrary.simpleMessage("Address"),
+        "clientsAll": MessageLookupByLibrary.simpleMessage("All"),
+        "clientsBasicInfo":
+            MessageLookupByLibrary.simpleMessage("Basic Information"),
+        "clientsCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "clientsClientAddedSuccess":
+            MessageLookupByLibrary.simpleMessage("Client added successfully"),
+        "clientsClientName":
+            MessageLookupByLibrary.simpleMessage("Client Name"),
+        "clientsClientUpdatedSuccess":
+            MessageLookupByLibrary.simpleMessage("Client updated successfully"),
+        "clientsCompanyInfo":
+            MessageLookupByLibrary.simpleMessage("Company Information"),
+        "clientsCompanyName":
+            MessageLookupByLibrary.simpleMessage("Company Name"),
+        "clientsContactPersonEmail":
+            MessageLookupByLibrary.simpleMessage("Contact Person Email"),
+        "clientsContactPersonInfo":
+            MessageLookupByLibrary.simpleMessage("Contact Person Information"),
+        "clientsContactPersonName":
+            MessageLookupByLibrary.simpleMessage("Contact Person Name"),
+        "clientsContactPersonPhone":
+            MessageLookupByLibrary.simpleMessage("Contact Person Phone"),
+        "clientsCount": m6,
+        "clientsCreatedAt": MessageLookupByLibrary.simpleMessage("Created At"),
+        "clientsDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "clientsDeleteConfirmation":
+            MessageLookupByLibrary.simpleMessage("Confirm Delete"),
+        "clientsDeleteConfirmationMessage": m7,
+        "clientsDetails":
+            MessageLookupByLibrary.simpleMessage("Client Details"),
+        "clientsEdit": MessageLookupByLibrary.simpleMessage("Edit Client"),
+        "clientsEditAction": MessageLookupByLibrary.simpleMessage("Edit"),
+        "clientsEditDesc": m8,
+        "clientsEmail": MessageLookupByLibrary.simpleMessage("Email"),
+        "clientsEnterAddress":
+            MessageLookupByLibrary.simpleMessage("Enter client address"),
+        "clientsEnterClientName":
+            MessageLookupByLibrary.simpleMessage("Enter client name"),
+        "clientsEnterCompanyName":
+            MessageLookupByLibrary.simpleMessage("Enter company name"),
+        "clientsEnterContactPersonEmail":
+            MessageLookupByLibrary.simpleMessage("Enter contact person email"),
+        "clientsEnterContactPersonName":
+            MessageLookupByLibrary.simpleMessage("Enter contact person name"),
+        "clientsEnterContactPersonPhone":
+            MessageLookupByLibrary.simpleMessage("Enter contact person phone"),
+        "clientsEnterEmail":
+            MessageLookupByLibrary.simpleMessage("Enter email"),
+        "clientsEnterNotes":
+            MessageLookupByLibrary.simpleMessage("Enter additional notes"),
+        "clientsEnterPhone":
+            MessageLookupByLibrary.simpleMessage("Enter phone number"),
+        "clientsEnterTaxNumber":
+            MessageLookupByLibrary.simpleMessage("Enter tax number"),
+        "clientsEnterWebsite":
+            MessageLookupByLibrary.simpleMessage("Enter website"),
+        "clientsErrorCreatingClient": m9,
+        "clientsErrorUpdatingClient": m10,
+        "clientsInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
         "clientsList": MessageLookupByLibrary.simpleMessage("Clients List"),
+        "clientsLockedAction":
+            MessageLookupByLibrary.simpleMessage("Locked Action"),
         "clientsManagement":
             MessageLookupByLibrary.simpleMessage("Clients Management"),
+        "clientsName": MessageLookupByLibrary.simpleMessage("Name"),
+        "clientsNoClientsFound":
+            MessageLookupByLibrary.simpleMessage("No clients found"),
+        "clientsNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "clientsNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "clientsNotes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "clientsPhone": MessageLookupByLibrary.simpleMessage("Phone"),
         "clientsProducts":
             MessageLookupByLibrary.simpleMessage("Clients and Products"),
         "clientsProductsDesc": MessageLookupByLibrary.simpleMessage(
             "Control of clients and products"),
         "clientsProductsTitle":
             MessageLookupByLibrary.simpleMessage("Clients and Products"),
+        "clientsSaveChanges":
+            MessageLookupByLibrary.simpleMessage("Save Changes"),
+        "clientsSearchClients":
+            MessageLookupByLibrary.simpleMessage("Search clients..."),
+        "clientsStartByAddingFirst": MessageLookupByLibrary.simpleMessage(
+            "Start by adding your first client to the system"),
+        "clientsStatus": MessageLookupByLibrary.simpleMessage("Status"),
+        "clientsTaxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
+        "clientsTotal": MessageLookupByLibrary.simpleMessage("Total"),
+        "clientsUpdatedAt":
+            MessageLookupByLibrary.simpleMessage("Last Updated"),
+        "clientsView": MessageLookupByLibrary.simpleMessage("View"),
+        "clientsWebsite": MessageLookupByLibrary.simpleMessage("Website"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "codeMustBe6Digits":
             MessageLookupByLibrary.simpleMessage("Code must be 6 digits"),
@@ -393,16 +547,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ability to edit company settings"),
         "completeRequiredFields":
             MessageLookupByLibrary.simpleMessage("Complete required fields"),
+        "completedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("completed successfully"),
         "configureTaxIntegration":
             MessageLookupByLibrary.simpleMessage("Configure Tax Integration"),
         "confirmDelete": MessageLookupByLibrary.simpleMessage("Confirm Delete"),
         "confirmDeleteCustomer":
             MessageLookupByLibrary.simpleMessage("Confirm Delete Customer"),
-        "confirmDeleteCustomerMessage": m6,
+        "confirmDeleteCustomerMessage": m11,
         "confirmNewPassword":
             MessageLookupByLibrary.simpleMessage("Confirm New Password"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
+        "confirmPasswordPlaceholder":
+            MessageLookupByLibrary.simpleMessage("Confirm password"),
         "confirmPasswordRequired": MessageLookupByLibrary.simpleMessage(
             "Password confirmation is required"),
         "connectionError":
@@ -438,9 +596,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create an account"),
         "createAndEditInvoices":
             MessageLookupByLibrary.simpleMessage("Create and edit invoices"),
+        "createCustomers":
+            MessageLookupByLibrary.simpleMessage("Create Customers"),
         "createEditInvoices":
             MessageLookupByLibrary.simpleMessage("Create and edit invoices"),
         "createExpense": MessageLookupByLibrary.simpleMessage("Create Expense"),
+        "createExpenses":
+            MessageLookupByLibrary.simpleMessage("Create Expenses"),
         "createInvoice": MessageLookupByLibrary.simpleMessage("Create Invoice"),
         "createInvoiceDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to create new invoice"),
@@ -456,6 +618,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create New Invoice"),
         "createNewInvoiceStepper":
             MessageLookupByLibrary.simpleMessage("Create New Invoice"),
+        "createProducts":
+            MessageLookupByLibrary.simpleMessage("Create Products"),
+        "createUsers": MessageLookupByLibrary.simpleMessage("Create Users"),
         "createYourFirstExpenseCategory": MessageLookupByLibrary.simpleMessage(
             "Create your first expense category"),
         "createdAt": MessageLookupByLibrary.simpleMessage("Created At"),
@@ -469,6 +634,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Creating Invoices"),
         "creationDate": MessageLookupByLibrary.simpleMessage("Creation Date"),
         "creditCard": MessageLookupByLibrary.simpleMessage("Credit Card"),
+        "creditInvoicesTitle":
+            MessageLookupByLibrary.simpleMessage("Credit Invoices"),
         "currency": MessageLookupByLibrary.simpleMessage("Dinar"),
         "currentPassword":
             MessageLookupByLibrary.simpleMessage("Current Password"),
@@ -628,7 +795,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customerCost": MessageLookupByLibrary.simpleMessage("Customer Cost"),
         "customerCreatedDate":
             MessageLookupByLibrary.simpleMessage("Created Date"),
-        "customerCreatedSuccessfully": m7,
+        "customerCreatedSuccessfully": m12,
         "customerCreativity":
             MessageLookupByLibrary.simpleMessage("Customer Creativity"),
         "customerCredentials":
@@ -1204,7 +1371,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customerType": MessageLookupByLibrary.simpleMessage("Customer Type"),
         "customerUniqueness":
             MessageLookupByLibrary.simpleMessage("Customer Uniqueness"),
-        "customerUpdatedSuccessfully": m8,
+        "customerUpdatedSuccessfully": m13,
         "customerUranium":
             MessageLookupByLibrary.simpleMessage("Customer Uranium"),
         "customerValidation":
@@ -1230,15 +1397,88 @@ class MessageLookup extends MessageLookupByLibrary {
         "customerZirconium":
             MessageLookupByLibrary.simpleMessage("Customer Zirconium"),
         "customers": MessageLookupByLibrary.simpleMessage("Customers"),
+        "customersAccountStatus":
+            MessageLookupByLibrary.simpleMessage("Account Status"),
+        "customersAppSettings":
+            MessageLookupByLibrary.simpleMessage("App Settings"),
         "customersCacheError":
             MessageLookupByLibrary.simpleMessage("Cache error - Customers"),
+        "customersCall": MessageLookupByLibrary.simpleMessage("Call"),
+        "customersCallPermissionDenied":
+            MessageLookupByLibrary.simpleMessage("Call permission denied"),
+        "customersCallPermissionRequired":
+            MessageLookupByLibrary.simpleMessage("Call Permission Required"),
+        "customersCallPermissionRequiredMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "You must allow call permission to use this feature. Please go to app settings and allow call permission."),
+        "customersCannotMakeCall":
+            MessageLookupByLibrary.simpleMessage("Cannot make call"),
+        "customersCannotOpenMap":
+            MessageLookupByLibrary.simpleMessage("Cannot open map"),
+        "customersCannotSendEmail":
+            MessageLookupByLibrary.simpleMessage("Cannot send email"),
+        "customersCompanyConstruction": MessageLookupByLibrary.simpleMessage(
+            "Construction & Development Company"),
+        "customersCompanyEcommerce":
+            MessageLookupByLibrary.simpleMessage("E-commerce Institution"),
+        "customersCompanyEducation": MessageLookupByLibrary.simpleMessage(
+            "Modern Education Institution"),
+        "customersCompanyFinance": MessageLookupByLibrary.simpleMessage(
+            "Financial Services Institution"),
+        "customersCompanyHealthcare":
+            MessageLookupByLibrary.simpleMessage("Healthcare Institution"),
+        "customersCompanyTech":
+            MessageLookupByLibrary.simpleMessage("Advanced Technology Company"),
+        "customersCompanyTourism": MessageLookupByLibrary.simpleMessage(
+            "Tourism & Entertainment Company"),
+        "customersCompanyTransport": MessageLookupByLibrary.simpleMessage(
+            "Transport & Logistics Company"),
+        "customersContactInformation":
+            MessageLookupByLibrary.simpleMessage("Contact Information"),
+        "customersCreated": MessageLookupByLibrary.simpleMessage("Created"),
+        "customersCustomerFormHelpDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "This form is divided into three steps:\n\n1. Basic Information\n2. Address Information\n3. Additional Information"),
+        "customersDeleteAction": MessageLookupByLibrary.simpleMessage("Delete"),
+        "customersEditCustomerAction":
+            MessageLookupByLibrary.simpleMessage("Edit Customer"),
+        "customersEmailSubject":
+            MessageLookupByLibrary.simpleMessage("Message from Invotek App"),
+        "customersInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+        "customersInvalidPhoneFormat":
+            MessageLookupByLibrary.simpleMessage("Invalid phone number format"),
+        "customersLastFiveInvoices":
+            MessageLookupByLibrary.simpleMessage("The last 5 invoices"),
+        "customersLastUpdated":
+            MessageLookupByLibrary.simpleMessage("Last Updated"),
         "customersList": MessageLookupByLibrary.simpleMessage("Customers List"),
         "customersLoadError":
             MessageLookupByLibrary.simpleMessage("Error loading customers"),
+        "customersLoadingMore":
+            MessageLookupByLibrary.simpleMessage("Loading more..."),
+        "customersLocationPermissionDenied":
+            MessageLookupByLibrary.simpleMessage("Location permission denied"),
+        "customersLocationPermissionRequired":
+            MessageLookupByLibrary.simpleMessage(
+                "Location Permission Required"),
+        "customersLocationPermissionRequiredMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "You must allow location permission to use this feature. Please go to app settings and allow location permission."),
+        "customersLockedAction":
+            MessageLookupByLibrary.simpleMessage("Locked Action"),
         "customersManagement":
             MessageLookupByLibrary.simpleMessage("Customers"),
+        "customersMap": MessageLookupByLibrary.simpleMessage("Map"),
         "customersNetworkError":
             MessageLookupByLibrary.simpleMessage("Network error - Customers"),
+        "customersNoInvoicesForCustomer": MessageLookupByLibrary.simpleMessage(
+            "No invoices for this customer"),
+        "customersNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "customersNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "customersNotProvided":
+            MessageLookupByLibrary.simpleMessage("Not provided"),
         "customersReport":
             MessageLookupByLibrary.simpleMessage("Customers Report"),
         "customersTimeoutError":
@@ -1247,6 +1487,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Unauthorized error - Customers"),
         "customersUnknownError":
             MessageLookupByLibrary.simpleMessage("Unknown error - Customers"),
+        "customersUnnamedCustomer":
+            MessageLookupByLibrary.simpleMessage("Unnamed Customer"),
         "customersValidationError": MessageLookupByLibrary.simpleMessage(
             "Validation error - Customers"),
         "dark": MessageLookupByLibrary.simpleMessage("Dark"),
@@ -1260,8 +1502,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Error loading data"),
         "dashboardErrorMessage": MessageLookupByLibrary.simpleMessage(
             "An error occurred while loading dashboard data"),
-        "dataConversionError": m9,
+        "dataConversionError": m14,
         "date": MessageLookupByLibrary.simpleMessage("Date"),
+        "deactivate": MessageLookupByLibrary.simpleMessage("Deactivate"),
         "debitCard": MessageLookupByLibrary.simpleMessage("Debit Card"),
         "decrease": MessageLookupByLibrary.simpleMessage("Decrease"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
@@ -1278,7 +1521,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete All Categories"),
         "deleteCategory":
             MessageLookupByLibrary.simpleMessage("Delete Category"),
-        "deleteCategoryConfirmation": m10,
+        "deleteCategoryConfirmation": m15,
         "deleteClient": MessageLookupByLibrary.simpleMessage("Delete Client"),
         "deleteClientDescription":
             MessageLookupByLibrary.simpleMessage("Ability to delete client"),
@@ -1286,10 +1529,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete Confirmation"),
         "deleteCustomer":
             MessageLookupByLibrary.simpleMessage("Delete Customer"),
-        "deleteCustomerConfirmation": m11,
+        "deleteCustomerConfirmation": m16,
+        "deleteCustomers":
+            MessageLookupByLibrary.simpleMessage("Delete Customers"),
         "deleteExpense": MessageLookupByLibrary.simpleMessage("Delete Expense"),
         "deleteExpenseDescription":
             MessageLookupByLibrary.simpleMessage("Ability to delete expense"),
+        "deleteExpenses":
+            MessageLookupByLibrary.simpleMessage("Delete Expenses"),
         "deleteInvoice": MessageLookupByLibrary.simpleMessage("Delete Invoice"),
         "deleteInvoiceConfirmation":
             MessageLookupByLibrary.simpleMessage("Delete Invoice Confirmation"),
@@ -1298,15 +1545,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteInvoiceWarning": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this invoice? This action cannot be undone."),
         "deleteProduct": MessageLookupByLibrary.simpleMessage("Delete Product"),
-        "deleteProductConfirmation": m12,
+        "deleteProductConfirmation": m17,
         "deleteProductDescription":
             MessageLookupByLibrary.simpleMessage("Ability to delete product"),
+        "deleteProducts":
+            MessageLookupByLibrary.simpleMessage("Delete Products"),
         "deleteUser": MessageLookupByLibrary.simpleMessage("Delete User"),
-        "deleteUserConfirmation": m13,
+        "deleteUserConfirmation": m18,
         "deleteUserDescription":
             MessageLookupByLibrary.simpleMessage("Ability to delete user"),
         "deleteUserPermanently":
             MessageLookupByLibrary.simpleMessage("Delete user permanently"),
+        "deleteUsers": MessageLookupByLibrary.simpleMessage("Delete Users"),
         "deletingInvoice":
             MessageLookupByLibrary.simpleMessage("Deleting invoice..."),
         "department": MessageLookupByLibrary.simpleMessage("Department"),
@@ -1319,6 +1569,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Device Information"),
         "deviceType": MessageLookupByLibrary.simpleMessage("Device Type"),
         "dimensions": MessageLookupByLibrary.simpleMessage("Dimensions"),
+        "dinar": MessageLookupByLibrary.simpleMessage("Dinar"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "dismiss": MessageLookupByLibrary.simpleMessage("Dismiss"),
         "dontHaveAnAccount":
@@ -1328,7 +1579,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duplicate": MessageLookupByLibrary.simpleMessage("Duplicate"),
         "duplicateInvoice":
             MessageLookupByLibrary.simpleMessage("Duplicate Invoice"),
-        "duplicateInvoiceMessage": m14,
+        "duplicateInvoiceMessage": m19,
         "easyInvoiceCustomerManagement": MessageLookupByLibrary.simpleMessage(
             "Easy invoice and customer management"),
         "ecommerceInstitution":
@@ -1336,15 +1587,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editCategory": MessageLookupByLibrary.simpleMessage("Edit Category"),
         "editClient": MessageLookupByLibrary.simpleMessage("Edit Client"),
-        "editClientData": m15,
+        "editClientData": m20,
         "editClientDescription":
             MessageLookupByLibrary.simpleMessage("Ability to edit client data"),
         "editCustomer": MessageLookupByLibrary.simpleMessage("Edit Customer"),
+        "editCustomers": MessageLookupByLibrary.simpleMessage("Edit Customers"),
         "editExpense": MessageLookupByLibrary.simpleMessage("Edit Expense"),
         "editExpenseCategory":
             MessageLookupByLibrary.simpleMessage("Edit Expense Category"),
         "editExpenseDescription":
             MessageLookupByLibrary.simpleMessage("Ability to edit expense"),
+        "editExpenses": MessageLookupByLibrary.simpleMessage("Edit Expenses"),
         "editInvoice": MessageLookupByLibrary.simpleMessage("Edit Invoice"),
         "editInvoiceDescription":
             MessageLookupByLibrary.simpleMessage("Ability to edit invoice"),
@@ -1352,22 +1605,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "editProduct": MessageLookupByLibrary.simpleMessage("Edit Product"),
         "editProductDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to edit product data"),
+        "editProducts": MessageLookupByLibrary.simpleMessage("Edit Products"),
         "editRole": MessageLookupByLibrary.simpleMessage("Edit Role"),
         "editUser": MessageLookupByLibrary.simpleMessage("Edit User"),
         "editUserDescription":
             MessageLookupByLibrary.simpleMessage("Ability to edit user data"),
         "editUserInformation":
             MessageLookupByLibrary.simpleMessage("Edit user information"),
+        "editUsers": MessageLookupByLibrary.simpleMessage("Edit Users"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
         "emailAddress": MessageLookupByLibrary.simpleMessage("Email Address"),
         "emailDetails": MessageLookupByLibrary.simpleMessage("Email Details"),
         "emailInvalid": MessageLookupByLibrary.simpleMessage("Invalid email"),
         "emailRequired":
             MessageLookupByLibrary.simpleMessage("Email is required"),
+        "employee": MessageLookupByLibrary.simpleMessage("Employee"),
         "enableDarkMode":
             MessageLookupByLibrary.simpleMessage("Enable Dark Mode"),
         "enableDisableProduct":
             MessageLookupByLibrary.simpleMessage("Enable/Disable Product"),
+        "enableOrDisableUserAccount": MessageLookupByLibrary.simpleMessage(
+            "Enable or disable user account"),
         "enableTaxIntegration":
             MessageLookupByLibrary.simpleMessage("Enable Tax Integration"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
@@ -1433,6 +1691,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter responsible person"),
         "enterCustomerTaxNumber":
             MessageLookupByLibrary.simpleMessage("Enter tax number"),
+        "enterDepartment":
+            MessageLookupByLibrary.simpleMessage("Enter department"),
         "enterDescription":
             MessageLookupByLibrary.simpleMessage("Enter description"),
         "enterDetailedAddress":
@@ -1459,6 +1719,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterPhone": MessageLookupByLibrary.simpleMessage("Enter phone"),
         "enterPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Enter phone number"),
+        "enterPosition": MessageLookupByLibrary.simpleMessage("Enter position"),
         "enterPostalCode":
             MessageLookupByLibrary.simpleMessage("Enter postal code"),
         "enterPrice": MessageLookupByLibrary.simpleMessage("Enter price"),
@@ -1498,29 +1759,29 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Error adding category"),
         "errorAddingProduct":
             MessageLookupByLibrary.simpleMessage("Error adding product"),
-        "errorCreatingClient": m16,
+        "errorCreatingClient": m21,
         "errorCreatingCustomer":
             MessageLookupByLibrary.simpleMessage("Error creating customer"),
-        "errorCreatingFile": m17,
-        "errorCreatingInvoice": m18,
+        "errorCreatingFile": m22,
+        "errorCreatingInvoice": m23,
         "errorCreatingProduct":
             MessageLookupByLibrary.simpleMessage("Error creating product"),
         "errorCreatingUser":
             MessageLookupByLibrary.simpleMessage("Error creating user: \$e"),
         "errorDeletingCategory":
             MessageLookupByLibrary.simpleMessage("Error deleting category"),
-        "errorDeletingClient": m19,
-        "errorDeletingClients": m20,
+        "errorDeletingClient": m24,
+        "errorDeletingClients": m25,
         "errorDeletingCustomer":
             MessageLookupByLibrary.simpleMessage("Error deleting customer"),
-        "errorDeletingInvoice": m21,
+        "errorDeletingInvoice": m26,
         "errorDeletingProduct":
             MessageLookupByLibrary.simpleMessage("Error deleting product"),
         "errorDeletingUser":
             MessageLookupByLibrary.simpleMessage("Error deleting user"),
         "errorLoadingCategories":
             MessageLookupByLibrary.simpleMessage("Error Loading Categories"),
-        "errorLoadingClients": m22,
+        "errorLoadingClients": m27,
         "errorLoadingCustomer":
             MessageLookupByLibrary.simpleMessage("Error loading customer"),
         "errorLoadingCustomers":
@@ -1535,29 +1796,29 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Error loading product data"),
         "errorLoadingProducts":
             MessageLookupByLibrary.simpleMessage("Error loading products"),
-        "errorLoadingStatistics": m23,
+        "errorLoadingStatistics": m28,
         "errorLoadingUsers":
             MessageLookupByLibrary.simpleMessage("Error loading users"),
-        "errorMessage": m24,
+        "errorMessage": m29,
         "errorOccurred": MessageLookupByLibrary.simpleMessage("Error Occurred"),
-        "errorOccurredWithMessage": m25,
+        "errorOccurredWithMessage": m30,
         "errorParsingUserData":
             MessageLookupByLibrary.simpleMessage("Error parsing user data"),
-        "errorPrintingInvoice": m26,
-        "errorSendingInvoice": m27,
-        "errorSharingInvoice": m28,
+        "errorPrintingInvoice": m31,
+        "errorSendingInvoice": m32,
+        "errorSharingInvoice": m33,
         "errorText": MessageLookupByLibrary.simpleMessage("Error Text"),
         "errorUpdatingCategory":
             MessageLookupByLibrary.simpleMessage("Error updating category"),
-        "errorUpdatingClient": m29,
-        "errorUpdatingClientStatus": m30,
+        "errorUpdatingClient": m34,
+        "errorUpdatingClientStatus": m35,
         "errorUpdatingCustomer":
             MessageLookupByLibrary.simpleMessage("Error updating customer"),
         "errorUpdatingInvoice":
             MessageLookupByLibrary.simpleMessage("Error updating invoice"),
         "errorUpdatingProduct":
             MessageLookupByLibrary.simpleMessage("Error updating product"),
-        "errorUpdatingStatus": m31,
+        "errorUpdatingStatus": m36,
         "exampleEmail":
             MessageLookupByLibrary.simpleMessage("example@email.com"),
         "examplePhone": MessageLookupByLibrary.simpleMessage("0500000000"),
@@ -1581,44 +1842,139 @@ class MessageLookup extends MessageLookupByLibrary {
         "expenseUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Expense updated successfully"),
         "expenses": MessageLookupByLibrary.simpleMessage("Expenses"),
+        "expensesAddFirstCategory":
+            MessageLookupByLibrary.simpleMessage("Add First Category"),
+        "expensesAddFirstExpense":
+            MessageLookupByLibrary.simpleMessage("Add First Expense"),
+        "expensesAllCategories":
+            MessageLookupByLibrary.simpleMessage("All Categories"),
+        "expensesAllCategoriesDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "All categories deleted successfully"),
+        "expensesAllStatus": MessageLookupByLibrary.simpleMessage("All Status"),
+        "expensesAreYouSureDeleteCategory":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure you want to delete this expense category?"),
+        "expensesAreYouSureDeleteExpense": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this expense?"),
         "expensesCacheError":
             MessageLookupByLibrary.simpleMessage("Cache error - Expenses"),
+        "expensesCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("Copied to clipboard"),
+        "expensesCreateExpenseCategories": MessageLookupByLibrary.simpleMessage(
+            "Create expense categories to organize your business expenses"),
+        "expensesCurrentCategories":
+            MessageLookupByLibrary.simpleMessage("Current Categories"),
+        "expensesDeleteAllCategories":
+            MessageLookupByLibrary.simpleMessage("Delete All Categories"),
+        "expensesDeleteAllCategoriesCount":
+            MessageLookupByLibrary.simpleMessage("Delete All Categories"),
+        "expensesDeleteCategory":
+            MessageLookupByLibrary.simpleMessage("Delete Category"),
+        "expensesDeleteExpense":
+            MessageLookupByLibrary.simpleMessage("Delete Expense"),
+        "expensesDeleteExpenseConfirmation": m37,
+        "expensesDeleting": MessageLookupByLibrary.simpleMessage("Deleting..."),
         "expensesDesc": MessageLookupByLibrary.simpleMessage(
             "Expense categories & Expense management"),
+        "expensesEditCategory":
+            MessageLookupByLibrary.simpleMessage("Edit Category"),
+        "expensesEditExpense":
+            MessageLookupByLibrary.simpleMessage("Edit Expense"),
+        "expensesErrorOccurred": m38,
+        "expensesErrorPrefix": MessageLookupByLibrary.simpleMessage("Error"),
+        "expensesExpenseDetailsHelpDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "This screen shows detailed information about the expense including financial details, payment information, and metadata."),
+        "expensesExpenseDetailsHelpTitle":
+            MessageLookupByLibrary.simpleMessage("Help"),
         "expensesList": MessageLookupByLibrary.simpleMessage("Expenses List"),
         "expensesLoadError":
             MessageLookupByLibrary.simpleMessage("Error loading expenses"),
+        "expensesLoading": MessageLookupByLibrary.simpleMessage("Loading..."),
+        "expensesLockedAction":
+            MessageLookupByLibrary.simpleMessage("Locked Action"),
         "expensesManagement":
             MessageLookupByLibrary.simpleMessage("Expenses & Categories"),
         "expensesNetworkError":
             MessageLookupByLibrary.simpleMessage("Network error - Expenses"),
+        "expensesNoCategoriesFoundMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "No categories found. You can now start creating new ones!"),
+        "expensesNoCategoriesToDelete":
+            MessageLookupByLibrary.simpleMessage("No categories to delete"),
+        "expensesNoCategoriesYet":
+            MessageLookupByLibrary.simpleMessage("No categories yet"),
+        "expensesNoDescription":
+            MessageLookupByLibrary.simpleMessage("No description"),
+        "expensesNoExpensesYet":
+            MessageLookupByLibrary.simpleMessage("No expenses yet"),
+        "expensesNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "expensesNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "expensesOrder": MessageLookupByLibrary.simpleMessage("Order"),
+        "expensesPaymentMethodBankTransfer":
+            MessageLookupByLibrary.simpleMessage("Bank Transfer"),
+        "expensesPaymentMethodCard":
+            MessageLookupByLibrary.simpleMessage("Credit/Debit Card"),
+        "expensesPaymentMethodCash":
+            MessageLookupByLibrary.simpleMessage("Cash"),
+        "expensesPaymentMethodCheck":
+            MessageLookupByLibrary.simpleMessage("Check"),
         "expensesReport":
             MessageLookupByLibrary.simpleMessage("Expenses Report"),
+        "expensesSearchCategories":
+            MessageLookupByLibrary.simpleMessage("Search categories..."),
+        "expensesSomethingWentWrong":
+            MessageLookupByLibrary.simpleMessage("Something went wrong"),
+        "expensesSortBy": MessageLookupByLibrary.simpleMessage("Sort by"),
+        "expensesSortByAmount": MessageLookupByLibrary.simpleMessage("Amount"),
+        "expensesSortByCreatedAt":
+            MessageLookupByLibrary.simpleMessage("Created At"),
+        "expensesSortByDate": MessageLookupByLibrary.simpleMessage("Date"),
+        "expensesSortByTitle": MessageLookupByLibrary.simpleMessage("Title"),
+        "expensesSortByUpdatedAt":
+            MessageLookupByLibrary.simpleMessage("Updated At"),
+        "expensesSortOrderAsc": MessageLookupByLibrary.simpleMessage("ASC"),
+        "expensesSortOrderDesc": MessageLookupByLibrary.simpleMessage("DESC"),
+        "expensesStartTrackingExpenses": MessageLookupByLibrary.simpleMessage(
+            "Start tracking your business expenses by adding your first expense"),
+        "expensesStatus": m39,
+        "expensesStatusLabel": MessageLookupByLibrary.simpleMessage("Status"),
+        "expensesThisActionCannotBeUndone":
+            MessageLookupByLibrary.simpleMessage(
+                "This action cannot be undone."),
         "expensesTimeoutError":
             MessageLookupByLibrary.simpleMessage("Timeout error - Expenses"),
         "expensesTitle": MessageLookupByLibrary.simpleMessage("Expenses"),
+        "expensesTryAgain": MessageLookupByLibrary.simpleMessage("Try Again"),
         "expensesUnauthorizedError": MessageLookupByLibrary.simpleMessage(
             "Unauthorized error - Expenses"),
+        "expensesUnknownCategory":
+            MessageLookupByLibrary.simpleMessage("Unknown Category"),
         "expensesUnknownError":
             MessageLookupByLibrary.simpleMessage("Unknown error - Expenses"),
         "expensesValidationError":
             MessageLookupByLibrary.simpleMessage("Validation error - Expenses"),
+        "expensesViewDetails":
+            MessageLookupByLibrary.simpleMessage("View Details"),
         "exportReports": MessageLookupByLibrary.simpleMessage("Export Reports"),
         "exportReportsDescription":
             MessageLookupByLibrary.simpleMessage("Ability to export reports"),
-        "failedToAddRole": m32,
-        "failedToDeleteRole": m33,
+        "failedToAddRole": m40,
+        "failedToDeleteRole": m41,
         "failedToGetUserData":
             MessageLookupByLibrary.simpleMessage("Failed to get user data"),
-        "failedToLoadRoles": m34,
-        "failedToLoadUserPermissions": m35,
-        "failedToUpdateRole": m36,
+        "failedToLoadRoles": m42,
+        "failedToLoadUserPermissions": m43,
+        "failedToUpdateRole": m44,
         "failedToUpdateUser":
             MessageLookupByLibrary.simpleMessage("Failed to update user"),
-        "failedToUpdateUserPermissions": m37,
-        "fieldIsRequired": m38,
-        "fileName": m39,
-        "fileSavedSuccessfully": m40,
+        "failedToUpdateUserPermissions": m45,
+        "fieldIsRequired": m46,
+        "fileName": m47,
+        "fileSavedSuccessfully": m48,
         "fillAllRequiredFields": MessageLookupByLibrary.simpleMessage(
             "Please fill in all required fields"),
         "fillFormToAddClient": MessageLookupByLibrary.simpleMessage(
@@ -1652,6 +2008,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
         "generatingPDF":
             MessageLookupByLibrary.simpleMessage("Generating PDF..."),
+        "goToSettings": MessageLookupByLibrary.simpleMessage("Go to Settings"),
         "googleSignInError":
             MessageLookupByLibrary.simpleMessage("Google sign in error"),
         "gotIt": MessageLookupByLibrary.simpleMessage("Got it!"),
@@ -1664,6 +2021,36 @@ class MessageLookup extends MessageLookupByLibrary {
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "high": MessageLookupByLibrary.simpleMessage("High"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "homeAccessDenied":
+            MessageLookupByLibrary.simpleMessage("Access Denied"),
+        "homeAddNewCustomer":
+            MessageLookupByLibrary.simpleMessage("Add New Customer"),
+        "homeAddNotificationsFeature": MessageLookupByLibrary.simpleMessage(
+            "Add notifications feature here"),
+        "homeAreYouSureLogout": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to logout?"),
+        "homeCreateNewInvoice":
+            MessageLookupByLibrary.simpleMessage("Create New Invoice"),
+        "homeDeviceInfo":
+            MessageLookupByLibrary.simpleMessage("Device Information"),
+        "homeDeviceType": m49,
+        "homeHeight": m50,
+        "homeLoadingDashboard":
+            MessageLookupByLibrary.simpleMessage("Loading dashboard data"),
+        "homeLockedAction":
+            MessageLookupByLibrary.simpleMessage("Locked Action"),
+        "homeNoPermissionToAccess": m51,
+        "homeNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "homeNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "homePhone": MessageLookupByLibrary.simpleMessage("Phone"),
+        "homePixelRatio": m52,
+        "homeTablet": MessageLookupByLibrary.simpleMessage("Tablet"),
+        "homeVersion": m53,
+        "homeViewAllInvoices":
+            MessageLookupByLibrary.simpleMessage("View All Invoices"),
+        "homeWidth": m54,
         "icon": MessageLookupByLibrary.simpleMessage("Icon"),
         "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
         "inactiveStatus": MessageLookupByLibrary.simpleMessage("Inactive"),
@@ -1711,7 +2098,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceManagement":
             MessageLookupByLibrary.simpleMessage("Invoice Management"),
         "invoiceNumber": MessageLookupByLibrary.simpleMessage("Invoice Number"),
-        "invoiceNumberLabel": m41,
+        "invoiceNumberLabel": m55,
         "invoiceOverdue": MessageLookupByLibrary.simpleMessage("Overdue"),
         "invoicePaid": MessageLookupByLibrary.simpleMessage("Paid"),
         "invoicePending": MessageLookupByLibrary.simpleMessage("Pending"),
@@ -1722,18 +2109,94 @@ class MessageLookup extends MessageLookupByLibrary {
         "invoiceStatistics":
             MessageLookupByLibrary.simpleMessage("Invoice Statistics"),
         "invoiceStatus": MessageLookupByLibrary.simpleMessage("Invoice Status"),
-        "invoiceStatusUpdated": m42,
+        "invoiceStatusUpdated": m56,
         "invoiceUnknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "invoiceUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Invoice updated successfully"),
         "invoices": MessageLookupByLibrary.simpleMessage("Invoices"),
+        "invoicesAll": MessageLookupByLibrary.simpleMessage("All"),
+        "invoicesApply": MessageLookupByLibrary.simpleMessage("Apply"),
+        "invoicesAscending": MessageLookupByLibrary.simpleMessage("Ascending"),
         "invoicesCacheError":
             MessageLookupByLibrary.simpleMessage("Cache error - Invoices"),
+        "invoicesCannotDeleteNonDraft": MessageLookupByLibrary.simpleMessage(
+            "Cannot delete this invoice because it is not a draft"),
+        "invoicesCustomerAddress":
+            MessageLookupByLibrary.simpleMessage("Customer Address"),
+        "invoicesCustomerEmail":
+            MessageLookupByLibrary.simpleMessage("Customer Email"),
+        "invoicesCustomerName":
+            MessageLookupByLibrary.simpleMessage("Customer Name"),
+        "invoicesCustomerNotes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "invoicesCustomerPhone":
+            MessageLookupByLibrary.simpleMessage("Customer Phone"),
+        "invoicesDescending":
+            MessageLookupByLibrary.simpleMessage("Descending"),
+        "invoicesDiscount": MessageLookupByLibrary.simpleMessage("Discount"),
+        "invoicesDownloadPDF":
+            MessageLookupByLibrary.simpleMessage("Download PDF"),
+        "invoicesDuplicateInvoice":
+            MessageLookupByLibrary.simpleMessage("Duplicate Invoice"),
+        "invoicesEmail": MessageLookupByLibrary.simpleMessage("Email"),
+        "invoicesFilterInvoices":
+            MessageLookupByLibrary.simpleMessage("Filter Invoices"),
+        "invoicesInvoiceNumber":
+            MessageLookupByLibrary.simpleMessage("Invoice Number"),
+        "invoicesInvoiceNumberPlaceholder": m57,
+        "invoicesItemDescriptionLabel":
+            MessageLookupByLibrary.simpleMessage("Description:"),
+        "invoicesItemDetails":
+            MessageLookupByLibrary.simpleMessage("Item Details:"),
+        "invoicesItemDetailsCopied": MessageLookupByLibrary.simpleMessage(
+            "Item details copied to clipboard"),
+        "invoicesItemDiscountLabel":
+            MessageLookupByLibrary.simpleMessage("Discount:"),
+        "invoicesItemNameLabel": MessageLookupByLibrary.simpleMessage("Name:"),
+        "invoicesItemPriceLabel":
+            MessageLookupByLibrary.simpleMessage("Price:"),
+        "invoicesItemQuantityLabel":
+            MessageLookupByLibrary.simpleMessage("Quantity:"),
+        "invoicesItemTaxAmountLabel":
+            MessageLookupByLibrary.simpleMessage("Tax Amount:"),
+        "invoicesItemTaxPercentageLabel":
+            MessageLookupByLibrary.simpleMessage("Tax Percentage:"),
+        "invoicesItemTotalLabel":
+            MessageLookupByLibrary.simpleMessage("Total:"),
         "invoicesList": MessageLookupByLibrary.simpleMessage("Invoices List"),
         "invoicesLoadError":
             MessageLookupByLibrary.simpleMessage("Error loading invoices"),
+        "invoicesLoadingInvoices":
+            MessageLookupByLibrary.simpleMessage("Loading invoices..."),
+        "invoicesLoadingMore":
+            MessageLookupByLibrary.simpleMessage("Loading more..."),
+        "invoicesLockedAction":
+            MessageLookupByLibrary.simpleMessage("Locked Action"),
         "invoicesNetworkError":
             MessageLookupByLibrary.simpleMessage("Network error - Invoices"),
+        "invoicesNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "invoicesNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "invoicesNoProductIdAvailable":
+            MessageLookupByLibrary.simpleMessage("No product ID available"),
+        "invoicesPending": MessageLookupByLibrary.simpleMessage("Pending"),
+        "invoicesPleaseFindAttachedInvoice":
+            MessageLookupByLibrary.simpleMessage(
+                "Please find attached your invoice."),
+        "invoicesProductInfo":
+            MessageLookupByLibrary.simpleMessage("Product Information:"),
+        "invoicesProductInformation":
+            MessageLookupByLibrary.simpleMessage("Product Information"),
+        "invoicesProductNameLabel":
+            MessageLookupByLibrary.simpleMessage("Product Name:"),
+        "invoicesQRCode": MessageLookupByLibrary.simpleMessage("QR Code"),
+        "invoicesScanQRCodeMessage": MessageLookupByLibrary.simpleMessage(
+            "You can scan this code to access invoice details"),
+        "invoicesSent": MessageLookupByLibrary.simpleMessage("Sent"),
+        "invoicesSortOrder": MessageLookupByLibrary.simpleMessage("Sort Order"),
+        "invoicesStatus": MessageLookupByLibrary.simpleMessage("Status"),
+        "invoicesTaxPercentage":
+            MessageLookupByLibrary.simpleMessage("Tax Percentage"),
         "invoicesTimeoutError":
             MessageLookupByLibrary.simpleMessage("Timeout error - Invoices"),
         "invoicesUnauthorizedError": MessageLookupByLibrary.simpleMessage(
@@ -1752,7 +2215,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemName": MessageLookupByLibrary.simpleMessage("Item Name"),
         "itemPrice": MessageLookupByLibrary.simpleMessage("Price"),
         "itemQuantity": MessageLookupByLibrary.simpleMessage("Quantity"),
-        "itemRow": m43,
+        "itemRow": m58,
         "itemSeparator": MessageLookupByLibrary.simpleMessage("-"),
         "itemTax": MessageLookupByLibrary.simpleMessage("Tax"),
         "itemTotal": MessageLookupByLibrary.simpleMessage("Total"),
@@ -1772,6 +2235,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastFiveInvoices":
             MessageLookupByLibrary.simpleMessage("Last 5 Invoices"),
         "lastInvoices": MessageLookupByLibrary.simpleMessage("Last Invoices"),
+        "lastLogin": MessageLookupByLibrary.simpleMessage("Last Login"),
         "lastUpdated": MessageLookupByLibrary.simpleMessage("Last Updated"),
         "light": MessageLookupByLibrary.simpleMessage("Light"),
         "link": MessageLookupByLibrary.simpleMessage("Link"),
@@ -1790,7 +2254,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loadingInvoices":
             MessageLookupByLibrary.simpleMessage("Loading Invoices..."),
         "loadingMore": MessageLookupByLibrary.simpleMessage("Loading more..."),
-        "loadingProductDetails": m44,
+        "loadingProductDetails": m59,
         "loadingProducts":
             MessageLookupByLibrary.simpleMessage("Loading products..."),
         "loadingUsers":
@@ -1812,6 +2276,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "mainTitle": MessageLookupByLibrary.simpleMessage("Main Title"),
         "manageCustomers":
             MessageLookupByLibrary.simpleMessage("Manage Customers"),
+        "manageExpensesAndBudgets":
+            MessageLookupByLibrary.simpleMessage("Manage expenses and budgets"),
         "manageInvoiceStep1": MessageLookupByLibrary.simpleMessage(
             "1. Use search and filters to find invoices"),
         "manageInvoiceStep2": MessageLookupByLibrary.simpleMessage(
@@ -1830,6 +2296,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ability to manage user permissions"),
         "manageProducts":
             MessageLookupByLibrary.simpleMessage("Manage Products"),
+        "manageSettings":
+            MessageLookupByLibrary.simpleMessage("Manage Settings"),
+        "manageUsersAndPermissions": MessageLookupByLibrary.simpleMessage(
+            "Manage users and permissions"),
         "manager": MessageLookupByLibrary.simpleMessage("Manager"),
         "managingInvoices":
             MessageLookupByLibrary.simpleMessage("Managing Invoices"),
@@ -1868,6 +2338,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "netProfit": MessageLookupByLibrary.simpleMessage("Net Profit"),
         "network": MessageLookupByLibrary.simpleMessage("Network"),
         "networkError": MessageLookupByLibrary.simpleMessage("Network error"),
+        "never": MessageLookupByLibrary.simpleMessage("Never"),
         "newCategoryDetails":
             MessageLookupByLibrary.simpleMessage("New Category Details"),
         "newCustomer": MessageLookupByLibrary.simpleMessage("New Customer"),
@@ -1909,7 +2380,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "noItemsAdded":
             MessageLookupByLibrary.simpleMessage("No items added yet"),
         "noName": MessageLookupByLibrary.simpleMessage("No name"),
-        "noPermissionMessage": m45,
+        "noNotesAvailable":
+            MessageLookupByLibrary.simpleMessage("No notes available"),
+        "noPermission": MessageLookupByLibrary.simpleMessage("Not allowed"),
+        "noPermissionMessage": m60,
+        "noPhone": MessageLookupByLibrary.simpleMessage("No Phone"),
         "noPrintersFound":
             MessageLookupByLibrary.simpleMessage("No printers found"),
         "noProductsFound":
@@ -1923,20 +2398,66 @@ class MessageLookup extends MessageLookupByLibrary {
         "noQRCodeAvailable": MessageLookupByLibrary.simpleMessage(
             "No QR code available for this invoice"),
         "noRole": MessageLookupByLibrary.simpleMessage("No role"),
+        "noStatus": MessageLookupByLibrary.simpleMessage("No Status"),
         "noTaxUIDAvailable": MessageLookupByLibrary.simpleMessage(
             "No tax UID available for this invoice"),
         "noUsersFound": MessageLookupByLibrary.simpleMessage("No users found"),
         "normalButton": MessageLookupByLibrary.simpleMessage("Normal Button"),
         "normalText": MessageLookupByLibrary.simpleMessage("Normal Text"),
         "notAMember": MessageLookupByLibrary.simpleMessage("Not a member?"),
+        "notAssigned": MessageLookupByLibrary.simpleMessage("Not assigned"),
+        "notAvailable": MessageLookupByLibrary.simpleMessage("Not available"),
+        "notProvided": MessageLookupByLibrary.simpleMessage("Not provided"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "notesHint": MessageLookupByLibrary.simpleMessage(
             "Any additional information or context"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "notificationsAdditionalData":
+            MessageLookupByLibrary.simpleMessage("Additional Data"),
+        "notificationsAll": MessageLookupByLibrary.simpleMessage("All"),
+        "notificationsClearRead":
+            MessageLookupByLibrary.simpleMessage("Clear Read"),
+        "notificationsClearReadConfirmation":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure you want to delete all read notifications?"),
+        "notificationsClearReadSuccess": MessageLookupByLibrary.simpleMessage(
+            "All read notifications cleared successfully"),
+        "notificationsDeleteConfirmation": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to delete this notification?"),
+        "notificationsDeleteNotification":
+            MessageLookupByLibrary.simpleMessage("Delete Notification"),
+        "notificationsDeleteSuccess": MessageLookupByLibrary.simpleMessage(
+            "Notification deleted successfully"),
+        "notificationsDetails":
+            MessageLookupByLibrary.simpleMessage("Notification Details"),
         "notificationsDisabled":
             MessageLookupByLibrary.simpleMessage("Notifications disabled"),
         "notificationsEnabled":
             MessageLookupByLibrary.simpleMessage("Notifications enabled"),
+        "notificationsMarkAllAsRead":
+            MessageLookupByLibrary.simpleMessage("Mark All as Read"),
+        "notificationsMarkAllAsReadSuccess":
+            MessageLookupByLibrary.simpleMessage(
+                "All notifications marked as read successfully"),
+        "notificationsMarkAsRead":
+            MessageLookupByLibrary.simpleMessage("Mark as Read"),
+        "notificationsMarkAsReadSuccess": MessageLookupByLibrary.simpleMessage(
+            "Notification marked as read successfully"),
+        "notificationsNoNotifications":
+            MessageLookupByLibrary.simpleMessage("No notifications"),
+        "notificationsRead": MessageLookupByLibrary.simpleMessage("Read"),
+        "notificationsSearchHint":
+            MessageLookupByLibrary.simpleMessage("Search notifications..."),
+        "notificationsTotal": MessageLookupByLibrary.simpleMessage("Total"),
+        "notificationsTypeInvoice":
+            MessageLookupByLibrary.simpleMessage("Invoice"),
+        "notificationsTypePayment":
+            MessageLookupByLibrary.simpleMessage("Payment"),
+        "notificationsTypeSystem":
+            MessageLookupByLibrary.simpleMessage("System"),
+        "notificationsTypeUserCreated":
+            MessageLookupByLibrary.simpleMessage("User Created"),
+        "notificationsUnread": MessageLookupByLibrary.simpleMessage("Unread"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "onboardingClients": MessageLookupByLibrary.simpleMessage(
             "Client and Product Management"),
@@ -1971,7 +2492,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Welcome to Invotek"),
         "onboardingWelcomeDesc": MessageLookupByLibrary.simpleMessage(
             "Integrated system for electronic invoice management with integration with the Jordanian national billing system"),
-        "openingEmail": m46,
+        "openingEmail": m61,
         "openingMap": MessageLookupByLibrary.simpleMessage("Opening map"),
         "operationCompletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Operation completed successfully"),
@@ -2091,7 +2612,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "printError": MessageLookupByLibrary.simpleMessage("Print error"),
         "printFailed": MessageLookupByLibrary.simpleMessage("Print failed"),
         "printInvoice": MessageLookupByLibrary.simpleMessage("Print Invoice"),
-        "printInvoiceText": m47,
+        "printInvoiceText": m62,
         "printOptions": MessageLookupByLibrary.simpleMessage("Print Options"),
         "printQuality": MessageLookupByLibrary.simpleMessage("Print Quality"),
         "printReceipt": MessageLookupByLibrary.simpleMessage("Print Receipt"),
@@ -2135,30 +2656,164 @@ class MessageLookup extends MessageLookupByLibrary {
         "productUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Product updated successfully"),
         "products": MessageLookupByLibrary.simpleMessage("Products"),
+        "productsAdd": MessageLookupByLibrary.simpleMessage("Add"),
+        "productsApplyTaxToProduct":
+            MessageLookupByLibrary.simpleMessage("Apply tax to product"),
+        "productsAreYouSureYouWantToDeleteThisProduct":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure you want to delete this product?"),
+        "productsAvailable": MessageLookupByLibrary.simpleMessage("Available"),
+        "productsBarcode": MessageLookupByLibrary.simpleMessage("Barcode"),
+        "productsBasicInformation":
+            MessageLookupByLibrary.simpleMessage("Basic Information"),
+        "productsBasicInformationDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Enter product name, description, category, and status."),
+        "productsBoughtThis":
+            MessageLookupByLibrary.simpleMessage("Bought This"),
         "productsCacheError":
             MessageLookupByLibrary.simpleMessage("Cache error - Products"),
         "productsCategories": MessageLookupByLibrary.simpleMessage("Products"),
         "productsCategoriesManagement":
             MessageLookupByLibrary.simpleMessage("Products and Categories"),
+        "productsCategoryState":
+            MessageLookupByLibrary.simpleMessage("Category State"),
+        "productsCheckIfCategoryIsActiveOrInactive":
+            MessageLookupByLibrary.simpleMessage(
+                "check if the category is active or inactive"),
+        "productsCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("Copied to clipboard"),
+        "productsCostPrice": MessageLookupByLibrary.simpleMessage("Cost Price"),
+        "productsCreateFirstProduct": MessageLookupByLibrary.simpleMessage(
+            "Create your first product to get started"),
+        "productsCustomers": MessageLookupByLibrary.simpleMessage("Customers"),
+        "productsDelete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "productsDeleteCategory":
+            MessageLookupByLibrary.simpleMessage("Delete Category"),
+        "productsDeleteCategoryConfirmation": m63,
+        "productsDescription":
+            MessageLookupByLibrary.simpleMessage("Description"),
+        "productsEdit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "productsEditProduct":
+            MessageLookupByLibrary.simpleMessage("Edit Product"),
+        "productsEnterBarcode":
+            MessageLookupByLibrary.simpleMessage("Enter barcode"),
+        "productsEnterCostPrice":
+            MessageLookupByLibrary.simpleMessage("Enter cost price"),
+        "productsEnterProductDescription":
+            MessageLookupByLibrary.simpleMessage("Enter product description"),
+        "productsEnterProductName":
+            MessageLookupByLibrary.simpleMessage("Enter product name"),
+        "productsEnterProductSku":
+            MessageLookupByLibrary.simpleMessage("Enter product SKU"),
+        "productsEnterQuantity":
+            MessageLookupByLibrary.simpleMessage("Enter quantity"),
+        "productsEnterSKU": MessageLookupByLibrary.simpleMessage("Enter SKU"),
+        "productsEnterSellingPrice":
+            MessageLookupByLibrary.simpleMessage("Enter selling price"),
+        "productsEnterTaxRatePercentage":
+            MessageLookupByLibrary.simpleMessage("Enter tax rate percentage"),
+        "productsEnterUnit":
+            MessageLookupByLibrary.simpleMessage("Enter unit (e.g., piece)"),
+        "productsErrorOccurred":
+            MessageLookupByLibrary.simpleMessage("Error Occurred"),
+        "productsHelp": MessageLookupByLibrary.simpleMessage("Product Help"),
+        "productsHelpDescription": MessageLookupByLibrary.simpleMessage(
+            "This screen helps you add new products to your inventory. Here\'s what you need to know:"),
         "productsInStock":
             MessageLookupByLibrary.simpleMessage("Products in Stock"),
+        "productsInventory": MessageLookupByLibrary.simpleMessage("Inventory"),
+        "productsInventoryDescription": MessageLookupByLibrary.simpleMessage(
+            "Manage quantity, units, and stock levels."),
+        "productsInvoices": MessageLookupByLibrary.simpleMessage("Invoices"),
         "productsList": MessageLookupByLibrary.simpleMessage("Products List"),
         "productsLoadError":
             MessageLookupByLibrary.simpleMessage("Error loading products"),
+        "productsManageProductsAndInventory":
+            MessageLookupByLibrary.simpleMessage(
+                "Manage products and inventory"),
         "productsManagement": MessageLookupByLibrary.simpleMessage(
             "Products & Categories Management"),
         "productsNetworkError":
             MessageLookupByLibrary.simpleMessage("Network error - Products"),
+        "productsNo": MessageLookupByLibrary.simpleMessage("No"),
+        "productsNoCategoriesFound":
+            MessageLookupByLibrary.simpleMessage("No categories found"),
+        "productsNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "productsNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "productsNotSet": MessageLookupByLibrary.simpleMessage("Not set"),
+        "productsNotSpecified":
+            MessageLookupByLibrary.simpleMessage("Not specified"),
+        "productsPleaseEnterValidPrice":
+            MessageLookupByLibrary.simpleMessage("Please enter a valid price"),
+        "productsPleaseEnterValidQuantity":
+            MessageLookupByLibrary.simpleMessage(
+                "Please enter a valid quantity"),
+        "productsPricing": MessageLookupByLibrary.simpleMessage("Pricing"),
+        "productsPricingDescription": MessageLookupByLibrary.simpleMessage(
+            "Set selling price, cost price, and tax rate."),
+        "productsProductDetails":
+            MessageLookupByLibrary.simpleMessage("Product Details"),
+        "productsProductDetailsDescription":
+            MessageLookupByLibrary.simpleMessage(
+                "Add SKU, barcode, brand, model, and other details."),
+        "productsProductInformation":
+            MessageLookupByLibrary.simpleMessage("Product Information"),
+        "productsProductInsights":
+            MessageLookupByLibrary.simpleMessage("Product Insights"),
+        "productsProductIsTaxable":
+            MessageLookupByLibrary.simpleMessage("Product is Taxable"),
+        "productsProductNameRequired":
+            MessageLookupByLibrary.simpleMessage("Product name is required"),
+        "productsProductStatusRequired":
+            MessageLookupByLibrary.simpleMessage("Product status is required"),
+        "productsQty": MessageLookupByLibrary.simpleMessage("Qty"),
+        "productsQuantity": MessageLookupByLibrary.simpleMessage("Quantity"),
+        "productsQuantityRequired":
+            MessageLookupByLibrary.simpleMessage("Quantity is required"),
         "productsReport":
             MessageLookupByLibrary.simpleMessage("Products Report"),
+        "productsSales": MessageLookupByLibrary.simpleMessage("Sales"),
+        "productsSellingPriceRequired":
+            MessageLookupByLibrary.simpleMessage("Selling price is required"),
+        "productsSettings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "productsSku": MessageLookupByLibrary.simpleMessage("SKU"),
+        "productsStock": MessageLookupByLibrary.simpleMessage("Stock"),
+        "productsTapToCopy":
+            MessageLookupByLibrary.simpleMessage("Tap to copy"),
+        "productsTaxRate": MessageLookupByLibrary.simpleMessage("Tax Rate"),
+        "productsTaxable": MessageLookupByLibrary.simpleMessage("Taxable"),
+        "productsThisActionCannotBeUndone":
+            MessageLookupByLibrary.simpleMessage(
+                "This action cannot be undone."),
+        "productsThisMonth": MessageLookupByLibrary.simpleMessage("This Month"),
         "productsTimeoutError":
             MessageLookupByLibrary.simpleMessage("Timeout error - Products"),
+        "productsTrackAvailableProductQuantity":
+            MessageLookupByLibrary.simpleMessage(
+                "Track available product quantity"),
+        "productsTrackInventory":
+            MessageLookupByLibrary.simpleMessage("Track Inventory"),
         "productsUnauthorizedError": MessageLookupByLibrary.simpleMessage(
             "Unauthorized error - Products"),
+        "productsUnit": MessageLookupByLibrary.simpleMessage("Unit"),
+        "productsUnitHint":
+            MessageLookupByLibrary.simpleMessage("piece, kg, meter..."),
         "productsUnknownError":
             MessageLookupByLibrary.simpleMessage("Unknown error - Products"),
+        "productsUnnamedProduct":
+            MessageLookupByLibrary.simpleMessage("Unnamed Product"),
+        "productsUpdate": MessageLookupByLibrary.simpleMessage("Update"),
         "productsValidationError":
             MessageLookupByLibrary.simpleMessage("Validation error - Products"),
+        "productsViewAndManageProductInformation":
+            MessageLookupByLibrary.simpleMessage(
+                "View and manage product information"),
+        "productsYes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "profileInformation":
+            MessageLookupByLibrary.simpleMessage("Profile Information"),
         "profitGrowth": MessageLookupByLibrary.simpleMessage("Profit Growth"),
         "qty": MessageLookupByLibrary.simpleMessage("Qty"),
         "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
@@ -2194,7 +2849,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestedPageNotFound": MessageLookupByLibrary.simpleMessage(
             "The requested page was not found"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
-        "resendCodeIn": m48,
+        "resendCodeIn": m64,
         "resetFilters": MessageLookupByLibrary.simpleMessage("Reset"),
         "resetPassword": MessageLookupByLibrary.simpleMessage("Reset Password"),
         "resetPasswordDesc":
@@ -2256,6 +2911,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "searchItems": MessageLookupByLibrary.simpleMessage("Search items..."),
         "searchProducts":
             MessageLookupByLibrary.simpleMessage("Search products..."),
+        "searchUsers": MessageLookupByLibrary.simpleMessage("Search users"),
         "searchingPrinter":
             MessageLookupByLibrary.simpleMessage("Searching for printer..."),
         "securityInformation":
@@ -2274,6 +2930,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please select a customer or enter customer data"),
         "selectPrinter": MessageLookupByLibrary.simpleMessage("Select Printer"),
         "selectProduct": MessageLookupByLibrary.simpleMessage("Select Product"),
+        "selectRole": MessageLookupByLibrary.simpleMessage("Select Role"),
+        "selectStatus": MessageLookupByLibrary.simpleMessage("Select Status"),
         "selectTheDateThisExpenseOccurred":
             MessageLookupByLibrary.simpleMessage(
                 "Select the date this expense occurred"),
@@ -2294,11 +2952,38 @@ class MessageLookup extends MessageLookupByLibrary {
         "setAmountDateAndPaymentMethod": MessageLookupByLibrary.simpleMessage(
             "Set amount, date, and payment method"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "settingsActivate": MessageLookupByLibrary.simpleMessage("Activate"),
+        "settingsActivateIntegration":
+            MessageLookupByLibrary.simpleMessage("Activate Integration"),
+        "settingsActive": MessageLookupByLibrary.simpleMessage("Active"),
+        "settingsDeactivate":
+            MessageLookupByLibrary.simpleMessage("Deactivate"),
+        "settingsInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+        "settingsIncome": MessageLookupByLibrary.simpleMessage("Income"),
+        "settingsInvoiceType":
+            MessageLookupByLibrary.simpleMessage("Invoice Type"),
+        "settingsNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "settingsNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view settings"),
+        "settingsRetry": MessageLookupByLibrary.simpleMessage("Retry"),
         "settingsSavedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Settings saved successfully"),
+        "settingsStatus": MessageLookupByLibrary.simpleMessage("Status"),
+        "settingsSupportEmailSubject": MessageLookupByLibrary.simpleMessage(
+            "Technical Support - Invotek App"),
+        "settingsTaxIntegration":
+            MessageLookupByLibrary.simpleMessage("Tax Integration"),
+        "settingsTaxInvoiceType":
+            MessageLookupByLibrary.simpleMessage("Tax Invoice Type"),
+        "settingsTaxMerchantCode":
+            MessageLookupByLibrary.simpleMessage("Tax Merchant Code"),
+        "settingsUpdateStatus":
+            MessageLookupByLibrary.simpleMessage("Update Status"),
+        "settingsVAT": MessageLookupByLibrary.simpleMessage("VAT"),
         "shareInvoice": MessageLookupByLibrary.simpleMessage("Share Invoice"),
-        "shareInvoiceText": m49,
-        "showAllItems": m50,
+        "shareInvoiceText": m65,
+        "showAllItems": m66,
         "showLess": MessageLookupByLibrary.simpleMessage("Show Less"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
         "signInFailed": MessageLookupByLibrary.simpleMessage("Sign in failed"),
@@ -2317,11 +3002,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByName": MessageLookupByLibrary.simpleMessage("Name"),
         "sortByUpdatedAt": MessageLookupByLibrary.simpleMessage("Updated Date"),
         "sortOrder": MessageLookupByLibrary.simpleMessage("Sort Order"),
+        "startByAddingFirstUser": MessageLookupByLibrary.simpleMessage(
+            "Start by adding your first user to the system"),
         "startNow": MessageLookupByLibrary.simpleMessage("Start Now"),
         "state": MessageLookupByLibrary.simpleMessage("Status"),
         "statistics": MessageLookupByLibrary.simpleMessage("Statistics"),
         "status": MessageLookupByLibrary.simpleMessage("Status"),
-        "statusCategory": m51,
+        "statusCategory": m67,
         "statusDraft": MessageLookupByLibrary.simpleMessage("Draft"),
         "statusInfo": MessageLookupByLibrary.simpleMessage("Status Info"),
         "statusOverdue": MessageLookupByLibrary.simpleMessage("Overdue"),
@@ -2334,15 +3021,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "subscriptionRequired":
             MessageLookupByLibrary.simpleMessage("Subscription Required"),
+        "subscriptionRequiredAction":
+            MessageLookupByLibrary.simpleMessage("Choose Package"),
         "subscriptionRequiredMessage": MessageLookupByLibrary.simpleMessage(
             "You must choose a suitable subscription to use this feature"),
+        "subscriptionRequiredTitle":
+            MessageLookupByLibrary.simpleMessage("Subscription Required"),
         "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal"),
-        "subtotalLine": m52,
+        "subtotalLine": m68,
         "successText": MessageLookupByLibrary.simpleMessage("Success Text"),
         "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
         "supervisorDescription": MessageLookupByLibrary.simpleMessage(
             "Manages users and permissions"),
         "supportEmail": MessageLookupByLibrary.simpleMessage("Support Email"),
+        "suspended": MessageLookupByLibrary.simpleMessage("Suspended"),
         "systemAccess": MessageLookupByLibrary.simpleMessage("System Access"),
         "systemAdministrator":
             MessageLookupByLibrary.simpleMessage("System Administrator"),
@@ -2357,6 +3049,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxAmount": MessageLookupByLibrary.simpleMessage("Tax Amount"),
         "taxIntegration":
             MessageLookupByLibrary.simpleMessage("Tax Integration"),
+        "taxIntegrationNotActive": MessageLookupByLibrary.simpleMessage(
+            "Tax integration is not active"),
+        "taxIntegrationNotActiveMessage": MessageLookupByLibrary.simpleMessage(
+            "You have not activated tax integration. Please activate it from settings if you have permission to do so"),
         "taxIntegrationSettings":
             MessageLookupByLibrary.simpleMessage("Tax Integration Settings"),
         "taxIntegrationStep1":
@@ -2365,12 +3061,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "2. Enter company tax information"),
         "taxIntegrationStep3": MessageLookupByLibrary.simpleMessage(
             "3. Test connection and save settings"),
+        "taxInvoiceType":
+            MessageLookupByLibrary.simpleMessage("Tax Invoice Type"),
         "taxInvoices": MessageLookupByLibrary.simpleMessage("Tax Invoices"),
         "taxInvoicesDesc": MessageLookupByLibrary.simpleMessage(
             "Unposted invoices & Postpaid invoices & Returned invoices & Create a new invoice"),
         "taxInvoicesTitle":
             MessageLookupByLibrary.simpleMessage("Tax Invoices"),
-        "taxLine": m53,
+        "taxLine": m69,
+        "taxMerchantCode":
+            MessageLookupByLibrary.simpleMessage("Tax Merchant Code"),
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "taxPercent": MessageLookupByLibrary.simpleMessage("Tax Percent"),
         "taxRate": MessageLookupByLibrary.simpleMessage("Tax Rate"),
@@ -2378,7 +3078,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxType": MessageLookupByLibrary.simpleMessage("Tax Type"),
         "taxUID": MessageLookupByLibrary.simpleMessage("Tax UID"),
         "taxUIDCopied": MessageLookupByLibrary.simpleMessage("Tax UID copied"),
-        "taxUIDForInvoice": m54,
+        "taxUIDForInvoice": m70,
         "tekpart": MessageLookupByLibrary.simpleMessage("TekPart"),
         "termsOfUse": MessageLookupByLibrary.simpleMessage("Terms of Use"),
         "termsOfUseComingSoon":
@@ -2416,7 +3116,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Total Customers"),
         "totalExpenses": MessageLookupByLibrary.simpleMessage("Total Expenses"),
         "totalInvoices": MessageLookupByLibrary.simpleMessage("Total Invoices"),
-        "totalLine": m55,
+        "totalLine": m71,
         "totalProducts": MessageLookupByLibrary.simpleMessage("Total Products"),
         "totalSales": MessageLookupByLibrary.simpleMessage("Total Sales"),
         "tourismEntertainmentCompany": MessageLookupByLibrary.simpleMessage(
@@ -2441,8 +3141,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "undefinedProduct":
             MessageLookupByLibrary.simpleMessage("Undefined Product"),
         "unit": MessageLookupByLibrary.simpleMessage("Unit"),
+        "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownError": MessageLookupByLibrary.simpleMessage(
             "An unexpected error occurred. Please try again."),
+        "unknownUser": MessageLookupByLibrary.simpleMessage("Unknown User"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateCategory":
             MessageLookupByLibrary.simpleMessage("Update Category"),
@@ -2459,37 +3161,142 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("User added successfully"),
         "userCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("User created successfully"),
+        "userCreatedSuccessfullyMessage":
+            MessageLookupByLibrary.simpleMessage("User created successfully"),
         "userDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("User deleted successfully"),
+        "userDeletedSuccessfullyMessage":
             MessageLookupByLibrary.simpleMessage("User deleted successfully"),
         "userDescription": MessageLookupByLibrary.simpleMessage(
             "Limited permissions for viewing and reading"),
+        "userDetails": MessageLookupByLibrary.simpleMessage("User Details"),
         "userId": MessageLookupByLibrary.simpleMessage("User ID"),
+        "userInformation":
+            MessageLookupByLibrary.simpleMessage("User Information"),
         "userManagement":
             MessageLookupByLibrary.simpleMessage("User Management"),
         "userNotFound": MessageLookupByLibrary.simpleMessage("User not found"),
+        "userPermissions":
+            MessageLookupByLibrary.simpleMessage("User Permissions"),
         "userSettings": MessageLookupByLibrary.simpleMessage("User settings"),
+        "userSummary": MessageLookupByLibrary.simpleMessage("User Summary"),
         "userUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("User updated successfully"),
+        "userUpdatedSuccessfullyMessage":
+            MessageLookupByLibrary.simpleMessage("User updated successfully"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "usersActive": MessageLookupByLibrary.simpleMessage("Active"),
+        "usersAdd": MessageLookupByLibrary.simpleMessage("Add"),
+        "usersAddNewRole": MessageLookupByLibrary.simpleMessage("Add New Role"),
         "usersAndPermissionsDescription": MessageLookupByLibrary.simpleMessage(
             "View and manage users and their permissions"),
         "usersAndPermissionsManagement": MessageLookupByLibrary.simpleMessage(
             "Users and Permissions Management"),
+        "usersAreYouSureYouWantToDeleteRole": m72,
+        "usersAreYouSureYouWantToDeleteUser":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure you want to delete user"),
+        "usersCannotDeleteAdmin":
+            MessageLookupByLibrary.simpleMessage("Cannot delete admin user"),
+        "usersCannotDeleteAdminMessage": MessageLookupByLibrary.simpleMessage(
+            "Admin users cannot be deleted"),
+        "usersCannotDeleteYourself": MessageLookupByLibrary.simpleMessage(
+            "Cannot delete your own account"),
+        "usersCannotDeleteYourselfMessage":
+            MessageLookupByLibrary.simpleMessage(
+                "You cannot delete your own account"),
+        "usersClients": MessageLookupByLibrary.simpleMessage("Clients"),
+        "usersConfirmDelete":
+            MessageLookupByLibrary.simpleMessage("Confirm Delete"),
+        "usersCopiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("Copied to clipboard"),
+        "usersDeleteUser": MessageLookupByLibrary.simpleMessage("Delete User"),
+        "usersDeleteUserPermanently":
+            MessageLookupByLibrary.simpleMessage("Delete user permanently"),
+        "usersEditRole": MessageLookupByLibrary.simpleMessage("Edit Role"),
+        "usersEditUser": MessageLookupByLibrary.simpleMessage("Edit User"),
+        "usersEditUserInformation":
+            MessageLookupByLibrary.simpleMessage("Edit user information"),
+        "usersEmailRequired":
+            MessageLookupByLibrary.simpleMessage("Email is required"),
+        "usersExpenses": MessageLookupByLibrary.simpleMessage("Expenses"),
+        "usersInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+        "usersInvoices": MessageLookupByLibrary.simpleMessage("Invoices"),
         "usersList": MessageLookupByLibrary.simpleMessage("Users List"),
+        "usersManagePermissions":
+            MessageLookupByLibrary.simpleMessage("Manage Permissions"),
+        "usersManageRolesAndPermissions": MessageLookupByLibrary.simpleMessage(
+            "Manage roles and permissions"),
         "usersManagement":
             MessageLookupByLibrary.simpleMessage("Users and Permissions"),
-        "usersPermissions":
-            MessageLookupByLibrary.simpleMessage("Users and Permissions"),
+        "usersManagementTitle":
+            MessageLookupByLibrary.simpleMessage("Users Management"),
+        "usersModule": MessageLookupByLibrary.simpleMessage("Module"),
+        "usersModulePermissions":
+            MessageLookupByLibrary.simpleMessage("Permissions"),
+        "usersNameRequired":
+            MessageLookupByLibrary.simpleMessage("Name is required"),
+        "usersNoEmail": MessageLookupByLibrary.simpleMessage("No email"),
+        "usersNoName": MessageLookupByLibrary.simpleMessage("No name"),
+        "usersNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to perform this action"),
+        "usersNoPermissionToView": MessageLookupByLibrary.simpleMessage(
+            "You don\'t have permission to view this content"),
+        "usersNoPermissionsForThisModule": MessageLookupByLibrary.simpleMessage(
+            "No permissions for this module"),
+        "usersNoRole": MessageLookupByLibrary.simpleMessage("No role"),
+        "usersPasswordMustBeAtLeast6Characters":
+            MessageLookupByLibrary.simpleMessage(
+                "Password must be at least 6 characters"),
+        "usersPasswordRequired":
+            MessageLookupByLibrary.simpleMessage("Password is required"),
+        "usersPasswordsDoNotMatch":
+            MessageLookupByLibrary.simpleMessage("Passwords do not match"),
+        "usersPermissions": MessageLookupByLibrary.simpleMessage("Permissions"),
         "usersPermissionsDesc": MessageLookupByLibrary.simpleMessage(
             "Control of clients and permissions"),
         "usersPermissionsTitle":
             MessageLookupByLibrary.simpleMessage("Users and Permissions"),
+        "usersPleaseConfirmYourPassword": MessageLookupByLibrary.simpleMessage(
+            "Please confirm your password"),
+        "usersPleaseEnterValidEmail":
+            MessageLookupByLibrary.simpleMessage("Please enter a valid email"),
+        "usersProducts": MessageLookupByLibrary.simpleMessage("Products"),
+        "usersReports": MessageLookupByLibrary.simpleMessage("Reports"),
+        "usersRoleAccountant":
+            MessageLookupByLibrary.simpleMessage("Accountant"),
+        "usersRoleAdmin": MessageLookupByLibrary.simpleMessage("Admin"),
+        "usersRoleDescription":
+            MessageLookupByLibrary.simpleMessage("Role Description"),
+        "usersRoleName": MessageLookupByLibrary.simpleMessage("Role Name"),
+        "usersRoleSupervisor":
+            MessageLookupByLibrary.simpleMessage("Supervisor"),
+        "usersRoleUser": MessageLookupByLibrary.simpleMessage("User"),
+        "usersRoles": MessageLookupByLibrary.simpleMessage("Roles"),
+        "usersSelectModule":
+            MessageLookupByLibrary.simpleMessage("Select Module"),
+        "usersSettings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "usersStatusActive": MessageLookupByLibrary.simpleMessage("Active"),
+        "usersStatusInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+        "usersThisActionCannotBeUndone": MessageLookupByLibrary.simpleMessage(
+            "This action cannot be undone."),
+        "usersTotalPermissions":
+            MessageLookupByLibrary.simpleMessage("Total Permissions"),
+        "usersUndefined": MessageLookupByLibrary.simpleMessage("Undefined"),
+        "usersUnknownStatus": MessageLookupByLibrary.simpleMessage("Unknown"),
+        "usersUnknownUser":
+            MessageLookupByLibrary.simpleMessage("Unknown User"),
+        "usersUsers": MessageLookupByLibrary.simpleMessage("Users"),
+        "usersViewDetails":
+            MessageLookupByLibrary.simpleMessage("View Details"),
+        "usersViewUserDetails":
+            MessageLookupByLibrary.simpleMessage("View user details"),
         "validationError":
             MessageLookupByLibrary.simpleMessage("Data validation error"),
         "vat": MessageLookupByLibrary.simpleMessage("VAT"),
         "vatNumber": MessageLookupByLibrary.simpleMessage("VAT Number"),
         "verifyCode": MessageLookupByLibrary.simpleMessage("Verify Code"),
-        "verifyCodeDesc": m56,
+        "verifyCodeDesc": m73,
         "verifyCodeTitle": MessageLookupByLibrary.simpleMessage("Verify Code"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "viewAllInvoices":
@@ -2498,7 +3305,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewClientsDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to view clients list"),
         "viewCustomer": MessageLookupByLibrary.simpleMessage("View Customer"),
-        "viewCustomerDetails": m57,
+        "viewCustomerDetails": m74,
+        "viewCustomers": MessageLookupByLibrary.simpleMessage("View Customers"),
         "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
         "viewExpenses": MessageLookupByLibrary.simpleMessage("View Expenses"),
         "viewExpensesDescription": MessageLookupByLibrary.simpleMessage(
@@ -2506,7 +3314,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewInvoices": MessageLookupByLibrary.simpleMessage("View Invoices"),
         "viewInvoicesDescription": MessageLookupByLibrary.simpleMessage(
             "Ability to view invoices list"),
-        "viewItemDetails": m58,
+        "viewItemDetails": m75,
         "viewPrivacyPolicy":
             MessageLookupByLibrary.simpleMessage("View privacy policy"),
         "viewProducts": MessageLookupByLibrary.simpleMessage("View Products"),
@@ -2528,15 +3336,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewUsers": MessageLookupByLibrary.simpleMessage("View Users"),
         "viewUsersDescription":
             MessageLookupByLibrary.simpleMessage("Ability to view users list"),
-        "viewingInvoices": m59,
-        "viewingOrders": m60,
+        "viewer": MessageLookupByLibrary.simpleMessage("Viewer"),
+        "viewingInvoices": m76,
+        "viewingOrders": m77,
         "visitInvotekWebsite":
             MessageLookupByLibrary.simpleMessage("Visit Invotek website"),
         "website": MessageLookupByLibrary.simpleMessage("Website"),
         "weight": MessageLookupByLibrary.simpleMessage("Weight"),
         "welcome": MessageLookupByLibrary.simpleMessage("WELCOME!"),
         "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome back, 👋"),
-        "welcomeBackWithName": m61,
+        "welcomeBackWithName": m78,
         "welcomeToInvotek":
             MessageLookupByLibrary.simpleMessage("Welcome to Invotek App"),
         "welcomeToInvotekApp":

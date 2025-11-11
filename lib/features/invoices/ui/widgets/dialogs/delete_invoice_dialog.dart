@@ -53,11 +53,13 @@ class DeleteInvoiceDialog extends StatelessWidget {
 
           // Description
           Text(
-            S.of(context).deleteInvoiceConfirmation,
+            invoice.status?.toLowerCase() == 'draft'
+                ? S.of(context).deleteInvoiceConfirmation
+                : S.of(context).invoicesCannotDeleteNonDraft,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16.sp,
-              color: AppColors.textSecondary,
+              color: AppColors.white,
               height: 1.5,
             ),
           ),
@@ -68,19 +70,20 @@ class DeleteInvoiceDialog extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              color: AppColors.background,
+              color: AppColors.primary,
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(
               children: [
-                Icon(Icons.receipt_long, size: 20.sp, color: AppColors.primary),
+                Icon(Icons.receipt_long, size: 20.sp, color: AppColors.white),
                 SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        invoice.invoiceNumber ?? "Invoice Number",
+                        invoice.invoiceNumber ??
+                            S.of(context).invoicesInvoiceNumber,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -89,10 +92,11 @@ class DeleteInvoiceDialog extends StatelessWidget {
                       ),
                       SizedBox(height: 2.h),
                       Text(
-                        invoice.customerName ?? "Customer Name",
+                        invoice.customerName ??
+                            S.of(context).invoicesCustomerName,
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: AppColors.textSecondary,
+                          color: AppColors.white,
                         ),
                       ),
                     ],
@@ -148,12 +152,13 @@ class DeleteInvoiceDialog extends StatelessWidget {
           ),
         ),
 
-        // Delete Button
+        // Delete Button (only enabled for draft invoices)
         ElevatedButton(
-          onPressed: () {
-            onDelete();
-            Navigator.pop(context);
-          },
+          onPressed: invoice.status?.toLowerCase() == 'draft'
+              ? () {
+                  onDelete();
+                }
+              : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.error,
             foregroundColor: Colors.white,
@@ -161,6 +166,8 @@ class DeleteInvoiceDialog extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),
+            disabledBackgroundColor: AppColors.error.withOpacity(0.3),
+            disabledForegroundColor: Colors.white.withOpacity(0.5),
           ),
           child: Text(
             S.of(context).delete,

@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
+import 'package:invotek/core/di/injection.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/widgets/animated_entry_widget.dart';
-import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
-import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/data/models/invoice_item.dart';
+import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
-import 'package:invotek/features/invoices/ui/dialogs/dialogs.dart';
-import 'package:invotek/features/invoices/ui/models/invoice_item_model.dart';
-import 'package:invotek/features/invoices/ui/widgets/headers/edit_invoice_header_widget.dart';
-import 'package:invotek/features/invoices/ui/widgets/sections/add_invoice_form_section.dart';
-import 'package:invotek/features/invoices/ui/widgets/sections/edit_invoice_bottom_actions.dart';
-import 'package:invotek/features/invoices/ui/widgets/widgets.dart';
+import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_basic_info_step.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/customer_selection_step.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/items_selection_step.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_summary_step.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
 
 class EditInvoiceScreen extends StatefulWidget {
   final InvoiceModel invoice;
@@ -25,521 +30,382 @@ class EditInvoiceScreen extends StatefulWidget {
   State<EditInvoiceScreen> createState() => _EditInvoiceScreenState();
 }
 
-class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
-  final _formKey = GlobalKey<FormState>();
+class _EditInvoiceScreenState extends State<EditInvoiceScreen>
+    with TickerProviderStateMixin {
+  late TabController _tabController;
+  int _currentTabIndex = 0;
+  final Map<String, String> _validationErrors = {};
 
-  // Form controllers
-  late TextEditingController _invoiceNumberController;
-  late TextEditingController _customerNameController;
-  late TextEditingController _customerEmailController;
-  late TextEditingController _customerPhoneController;
-  late TextEditingController _subtotalController;
-  late TextEditingController _taxAmountController;
-  late TextEditingController _totalController;
-  late TextEditingController _descriptionController;
-  late TextEditingController _issueDateController;
-
-  // Form data
-  String _selectedStatus = 'draft';
-  String _selectedPaymentMethod = 'cash';
-  DateTime _selectedDate = DateTime.now();
-
-  // Customer and Items data
-  CustomerModel? _selectedCustomer;
-  List<InvoiceItemModel> _invoiceItems = [];
+  late InvoiceFormController _formController;
+  late InvoicesCubit _cubit;
 
   // Invoice status check
-  bool get _isInvoiceSent => widget.invoice.status == 'sent';
+  bool get _isInvoiceSent => widget.invoice.status?.toLowerCase() == 'sent';
 
   @override
   void initState() {
     super.initState();
-    _initializeControllers();
-    _populateFormData();
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+    });
+
+    _formController = InvoiceFormController();
+    _cubit = getIt<InvoicesCubit>();
+
+    // Load invoice data into form controller
+    _loadInvoiceData();
   }
 
-  void _initializeControllers() {
-    _invoiceNumberController = TextEditingController();
-    _customerNameController = TextEditingController();
-    _customerEmailController = TextEditingController();
-    _customerPhoneController = TextEditingController();
-    _subtotalController = TextEditingController();
-    _taxAmountController = TextEditingController();
-    _totalController = TextEditingController();
-    _descriptionController = TextEditingController();
-    _issueDateController = TextEditingController();
-  }
-
-  void _populateFormData() {
+  void _loadInvoiceData() {
     final invoice = widget.invoice;
-    _invoiceNumberController.text = invoice.invoiceNumber ?? "Invoice Number";
-    _customerNameController.text = invoice.customerName ?? "Customer Name";
-    _customerEmailController.text = invoice.customer?.email ?? "Customer Email";
-    _customerPhoneController.text = invoice.customer?.phone ?? "Customer Phone";
-    _subtotalController.text = invoice.subtotal ?? "0.00";
-    _taxAmountController.text = invoice.taxAmount ?? "0.00";
-    _totalController.text = invoice.total ?? "0.00";
-    _descriptionController.text = invoice.description ?? "No Description";
-    _issueDateController.text = invoice.issueDate ?? "0.00";
+    
+    // Get current locale for date formatting
+    final localizationCubit = getIt<LocalizationCubit>();
+    final currentLocale = localizationCubit.getCurrentLanguage();
 
-    _selectedStatus = invoice.status ?? "draft";
-    _selectedPaymentMethod = invoice.paymentMethodCode ?? "cash";
-    _selectedDate =
-        DateTime.tryParse(invoice.issueDate ?? "0.00") ?? DateTime.now();
+    // Load basic info
+    _formController.selectedAction =
+        'save_only'; // Default, can be updated if needed
+    _formController.selectedPaymentMethod = invoice.paymentMethodCode ?? 'cash';
+    _formController.selectedStatus = invoice.status ?? 'draft';
+    _formController.selectedDate =
+        DateFormatter.parseApiDate(invoice.issueDate) ?? DateTime.now();
+    _formController.issueDateController.text =
+        DateFormatter.formatForTextField(invoice.issueDate, locale: currentLocale) ??
+        DateFormatter.formatForTextField(DateFormatter.getCurrentDateApiFormat(), locale: currentLocale) ??
+        DateFormatter.getCurrentDateApiFormat();
+    _formController.descriptionController.text = invoice.description ?? '';
 
-    // Set customer if available
+    // Load customer data
+    // Priority: customer object > customer_id > customer name only
     if (invoice.customer != null) {
-      // Convert InvoiceCustomerModel to CustomerModel
-      _selectedCustomer = CustomerModel(
-        id: invoice.customer!.id ?? 0,
-        name: invoice.customer!.name ?? '',
-        email: invoice.customer!.email ?? '',
-        phone: invoice.customer!.phone,
-        address: invoice.customer!.address,
-        companyName: null, // InvoiceCustomerModel doesn't have companyName
-        status: 'active', // Default status
+      // We have full customer object
+      _formController.onCustomerSelected(
+        invoice.customer!.id ?? invoice.customerId ?? 0,
+        invoice.customer!.name ?? invoice.customerName ?? '',
+        invoice.customer!.email ?? '',
+        invoice.customer!.phone ?? '',
+        invoice.customer!.address ?? '',
       );
+    } else if (invoice.customerId != null) {
+      // We have customer_id but no customer object
+      // Set customer_id directly and use customerName for display
+      _formController.selectedCustomerId = invoice.customerId;
+      _formController.selectedCustomerName = invoice.customerName;
+      _formController.customerNameController.text = invoice.customerName ?? '';
+      _formController.customerEmailController.text = '';
+      _formController.customerPhoneController.text = '';
+      _formController.customerAddressController.text = '';
+    } else if (invoice.customerName != null) {
+      // No customer_id, just customer name (new customer scenario)
+      _formController.onNewCustomerAdded(invoice.customerName!, '', '', '');
     }
 
-    // TODO: Load invoice items from the invoice
-    // For now, initialize with empty list
-    _invoiceItems = [];
+    // Load financial data
+    _formController.subtotalController.text = invoice.subtotal ?? '0.00';
+    _formController.taxAmountController.text = invoice.taxAmount ?? '0.00';
+    _formController.discountController.text = invoice.discount ?? '0.00';
+    _formController.totalController.text = invoice.total ?? '0.00';
+
+    // Load items
+    if (invoice.items != null && invoice.items!.isNotEmpty) {
+      for (var item in invoice.items!) {
+        final itemData = _convertInvoiceItemToItemData(item);
+        _formController.addItem(itemData);
+      }
+    }
+
+    // Update controllers
+    _formController.onActionChanged(_formController.selectedAction);
+    _formController.onPaymentMethodChanged(
+      _formController.selectedPaymentMethod,
+    );
+    _formController.onStatusChanged(_formController.selectedStatus);
+    _formController.onDateChanged(_formController.selectedDate);
+  }
+
+  InvoiceItemData _convertInvoiceItemToItemData(InvoiceItem item) {
+    return InvoiceItemData(
+      productId: item.productId,
+      name: item.name ?? '',
+      quantity: item.quantity ?? '0',
+      price: item.price ?? '0.00',
+      discount: item.discount ?? '0.00',
+      taxPercent: item.taxPercent ?? '0.00',
+      taxAmount: item.taxAmount ?? '0.00',
+      total: item.total ?? '0.00',
+      productName: item.name,
+      productDescription: item.description,
+      productCategory: null, // Not available in InvoiceItem
+      availableQuantity:
+          null, // We don't have this info from invoice, could fetch if needed
+    );
   }
 
   @override
   void dispose() {
-    _invoiceNumberController.dispose();
-    _customerNameController.dispose();
-    _customerEmailController.dispose();
-    _customerPhoneController.dispose();
-    _subtotalController.dispose();
-    _taxAmountController.dispose();
-    _totalController.dispose();
-    _descriptionController.dispose();
-    _issueDateController.dispose();
+    _tabController.dispose();
+    _formController.dispose();
     super.dispose();
   }
 
-  void _onDateChanged(DateTime date) {
-    setState(() {
-      _selectedDate = date;
-      _issueDateController.text = DateFormat('yyyy-MM-dd').format(date);
-    });
-  }
+  @override
+  Widget build(BuildContext context) {
+    final s = S.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.edit,
+    );
 
-  void _onStatusChanged(String status) {
-    setState(() {
-      _selectedStatus = status;
-    });
-  }
-
-  void _onPaymentMethodChanged(String paymentMethod) {
-    setState(() {
-      _selectedPaymentMethod = paymentMethod;
-    });
-  }
-
-  void _onSubtotalChanged(String value) {
-    final subtotal = double.tryParse(value) ?? 0.0;
-    final taxAmount = double.tryParse(_taxAmountController.text) ?? 0.0;
-    final total = subtotal + taxAmount;
-    _totalController.text = total.toStringAsFixed(2);
-  }
-
-  void _onTaxAmountChanged(String value) {
-    final subtotal = double.tryParse(_subtotalController.text) ?? 0.0;
-    final taxAmount = double.tryParse(value) ?? 0.0;
-    final total = subtotal + taxAmount;
-    _totalController.text = total.toStringAsFixed(2);
-  }
-
-  void _onCustomerSelected(CustomerModel customer) {
-    setState(() {
-      _selectedCustomer = customer;
-      _customerNameController.text = customer.name;
-      _customerEmailController.text = customer.email;
-      _customerPhoneController.text = customer.phone ?? '';
-    });
-  }
-
-  void _onCustomerCreated(CustomerModel customer) {
-    setState(() {
-      _selectedCustomer = customer;
-      _customerNameController.text = customer.name;
-      _customerEmailController.text = customer.email;
-      _customerPhoneController.text = customer.phone ?? '';
-    });
-  }
-
-  void _onItemsChanged(List<InvoiceItemModel> items) {
-    setState(() {
-      _invoiceItems = items;
-    });
-  }
-
-  void _onSubtotalChangedFromItems(double subtotal) {
-    _subtotalController.text = subtotal.toStringAsFixed(2);
-    _onSubtotalChanged(_subtotalController.text);
-  }
-
-  void _onSave() async {
-    // Check if invoice is sent and cannot be edited
-    if (_isInvoiceSent) {
-      _showCannotEditDialog();
-      return;
-    }
-
-    if (!_formKey.currentState!.validate()) return;
-
-    // Show loading indicator
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => Material(
-        color: Colors.transparent,
-        child: Center(
-          child: Container(
-            padding: EdgeInsets.all(24.w),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16.r),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(color: AppColors.primary),
-                SizedBox(height: 16.h),
-                Text(
-                  S.of(context).updatingStatus,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+    if (!hasEditPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
                   ),
-                ),
-              ],
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.invoicesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.invoicesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-
-    try {
-      // Update invoice using InvoicesCubit
-      await context.read<InvoicesCubit>().updateInvoice(
-        id: widget.invoice.id!.toString(),
-        customerId: _selectedCustomer?.id.toString(),
-        customerName: _customerNameController.text.trim(),
-        customerEmail: _customerEmailController.text.trim(),
-        customerPhone: _customerPhoneController.text.trim(),
-        subtotal: (double.tryParse(_subtotalController.text) ?? 0.0).toString(),
-        taxAmount: (double.tryParse(_taxAmountController.text) ?? 0.0)
-            .toString(),
-        total: (double.tryParse(_totalController.text) ?? 0.0).toString(),
-        description: _descriptionController.text.trim(),
-        issueDate: _selectedDate.toIso8601String(),
-        status: _selectedStatus,
-        paymentMethodCode: _selectedPaymentMethod,
-        // TODO: Convert InvoiceItemModel to UpdateInvoiceItemRequest
-        // items: _invoiceItems,
       );
-
-      // Close loading dialog
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
-
-      // Show success message
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.check_circle, color: Colors.white, size: 20.sp),
-                SizedBox(width: 8.w),
-                Expanded(child: Text(S.of(context).invoiceUpdatedSuccessfully)),
-              ],
-            ),
-            backgroundColor: AppColors.success,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            margin: EdgeInsets.all(16.w),
-          ),
-        );
-        Navigator.pop(context);
-      }
-    } catch (e) {
-      // Close loading dialog
-      if (Navigator.canPop(context)) {
-        Navigator.pop(context);
-      }
-
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                Icon(Icons.error_outline, color: Colors.white, size: 20.sp),
-                SizedBox(width: 8.w),
-                Expanded(child: Text(S.of(context).errorUpdatingInvoice)),
-              ],
-            ),
-            backgroundColor: AppColors.error,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            margin: EdgeInsets.all(16.w),
-          ),
-        );
-      }
-    } finally {
-      // Handle any cleanup if needed
     }
-  }
 
-  void _showCannotEditDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(S.of(context).cannotEditInvoice),
-        content: Text(S.of(context).invoiceAlreadySent),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(S.of(context).ok),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onCancel() {
-    Navigator.pop(context);
-  }
-
-  Widget _buildCustomerSelectionSection() {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.person, color: AppColors.primary, size: 24.sp),
+    return BlocBuilder<TaxIntegrationCubit, TaxIntegrationState>(
+      builder: (context, taxState) {
+        // التحقق من التكامل الضريبي
+        if (taxState is TaxIntegrationLoaded) {
+          if (!taxState.status.taxIntegrationActive) {
+            return _buildTaxIntegrationRequiredWidget(s);
+          }
+        }
+        
+        return Scaffold(
+          backgroundColor: AppColors.whiteGray,
+          appBar: AppBar(
+            title: Text(s.editInvoice),
+            backgroundColor: AppColors.white,
+            foregroundColor: AppColors.textPrimary,
+            elevation: 0,
+            scrolledUnderElevation: 1,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+              onPressed: () => Navigator.pop(context),
+            ),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
+                onPressed: () => _showHelpDialog(),
+              ),
               SizedBox(width: 8.w),
-              Text(
-                S.of(context).customerSelection,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
-              ),
             ],
           ),
-          SizedBox(height: 16.h),
-
-          if (_selectedCustomer != null)
-            _buildSelectedCustomerCard()
-          else
-            _buildNoCustomerSelected(),
-
-          SizedBox(height: 16.h),
-
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: _showCustomerSelectionDialog,
-                  icon: Icon(Icons.person_search, size: 20.sp),
-                  label: Text(S.of(context).selectCustomer),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                    side: BorderSide(color: AppColors.primary),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
+          body: BlocListener<InvoicesCubit, InvoicesState>(
+        bloc: _cubit,
+        listener: (context, state) {
+          state.maybeWhen(
+            updateSuccess:
+                (invoices, updated, selectedInvoice, currentPage, totalPages) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(s.invoiceUpdatedSuccessfully),
+                      backgroundColor: AppColors.primary,
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12.h),
-                  ),
-                ),
-              ),
-              SizedBox(width: 12.w),
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: _showAddCustomerDialog,
-                  icon: Icon(Icons.person_add, size: 20.sp),
-                  label: Text(S.of(context).addNewCustomer),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.textSecondary,
-                    side: BorderSide(color: AppColors.border),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 12.h),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+                  );
+                  Navigator.pushReplacementNamed(
+                    context,
+                    AppRoutes.enhancedInvoiceDetailsRoute,
+                    arguments: widget.invoice.id.toString(),
+                  );
+                },
+            failure:
+                (invoices, selectedInvoice, currentPage, totalPages, error) {
+                  SnackBarHelper.showFailureSnackBar(context, error);
+                },
+            orElse: () {},
+          );
+        },
+        child: Column(
+          children: [
+            // Warning banner if invoice is sent
+            if (_isInvoiceSent) _buildWarningBanner(),
 
-  Widget _buildSelectedCustomerCard() {
-    return Container(
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: AppColors.primary,
-            child: Text(
-              _selectedCustomer!.name.isNotEmpty
-                  ? _selectedCustomer!.name[0].toUpperCase()
-                  : 'C',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _selectedCustomer!.name,
-                  style: TextStyle(
-                    fontSize: 16.sp,
+            // Tab Bar
+            Container(
+              color: AppColors.white,
+              child: IgnorePointer(
+                ignoring: _isInvoiceSent,
+                child: TabBar(
+                  controller: _tabController,
+                  indicatorColor: AppColors.primary,
+                  labelColor: AppColors.primary,
+                  unselectedLabelColor: AppColors.greyDark,
+                  labelStyle: TextStyle(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                    fontSize: 14.sp,
                   ),
+                  tabs: [
+                    Tab(text: s.invoiceBasicInfo),
+                    Tab(text: s.selectCustomer),
+                    Tab(text: s.invoiceItems),
+                    Tab(text: s.reviewCalculations),
+                  ],
                 ),
-                if (_selectedCustomer!.email.isNotEmpty)
-                  Text(
-                    _selectedCustomer!.email,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                if (_selectedCustomer!.phone?.isNotEmpty == true)
-                  Text(
-                    _selectedCustomer!.phone!,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-              ],
+              ),
             ),
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _selectedCustomer = null;
-                _customerNameController.clear();
-                _customerEmailController.clear();
-                _customerPhoneController.clear();
-              });
-            },
-            icon: Icon(Icons.clear, color: AppColors.error, size: 20.sp),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildNoCustomerSelected() {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.person_outline,
-            color: AppColors.textSecondary,
-            size: 24.sp,
-          ),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Text(
-              S.of(context).noCustomerSelected,
-              style: TextStyle(fontSize: 16.sp, color: AppColors.textSecondary),
+            // Form Content
+            Expanded(
+              child: _isInvoiceSent
+                  ? _buildReadOnlyView()
+                  : TabBarView(
+                      controller: _tabController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        InvoiceBasicInfoStep(formController: _formController),
+                        CustomerSelectionStep(formController: _formController),
+                        ItemsSelectionStep(formController: _formController),
+                        InvoiceSummaryStep(formController: _formController),
+                      ],
+                    ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  void _showCustomerSelectionDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => BlocProvider.value(
-        value: context.read<CustomersCubit>(),
-        child: CustomerSelectionDialog(
-          selectedCustomer: _selectedCustomer,
-          onCustomerSelected: _onCustomerSelected,
-          onAddNewCustomer: () {
-            Navigator.pop(context);
-            _showAddCustomerDialog();
-          },
+            // Bottom Action Buttons (rebuild on form changes)
+            if (!_isInvoiceSent)
+              AnimatedBuilder(
+                animation: _formController,
+                builder: (context, _) {
+                  return Container(
+                    padding: EdgeInsets.only(
+                      left: 16.w,
+                      right: 16.w,
+                      top: 16.w,
+                      bottom: 16.w + MediaQuery.of(context).padding.bottom,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, -2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        // Cancel/Previous Button
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: _currentTabIndex == 0
+                                ? () => Navigator.pop(context)
+                                : () => _goToPreviousTab(),
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                              side: BorderSide(
+                                color: AppColors.grey.withOpacity(0.3),
+                              ),
+                            ),
+                            child: Text(
+                              _currentTabIndex == 0 ? s.cancel : s.previous,
+                              style: TextStyle(
+                                color: AppColors.greyDark,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 12.w),
+                        // Save Button
+                        Expanded(
+                          flex: 2,
+                          child: FilledButton(
+                            onPressed: _currentTabIndex == 3
+                                ? _handleSubmit
+                                : () => _goToNextTab(),
+                            style: FilledButton.styleFrom(
+                              backgroundColor: _isCurrentTabValid()
+                                  ? AppColors.primary
+                                  : AppColors.grey.withOpacity(0.3),
+                              foregroundColor: _isCurrentTabValid()
+                                  ? AppColors.white
+                                  : AppColors.greyDark,
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.r),
+                              ),
+                            ),
+                            child: Text(
+                              _currentTabIndex == 3 ? s.saveChanges : s.next,
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+          ],
         ),
       ),
-    );
-  }
-
-  void _showAddCustomerDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => BlocProvider.value(
-        value: context.read<CustomersCubit>(),
-        child: AddCustomerDialog(onCustomerCreated: _onCustomerCreated),
-      ),
+        );
+      },
     );
   }
 
   Widget _buildWarningBanner() {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.all(16.w),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: AppColors.warning.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.warning.withOpacity(0.3)),
+        border: Border(
+          bottom: BorderSide(color: AppColors.warning.withOpacity(0.3)),
+        ),
       ),
       child: Row(
         children: [
@@ -578,359 +444,347 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen> {
   }
 
   Widget _buildReadOnlyView() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Basic Information
-          _buildReadOnlySection(
-            title: S.of(context).basicInformation,
-            icon: Icons.info_outline,
-            children: [
-              _buildReadOnlyField(
-                label: S.of(context).invoiceNumber,
-                value: widget.invoice.invoiceNumber ?? '',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).issueDate,
-                value: widget.invoice.issueDate ?? '',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).status,
-                value: widget.invoice.status ?? '',
-              ),
-            ],
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Customer Information
-          _buildReadOnlySection(
-            title: S.of(context).customerInformation,
-            icon: Icons.person_outline,
-            children: [
-              _buildReadOnlyField(
-                label: S.of(context).customerName,
-                value: widget.invoice.customerName ?? '',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).customerEmail,
-                value: widget.invoice.customer?.email ?? '',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).customerPhone,
-                value: widget.invoice.customer?.phone ?? '',
-              ),
-            ],
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Amount Information
-          _buildReadOnlySection(
-            title: S.of(context).amountInformation,
-            icon: Icons.attach_money,
-            children: [
-              _buildReadOnlyField(
-                label: S.of(context).subtotal,
-                value: widget.invoice.subtotal ?? '0.00',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).taxAmount,
-                value: widget.invoice.taxAmount ?? '0.00',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).total,
-                value: widget.invoice.total ?? '0.00',
-              ),
-              _buildReadOnlyField(
-                label: S.of(context).paymentMethod,
-                value: widget.invoice.paymentMethodCode ?? '',
-              ),
-            ],
-          ),
-
-          SizedBox(height: 16.h),
-
-          // Additional Information
-          _buildReadOnlySection(
-            title: S.of(context).additionalInformation,
-            icon: Icons.note_outlined,
-            children: [
-              _buildReadOnlyField(
-                label: S.of(context).description,
-                value: widget.invoice.description ?? '',
-                isMultiline: true,
-              ),
-            ],
-          ),
-
-          SizedBox(height: 100.h),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReadOnlySection({
-    required String title,
-    required IconData icon,
-    required List<Widget> children,
-  }) {
-    return Container(
-      padding: EdgeInsets.all(20.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(8.w),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: Icon(icon, size: 20.sp, color: AppColors.primary),
-              ),
-              SizedBox(width: 12.w),
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-          ...children,
-        ],
-      ),
-    );
-  }
-
-  Widget _buildReadOnlyField({
-    required String label,
-    required String value,
-    bool isMultiline = false,
-  }) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 20.h),
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            label,
+            S.of(context).cannotEditInvoice,
             style: TextStyle(
-              fontSize: 14.sp,
+              fontSize: 18.sp,
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: AppColors.textPrimary,
             ),
           ),
           SizedBox(height: 8.h),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(16.w),
-            decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
-              borderRadius: BorderRadius.circular(12.r),
-              border: Border.all(color: AppColors.border.withOpacity(0.5)),
-            ),
-            child: Text(
-              value.isEmpty ? S.of(context).noData : value,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-                color: value.isEmpty
-                    ? AppColors.textSecondary
-                    : AppColors.textPrimary,
-              ),
-              maxLines: isMultiline ? null : 1,
-              overflow: isMultiline ? null : TextOverflow.ellipsis,
-            ),
+          Text(
+            S.of(context).invoiceAlreadySent,
+            style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
         ],
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void _goToNextTab() {
+    if (_currentTabIndex < 3) {
+      if (_validateCurrentTab()) {
+        _tabController.animateTo(_currentTabIndex + 1);
+      }
+    }
+  }
+
+  void _goToPreviousTab() {
+    if (_currentTabIndex > 0) {
+      _tabController.animateTo(_currentTabIndex - 1);
+    }
+  }
+
+  void _handleSubmit() {
+    if (_isInvoiceSent) {
+      _showCannotEditDialog();
+      return;
+    }
+
+    if (_validateForm()) {
+      _updateInvoice();
+    }
+  }
+
+  void _updateInvoice() {
+    _cubit.updateInvoice(
+      id: widget.invoice.id!.toString(),
+      customerId: _formController.selectedCustomerId?.toString(),
+      customerName: _formController.selectedCustomerName,
+      customerEmail: _formController.selectedCustomerEmail,
+      customerPhone: _formController.selectedCustomerPhone,
+      customerAddress: _formController.selectedCustomerAddress,
+      subtotal: _formController.subtotalController.text,
+      taxAmount: _formController.taxAmountController.text,
+      discount: _formController.discountController.text,
+      total: _formController.totalController.text,
+      issueDate: _formController.issueDateController.text,
+      status: _formController.selectedStatus,
+      description: _formController.descriptionController.text.isEmpty
+          ? null
+          : _formController.descriptionController.text,
+      paymentMethodCode: _formController.selectedPaymentMethod,
+      action: _formController.selectedAction,
+      items: _formController.items
+          .map(
+            (item) => UpdateInvoiceItemRequest(
+              productId: item.productId?.toString(),
+              name: item.name,
+              quantity: item.quantity,
+              price: item.price,
+              discount: item.discount,
+              taxPercent: item.taxPercent,
+              taxAmount: item.taxAmount,
+              total: item.total,
+              productName: item.productName,
+              productDescription: item.productDescription,
+              productCategory: item.productCategory,
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  bool _validateCurrentTab() {
+    final s = S.of(context);
+    setState(() {
+      _validationErrors.clear();
+    });
+
+    bool isValid = true;
+    String errorMessage = '';
+
+    switch (_currentTabIndex) {
+      case 0: // Basic Info Tab
+        isValid = _validateBasicInfoTab();
+        if (!isValid) {
+          errorMessage = s.fillRequiredFieldsBasicInfo;
+        }
+        break;
+      case 1: // Customer Tab
+        isValid = _validateCustomerTab();
+        if (!isValid) {
+          errorMessage = s.selectOrAddCustomer;
+        }
+        break;
+      case 2: // Items Tab
+        isValid = _validateItemsTab();
+        if (!isValid) {
+          errorMessage = s.addAtLeastOneItem;
+        }
+        break;
+      case 3: // Summary Tab
+        isValid = true;
+        break;
+    }
+
+    if (!isValid) {
+      _showValidationError(errorMessage);
+    }
+
+    return isValid;
+  }
+
+  bool _isCurrentTabValid() {
+    switch (_currentTabIndex) {
+      case 0: // Basic Info Tab
+        return _formController.selectedAction.isNotEmpty &&
+            _formController.selectedPaymentMethod.isNotEmpty &&
+            _formController.selectedStatus.isNotEmpty;
+      case 1: // Customer Tab
+        return (_formController.selectedCustomerId != null) ||
+            (_formController.selectedCustomerName != null &&
+                _formController.selectedCustomerName!.isNotEmpty);
+      case 2: // Items Tab
+        return _formController.items.isNotEmpty;
+      case 3: // Summary Tab
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  bool _validateBasicInfoTab() {
+    final s = S.of(context);
+    bool isValid = true;
+
+    if (_formController.selectedAction.isEmpty) {
+      _validationErrors['action'] = s.actionRequired;
+      isValid = false;
+    }
+
+    if (_formController.selectedPaymentMethod.isEmpty) {
+      _validationErrors['paymentMethod'] = s.paymentMethodRequired;
+      isValid = false;
+    }
+
+    if (_formController.selectedStatus.isEmpty) {
+      _validationErrors['status'] = s.statusRequired;
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  bool _validateCustomerTab() {
+    final s = S.of(context);
+    bool isValid = true;
+
+    if (_formController.selectedCustomerId == null &&
+        (_formController.selectedCustomerName == null ||
+            _formController.selectedCustomerName!.isEmpty)) {
+      _validationErrors['customer'] = s.customerRequired;
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  bool _validateItemsTab() {
+    final s = S.of(context);
+    bool isValid = true;
+
+    if (_formController.items.isEmpty) {
+      _validationErrors['items'] = s.itemsRequired;
+      isValid = false;
+    }
+
+    final qtyError = _formController.validateItemQuantities();
+    if (qtyError != null) {
+      _validationErrors['items'] = qtyError;
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  bool _validateForm() {
+    setState(() {
+      _validationErrors.clear();
+    });
+
+    bool isValid = true;
+
+    if (!_validateBasicInfoTab()) {
+      isValid = false;
+    }
+
+    if (!_validateCustomerTab()) {
+      isValid = false;
+    }
+
+    if (!_validateItemsTab()) {
+      isValid = false;
+    }
+
+    if (!isValid) {
+      final firstError = _validationErrors.values.first;
+      _showValidationError(firstError);
+    }
+
+    return isValid;
+  }
+
+  void _showValidationError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: AppColors.error,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+      ),
+    );
+  }
+
+  void _showCannotEditDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(S.of(context).cannotEditInvoice),
+        content: Text(S.of(context).invoiceAlreadySent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(S.of(context).ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showHelpDialog() {
+    final s = S.of(context);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(s.help),
+        content: Text(s.invoiceCreationHelp),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(s.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTaxIntegrationRequiredWidget(S s) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: Form(
-        key: _formKey,
-        child: CustomScrollView(
-          slivers: [
-            // Modern Header with Animation
-            SliverToBoxAdapter(
-              child: AnimatedEntryWidget(
-                delay: Duration.zero,
-                child: EditInvoiceHeaderWidget(
-                  invoice: widget.invoice,
-                  onBack: _onCancel,
-                  onSave: _onSave,
+      backgroundColor: AppColors.whiteGray,
+      appBar: AppBar(
+        title: Text(s.editInvoice),
+        backgroundColor: AppColors.white,
+        foregroundColor: AppColors.textPrimary,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  size: 64.sp,
+                  color: AppColors.error,
                 ),
-              ),
+                SizedBox(height: 24.h),
+                Text(
+                  s.taxIntegrationNotActive,
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 16.h),
+                Text(
+                  s.taxIntegrationNotActiveMessage,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: AppColors.textSecondary,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 32.h),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, AppRoutes.settingsRoute);
+                  },
+                  icon: Icon(Icons.settings, size: 20.sp),
+                  label: Text(s.goToSettings),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 24.w,
+                      vertical: 16.h,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                ),
+              ],
             ),
-
-            // Warning banner if invoice is sent
-            if (_isInvoiceSent)
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 200),
-                  child: _buildWarningBanner(),
-                ),
-              ),
-
-            // Space with Animation
-            SliverToBoxAdapter(
-              child: AnimatedEntryWidget(
-                delay: Duration(milliseconds: 200),
-                child: SizedBox(height: 16.h),
-              ),
-            ),
-
-            // Form Content with Staggered Animation
-            if (_isInvoiceSent)
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 400),
-                  child: _buildReadOnlyView(),
-                ),
-              )
-            else ...[
-              // Basic Form Section with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 400),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 20,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: AddInvoiceFormSection(
-                      invoiceNumberController: _invoiceNumberController,
-                      customerNameController: _customerNameController,
-                      customerEmailController: _customerEmailController,
-                      customerPhoneController: _customerPhoneController,
-                      subtotalController: _subtotalController,
-                      taxAmountController: _taxAmountController,
-                      totalController: _totalController,
-                      descriptionController: _descriptionController,
-                      issueDateController: _issueDateController,
-                      selectedStatus: _selectedStatus,
-                      selectedPaymentMethod: _selectedPaymentMethod,
-                      selectedDate: _selectedDate,
-                      onDateChanged: _onDateChanged,
-                      onStatusChanged: _onStatusChanged,
-                      onPaymentMethodChanged: _onPaymentMethodChanged,
-                      onSubtotalChanged: _onSubtotalChanged,
-                      onTaxAmountChanged: _onTaxAmountChanged,
-                    ),
-                  ),
-                ),
-              ),
-
-              // Space with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 600),
-                  child: SizedBox(height: 16.h),
-                ),
-              ),
-
-              // Customer Selection Section with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 800),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: _buildCustomerSelectionSection(),
-                  ),
-                ),
-              ),
-
-              // Space with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 1000),
-                  child: SizedBox(height: 16.h),
-                ),
-              ),
-
-              // Items Section with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 1200),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: EditableInvoiceItemsSection(
-                      items: _invoiceItems,
-                      onItemsChanged: _onItemsChanged,
-                      onSubtotalChanged: _onSubtotalChangedFromItems,
-                    ),
-                  ),
-                ),
-              ),
-
-              // Space with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 1400),
-                  child: SizedBox(height: 16.h),
-                ),
-              ),
-
-              // Bottom Actions Section with Animation
-              SliverToBoxAdapter(
-                child: AnimatedEntryWidget(
-                  delay: Duration(milliseconds: 1600),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 20,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: EditInvoiceBottomActions(
-                      onSave: _onSave,
-                      onCancel: _onCancel,
-                    ),
-                  ),
-                ),
-              ),
-
-              // Bottom spacing
-              SliverToBoxAdapter(child: SizedBox(height: 100.h)),
-            ],
-          ],
+          ),
         ),
       ),
     );

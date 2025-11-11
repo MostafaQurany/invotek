@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
 
 class ExpenseCard extends StatelessWidget {
@@ -123,7 +124,7 @@ class ExpenseCard extends StatelessWidget {
 
                   // Amount
                   Text(
-                    expense.formattedAmount,
+                    CurrencyFormatter.formatCurrency(expense.amount, context),
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,

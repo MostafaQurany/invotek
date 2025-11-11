@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/cubits/localization_cubit.dart';
+import '../../../../core/cubits/currency_cubit.dart';
+import '../../../../core/utils/app_api_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_theme.dart';
 import '../../../../generated/l10n.dart';
@@ -17,7 +19,6 @@ class SystemSettingsSection extends StatefulWidget {
 
 class _SystemSettingsSectionState extends State<SystemSettingsSection> {
   bool _notificationsEnabled = true;
-  bool _isDarkMode = false;
 
   @override
   void initState() {
@@ -29,7 +30,6 @@ class _SystemSettingsSectionState extends State<SystemSettingsSection> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       _notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
-      _isDarkMode = prefs.getBool('is_dark_mode') ?? false;
     });
   }
 
@@ -41,19 +41,14 @@ class _SystemSettingsSectionState extends State<SystemSettingsSection> {
     });
   }
 
-  void _saveThemeSetting(bool value) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('is_dark_mode', value);
-    setState(() {
-      _isDarkMode = value;
-    });
-  }
-
   void _changeLanguage() {
     final currentLocale = context.read<LocalizationCubit>().state.locale;
     final newLanguageCode = currentLocale.languageCode == 'ar' ? 'en' : 'ar';
 
     context.read<LocalizationCubit>().changeLanguage(newLanguageCode);
+
+    // إخفاء SnackBar الحالي قبل عرض واحد جديد لتجنب تعارض Hero tags
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -81,6 +76,30 @@ class _SystemSettingsSectionState extends State<SystemSettingsSection> {
               : S.of(context).english,
           icon: Icons.language,
           onTap: _changeLanguage,
+        ),
+
+        SizedBox(height: 8.h),
+
+        // إعدادات العملة
+        BlocBuilder<CurrencyCubit, CurrencyState>(
+          builder: (context, currencyState) {
+            final currencyCubit = context.read<CurrencyCubit>();
+            final languageCode = context
+                .read<LocalizationCubit>()
+                .getCurrentLanguage();
+            final currentCurrency = currencyState.currencyCode;
+            final currencyName = AppCurrency.getCurrencyName(
+              currentCurrency,
+              languageCode,
+            );
+
+            return _buildSettingTile(
+              title: S.of(context).currency,
+              subtitle: currencyName,
+              icon: Icons.attach_money,
+              onTap: () => _showCurrencyDialog(context, currencyCubit),
+            );
+          },
         ),
 
         SizedBox(height: 8.h),
@@ -165,6 +184,58 @@ class _SystemSettingsSectionState extends State<SystemSettingsSection> {
         value: value,
         onChanged: onChanged,
         activeThumbColor: AppColors.primary,
+      ),
+    );
+  }
+
+  void _showCurrencyDialog(BuildContext context, CurrencyCubit currencyCubit) {
+    final languageCode = context.read<LocalizationCubit>().getCurrentLanguage();
+    final currentCurrency = currencyCubit.getCurrentCurrency();
+    final currencies = AppCurrency.getAllCurrencies();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(S.of(context).currency),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: currencies.map((currencyCode) {
+            final currencyName = AppCurrency.getCurrencyName(
+              currencyCode,
+              languageCode,
+            );
+
+            return RadioListTile<String>(
+              title: Text(currencyName),
+              subtitle: Text(
+                AppCurrency.getCurrencySymbol(currencyCode, languageCode),
+              ),
+              value: currencyCode,
+              groupValue: currentCurrency,
+              onChanged: (value) {
+                if (value != null) {
+                  currencyCubit.changeCurrency(value);
+                  Navigator.pop(context);
+                  // إخفاء SnackBar الحالي قبل عرض واحد جديد لتجنب تعارض Hero tags
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${S.of(context).currency}: $currencyName'),
+                      backgroundColor: AppColors.success,
+                    ),
+                  );
+                }
+              },
+              activeColor: AppColors.primary,
+            );
+          }).toList(),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(S.of(context).cancel),
+          ),
+        ],
       ),
     );
   }

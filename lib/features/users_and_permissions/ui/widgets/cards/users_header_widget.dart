@@ -4,6 +4,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/forms/role_dropdown.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/forms/status_dropdown.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UsersHeaderWidget extends StatefulWidget {
   final VoidCallback onMenuPressed;
@@ -70,6 +71,7 @@ class _UsersHeaderWidgetState extends State<UsersHeaderWidget>
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
@@ -98,6 +100,32 @@ class _UsersHeaderWidgetState extends State<UsersHeaderWidget>
                       padding: EdgeInsets.fromLTRB(20.w, 16.h, 20.w, 0),
                       child: Row(
                         children: [
+                          // Title and Subtitle
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  s.usersManagementTitle,
+                                  style: TextStyle(
+                                    color: AppColors.white,
+                                    fontSize: 24.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 4.h),
+                                Text(
+                                  s.manageUsersAndPermissions,
+                                  style: TextStyle(
+                                    color: AppColors.white.withOpacity(0.8),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
                           // Menu Button
                           Container(
                             decoration: BoxDecoration(
@@ -114,33 +142,6 @@ class _UsersHeaderWidgetState extends State<UsersHeaderWidget>
                               padding: EdgeInsets.all(8.w),
                             ),
                           ),
-                          SizedBox(width: 16.w),
-
-                          // Title and Subtitle
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Users Management',
-                                  style: TextStyle(
-                                    color: AppColors.white,
-                                    fontSize: 24.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 4.h),
-                                Text(
-                                  'Manage users and permissions',
-                                  style: TextStyle(
-                                    color: AppColors.white.withOpacity(0.8),
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -152,7 +153,7 @@ class _UsersHeaderWidgetState extends State<UsersHeaderWidget>
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CommonSearchBar(
                         controller: widget.searchController,
-                        hintText: 'Search users',
+                        hintText: s.searchUsers,
                         onChanged: widget.onSearchChanged,
                         backgroundColor: AppColors.white,
                         borderRadius: 32.r,

@@ -16,8 +16,10 @@ import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dial
 import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/item_details_dialog.dart';
-import 'package:invotek/features/printing/ui/screens/print_options_screen.dart';
+import 'package:invotek/features/printing/ui/dialogs/invoice_print_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class InvoiceDetailsScreen extends StatefulWidget {
   final InvoiceModel invoice;
@@ -82,9 +84,9 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
                     invoice.customer ??
                     InvoiceCustomerModel(
                       id: 0,
-                      name: "Customer Name",
-                      email: "Customer Email",
-                      phone: "Customer Phone ",
+                      name: S.of(context).invoicesCustomerName,
+                      email: S.of(context).invoicesCustomerEmail,
+                      phone: S.of(context).invoicesCustomerPhone,
                       companyId: 0,
                       taxNumber: "0",
                       address: "0",
@@ -142,33 +144,76 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
   }
 
   Widget _buildFloatingActionButton() {
+    final s = S.of(context);
+    final hasPrintPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.print,
+    );
+    final hasSendPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.send,
+    );
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.edit,
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         // Print Button
-        FloatingActionButton(
-          heroTag: "print_${widget.invoice.id}",
-          onPressed: _showPrintOptions,
-          backgroundColor: AppColors.warning,
-          child: const Icon(Icons.print, color: Colors.white),
+        Tooltip(
+          message: hasPrintPermission
+              ? s.printInvoice
+              : s.invoicesNoPermissionToAct,
+          child: FloatingActionButton(
+            heroTag: "print_${widget.invoice.id}",
+            onPressed: hasPrintPermission ? _showPrintOptions : null,
+            backgroundColor: hasPrintPermission
+                ? AppColors.warning
+                : AppColors.grey.withOpacity(0.5),
+            child: Icon(
+              hasPrintPermission ? Icons.print : Icons.lock_outline,
+              color: Colors.white,
+            ),
+          ),
         ),
         SizedBox(height: 8.h),
 
         // Send Invoice Button
-        FloatingActionButton(
-          heroTag: "send_${widget.invoice.id}",
-          onPressed: _sendInvoice,
-          backgroundColor: AppColors.success,
-          child: const Icon(Icons.send, color: Colors.white),
+        Tooltip(
+          message: hasSendPermission
+              ? s.sendInvoice
+              : s.invoicesNoPermissionToAct,
+          child: FloatingActionButton(
+            heroTag: "send_${widget.invoice.id}",
+            onPressed: hasSendPermission ? _sendInvoice : null,
+            backgroundColor: hasSendPermission
+                ? AppColors.success
+                : AppColors.grey.withOpacity(0.5),
+            child: Icon(
+              hasSendPermission ? Icons.send : Icons.lock_outline,
+              color: Colors.white,
+            ),
+          ),
         ),
         SizedBox(height: 8.h),
 
         // Edit Invoice Button
-        FloatingActionButton(
-          heroTag: "edit_${widget.invoice.id}",
-          onPressed: _editInvoice,
-          backgroundColor: AppColors.primary,
-          child: const Icon(Icons.edit, color: Colors.white),
+        Tooltip(
+          message: hasEditPermission
+              ? s.editInvoice
+              : s.invoicesNoPermissionToAct,
+          child: FloatingActionButton(
+            heroTag: "edit_${widget.invoice.id}",
+            onPressed: hasEditPermission ? _editInvoice : null,
+            backgroundColor: hasEditPermission
+                ? AppColors.primary
+                : AppColors.grey.withOpacity(0.5),
+            child: Icon(
+              hasEditPermission ? Icons.edit : Icons.lock_outline,
+              color: Colors.white,
+            ),
+          ),
         ),
         SizedBox(height: 8.h),
 
@@ -245,22 +290,39 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
   }
 
   Widget _buildMoreOptionsBottomSheet() {
+    final s = S.of(context);
+    final hasPrintPermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.print,
+    );
+    final hasDeletePermission = PermissionChecker.hasPermission(
+      context,
+      InvoicesPermissions.delete,
+    );
+
     return Container(
       padding: EdgeInsets.all(16.w),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            leading: const Icon(Icons.print, color: AppColors.warning),
-            title: Text(S.of(context).printInvoice),
-            onTap: () {
-              Navigator.pop(context);
-              _showPrintOptions();
-            },
+          _buildOptionTile(
+            icon: Icons.print,
+            iconColor: hasPrintPermission
+                ? AppColors.warning
+                : AppColors.grey.withOpacity(0.5),
+            title: s.printInvoice,
+            hasPermission: hasPrintPermission,
+            permissionMessage: s.invoicesNoPermissionToAct,
+            onTap: hasPrintPermission
+                ? () {
+                    Navigator.pop(context);
+                    _showPrintOptions();
+                  }
+                : null,
           ),
           ListTile(
             leading: const Icon(Icons.copy, color: AppColors.primary),
-            title: Text('تكرار الفاتورة'),
+            title: Text(s.invoicesDuplicateInvoice),
             onTap: () {
               Navigator.pop(context);
               _duplicateInvoice();
@@ -268,21 +330,56 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.download, color: AppColors.success),
-            title: Text('تحميل PDF'),
+            title: Text(s.invoicesDownloadPDF),
             onTap: () {
               Navigator.pop(context);
               _downloadPDF();
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.delete, color: AppColors.error),
-            title: Text(S.of(context).deleteInvoice),
-            onTap: () {
-              Navigator.pop(context);
-              _deleteInvoice();
-            },
+          _buildOptionTile(
+            icon: Icons.delete,
+            iconColor: hasDeletePermission
+                ? AppColors.error
+                : AppColors.grey.withOpacity(0.5),
+            title: s.deleteInvoice,
+            hasPermission: hasDeletePermission,
+            permissionMessage: s.invoicesNoPermissionToAct,
+            onTap: hasDeletePermission
+                ? () {
+                    Navigator.pop(context);
+                    _deleteInvoice();
+                  }
+                : null,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildOptionTile({
+    required IconData icon,
+    required Color iconColor,
+    required String title,
+    required bool hasPermission,
+    required String permissionMessage,
+    VoidCallback? onTap,
+  }) {
+    return Tooltip(
+      message: hasPermission ? title : permissionMessage,
+      child: ListTile(
+        leading: Icon(
+          hasPermission ? icon : Icons.lock_outline,
+          color: iconColor,
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: hasPermission
+                ? AppColors.textPrimary
+                : AppColors.grey.withOpacity(0.5),
+          ),
+        ),
+        onTap: onTap,
       ),
     );
   }
@@ -310,11 +407,10 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
   }
 
   void _showPrintOptions() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PrintOptionsScreen(invoice: widget.invoice),
-      ),
+    // عرض dialog الطباعة مباشرة
+    showDialog(
+      context: context,
+      builder: (context) => InvoicePrintDialog(invoice: widget.invoice),
     );
   }
 }

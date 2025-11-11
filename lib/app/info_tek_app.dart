@@ -18,12 +18,12 @@ class InfoTekApp extends StatelessWidget {
   const InfoTekApp({super.key});
 
   Future<Widget> _getInitialScreen() async {
-    // التحقق من أول مرة للمستخدم
-    final isFirstTime = StorageService.isFirstTime();
+    // التحقق من إكمال Onboarding
+    final onboardingCompleted =
+        StorageService.getBool('onboarding_completed') ?? false;
 
-    if (isFirstTime) {
-      // إذا كان أول مرة، نضع is_first_time = false ونظهر Onboarding
-      await StorageService.setFirstTime(false);
+    // إذا لم يكمل المستخدم onboarding، نعرض Onboarding
+    if (!onboardingCompleted) {
       return const OnboardingScreen();
     }
 
@@ -35,14 +35,6 @@ class InfoTekApp extends StatelessWidget {
 
     if (!isLoggedIn) {
       return const AuthScreen();
-    }
-
-    // التحقق من إكمال Onboarding
-    final onboardingCompleted =
-        StorageService.getBool('onboarding_completed') ?? false;
-
-    if (!onboardingCompleted) {
-      return const OnboardingScreen();
     }
 
     return const HomeScreenWithDrawer();
@@ -67,7 +59,7 @@ class InfoTekApp extends StatelessWidget {
                   theme: AppTheme.lightTheme,
 
                   locale: localizationState.locale,
-                  supportedLocales: const [Locale('en'), Locale('ar')],
+                  supportedLocales: const [Locale('ar'), Locale('en')],
                   localizationsDelegates: [
                     S.delegate,
                     GlobalMaterialLocalizations.delegate,

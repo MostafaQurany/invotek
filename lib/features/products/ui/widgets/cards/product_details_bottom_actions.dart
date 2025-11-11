@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ProductDetailsBottomActions extends StatelessWidget {
   final VoidCallback onDelete;
@@ -15,6 +16,7 @@ class ProductDetailsBottomActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AnimatedEntryWidget(
       delay: Duration(milliseconds: 800),
       child: Container(
@@ -52,7 +54,7 @@ class ProductDetailsBottomActions extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        'Delete',
+                        s.delete,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -85,7 +87,7 @@ class ProductDetailsBottomActions extends StatelessWidget {
                       ),
                       SizedBox(width: 8.w),
                       Text(
-                        'Edit Product',
+                        s.productsEditProduct,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,

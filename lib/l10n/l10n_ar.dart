@@ -200,7 +200,7 @@ class SAr extends S {
   String get registerSuccess => 'تم التسجيل بنجاح! يرجى تسجيل الدخول.';
 
   @override
-  String get usersPermissions => 'المستخدمين والصلاحيات';
+  String get usersPermissions => 'الصلاحيات';
 
   @override
   String get usersPermissionsDesc => 'التحكم في العملاء والصلاحيات';
@@ -425,7 +425,7 @@ class SAr extends S {
   String get referenceNumberHint => 'رقم الفاتورة، معرف الإيصال، إلخ';
 
   @override
-  String get notes => 'ملاحظات';
+  String get notes => 'الملاحظات';
 
   @override
   String get notesHint => 'أي معلومات إضافية أو سياق';
@@ -1758,7 +1758,7 @@ class SAr extends S {
   String get editRole => 'تعديل الدور';
 
   @override
-  String get noEmail => 'بدون بريد إلكتروني';
+  String get noEmail => 'لا يوجد بريد إلكتروني';
 
   @override
   String get noRole => 'بدون دور';
@@ -1996,7 +1996,7 @@ class SAr extends S {
   String get expenseManagement => 'إدارة المصروفات';
 
   @override
-  String get systemAccess => 'الوصول للنظام';
+  String get systemAccess => 'الوصول إلى النظام';
 
   @override
   String get viewUsersDescription => 'إمكانية عرض قائمة المستخدمين';
@@ -4616,10 +4616,1445 @@ class SAr extends S {
   String get updatePhoto => 'تحديث الصورة';
 
   @override
-  String get position => 'الوظيفة';
+  String get position => 'المنصب';
 
   @override
   String fieldIsRequired(String field) {
     return 'حقل $field مطلوب';
   }
+
+  @override
+  String get activate => 'تفعيل';
+
+  @override
+  String get deactivate => 'إلغاء التفعيل';
+
+  @override
+  String get taxMerchantCode => 'رمز التاجر الضريبي';
+
+  @override
+  String get taxInvoiceType => 'نوع الفاتورة الضريبية';
+
+  @override
+  String get noPermission => 'غير مسموح';
+
+  @override
+  String get authLoadingDashboard => 'جاري تحميل بيانات لوحة التحكم...';
+
+  @override
+  String get authLoadingComplete => 'اكتمل التحميل!';
+
+  @override
+  String get authLoadingError => 'خطأ في التحميل';
+
+  @override
+  String get authSubscriptionRequired => 'يُتطلب اشتراك';
+
+  @override
+  String get authLoadingStatistics => 'جاري تحميل الإحصائيات...';
+
+  @override
+  String get authPreparingHome => 'جاري إعداد الشاشة الرئيسية...';
+
+  @override
+  String get authCopyCodeFromEmail =>
+      'انسخ الكود من البريد الإلكتروني والصقه هنا';
+
+  @override
+  String get authConfirmPasswordHint => 'أدخل تأكيد كلمة المرور';
+
+  @override
+  String get authSignInWithGoogle => 'تسجيل الدخول باستخدام Google';
+
+  @override
+  String get clientsAddNew => 'إضافة عميل جديد';
+
+  @override
+  String get clientsAddNewDesc => 'املأ النموذج أدناه لإضافة عميل جديد للنظام';
+
+  @override
+  String get clientsEdit => 'تعديل العميل';
+
+  @override
+  String clientsEditDesc(String clientName) {
+    return 'قم بتعديل بيانات العميل \"$clientName\"';
+  }
+
+  @override
+  String get clientsDetails => 'تفاصيل العميل';
+
+  @override
+  String get clientsBasicInfo => 'المعلومات الأساسية';
+
+  @override
+  String get clientsCompanyInfo => 'معلومات الشركة';
+
+  @override
+  String get clientsContactPersonInfo => 'معلومات شخص الاتصال';
+
+  @override
+  String get clientsAdditionalInfo => 'معلومات إضافية';
+
+  @override
+  String get clientsClientName => 'اسم العميل';
+
+  @override
+  String get clientsEnterClientName => 'أدخل اسم العميل';
+
+  @override
+  String get clientsEnterEmail => 'أدخل البريد الإلكتروني';
+
+  @override
+  String get clientsEnterPhone => 'أدخل رقم الهاتف';
+
+  @override
+  String get clientsEnterAddress => 'أدخل عنوان العميل';
+
+  @override
+  String get clientsCompanyName => 'اسم الشركة';
+
+  @override
+  String get clientsEnterCompanyName => 'أدخل اسم الشركة';
+
+  @override
+  String get clientsTaxNumber => 'الرقم الضريبي';
+
+  @override
+  String get clientsEnterTaxNumber => 'أدخل الرقم الضريبي';
+
+  @override
+  String get clientsWebsite => 'الموقع الإلكتروني';
+
+  @override
+  String get clientsEnterWebsite => 'أدخل الموقع الإلكتروني';
+
+  @override
+  String get clientsContactPersonName => 'اسم شخص الاتصال';
+
+  @override
+  String get clientsEnterContactPersonName => 'أدخل اسم شخص الاتصال';
+
+  @override
+  String get clientsContactPersonPhone => 'هاتف شخص الاتصال';
+
+  @override
+  String get clientsEnterContactPersonPhone => 'أدخل هاتف شخص الاتصال';
+
+  @override
+  String get clientsContactPersonEmail => 'بريد شخص الاتصال';
+
+  @override
+  String get clientsEnterContactPersonEmail => 'أدخل بريد شخص الاتصال';
+
+  @override
+  String get clientsStatus => 'الحالة';
+
+  @override
+  String get clientsNotes => 'ملاحظات';
+
+  @override
+  String get clientsEnterNotes => 'أدخل ملاحظات إضافية';
+
+  @override
+  String get clientsActive => 'نشط';
+
+  @override
+  String get clientsInactive => 'غير نشط';
+
+  @override
+  String get clientsAll => 'الكل';
+
+  @override
+  String get clientsAddClient => 'إضافة العميل';
+
+  @override
+  String get clientsSaveChanges => 'حفظ التعديلات';
+
+  @override
+  String get clientsCancel => 'إلغاء';
+
+  @override
+  String get clientsEditAction => 'تعديل';
+
+  @override
+  String get clientsDelete => 'حذف';
+
+  @override
+  String get clientsView => 'عرض';
+
+  @override
+  String get clientsDeleteConfirmation => 'تأكيد الحذف';
+
+  @override
+  String clientsDeleteConfirmationMessage(String clientName) {
+    return 'هل أنت متأكد من حذف العميل \"$clientName\"؟';
+  }
+
+  @override
+  String get clientsClientAddedSuccess => 'تم إضافة العميل بنجاح';
+
+  @override
+  String get clientsClientUpdatedSuccess => 'تم تحديث العميل بنجاح';
+
+  @override
+  String clientsErrorCreatingClient(String error) {
+    return 'حدث خطأ أثناء إنشاء العميل: $error';
+  }
+
+  @override
+  String clientsErrorUpdatingClient(String error) {
+    return 'حدث خطأ أثناء تحديث العميل: $error';
+  }
+
+  @override
+  String get clientsName => 'الاسم';
+
+  @override
+  String get clientsEmail => 'البريد الإلكتروني';
+
+  @override
+  String get clientsPhone => 'رقم الهاتف';
+
+  @override
+  String get clientsAddress => 'العنوان';
+
+  @override
+  String get clientsCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String get clientsUpdatedAt => 'آخر تحديث';
+
+  @override
+  String get clientsNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get clientsNoPermissionToAct => 'ليس لديك صلاحية لتنفيذ هذا الإجراء';
+
+  @override
+  String get clientsLockedAction => 'إجراء محظور';
+
+  @override
+  String get clientsSearchClients => 'البحث في العملاء...';
+
+  @override
+  String get clientsNoClientsFound => 'لا توجد عملاء';
+
+  @override
+  String get clientsStartByAddingFirst => 'ابدأ بإضافة أول عميل إلى النظام';
+
+  @override
+  String get clientsAddFirstClient => 'إضافة أول عميل';
+
+  @override
+  String get clientsTotal => 'إجمالي';
+
+  @override
+  String clientsCount(int count) {
+    return 'العملاء ($count)';
+  }
+
+  @override
+  String get customersNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get customersNoPermissionToAct => 'ليس لديك صلاحية لتنفيذ هذا الإجراء';
+
+  @override
+  String get customersLockedAction => 'إجراء محظور';
+
+  @override
+  String get customersCannotMakeCall => 'لا يمكن إجراء المكالمة';
+
+  @override
+  String get customersCallPermissionDenied => 'تم رفض إذن الاتصال';
+
+  @override
+  String get customersCallPermissionRequired => 'إذن الاتصال مطلوب';
+
+  @override
+  String get customersCallPermissionRequiredMessage =>
+      'يجب السماح بإذن الاتصال لاستخدام هذه الميزة. يرجى الذهاب إلى إعدادات التطبيق والسماح بإذن الاتصال.';
+
+  @override
+  String get customersCannotSendEmail => 'لا يمكن إرسال البريد الإلكتروني';
+
+  @override
+  String get customersEmailSubject => 'مراسلة من تطبيق Invotek';
+
+  @override
+  String get customersCannotOpenMap => 'لا يمكن فتح الخريطة';
+
+  @override
+  String get customersLocationPermissionDenied => 'تم رفض إذن الموقع';
+
+  @override
+  String get customersLocationPermissionRequired => 'إذن الموقع مطلوب';
+
+  @override
+  String get customersLocationPermissionRequiredMessage =>
+      'يجب السماح بإذن الموقع لاستخدام هذه الميزة. يرجى الذهاب إلى إعدادات التطبيق والسماح بإذن الموقع.';
+
+  @override
+  String get customersAppSettings => 'إعدادات التطبيق';
+
+  @override
+  String get customersInvalidPhoneFormat => 'تنسيق رقم الهاتف غير صحيح';
+
+  @override
+  String get customersDeleteAction => 'حذف';
+
+  @override
+  String get customersEditCustomerAction => 'تعديل العميل';
+
+  @override
+  String get customersCustomerFormHelpDescription =>
+      'هذا النموذج مقسم إلى ثلاث خطوات:\n\n1. المعلومات الأساسية\n2. معلومات العنوان\n3. المعلومات الإضافية';
+
+  @override
+  String get expensesNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get expensesNoPermissionToAct => 'ليس لديك صلاحية لتنفيذ هذا الإجراء';
+
+  @override
+  String get expensesLockedAction => 'إجراء محظور';
+
+  @override
+  String get expensesDeleteExpense => 'حذف المصروف';
+
+  @override
+  String get expensesEditExpense => 'تعديل المصروف';
+
+  @override
+  String get expensesViewDetails => 'عرض التفاصيل';
+
+  @override
+  String expensesDeleteExpenseConfirmation(String expenseTitle) {
+    return 'هل أنت متأكد من حذف المصروف \"$expenseTitle\"؟ لا يمكن التراجع عن هذا الإجراء.';
+  }
+
+  @override
+  String get expensesAreYouSureDeleteExpense =>
+      'هل أنت متأكد من حذف هذا المصروف؟';
+
+  @override
+  String get expensesThisActionCannotBeUndone =>
+      'لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get expensesNoDescription => 'لا يوجد وصف';
+
+  @override
+  String get expensesUnknownCategory => 'فئة غير معروفة';
+
+  @override
+  String get expensesLoading => 'جاري التحميل...';
+
+  @override
+  String get expensesDeleteCategory => 'حذف الفئة';
+
+  @override
+  String get expensesAreYouSureDeleteCategory =>
+      'هل أنت متأكد من حذف فئة المصروفات هذه؟';
+
+  @override
+  String expensesStatus(String status) {
+    return 'الحالة: $status';
+  }
+
+  @override
+  String get expensesCopiedToClipboard => 'تم النسخ إلى الحافظة';
+
+  @override
+  String expensesErrorOccurred(String error) {
+    return 'حدث خطأ: $error';
+  }
+
+  @override
+  String get expensesExpenseDetailsHelpDescription =>
+      'تعرض هذه الشاشة معلومات مفصلة عن المصروف بما في ذلك التفاصيل المالية ومعلومات الدفع والبيانات الوصفية.';
+
+  @override
+  String get expensesExpenseDetailsHelpTitle => 'مساعدة';
+
+  @override
+  String get homeNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get homeNoPermissionToAct => 'ليس لديك صلاحية لتنفيذ هذا الإجراء';
+
+  @override
+  String get homeLockedAction => 'إجراء محظور';
+
+  @override
+  String get homeLoadingDashboard => 'جاري تحميل بيانات لوحة التحكم';
+
+  @override
+  String get homeAddNotificationsFeature => 'إضافة وظيفة الإشعارات هنا';
+
+  @override
+  String get homeAccessDenied => 'غير مسموح';
+
+  @override
+  String homeNoPermissionToAccess(String featureName) {
+    return 'ليس لديك صلاحية للوصول إلى $featureName';
+  }
+
+  @override
+  String get homeAreYouSureLogout => 'هل أنت متأكد من تسجيل الخروج؟';
+
+  @override
+  String homeVersion(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String get homeAddNewCustomer => 'إضافة عميل جديد';
+
+  @override
+  String get homeCreateNewInvoice => 'إنشاء فاتورة جديدة';
+
+  @override
+  String get homeViewAllInvoices => 'عرض جميع الفواتير';
+
+  @override
+  String get homeDeviceInfo => 'معلومات الجهاز';
+
+  @override
+  String homeWidth(String width) {
+    return 'العرض: ${width}px';
+  }
+
+  @override
+  String homeHeight(String height) {
+    return 'الارتفاع: ${height}px';
+  }
+
+  @override
+  String homeDeviceType(String deviceType) {
+    return 'نوع الجهاز: $deviceType';
+  }
+
+  @override
+  String homePixelRatio(String ratio) {
+    return 'نسبة البكسل: $ratio';
+  }
+
+  @override
+  String get homeTablet => 'تابلت';
+
+  @override
+  String get homePhone => 'هاتف';
+
+  @override
+  String get invoicesNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get invoicesNoPermissionToAct => 'ليس لديك صلاحية لتنفيذ هذا الإجراء';
+
+  @override
+  String get invoicesLockedAction => 'إجراء محظور';
+
+  @override
+  String get invoicesCannotDeleteNonDraft =>
+      'لا يمكن حذف هذه الفاتورة لأنها ليست مسودة';
+
+  @override
+  String get invoicesInvoiceNumber => 'رقم الفاتورة';
+
+  @override
+  String get invoicesCustomerName => 'اسم العميل';
+
+  @override
+  String get invoicesCustomerEmail => 'بريد العميل';
+
+  @override
+  String get invoicesCustomerPhone => 'هاتف العميل';
+
+  @override
+  String get invoicesCustomerAddress => 'عنوان العميل';
+
+  @override
+  String get invoicesCustomerNotes => 'ملاحظات';
+
+  @override
+  String get invoicesNoProductIdAvailable => 'لا يوجد معرف منتج متاح';
+
+  @override
+  String get invoicesDuplicateInvoice => 'تكرار الفاتورة';
+
+  @override
+  String get invoicesDownloadPDF => 'تحميل PDF';
+
+  @override
+  String get invoicesEmail => 'البريد الإلكتروني';
+
+  @override
+  String invoicesInvoiceNumberPlaceholder(String number) {
+    return 'فاتورة $number';
+  }
+
+  @override
+  String get invoicesPleaseFindAttachedInvoice =>
+      'يرجى الاطلاع على الفاتورة المرفقة';
+
+  @override
+  String get invoicesDiscount => 'الخصم';
+
+  @override
+  String get invoicesTaxPercentage => 'نسبة الضريبة';
+
+  @override
+  String get invoicesItemDetailsCopied => 'تم نسخ تفاصيل العنصر إلى الحافظة';
+
+  @override
+  String get invoicesItemDetails => 'تفاصيل العنصر:';
+
+  @override
+  String get invoicesItemNameLabel => 'الاسم:';
+
+  @override
+  String get invoicesItemDescriptionLabel => 'الوصف:';
+
+  @override
+  String get invoicesItemQuantityLabel => 'الكمية:';
+
+  @override
+  String get invoicesItemPriceLabel => 'السعر:';
+
+  @override
+  String get invoicesItemDiscountLabel => 'الخصم:';
+
+  @override
+  String get invoicesItemTaxPercentageLabel => 'نسبة الضريبة:';
+
+  @override
+  String get invoicesItemTaxAmountLabel => 'مبلغ الضريبة:';
+
+  @override
+  String get invoicesItemTotalLabel => 'المجموع:';
+
+  @override
+  String get invoicesProductInfo => 'معلومات المنتج:';
+
+  @override
+  String get invoicesProductNameLabel => 'اسم المنتج:';
+
+  @override
+  String get invoicesQRCode => 'رمز QR';
+
+  @override
+  String get invoicesScanQRCodeMessage =>
+      'يمكن مسح هذا الرمز للوصول إلى تفاصيل الفاتورة';
+
+  @override
+  String get invoicesProductInformation => 'معلومات المنتج';
+
+  @override
+  String get invoicesFilterInvoices => 'تصفية الفواتير';
+
+  @override
+  String get invoicesStatus => 'الحالة';
+
+  @override
+  String get invoicesSortOrder => 'اتجاه الترتيب';
+
+  @override
+  String get invoicesApply => 'تطبيق';
+
+  @override
+  String get invoicesAll => 'الكل';
+
+  @override
+  String get invoicesPending => 'قيد الانتظار';
+
+  @override
+  String get invoicesSent => 'مُرسلة';
+
+  @override
+  String get invoicesDescending => 'تنازلي';
+
+  @override
+  String get invoicesAscending => 'تصاعدي';
+
+  @override
+  String get invoicesLoadingMore => 'جاري تحميل المزيد...';
+
+  @override
+  String get invoicesLoadingInvoices => 'جاري تحميل الفواتير...';
+
+  @override
+  String get productsNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get productsNoPermissionToAct => 'ليس لديك صلاحية للقيام بهذا الإجراء';
+
+  @override
+  String get productsSettings => 'الإعدادات';
+
+  @override
+  String get productsEnterProductName => 'أدخل اسم المنتج';
+
+  @override
+  String get productsEnterProductDescription => 'أدخل وصف المنتج';
+
+  @override
+  String get productsEnterSellingPrice => 'أدخل سعر البيع';
+
+  @override
+  String get productsEnterCostPrice => 'أدخل سعر التكلفة';
+
+  @override
+  String get productsEnterTaxRatePercentage => 'أدخل نسبة الضريبة';
+
+  @override
+  String get productsEnterQuantity => 'أدخل الكمية';
+
+  @override
+  String get productsEnterUnit => 'أدخل الوحدة (مثل: قطعة)';
+
+  @override
+  String get productsEnterSKU => 'أدخل رمز المنتج';
+
+  @override
+  String get productsEnterBarcode => 'أدخل الباركود';
+
+  @override
+  String get productsProductNameRequired => 'اسم المنتج مطلوب';
+
+  @override
+  String get productsProductStatusRequired => 'حالة المنتج مطلوبة';
+
+  @override
+  String get productsSellingPriceRequired => 'سعر البيع مطلوب';
+
+  @override
+  String get productsPleaseEnterValidPrice => 'يرجى إدخال سعر صحيح';
+
+  @override
+  String get productsQuantityRequired => 'الكمية مطلوبة';
+
+  @override
+  String get productsPleaseEnterValidQuantity => 'يرجى إدخال كمية صحيحة';
+
+  @override
+  String get productsUnnamedProduct => 'منتج بدون اسم';
+
+  @override
+  String get productsThisActionCannotBeUndone =>
+      'لا يمكن التراجع عن هذا الإجراء';
+
+  @override
+  String get productsCopiedToClipboard => 'تم النسخ إلى الحافظة';
+
+  @override
+  String get productsNoCategoriesFound => 'لا توجد فئات';
+
+  @override
+  String get productsDeleteCategory => 'حذف الفئة';
+
+  @override
+  String get productsCategoryState => 'حالة الفئة';
+
+  @override
+  String get productsCheckIfCategoryIsActiveOrInactive =>
+      'تحقق من أن الفئة نشطة أو غير نشطة';
+
+  @override
+  String get productsAdd => 'إضافة';
+
+  @override
+  String get productsUpdate => 'تحديث';
+
+  @override
+  String productsDeleteCategoryConfirmation(String name) {
+    return 'هل أنت متأكد من حذف الفئة \"$name\"؟';
+  }
+
+  @override
+  String get productsAreYouSureYouWantToDeleteThisProduct =>
+      'هل أنت متأكد من حذف هذا المنتج؟';
+
+  @override
+  String get productsProductIsTaxable => 'المنتج خاضع للضريبة';
+
+  @override
+  String get productsApplyTaxToProduct => 'تطبيق الضريبة على المنتج';
+
+  @override
+  String get productsTrackAvailableProductQuantity =>
+      'تتبع الكمية المتاحة للمنتج';
+
+  @override
+  String get settingsNoPermissionToView => 'ليس لديك صلاحية لعرض الإعدادات';
+
+  @override
+  String get settingsNoPermissionToAct => 'ليس لديك صلاحية للقيام بهذا الإجراء';
+
+  @override
+  String get settingsTaxIntegration => 'التكامل الضريبي';
+
+  @override
+  String get settingsRetry => 'إعادة المحاولة';
+
+  @override
+  String get settingsUpdateStatus => 'تحديث الحالة';
+
+  @override
+  String get settingsStatus => 'الحالة';
+
+  @override
+  String get settingsActive => 'مفعّل';
+
+  @override
+  String get settingsInactive => 'غير مفعّل';
+
+  @override
+  String get settingsTaxInvoiceType => 'نوع الفاتورة الضريبية';
+
+  @override
+  String get settingsTaxMerchantCode => 'رمز التاجر الضريبي';
+
+  @override
+  String get settingsActivateIntegration => 'تفعيل التكامل';
+
+  @override
+  String get settingsInvoiceType => 'نوع الفاتورة';
+
+  @override
+  String get settingsIncome => 'دخل';
+
+  @override
+  String get settingsVAT => 'ضريبة القيمة المضافة';
+
+  @override
+  String get settingsActivate => 'تفعيل';
+
+  @override
+  String get settingsDeactivate => 'إلغاء التفعيل';
+
+  @override
+  String get settingsSupportEmailSubject => 'دعم فني - تطبيق إنفوتك';
+
+  @override
+  String get usersNoPermissionToView => 'ليس لديك صلاحية لعرض هذا المحتوى';
+
+  @override
+  String get usersNoPermissionToAct => 'ليس لديك صلاحية للقيام بهذا الإجراء';
+
+  @override
+  String get usersDeleteUser => 'حذف المستخدم';
+
+  @override
+  String get usersAreYouSureYouWantToDeleteUser =>
+      'هل أنت متأكد من حذف المستخدم';
+
+  @override
+  String get usersThisActionCannotBeUndone => 'لا يمكن التراجع عن هذا الإجراء';
+
+  @override
+  String get usersUnknownUser => 'مستخدم غير معروف';
+
+  @override
+  String get usersNoEmail => 'لا يوجد بريد إلكتروني';
+
+  @override
+  String get usersViewDetails => 'عرض التفاصيل';
+
+  @override
+  String get usersViewUserDetails => 'عرض تفاصيل المستخدم';
+
+  @override
+  String get usersEditUser => 'تعديل المستخدم';
+
+  @override
+  String get usersEditUserInformation => 'تعديل معلومات المستخدم';
+
+  @override
+  String get usersDeleteUserPermanently => 'حذف المستخدم نهائيًا';
+
+  @override
+  String get usersCopiedToClipboard => 'تم النسخ إلى الحافظة';
+
+  @override
+  String get usersNameRequired => 'الاسم مطلوب';
+
+  @override
+  String get usersEmailRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get usersPleaseEnterValidEmail => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get usersPasswordRequired => 'كلمة المرور مطلوبة';
+
+  @override
+  String get usersPasswordMustBeAtLeast6Characters =>
+      'يجب أن تكون كلمة المرور 6 أحرف على الأقل';
+
+  @override
+  String get usersPleaseConfirmYourPassword => 'يرجى تأكيد كلمة المرور';
+
+  @override
+  String get usersPasswordsDoNotMatch => 'كلمات المرور غير متطابقة';
+
+  @override
+  String get usersManagePermissions => 'إدارة الصلاحيات';
+
+  @override
+  String get usersManageRolesAndPermissions => 'إدارة الأدوار والصلاحيات';
+
+  @override
+  String get usersRoles => 'الأدوار';
+
+  @override
+  String get usersSelectModule => 'اختر الوحدة';
+
+  @override
+  String get usersModulePermissions => 'صلاحيات الوحدة';
+
+  @override
+  String get usersNoPermissionsForThisModule => 'لا توجد صلاحيات لهذه الوحدة';
+
+  @override
+  String get usersTotalPermissions => 'إجمالي الصلاحيات';
+
+  @override
+  String get usersAddNewRole => 'إضافة دور جديد';
+
+  @override
+  String get usersRoleName => 'اسم الدور';
+
+  @override
+  String get usersRoleDescription => 'وصف الدور';
+
+  @override
+  String get usersAdd => 'إضافة';
+
+  @override
+  String get usersEditRole => 'تعديل الدور';
+
+  @override
+  String get usersConfirmDelete => 'تأكيد الحذف';
+
+  @override
+  String usersAreYouSureYouWantToDeleteRole(String name) {
+    return 'هل أنت متأكد من حذف الدور \"$name\"؟';
+  }
+
+  @override
+  String get usersActive => 'نشط';
+
+  @override
+  String get usersInactive => 'غير نشط';
+
+  @override
+  String get usersModule => 'الوحدة';
+
+  @override
+  String get usersUsers => 'المستخدمين';
+
+  @override
+  String get usersClients => 'العملاء';
+
+  @override
+  String get usersProducts => 'المنتجات';
+
+  @override
+  String get usersInvoices => 'الفواتير';
+
+  @override
+  String get usersExpenses => 'المصروفات';
+
+  @override
+  String get usersReports => 'التقارير';
+
+  @override
+  String get usersSettings => 'الإعدادات';
+
+  @override
+  String get creditInvoicesTitle => 'فواتير الائتمان';
+
+  @override
+  String get dinar => 'د.ر';
+
+  @override
+  String get manageExpensesAndBudgets => 'إدارة النفقات والميزانيات';
+
+  @override
+  String get enterPosition => 'أدخل المنصب';
+
+  @override
+  String get confirmPasswordPlaceholder => 'تأكيد كلمة المرور';
+
+  @override
+  String get selectRole => 'اختر الدور';
+
+  @override
+  String get selectStatus => 'اختر الحالة';
+
+  @override
+  String get searchUsers => 'البحث عن المستخدمين';
+
+  @override
+  String get usersManagementTitle => 'إدارة المستخدمين';
+
+  @override
+  String get manageUsersAndPermissions => 'إدارة المستخدمين والصلاحيات';
+
+  @override
+  String get userDetails => 'تفاصيل المستخدم';
+
+  @override
+  String get unknownUser => 'مستخدم غير معروف';
+
+  @override
+  String get notProvided => 'غير متوفر';
+
+  @override
+  String get notAvailable => 'غير متوفر';
+
+  @override
+  String get notAssigned => 'غير معين';
+
+  @override
+  String get noNotesAvailable => 'لا توجد ملاحظات متاحة';
+
+  @override
+  String get userInformation => 'معلومات المستخدم';
+
+  @override
+  String get userSummary => 'ملخص المستخدم';
+
+  @override
+  String get lastLogin => 'آخر تسجيل دخول';
+
+  @override
+  String get never => 'أبداً';
+
+  @override
+  String get unknown => 'غير معروف';
+
+  @override
+  String get allRoles => 'جميع الأدوار';
+
+  @override
+  String get employee => 'موظف';
+
+  @override
+  String get viewer => 'عارض';
+
+  @override
+  String get suspended => 'معلق';
+
+  @override
+  String get startByAddingFirstUser => 'ابدأ بإضافة أول مستخدم إلى النظام';
+
+  @override
+  String get addFirstUser => 'إضافة أول مستخدم';
+
+  @override
+  String get userPermissions => 'صلاحيات المستخدم';
+
+  @override
+  String get createUsers => 'إنشاء المستخدمين';
+
+  @override
+  String get editUsers => 'تعديل المستخدمين';
+
+  @override
+  String get deleteUsers => 'حذف المستخدمين';
+
+  @override
+  String get createProducts => 'إنشاء المنتجات';
+
+  @override
+  String get editProducts => 'تعديل المنتجات';
+
+  @override
+  String get deleteProducts => 'حذف المنتجات';
+
+  @override
+  String get viewCustomers => 'عرض العملاء';
+
+  @override
+  String get createCustomers => 'إنشاء العملاء';
+
+  @override
+  String get editCustomers => 'تعديل العملاء';
+
+  @override
+  String get deleteCustomers => 'حذف العملاء';
+
+  @override
+  String get createExpenses => 'إنشاء المصروفات';
+
+  @override
+  String get editExpenses => 'تعديل المصروفات';
+
+  @override
+  String get deleteExpenses => 'حذف المصروفات';
+
+  @override
+  String get manageSettings => 'إدارة الإعدادات';
+
+  @override
+  String get profileInformation => 'معلومات الملف الشخصي';
+
+  @override
+  String get enterDepartment => 'أدخل القسم';
+
+  @override
+  String get accountStatus => 'حالة الحساب';
+
+  @override
+  String get enableOrDisableUserAccount => 'تفعيل أو تعطيل حساب المستخدم';
+
+  @override
+  String get userCreatedSuccessfullyMessage => 'تم إنشاء المستخدم بنجاح';
+
+  @override
+  String get userUpdatedSuccessfullyMessage => 'تم تحديث المستخدم بنجاح';
+
+  @override
+  String get userDeletedSuccessfullyMessage => 'تم حذف المستخدم بنجاح';
+
+  @override
+  String get completedSuccessfully => 'تم بنجاح';
+
+  @override
+  String get usersNoName => 'لا يوجد اسم';
+
+  @override
+  String get usersNoRole => 'لا يوجد دور';
+
+  @override
+  String get usersUndefined => 'غير محدد';
+
+  @override
+  String get usersUnknownStatus => 'غير معروف';
+
+  @override
+  String get usersRoleAdmin => 'مدير';
+
+  @override
+  String get usersRoleAccountant => 'محاسب';
+
+  @override
+  String get usersRoleUser => 'مستخدم';
+
+  @override
+  String get usersRoleSupervisor => 'مشرف';
+
+  @override
+  String get usersStatusActive => 'نشط';
+
+  @override
+  String get usersStatusInactive => 'غير نشط';
+
+  @override
+  String get noStatus => 'لا توجد حالة';
+
+  @override
+  String get noPhone => 'لا يوجد هاتف';
+
+  @override
+  String get taxIntegrationNotActive => 'التكامل الضريبي غير مفعل';
+
+  @override
+  String get taxIntegrationNotActiveMessage =>
+      'لم تقم بتفعيل التكامل الضريبي. يرجى تفعيله من الإعدادات إذا كان لديك صلاحية لذلك';
+
+  @override
+  String get goToSettings => 'الذهاب إلى الإعدادات';
+
+  @override
+  String get customersUnnamedCustomer => 'عميل بدون اسم';
+
+  @override
+  String get customersInactive => 'غير نشط';
+
+  @override
+  String get customersCompanyTech => 'شركة التقنية المتقدمة';
+
+  @override
+  String get customersCompanyFinance => 'مؤسسة الخدمات المالية';
+
+  @override
+  String get customersCompanyConstruction => 'شركة البناء والتطوير';
+
+  @override
+  String get customersCompanyEducation => 'مؤسسة التعليم الحديث';
+
+  @override
+  String get customersCompanyTourism => 'شركة السياحة والترفيه';
+
+  @override
+  String get customersCompanyHealthcare => 'مؤسسة الرعاية الصحية';
+
+  @override
+  String get customersCompanyTransport => 'شركة النقل واللوجستيات';
+
+  @override
+  String get customersCompanyEcommerce => 'مؤسسة التجارة الإلكترونية';
+
+  @override
+  String get customersLastFiveInvoices => 'آخر 5 فواتير';
+
+  @override
+  String get customersContactInformation => 'معلومات الاتصال';
+
+  @override
+  String get customersNotProvided => 'غير متوفر';
+
+  @override
+  String get customersCall => 'اتصال';
+
+  @override
+  String get customersMap => 'خريطة';
+
+  @override
+  String get customersAccountStatus => 'حالة الحساب';
+
+  @override
+  String get customersCreated => 'تاريخ الإنشاء';
+
+  @override
+  String get customersLastUpdated => 'آخر تحديث';
+
+  @override
+  String get customersLoadingMore => 'جاري تحميل المزيد...';
+
+  @override
+  String get customersNoInvoicesForCustomer => 'لا توجد فواتير لهذا العميل';
+
+  @override
+  String get usersCannotDeleteAdmin => 'لا يمكن حذف مستخدم مدير';
+
+  @override
+  String get usersCannotDeleteYourself => 'لا يمكن حذف حسابك الخاص';
+
+  @override
+  String get usersCannotDeleteAdminMessage =>
+      'لا يمكن حذف المستخدمين من نوع مدير';
+
+  @override
+  String get usersCannotDeleteYourselfMessage => 'لا يمكنك حذف حسابك الخاص';
+
+  @override
+  String get productsHelp => 'مساعدة المنتجات';
+
+  @override
+  String get productsHelpDescription =>
+      'تساعدك هذه الشاشة على إضافة منتجات جديدة إلى المخزون الخاص بك. إليك ما تحتاج إلى معرفته:';
+
+  @override
+  String get productsBasicInformation => 'المعلومات الأساسية';
+
+  @override
+  String get productsBasicInformationDescription =>
+      'أدخل اسم المنتج والوصف والفئة والحالة.';
+
+  @override
+  String get productsPricing => 'التسعير';
+
+  @override
+  String get productsPricingDescription =>
+      'حدد سعر البيع وسعر التكلفة ومعدل الضريبة.';
+
+  @override
+  String get productsInventory => 'المخزون';
+
+  @override
+  String get productsInventoryDescription =>
+      'إدارة الكمية والوحدات ومستويات المخزون.';
+
+  @override
+  String get productsProductDetails => 'تفاصيل المنتج';
+
+  @override
+  String get productsProductDetailsDescription =>
+      'أضف رمز SKU والباركود والعلامة التجارية والنموذج وتفاصيل أخرى.';
+
+  @override
+  String get subscriptionRequiredTitle => 'اختيار الباقة مطلوب';
+
+  @override
+  String get subscriptionRequiredAction => 'اختيار الباقة';
+
+  @override
+  String get productsProductInformation => 'معلومات المنتج';
+
+  @override
+  String get productsDescription => 'الوصف';
+
+  @override
+  String get productsCostPrice => 'سعر التكلفة';
+
+  @override
+  String get productsNotSet => 'غير محدد';
+
+  @override
+  String get productsTaxRate => 'معدل الضريبة';
+
+  @override
+  String get productsUnit => 'الوحدة';
+
+  @override
+  String get productsNotSpecified => 'غير محدد';
+
+  @override
+  String get productsTaxable => 'خاضع للضريبة';
+
+  @override
+  String get productsYes => 'نعم';
+
+  @override
+  String get productsNo => 'لا';
+
+  @override
+  String get productsTrackInventory => 'تتبع المخزون';
+
+  @override
+  String get productsBarcode => 'الباركود';
+
+  @override
+  String get productsTapToCopy => 'اضغط للنسخ';
+
+  @override
+  String get productsSku => 'رمز SKU';
+
+  @override
+  String get productsQuantity => 'الكمية';
+
+  @override
+  String get productsQty => 'الكمية';
+
+  @override
+  String get productsEdit => 'تعديل';
+
+  @override
+  String get productsDelete => 'حذف';
+
+  @override
+  String get productsCreateFirstProduct => 'أنشئ منتجك الأول للبدء';
+
+  @override
+  String get productsErrorOccurred => 'حدث خطأ';
+
+  @override
+  String get productsUnitHint => 'قطعة، كجم، متر...';
+
+  @override
+  String get productsEnterProductSku => 'أدخل رمز SKU للمنتج';
+
+  @override
+  String get productsManageProductsAndInventory => 'إدارة المنتجات والمخزون';
+
+  @override
+  String get productsViewAndManageProductInformation =>
+      'عرض وإدارة معلومات المنتج';
+
+  @override
+  String get productsEditProduct => 'تعديل المنتج';
+
+  @override
+  String get productsProductInsights => 'رؤى المنتج';
+
+  @override
+  String get productsInvoices => 'الفواتير';
+
+  @override
+  String get productsThisMonth => 'هذا الشهر';
+
+  @override
+  String get productsCustomers => 'العملاء';
+
+  @override
+  String get productsBoughtThis => 'اشتروا هذا';
+
+  @override
+  String get productsSales => 'المبيعات';
+
+  @override
+  String get productsStock => 'المخزون';
+
+  @override
+  String get productsAvailable => 'متوفر';
+
+  @override
+  String get expensesPaymentMethodCash => 'نقدي';
+
+  @override
+  String get expensesPaymentMethodCard => 'بطاقة ائتمان/خصم';
+
+  @override
+  String get expensesPaymentMethodBankTransfer => 'تحويل بنكي';
+
+  @override
+  String get expensesPaymentMethodCheck => 'شيك';
+
+  @override
+  String get expensesNoCategoriesToDelete => 'لا توجد فئات للحذف';
+
+  @override
+  String get expensesAllCategoriesDeletedSuccessfully =>
+      'تم حذف جميع الفئات بنجاح';
+
+  @override
+  String get expensesDeleteAllCategories => 'حذف جميع الفئات';
+
+  @override
+  String get expensesCurrentCategories => 'الفئات الحالية';
+
+  @override
+  String get expensesNoCategoriesFoundMessage =>
+      'لا توجد فئات. يمكنك الآن البدء في إنشاء فئات جديدة!';
+
+  @override
+  String get expensesStatusLabel => 'الحالة';
+
+  @override
+  String get expensesDeleting => 'جاري الحذف...';
+
+  @override
+  String get expensesDeleteAllCategoriesCount => 'حذف جميع الفئات';
+
+  @override
+  String get expensesSortByTitle => 'العنوان';
+
+  @override
+  String get expensesSortByAmount => 'المبلغ';
+
+  @override
+  String get expensesSortByCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String get expensesSortByUpdatedAt => 'تاريخ التحديث';
+
+  @override
+  String get expensesSortByDate => 'التاريخ';
+
+  @override
+  String get expensesSortOrderAsc => 'تصاعدي';
+
+  @override
+  String get expensesSortOrderDesc => 'تنازلي';
+
+  @override
+  String get expensesAllCategories => 'جميع الفئات';
+
+  @override
+  String get expensesSortBy => 'ترتيب حسب';
+
+  @override
+  String get expensesOrder => 'الترتيب';
+
+  @override
+  String get expensesAllStatus => 'جميع الحالات';
+
+  @override
+  String get expensesSearchCategories => 'البحث في الفئات...';
+
+  @override
+  String get expensesErrorPrefix => 'خطأ';
+
+  @override
+  String get expensesEditCategory => 'تعديل الفئة';
+
+  @override
+  String get expensesNoExpensesYet => 'لا توجد مصروفات بعد';
+
+  @override
+  String get expensesStartTrackingExpenses =>
+      'ابدأ تتبع مصروفات عملك بإضافة أول مصروف';
+
+  @override
+  String get expensesAddFirstExpense => 'إضافة أول مصروف';
+
+  @override
+  String get expensesSomethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String get expensesTryAgain => 'حاول مرة أخرى';
+
+  @override
+  String get expensesNoCategoriesYet => 'لا توجد فئات بعد';
+
+  @override
+  String get expensesCreateExpenseCategories =>
+      'أنشئ فئات المصروفات لتنظيم مصروفات عملك';
+
+  @override
+  String get expensesAddFirstCategory => 'إضافة أول فئة';
+
+  @override
+  String get notificationsAll => 'الكل';
+
+  @override
+  String get notificationsRead => 'مقروء';
+
+  @override
+  String get notificationsUnread => 'غير مقروء';
+
+  @override
+  String get notificationsTotal => 'الإجمالي';
+
+  @override
+  String get notificationsSearchHint => 'البحث في الإشعارات...';
+
+  @override
+  String get notificationsDetails => 'تفاصيل الإشعار';
+
+  @override
+  String get notificationsMarkAsRead => 'تحديد كمقروء';
+
+  @override
+  String get notificationsMarkAllAsRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get notificationsClearRead => 'حذف المقروءة';
+
+  @override
+  String get notificationsDeleteNotification => 'حذف الإشعار';
+
+  @override
+  String get notificationsDeleteConfirmation =>
+      'هل أنت متأكد من حذف هذا الإشعار؟';
+
+  @override
+  String get notificationsClearReadConfirmation =>
+      'هل أنت متأكد من حذف جميع الإشعارات المقروءة؟';
+
+  @override
+  String get notificationsMarkAsReadSuccess => 'تم تحديد الإشعار كمقروء بنجاح';
+
+  @override
+  String get notificationsMarkAllAsReadSuccess =>
+      'تم تحديد جميع الإشعارات كمقروءة بنجاح';
+
+  @override
+  String get notificationsDeleteSuccess => 'تم حذف الإشعار بنجاح';
+
+  @override
+  String get notificationsClearReadSuccess =>
+      'تم حذف جميع الإشعارات المقروءة بنجاح';
+
+  @override
+  String get notificationsNoNotifications => 'لا توجد إشعارات';
+
+  @override
+  String get notificationsTypeInvoice => 'فاتورة';
+
+  @override
+  String get notificationsTypePayment => 'دفعة';
+
+  @override
+  String get notificationsTypeUserCreated => 'مستخدم جديد';
+
+  @override
+  String get notificationsTypeSystem => 'نظام';
+
+  @override
+  String get notificationsAdditionalData => 'بيانات إضافية';
 }

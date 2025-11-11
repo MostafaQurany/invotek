@@ -82,9 +82,6 @@ class CommonSearchBar extends StatelessWidget {
         keyboardType: keyboardType,
         maxLines: maxLines,
         maxLength: maxLength,
-        onTapOutside: (event) {
-          FocusScope.of(context).unfocus();
-        },
         style: TextStyle(
           fontSize: 14.sp,
           color: textColor ?? AppColors.textPrimary,

@@ -1,3 +1,5 @@
+import 'package:invotek/core/utils/date_formatter.dart';
+
 class ExpenseModel {
   final int id;
   final int companyId;
@@ -42,12 +44,7 @@ class ExpenseModel {
   String get formattedAmount => '\$${amount.toStringAsFixed(2)}';
 
   String get formattedDate {
-    try {
-      final date = DateTime.parse(expenseDate);
-      return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
-    } catch (e) {
-      return expenseDate;
-    }
+    return DateFormatter.apiStringToDisplayFormat(expenseDate) ?? expenseDate;
   }
 
   ExpenseModel copyWith({

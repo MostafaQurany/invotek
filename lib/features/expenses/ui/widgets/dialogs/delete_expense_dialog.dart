@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class DeleteExpenseDialog extends StatelessWidget {
   final ExpenseModel expense;
@@ -15,6 +17,7 @@ class DeleteExpenseDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       title: Row(
@@ -26,7 +29,7 @@ class DeleteExpenseDialog extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
           Text(
-            'Delete Expense',
+            s.expensesDeleteExpense,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -40,7 +43,7 @@ class DeleteExpenseDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Are you sure you want to delete this expense?',
+            s.expensesAreYouSureDeleteExpense,
             style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
 
@@ -62,7 +65,7 @@ class DeleteExpenseDialog extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        expense.description ?? 'No description',
+                        expense.description ?? s.expensesNoDescription,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -72,7 +75,7 @@ class DeleteExpenseDialog extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        expense.formattedAmount,
+                        CurrencyFormatter.formatCurrency(expense.amount, context),
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: AppColors.textSecondary,
@@ -88,7 +91,7 @@ class DeleteExpenseDialog extends StatelessWidget {
           SizedBox(height: 8.h),
 
           Text(
-            'This action cannot be undone.',
+            s.expensesThisActionCannotBeUndone,
             style: TextStyle(
               fontSize: 12.sp,
               color: AppColors.error,
@@ -101,7 +104,7 @@ class DeleteExpenseDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
-            'Cancel',
+            s.cancel,
             style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
         ),
@@ -119,7 +122,7 @@ class DeleteExpenseDialog extends StatelessWidget {
             elevation: 0,
           ),
           child: Text(
-            'Delete',
+            s.delete,
             style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
           ),
         ),

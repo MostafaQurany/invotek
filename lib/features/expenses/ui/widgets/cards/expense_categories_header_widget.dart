@@ -130,7 +130,7 @@ class _ExpenseCategoriesHeaderWidgetState
             child: CommonSearchBarExtensions.expenseCategoriesSearch(
               controller: widget.searchController,
               onChanged: widget.onSearchChanged,
-              hintText: 'Search categories...',
+              hintText: S.of(context).expensesSearchCategories,
             ),
           ),
 
@@ -173,13 +173,13 @@ class _ExpenseCategoriesHeaderWidgetState
             Expanded(
               child: _buildFilterDropdown(
                 value: widget.selectedStatus,
-                items: const [
+                items: [
                   DropdownMenuItem(
                     value: 'all_status',
-                    child: Text('All Status'),
+                    child: Text(S.of(context).expensesAllStatus),
                   ),
-                  DropdownMenuItem(value: 'active', child: Text('Active')),
-                  DropdownMenuItem(value: 'inactive', child: Text('Inactive')),
+                  DropdownMenuItem(value: 'active', child: Text(S.of(context).active)),
+                  DropdownMenuItem(value: 'inactive', child: Text(S.of(context).inactive)),
                 ],
                 onChanged: widget.onStatusChanged,
                 hint: 'Status',

@@ -17,7 +17,7 @@ class StorageService {
   }
 
   static String getLanguage() {
-    return _prefs?.getString('language_code') ?? 'en';
+    return _prefs?.getString('language_code') ?? 'ar';
   }
 
   // Token methods
@@ -104,5 +104,18 @@ class StorageService {
 
   static Future<void> removePermissions() async {
     await _prefs?.remove('user_permissions');
+  }
+
+  // Currency methods
+  static Future<void> saveCurrency(String currencyCode) async {
+    await _prefs?.setString('currency_code', currencyCode);
+  }
+
+  static String? getCurrency() {
+    return _prefs?.getString('currency_code');
+  }
+
+  static Future<void> removeCurrency() async {
+    await _prefs?.remove('currency_code');
   }
 }

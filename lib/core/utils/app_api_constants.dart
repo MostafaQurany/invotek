@@ -1,6 +1,9 @@
 class ApiConstants {
-  //
-  static const String baserUrl = "https://demo.invotik.com/api/";
+  //google key
+  static const String googleServerClientId =
+      "993254668806-r1864hu1nskob17pe4uf2qu9o773q4se.apps.googleusercontent.com";
+  // auth
+  static const String baserUrl = "https://invotik.com/api/";
   static const String login = "login";
   static const String register = "register";
   static const String logOut = "logout";
@@ -75,6 +78,8 @@ class ApiConstants {
   static const String createInvoice = "company/tax-invoices";
   static const String updateInvoice = "company/tax-invoices/{id}";
   static const String deleteInvoice = "company/tax-invoices/{id}";
+  // Credit Invoices
+  static const String creditInvoices = "company/credit-invoices";
 
   // ===== TAX INTEGRATION APIs =====
   // التكامل الضريبي | Tax Integration
@@ -89,6 +94,14 @@ class ApiConstants {
 
   // Permissions
   static const String rolePermissions = "company/roles/{roleId}/permissions";
+
+  // Notifications
+  static const String notifications = "company/notifications";
+  static const String notificationById = "company/notifications/{id}";
+  static const String notificationStats = "company/notifications/stats";
+  static const String markNotificationAsRead = "notifications/{id}/read";
+  static const String markAllNotificationsAsRead = "company/notifications/read-all";
+  static const String clearReadNotifications = "company/notifications/clear-read";
 }
 
 class ApiKey {
@@ -126,7 +139,62 @@ class ApiErrors {
   static const String ok = "Ok";
 }
 
+enum CurrencyCode { aed, egp, sar, usd }
+
 class AppCurrency {
   static const String currencyAr = "د.ع";
-  static const String currencyEn = "AED";
+  static const String currencyEn = "JOD";
+
+  // Currency symbols by language
+  static const Map<String, Map<String, String>> _currencySymbols = {
+    'AED': {'ar': 'د.إ', 'en': 'AED'},
+    'JOD': {'ar': 'د.ع', 'en': 'JOD'},
+    'EGP': {'ar': 'ج.م', 'en': 'EGP'},
+    'SAR': {'ar': 'ر.س', 'en': 'SAR'},
+    'USD': {'ar': '\$', 'en': '\$'},
+  };
+
+  // Currency names by language
+  static const Map<String, Map<String, String>> _currencyNames = {
+    'AED': {'ar': 'درهم إماراتي', 'en': 'UAE Dirham'},
+    'EGP': {'ar': 'جنيه مصري', 'en': 'Egyptian Pound'},
+    'SAR': {'ar': 'ريال سعودي', 'en': 'Saudi Riyal'},
+    'USD': {'ar': 'دولار أمريكي', 'en': 'US Dollar'},
+    'JOD': {'ar': 'الدينار الأردني', 'en': 'Jordanian dinar'},
+  };
+
+  /// Get currency symbol based on currency code and language
+  static String getCurrencySymbol(String currencyCode, String languageCode) {
+    return _currencySymbols[currencyCode]?[languageCode] ?? currencyCode;
+  }
+
+  /// Get currency name based on currency code and language
+  static String getCurrencyName(String currencyCode, String languageCode) {
+    return _currencyNames[currencyCode]?[languageCode] ?? currencyCode;
+  }
+
+  /// Get all available currencies
+  static List<String> getAllCurrencies() {
+    return ['AED', 'EGP', 'SAR', 'USD', 'JOD'];
+  }
+
+  /// Get currency symbol for Arabic
+  static String getCurrencySymbolAr(String currencyCode) {
+    return getCurrencySymbol(currencyCode, 'ar');
+  }
+
+  /// Get currency symbol for English
+  static String getCurrencySymbolEn(String currencyCode) {
+    return getCurrencySymbol(currencyCode, 'en');
+  }
+
+  /// Get currency name for Arabic
+  static String getCurrencyNameAr(String currencyCode) {
+    return getCurrencyName(currencyCode, 'ar');
+  }
+
+  /// Get currency name for English
+  static String getCurrencyNameEn(String currencyCode) {
+    return getCurrencyName(currencyCode, 'en');
+  }
 }

@@ -171,7 +171,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             SizedBox(height: ScreenUtils.paddingMedium),
 
             ResponsiveButton(
-              text: 'إضافة عميل جديد',
+              text: S.of(context).homeAddNewCustomer,
               icon: Icons.person_add,
               onPressed: () {
                 // Add new customer
@@ -182,7 +182,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             SizedBox(height: ScreenUtils.paddingSmall),
 
             ResponsiveButton(
-              text: 'إنشاء فاتورة جديدة',
+              text: S.of(context).homeCreateNewInvoice,
               icon: Icons.add_shopping_cart,
               backgroundColor: Colors.orange,
               onPressed: () {
@@ -194,7 +194,7 @@ class _HomeDashboardState extends State<HomeDashboard> {
             SizedBox(height: ScreenUtils.paddingSmall),
 
             ResponsiveOutlinedButton(
-              text: 'عرض جميع الفواتير',
+              text: S.of(context).homeViewAllInvoices,
               icon: Icons.list,
               onPressed: () {
                 // View all invoices
@@ -206,14 +206,14 @@ class _HomeDashboardState extends State<HomeDashboard> {
 
             // Device Info Card
             ResponsiveInfoCard(
-              title: 'معلومات الجهاز',
+              title: S.of(context).homeDeviceInfo,
               subtitle: S.of(context).screenDimensionsPerformance,
               description:
                   '''
-العرض: ${ScreenUtils.screenWidth.toStringAsFixed(0)}px
-الارتفاع: ${ScreenUtils.screenHeight.toStringAsFixed(0)}px
-نوع الجهاز: ${ScreenUtils.isTablet ? 'تابلت' : 'هاتف'}
-نسبة البكسل: ${ScreenUtils.pixelRatio.toStringAsFixed(2)}
+${S.of(context).homeWidth(ScreenUtils.screenWidth.toStringAsFixed(0))}
+${S.of(context).homeHeight(ScreenUtils.screenHeight.toStringAsFixed(0))}
+${S.of(context).homeDeviceType(ScreenUtils.isTablet ? S.of(context).homeTablet : S.of(context).homePhone)}
+${S.of(context).homePixelRatio(ScreenUtils.pixelRatio.toStringAsFixed(2))}
               ''',
               icon: Icons.device_hub,
               iconColor: Colors.blue,

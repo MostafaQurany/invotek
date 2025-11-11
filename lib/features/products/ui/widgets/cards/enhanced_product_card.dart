@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class EnhancedProductCard extends StatelessWidget {
   final ProductModel product;
@@ -19,6 +20,7 @@ class EnhancedProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
       decoration: BoxDecoration(
@@ -55,7 +57,7 @@ class EnhancedProductCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              product.name ?? 'Unnamed Product',
+                              product.name ?? s.productsUnnamedProduct,
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
@@ -74,7 +76,7 @@ class EnhancedProductCard extends StatelessWidget {
 
                       // Quantity
                       Text(
-                        'Quantity: ${product.quantity ?? 0}',
+                        '${s.productsQuantity}: ${product.quantity ?? 0}',
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.greyDark,
@@ -86,7 +88,7 @@ class EnhancedProductCard extends StatelessWidget {
                       // SKU
                       if (product.sku != null && product.sku!.isNotEmpty)
                         Text(
-                          'SKU: ${product.sku!}',
+                          '${s.productsSku}: ${product.sku!}',
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: AppColors.greyDark,
@@ -131,7 +133,7 @@ class EnhancedProductCard extends StatelessWidget {
                             children: [
                               Icon(Icons.edit_outlined, size: 18.sp),
                               SizedBox(width: 8.w),
-                              Text('Edit'),
+                              Text(s.productsEdit),
                             ],
                           ),
                         ),
@@ -146,7 +148,7 @@ class EnhancedProductCard extends StatelessWidget {
                               ),
                               SizedBox(width: 8.w),
                               Text(
-                                'Delete',
+                                s.productsDelete,
                                 style: TextStyle(color: AppColors.error),
                               ),
                             ],

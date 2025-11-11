@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/add_invoice_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/sections/add_invoice_form_section.dart';
 import 'package:invotek/features/invoices/ui/widgets/sections/add_invoice_bottom_actions.dart';
@@ -47,7 +47,7 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
     _totalController = TextEditingController();
     _descriptionController = TextEditingController();
     _issueDateController = TextEditingController(
-      text: DateFormat('yyyy-MM-dd').format(_selectedDate),
+      text: DateFormatter.toApiFormat(_selectedDate),
     );
   }
 
@@ -68,7 +68,7 @@ class _AddInvoiceScreenState extends State<AddInvoiceScreen> {
   void _onDateChanged(DateTime date) {
     setState(() {
       _selectedDate = date;
-      _issueDateController.text = DateFormat('yyyy-MM-dd').format(date);
+      _issueDateController.text = DateFormatter.toApiFormat(date);
     });
   }
 

@@ -47,17 +47,28 @@ class InvoiceModel {
   final String? updatedAt;
   @JsonKey(name: "company_id")
   final int? companyId;
-  @JsonKey(name: "customer_id")
+  @JsonKey(name: "customer_id", fromJson: _customerIdFromJson)
   final int? customerId;
+
+  static int? _customerIdFromJson(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is String && value.isNotEmpty) {
+      return int.tryParse(value);
+    }
+    if (value is num) return value.toInt();
+    return null;
+  }
+
   @JsonKey(name: "items")
   final List<InvoiceItem>? items;
   @JsonKey(name: "customer")
   final InvoiceCustomerModel? customer;
 
   InvoiceModel({
-     this.id,
+    this.id,
     this.invoiceId,
-     this.invoiceNumber,
+    this.invoiceNumber,
     this.taxUid,
     this.qrCode,
     this.invoiceType,

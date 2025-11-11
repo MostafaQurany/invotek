@@ -44,7 +44,7 @@ class BasicInfoTab extends StatelessWidget {
               CustomTextField(
                 controller: nameController,
                 label: s.name,
-                hint: 'Enter product name',
+                hint: s.productsEnterProductName,
                 icon: Icons.inventory_2,
                 isRequired: true,
                 errorText: validationErrors['name'],
@@ -55,7 +55,7 @@ class BasicInfoTab extends StatelessWidget {
               CustomTextField(
                 controller: descriptionController,
                 label: s.description,
-                hint: 'Enter product description',
+                hint: s.productsEnterProductDescription,
                 icon: Icons.description_outlined,
                 maxLines: 3,
               ),

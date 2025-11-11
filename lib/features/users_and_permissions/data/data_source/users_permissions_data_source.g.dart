@@ -10,7 +10,7 @@ part of 'users_permissions_data_source.dart';
 
 class _UsersPermissionsDataSource implements UsersPermissionsDataSource {
   _UsersPermissionsDataSource(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://demo.invotik.com/api/';
+    baseUrl ??= 'https://invotik.com/api/';
   }
 
   final Dio _dio;

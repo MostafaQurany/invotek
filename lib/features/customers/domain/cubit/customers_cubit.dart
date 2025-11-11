@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/error/failures.dart';
-import 'package:invotek/features/customers/domain/usecases/get_customers.dart';
-import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.dart';
-import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
-import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
-import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
+import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
+import 'package:invotek/features/customers/domain/usecases/create_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/delete_customer.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customer_by_id.dart';
+import 'package:invotek/features/customers/domain/usecases/get_customers.dart';
+import 'package:invotek/features/customers/domain/usecases/update_customer.dart';
 
 part 'customers_cubit.freezed.dart';
 
@@ -78,7 +78,7 @@ class CustomersCubit extends Cubit<CustomersState> {
 
   static CustomersCubit get(context) => BlocProvider.of(context);
 
-  final List<CustomerModel> _customers = <CustomerModel>[];
+  List<CustomerModel> _customers = <CustomerModel>[];
   int _currentPage = 1;
   int _totalPages = 1;
   String? _lastSearch;
@@ -102,7 +102,7 @@ class CustomersCubit extends Cubit<CustomersState> {
        _deleteCustomer = deleteCustomer,
        super(const CustomersState.initial());
 
-  List<CustomerModel> get customers => List.unmodifiable(_customers);
+  List<CustomerModel> get customers => List.from(_customers);
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   bool get hasMore => _currentPage < _totalPages;

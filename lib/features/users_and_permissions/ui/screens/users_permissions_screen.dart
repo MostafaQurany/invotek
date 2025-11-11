@@ -12,6 +12,7 @@ import 'package:invotek/features/users_and_permissions/ui/widgets/users_list_wid
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_search_filter_widget.dart';
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/users_state_widgets.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UsersPermissionsScreen extends StatefulWidget {
   const UsersPermissionsScreen({super.key});
@@ -208,9 +209,10 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
         } else if (state is BulkOperationError) {
           SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is UserCreated) {
+          final s = S.of(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('User created successfully'),
+              content: Text(s.userCreatedSuccessfullyMessage),
               backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
@@ -218,33 +220,37 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           // Refresh the users list to show the new user
           context.read<UsersCubit>().refreshUsers();
         } else if (state is UserUpdated) {
+          final s = S.of(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('User updated successfully'),
+              content: Text(s.userUpdatedSuccessfullyMessage),
               backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
         } else if (state is UserDeleted) {
+          final s = S.of(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('User deleted successfully'),
+              content: Text(s.userDeletedSuccessfullyMessage),
               backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
         } else if (state is PasswordChanged) {
+          final s = S.of(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Password changed successfully'),
+              content: Text(s.passwordChangedSuccessfully),
               backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
           );
         } else if (state is BulkOperationCompleted) {
+          final s = S.of(context);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${state.operation} completed successfully'),
+              content: Text('${state.operation} ${s.completedSuccessfully}'),
               backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),

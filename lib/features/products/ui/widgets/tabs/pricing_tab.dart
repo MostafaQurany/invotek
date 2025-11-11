@@ -39,7 +39,7 @@ class PricingTab extends StatelessWidget {
                     child: CustomTextField(
                       controller: priceController,
                       label: s.sellingPrice,
-                      hint: 'Enter selling price',
+                      hint: s.productsEnterSellingPrice,
                       icon: Icons.sell_outlined,
                       keyboardType: TextInputType.number,
                       isRequired: true,
@@ -51,7 +51,7 @@ class PricingTab extends StatelessWidget {
                     child: CustomTextField(
                       controller: costController,
                       label: s.costPrice,
-                      hint: 'Enter cost price',
+                      hint: s.productsEnterCostPrice,
                       icon: Icons.account_balance_wallet_outlined,
                       keyboardType: TextInputType.number,
                     ),
@@ -64,7 +64,7 @@ class PricingTab extends StatelessWidget {
               CustomTextField(
                 controller: taxRateController,
                 label: s.taxRate,
-                hint: 'Enter tax rate percentage',
+                hint: s.productsEnterTaxRatePercentage,
                 icon: Icons.percent_outlined,
                 keyboardType: TextInputType.number,
               ),

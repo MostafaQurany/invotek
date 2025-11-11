@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class EnhancedCustomerCard extends StatelessWidget {
   final CustomerModel customer;
@@ -19,6 +20,7 @@ class EnhancedCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
       decoration: BoxDecoration(
@@ -55,7 +57,7 @@ class EnhancedCustomerCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              customer.name ?? 'Unnamed Customer',
+                              customer.name ?? s.customersUnnamedCustomer,
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
@@ -66,7 +68,7 @@ class EnhancedCustomerCard extends StatelessWidget {
                             ),
                           ),
                           SizedBox(width: 8.w),
-                          _buildStatusChip(),
+                          _buildStatusChip(context),
                         ],
                       ),
 
@@ -155,7 +157,7 @@ class EnhancedCustomerCard extends StatelessWidget {
                         children: [
                           Icon(Icons.edit_outlined, size: 18.sp),
                           SizedBox(width: 8.w),
-                          Text('Edit'),
+                          Text(s.edit),
                         ],
                       ),
                     ),
@@ -170,7 +172,7 @@ class EnhancedCustomerCard extends StatelessWidget {
                           ),
                           SizedBox(width: 8.w),
                           Text(
-                            'Delete',
+                            s.delete,
                             style: TextStyle(color: AppColors.error),
                           ),
                         ],
@@ -215,7 +217,8 @@ class EnhancedCustomerCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusChip() {
+  Widget _buildStatusChip(BuildContext context) {
+    final s = S.of(context);
     final isActive = customer.status.toLowerCase() == 'active';
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
@@ -226,7 +229,9 @@ class EnhancedCustomerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.r),
       ),
       child: Text(
-        customer.status.toUpperCase() ?? 'INACTIVE',
+        isActive
+            ? customer.status.toUpperCase()
+            : s.customersInactive.toUpperCase(),
         style: TextStyle(
           fontSize: 10.sp,
           fontWeight: FontWeight.w600,

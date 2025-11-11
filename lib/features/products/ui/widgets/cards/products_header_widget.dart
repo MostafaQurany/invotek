@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/core/widgets/generic_search_and_filters.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
@@ -121,22 +123,10 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
       ), // Top padding for status bar
       child: Row(
         children: [
-          // Menu Button
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: IconButton(
-              onPressed: widget.onMenuPressed,
-              icon: Icon(
-                Icons.menu_rounded,
-                color: AppColors.white,
-                size: 24.sp,
-              ),
-              padding: EdgeInsets.all(8.w),
-            ),
-          ),
+          if (ZoomDrawer.of(context) == null)
+            // Menu Button
+            CommonMenuButton(color: AppColors.white),
+
           SizedBox(width: 16.w),
 
           // Title
@@ -154,7 +144,7 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  'Manage products and inventory',
+                  s.productsManageProductsAndInventory,
                   style: TextStyle(
                     color: AppColors.white.withOpacity(0.8),
                     fontSize: 14.sp,
@@ -164,6 +154,11 @@ class _ProductsHeaderWidgetState extends State<ProductsHeaderWidget>
               ],
             ),
           ),
+          SizedBox(width: 16.w),
+
+          if (ZoomDrawer.of(context) != null)
+            // Menu Button
+            CommonMenuButton(color: AppColors.white),
         ],
       ),
     );

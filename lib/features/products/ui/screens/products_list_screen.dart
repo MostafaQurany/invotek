@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/products/data/models/product_category_models.dart';
 import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
@@ -15,6 +16,8 @@ import 'package:invotek/features/products/ui/widgets/cards/products_header_widge
 import 'package:invotek/features/products/ui/widgets/dialogs/delete_product_dialog.dart';
 import 'package:invotek/features/products/ui/widgets/lists/products_state_builder.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/products/constants/products_permissions.dart';
 
 class ProductsListScreen extends StatefulWidget {
   const ProductsListScreen({super.key});
@@ -132,9 +135,39 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: BlocListener<ProductsCubit, ProductsState>(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: BlocListener<ProductsCubit, ProductsState>(
         listener: (context, state) {
           print('🔄 ProductsListScreen received state: ${state.runtimeType}');
           state.whenOrNull(
@@ -234,15 +267,35 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddProduct,
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
+      floatingActionButton: Builder(
+        builder: (context) {
+          final hasCreatePermission = PermissionChecker.hasPermission(
+            context,
+            ProductsPermissions.create,
+          );
+          return Tooltip(
+            message: hasCreatePermission
+                ? S.of(context).addProduct
+                : S.of(context).productsNoPermissionToAct,
+            child: FloatingActionButton(
+              onPressed: hasCreatePermission ? _navigateToAddProduct : null,
+              backgroundColor: hasCreatePermission
+                  ? AppColors.primary
+                  : AppColors.greyDark,
+              foregroundColor: AppColors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Icon(
+                hasCreatePermission ? Icons.add : Icons.lock_outlined,
+                size: 26.sp,
+                color: AppColors.white,
+              ),
+            ),
+          );
+        },
+      ),
       ),
     );
   }

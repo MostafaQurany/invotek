@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/widgets/common_menu_button.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/core/widgets/generic_search_and_filters.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -108,22 +110,8 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
       ), // Top padding for status bar
       child: Row(
         children: [
-          // Menu Button
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: IconButton(
-              onPressed: widget.onMenuPressed,
-              icon: Icon(
-                Icons.menu_rounded,
-                color: AppColors.white,
-                size: 24.sp,
-              ),
-              padding: EdgeInsets.all(8.w),
-            ),
-          ),
+          if (ZoomDrawer.of(context) == null)
+            CommonMenuButton(color: AppColors.white),
           SizedBox(width: 16.w),
 
           // Title
@@ -151,6 +139,11 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
               ],
             ),
           ),
+          SizedBox(width: 16.w),
+
+          // Menu Button
+          if (ZoomDrawer.of(context) != null)
+            CommonMenuButton(color: AppColors.white),
         ],
       ),
     );
@@ -246,35 +239,35 @@ class _CustomersHeaderWidgetState extends State<CustomersHeaderWidget>
                 FilterOptionExtensions.custom('all_company', s.all),
                 FilterOptionExtensions.custom(
                   'tech_company',
-                  'شركة التقنية المتقدمة',
+                  s.customersCompanyTech,
                 ),
                 FilterOptionExtensions.custom(
                   'finance_company',
-                  'مؤسسة الخدمات المالية',
+                  s.customersCompanyFinance,
                 ),
                 FilterOptionExtensions.custom(
                   'construction_company',
-                  'شركة البناء والتطوير',
+                  s.customersCompanyConstruction,
                 ),
                 FilterOptionExtensions.custom(
                   'education_company',
-                  'مؤسسة التعليم الحديث',
+                  s.customersCompanyEducation,
                 ),
                 FilterOptionExtensions.custom(
                   'tourism_company',
-                  'شركة السياحة والترفيه',
+                  s.customersCompanyTourism,
                 ),
                 FilterOptionExtensions.custom(
                   'healthcare_company',
-                  'مؤسسة الرعاية الصحية',
+                  s.customersCompanyHealthcare,
                 ),
                 FilterOptionExtensions.custom(
                   'transport_company',
-                  'شركة النقل واللوجستيات',
+                  s.customersCompanyTransport,
                 ),
                 FilterOptionExtensions.custom(
                   'ecommerce_company',
-                  'مؤسسة التجارة الإلكترونية',
+                  s.customersCompanyEcommerce,
                 ),
               ],
               onChanged: widget.onCompanyChanged,

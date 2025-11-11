@@ -99,21 +99,21 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
 
                       SizedBox(height: 20.h),
 
-                      // Company Information
-                      _buildSectionTitle(S.of(context).companyInformation),
-                      SizedBox(height: 12.h),
-                      _buildTextField(
-                        controller: _companyNameController,
-                        label: S.of(context).companyName,
-                        hint: S.of(context).enterCompanyName,
-                      ),
-                      SizedBox(height: 12.h),
-                      _buildTextField(
-                        controller: _addressController,
-                        label: S.of(context).address,
-                        hint: S.of(context).enterAddress,
-                        maxLines: 2,
-                      ),
+                      // // Company Information
+                      // _buildSectionTitle(S.of(context).companyInformation),
+                      // SizedBox(height: 12.h),
+                      // _buildTextField(
+                      //   controller: _companyNameController,
+                      //   label: S.of(context).companyName,
+                      //   hint: S.of(context).enterCompanyName,
+                      // ),
+                      // SizedBox(height: 12.h),
+                      // _buildTextField(
+                      //   controller: _addressController,
+                      //   label: S.of(context).address,
+                      //   hint: S.of(context).enterAddress,
+                      //   maxLines: 2,
+                      // ),
                     ],
                   ),
                 ),
@@ -314,6 +314,3 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
     }
   }
 }
-
-
-

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
+import 'package:invotek/core/cubits/currency_cubit.dart';
 import 'package:invotek/core/cubits/permissions_cubit.dart';
 import 'package:invotek/core/network/cache_module.dart';
 import 'package:invotek/core/network/cache_policies.dart';
@@ -50,6 +51,7 @@ import 'package:invotek/features/invoices/domain/usecases/delete_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/get_invoice_by_id.dart';
 import 'package:invotek/features/invoices/domain/usecases/get_invoices.dart';
 import 'package:invotek/features/invoices/domain/usecases/update_invoice.dart';
+import 'package:invotek/features/invoices/demo/cubit/credit_invoices_cubit.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 // Removed: old ProductsDataSource (now centralized in ApiClient)
 import 'package:invotek/features/products/data/repository/products_repository.dart';
@@ -77,17 +79,39 @@ import 'package:invotek/features/users_and_permissions/domain/usecases/update_us
 // Settings feature imports
 import 'package:invotek/features/settings/data/data_source/settings_data_source.dart';
 import 'package:invotek/features/settings/data/repository/settings_repository.dart';
-import 'package:invotek/features/settings/domain/repositories/settings_repository.dart' as SettingsDomain;
+import 'package:invotek/features/settings/domain/repositories/settings_repository.dart'
+    as SettingsDomain;
 import 'package:invotek/features/settings/domain/usecases/get_profile.dart';
-import 'package:invotek/features/settings/domain/usecases/update_profile.dart' as SettingsUpdateProfile;
-import 'package:invotek/features/settings/domain/usecases/change_password.dart' as SettingsChangePassword;
+import 'package:invotek/features/settings/domain/usecases/update_profile.dart'
+    as SettingsUpdateProfile;
+import 'package:invotek/features/settings/domain/usecases/change_password.dart'
+    as SettingsChangePassword;
 import 'package:invotek/features/settings/domain/usecases/update_photo.dart';
-import 'package:invotek/features/settings/domain/usecases/delete_account.dart' as SettingsDeleteAccount;
+import 'package:invotek/features/settings/domain/usecases/delete_account.dart'
+    as SettingsDeleteAccount;
 import 'package:invotek/features/settings/domain/usecases/get_company_settings.dart';
 import 'package:invotek/features/settings/cubit/profile_cubit.dart';
 import 'package:invotek/features/settings/cubit/update_profile_cubit.dart';
 import 'package:invotek/features/settings/cubit/photo_cubit.dart';
 import 'package:invotek/features/settings/cubit/company_cubit.dart';
+import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
+// Notifications feature imports
+import 'package:invotek/core/services/local_notification_service.dart';
+import 'package:invotek/features/notifications/data/datasources/notifications_data_source.dart';
+import 'package:invotek/features/notifications/data/repositories/notifications_repository_impl.dart';
+import 'package:invotek/features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:invotek/features/notifications/domain/usecases/clear_read_notifications_usecase.dart';
+import 'package:invotek/features/notifications/domain/usecases/delete_notification_usecase.dart';
+import 'package:invotek/features/notifications/domain/usecases/get_all_notifications_usecase.dart';
+import 'package:invotek/features/notifications/domain/usecases/get_notification_stats_usecase.dart';
+import 'package:invotek/features/notifications/domain/usecases/get_single_notification_usecase.dart';
+import 'package:invotek/features/notifications/domain/usecases/mark_all_notifications_as_read_usecase.dart';
+import 'package:invotek/features/notifications/domain/usecases/mark_notification_as_read_usecase.dart';
+import 'package:invotek/features/notifications/ui/cubit/notifications_cubit.dart';
+// Printing feature imports
+import 'package:invotek/features/printing/core/controllers/pos_printer_controller.dart';
+import 'package:invotek/features/printing/core/services/printer_service.dart';
+import 'package:invotek/features/printing/presentation/cubit/printer_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -309,6 +333,7 @@ Future<void> configureDependencies() async {
 
   // Register cubits (use factory so each screen gets a fresh instance)
   getIt.registerFactory<LocalizationCubit>(() => LocalizationCubit());
+  getIt.registerFactory<CurrencyCubit>(() => CurrencyCubit());
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt<AuthRepo>()));
   getIt.registerFactory<OnboardingCubit>(() => OnboardingCubit());
   // MenuCubit removed from DI to prevent closing issues - created locally in screens
@@ -343,18 +368,34 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<InvoicesCubit>(
     () => InvoicesCubit(getIt<InvoiceRepository>()),
   );
+  getIt.registerLazySingleton<CreditInvoicesCubit>(
+    () => CreditInvoicesCubit(getIt<InvoiceRepository>()),
+  );
   // Settings cubits
   getIt.registerFactory<ProfileCubit>(
     () => ProfileCubit(getProfileUseCase: getIt<GetProfile>()),
   );
   getIt.registerFactory<UpdateProfileCubit>(
-    () => UpdateProfileCubit(updateProfileUseCase: getIt<SettingsUpdateProfile.UpdateProfile>()),
+    () => UpdateProfileCubit(
+      updateProfileUseCase: getIt<SettingsUpdateProfile.UpdateProfile>(),
+    ),
   );
   getIt.registerFactory<PhotoCubit>(
     () => PhotoCubit(updatePhotoUseCase: getIt<UpdatePhoto>()),
   );
   getIt.registerFactory<CompanyCubit>(
     () => CompanyCubit(getCompanySettingsUseCase: getIt<GetCompanySettings>()),
+  );
+  getIt.registerFactory<TaxIntegrationCubit>(
+    () => TaxIntegrationCubit(getIt<InvoiceRepository>()),
+  );
+
+  // Printing dependencies
+  getIt.registerLazySingleton<PrinterService>(
+    () => PrinterService(PosPrinterController.instance),
+  );
+  getIt.registerLazySingleton<PrinterCubit>(
+    () => PrinterCubit(getIt<PrinterService>()),
   );
 
   // Permissions dependencies
@@ -371,5 +412,59 @@ Future<void> configureDependencies() async {
   // Register theme provider
   getIt.registerLazySingleton<ThemeProvider>(() => ThemeProvider());
 
-  // Add more dependencies here as needed
+  // Notifications dependencies
+  _notificationsLayer();
+}
+
+void _notificationsLayer() {
+  // Data Source
+  getIt.registerLazySingleton<NotificationsDataSource>(
+    () => NotificationsDataSource(getIt<ApiClient>()),
+  );
+
+  // Repository
+  getIt.registerLazySingleton<NotificationsRepository>(
+    () => NotificationsRepositoryImpl(getIt<NotificationsDataSource>()),
+  );
+
+  // Use Cases
+  getIt.registerLazySingleton<GetAllNotificationsUseCase>(
+    () => GetAllNotificationsUseCase(getIt<NotificationsRepository>()),
+  );
+  getIt.registerLazySingleton<GetNotificationStatsUseCase>(
+    () => GetNotificationStatsUseCase(getIt<NotificationsRepository>()),
+  );
+  getIt.registerLazySingleton<GetSingleNotificationUseCase>(
+    () => GetSingleNotificationUseCase(getIt<NotificationsRepository>()),
+  );
+  getIt.registerLazySingleton<MarkNotificationAsReadUseCase>(
+    () => MarkNotificationAsReadUseCase(getIt<NotificationsRepository>()),
+  );
+  getIt.registerLazySingleton<MarkAllNotificationsAsReadUseCase>(
+    () => MarkAllNotificationsAsReadUseCase(getIt<NotificationsRepository>()),
+  );
+  getIt.registerLazySingleton<DeleteNotificationUseCase>(
+    () => DeleteNotificationUseCase(getIt<NotificationsRepository>()),
+  );
+  getIt.registerLazySingleton<ClearReadNotificationsUseCase>(
+    () => ClearReadNotificationsUseCase(getIt<NotificationsRepository>()),
+  );
+
+  // Cubit
+  getIt.registerFactory<NotificationsCubit>(
+    () => NotificationsCubit(
+      getAllNotifications: getIt<GetAllNotificationsUseCase>(),
+      getNotificationStats: getIt<GetNotificationStatsUseCase>(),
+      getSingleNotification: getIt<GetSingleNotificationUseCase>(),
+      markNotificationAsRead: getIt<MarkNotificationAsReadUseCase>(),
+      markAllNotificationsAsRead: getIt<MarkAllNotificationsAsReadUseCase>(),
+      deleteNotification: getIt<DeleteNotificationUseCase>(),
+      clearReadNotifications: getIt<ClearReadNotificationsUseCase>(),
+    ),
+  );
+
+  // Local Notification Service
+  getIt.registerLazySingleton<LocalNotificationService>(
+    () => LocalNotificationService(),
+  );
 }

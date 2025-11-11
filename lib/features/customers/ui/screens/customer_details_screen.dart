@@ -13,6 +13,8 @@ import 'package:invotek/features/customers/ui/screens/customer_invoices_list_scr
 import 'package:invotek/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:invotek/features/customers/constants/customers_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class CustomerDetailsScreen extends StatefulWidget {
   final CustomerModel customer;
@@ -42,6 +44,57 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final customer = widget.customer;
+    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasViewPermission = PermissionChecker.hasPermission(
+      context,
+      CustomersPermissions.view,
+    );
+
+    if (!hasViewPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        appBar: AppBar(
+          title: Text(s.customerDetails),
+          backgroundColor: colorScheme.surface,
+          foregroundColor: colorScheme.onSurface,
+        ),
+        body: Center(
+          child: Padding(
+            padding: EdgeInsets.all(32.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.lock_outline,
+                  size: 64.sp,
+                  color: colorScheme.error,
+                ),
+                SizedBox(height: 24.h),
+                Text(
+                  s.customersNoPermissionToView,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurface,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  s.customersNoPermissionToAct,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
 
     return Scaffold(
       body: CustomScrollView(
@@ -103,6 +156,14 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
         customer: customer,
         onEdit: () => _editCustomer(),
         onDelete: () => _showDeleteConfirmation(),
+        hasEditPermission: PermissionChecker.hasPermission(
+          context,
+          CustomersPermissions.edit,
+        ),
+        hasDeletePermission: PermissionChecker.hasPermission(
+          context,
+          CustomersPermissions.delete,
+        ),
       ),
     );
   }
@@ -124,12 +185,12 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           if (await canLaunchUrl(phoneUri)) {
             await launchUrl(phoneUri);
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('لا يمكن إجراء المكالمة'),
-                backgroundColor: AppColors.error,
-              ),
-            );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(S.of(context).customersCannotMakeCall),
+              backgroundColor: AppColors.error,
+            ),
+          );
           }
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -144,15 +205,15 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
       } else if (permission.isDenied) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تم رفض إذن الاتصال'),
+            content: Text(S.of(context).customersCallPermissionDenied),
             backgroundColor: AppColors.warning,
           ),
         );
       } else if (permission.isPermanentlyDenied) {
         // عرض dialog لتوجيه المستخدم لإعدادات التطبيق
         _showPermissionDialog(
-          'إذن الاتصال مطلوب',
-          'يجب السماح بإذن الاتصال لاستخدام هذه الميزة. يرجى الذهاب إلى إعدادات التطبيق والسماح بإذن الاتصال.',
+          S.of(context).customersCallPermissionRequired,
+          S.of(context).customersCallPermissionRequiredMessage,
         );
       }
     }
@@ -163,7 +224,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
       final Uri emailUri = Uri(
         scheme: 'mailto',
         path: widget.customer.email,
-        query: 'subject=${Uri.encodeComponent('مراسلة من تطبيق Invotek')}',
+        query: 'subject=${Uri.encodeComponent(S.of(context).customersEmailSubject)}',
       );
       try {
         if (await canLaunchUrl(emailUri)) {
@@ -171,7 +232,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('لا يمكن إرسال البريد الإلكتروني'),
+              content: Text(S.of(context).customersCannotSendEmail),
               backgroundColor: AppColors.error,
             ),
           );
@@ -229,7 +290,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('لا يمكن فتح الخريطة'),
+                content: Text(S.of(context).customersCannotOpenMap),
                 backgroundColor: AppColors.error,
               ),
             );
@@ -247,15 +308,15 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
       } else if (permission.isDenied) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('تم رفض إذن الموقع'),
+            content: Text(S.of(context).customersLocationPermissionDenied),
             backgroundColor: AppColors.warning,
           ),
         );
       } else if (permission.isPermanentlyDenied) {
         // عرض dialog لتوجيه المستخدم لإعدادات التطبيق
         _showPermissionDialog(
-          'إذن الموقع مطلوب',
-          'يجب السماح بإذن الموقع لاستخدام هذه الميزة. يرجى الذهاب إلى إعدادات التطبيق والسماح بإذن الموقع.',
+          S.of(context).customersLocationPermissionRequired,
+          S.of(context).customersLocationPermissionRequiredMessage,
         );
       }
     }
@@ -314,7 +375,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             Text(S.of(context).help),
           ],
         ),
-        content: Text(S.of(context).customerFormHelpDescription),
+        content: Text(S.of(context).customersCustomerFormHelpDescription),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -351,7 +412,7 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
               openAppSettings();
             },
             style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
-            child: Text('إعدادات التطبيق'),
+            child: Text(S.of(context).customersAppSettings),
           ),
         ],
       ),

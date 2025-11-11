@@ -1,7 +1,10 @@
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ProductInfoCard extends StatelessWidget {
   final ProductModel product;
@@ -15,6 +18,7 @@ class ProductInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -31,7 +35,7 @@ class ProductInfoCard extends StatelessWidget {
                 Icon(Icons.info_outline, color: AppColors.primary, size: 24.sp),
                 SizedBox(width: 12.w),
                 Text(
-                  'Product Information',
+                  s.productsProductInformation,
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
@@ -46,7 +50,7 @@ class ProductInfoCard extends StatelessWidget {
             if (product.description != null && product.description!.isNotEmpty)
               _buildInfoTile(
                 icon: Icons.description_outlined,
-                label: 'Description',
+                label: s.productsDescription,
                 value: product.description!,
               ),
 
@@ -56,8 +60,10 @@ class ProductInfoCard extends StatelessWidget {
             // Cost Price
             _buildInfoTile(
               icon: Icons.attach_money_outlined,
-              label: 'Cost Price',
-              value: product.cost != null ? '${product.cost!}' : 'Not set',
+              label: s.productsCostPrice,
+              value: product.cost != null
+                  ? CurrencyFormatter.formatCurrencyString(product.cost!, null)
+                  : s.productsNotSet,
             ),
 
             SizedBox(height: 16.h),
@@ -65,7 +71,7 @@ class ProductInfoCard extends StatelessWidget {
             // Tax Rate
             _buildInfoTile(
               icon: Icons.percent_outlined,
-              label: 'Tax Rate',
+              label: s.productsTaxRate,
               value: '${product.taxRate ?? '0.0'}%',
             ),
 
@@ -74,30 +80,24 @@ class ProductInfoCard extends StatelessWidget {
             // Unit
             _buildInfoTile(
               icon: Icons.straighten_outlined,
-              label: 'Unit',
-              value: product.unit ?? 'Not specified',
+              label: s.productsUnit,
+              value: product.unit ?? s.productsNotSpecified,
             ),
 
             SizedBox(height: 16.h),
 
             // Barcode
-            _buildInfoTile(
-              icon: Icons.qr_code_outlined,
-              label: 'Barcode',
-              value: product.barcode ?? 'Not set',
-              onAction: product.barcode != null
-                  ? () => onCopyToClipboard(product.barcode!)
-                  : null,
-              actionLabel: 'Copy',
-            ),
+            _buildBarcodeTile(context),
+            // SKU
+            _buildSKUTile(context),
 
             SizedBox(height: 16.h),
 
             // Taxable
             _buildInfoTile(
               icon: Icons.receipt_outlined,
-              label: 'Taxable',
-              value: product.hasTax == true ? 'Yes' : 'No',
+              label: s.productsTaxable,
+              value: product.hasTax == true ? s.productsYes : s.productsNo,
               valueColor: product.hasTax == true
                   ? AppColors.success
                   : AppColors.greyDark,
@@ -108,8 +108,8 @@ class ProductInfoCard extends StatelessWidget {
             // Track Inventory
             _buildInfoTile(
               icon: Icons.inventory_outlined,
-              label: 'Track Inventory',
-              value: product.trackInventory == true ? 'Yes' : 'No',
+              label: s.productsTrackInventory,
+              value: product.trackInventory == true ? s.productsYes : s.productsNo,
               valueColor: product.trackInventory == true
                   ? AppColors.success
                   : AppColors.greyDark,
@@ -175,6 +175,174 @@ class ProductInfoCard extends StatelessWidget {
               ),
             ),
           ),
+      ],
+    );
+  }
+
+  Widget _buildBarcodeTile(BuildContext context) {
+    final s = S.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Icon(Icons.qr_code_outlined, color: AppColors.greyDark, size: 20.sp),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                s.productsBarcode,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.greyDark,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              if (product.barcode != null && product.barcode!.isNotEmpty)
+                GestureDetector(
+                  onTap: () => onCopyToClipboard(product.barcode!),
+                  child: Container(
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: AppColors.border, width: 1),
+                    ),
+                    child: Column(
+                      children: [
+                        BarcodeWidget(
+                          barcode: Barcode.code128(),
+                          data: product.barcode!,
+                          width: double.infinity,
+                          height: 80.h,
+                          drawText: true,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.copy,
+                              size: 14.sp,
+                              color: AppColors.primary,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              s.productsTapToCopy,
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              else
+                Text(
+                  s.productsNotSet,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSKUTile(BuildContext context) {
+    final s = S.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Icon(Icons.qr_code_outlined, color: AppColors.greyDark, size: 20.sp),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                s.productsSku,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.greyDark,
+                ),
+              ),
+              SizedBox(height: 8.h),
+              if (product.sku != null && product.sku!.isNotEmpty)
+                GestureDetector(
+                  onTap: () => onCopyToClipboard(product.sku!),
+                  child: Container(
+                    padding: EdgeInsets.all(12.w),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: AppColors.border, width: 1),
+                    ),
+                    child: Column(
+                      children: [
+                        BarcodeWidget(
+                          barcode: Barcode.code128(),
+                          data: product.sku!,
+                          width: double.infinity,
+                          height: 80.h,
+                          drawText: true,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.copy,
+                              size: 14.sp,
+                              color: AppColors.primary,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              s.productsTapToCopy,
+                              style: TextStyle(
+                                fontSize: 10.sp,
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              else
+                Text(
+                  s.productsNotSet,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ],
     );
   }

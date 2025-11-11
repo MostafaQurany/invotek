@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpensesErrorState extends StatelessWidget {
   final String error;
@@ -14,6 +15,7 @@ class ExpensesErrorState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Center(
       child: Padding(
         padding: EdgeInsets.all(32.w),
@@ -39,7 +41,7 @@ class ExpensesErrorState extends StatelessWidget {
 
             // Title
             Text(
-              'Something went wrong',
+              s.expensesSomethingWentWrong,
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w600,
@@ -67,7 +69,7 @@ class ExpensesErrorState extends StatelessWidget {
               onPressed: onRetry,
               icon: Icon(Icons.refresh, size: 20.sp),
               label: Text(
-                'Try Again',
+                s.expensesTryAgain,
                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
               ),
               style: ElevatedButton.styleFrom(

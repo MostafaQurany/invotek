@@ -62,6 +62,7 @@ dependencies:
   printing: ^5.11.1
   pdf: ^3.10.4
   qr_flutter: ^4.1.0
+  barcode_widget: ^2.0.4
   # image picker
   # Printing packages
   quick_print: ^1.0.0
@@ -72,10 +73,14 @@ dependencies:
   sunmi_printer_plus: ^4.1.1
   flutter_pos_printer_platform_image_3_sdt: ^1.2.12
 
+  # Bluetooth Printer Support
+  bluetooth_print_plus:
+
   # OTP Input Package
   pinput: ^5.0.2
   image_picker: ^1.2.0
   cached_network_image: ^3.4.1
+  flutter_local_notifications: ^17.2.3
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +96,7 @@ dev_dependencies:
   json_serializable: ^6.10.0
   retrofit_generator: ^10.0.0
   freezed: ^3.2.0
+  flutter_native_splash: ^2.4.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -141,3 +147,11 @@ flutter:
 # flutter_intl configuration
 flutter_intl:
   enabled: true
+
+# flutter_native_splash configuration
+flutter_native_splash:
+  image: assets/images/logo_white.png
+  color: "#1E8E3E"
+  android: true
+  ios: true
+  web: false

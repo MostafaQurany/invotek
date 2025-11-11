@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
@@ -47,15 +46,18 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     'settings',
   ];
 
-  final Map<String, String> _moduleNames = {
-    'users': 'Users',
-    'clients': 'Clients',
-    'products': 'Products',
-    'invoices': 'Invoices',
-    'expenses': 'Expenses',
-    'reports': 'Reports',
-    'settings': 'Settings',
-  };
+  Map<String, String> _getModuleNames(BuildContext context) {
+    final s = S.of(context);
+    return {
+      'users': s.usersUsers,
+      'clients': s.usersClients,
+      'products': s.usersProducts,
+      'invoices': s.usersInvoices,
+      'expenses': s.usersExpenses,
+      'reports': s.usersReports,
+      'settings': s.usersSettings,
+    };
+  }
 
   @override
   void initState() {
@@ -72,8 +74,6 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
     return BlocListener<PermissionsCubit, PermissionsState>(
       listener: (context, state) {
         if (state.error != null) {
@@ -108,9 +108,9 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                         indicatorColor: AppColors.primary,
                         labelColor: AppColors.primary,
                         unselectedLabelColor: AppColors.grey,
-                        tabs: const [
-                          Tab(text: 'Roles'),
-                          Tab(text: 'Permissions'),
+                        tabs: [
+                          Tab(text: S.of(context).usersRoles),
+                          Tab(text: S.of(context).usersPermissions),
                         ],
                       ),
                     ),
@@ -180,7 +180,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Manage Permissions',
+                        S.of(context).usersManagePermissions,
                         style: TextStyle(
                           color: AppColors.white,
                           fontSize: 24.sp,
@@ -189,7 +189,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        'Manage roles and permissions',
+                        S.of(context).usersManageRolesAndPermissions,
                         style: TextStyle(
                           color: AppColors.white.withOpacity(0.8),
                           fontSize: 14.sp,
@@ -223,33 +223,13 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
   }
 
   // Event Handlers
-  void _handleMenuPressed() {
-    try {
-      final zoomDrawer = ZoomDrawer.of(context);
-      if (zoomDrawer != null) {
-        zoomDrawer.toggle();
-      } else {
-        // Fallback navigation if zoom drawer is not available
-        if (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        } else {
-          Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
-        }
-      }
-    } catch (e) {
-      // Error handling for zoom drawer
-      debugPrint('Error toggling zoom drawer: $e');
-      if (Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
-      }
-    }
-  }
-
   void _navigateToUsers() {
     Navigator.pushNamed(context, AppRoutes.usersListRoute);
   }
 
   Widget _buildRolesTab(PermissionsState state) {
+    final s = S.of(context);
+    final moduleNames = _getModuleNames(context);
     return Column(
       children: [
         // Module Filter
@@ -258,7 +238,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
           child: DropdownButtonFormField<String>(
             initialValue: _selectedModule,
             decoration: InputDecoration(
-              labelText: 'Select Module',
+              labelText: s.usersSelectModule,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
@@ -268,7 +248,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             items: _modules.map((module) {
               return DropdownMenuItem(
                 value: module,
-                child: Text(_moduleNames[module] ?? module),
+                child: Text(moduleNames[module] ?? module),
               );
             }).toList(),
             onChanged: (value) {
@@ -336,7 +316,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
-                role.isActive ? 'Active' : 'Inactive',
+                role.isActive ? S.of(context).usersActive : S.of(context).usersInactive,
                 style: TextStyle(color: AppColors.white, fontSize: 12.sp),
               ),
             ),
@@ -378,7 +358,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${_moduleNames[_selectedModule]} Permissions',
+                  '${_getModuleNames(context)[_selectedModule]} ${S.of(context).usersModulePermissions}',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
@@ -388,7 +368,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 SizedBox(height: 8.h),
                 if (modulePermissions.isEmpty)
                   Text(
-                    'No permissions for this module',
+                    S.of(context).usersNoPermissionsForThisModule,
                     style: TextStyle(color: AppColors.grey, fontSize: 12.sp),
                   )
                 else
@@ -410,7 +390,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 Row(
                   children: [
                     Text(
-                      'Total Permissions: ',
+                      '${S.of(context).usersTotalPermissions}: ',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12.sp,
@@ -435,6 +415,8 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
   }
 
   Widget _buildPermissionsTab(PermissionsState state) {
+    final s = S.of(context);
+    final moduleNames = _getModuleNames(context);
     final modulePermissions = state.permissions
         .where((p) => p.module == _selectedModule)
         .toList();
@@ -447,7 +429,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
           child: DropdownButtonFormField<String>(
             initialValue: _selectedModule,
             decoration: InputDecoration(
-              labelText: 'Select Module',
+              labelText: s.usersSelectModule,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
@@ -457,7 +439,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             items: _modules.map((module) {
               return DropdownMenuItem(
                 value: module,
-                child: Text(_moduleNames[module] ?? module),
+                child: Text(moduleNames[module] ?? module),
               );
             }).toList(),
             onChanged: (value) {
@@ -517,7 +499,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             borderRadius: BorderRadius.circular(12.r),
           ),
           child: Text(
-            permission.isActive ? 'Active' : 'Inactive',
+            permission.isActive ? S.of(context).usersActive : S.of(context).usersInactive,
             style: TextStyle(color: AppColors.white, fontSize: 10.sp),
           ),
         ),
@@ -565,17 +547,18 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     final nameController = TextEditingController();
     final descriptionController = TextEditingController();
 
+    final s = S.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Add New Role'),
+        title: Text(s.usersAddNewRole),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'Role Name',
+                labelText: s.usersRoleName,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -585,7 +568,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(
-                labelText: 'Role Description',
+                labelText: s.usersRoleDescription,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -597,7 +580,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(s.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -611,7 +594,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 Navigator.pop(context);
               }
             },
-            child: const Text('Add'),
+            child: Text(s.usersAdd),
           ),
         ],
       ),
@@ -622,17 +605,18 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
     final nameController = TextEditingController(text: role.name);
     final descriptionController = TextEditingController(text: role.description);
 
+    final s = S.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Edit Role'),
+        title: Text(s.usersEditRole),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
               decoration: InputDecoration(
-                labelText: 'Role Name',
+                labelText: s.usersRoleName,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -642,7 +626,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(
-                labelText: 'Role Description',
+                labelText: s.usersRoleDescription,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -654,7 +638,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(s.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -670,7 +654,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
                 Navigator.pop(context);
               }
             },
-            child: const Text('Save'),
+            child: Text(s.save),
           ),
         ],
       ),
@@ -678,19 +662,19 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
   }
 
   void _showDeleteRoleConfirmation(BuildContext context, Role role) {
+    final s = S.of(context);
     final colorScheme = Theme.of(context).colorScheme;
-
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirm Delete'),
+        title: Text(s.usersConfirmDelete),
         content: Text(
-          'Are you sure you want to delete the role "${role.name}"?',
+          s.usersAreYouSureYouWantToDeleteRole(role.name),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(s.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -698,7 +682,7 @@ class _ManagePermissionsScreenState extends State<ManagePermissionsScreen>
               Navigator.pop(context);
             },
             style: TextButton.styleFrom(foregroundColor: colorScheme.error),
-            child: const Text('Delete'),
+            child: Text(s.delete),
           ),
         ],
       ),

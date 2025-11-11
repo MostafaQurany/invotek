@@ -38,18 +38,17 @@ class ExpensesStateBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        height: 0.775.sh,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppColors.whiteGray,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28.r),
-            topRight: Radius.circular(28.r),
-          ),
+    return Container(
+      height: 0.775.sh,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.whiteGray,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
         ),
-        child: BlocBuilder<ExpensesCubit, ExpensesState>(
+      ),
+      child: BlocBuilder<ExpensesCubit, ExpensesState>(
           builder: (context, state) {
             print(
               '🏗️ ExpensesStateBuilder building with state: ${state.runtimeType}',
@@ -58,8 +57,9 @@ class ExpensesStateBuilder extends StatelessWidget {
             return state.when(
               initial:
                   (expenses, selectedExpense, currentPage, totalPages, error) {
-                    if (expenses.isEmpty)
+                    if (expenses.isEmpty) {
                       return ExpensesEmptyState(onAddExpense: onAddExpense);
+                    }
                     return ExpensesList(
                       expenses: expenses,
                       onExpenseTap: onExpenseTap,
@@ -79,12 +79,13 @@ class ExpensesStateBuilder extends StatelessWidget {
                     totalPages,
                     message,
                   ) {
-                    if (expenses.isEmpty)
+                    if (expenses.isEmpty) {
                       return Center(
                         child: CircularProgressIndicator(
                           color: Theme.of(context).primaryColor,
                         ),
                       );
+                    }
                     return ExpensesList(
                       expenses: expenses,
                       onExpenseTap: onExpenseTap,
@@ -193,7 +194,6 @@ class ExpensesStateBuilder extends StatelessWidget {
             );
           },
         ),
-      ),
     );
   }
 }

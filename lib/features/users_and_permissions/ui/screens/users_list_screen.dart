@@ -1,16 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/features/users_and_permissions/constants/users_permissions.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_cubit.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/users_state.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/user_options_bottom_sheet.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/cards/users_header_widget.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/dialogs/delete_user_dialog.dart';
 import 'package:invotek/features/users_and_permissions/ui/widgets/lists/users_state_builder.dart';
+import 'package:invotek/features/users_and_permissions/utils/user_deletion_helper.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class UsersListScreen extends StatefulWidget {
@@ -34,10 +40,12 @@ class _UsersListScreenState extends State<UsersListScreen> {
   final _scrollController = ScrollController();
   String? _selectedRole;
   String? _selectedStatus;
+  Timer? _debounceTimer;
 
   @override
   void initState() {
     super.initState();
+    context.read<UsersCubit>().loadUsers(isRefresh: true);
     _initializeOptions();
     _scrollController.addListener(_onScroll);
   }
@@ -45,7 +53,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    FocusScope.of(context).unfocus();
+    // Removed FocusScope.of(context).unfocus() to prevent search bar from closing automatically
   }
 
   void _initializeOptions() {
@@ -57,6 +65,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
   void dispose() {
     _searchController.dispose();
     _scrollController.dispose();
+    _debounceTimer?.cancel();
     super.dispose();
   }
 
@@ -79,64 +88,146 @@ class _UsersListScreenState extends State<UsersListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: BlocListener<UsersCubit, UsersState>(
-        listener: (context, state) {
-          if (state is UserDeleted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(S.of(context).userDeletedSuccessfully),
-                backgroundColor: AppColors.success,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-              ),
-            );
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(
+                  AppRoutes.homeRoute,
+                );
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
           }
-        },
-        child: RefreshIndicator(
-          onRefresh: () async {
-            context.read<UsersCubit>().refreshUsers();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: BlocListener<UsersCubit, UsersState>(
+          listener: (context, state) {
+            if (state is UserDeleted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(S.of(context).userDeletedSuccessfully),
+                  backgroundColor: AppColors.success,
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
+              );
+            }
           },
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            physics: const AlwaysScrollableScrollPhysics(),
+          child: RefreshIndicator(
+            onRefresh: () async {
+              context.read<UsersCubit>().refreshUsers();
+            },
             child: Column(
               children: [
                 // Header Widget - Scrolls with content
                 _buildUsersHeader(),
 
                 // Users List Content
-                UsersStateBuilder(
-                  onUserTap: (user) => _showUserOptions(context, user),
-                  onUserView: _navigateToUserDetails,
-                  onUserEdit: _navigateToEditUser,
-                  onUserDelete: _showDeleteConfirmation,
-                  onAddUser: _navigateToAddUser,
-                  onRetry: _retry,
-                  selectedRole: _selectedRole ?? '',
-                  selectedStatus: _selectedStatus ?? '',
-                  onRoleChanged: _onRoleChanged,
-                  onStatusChanged: _onStatusChanged,
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(28.r),
+                        topRight: Radius.circular(28.r),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(28.r),
+                        topRight: Radius.circular(28.r),
+                      ),
+                      child: UsersStateBuilder(
+                        onUserTap: (user) => _showUserOptions(context, user),
+                        onUserView: _navigateToUserDetails,
+                        onUserEdit: _navigateToEditUser,
+                        onUserDelete: _showDeleteConfirmation,
+                        onAddUser: _navigateToAddUser,
+                        onRetry: _retry,
+                        selectedRole: _selectedRole ?? '',
+                        selectedStatus: _selectedStatus ?? '',
+                        onRoleChanged: _onRoleChanged,
+                        onStatusChanged: _onStatusChanged,
+                        scrollController: _scrollController,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddUser,
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
+        floatingActionButton: Builder(
+          builder: (context) {
+            final hasCreatePermission = PermissionChecker.hasPermission(
+              context,
+              UsersPermissions.create,
+            );
+            return Tooltip(
+              message: hasCreatePermission
+                  ? S.of(context).addUser
+                  : S.of(context).usersNoPermissionToAct,
+              child: FloatingActionButton(
+                onPressed: hasCreatePermission ? _navigateToAddUser : null,
+                backgroundColor: hasCreatePermission
+                    ? AppColors.primary
+                    : AppColors.greyDark,
+                foregroundColor: AppColors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Icon(
+                  hasCreatePermission ? Icons.add : Icons.lock_outlined,
+                  size: 26.sp,
+                  color: AppColors.white,
+                ),
+              ),
+            );
+          },
         ),
-        child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
       ),
     );
+  }
+
+  void _onSearchChanged(String query) {
+    _debounceTimer?.cancel();
+
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
+      if (query.length >= 2 || query.isEmpty) {
+        context.read<UsersCubit>().refreshUsers(
+          search: query.isEmpty ? null : query,
+          role: _selectedRole != 'all' ? _selectedRole : null,
+          status: _selectedStatus != 'all' ? _selectedStatus : null,
+        );
+      }
+    });
   }
 
   // Helper Methods
@@ -144,9 +235,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
     return UsersHeaderWidget(
       onMenuPressed: _handleMenuPressed,
       searchController: _searchController,
-      onSearchChanged: (query) {
-        // Implement search functionality
-      },
+      onSearchChanged: _onSearchChanged,
       selectedRole: _selectedRole ?? '',
       selectedStatus: _selectedStatus ?? '',
       onRoleChanged: _onRoleChanged,
@@ -178,11 +267,23 @@ class _UsersListScreenState extends State<UsersListScreen> {
   }
 
   void _onRoleChanged(String? role) {
+    if (!mounted) return;
     setState(() => _selectedRole = role);
+    context.read<UsersCubit>().refreshUsers(
+      search: _searchController.text.isEmpty ? null : _searchController.text,
+      role: role != 'all' ? role : null,
+      status: _selectedStatus != 'all' ? _selectedStatus : null,
+    );
   }
 
   void _onStatusChanged(String? status) {
+    if (!mounted) return;
     setState(() => _selectedStatus = status);
+    context.read<UsersCubit>().refreshUsers(
+      search: _searchController.text.isEmpty ? null : _searchController.text,
+      role: _selectedRole != 'all' ? _selectedRole : null,
+      status: status != 'all' ? status : null,
+    );
   }
 
   void _retry() {
@@ -204,7 +305,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
     if (result == 'deleted' && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('User deleted successfully'),
+          content: Text(S.of(context).userDeletedSuccessfully),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -247,7 +348,28 @@ class _UsersListScreenState extends State<UsersListScreen> {
         },
         onDelete: () {
           Navigator.pop(context);
-          _showDeleteConfirmation(user);
+          if (UserDeletionHelper.canDeleteUser(user)) {
+            _showDeleteConfirmation(user);
+          } else {
+            final s = S.of(context);
+            final errorMessage = UserDeletionHelper.getDeletionErrorMessage(
+              user,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  errorMessage == 'usersCannotDeleteYourselfMessage'
+                      ? s.usersCannotDeleteYourselfMessage
+                      : s.usersCannotDeleteAdminMessage,
+                ),
+                backgroundColor: AppColors.error,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+              ),
+            );
+          }
         },
       ),
     );
@@ -255,7 +377,6 @@ class _UsersListScreenState extends State<UsersListScreen> {
 
   void _showDeleteConfirmation(User user) {
     final usersCubit = context.read<UsersCubit>();
-
     showDialog(
       context: context,
       builder: (context) => DeleteUserDialog(
@@ -264,7 +385,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
           usersCubit.deleteUser(user.id!);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('User deleted successfully'),
+              content: Text(S.of(context).userDeletedSuccessfully),
               backgroundColor: AppColors.error,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(

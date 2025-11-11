@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_card.dart';
-import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class InvoicesList extends StatelessWidget {
   final List<InvoiceModel> invoices;
   final Function(InvoiceModel) onInvoiceTap;
   final Function(InvoiceModel) onInvoiceView;
-  final Function(InvoiceModel) onInvoiceEdit;
-  final Function(InvoiceModel) onInvoiceDelete;
+  final Function(InvoiceModel)? onInvoiceEdit;
+  final Function(InvoiceModel)? onInvoiceDelete;
   final bool showLoadingIndicator;
   final String? loadingMessage;
 
@@ -18,8 +19,8 @@ class InvoicesList extends StatelessWidget {
     required this.invoices,
     required this.onInvoiceTap,
     required this.onInvoiceView,
-    required this.onInvoiceEdit,
-    required this.onInvoiceDelete,
+    this.onInvoiceEdit,
+    this.onInvoiceDelete,
     this.showLoadingIndicator = false,
     this.loadingMessage,
   });
@@ -37,8 +38,10 @@ class InvoicesList extends StatelessWidget {
               invoice: invoice,
               onTap: () => onInvoiceTap(invoice),
               onView: () => onInvoiceView(invoice),
-              onEdit: () => onInvoiceEdit(invoice),
-              onDelete: () => onInvoiceDelete(invoice),
+              onEdit: () =>
+                  (onInvoiceEdit == null) ? null : onInvoiceEdit!(invoice),
+              onDelete: () =>
+                  (onInvoiceDelete == null) ? null : onInvoiceDelete!(invoice),
             ),
           );
         }
@@ -59,7 +62,7 @@ class InvoicesList extends StatelessWidget {
                   ),
                   SizedBox(height: 8.h),
                   Text(
-                    loadingMessage ?? 'جاري تحميل المزيد...',
+                    loadingMessage ?? S.of(context).invoicesLoadingMore,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: AppColors.textSecondary,

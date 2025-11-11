@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
@@ -11,6 +11,8 @@ import 'package:invotek/features/expenses/ui/widgets/headers/edit_expense_header
 import 'package:invotek/features/expenses/ui/widgets/sections/add_expense_form_section.dart';
 import 'package:invotek/features/expenses/ui/widgets/sections/add_expense_bottom_actions.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class EditExpenseScreen extends StatefulWidget {
   final ExpenseModel expense;
@@ -67,17 +69,8 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
     _amountController.text = expense.amount.toString();
 
     // Parse the expense date
-    try {
-      _selectedDate = DateTime.parse(expense.expenseDate);
-      _expenseDateController.text = DateFormat(
-        'yyyy-MM-dd',
-      ).format(_selectedDate);
-    } catch (e) {
-      _selectedDate = DateTime.now();
-      _expenseDateController.text = DateFormat(
-        'yyyy-MM-dd',
-      ).format(_selectedDate);
-    }
+    _selectedDate = DateFormatter.parseApiDate(expense.expenseDate) ?? DateTime.now();
+    _expenseDateController.text = DateFormatter.toApiFormat(_selectedDate);
 
     _referenceNumberController.text = expense.referenceNumber ?? '';
     _notesController.text = expense.notes ?? '';
@@ -104,7 +97,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
         (cat) => cat.id == widget.expense.expenseCategoryId,
         orElse: () => ExpenseCategoryModel(
           id: widget.expense.expenseCategoryId,
-          name: 'Unknown Category',
+          name: S.of(context).expensesUnknownCategory,
           status: 'active',
         ),
       );
@@ -149,6 +142,55 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final s = S.of(context);
+    final hasEditPermission = PermissionChecker.hasPermission(
+      context,
+      ExpensesPermissions.edit,
+    );
+
+    if (!hasEditPermission) {
+      return Scaffold(
+        backgroundColor: colorScheme.surface,
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(32.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.lock_outline,
+                    size: 64.sp,
+                    color: colorScheme.error,
+                  ),
+                  SizedBox(height: 24.h),
+                  Text(
+                    s.expensesNoPermissionToView,
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    s.expensesNoPermissionToAct,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: BlocListener<ExpensesCubit, ExpensesState>(
@@ -187,8 +229,8 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
                   messenger.showSnackBar(
                     SnackBar(
                       content: Text(
-                        'Error: $error',
-                      ), // TODO: Add to localization
+                        s.expensesErrorOccurred(error.toString()),
+                      ),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
@@ -255,7 +297,7 @@ class _EditExpenseScreenState extends State<EditExpenseScreen> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _expenseDateController.text = DateFormat('yyyy-MM-dd').format(picked);
+        _expenseDateController.text = DateFormatter.toApiFormat(picked);
       });
     }
   }

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/home/data/models/menu_item.dart';
-import 'package:invotek/features/home/data/models/navigation_state.dart';
-import 'package:invotek/features/home/cubit/navigation_cubit.dart';
-import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/core/cubits/permissions_cubit.dart';
 import 'package:invotek/core/routes/app_routes.dart';
+import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/features/home/data/models/menu_item.dart';
+import 'package:invotek/features/home/data/models/navigation_state.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -41,16 +41,16 @@ class _MenuScreenState extends State<MenuScreen> {
       child: Column(
         children: [
           CircleAvatar(
-            radius: 40,
+            radius: 40.r,
             backgroundColor: Colors.white,
-            child: Icon(Icons.person, size: 40, color: AppColors.primary),
+            child: Icon(Icons.person, size: 40.sp, color: AppColors.primary),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Text(
             'Invotek',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24,
+              fontSize: 24.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -123,7 +123,7 @@ class _MenuScreenState extends State<MenuScreen> {
             leading: Icon(
               subItem.icon,
               color: isSubSelected ? Colors.white : Colors.white70,
-              size: 20,
+              size: 20.sp,
             ),
             title: Text(
               subItem.getLocalizedTitle(S.of(context)),
@@ -146,7 +146,7 @@ class _MenuScreenState extends State<MenuScreen> {
       child: Column(
         children: [
           Divider(color: Colors.white.withOpacity(0.3)),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
 
           // زر تسجيل الخروج
           ListTile(
@@ -158,12 +158,12 @@ class _MenuScreenState extends State<MenuScreen> {
             onTap: _showLogoutDialog,
           ),
 
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h),
           Text(
-            'الإصدار 1.0.0',
+            S.of(context).homeVersion('1.0.0'),
             style: TextStyle(
               color: Colors.white.withOpacity(0.7),
-              fontSize: 12,
+              fontSize: 12.sp,
             ),
           ),
         ],
@@ -223,25 +223,29 @@ class _MenuScreenState extends State<MenuScreen> {
   }
 
   void _showPermissionDeniedSnackBar(String featureName) {
+    final s = S.of(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            Icon(Icons.lock_outline, color: Colors.white),
-            SizedBox(width: 12),
+            Icon(Icons.lock_outline, color: Colors.white, size: 24.sp),
+            SizedBox(width: 12.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'غير مسموح',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    s.homeAccessDenied,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.sp,
+                    ),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
-                    'ليس لديك صلاحية للوصول إلى $featureName',
-                    style: TextStyle(fontSize: 12),
+                    s.homeNoPermissionToAccess(featureName),
+                    style: TextStyle(fontSize: 12.sp),
                   ),
                 ],
               ),
@@ -251,7 +255,9 @@ class _MenuScreenState extends State<MenuScreen> {
         backgroundColor: AppColors.error,
         duration: const Duration(seconds: 4),
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
     );
   }
@@ -262,7 +268,7 @@ class _MenuScreenState extends State<MenuScreen> {
       builder: (BuildContext dialogContext) {
         return AlertDialog(
           title: Text(S.of(context).logout),
-          content: Text('هل أنت متأكد من تسجيل الخروج؟'),
+          content: Text(S.of(context).homeAreYouSureLogout),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(),

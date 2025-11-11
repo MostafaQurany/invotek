@@ -66,9 +66,10 @@ class _AddExpenseCategoryDialogState extends State<AddExpenseCategoryDialog> {
                 setState(() {
                   _isLoading = false;
                 });
+                final s = S.of(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Error: $error'),
+                    content: Text('${s.expensesErrorPrefix}: $error'),
                     backgroundColor: AppColors.error,
                     behavior: SnackBarBehavior.floating,
                     shape: RoundedRectangleBorder(

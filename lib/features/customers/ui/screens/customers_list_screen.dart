@@ -15,7 +15,10 @@ import 'package:invotek/features/customers/ui/widgets/cards/customer_options_bot
 import 'package:invotek/features/customers/ui/widgets/cards/customers_header_widget.dart';
 import 'package:invotek/features/customers/ui/widgets/dialogs/delete_customer_dialog.dart';
 import 'package:invotek/features/customers/ui/widgets/lists/customers_state_builder.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/customers/constants/customers_permissions.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
 
 class CustomersListScreen extends StatefulWidget {
   const CustomersListScreen({super.key});
@@ -56,7 +59,7 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    FocusScope.of(context).unfocus();
+    // Removed FocusScope.of(context).unfocus() to prevent search bar from closing automatically
   }
 
   void _initializeOptions() {
@@ -106,7 +109,10 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
     _debounceTimer?.cancel();
 
     _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-      _loadWithAllFilters(search: query.isEmpty ? null : query);
+      if (!mounted) return;
+      if (query.length >= 2 || query.isEmpty) {
+        _loadWithAllFilters(search: query.isEmpty ? null : query);
+      }
     });
   }
 
@@ -200,9 +206,39 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: BlocListener<CustomersCubit, CustomersState>(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: BlocListener<CustomersCubit, CustomersState>(
         listener: (context, state) {
           print('🔄 CustomersListScreen received state: ${state.runtimeType}');
           state.whenOrNull(
@@ -286,15 +322,37 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddCustomer,
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
+      floatingActionButton: Builder(
+        builder: (context) {
+          final s = S.of(context);
+          return PermissionWidget(
+            permission: CustomersPermissions.create,
+            fallback: Tooltip(
+              message: s.customersNoPermissionToAct,
+              child: FloatingActionButton(
+                onPressed: null,
+                backgroundColor: AppColors.primary.withOpacity(0.5),
+                foregroundColor: AppColors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
+                child: Icon(Icons.lock_outline, size: 26.sp, color: AppColors.white),
+              ),
+            ),
+            child: FloatingActionButton(
+              onPressed: _navigateToAddCustomer,
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Icon(Icons.add, size: 26.sp, color: AppColors.white),
+            ),
+          );
+        },
+      ),
       ),
     );
   }

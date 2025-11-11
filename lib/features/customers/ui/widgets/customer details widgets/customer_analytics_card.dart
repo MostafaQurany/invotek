@@ -159,7 +159,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
           Padding(
             padding: EdgeInsets.only(top: 8.h),
             child: Text(
-              "The last 5 invoices",
+              S.of(context).customersLastFiveInvoices,
               style: TextStyle(
                 color: AppColors.greyDark,
                 fontSize: 12.sp,

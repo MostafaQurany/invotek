@@ -22,17 +22,33 @@ class LocalizationState {
 }
 
 class LocalizationCubit extends Cubit<LocalizationState> {
-  LocalizationCubit() : super(const LocalizationState(locale: Locale('en')));
+  LocalizationCubit() : super(const LocalizationState(locale: Locale('ar')));
 
-  void initializeLanguage() {
-    _loadSavedLanguage();
+  Future<void> initializeLanguage() async {
+    await _loadSavedLanguage();
   }
 
   Future<void> _loadSavedLanguage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedLanguage = prefs.getString('language_code') ?? 'en';
-    final locale = Locale(savedLanguage);
-    emit(LocalizationState(locale: locale));
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedLanguage = prefs.getString('language_code');
+      
+      // إذا لم تكن هناك لغة محفوظة، استخدام 'ar' كافتراضي
+      if (savedLanguage == null || savedLanguage.isEmpty) {
+        emit(const LocalizationState(locale: Locale('ar')));
+        return;
+      }
+      
+      // التأكد من أن اللغة المحفوظة صالحة، وإلا استخدام 'ar' كافتراضي
+      final languageCode = (savedLanguage == 'ar' || savedLanguage == 'en')
+          ? savedLanguage
+          : 'ar';
+      final locale = Locale(languageCode);
+      emit(LocalizationState(locale: locale));
+    } catch (e) {
+      // في حالة حدوث خطأ، استخدام 'ar' كافتراضي
+      emit(const LocalizationState(locale: Locale('ar')));
+    }
   }
 
   Future<void> changeLanguage(String languageCode) async {

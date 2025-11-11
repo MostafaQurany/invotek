@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_category_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class DeleteExpenseCategoryDialog extends StatelessWidget {
   final ExpenseCategoryModel category;
@@ -15,6 +16,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
       title: Row(
@@ -26,7 +28,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
           ),
           SizedBox(width: 8.w),
           Text(
-            'Delete Category',
+            s.expensesDeleteCategory,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -40,7 +42,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Are you sure you want to delete this expense category?',
+            s.expensesAreYouSureDeleteCategory,
             style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
 
@@ -72,7 +74,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        'Status: ${category.status.toUpperCase()}',
+                        s.expensesStatus(category.status.toUpperCase()),
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: AppColors.textSecondary,
@@ -88,7 +90,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
           SizedBox(height: 8.h),
 
           Text(
-            'This action cannot be undone.',
+            s.expensesThisActionCannotBeUndone,
             style: TextStyle(
               fontSize: 12.sp,
               color: AppColors.error,
@@ -101,7 +103,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(
-            'Cancel',
+            s.cancel,
             style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
           ),
         ),
@@ -119,7 +121,7 @@ class DeleteExpenseCategoryDialog extends StatelessWidget {
             elevation: 0,
           ),
           child: Text(
-            'Delete',
+            s.delete,
             style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
           ),
         ),

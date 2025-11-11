@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
+import 'package:invotek/core/cubits/currency_cubit.dart';
 import 'package:invotek/core/cubits/permissions_cubit.dart'
     as CorePermissionsCubit;
 import 'package:invotek/core/di/injection.dart';
@@ -15,9 +16,11 @@ import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/home/data/repository/dashboard_repository.dart';
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
+import 'package:invotek/features/printing/presentation/cubit/printer_cubit.dart';
 import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/settings/cubit/settings_cubit.dart';
+import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
 import 'package:invotek/features/settings/data/data_source/settings_data_source.dart';
 import 'package:invotek/features/settings/data/repository/settings_repository.dart';
 import 'package:invotek/features/users_and_permissions/demo/cubit/permissions_cubit.dart';
@@ -29,6 +32,9 @@ class AppProviders {
     // Core cubits
     BlocProvider<LocalizationCubit>(
       create: (context) => getIt<LocalizationCubit>()..initializeLanguage(),
+    ),
+    BlocProvider<CurrencyCubit>(
+      create: (context) => getIt<CurrencyCubit>()..initializeCurrency(),
     ),
     BlocProvider<OnboardingCubit>(
       create: (context) => getIt<OnboardingCubit>(),
@@ -79,6 +85,12 @@ class AppProviders {
         repository: SettingsRepository(SettingsDataSource(ApiClient(getIt()))),
       ),
     ),
+    // Tax Integration
+    BlocProvider<TaxIntegrationCubit>(
+      create: (context) => getIt<TaxIntegrationCubit>(),
+    ),
+    // Printing
+    BlocProvider<PrinterCubit>(create: (context) => getIt<PrinterCubit>()),
   ];
 
   /// Initialize data for cubits that need initial loading
@@ -91,6 +103,7 @@ class AppProviders {
     context.read<ExpenseCategoriesCubit>().loadFirstPage();
     context.read<InvoicesCubit>().loadFirstPage();
     context.read<DashboardCubit>().loadDashboard();
+    context.read<TaxIntegrationCubit>().loadStatus();
 
     // Load cached permissions
     context

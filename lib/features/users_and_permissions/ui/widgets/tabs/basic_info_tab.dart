@@ -141,8 +141,8 @@ class BasicInfoTab extends StatelessWidget {
                 // Email Field
                 CustomTextField(
                   controller: emailController,
-                  label: 'Email Address',
-                  hintText: 'Enter email address',
+                  label: s.emailAddress,
+                  hintText: s.enterEmailAddress,
                   prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                   errorText: validationErrors['email'],
@@ -180,8 +180,8 @@ class BasicInfoTab extends StatelessWidget {
                 if (positionController != null)
                   CustomTextField(
                     controller: positionController!,
-                    label: 'Position',
-                    hintText: 'Enter position',
+                    label: s.position,
+                    hintText: s.enterPosition,
                     prefixIcon: Icons.work_outline,
                     errorText: validationErrors['position'],
                     focusNode: positionFocus,
@@ -220,7 +220,7 @@ class BasicInfoTab extends StatelessWidget {
                   CustomTextField(
                     controller: confirmPasswordController!,
                     label: s.confirmPassword,
-                    hintText: 'Confirm password',
+                    hintText: s.confirmPasswordPlaceholder,
                     prefixIcon: Icons.lock_outline,
                     obscureText: !isConfirmPasswordVisible,
                     suffixIcon: isConfirmPasswordVisible

@@ -23,9 +23,9 @@ GetTaxIntegrationStatusData _$GetTaxIntegrationStatusDataFromJson(
   Map<String, dynamic> json,
 ) => GetTaxIntegrationStatusData(
   taxIntegrationActive: json['tax_integration_active'] as bool,
-  taxMerchantCode: json['tax_merchant_code'] as String,
-  taxInvoiceType: json['tax_invoice_type'] as String,
-  companyName: json['company_name'] as String,
+  taxMerchantCode: json['tax_merchant_code'] as String?,
+  taxInvoiceType: json['tax_invoice_type'] as String?,
+  companyName: json['company_name'] as String?,
 );
 
 Map<String, dynamic> _$GetTaxIntegrationStatusDataToJson(

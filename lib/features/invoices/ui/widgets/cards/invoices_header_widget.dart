@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_menu_button.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoicesHeaderWidget extends StatelessWidget {
+  final String title;
   final TextEditingController searchController;
   final Function(String) onSearchChanged;
   final String? selectedStatus;
@@ -15,6 +17,7 @@ class InvoicesHeaderWidget extends StatelessWidget {
   final Function(String?) onPaymentMethodChanged;
   final Function(String?) onCustomerChanged;
   final VoidCallback onRefresh;
+  final VoidCallback? onOpenFilters;
 
   const InvoicesHeaderWidget({
     super.key,
@@ -27,31 +30,53 @@ class InvoicesHeaderWidget extends StatelessWidget {
     required this.onPaymentMethodChanged,
     required this.onCustomerChanged,
     required this.onRefresh,
+    this.onOpenFilters,
+    required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Title and Refresh Button
           Row(
             children: [
-              // Menu Button
-              CommonMenuButton(color: AppColors.primary),
+              if (ZoomDrawer.of(context) == null)
+                // Menu Button
+                CommonMenuButton(color: AppColors.primary),
 
               Expanded(
-                child: Center(
-                  child: Text(
-                    S.of(context).invoices,
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 24.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
                   ),
+                ),
+              ),
+
+              if (ZoomDrawer.of(context) != null)
+                // Menu Button
+                CommonMenuButton(color: AppColors.primary),
+            ],
+          ),
+
+          SizedBox(height: 12.h),
+
+          // Search Bar
+          Row(
+            children: [
+              Expanded(
+                child: CommonSearchBar(
+                  controller: searchController,
+                  hintText: S.of(context).searchInvoices,
+                  onChanged: onSearchChanged,
                 ),
               ),
               IconButton(
@@ -62,19 +87,17 @@ class InvoicesHeaderWidget extends StatelessWidget {
                   size: 24.sp,
                 ),
               ),
+              if (onOpenFilters != null)
+                IconButton(
+                  onPressed: onOpenFilters,
+                  icon: Icon(
+                    Icons.filter_alt_outlined,
+                    color: AppColors.primary,
+                    size: 24.sp,
+                  ),
+                ),
             ],
           ),
-
-          SizedBox(height: 16.h),
-
-          // Search Bar
-          CommonSearchBar(
-            controller: searchController,
-            hintText: S.of(context).searchInvoices,
-            onChanged: onSearchChanged,
-          ),
-
-          SizedBox(height: 16.h),
 
           // // Filter Row
           // CommonFilterRow(

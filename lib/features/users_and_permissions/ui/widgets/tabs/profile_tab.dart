@@ -62,7 +62,7 @@ class ProfileTab extends StatelessWidget {
                     ),
                     SizedBox(width: 12.w),
                     Text(
-                      'Profile Information',
+                      s.profileInformation,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -77,8 +77,8 @@ class ProfileTab extends StatelessWidget {
                 // Department Field
                 CustomTextField(
                   controller: departmentController,
-                  label: 'Department',
-                  hintText: 'Enter department',
+                  label: s.department,
+                  hintText: s.enterDepartment,
                   prefixIcon: Icons.business_outlined,
                 ),
 
@@ -88,7 +88,7 @@ class ProfileTab extends StatelessWidget {
                 CustomTextField(
                   controller: notesController,
                   label: s.notes,
-                  hintText: 'Enter notes',
+                  hintText: s.enterNotes,
                   prefixIcon: Icons.note_outlined,
                   maxLines: 4,
                 ),
@@ -127,7 +127,7 @@ class ProfileTab extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Account Status',
+                              s.accountStatus,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class ProfileTab extends StatelessWidget {
                             ),
                             SizedBox(height: 2.h),
                             Text(
-                              'Enable or disable user account',
+                              s.enableOrDisableUserAccount,
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 color: AppColors.grey,
@@ -194,7 +194,7 @@ class ProfileTab extends StatelessWidget {
                     ),
                     SizedBox(width: 12.w),
                     Text(
-                      'Additional Information',
+                      s.additionalInformation,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -209,7 +209,7 @@ class ProfileTab extends StatelessWidget {
                 // Info Items
                 _buildInfoItem(
                   icon: Icons.person_outline,
-                  title: 'User ID',
+                  title: s.userId,
                   value: 'ID-001234', // This would come from the user object
                 ),
                 _buildInfoItem(
@@ -219,7 +219,7 @@ class ProfileTab extends StatelessWidget {
                 ),
                 _buildInfoItem(
                   icon: Icons.login_outlined,
-                  title: 'Last Login',
+                  title: s.lastLogin,
                   value: '2 hours ago', // This would come from the user object
                 ),
               ],

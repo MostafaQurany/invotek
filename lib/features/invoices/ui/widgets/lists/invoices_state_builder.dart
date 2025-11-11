@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/ui/widgets/lists/invoices_list.dart';
 import 'package:invotek/features/invoices/ui/widgets/states/invoices_empty_state.dart';
 import 'package:invotek/features/invoices/ui/widgets/states/invoices_error_state.dart';
 import 'package:invotek/features/invoices/ui/widgets/states/invoices_loading_state.dart';
-import 'package:invotek/features/invoices/ui/widgets/lists/invoices_list.dart';
 
 class InvoicesStateBuilder extends StatelessWidget {
   final Function(InvoiceModel) onInvoiceTap;
@@ -157,12 +157,7 @@ class InvoicesStateBuilder extends StatelessWidget {
               },
           failure: (invoices, selectedInvoice, currentPage, totalPages, error) {
             if (invoices.isEmpty) {
-              return SliverToBoxAdapter(
-                child: InvoicesErrorState(
-                  error: error.message,
-                  onRetry: onRetry,
-                ),
-              );
+              return InvoicesErrorState(error: error.message, onRetry: onRetry);
             }
             return InvoicesList(
               invoices: invoices,

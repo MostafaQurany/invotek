@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:invotek/core/routes/app_routes.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/features/expenses/constants/expenses_permissions.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
@@ -13,6 +18,8 @@ import 'package:invotek/features/expenses/ui/widgets/cards/expense_options_botto
 import 'package:invotek/features/expenses/ui/widgets/cards/expenses_header_widget.dart';
 import 'package:invotek/features/expenses/ui/widgets/dialogs/delete_expense_dialog.dart';
 import 'package:invotek/features/expenses/ui/widgets/lists/expenses_state_builder.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ExpensesListScreen extends StatefulWidget {
   const ExpensesListScreen({super.key});
@@ -40,6 +47,7 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
   String _selectedSortOrder = 'desc';
   bool _isLoadingNextPage = false;
   bool _isNavigating = false;
+  Timer? _debounceTimer;
 
   @override
   void initState() {
@@ -85,144 +93,175 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
   void dispose() {
     _searchController.dispose();
     _scrollController.dispose();
+    _debounceTimer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: BlocListener<ExpensesCubit, ExpensesState>(
-        listener: (context, state) {
-          print('🔄 ExpensesListScreen received state: ${state.runtimeType}');
-          state.whenOrNull(
-            deleteSuccess:
-                (
-                  expenses,
-                  deletedId,
-                  selectedExpense,
-                  currentPage,
-                  totalPages,
-                ) {
-                  print(
-                    '✅ DeleteSuccess received with ${expenses.length} expenses, deletedId: $deletedId',
-                  );
-                  // Expense deleted successfully - UI will update automatically
-                  // No need to show SnackBar here as it's handled in the delete confirmation
-                },
-          );
-        },
-        child: SafeArea(
-          bottom: false,
-          child: Column(
-            children: [
-              // Header Widget - Scrolls with content
-              ExpensesHeaderWidget(
-                onMenuPressed: _handleMenuPressed,
-                searchController: _searchController,
-                onSearchChanged: (query) {
-                  ExpensesCubit.get(context).loadFirstPage(
-                    refresh: true,
-                    search: query.isEmpty ? null : query,
-                    status: _selectedStatus == 'all_status'
-                        ? null
-                        : _selectedStatus,
-                    categoryId: _selectedCategory == 'all_category'
-                        ? null
-                        : int.tryParse(_selectedCategory ?? ''),
-                    sortBy: _selectedSortBy,
-                    sortOrder: _selectedSortOrder,
-                  );
-                },
-                selectedStatus: _selectedStatus ?? '',
-                selectedCategory: _selectedCategory ?? '',
-                onStatusChanged: _onStatusChanged,
-                onCategoryChanged: _onCategoryChanged,
-                selectedSortBy: _selectedSortBy,
-                selectedSortOrder: _selectedSortOrder,
-                onSortByChanged: _onSortByChanged,
-                onSortOrderChanged: _onSortOrderChanged,
-              ),
-
-              // Expenses List Content
-              Expanded(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    ExpensesCubit.get(context).loadFirstPage(
-                      refresh: true,
-                      search: _searchController.text.isEmpty
-                          ? null
-                          : _searchController.text,
-                      status: _selectedStatus == 'all_status'
-                          ? null
-                          : _selectedStatus,
-                      categoryId: _selectedCategory == 'all_category'
-                          ? null
-                          : int.tryParse(_selectedCategory ?? ''),
-                      sortBy: _selectedSortBy,
-                      sortOrder: _selectedSortOrder,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(
+                  AppRoutes.homeRoute,
+                );
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.primary,
+        body: BlocListener<ExpensesCubit, ExpensesState>(
+          listener: (context, state) {
+            print('🔄 ExpensesListScreen received state: ${state.runtimeType}');
+            state.whenOrNull(
+              deleteSuccess:
+                  (
+                    expenses,
+                    deletedId,
+                    selectedExpense,
+                    currentPage,
+                    totalPages,
+                  ) {
+                    print(
+                      '✅ DeleteSuccess received with ${expenses.length} expenses, deletedId: $deletedId',
                     );
-                    ExpenseCategoriesCubit.get(
-                      context,
-                    ).loadFirstPage(refresh: true);
+                    // Expense deleted successfully - UI will update automatically
+                    // No need to show SnackBar here as it's handled in the delete confirmation
                   },
-                  child: ExpensesStateBuilder(
-                    onExpenseTap: (expense) =>
-                        _showExpenseOptions(context, expense),
-                    onExpenseView: _navigateToExpenseDetails,
-                    onExpenseEdit: _navigateToEditExpense,
-                    onExpenseDelete: _showDeleteConfirmation,
-                    onAddExpense: _navigateToAddExpense,
-                    onRetry: _retry,
-                    selectedStatus: _selectedStatus ?? '',
-                    selectedCategory: _selectedCategory ?? '',
-                    onStatusChanged: _onStatusChanged,
-                    onCategoryChanged: _onCategoryChanged,
-                    scrollController: _scrollController,
+            );
+          },
+          child: SafeArea(
+            bottom: false,
+            child: Column(
+              children: [
+                // Header Widget - Scrolls with content
+                ExpensesHeaderWidget(
+                  searchController: _searchController,
+                  onSearchChanged: _onSearchChanged,
+                  selectedStatus: _selectedStatus ?? '',
+                  selectedCategory: _selectedCategory ?? '',
+                  onStatusChanged: _onStatusChanged,
+                  onCategoryChanged: _onCategoryChanged,
+                  selectedSortBy: _selectedSortBy,
+                  selectedSortOrder: _selectedSortOrder,
+                  onSortByChanged: _onSortByChanged,
+                  onSortOrderChanged: _onSortOrderChanged,
+                ),
+
+                // Expenses List Content
+                Expanded(
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      ExpensesCubit.get(context).loadFirstPage(
+                        refresh: true,
+                        search: _searchController.text.isEmpty
+                            ? null
+                            : _searchController.text,
+                        status: _selectedStatus == 'all_status'
+                            ? null
+                            : _selectedStatus,
+                        categoryId: _selectedCategory == 'all_category'
+                            ? null
+                            : int.tryParse(_selectedCategory ?? ''),
+                        sortBy: _selectedSortBy,
+                        sortOrder: _selectedSortOrder,
+                      );
+                      ExpenseCategoriesCubit.get(
+                        context,
+                      ).loadFirstPage(refresh: true);
+                    },
+                    child: ExpensesStateBuilder(
+                      onExpenseTap: (expense) =>
+                          _showExpenseOptions(context, expense),
+                      onExpenseView: _navigateToExpenseDetails,
+                      onExpenseEdit: _navigateToEditExpense,
+                      onExpenseDelete: _showDeleteConfirmation,
+                      onAddExpense: _navigateToAddExpense,
+                      onRetry: _retry,
+                      selectedStatus: _selectedStatus ?? '',
+                      selectedCategory: _selectedCategory ?? '',
+                      onStatusChanged: _onStatusChanged,
+                      onCategoryChanged: _onCategoryChanged,
+                      scrollController: _scrollController,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _navigateToAddExpense,
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
+        floatingActionButton: Builder(
+          builder: (context) {
+            final s = S.of(context);
+            return PermissionWidget(
+              permission: ExpensesPermissions.create,
+              fallback: Tooltip(
+                message: s.expensesNoPermissionToAct,
+                child: FloatingActionButton(
+                  onPressed: null,
+                  backgroundColor: AppColors.primary.withOpacity(0.5),
+                  foregroundColor: AppColors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: Icon(Icons.lock_outline, size: 22.sp),
+                ),
+              ),
+              child: FloatingActionButton(
+                onPressed: _navigateToAddExpense,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.r),
+                ),
+                child: Icon(Icons.add, size: 22.sp),
+              ),
+            );
+          },
         ),
-        child: Icon(Icons.add, size: 22.sp),
       ),
     );
   }
 
-  // Event Handlers
-  void _handleMenuPressed() {
-    try {
-      final zoomDrawer = ZoomDrawer.of(context);
-      if (zoomDrawer != null) {
-        zoomDrawer.toggle();
-      } else {
-        if (Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        } else {
-          Navigator.of(context).pushReplacementNamed('/home');
-        }
-      }
-    } catch (e) {
-      if (Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
-      } else {
-        // CustomersCubit.get(context).loadFirstPage(
-        //   refresh: true,
-        //   search: " query.isEmpty ? null : query",
-        //   status: _selectedStatus == 'all_status' ? null : _selectedStatus,
-        //   company: _selectedCompany == 'all_company' ? null : _selectedCompany,
-        // );
-      }
-    }
+  void _onSearchChanged(String query) {
+    _debounceTimer?.cancel();
+
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      if (!mounted) return;
+      ExpensesCubit.get(context).loadFirstPage(
+        refresh: true,
+        search: query.isEmpty ? null : query,
+        status: _selectedStatus == 'all_status' ? null : _selectedStatus,
+        categoryId: _selectedCategory == 'all_category'
+            ? null
+            : int.tryParse(_selectedCategory ?? ''),
+        sortBy: _selectedSortBy,
+        sortOrder: _selectedSortOrder,
+      );
+    });
   }
 
   void _onStatusChanged(String status) {

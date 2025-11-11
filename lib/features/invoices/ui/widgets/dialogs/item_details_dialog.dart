@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_item.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -90,7 +91,7 @@ class ItemDetailsDialog extends StatelessWidget {
                   child: _buildInfoRow(
                     context,
                     S.of(context).itemPrice,
-                    '${item.price ?? '0.00'} ',
+                    CurrencyFormatter.formatCurrencyString(item.price, context),
                     Icons.attach_money,
                   ),
                 ),
@@ -103,7 +104,7 @@ class ItemDetailsDialog extends StatelessWidget {
             if (item.discount?.isNotEmpty ?? false) ...[
               _buildInfoRow(
                 context,
-                'الخصم',
+                S.of(context).invoicesDiscount,
                 '${item.discount} ',
                 Icons.discount,
               ),
@@ -117,7 +118,7 @@ class ItemDetailsDialog extends StatelessWidget {
                   Expanded(
                     child: _buildInfoRow(
                       context,
-                      'نسبة الضريبة',
+                      S.of(context).invoicesTaxPercentage,
                       '${item.taxPercent}%',
                       Icons.percent,
                     ),
@@ -127,7 +128,10 @@ class ItemDetailsDialog extends StatelessWidget {
                     child: _buildInfoRow(
                       context,
                       S.of(context).taxAmount,
-                      '${item.taxAmount ?? '0.00'} ',
+                      CurrencyFormatter.formatCurrencyString(
+                        item.taxAmount,
+                        context,
+                      ),
                       Icons.receipt,
                     ),
                   ),
@@ -158,7 +162,7 @@ class ItemDetailsDialog extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    '${item.total ?? '0.00'} ',
+                    CurrencyFormatter.formatCurrencyString(item.total, context),
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -192,7 +196,7 @@ class ItemDetailsDialog extends StatelessWidget {
                         ),
                         SizedBox(width: 8.w),
                         Text(
-                          'معلومات المنتج',
+                          S.of(context).invoicesProductInformation,
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
@@ -204,7 +208,7 @@ class ItemDetailsDialog extends StatelessWidget {
                     SizedBox(height: 8.h),
                     if (item.product?.name?.isNotEmpty ?? false)
                       Text(
-                        'الاسم: ${item.product!.name}',
+                        '${S.of(context).invoicesProductNameLabel} ${item.product!.name}',
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: AppColors.textSecondary,
@@ -230,7 +234,9 @@ class ItemDetailsDialog extends StatelessWidget {
                 // Copy Item Details
                 Expanded(
                   child: OutlinedButton.icon(
-                    onPressed: () => _copyItemDetails(context),
+                    onPressed: () {
+                      _copyItemDetails(context);
+                    },
                     icon: Icon(Icons.copy, size: 16.sp),
                     label: Text(
                       S.of(context).copy,
@@ -316,41 +322,43 @@ class ItemDetailsDialog extends StatelessWidget {
   }
 
   void _copyItemDetails(BuildContext context) {
-    final details = _buildItemDetailsText();
+    final s = S.of(context);
+    final details = _buildItemDetailsText(context);
     Clipboard.setData(ClipboardData(text: details));
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('تم نسخ تفاصيل العنصر إلى الحافظة'),
+        content: Text(s.invoicesItemDetailsCopied),
         backgroundColor: AppColors.success,
       ),
     );
   }
 
-  String _buildItemDetailsText() {
+  String _buildItemDetailsText(BuildContext context) {
+    final s = S.of(context);
     final buffer = StringBuffer();
-    buffer.writeln('تفاصيل العنصر:');
-    buffer.writeln('الاسم: ${item.name ?? 'غير محدد'}');
+    buffer.writeln(s.invoicesItemDetails);
+    buffer.writeln('${s.invoicesItemNameLabel} ${item.name ?? s.noName}');
     if (item.description?.isNotEmpty ?? false) {
-      buffer.writeln('الوصف: ${item.description}');
+      buffer.writeln('${s.invoicesItemDescriptionLabel} ${item.description}');
     }
-    buffer.writeln('الكمية: ${item.quantity ?? '0'}');
-    buffer.writeln('السعر: ${item.price ?? '0.00'} ');
+    buffer.writeln('${s.invoicesItemQuantityLabel} ${item.quantity ?? '0'}');
+    buffer.writeln('${s.invoicesItemPriceLabel} ${item.price ?? '0.00'} ');
     if (item.discount?.isNotEmpty ?? false) {
-      buffer.writeln('الخصم: ${item.discount} ');
+      buffer.writeln('${s.invoicesItemDiscountLabel} ${item.discount} ');
     }
     if (item.taxPercent?.isNotEmpty ?? false) {
-      buffer.writeln('نسبة الضريبة: ${item.taxPercent}%');
+      buffer.writeln('${s.invoicesItemTaxPercentageLabel} ${item.taxPercent}%');
     }
     if (item.taxAmount?.isNotEmpty ?? false) {
-      buffer.writeln('مبلغ الضريبة: ${item.taxAmount} ');
+      buffer.writeln('${s.invoicesItemTaxAmountLabel} ${item.taxAmount} ');
     }
-    buffer.writeln('المجموع: ${item.total ?? '0.00'} ');
+    buffer.writeln('${s.invoicesItemTotalLabel} ${item.total ?? '0.00'} ');
 
     if (item.product != null) {
       buffer.writeln();
-      buffer.writeln('معلومات المنتج:');
+      buffer.writeln(s.invoicesProductInfo);
       if (item.product?.name?.isNotEmpty ?? false) {
-        buffer.writeln('اسم المنتج: ${item.product!.name}');
+        buffer.writeln('${s.invoicesProductNameLabel} ${item.product!.name}');
       }
       if (item.product?.sku?.isNotEmpty ?? false) {
         buffer.writeln('SKU: ${item.product!.sku}');

@@ -8,6 +8,7 @@ import 'package:invotek/features/users_and_permissions/ui/widgets/tabs/basic_inf
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/generated/l10n.dart';
+import 'package:invotek/features/users_and_permissions/constants/users_permissions.dart';
 
 class AddUserScreen extends StatefulWidget {
   const AddUserScreen({super.key});
@@ -124,12 +125,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
       // Validate password length
       if (password.isNotEmpty && password.length < 6) {
-        _validationErrors['password'] = 'Password must be at least 6 characters';
+        _validationErrors['password'] = S.of(context).usersPasswordMustBeAtLeast6Characters;
       }
 
       // Validate password match (only if both fields have values)
       if (password.isNotEmpty && confirmPassword.isNotEmpty && password != confirmPassword) {
-        _validationErrors['confirmPassword'] = 'Passwords do not match';
+        _validationErrors['confirmPassword'] = S.of(context).usersPasswordsDoNotMatch;
       }
     });
   }
@@ -144,7 +145,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
       if (email.isNotEmpty) {
         final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
         if (!emailRegex.hasMatch(email)) {
-          _validationErrors['email'] = 'Please enter a valid email';
+          _validationErrors['email'] = S.of(context).usersPleaseEnterValidEmail;
         }
       }
     });
@@ -167,11 +168,27 @@ class _AddUserScreenState extends State<AddUserScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: ModulePermissionWidget(
-        module: 'users',
-        action: 'create',
+      body: PermissionWidget(
+        permission: UsersPermissions.create,
         fallback: Center(
-          child: Text('You do not have permission to create users'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.lock_outline, size: 64.sp, color: AppColors.error),
+              SizedBox(height: 16.h),
+              Text(
+                s.usersNoPermissionToView,
+                style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                s.usersNoPermissionToAct,
+                style: TextStyle(fontSize: 14.sp, color: AppColors.greyDark),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
         child: BlocListener<UsersCubit, UsersState>(
           listener: (context, state) {
@@ -207,7 +224,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
               // Bottom Action Buttons
               Container(
-                padding: EdgeInsets.all(16.w),
+                padding: EdgeInsets.only(
+                  left: 16.w,
+                  right: 16.w,
+                  top: 16.w,
+                  bottom: 16.w + MediaQuery.of(context).padding.bottom,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   boxShadow: [
@@ -390,34 +412,35 @@ class _AddUserScreenState extends State<AddUserScreen> {
 
     bool isValid = true;
 
+    final s = S.of(context);
     if (_nameController.text.trim().isEmpty) {
-      _validationErrors['name'] = 'Name is required';
+      _validationErrors['name'] = s.usersNameRequired;
       isValid = false;
     }
 
     if (_emailController.text.trim().isEmpty) {
-      _validationErrors['email'] = 'Email is required';
+      _validationErrors['email'] = s.usersEmailRequired;
       isValid = false;
     } else if (!RegExp(
       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
     ).hasMatch(_emailController.text.trim())) {
-      _validationErrors['email'] = 'Please enter a valid email';
+      _validationErrors['email'] = s.usersPleaseEnterValidEmail;
       isValid = false;
     }
 
     if (_passwordController.text.trim().isEmpty) {
-      _validationErrors['password'] = 'Password is required';
+      _validationErrors['password'] = s.usersPasswordRequired;
       isValid = false;
     } else if (_passwordController.text.length < 6) {
-      _validationErrors['password'] = 'Password must be at least 6 characters';
+      _validationErrors['password'] = s.usersPasswordMustBeAtLeast6Characters;
       isValid = false;
     }
 
     if (_confirmPasswordController.text.trim().isEmpty) {
-      _validationErrors['confirmPassword'] = 'Please confirm your password';
+      _validationErrors['confirmPassword'] = s.usersPleaseConfirmYourPassword;
       isValid = false;
     } else if (_passwordController.text != _confirmPasswordController.text) {
-      _validationErrors['confirmPassword'] = 'Passwords do not match';
+      _validationErrors['confirmPassword'] = s.usersPasswordsDoNotMatch;
       isValid = false;
     }
 

@@ -7,6 +7,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_extended_fab.dart';
 import 'package:invotek/core/widgets/common_filter_row.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
+import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/enhanced_product_card.dart';
@@ -43,9 +44,39 @@ class _EnhancedProductsListScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Column(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          final canPop = Navigator.of(context).canPop();
+          if (canPop) {
+            // السماح بالرجوع العادي بدون dialog
+            Navigator.of(context).pop();
+          } else {
+            // فتح zoomDrawer والانتقال إلى home
+            try {
+              final zoomDrawer = ZoomDrawer.of(context);
+              if (zoomDrawer != null) {
+                // إغلاق zoomDrawer إذا كان مفتوحاً
+                if (zoomDrawer.isOpen()) {
+                  zoomDrawer.close();
+                }
+                // الانتقال إلى home باستخدام NavigationCubit
+                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+              } else {
+                // Fallback: الانتقال إلى home مباشرة
+                Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+              }
+            } catch (e) {
+              // Fallback: الانتقال إلى home مباشرة
+              Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+            }
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: _buildAppBar(),
+        body: Column(
         children: [
           // Search Bar
           CommonSearchBar(
@@ -127,6 +158,7 @@ class _EnhancedProductsListScreenState
         label: 'Add New Product',
         icon: Icons.add,
         onPressed: _addProduct,
+      ),
       ),
     );
   }
@@ -261,10 +293,6 @@ class _EnhancedProductsListScreenState
   void _onSearchChanged(String query) {
     // Implement search logic
     context.read<ProductsCubit>().loadFirstPage(search: query);
-  }
-
-  void _onSearchCleared() {
-    context.read<ProductsCubit>().loadFirstPage();
   }
 
   void _onCategoryChanged(String? category) {

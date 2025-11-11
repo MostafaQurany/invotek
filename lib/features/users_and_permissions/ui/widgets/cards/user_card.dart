@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/auth/domain/entit/user_model.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class UserCard extends StatelessWidget {
   final User user;
@@ -11,6 +12,7 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -20,7 +22,7 @@ class UserCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: AppColors.grey.withOpacity(0.1),
+              color: AppColors.grey.withOpacity(0.3),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -56,7 +58,7 @@ class UserCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.name ?? 'Unknown User',
+                    user.name ?? s.usersUnknownUser,
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
@@ -67,7 +69,7 @@ class UserCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   Text(
-                    user.email ?? 'No email',
+                    user.email ?? s.usersNoEmail,
                     style: TextStyle(fontSize: 14.sp, color: AppColors.grey),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -101,7 +103,7 @@ class UserCard extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                _buildStatusChip(user.status ?? 'unknown'),
+                _buildStatusChip(context, user.status ?? 'unknown'),
                 SizedBox(height: 8.h),
                 Icon(
                   Icons.arrow_forward_ios,
@@ -125,8 +127,19 @@ class UserCard extends StatelessWidget {
     return name[0].toUpperCase();
   }
 
-  Widget _buildStatusChip(String status) {
-    final isActive = status.toLowerCase() == 'active';
+  Widget _buildStatusChip(BuildContext context, String status) {
+    final s = S.of(context);
+    final statusLower = status.toLowerCase();
+    final isActive = statusLower == 'active' || statusLower == 'نشط';
+    String displayStatus;
+    if (statusLower == 'active' || statusLower == 'نشط') {
+      displayStatus = s.usersStatusActive;
+    } else if (statusLower == 'inactive' || statusLower == 'غير نشط') {
+      displayStatus = s.usersStatusInactive;
+    } else {
+      displayStatus = s.usersUnknownStatus;
+    }
+    
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(
@@ -148,7 +161,7 @@ class UserCard extends StatelessWidget {
           ),
           SizedBox(width: 4.w),
           Text(
-            status.toUpperCase(),
+            displayStatus.toUpperCase(),
             style: TextStyle(
               fontSize: 10.sp,
               fontWeight: FontWeight.w600,
