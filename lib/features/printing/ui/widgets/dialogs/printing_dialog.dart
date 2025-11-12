@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class PrintingDialog extends StatelessWidget {
   final VoidCallback onCancel;
@@ -27,7 +28,7 @@ class PrintingDialog extends StatelessWidget {
             ),
             SizedBox(height: 16.h),
             Text(
-              'جاري الطباعة...',
+              S.of(context).printingInProgress,
               style: TextStyle(
                 color: AppColors.white,
                 fontSize: 16.sp,
@@ -48,7 +49,7 @@ class PrintingDialog extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
-              child: const Text('إلغاء'),
+              child: Text(S.of(context).cancel),
             ),
           ],
         ),

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -74,10 +71,10 @@ class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
             s.paymentMethod,
             _getPaymentMethodText(widget.formController.selectedPaymentMethod),
           ),
-          _buildSummaryRow(
-            s.invoiceStatus,
-            _getStatusText(widget.formController.selectedStatus),
-          ),
+          // _buildSummaryRow(
+          //   s.invoiceStatus,
+          //   _getStatusText(widget.formController.selectedStatus),
+          // ),
           _buildSummaryRow(
             s.issueDate,
             widget.formController.issueDateController.text,
@@ -114,7 +111,7 @@ class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
           SizedBox(height: 12.h),
           _buildSummaryRow(
             s.customerName,
-            widget.formController.selectedCustomerName ?? 'غير محدد',
+            widget.formController.selectedCustomerName ?? s.notSpecified,
           ),
           if (widget.formController.selectedCustomerEmail != null)
             _buildSummaryRow(
@@ -276,10 +273,7 @@ class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
           ),
           Expanded(
             child: Text(
-              CurrencyFormatter.formatCurrencyString(
-                item.total,
-                context,
-              ),
+              CurrencyFormatter.formatCurrencyString(item.total, context),
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
@@ -325,39 +319,42 @@ class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
   }
 
   String _getActionText(String action) {
+    final s = S.of(context);
     switch (action) {
       case 'save_only':
-        return 'حفظ فقط';
+        return s.saveOnly;
       case 'save_and_send':
-        return 'حفظ وإرسال';
+        return s.saveAndSend;
       default:
         return action;
     }
   }
 
   String _getPaymentMethodText(String method) {
+    final s = S.of(context);
     switch (method) {
       case 'cash':
-        return 'نقداً';
+        return s.paymentMethodCash;
       case 'card':
-        return 'بطاقة';
+        return s.paymentMethodCard;
       case 'bank_transfer':
-        return 'تحويل بنكي';
+        return s.paymentMethodBankTransfer;
       case 'check':
-        return 'شيك';
+        return s.paymentMethodCheck;
       default:
         return method;
     }
   }
 
   String _getStatusText(String status) {
+    final s = S.of(context);
     switch (status) {
       case 'draft':
-        return 'مسودة';
+        return s.statusDraft;
       case 'sent':
-        return 'مرسلة';
+        return s.statusSent;
       case 'paid':
-        return 'مدفوعة';
+        return s.statusPaid;
       default:
         return status;
     }

@@ -359,7 +359,7 @@ class SAr extends S {
   String get invoicesList => 'قائمة الفواتير';
 
   @override
-  String get createInvoice => 'إنشاء فاتورة';
+  String get createInvoice => 'إنشاء الفاتورة';
 
   @override
   String get postedInvoices => 'الفواتير المعلنة';
@@ -1987,7 +1987,9 @@ class SAr extends S {
   String get boughtThis => 'تم شراؤها';
 
   @override
-  String get available => 'متوفر';
+  String available(int count) {
+    return 'المتاح: $count';
+  }
 
   @override
   String get productManagement => 'إدارة المنتجات';
@@ -2322,10 +2324,10 @@ class SAr extends S {
   String get card => 'بطاقة';
 
   @override
-  String get total => 'المجموع الكلي';
+  String get total => 'المجموع:';
 
   @override
-  String get subtotal => 'المجموع الفرعي';
+  String get subtotal => 'المجموع الفرعي:';
 
   @override
   String get tax => 'الضريبة';
@@ -2449,10 +2451,10 @@ class SAr extends S {
   String get paymentMethods => 'طرق الدفع';
 
   @override
-  String get paymentMethodCash => 'نقدي';
+  String get paymentMethodCash => 'نقداً';
 
   @override
-  String get paymentMethodCard => 'بطاقة ائتمان';
+  String get paymentMethodCard => 'بطاقة';
 
   @override
   String get paymentMethodBank => 'تحويل بنكي';
@@ -2560,7 +2562,7 @@ class SAr extends S {
   String get testingConnection => 'جاري اختبار الاتصال...';
 
   @override
-  String get taxAmount => 'مبلغ الضريبة';
+  String get taxAmount => 'مبلغ الضريبة:';
 
   @override
   String get enterDescription => 'أدخل الوصف';
@@ -2892,13 +2894,13 @@ class SAr extends S {
   String get enterCustomerAddress => 'أدخل العنوان';
 
   @override
-  String get addItem => 'إضافة عنصر';
+  String get addItem => 'إضافة العنصر';
 
   @override
   String get addFirstItem => 'أضف أول عنصر';
 
   @override
-  String get taxPercent => 'نسبة الضريبة';
+  String get taxPercent => 'نسبة الضريبة (%)';
 
   @override
   String get enterItemName => 'أدخل اسم العنصر';
@@ -5533,7 +5535,7 @@ class SAr extends S {
   String get never => 'أبداً';
 
   @override
-  String get unknown => 'غير معروف';
+  String get unknown => '(غير معروف)';
 
   @override
   String get allRoles => 'جميع الأدوار';
@@ -6057,4 +6059,281 @@ class SAr extends S {
 
   @override
   String get notificationsAdditionalData => 'بيانات إضافية';
+
+  @override
+  String get printInvoiceTitle => 'طباعة الفاتورة';
+
+  @override
+  String get noPreview => 'لا توجد معاينة';
+
+  @override
+  String get print => 'طباعة';
+
+  @override
+  String get preview => 'معاينة';
+
+  @override
+  String get printCancelled => 'تم إلغاء الطباعة';
+
+  @override
+  String previewError(String error) {
+    return 'خطأ في المعاينة: $error';
+  }
+
+  @override
+  String get printerNotConnected => 'الطابعة غير متصلة';
+
+  @override
+  String get connectPrinterFromSettings => 'يرجى الاتصال بالطابعة من الإعدادات';
+
+  @override
+  String get pleaseConnectPrinterFirst => 'يرجى الاتصال بالطابعة أولاً';
+
+  @override
+  String printErrorWithMessage(String error) {
+    return 'خطأ في الطباعة: $error';
+  }
+
+  @override
+  String get subscriptionPackageSelectionPage => 'صفحة اختيار الباقات';
+
+  @override
+  String get comingSoon => 'سيتم تطوير هذه الصفحة قريباً';
+
+  @override
+  String get cannotOpenPackageLink => 'لا يمكن فتح رابط الباقة';
+
+  @override
+  String get deleteItemConfirmation => 'هل أنت متأكد من حذف هذا العنصر؟';
+
+  @override
+  String get stop => 'إيقاف';
+
+  @override
+  String get connect => 'اتصال';
+
+  @override
+  String get disconnect => 'قطع الاتصال';
+
+  @override
+  String get sliceHeight => 'ارتفاع الslice (بكسل)';
+
+  @override
+  String get checkingBluetoothStatus => 'جارِ التحقق من حالة البلوتوث...';
+
+  @override
+  String get bluetoothOff => 'البلوتوث مغلق. فضلاً قم بتفعيله.';
+
+  @override
+  String get checkingPrinterConnection => 'جارِ فحص الاتصال بالطابعة...';
+
+  @override
+  String get printerNotConnectedStatus => 'غير متصل بالطابعة';
+
+  @override
+  String get printingInProgress => 'جاري الطباعة...';
+
+  @override
+  String statusCode(String code) {
+    return 'رمز الحالة: $code';
+  }
+
+  @override
+  String get emailIsRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get verifyTokenIsRequired => 'رمز التحقق مطلوب';
+
+  @override
+  String get newNotifications => 'إشعارات جديدة';
+
+  @override
+  String youHaveNewNotification(int count) {
+    return 'لديك $count إشعار جديد';
+  }
+
+  @override
+  String get searchingForPrinters => 'جاري البحث عن الطابعات...';
+
+  @override
+  String get connectedPrinterShownAtTop => 'الطابعة المتصلة تظهر في الأعلى';
+
+  @override
+  String get noPrintersPressSearch => 'لا توجد طابعات. اضغط على \"بحث\" للبحث';
+
+  @override
+  String get previewAndTestPrint => 'معاينة وطباعة تجريبية';
+
+  @override
+  String get connectingToPrinter => 'جاري الاتصال بالطابعة...';
+
+  @override
+  String get noPrinterDeviceSaved => 'لا يوجد جهاز طابعة محفوظ';
+
+  @override
+  String get printerDeviceNotFound =>
+      'لم يتم العثور على جهاز طابعة محفوظ. يرجى الذهاب إلى الإعدادات وإضافة جهاز طابعة.';
+
+  @override
+  String get connectionFailed => 'فشل الاتصال';
+
+  @override
+  String get connectionFailedMessage =>
+      'فشل الاتصال بالطابعة. يرجى التحقق من إعدادات الطابعة والمحاولة مرة أخرى.';
+
+  @override
+  String get bluetoothIsOff => 'البلوتوث مغلق';
+
+  @override
+  String get bluetoothIsOffMessage =>
+      'البلوتوث مغلق. يرجى تشغيل البلوتوث للاتصال بالطابعة.';
+
+  @override
+  String get connected => 'متصل';
+
+  @override
+  String get disconnected => 'غير متصل';
+
+  @override
+  String get connectedPrinter => 'الطابعة المتصلة';
+
+  @override
+  String get printers => 'الطابعات';
+
+  @override
+  String get previewLabel => 'معاينة:';
+
+  @override
+  String get invoiceLanguage => 'لغة الفاتورة';
+
+  @override
+  String get pleaseEnableBluetooth => 'يرجى تفعيل Bluetooth';
+
+  @override
+  String get testCustomer => 'عميل تجريبي';
+
+  @override
+  String get testProduct1 => 'منتج تجريبي 1';
+
+  @override
+  String get testProduct2 => 'منتج تجريبي 2';
+
+  @override
+  String get editProfile => 'تعديل الملف الشخصي';
+
+  @override
+  String get updateYourProfileInformation => 'تحديث معلومات ملفك الشخصي';
+
+  @override
+  String get operationDelete => 'حذف';
+
+  @override
+  String get operationStatusUpdate => 'تحديث الحالة';
+
+  @override
+  String get operationBulkDelete => 'الحذف المجمع';
+
+  @override
+  String get operationBulkStatusUpdate => 'تحديث الحالة المجمع';
+
+  @override
+  String get additionalInvoiceDetails => 'تفاصيل إضافية للفاتورة';
+
+  @override
+  String get invoiceType => 'نوع الفاتورة';
+
+  @override
+  String get sentDate => 'تاريخ الإرسال';
+
+  @override
+  String get qrCode => 'QR- Code';
+
+  @override
+  String get qrCodeLabel => 'رمز QR';
+
+  @override
+  String get errorMessageLabel => 'رسالة الخطأ';
+
+  @override
+  String get invoiceTypeStandard => 'فاتورة عادية';
+
+  @override
+  String get invoiceTypeCreditNote => 'إشعار دائن';
+
+  @override
+  String get invoiceTypeDebitNote => 'إشعار مدين';
+
+  @override
+  String get invoiceTypeProforma => 'فاتورة مؤقتة';
+
+  @override
+  String get customerNamePlaceholder => 'اسم العميل';
+
+  @override
+  String get customerEmailPlaceholder => 'بريد العميل';
+
+  @override
+  String get customerPhonePlaceholder => 'هاتف العميل';
+
+  @override
+  String get customerAddressPlaceholder => 'عنوان العميل';
+
+  @override
+  String get customerTaxNumberPlaceholder => 'الرقم الضريبي للعميل';
+
+  @override
+  String get addNewItem => 'إضافة عنصر جديد';
+
+  @override
+  String get itemNameRequired => 'اسم العنصر مطلوب';
+
+  @override
+  String get quantityMustBeGreaterThanZero => 'الكمية يجب أن تكون أكبر من صفر';
+
+  @override
+  String quantityExceedsAvailableStock(int count) {
+    return 'الكمية تتجاوز المخزون المتاح ($count)';
+  }
+
+  @override
+  String get priceMustBeGreaterThanOrEqualZero =>
+      'السعر يجب أن يكون أكبر من أو يساوي صفر';
+
+  @override
+  String get discountPercent => 'الخصم (%)';
+
+  @override
+  String get discountRequired => 'الخصم مطلوب';
+
+  @override
+  String get discountMustBeGreaterThanOrEqualZero =>
+      'الخصم يجب أن يكون أكبر من أو يساوي صفر';
+
+  @override
+  String get taxPercentRequired => 'نسبة الضريبة مطلوبة';
+
+  @override
+  String get taxPercentMustBeGreaterThanOrEqualZero =>
+      'نسبة الضريبة يجب أن تكون أكبر من أو يساوي صفر';
+
+  @override
+  String get saveEdit => 'حفظ التعديل';
+
+  @override
+  String get itemTaxAmount => 'مبلغ الضريبة';
+
+  @override
+  String get itemsCount => 'عدد العناصر:';
+
+  @override
+  String get product => 'منتج';
+
+  @override
+  String get paymentMethodBankTransfer => 'تحويل بنكي';
+
+  @override
+  String get statusSent => 'مرسلة';
+
+  @override
+  String get notSpecified => 'غير محدد';
 }

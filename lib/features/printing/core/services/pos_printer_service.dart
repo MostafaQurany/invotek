@@ -5,7 +5,7 @@ import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 
 import '../../core/models/invoice_language.dart';
 import '../../core/utils/paper_preset.dart';
-import '../../templates/tax_invoice_template.dart';
+import '../templates/tax_invoice_template.dart';
 
 class PosPrinterService {
   const PosPrinterService();

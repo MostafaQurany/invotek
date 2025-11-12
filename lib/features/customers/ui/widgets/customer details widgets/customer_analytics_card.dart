@@ -19,16 +19,7 @@ class CustomerAnalyticsCard extends StatefulWidget {
 }
 
 class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
-  @override
-  void initState() {
-    super.initState();
-    // تحميل فواتير العميل عند إنشاء العنصر
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CustomerInvoicesCubit>().loadCustomerInvoices(
-        widget.customer.id,
-      );
-    });
-  }
+  // تم إزالة initState لأن التحميل يتم في CustomerDetailsScreen
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +57,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
                 return _buildInvoicesList(state.invoices, state.totalInvoices);
               } else if (state is CustomerInvoicesError) {
                 return _buildErrorState(state.failure);
-              }else {
+              } else {
                 return SizedBox();
               }
             },

@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:invotek/features/notifications/domain/entities/notification_entity.dart';
+
+import '../../generated/l10n.dart';
 
 class LocalNotificationService {
   static final LocalNotificationService _instance =
@@ -14,7 +18,9 @@ class LocalNotificationService {
   Future<void> initialize() async {
     if (_isInitialized) return;
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings = AndroidInitializationSettings(
+      '@mipmap/ic_launcher',
+    );
     const iosSettings = DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -73,10 +79,18 @@ class LocalNotificationService {
     );
   }
 
-  Future<void> showNewNotificationsNotification(int count) async {
+  Future<void> showNewNotificationsNotification({
+    required int count,
+    required Locale locale,
+  }) async {
     if (!_isInitialized) {
       await initialize();
     }
+
+    // Load localization for the current locale
+    final s = await S.load(locale);
+    final title = s.newNotifications;
+    final message = s.youHaveNewNotification(count);
 
     const androidDetails = AndroidNotificationDetails(
       'notifications_channel',
@@ -98,12 +112,7 @@ class LocalNotificationService {
       iOS: iosDetails,
     );
 
-    await _notifications.show(
-      0,
-      'إشعارات جديدة',
-      'لديك $count إشعار جديد',
-      notificationDetails,
-    );
+    await _notifications.show(0, title, message, notificationDetails);
   }
 
   Future<void> cancelAllNotifications() async {
@@ -114,5 +123,3 @@ class LocalNotificationService {
     await _notifications.cancel(id);
   }
 }
-
-

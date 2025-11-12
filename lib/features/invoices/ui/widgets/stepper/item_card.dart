@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class ItemCard extends StatelessWidget {
   final InvoiceItemData item;
@@ -70,14 +71,14 @@ class ItemCard extends StatelessWidget {
           // Item details
           Row(
             children: [
-              Expanded(child: _buildDetailItem('الكمية', item.quantity)),
+              Expanded(child: _buildDetailItem(S.of(context).itemQuantity, item.quantity)),
               Expanded(
                 child: _buildDetailItem(
-                  'السعر',
+                  S.of(context).itemPrice,
                   CurrencyFormatter.formatCurrencyString(item.price, context),
                 ),
               ),
-              Expanded(child: _buildDetailItem('الخصم', '${item.discount}%')),
+              Expanded(child: _buildDetailItem(S.of(context).itemDiscount, '${item.discount}%')),
             ],
           ),
 
@@ -86,11 +87,11 @@ class ItemCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: _buildDetailItem('الضريبة', '${item.taxPercent}%'),
+                child: _buildDetailItem(S.of(context).itemTax, '${item.taxPercent}%'),
               ),
               Expanded(
                 child: _buildDetailItem(
-                  'مبلغ الضريبة',
+                  S.of(context).itemTaxAmount,
                   CurrencyFormatter.formatCurrencyString(
                     item.taxAmount,
                     context,
@@ -99,7 +100,7 @@ class ItemCard extends StatelessWidget {
               ),
               Expanded(
                 child: _buildDetailItem(
-                  'المجموع',
+                  S.of(context).itemTotal,
                   CurrencyFormatter.formatCurrencyString(item.total, context),
                   isTotal: true,
                 ),

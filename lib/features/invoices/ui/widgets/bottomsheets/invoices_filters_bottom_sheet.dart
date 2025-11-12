@@ -39,9 +39,15 @@ class _InvoicesFiltersBottomSheetState
 
   @override
   Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(20.w),
+        padding: EdgeInsets.only(
+          left: 20.w,
+          top: 20.w,
+          right: 20.w,
+          bottom: bottomPadding > 0 ? bottomPadding + 20.w : 20.w,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

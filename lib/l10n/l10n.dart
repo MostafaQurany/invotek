@@ -3928,8 +3928,8 @@ abstract class S {
   /// No description provided for @available.
   ///
   /// In en, this message translates to:
-  /// **'Available'**
-  String get available;
+  /// **'Available: {count}'**
+  String available(int count);
 
   /// No description provided for @productManagement.
   ///
@@ -4552,13 +4552,13 @@ abstract class S {
   /// No description provided for @total.
   ///
   /// In en, this message translates to:
-  /// **'Total'**
+  /// **'Total:'**
   String get total;
 
   /// No description provided for @subtotal.
   ///
   /// In en, this message translates to:
-  /// **'Subtotal'**
+  /// **'Subtotal:'**
   String get subtotal;
 
   /// No description provided for @tax.
@@ -4804,7 +4804,7 @@ abstract class S {
   /// No description provided for @paymentMethodCard.
   ///
   /// In en, this message translates to:
-  /// **'Credit Card'**
+  /// **'Card'**
   String get paymentMethodCard;
 
   /// No description provided for @paymentMethodBank.
@@ -5020,7 +5020,7 @@ abstract class S {
   /// No description provided for @taxAmount.
   ///
   /// In en, this message translates to:
-  /// **'Tax Amount'**
+  /// **'Tax Amount:'**
   String get taxAmount;
 
   /// No description provided for @enterDescription.
@@ -5583,7 +5583,7 @@ abstract class S {
   /// No description provided for @taxPercent.
   ///
   /// In en, this message translates to:
-  /// **'Tax Percent'**
+  /// **'Tax Percent (%)'**
   String get taxPercent;
 
   /// No description provided for @enterItemName.
@@ -10713,7 +10713,7 @@ abstract class S {
   /// No description provided for @unknown.
   ///
   /// In en, this message translates to:
-  /// **'Unknown'**
+  /// **'(Unknown)'**
   String get unknown;
 
   /// No description provided for @allRoles.
@@ -11729,6 +11729,528 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Additional Data'**
   String get notificationsAdditionalData;
+
+  /// No description provided for @printInvoiceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Invoice'**
+  String get printInvoiceTitle;
+
+  /// No description provided for @noPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'No Preview'**
+  String get noPreview;
+
+  /// No description provided for @print.
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get print;
+
+  /// No description provided for @preview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview'**
+  String get preview;
+
+  /// No description provided for @printCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Cancelled'**
+  String get printCancelled;
+
+  /// No description provided for @previewError.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview Error: {error}'**
+  String previewError(String error);
+
+  /// No description provided for @printerNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer Not Connected'**
+  String get printerNotConnected;
+
+  /// No description provided for @connectPrinterFromSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Please connect printer from settings'**
+  String get connectPrinterFromSettings;
+
+  /// No description provided for @pleaseConnectPrinterFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please connect printer first'**
+  String get pleaseConnectPrinterFirst;
+
+  /// No description provided for @printErrorWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Print Error: {error}'**
+  String printErrorWithMessage(String error);
+
+  /// No description provided for @subscriptionPackageSelectionPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription Packages Page'**
+  String get subscriptionPackageSelectionPage;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'This page will be developed soon'**
+  String get comingSoon;
+
+  /// No description provided for @cannotOpenPackageLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open package link'**
+  String get cannotOpenPackageLink;
+
+  /// No description provided for @deleteItemConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this item?'**
+  String get deleteItemConfirmation;
+
+  /// No description provided for @stop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get stop;
+
+  /// No description provided for @connect.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect'**
+  String get connect;
+
+  /// No description provided for @disconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get disconnect;
+
+  /// No description provided for @sliceHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Slice Height (pixels)'**
+  String get sliceHeight;
+
+  /// No description provided for @checkingBluetoothStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking Bluetooth status...'**
+  String get checkingBluetoothStatus;
+
+  /// No description provided for @bluetoothOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is off. Please enable it.'**
+  String get bluetoothOff;
+
+  /// No description provided for @checkingPrinterConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking printer connection...'**
+  String get checkingPrinterConnection;
+
+  /// No description provided for @printerNotConnectedStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Not connected to printer'**
+  String get printerNotConnectedStatus;
+
+  /// No description provided for @printingInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Printing in progress...'**
+  String get printingInProgress;
+
+  /// No description provided for @statusCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Status Code: {code}'**
+  String statusCode(String code);
+
+  /// No description provided for @emailIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailIsRequired;
+
+  /// No description provided for @verifyTokenIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify token is required'**
+  String get verifyTokenIsRequired;
+
+  /// No description provided for @newNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'New Notifications'**
+  String get newNotifications;
+
+  /// No description provided for @youHaveNewNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {count} new notification'**
+  String youHaveNewNotification(int count);
+
+  /// No description provided for @searchingForPrinters.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching for printers...'**
+  String get searchingForPrinters;
+
+  /// No description provided for @connectedPrinterShownAtTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected printer is shown at the top'**
+  String get connectedPrinterShownAtTop;
+
+  /// No description provided for @noPrintersPressSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No printers found. Press \"Search\" to search'**
+  String get noPrintersPressSearch;
+
+  /// No description provided for @previewAndTestPrint.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview and Test Print'**
+  String get previewAndTestPrint;
+
+  /// No description provided for @connectingToPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to printer...'**
+  String get connectingToPrinter;
+
+  /// No description provided for @noPrinterDeviceSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'No printer device saved'**
+  String get noPrinterDeviceSaved;
+
+  /// No description provided for @printerDeviceNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved printer device found. Please go to settings and add a printer device.'**
+  String get printerDeviceNotFound;
+
+  /// No description provided for @connectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Failed'**
+  String get connectionFailed;
+
+  /// No description provided for @connectionFailedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to connect to printer. Please check printer settings and try again.'**
+  String get connectionFailedMessage;
+
+  /// No description provided for @bluetoothIsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is Off'**
+  String get bluetoothIsOff;
+
+  /// No description provided for @bluetoothIsOffMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Bluetooth is off. Please enable Bluetooth to connect to printer.'**
+  String get bluetoothIsOffMessage;
+
+  /// No description provided for @connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connected;
+
+  /// No description provided for @disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get disconnected;
+
+  /// No description provided for @connectedPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected Printer'**
+  String get connectedPrinter;
+
+  /// No description provided for @printers.
+  ///
+  /// In en, this message translates to:
+  /// **'Printers'**
+  String get printers;
+
+  /// No description provided for @previewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview:'**
+  String get previewLabel;
+
+  /// No description provided for @invoiceLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Language'**
+  String get invoiceLanguage;
+
+  /// No description provided for @pleaseEnableBluetooth.
+  ///
+  /// In en, this message translates to:
+  /// **'Please Enable Bluetooth'**
+  String get pleaseEnableBluetooth;
+
+  /// No description provided for @testCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Customer'**
+  String get testCustomer;
+
+  /// No description provided for @testProduct1.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Product 1'**
+  String get testProduct1;
+
+  /// No description provided for @testProduct2.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Product 2'**
+  String get testProduct2;
+
+  /// No description provided for @editProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Profile'**
+  String get editProfile;
+
+  /// No description provided for @updateYourProfileInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your profile information'**
+  String get updateYourProfileInformation;
+
+  /// No description provided for @operationDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get operationDelete;
+
+  /// No description provided for @operationStatusUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Status Update'**
+  String get operationStatusUpdate;
+
+  /// No description provided for @operationBulkDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Delete'**
+  String get operationBulkDelete;
+
+  /// No description provided for @operationBulkStatusUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk Status Update'**
+  String get operationBulkStatusUpdate;
+
+  /// No description provided for @additionalInvoiceDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Invoice Details'**
+  String get additionalInvoiceDetails;
+
+  /// No description provided for @invoiceType.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Type'**
+  String get invoiceType;
+
+  /// No description provided for @sentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent Date'**
+  String get sentDate;
+
+  /// No description provided for @qrCode.
+  ///
+  /// In en, this message translates to:
+  /// **'QR- Code'**
+  String get qrCode;
+
+  /// No description provided for @qrCodeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'QR Code'**
+  String get qrCodeLabel;
+
+  /// No description provided for @errorMessageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Message'**
+  String get errorMessageLabel;
+
+  /// No description provided for @invoiceTypeStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard Invoice'**
+  String get invoiceTypeStandard;
+
+  /// No description provided for @invoiceTypeCreditNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit Note'**
+  String get invoiceTypeCreditNote;
+
+  /// No description provided for @invoiceTypeDebitNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit Note'**
+  String get invoiceTypeDebitNote;
+
+  /// No description provided for @invoiceTypeProforma.
+  ///
+  /// In en, this message translates to:
+  /// **'Proforma Invoice'**
+  String get invoiceTypeProforma;
+
+  /// No description provided for @customerNamePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get customerNamePlaceholder;
+
+  /// No description provided for @customerEmailPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Email'**
+  String get customerEmailPlaceholder;
+
+  /// No description provided for @customerPhonePlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Phone'**
+  String get customerPhonePlaceholder;
+
+  /// No description provided for @customerAddressPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Address'**
+  String get customerAddressPlaceholder;
+
+  /// No description provided for @customerTaxNumberPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Tax Number'**
+  String get customerTaxNumberPlaceholder;
+
+  /// No description provided for @addNewItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Item'**
+  String get addNewItem;
+
+  /// No description provided for @itemNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Item name is required'**
+  String get itemNameRequired;
+
+  /// No description provided for @quantityMustBeGreaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity must be greater than zero'**
+  String get quantityMustBeGreaterThanZero;
+
+  /// No description provided for @quantityExceedsAvailableStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity exceeds available stock ({count})'**
+  String quantityExceedsAvailableStock(int count);
+
+  /// No description provided for @priceMustBeGreaterThanOrEqualZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Price must be greater than or equal to zero'**
+  String get priceMustBeGreaterThanOrEqualZero;
+
+  /// No description provided for @discountPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount (%)'**
+  String get discountPercent;
+
+  /// No description provided for @discountRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount is required'**
+  String get discountRequired;
+
+  /// No description provided for @discountMustBeGreaterThanOrEqualZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount must be greater than or equal to zero'**
+  String get discountMustBeGreaterThanOrEqualZero;
+
+  /// No description provided for @taxPercentRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax percent is required'**
+  String get taxPercentRequired;
+
+  /// No description provided for @taxPercentMustBeGreaterThanOrEqualZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax percent must be greater than or equal to zero'**
+  String get taxPercentMustBeGreaterThanOrEqualZero;
+
+  /// No description provided for @saveEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Edit'**
+  String get saveEdit;
+
+  /// No description provided for @itemTaxAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax Amount'**
+  String get itemTaxAmount;
+
+  /// No description provided for @itemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Items Count:'**
+  String get itemsCount;
+
+  /// No description provided for @product.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get product;
+
+  /// No description provided for @paymentMethodBankTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Transfer'**
+  String get paymentMethodBankTransfer;
+
+  /// No description provided for @statusSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get statusSent;
+
+  /// No description provided for @notSpecified.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Specified'**
+  String get notSpecified;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

@@ -23,6 +23,7 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -73,7 +74,8 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        expense.description ?? S.of(context).expensesNoDescription,
+                        expense.description ??
+                            S.of(context).expensesNoDescription,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -84,7 +86,10 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
                       ),
                       SizedBox(height: 4.h),
                       Text(
-                        CurrencyFormatter.formatCurrency(expense.amount, context),
+                        CurrencyFormatter.formatCurrency(
+                          expense.amount,
+                          context,
+                        ),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: AppColors.textSecondary,
@@ -146,6 +151,9 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
           ),
 
           SizedBox(height: 20.h),
+          SizedBox(
+            height: bottomPadding > 0 ? bottomPadding : 0,
+          ), // إضافة padding في الأسفل
         ],
       ),
     );
@@ -171,9 +179,7 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
               Icon(
                 hasPermission ? icon : Icons.lock_outline,
                 size: 24.sp,
-                color: hasPermission
-                    ? color
-                    : color.withOpacity(0.5),
+                color: hasPermission ? color : color.withOpacity(0.5),
               ),
               SizedBox(width: 16.w),
               Text(
@@ -182,7 +188,9 @@ class ExpenseOptionsBottomSheet extends StatelessWidget {
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                   color: hasPermission
-                      ? (isDestructive ? AppColors.error : AppColors.textPrimary)
+                      ? (isDestructive
+                            ? AppColors.error
+                            : AppColors.textPrimary)
                       : color.withOpacity(0.5),
                 ),
               ),

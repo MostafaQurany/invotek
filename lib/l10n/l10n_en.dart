@@ -2004,7 +2004,9 @@ class SEn extends S {
   String get boughtThis => 'Bought This';
 
   @override
-  String get available => 'Available';
+  String available(int count) {
+    return 'Available: $count';
+  }
 
   @override
   String get productManagement => 'Product Management';
@@ -2340,10 +2342,10 @@ class SEn extends S {
   String get card => 'Card';
 
   @override
-  String get total => 'Total';
+  String get total => 'Total:';
 
   @override
-  String get subtotal => 'Subtotal';
+  String get subtotal => 'Subtotal:';
 
   @override
   String get tax => 'Tax';
@@ -2470,7 +2472,7 @@ class SEn extends S {
   String get paymentMethodCash => 'Cash';
 
   @override
-  String get paymentMethodCard => 'Credit Card';
+  String get paymentMethodCard => 'Card';
 
   @override
   String get paymentMethodBank => 'Bank Transfer';
@@ -2578,7 +2580,7 @@ class SEn extends S {
   String get testingConnection => 'Testing connection...';
 
   @override
-  String get taxAmount => 'Tax Amount';
+  String get taxAmount => 'Tax Amount:';
 
   @override
   String get enterDescription => 'Enter description';
@@ -2918,7 +2920,7 @@ class SEn extends S {
   String get addFirstItem => 'Add First Item';
 
   @override
-  String get taxPercent => 'Tax Percent';
+  String get taxPercent => 'Tax Percent (%)';
 
   @override
   String get enterItemName => 'Enter item name';
@@ -5577,7 +5579,7 @@ class SEn extends S {
   String get never => 'Never';
 
   @override
-  String get unknown => 'Unknown';
+  String get unknown => '(Unknown)';
 
   @override
   String get allRoles => 'All Roles';
@@ -6106,4 +6108,286 @@ class SEn extends S {
 
   @override
   String get notificationsAdditionalData => 'Additional Data';
+
+  @override
+  String get printInvoiceTitle => 'Print Invoice';
+
+  @override
+  String get noPreview => 'No Preview';
+
+  @override
+  String get print => 'Print';
+
+  @override
+  String get preview => 'Preview';
+
+  @override
+  String get printCancelled => 'Print Cancelled';
+
+  @override
+  String previewError(String error) {
+    return 'Preview Error: $error';
+  }
+
+  @override
+  String get printerNotConnected => 'Printer Not Connected';
+
+  @override
+  String get connectPrinterFromSettings =>
+      'Please connect printer from settings';
+
+  @override
+  String get pleaseConnectPrinterFirst => 'Please connect printer first';
+
+  @override
+  String printErrorWithMessage(String error) {
+    return 'Print Error: $error';
+  }
+
+  @override
+  String get subscriptionPackageSelectionPage => 'Subscription Packages Page';
+
+  @override
+  String get comingSoon => 'This page will be developed soon';
+
+  @override
+  String get cannotOpenPackageLink => 'Cannot open package link';
+
+  @override
+  String get deleteItemConfirmation =>
+      'Are you sure you want to delete this item?';
+
+  @override
+  String get stop => 'Stop';
+
+  @override
+  String get connect => 'Connect';
+
+  @override
+  String get disconnect => 'Disconnect';
+
+  @override
+  String get sliceHeight => 'Slice Height (pixels)';
+
+  @override
+  String get checkingBluetoothStatus => 'Checking Bluetooth status...';
+
+  @override
+  String get bluetoothOff => 'Bluetooth is off. Please enable it.';
+
+  @override
+  String get checkingPrinterConnection => 'Checking printer connection...';
+
+  @override
+  String get printerNotConnectedStatus => 'Not connected to printer';
+
+  @override
+  String get printingInProgress => 'Printing in progress...';
+
+  @override
+  String statusCode(String code) {
+    return 'Status Code: $code';
+  }
+
+  @override
+  String get emailIsRequired => 'Email is required';
+
+  @override
+  String get verifyTokenIsRequired => 'Verify token is required';
+
+  @override
+  String get newNotifications => 'New Notifications';
+
+  @override
+  String youHaveNewNotification(int count) {
+    return 'You have $count new notification';
+  }
+
+  @override
+  String get searchingForPrinters => 'Searching for printers...';
+
+  @override
+  String get connectedPrinterShownAtTop =>
+      'Connected printer is shown at the top';
+
+  @override
+  String get noPrintersPressSearch =>
+      'No printers found. Press \"Search\" to search';
+
+  @override
+  String get previewAndTestPrint => 'Preview and Test Print';
+
+  @override
+  String get connectingToPrinter => 'Connecting to printer...';
+
+  @override
+  String get noPrinterDeviceSaved => 'No printer device saved';
+
+  @override
+  String get printerDeviceNotFound =>
+      'No saved printer device found. Please go to settings and add a printer device.';
+
+  @override
+  String get connectionFailed => 'Connection Failed';
+
+  @override
+  String get connectionFailedMessage =>
+      'Failed to connect to printer. Please check printer settings and try again.';
+
+  @override
+  String get bluetoothIsOff => 'Bluetooth is Off';
+
+  @override
+  String get bluetoothIsOffMessage =>
+      'Bluetooth is off. Please enable Bluetooth to connect to printer.';
+
+  @override
+  String get connected => 'Connected';
+
+  @override
+  String get disconnected => 'Disconnected';
+
+  @override
+  String get connectedPrinter => 'Connected Printer';
+
+  @override
+  String get printers => 'Printers';
+
+  @override
+  String get previewLabel => 'Preview:';
+
+  @override
+  String get invoiceLanguage => 'Invoice Language';
+
+  @override
+  String get pleaseEnableBluetooth => 'Please Enable Bluetooth';
+
+  @override
+  String get testCustomer => 'Test Customer';
+
+  @override
+  String get testProduct1 => 'Test Product 1';
+
+  @override
+  String get testProduct2 => 'Test Product 2';
+
+  @override
+  String get editProfile => 'Edit Profile';
+
+  @override
+  String get updateYourProfileInformation => 'Update your profile information';
+
+  @override
+  String get operationDelete => 'Delete';
+
+  @override
+  String get operationStatusUpdate => 'Status Update';
+
+  @override
+  String get operationBulkDelete => 'Bulk Delete';
+
+  @override
+  String get operationBulkStatusUpdate => 'Bulk Status Update';
+
+  @override
+  String get additionalInvoiceDetails => 'Additional Invoice Details';
+
+  @override
+  String get invoiceType => 'Invoice Type';
+
+  @override
+  String get sentDate => 'Sent Date';
+
+  @override
+  String get qrCode => 'QR- Code';
+
+  @override
+  String get qrCodeLabel => 'QR Code';
+
+  @override
+  String get errorMessageLabel => 'Error Message';
+
+  @override
+  String get invoiceTypeStandard => 'Standard Invoice';
+
+  @override
+  String get invoiceTypeCreditNote => 'Credit Note';
+
+  @override
+  String get invoiceTypeDebitNote => 'Debit Note';
+
+  @override
+  String get invoiceTypeProforma => 'Proforma Invoice';
+
+  @override
+  String get customerNamePlaceholder => 'Customer Name';
+
+  @override
+  String get customerEmailPlaceholder => 'Customer Email';
+
+  @override
+  String get customerPhonePlaceholder => 'Customer Phone';
+
+  @override
+  String get customerAddressPlaceholder => 'Customer Address';
+
+  @override
+  String get customerTaxNumberPlaceholder => 'Customer Tax Number';
+
+  @override
+  String get addNewItem => 'Add New Item';
+
+  @override
+  String get itemNameRequired => 'Item name is required';
+
+  @override
+  String get quantityMustBeGreaterThanZero =>
+      'Quantity must be greater than zero';
+
+  @override
+  String quantityExceedsAvailableStock(int count) {
+    return 'Quantity exceeds available stock ($count)';
+  }
+
+  @override
+  String get priceMustBeGreaterThanOrEqualZero =>
+      'Price must be greater than or equal to zero';
+
+  @override
+  String get discountPercent => 'Discount (%)';
+
+  @override
+  String get discountRequired => 'Discount is required';
+
+  @override
+  String get discountMustBeGreaterThanOrEqualZero =>
+      'Discount must be greater than or equal to zero';
+
+  @override
+  String get taxPercentRequired => 'Tax percent is required';
+
+  @override
+  String get taxPercentMustBeGreaterThanOrEqualZero =>
+      'Tax percent must be greater than or equal to zero';
+
+  @override
+  String get saveEdit => 'Save Edit';
+
+  @override
+  String get itemTaxAmount => 'Tax Amount';
+
+  @override
+  String get itemsCount => 'Items Count:';
+
+  @override
+  String get product => 'Product';
+
+  @override
+  String get paymentMethodBankTransfer => 'Bank Transfer';
+
+  @override
+  String get statusSent => 'Sent';
+
+  @override
+  String get notSpecified => 'Not Specified';
 }

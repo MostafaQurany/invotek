@@ -73,7 +73,7 @@ class FailureWidget extends StatelessWidget {
       subscriptionRequired: (message, redirectUrl) => _buildErrorWidget(
         context,
         icon: Icons.card_membership,
-        title: customTitle ?? 'اختيار الباقة مطلوب',
+        title: customTitle ?? S.of(context).subscriptionRequiredTitle,
         message: customMessage ?? message,
         showRetry: false,
         customAction:
@@ -90,7 +90,7 @@ class FailureWidget extends StatelessWidget {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('لا يمكن فتح رابط الباقة'),
+                          content: Text(S.of(context).cannotOpenPackageLink),
                           backgroundColor: Colors.red,
                         ),
                       );
@@ -98,7 +98,7 @@ class FailureWidget extends StatelessWidget {
                   }
                 : null),
         customActionText:
-            customActionText ?? (redirectUrl != null ? 'اختيار الباقة' : null),
+            customActionText ?? (redirectUrl != null ? S.of(context).subscriptionRequiredAction : null),
       ),
     );
   }
@@ -139,7 +139,7 @@ class FailureWidget extends StatelessWidget {
             if (statusCode != null) ...[
               const SizedBox(height: 8),
               Text(
-                'Status Code: $statusCode',
+                S.of(context).statusCode(statusCode.toString()),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),

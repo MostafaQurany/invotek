@@ -141,7 +141,7 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
 
     showModalBottomSheet(
       context: context,
-      useSafeArea: true,
+      useSafeArea: false,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),
@@ -443,7 +443,7 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
   void _showCustomerOptions(BuildContext context, CustomerModel customer) {
     showModalBottomSheet(
       context: context,
-      useSafeArea: true,
+      useSafeArea: false,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),

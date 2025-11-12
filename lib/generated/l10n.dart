@@ -6430,13 +6430,13 @@ class S {
     );
   }
 
-  /// `Available`
-  String get available {
+  /// `Available: {count}`
+  String available(int count) {
     return Intl.message(
-      'Available',
+      'Available: $count',
       name: 'available',
       desc: '',
-      args: [],
+      args: [count],
     );
   }
 
@@ -7470,20 +7470,20 @@ class S {
     );
   }
 
-  /// `Total`
+  /// `Total:`
   String get total {
     return Intl.message(
-      'Total',
+      'Total:',
       name: 'total',
       desc: '',
       args: [],
     );
   }
 
-  /// `Subtotal`
+  /// `Subtotal:`
   String get subtotal {
     return Intl.message(
-      'Subtotal',
+      'Subtotal:',
       name: 'subtotal',
       desc: '',
       args: [],
@@ -7890,10 +7890,10 @@ class S {
     );
   }
 
-  /// `Credit Card`
+  /// `Card`
   String get paymentMethodCard {
     return Intl.message(
-      'Credit Card',
+      'Card',
       name: 'paymentMethodCard',
       desc: '',
       args: [],
@@ -8250,10 +8250,10 @@ class S {
     );
   }
 
-  /// `Tax Amount`
+  /// `Tax Amount:`
   String get taxAmount {
     return Intl.message(
-      'Tax Amount',
+      'Tax Amount:',
       name: 'taxAmount',
       desc: '',
       args: [],
@@ -9182,10 +9182,10 @@ class S {
     );
   }
 
-  /// `Tax Percent`
+  /// `Tax Percent (%)`
   String get taxPercent {
     return Intl.message(
-      'Tax Percent',
+      'Tax Percent (%)',
       name: 'taxPercent',
       desc: '',
       args: [],
@@ -17732,10 +17732,10 @@ class S {
     );
   }
 
-  /// `Unknown`
+  /// `(Unknown)`
   String get unknown {
     return Intl.message(
-      'Unknown',
+      '(Unknown)',
       name: 'unknown',
       desc: '',
       args: [],
@@ -19427,6 +19427,876 @@ class S {
     return Intl.message(
       'Additional Data',
       name: 'notificationsAdditionalData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Invoice`
+  String get printInvoiceTitle {
+    return Intl.message(
+      'Print Invoice',
+      name: 'printInvoiceTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Preview`
+  String get noPreview {
+    return Intl.message(
+      'No Preview',
+      name: 'noPreview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print`
+  String get print {
+    return Intl.message(
+      'Print',
+      name: 'print',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview`
+  String get preview {
+    return Intl.message(
+      'Preview',
+      name: 'preview',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Cancelled`
+  String get printCancelled {
+    return Intl.message(
+      'Print Cancelled',
+      name: 'printCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview Error: {error}`
+  String previewError(String error) {
+    return Intl.message(
+      'Preview Error: $error',
+      name: 'previewError',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Printer Not Connected`
+  String get printerNotConnected {
+    return Intl.message(
+      'Printer Not Connected',
+      name: 'printerNotConnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please connect printer from settings`
+  String get connectPrinterFromSettings {
+    return Intl.message(
+      'Please connect printer from settings',
+      name: 'connectPrinterFromSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please connect printer first`
+  String get pleaseConnectPrinterFirst {
+    return Intl.message(
+      'Please connect printer first',
+      name: 'pleaseConnectPrinterFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Print Error: {error}`
+  String printErrorWithMessage(String error) {
+    return Intl.message(
+      'Print Error: $error',
+      name: 'printErrorWithMessage',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Subscription Packages Page`
+  String get subscriptionPackageSelectionPage {
+    return Intl.message(
+      'Subscription Packages Page',
+      name: 'subscriptionPackageSelectionPage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This page will be developed soon`
+  String get comingSoon {
+    return Intl.message(
+      'This page will be developed soon',
+      name: 'comingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open package link`
+  String get cannotOpenPackageLink {
+    return Intl.message(
+      'Cannot open package link',
+      name: 'cannotOpenPackageLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this item?`
+  String get deleteItemConfirmation {
+    return Intl.message(
+      'Are you sure you want to delete this item?',
+      name: 'deleteItemConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop`
+  String get stop {
+    return Intl.message(
+      'Stop',
+      name: 'stop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect`
+  String get connect {
+    return Intl.message(
+      'Connect',
+      name: 'connect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disconnect`
+  String get disconnect {
+    return Intl.message(
+      'Disconnect',
+      name: 'disconnect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Slice Height (pixels)`
+  String get sliceHeight {
+    return Intl.message(
+      'Slice Height (pixels)',
+      name: 'sliceHeight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checking Bluetooth status...`
+  String get checkingBluetoothStatus {
+    return Intl.message(
+      'Checking Bluetooth status...',
+      name: 'checkingBluetoothStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth is off. Please enable it.`
+  String get bluetoothOff {
+    return Intl.message(
+      'Bluetooth is off. Please enable it.',
+      name: 'bluetoothOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checking printer connection...`
+  String get checkingPrinterConnection {
+    return Intl.message(
+      'Checking printer connection...',
+      name: 'checkingPrinterConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not connected to printer`
+  String get printerNotConnectedStatus {
+    return Intl.message(
+      'Not connected to printer',
+      name: 'printerNotConnectedStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Printing in progress...`
+  String get printingInProgress {
+    return Intl.message(
+      'Printing in progress...',
+      name: 'printingInProgress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status Code: {code}`
+  String statusCode(String code) {
+    return Intl.message(
+      'Status Code: $code',
+      name: 'statusCode',
+      desc: '',
+      args: [code],
+    );
+  }
+
+  /// `Email is required`
+  String get emailIsRequired {
+    return Intl.message(
+      'Email is required',
+      name: 'emailIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify token is required`
+  String get verifyTokenIsRequired {
+    return Intl.message(
+      'Verify token is required',
+      name: 'verifyTokenIsRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Notifications`
+  String get newNotifications {
+    return Intl.message(
+      'New Notifications',
+      name: 'newNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have {count} new notification`
+  String youHaveNewNotification(int count) {
+    return Intl.message(
+      'You have $count new notification',
+      name: 'youHaveNewNotification',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Searching for printers...`
+  String get searchingForPrinters {
+    return Intl.message(
+      'Searching for printers...',
+      name: 'searchingForPrinters',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connected printer is shown at the top`
+  String get connectedPrinterShownAtTop {
+    return Intl.message(
+      'Connected printer is shown at the top',
+      name: 'connectedPrinterShownAtTop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No printers found. Press "Search" to search`
+  String get noPrintersPressSearch {
+    return Intl.message(
+      'No printers found. Press "Search" to search',
+      name: 'noPrintersPressSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview and Test Print`
+  String get previewAndTestPrint {
+    return Intl.message(
+      'Preview and Test Print',
+      name: 'previewAndTestPrint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connecting to printer...`
+  String get connectingToPrinter {
+    return Intl.message(
+      'Connecting to printer...',
+      name: 'connectingToPrinter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No printer device saved`
+  String get noPrinterDeviceSaved {
+    return Intl.message(
+      'No printer device saved',
+      name: 'noPrinterDeviceSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No saved printer device found. Please go to settings and add a printer device.`
+  String get printerDeviceNotFound {
+    return Intl.message(
+      'No saved printer device found. Please go to settings and add a printer device.',
+      name: 'printerDeviceNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection Failed`
+  String get connectionFailed {
+    return Intl.message(
+      'Connection Failed',
+      name: 'connectionFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to connect to printer. Please check printer settings and try again.`
+  String get connectionFailedMessage {
+    return Intl.message(
+      'Failed to connect to printer. Please check printer settings and try again.',
+      name: 'connectionFailedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth is Off`
+  String get bluetoothIsOff {
+    return Intl.message(
+      'Bluetooth is Off',
+      name: 'bluetoothIsOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth is off. Please enable Bluetooth to connect to printer.`
+  String get bluetoothIsOffMessage {
+    return Intl.message(
+      'Bluetooth is off. Please enable Bluetooth to connect to printer.',
+      name: 'bluetoothIsOffMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connected`
+  String get connected {
+    return Intl.message(
+      'Connected',
+      name: 'connected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disconnected`
+  String get disconnected {
+    return Intl.message(
+      'Disconnected',
+      name: 'disconnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connected Printer`
+  String get connectedPrinter {
+    return Intl.message(
+      'Connected Printer',
+      name: 'connectedPrinter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Printers`
+  String get printers {
+    return Intl.message(
+      'Printers',
+      name: 'printers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview:`
+  String get previewLabel {
+    return Intl.message(
+      'Preview:',
+      name: 'previewLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Language`
+  String get invoiceLanguage {
+    return Intl.message(
+      'Invoice Language',
+      name: 'invoiceLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Enable Bluetooth`
+  String get pleaseEnableBluetooth {
+    return Intl.message(
+      'Please Enable Bluetooth',
+      name: 'pleaseEnableBluetooth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test Customer`
+  String get testCustomer {
+    return Intl.message(
+      'Test Customer',
+      name: 'testCustomer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test Product 1`
+  String get testProduct1 {
+    return Intl.message(
+      'Test Product 1',
+      name: 'testProduct1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Test Product 2`
+  String get testProduct2 {
+    return Intl.message(
+      'Test Product 2',
+      name: 'testProduct2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update your profile information`
+  String get updateYourProfileInformation {
+    return Intl.message(
+      'Update your profile information',
+      name: 'updateYourProfileInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get operationDelete {
+    return Intl.message(
+      'Delete',
+      name: 'operationDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status Update`
+  String get operationStatusUpdate {
+    return Intl.message(
+      'Status Update',
+      name: 'operationStatusUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bulk Delete`
+  String get operationBulkDelete {
+    return Intl.message(
+      'Bulk Delete',
+      name: 'operationBulkDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bulk Status Update`
+  String get operationBulkStatusUpdate {
+    return Intl.message(
+      'Bulk Status Update',
+      name: 'operationBulkStatusUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Additional Invoice Details`
+  String get additionalInvoiceDetails {
+    return Intl.message(
+      'Additional Invoice Details',
+      name: 'additionalInvoiceDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Type`
+  String get invoiceType {
+    return Intl.message(
+      'Invoice Type',
+      name: 'invoiceType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sent Date`
+  String get sentDate {
+    return Intl.message(
+      'Sent Date',
+      name: 'sentDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `QR- Code`
+  String get qrCode {
+    return Intl.message(
+      'QR- Code',
+      name: 'qrCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `QR Code`
+  String get qrCodeLabel {
+    return Intl.message(
+      'QR Code',
+      name: 'qrCodeLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error Message`
+  String get errorMessageLabel {
+    return Intl.message(
+      'Error Message',
+      name: 'errorMessageLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Standard Invoice`
+  String get invoiceTypeStandard {
+    return Intl.message(
+      'Standard Invoice',
+      name: 'invoiceTypeStandard',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Credit Note`
+  String get invoiceTypeCreditNote {
+    return Intl.message(
+      'Credit Note',
+      name: 'invoiceTypeCreditNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Debit Note`
+  String get invoiceTypeDebitNote {
+    return Intl.message(
+      'Debit Note',
+      name: 'invoiceTypeDebitNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Proforma Invoice`
+  String get invoiceTypeProforma {
+    return Intl.message(
+      'Proforma Invoice',
+      name: 'invoiceTypeProforma',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Name`
+  String get customerNamePlaceholder {
+    return Intl.message(
+      'Customer Name',
+      name: 'customerNamePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Email`
+  String get customerEmailPlaceholder {
+    return Intl.message(
+      'Customer Email',
+      name: 'customerEmailPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Phone`
+  String get customerPhonePlaceholder {
+    return Intl.message(
+      'Customer Phone',
+      name: 'customerPhonePlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Address`
+  String get customerAddressPlaceholder {
+    return Intl.message(
+      'Customer Address',
+      name: 'customerAddressPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customer Tax Number`
+  String get customerTaxNumberPlaceholder {
+    return Intl.message(
+      'Customer Tax Number',
+      name: 'customerTaxNumberPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add New Item`
+  String get addNewItem {
+    return Intl.message(
+      'Add New Item',
+      name: 'addNewItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item name is required`
+  String get itemNameRequired {
+    return Intl.message(
+      'Item name is required',
+      name: 'itemNameRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity must be greater than zero`
+  String get quantityMustBeGreaterThanZero {
+    return Intl.message(
+      'Quantity must be greater than zero',
+      name: 'quantityMustBeGreaterThanZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quantity exceeds available stock ({count})`
+  String quantityExceedsAvailableStock(int count) {
+    return Intl.message(
+      'Quantity exceeds available stock ($count)',
+      name: 'quantityExceedsAvailableStock',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Price must be greater than or equal to zero`
+  String get priceMustBeGreaterThanOrEqualZero {
+    return Intl.message(
+      'Price must be greater than or equal to zero',
+      name: 'priceMustBeGreaterThanOrEqualZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discount (%)`
+  String get discountPercent {
+    return Intl.message(
+      'Discount (%)',
+      name: 'discountPercent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discount is required`
+  String get discountRequired {
+    return Intl.message(
+      'Discount is required',
+      name: 'discountRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discount must be greater than or equal to zero`
+  String get discountMustBeGreaterThanOrEqualZero {
+    return Intl.message(
+      'Discount must be greater than or equal to zero',
+      name: 'discountMustBeGreaterThanOrEqualZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax percent is required`
+  String get taxPercentRequired {
+    return Intl.message(
+      'Tax percent is required',
+      name: 'taxPercentRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax percent must be greater than or equal to zero`
+  String get taxPercentMustBeGreaterThanOrEqualZero {
+    return Intl.message(
+      'Tax percent must be greater than or equal to zero',
+      name: 'taxPercentMustBeGreaterThanOrEqualZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save Edit`
+  String get saveEdit {
+    return Intl.message(
+      'Save Edit',
+      name: 'saveEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tax Amount`
+  String get itemTaxAmount {
+    return Intl.message(
+      'Tax Amount',
+      name: 'itemTaxAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Items Count:`
+  String get itemsCount {
+    return Intl.message(
+      'Items Count:',
+      name: 'itemsCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product`
+  String get product {
+    return Intl.message(
+      'Product',
+      name: 'product',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bank Transfer`
+  String get paymentMethodBankTransfer {
+    return Intl.message(
+      'Bank Transfer',
+      name: 'paymentMethodBankTransfer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sent`
+  String get statusSent {
+    return Intl.message(
+      'Sent',
+      name: 'statusSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Specified`
+  String get notSpecified {
+    return Intl.message(
+      'Not Specified',
+      name: 'notSpecified',
       desc: '',
       args: [],
     );

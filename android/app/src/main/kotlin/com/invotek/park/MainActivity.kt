@@ -1,5 +1,6 @@
-package com.example.invotek
+package com.invotek.park
 
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : FlutterActivity()
+

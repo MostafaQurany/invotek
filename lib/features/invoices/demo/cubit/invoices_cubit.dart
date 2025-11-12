@@ -1,20 +1,19 @@
 // lib/features/invoices/demo/cubit/invoices_cubit.dart
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/error/failures.dart';
-import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
+import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/data/models/requests/get_all_invoices_request.dart';
-import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
-import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
-import 'package:invotek/features/invoices/data/models/requests/delete_invoice_request.dart';
-import 'package:invotek/features/invoices/data/models/requests/get_invoice_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/activating_tax_integration_request.dart';
-
-part 'invoices_state.dart';
+import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/delete_invoice_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/get_all_invoices_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/get_invoice_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
+import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
 
 part 'invoices_cubit.freezed.dart';
+part 'invoices_state.dart';
 
 class InvoicesCubit extends Cubit<InvoicesState> {
   final InvoiceRepository _repository;
@@ -225,7 +224,6 @@ class InvoicesCubit extends Cubit<InvoicesState> {
     required String discount,
     required String total,
     required String issueDate,
-    required String status,
     String? description,
     required String paymentMethodCode,
     required String action,
@@ -252,7 +250,6 @@ class InvoicesCubit extends Cubit<InvoicesState> {
         discount: discount,
         total: total,
         issueDate: issueDate,
-        status: status,
         description: description,
         paymentMethodCode: paymentMethodCode,
         action: action,
@@ -288,7 +285,6 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   /// Update existing invoice
   Future<void> updateInvoice({
     required String id,
-    String? status,
     String? customerId,
     String? customerName,
     String? customerEmail,
@@ -316,7 +312,6 @@ class InvoicesCubit extends Cubit<InvoicesState> {
     final result = await _repository.updateInvoice(
       request: UpdateInvoiceRequest(
         id: id,
-        status: status,
         customerId: customerId,
         customerName: customerName,
         customerEmail: customerEmail,
@@ -416,7 +411,9 @@ class InvoicesCubit extends Cubit<InvoicesState> {
       ),
     );
 
-    final result = await _repository.getInvoice(request: GetInvoiceRequest(id: id));
+    final result = await _repository.getInvoice(
+      request: GetInvoiceRequest(id: id),
+    );
 
     result.when(
       success: (response) {

@@ -167,7 +167,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'عدد العناصر:',
+                S.of(context).itemsCount,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
@@ -189,7 +189,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'المجموع الفرعي:',
+                S.of(context).subtotal,
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w500,
@@ -197,7 +197,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
                 ),
               ),
               Text(
-                '${widget.formController.subtotalController.text} ريال',
+                '${widget.formController.subtotalController.text} ${S.of(context).currency}',
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
@@ -241,12 +241,12 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تأكيد الحذف'),
-        content: const Text('هل أنت متأكد من حذف هذا العنصر؟'),
+        title: Text(S.of(context).deleteConfirmation),
+        content: Text(S.of(context).deleteItemConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إلغاء'),
+            child: Text(S.of(context).cancel),
           ),
           TextButton(
             onPressed: () {
@@ -254,7 +254,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
               setState(() {});
               Navigator.pop(context);
             },
-            child: const Text('حذف'),
+            child: Text(S.of(context).delete),
           ),
         ],
       ),
@@ -286,7 +286,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
 
         final item = InvoiceItemData(
           productId: product.id,
-          name: product.name ?? 'منتج',
+          name: product.name ?? S.of(context).product,
           quantity: qty.toStringAsFixed(0),
           price: unitPrice.toStringAsFixed(2),
           discount: '0',

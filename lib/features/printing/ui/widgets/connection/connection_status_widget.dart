@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 
 class ConnectionStatusWidget extends StatelessWidget {
@@ -43,7 +44,9 @@ class ConnectionStatusWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isConnected ? 'متصل' : 'غير متصل',
+                  isConnected
+                      ? S.of(context).connected
+                      : S.of(context).disconnected,
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -65,7 +68,7 @@ class ConnectionStatusWidget extends StatelessWidget {
             TextButton.icon(
               onPressed: onDisconnect,
               icon: const Icon(Icons.close),
-              label: const Text('قطع الاتصال'),
+              label: Text(S.of(context).disconnect),
             ),
         ],
       ),

@@ -63,7 +63,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      customer.name ?? "Customer Name",
+                      customer.name ?? S.of(context).customerNamePlaceholder,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700,
@@ -95,7 +95,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                 _buildDetailRow(
                   icon: Icons.email,
                   label: S.of(context).email,
-                  value: customer.email ?? "Customer Email",
+                  value: customer.email ?? S.of(context).customerEmailPlaceholder,
                 ),
 
               if (customer.email?.isNotEmpty ?? false) SizedBox(height: 12.h),
@@ -105,7 +105,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                 _buildDetailRow(
                   icon: Icons.phone,
                   label: S.of(context).phone,
-                  value: customer.phone ?? "Customer Phone",
+                  value: customer.phone ?? S.of(context).customerPhonePlaceholder,
                 ),
 
               if (customer.phone?.isNotEmpty ?? false) SizedBox(height: 12.h),
@@ -115,7 +115,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                 _buildDetailRow(
                   icon: Icons.location_on,
                   label: S.of(context).address,
-                  value: customer.address ?? "Customer Address",
+                  value: customer.address ?? S.of(context).customerAddressPlaceholder,
                 ),
 
               if (customer.address?.isNotEmpty ?? false) SizedBox(height: 12.h),
@@ -125,7 +125,7 @@ class InvoiceCustomerCard extends StatelessWidget {
                 _buildDetailRow(
                   icon: Icons.receipt,
                   label: S.of(context).taxNumber,
-                  value: customer.taxNumber ?? "Customer Tax Number",
+                  value: customer.taxNumber ?? S.of(context).customerTaxNumberPlaceholder,
                 ),
             ],
           ),

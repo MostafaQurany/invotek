@@ -1,26 +1,27 @@
 import 'dart:typed_data';
+
+import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/printing/presentation/cubit/printer_cubit.dart';
-import 'package:invotek/features/printing/presentation/cubit/printer_state.dart';
+import 'package:invotek/features/invoices/data/models/invoice_item.dart';
+import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/printing/core/models/invoice_language.dart';
 import 'package:invotek/features/printing/core/utils/paper_preset.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/data/models/invoice_item.dart';
+import 'package:invotek/features/printing/presentation/cubit/printer_cubit.dart';
+import 'package:invotek/features/printing/presentation/cubit/printer_state.dart';
 import 'package:invotek/generated/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widgets/connection/connected_printer_card.dart';
 // Widgets
 import '../widgets/connection/connection_status_widget.dart';
-import '../widgets/connection/connected_printer_card.dart';
-import '../widgets/settings/print_settings_widget.dart';
-import '../widgets/discovery/printer_discovery_widget.dart';
-import '../widgets/test/test_section_widget.dart';
 import '../widgets/dialogs/printing_dialog.dart';
+import '../widgets/discovery/printer_discovery_widget.dart';
+import '../widgets/settings/print_settings_widget.dart';
+import '../widgets/test/test_section_widget.dart';
 
 class PrinterSettingsScreen extends StatelessWidget {
   const PrinterSettingsScreen({super.key});
@@ -121,13 +122,13 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
       final testInvoice = InvoiceModel(
         invoiceNumber: 'TEST-001',
         issueDate: DateTime.now().toString().split(' ')[0],
-        customerName: 'عميل تجريبي',
+        customerName: S.of(context).testCustomer,
         paymentMethodCode: 'CASH',
         items: [
           InvoiceItem(
             id: 1,
             taxInvoiceId: 1,
-            name: 'منتج تجريبي 1',
+            name: S.of(context).testProduct1,
             description: '',
             quantity: '2',
             price: '100.00',
@@ -142,7 +143,7 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
           InvoiceItem(
             id: 2,
             taxInvoiceId: 1,
-            name: 'منتج تجريبي 2',
+            name: S.of(context).testProduct2,
             description: '',
             quantity: '1',
             price: '50.00',
@@ -173,7 +174,7 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('خطأ في المعاينة: $e'),
+            content: Text(S.of(context).previewError(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -188,7 +189,7 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
     if (!cubit.isConnected) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('يرجى الاتصال بالطابعة أولاً'),
+          content: Text(S.of(context).pleaseConnectPrinterFirst),
           backgroundColor: AppColors.error,
         ),
       );
@@ -213,13 +214,13 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
       final testInvoice = InvoiceModel(
         invoiceNumber: 'TEST-001',
         issueDate: DateTime.now().toString().split(' ')[0],
-        customerName: 'عميل تجريبي',
+        customerName: S.of(context).testCustomer,
         paymentMethodCode: 'CASH',
         items: [
           InvoiceItem(
             id: 1,
             taxInvoiceId: 1,
-            name: 'منتج تجريبي 1',
+            name: S.of(context).testProduct1,
             description: '',
             quantity: '2',
             price: '100.00',
@@ -254,21 +255,21 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
         if (_isPrintCancelled) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('تم إلغاء الطباعة'),
+              content: Text(S.of(context).printCancelled),
               backgroundColor: AppColors.primary,
             ),
           );
         } else if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('تمت الطباعة بنجاح'),
+              content: Text(S.of(context).printSuccess),
               backgroundColor: AppColors.primary,
             ),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('فشلت الطباعة'),
+              content: Text(S.of(context).printFailed),
               backgroundColor: AppColors.error,
             ),
           );
@@ -279,7 +280,7 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
         Navigator.of(context).pop(); // إغلاق dialog
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('خطأ في الطباعة: $e'),
+            content: Text(S.of(context).printErrorWithMessage(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -326,7 +327,7 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
                   ),
                   SizedBox(height: 16.h),
                   Text(
-                    'يرجى تفعيل Bluetooth',
+                    S.of(context).pleaseEnableBluetooth,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
@@ -345,7 +346,6 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent>
                   scanning: (_) => true,
                   orElse: () => false,
                 );
-
                 return SingleChildScrollView(
                   padding: EdgeInsets.all(20.w),
                   child: Column(

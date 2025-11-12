@@ -10,7 +10,6 @@ UpdateInvoiceRequest _$UpdateInvoiceRequestFromJson(
   Map<String, dynamic> json,
 ) => UpdateInvoiceRequest(
   id: json['id'] as String?,
-  status: json['status'] as String?,
   customerId: json['customer_id'] as String?,
   customerName: json['customer_name'] as String?,
   customerEmail: json['customer_email'] as String?,
@@ -33,7 +32,6 @@ Map<String, dynamic> _$UpdateInvoiceRequestToJson(
   UpdateInvoiceRequest instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  'status': instance.status,
   'customer_id': instance.customerId,
   'customer_name': instance.customerName,
   'customer_email': instance.customerEmail,

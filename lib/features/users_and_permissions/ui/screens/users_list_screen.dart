@@ -323,7 +323,7 @@ class _UsersListScreenState extends State<UsersListScreen> {
   void _showUserOptions(BuildContext context, User user) {
     showModalBottomSheet(
       context: context,
-      useSafeArea: true,
+      useSafeArea: false,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),

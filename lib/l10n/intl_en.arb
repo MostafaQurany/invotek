@@ -2773,5 +2773,166 @@
   "notificationsTypePayment": "Payment",
   "notificationsTypeUserCreated": "User Created",
   "notificationsTypeSystem": "System",
-  "notificationsAdditionalData": "Additional Data"
+  "notificationsAdditionalData": "Additional Data",
+  "printInvoiceTitle": "Print Invoice",
+  "noPreview": "No Preview",
+  "print": "Print",
+  "preview": "Preview",
+  "printCancelled": "Print Cancelled",
+  "previewError": "Preview Error: {error}",
+  "@previewError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "printerNotConnected": "Printer Not Connected",
+  "connectPrinterFromSettings": "Please connect printer from settings",
+  "pleaseConnectPrinterFirst": "Please connect printer first",
+  "printErrorWithMessage": "Print Error: {error}",
+  "@printErrorWithMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionPackageSelectionPage": "Subscription Packages Page",
+  "comingSoon": "This page will be developed soon",
+  "cannotOpenPackageLink": "Cannot open package link",
+  "deleteItemConfirmation": "Are you sure you want to delete this item?",
+  "stop": "Stop",
+  "connect": "Connect",
+  "disconnect": "Disconnect",
+  "sliceHeight": "Slice Height (pixels)",
+  "checkingBluetoothStatus": "Checking Bluetooth status...",
+  "bluetoothOff": "Bluetooth is off. Please enable it.",
+  "checkingPrinterConnection": "Checking printer connection...",
+  "printerNotConnectedStatus": "Not connected to printer",
+  "printingInProgress": "Printing in progress...",
+  "statusCode": "Status Code: {code}",
+  "@statusCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "emailIsRequired": "Email is required",
+  "verifyTokenIsRequired": "Verify token is required",
+  "newNotifications": "New Notifications",
+  "youHaveNewNotification": "You have {count} new notification",
+  "@youHaveNewNotification": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchingForPrinters": "Searching for printers...",
+  "connectedPrinterShownAtTop": "Connected printer is shown at the top",
+  "noPrintersPressSearch": "No printers found. Press \"Search\" to search",
+  "unknown": "(Unknown)",
+  "previewAndTestPrint": "Preview and Test Print",
+  "connectingToPrinter": "Connecting to printer...",
+  "noPrinterDeviceSaved": "No printer device saved",
+  "printerDeviceNotFound": "No saved printer device found. Please go to settings and add a printer device.",
+  "connectionFailed": "Connection Failed",
+  "connectionFailedMessage": "Failed to connect to printer. Please check printer settings and try again.",
+  "bluetoothIsOff": "Bluetooth is Off",
+  "bluetoothIsOffMessage": "Bluetooth is off. Please enable Bluetooth to connect to printer.",
+  "connected": "Connected",
+  "disconnected": "Disconnected",
+  "connectedPrinter": "Connected Printer",
+  "printers": "Printers",
+  "previewLabel": "Preview:",
+  "printSettings": "Print Settings",
+  "invoiceLanguage": "Invoice Language",
+  "paperSize": "Paper Size",
+  "pleaseEnableBluetooth": "Please Enable Bluetooth",
+  "testCustomer": "Test Customer",
+  "testProduct1": "Test Product 1",
+  "testProduct2": "Test Product 2",
+  "editProfile": "Edit Profile",
+  "updateYourProfileInformation": "Update your profile information",
+  "operationDelete": "Delete",
+  "operationStatusUpdate": "Status Update",
+  "operationBulkDelete": "Bulk Delete",
+  "operationBulkStatusUpdate": "Bulk Status Update",
+  "additionalInformation": "Additional Information",
+  "additionalInvoiceDetails": "Additional Invoice Details",
+  "invoiceType": "Invoice Type",
+  "description": "Description",
+  "sentDate": "Sent Date",
+  "qrCode": "QR- Code",
+  "qrCodeLabel": "QR Code",
+  "errorMessageLabel": "Error Message",
+  "invoiceTypeStandard": "Standard Invoice",
+  "invoiceTypeCreditNote": "Credit Note",
+  "invoiceTypeDebitNote": "Debit Note",
+  "invoiceTypeProforma": "Proforma Invoice",
+  "customerNamePlaceholder": "Customer Name",
+  "customerEmailPlaceholder": "Customer Email",
+  "customerPhonePlaceholder": "Customer Phone",
+  "customerAddressPlaceholder": "Customer Address",
+  "customerTaxNumberPlaceholder": "Customer Tax Number",
+  "editItem": "Edit Item",
+  "addNewItem": "Add New Item",
+  "itemName": "Item Name",
+  "itemNameRequired": "Item name is required",
+  "quantity": "Quantity",
+  "available": "Available: {count}",
+  "@available": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quantityRequired": "Quantity is required",
+  "quantityMustBeGreaterThanZero": "Quantity must be greater than zero",
+  "quantityExceedsAvailableStock": "Quantity exceeds available stock ({count})",
+  "@quantityExceedsAvailableStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "price": "Price",
+  "priceRequired": "Price is required",
+  "priceMustBeGreaterThanOrEqualZero": "Price must be greater than or equal to zero",
+  "discountPercent": "Discount (%)",
+  "discountRequired": "Discount is required",
+  "discountMustBeGreaterThanOrEqualZero": "Discount must be greater than or equal to zero",
+  "taxPercent": "Tax Percent (%)",
+  "taxPercentRequired": "Tax percent is required",
+  "taxPercentMustBeGreaterThanOrEqualZero": "Tax percent must be greater than or equal to zero",
+  "taxAmount": "Tax Amount:",
+  "total": "Total:",
+  "saveEdit": "Save Edit",
+  "addItem": "Add Item",
+  "previous": "Previous",
+  "next": "Next",
+  "createInvoice": "Create Invoice",
+  "itemQuantity": "Quantity",
+  "itemPrice": "Price",
+  "itemDiscount": "Discount",
+  "itemTax": "Tax",
+  "itemTaxAmount": "Tax Amount",
+  "itemTotal": "Total",
+  "itemsCount": "Items Count:",
+  "subtotal": "Subtotal:",
+  "product": "Product",
+  "saveOnly": "Save Only",
+  "saveAndSend": "Save and Send",
+  "paymentMethodCash": "Cash",
+  "paymentMethodCard": "Card",
+  "paymentMethodBankTransfer": "Bank Transfer",
+  "paymentMethodCheck": "Check",
+  "statusDraft": "Draft",
+  "statusSent": "Sent",
+  "statusPaid": "Paid",
+  "notSpecified": "Not Specified"
 }

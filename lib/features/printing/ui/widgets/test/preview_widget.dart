@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class PreviewWidget extends StatelessWidget {
   final List<Uint8List> previewChunks;
@@ -21,7 +22,7 @@ class PreviewWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'معاينة:',
+          S.of(context).previewLabel,
           style: TextStyle(
             fontSize: 16.sp,
             fontWeight: FontWeight.bold,

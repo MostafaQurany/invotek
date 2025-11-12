@@ -32,7 +32,7 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
           SizedBox(height: 20.h),
 
           // Status
-          _buildStatusSelection(s),
+          //    _buildStatusSelection(s),
           SizedBox(height: 20.h),
 
           // Issue Date
@@ -147,30 +147,30 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
           ),
         ),
         SizedBox(height: 8.h),
-        DropdownButtonFormField<String>(
-          initialValue: widget.formController.selectedStatus,
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            fillColor: AppColors.white,
-
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
-            ),
-          ),
-          items: [
-            DropdownMenuItem(value: 'draft', child: Text(s.draft)),
-            DropdownMenuItem(value: 'sent', child: Text(s.sent)),
-            DropdownMenuItem(value: 'paid', child: Text(s.paid)),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              widget.formController.onStatusChanged(value);
-            }
-          },
-        ),
+        // DropdownButtonFormField<String>(
+        //   initialValue: widget.formController.selectedStatus,
+        //   decoration: InputDecoration(
+        //     border: OutlineInputBorder(
+        //       borderRadius: BorderRadius.circular(8.r),
+        //     ),
+        //     fillColor: AppColors.white,
+        //
+        //     contentPadding: EdgeInsets.symmetric(
+        //       horizontal: 12.w,
+        //       vertical: 16.h,
+        //     ),
+        //   ),
+        //   items: [
+        //     DropdownMenuItem(value: 'draft', child: Text(s.draft)),
+        //     DropdownMenuItem(value: 'sent', child: Text(s.sent)),
+        //     DropdownMenuItem(value: 'paid', child: Text(s.paid)),
+        //   ],
+        //   onChanged: (value) {
+        //     if (value != null) {
+        //       widget.formController.onStatusChanged(value);
+        //     }
+        //   },
+        // ),
       ],
     );
   }

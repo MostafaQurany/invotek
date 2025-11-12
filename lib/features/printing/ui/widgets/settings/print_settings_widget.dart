@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/printing/core/utils/paper_preset.dart';
 import 'package:invotek/features/printing/core/models/invoice_language.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'paper_width_selector.dart';
 import 'slice_height_selector.dart';
 import 'language_selector.dart';
@@ -44,7 +45,7 @@ class PrintSettingsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'إعدادات الطباعة',
+            S.of(context).printSettings,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,

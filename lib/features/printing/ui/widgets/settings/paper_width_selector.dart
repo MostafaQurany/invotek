@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/printing/core/utils/paper_preset.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class PaperWidthSelector extends StatelessWidget {
   final PaperPreset value;
@@ -19,7 +20,7 @@ class PaperWidthSelector extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'حجم الورق',
+          S.of(context).paperSize,
           style: TextStyle(fontSize: 14.sp, color: AppColors.textSecondary),
         ),
         SizedBox(height: 8.h),

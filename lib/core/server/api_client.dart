@@ -99,7 +99,7 @@ abstract class ApiClient {
     @Body() ChangePasswordRequest request,
   );
 
-  @POST(ApiConstants.deleteAccount)
+  @DELETE(ApiConstants.deleteAccount)
   Future<DeleteAccountResponse> deleteAccount(
     @Body() DeleteAccountRequest request,
   );

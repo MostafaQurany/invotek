@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 /// بطاقة المعلومات الإضافية للفاتورة
@@ -58,7 +59,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'معلومات إضافية',
+                      S.of(context).additionalInformation,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
@@ -67,7 +68,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      'تفاصيل إضافية للفاتورة',
+                      S.of(context).additionalInvoiceDetails,
                       style: TextStyle(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w700,
@@ -89,8 +90,8 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
               if (invoice.invoiceType?.isNotEmpty ?? false)
                 _buildInfoRow(
                   icon: Icons.receipt_long,
-                  label: 'نوع الفاتورة',
-                  value: _getInvoiceTypeText(invoice.invoiceType ?? ''),
+                  label: S.of(context).invoiceType,
+                  value: _getInvoiceTypeText(context, invoice.invoiceType ?? ''),
                 ),
 
               if (invoice.invoiceType?.isNotEmpty ?? false)
@@ -111,7 +112,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
               if (invoice.description?.isNotEmpty ?? false)
                 _buildInfoRow(
                   icon: Icons.notes,
-                  label: 'الوصف',
+                  label: S.of(context).description,
                   value: invoice.description ?? '',
                   isMultiline: true,
                 ),
@@ -123,7 +124,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
               if (invoice.sentAt?.isNotEmpty ?? false)
                 _buildInfoRow(
                   icon: Icons.send,
-                  label: 'تاريخ الإرسال',
+                  label: S.of(context).sentDate,
                   value: _formatDate(invoice.sentAt ?? ''),
                 ),
 
@@ -173,7 +174,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'QR- Code',
+                              S.of(context).qrCode,
                               style: TextStyle(
                                 fontSize: 12.sp,
                                 color: AppColors.textSecondary,
@@ -217,7 +218,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
                                         ),
                                         SizedBox(height: 8.h),
                                         Text(
-                                          'رمز QR',
+                                          S.of(context).qrCodeLabel,
                                           style: TextStyle(
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w600,
@@ -243,7 +244,7 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
               if (invoice.errorMessage?.isNotEmpty ?? false)
                 _buildErrorRow(
                   icon: Icons.error_outline,
-                  label: 'رسالة الخطأ',
+                  label: S.of(context).errorMessageLabel,
                   value: invoice.errorMessage ?? '',
                 ),
 
@@ -399,33 +400,19 @@ class InvoiceAdditionalInfoCard extends StatelessWidget {
     );
   }
 
-  String _getInvoiceTypeText(String invoiceType) {
+  String _getInvoiceTypeText(BuildContext context, String invoiceType) {
+    final s = S.of(context);
     switch (invoiceType.toLowerCase()) {
       case 'standard':
-        return 'فاتورة عادية';
+        return s.invoiceTypeStandard;
       case 'credit_note':
-        return 'إشعار دائن';
+        return s.invoiceTypeCreditNote;
       case 'debit_note':
-        return 'إشعار مدين';
+        return s.invoiceTypeDebitNote;
       case 'proforma':
-        return 'فاتورة مؤقتة';
+        return s.invoiceTypeProforma;
       default:
         return invoiceType;
-    }
-  }
-
-  String _getDocumentTypeText(String documentType) {
-    switch (documentType.toLowerCase()) {
-      case 'invoice':
-        return 'فاتورة';
-      case 'receipt':
-        return 'إيصال';
-      case 'quote':
-        return 'عرض سعر';
-      case 'estimate':
-        return 'تقدير';
-      default:
-        return documentType;
     }
   }
 

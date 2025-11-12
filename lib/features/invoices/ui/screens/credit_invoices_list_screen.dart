@@ -203,6 +203,8 @@ class _CreditInvoicesListScreenState extends State<CreditInvoicesListScreen> {
   void _openFilters() async {
     final result = await showModalBottomSheet<InvoicesFiltersResult>(
       context: context,
+      useSafeArea: false,
+      isScrollControlled: true,
       builder: (context) => InvoicesFiltersBottomSheet(
         initialStatus: _selectedStatus ?? 'all',
         initialSortOrder: _sortOrder ?? 'desc',

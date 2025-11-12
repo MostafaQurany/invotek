@@ -74,14 +74,14 @@ class SnackBarHelper {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('لا يمكن فتح رابط الباقة'),
+                      content: Text(S.of(context).cannotOpenPackageLink),
                       backgroundColor: Colors.red,
                     ),
                   );
                 }
               }
             : null,
-        actionText: redirectUrl != null ? 'اختيار الباقة' : null,
+        actionText: redirectUrl != null ? S.of(context).subscriptionRequiredAction : null,
       ),
     );
   }

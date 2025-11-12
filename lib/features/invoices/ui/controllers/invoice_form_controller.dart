@@ -24,7 +24,6 @@ class InvoiceFormController extends ChangeNotifier {
   // Form Data
   String selectedAction = 'save_only';
   String selectedPaymentMethod = 'cash';
-  String selectedStatus = 'draft';
   DateTime selectedDate = DateTime.now();
 
   // Customer Data
@@ -47,7 +46,6 @@ class InvoiceFormController extends ChangeNotifier {
   void _initializeControllers() {
     actionController.text = selectedAction;
     paymentMethodController.text = selectedPaymentMethod;
-    statusController.text = selectedStatus;
     issueDateController.text = DateFormatter.toApiFormat(selectedDate);
   }
 
@@ -79,7 +77,6 @@ class InvoiceFormController extends ChangeNotifier {
 
   // Status Handling
   void onStatusChanged(String status) {
-    selectedStatus = status;
     statusController.text = status;
     notifyListeners();
   }
@@ -207,9 +204,7 @@ class InvoiceFormController extends ChangeNotifier {
   bool validateCurrentStep() {
     switch (currentStep) {
       case 0: // Basic Info
-        return selectedAction.isNotEmpty &&
-            selectedPaymentMethod.isNotEmpty &&
-            selectedStatus.isNotEmpty;
+        return selectedAction.isNotEmpty && selectedPaymentMethod.isNotEmpty;
       case 1: // Customer
         return (selectedCustomerId != null) ||
             (selectedCustomerName != null && selectedCustomerName!.isNotEmpty);
@@ -227,10 +222,11 @@ class InvoiceFormController extends ChangeNotifier {
     // Ensure issue_date is in English format (convert Arabic digits to English)
     // Use toApiFormat to ensure English digits are always sent to API
     final issueDate = DateFormatter.parseApiDate(issueDateController.text);
-    final formattedIssueDate = issueDate != null 
+    final formattedIssueDate = issueDate != null
         ? DateFormatter.toApiFormat(issueDate)
-        : DateFormatter.extractDateFromApiString(issueDateController.text) ?? issueDateController.text;
-    
+        : DateFormatter.extractDateFromApiString(issueDateController.text) ??
+              issueDateController.text;
+
     return {
       'customer_id': selectedCustomerId?.toString(),
       'customer_name': selectedCustomerName,
@@ -242,7 +238,6 @@ class InvoiceFormController extends ChangeNotifier {
       'discount': discountController.text,
       'total': totalController.text,
       'issue_date': formattedIssueDate,
-      'status': selectedStatus,
       'description': descriptionController.text,
       'payment_method_code': selectedPaymentMethod,
       'action': selectedAction,

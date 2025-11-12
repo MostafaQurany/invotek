@@ -2773,5 +2773,166 @@
   "notificationsTypePayment": "دفعة",
   "notificationsTypeUserCreated": "مستخدم جديد",
   "notificationsTypeSystem": "نظام",
-  "notificationsAdditionalData": "بيانات إضافية"
+  "notificationsAdditionalData": "بيانات إضافية",
+  "printInvoiceTitle": "طباعة الفاتورة",
+  "noPreview": "لا توجد معاينة",
+  "print": "طباعة",
+  "preview": "معاينة",
+  "printCancelled": "تم إلغاء الطباعة",
+  "previewError": "خطأ في المعاينة: {error}",
+  "@previewError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "printerNotConnected": "الطابعة غير متصلة",
+  "connectPrinterFromSettings": "يرجى الاتصال بالطابعة من الإعدادات",
+  "pleaseConnectPrinterFirst": "يرجى الاتصال بالطابعة أولاً",
+  "printErrorWithMessage": "خطأ في الطباعة: {error}",
+  "@printErrorWithMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionPackageSelectionPage": "صفحة اختيار الباقات",
+  "comingSoon": "سيتم تطوير هذه الصفحة قريباً",
+  "cannotOpenPackageLink": "لا يمكن فتح رابط الباقة",
+  "deleteItemConfirmation": "هل أنت متأكد من حذف هذا العنصر؟",
+  "stop": "إيقاف",
+  "connect": "اتصال",
+  "disconnect": "قطع الاتصال",
+  "sliceHeight": "ارتفاع الslice (بكسل)",
+  "checkingBluetoothStatus": "جارِ التحقق من حالة البلوتوث...",
+  "bluetoothOff": "البلوتوث مغلق. فضلاً قم بتفعيله.",
+  "checkingPrinterConnection": "جارِ فحص الاتصال بالطابعة...",
+  "printerNotConnectedStatus": "غير متصل بالطابعة",
+  "printingInProgress": "جاري الطباعة...",
+  "statusCode": "رمز الحالة: {code}",
+  "@statusCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "emailIsRequired": "البريد الإلكتروني مطلوب",
+  "verifyTokenIsRequired": "رمز التحقق مطلوب",
+  "newNotifications": "إشعارات جديدة",
+  "youHaveNewNotification": "لديك {count} إشعار جديد",
+  "@youHaveNewNotification": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "searchingForPrinters": "جاري البحث عن الطابعات...",
+  "connectedPrinterShownAtTop": "الطابعة المتصلة تظهر في الأعلى",
+  "noPrintersPressSearch": "لا توجد طابعات. اضغط على \"بحث\" للبحث",
+  "unknown": "(غير معروف)",
+  "previewAndTestPrint": "معاينة وطباعة تجريبية",
+  "connectingToPrinter": "جاري الاتصال بالطابعة...",
+  "noPrinterDeviceSaved": "لا يوجد جهاز طابعة محفوظ",
+  "printerDeviceNotFound": "لم يتم العثور على جهاز طابعة محفوظ. يرجى الذهاب إلى الإعدادات وإضافة جهاز طابعة.",
+  "connectionFailed": "فشل الاتصال",
+  "connectionFailedMessage": "فشل الاتصال بالطابعة. يرجى التحقق من إعدادات الطابعة والمحاولة مرة أخرى.",
+  "bluetoothIsOff": "البلوتوث مغلق",
+  "bluetoothIsOffMessage": "البلوتوث مغلق. يرجى تشغيل البلوتوث للاتصال بالطابعة.",
+  "connected": "متصل",
+  "disconnected": "غير متصل",
+  "connectedPrinter": "الطابعة المتصلة",
+  "printers": "الطابعات",
+  "previewLabel": "معاينة:",
+  "printSettings": "إعدادات الطباعة",
+  "invoiceLanguage": "لغة الفاتورة",
+  "paperSize": "حجم الورق",
+  "pleaseEnableBluetooth": "يرجى تفعيل Bluetooth",
+  "testCustomer": "عميل تجريبي",
+  "testProduct1": "منتج تجريبي 1",
+  "testProduct2": "منتج تجريبي 2",
+  "editProfile": "تعديل الملف الشخصي",
+  "updateYourProfileInformation": "تحديث معلومات ملفك الشخصي",
+  "operationDelete": "حذف",
+  "operationStatusUpdate": "تحديث الحالة",
+  "operationBulkDelete": "الحذف المجمع",
+  "operationBulkStatusUpdate": "تحديث الحالة المجمع",
+  "additionalInformation": "معلومات إضافية",
+  "additionalInvoiceDetails": "تفاصيل إضافية للفاتورة",
+  "invoiceType": "نوع الفاتورة",
+  "description": "الوصف",
+  "sentDate": "تاريخ الإرسال",
+  "qrCode": "QR- Code",
+  "qrCodeLabel": "رمز QR",
+  "errorMessageLabel": "رسالة الخطأ",
+  "invoiceTypeStandard": "فاتورة عادية",
+  "invoiceTypeCreditNote": "إشعار دائن",
+  "invoiceTypeDebitNote": "إشعار مدين",
+  "invoiceTypeProforma": "فاتورة مؤقتة",
+  "customerNamePlaceholder": "اسم العميل",
+  "customerEmailPlaceholder": "بريد العميل",
+  "customerPhonePlaceholder": "هاتف العميل",
+  "customerAddressPlaceholder": "عنوان العميل",
+  "customerTaxNumberPlaceholder": "الرقم الضريبي للعميل",
+  "editItem": "تعديل العنصر",
+  "addNewItem": "إضافة عنصر جديد",
+  "itemName": "اسم العنصر",
+  "itemNameRequired": "اسم العنصر مطلوب",
+  "quantity": "الكمية",
+  "available": "المتاح: {count}",
+  "@available": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "quantityRequired": "الكمية مطلوبة",
+  "quantityMustBeGreaterThanZero": "الكمية يجب أن تكون أكبر من صفر",
+  "quantityExceedsAvailableStock": "الكمية تتجاوز المخزون المتاح ({count})",
+  "@quantityExceedsAvailableStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "price": "السعر",
+  "priceRequired": "السعر مطلوب",
+  "priceMustBeGreaterThanOrEqualZero": "السعر يجب أن يكون أكبر من أو يساوي صفر",
+  "discountPercent": "الخصم (%)",
+  "discountRequired": "الخصم مطلوب",
+  "discountMustBeGreaterThanOrEqualZero": "الخصم يجب أن يكون أكبر من أو يساوي صفر",
+  "taxPercent": "نسبة الضريبة (%)",
+  "taxPercentRequired": "نسبة الضريبة مطلوبة",
+  "taxPercentMustBeGreaterThanOrEqualZero": "نسبة الضريبة يجب أن تكون أكبر من أو يساوي صفر",
+  "taxAmount": "مبلغ الضريبة:",
+  "total": "المجموع:",
+  "saveEdit": "حفظ التعديل",
+  "addItem": "إضافة العنصر",
+  "previous": "السابق",
+  "next": "التالي",
+  "createInvoice": "إنشاء الفاتورة",
+  "itemQuantity": "الكمية",
+  "itemPrice": "السعر",
+  "itemDiscount": "الخصم",
+  "itemTax": "الضريبة",
+  "itemTaxAmount": "مبلغ الضريبة",
+  "itemTotal": "المجموع",
+  "itemsCount": "عدد العناصر:",
+  "subtotal": "المجموع الفرعي:",
+  "product": "منتج",
+  "saveOnly": "حفظ فقط",
+  "saveAndSend": "حفظ وإرسال",
+  "paymentMethodCash": "نقداً",
+  "paymentMethodCard": "بطاقة",
+  "paymentMethodBankTransfer": "تحويل بنكي",
+  "paymentMethodCheck": "شيك",
+  "statusDraft": "مسودة",
+  "statusSent": "مرسلة",
+  "statusPaid": "مدفوعة",
+  "notSpecified": "غير محدد"
 }

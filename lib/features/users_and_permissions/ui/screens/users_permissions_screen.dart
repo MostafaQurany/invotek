@@ -248,9 +248,10 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           );
         } else if (state is BulkOperationCompleted) {
           final s = S.of(context);
+          final operationText = _getLocalizedOperation(context, state.operation);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('${state.operation} ${s.completedSuccessfully}'),
+              content: Text('$operationText ${s.completedSuccessfully}'),
               backgroundColor: colorScheme.primary,
               behavior: SnackBarBehavior.floating,
             ),
@@ -348,6 +349,24 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
         onUserDelete: _onUserDelete,
       );
     }
+  }
+
+  String _getLocalizedOperation(BuildContext context, String operation) {
+    final s = S.of(context);
+    final operationLower = operation.toLowerCase();
+    if (operationLower == 'delete' || operationLower == 'حذف') {
+      return s.operationDelete;
+    } else if (operationLower == 'status_update' || 
+               operationLower == 'تحديث الحالة') {
+      return s.operationStatusUpdate;
+    } else if (operationLower == 'bulk_delete' || 
+               operationLower == 'الحذف المجمع') {
+      return s.operationBulkDelete;
+    } else if (operationLower == 'bulk_status_update' || 
+               operationLower == 'تحديث الحالة المجمع') {
+      return s.operationBulkStatusUpdate;
+    }
+    return operation;
   }
 
   @override

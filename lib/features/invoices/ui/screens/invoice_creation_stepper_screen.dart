@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
-import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
-import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
-import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
-import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_basic_info_step.dart';
-import 'package:invotek/features/invoices/ui/widgets/stepper/customer_selection_step.dart';
-import 'package:invotek/features/invoices/ui/widgets/stepper/items_selection_step.dart';
-import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_summary_step.dart';
 import 'package:invotek/core/routes/app_routes.dart';
-import 'package:invotek/core/utils/snackbar_helper.dart';
-import 'package:invotek/generated/l10n.dart';
-import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
+import 'package:invotek/core/utils/snackbar_helper.dart';
+import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
+import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
+import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/customer_selection_step.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_basic_info_step.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_summary_step.dart';
+import 'package:invotek/features/invoices/ui/widgets/stepper/items_selection_step.dart';
 import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class InvoiceCreationStepperScreen extends StatefulWidget {
   const InvoiceCreationStepperScreen({super.key});
@@ -116,7 +116,7 @@ class _InvoiceCreationStepperScreenState
             return _buildTaxIntegrationRequiredWidget(s);
           }
         }
-        
+
         return Scaffold(
           backgroundColor: AppColors.whiteGray,
           appBar: AppBar(
@@ -138,141 +138,152 @@ class _InvoiceCreationStepperScreenState
             ],
           ),
           body: BlocListener<InvoicesCubit, InvoicesState>(
-        bloc: _cubit,
-        listener: (context, state) {
-          state.maybeWhen(
-            createSuccess:
-                (invoices, created, selectedInvoice, currentPage, totalPages) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(s.invoiceCreatedSuccessfully),
-                      backgroundColor: AppColors.primary,
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
-                  );
-                  Navigator.pushReplacementNamed(
-                    context,
-                    AppRoutes.enhancedInvoiceDetailsRoute,
-                    arguments: created.id.toString(),
-                  );
-                },
-            failure:
-                (invoices, selectedInvoice, currentPage, totalPages, error) {
-                  SnackBarHelper.showFailureSnackBar(context, error);
-                },
-            orElse: () {},
-          );
-        },
-        child: Column(
-          children: [
-            // Tab Bar
-            Container(
-              color: AppColors.white,
-              child: _buildTabs(s),
-            ),
+            bloc: _cubit,
+            listener: (context, state) {
+              state.maybeWhen(
+                createSuccess:
+                    (
+                      invoices,
+                      created,
+                      selectedInvoice,
+                      currentPage,
+                      totalPages,
+                    ) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(s.invoiceCreatedSuccessfully),
+                          backgroundColor: AppColors.primary,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                          ),
+                        ),
+                      );
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.enhancedInvoiceDetailsRoute,
+                        arguments: created.id.toString(),
+                      );
+                    },
+                failure:
+                    (
+                      invoices,
+                      selectedInvoice,
+                      currentPage,
+                      totalPages,
+                      error,
+                    ) {
+                      SnackBarHelper.showFailureSnackBar(context, error);
+                    },
+                orElse: () {},
+              );
+            },
+            child: Column(
+              children: [
+                // Tab Bar
+                Container(color: AppColors.white, child: _buildTabs(s)),
 
-            // Form Content
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  InvoiceBasicInfoStep(formController: _formController),
-                  CustomerSelectionStep(formController: _formController),
-                  ItemsSelectionStep(formController: _formController),
-                  InvoiceSummaryStep(formController: _formController),
-                ],
-              ),
-            ),
-
-            // Bottom Action Buttons (rebuild on form changes)
-            AnimatedBuilder(
-              animation: _formController,
-              builder: (context, _) {
-                return Container(
-                  padding: EdgeInsets.only(
-                    left: 16.w,
-                    right: 16.w,
-                    top: 16.w,
-                    bottom: 16.w + MediaQuery.of(context).padding.bottom,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, -2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
+                // Form Content
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
-                      // Cancel/Previous Button
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: _currentTabIndex == 0
-                              ? () => Navigator.pop(context)
-                              : () => _goToPreviousTab(),
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 16.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            side: BorderSide(
-                              color: AppColors.grey.withOpacity(0.3),
-                            ),
-                          ),
-                          child: Text(
-                            _currentTabIndex == 0 ? s.cancel : s.previous,
-                            style: TextStyle(
-                              color: AppColors.greyDark,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 12.w),
-                      // Next/Save Button
-                      Expanded(
-                        flex: 2,
-                        child: FilledButton(
-                          onPressed: _currentTabIndex == 3
-                              ? _handleSubmit
-                              : () => _goToNextTab(),
-                          style: FilledButton.styleFrom(
-                            backgroundColor: _isCurrentTabValid()
-                                ? AppColors.primary
-                                : AppColors.grey.withOpacity(0.3),
-                            foregroundColor: _isCurrentTabValid()
-                                ? AppColors.white
-                                : AppColors.greyDark,
-                            padding: EdgeInsets.symmetric(vertical: 16.h),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                          ),
-                          child: Text(
-                            _currentTabIndex == 3 ? s.createInvoice : s.next,
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
+                      InvoiceBasicInfoStep(formController: _formController),
+                      CustomerSelectionStep(formController: _formController),
+                      ItemsSelectionStep(formController: _formController),
+                      InvoiceSummaryStep(formController: _formController),
                     ],
                   ),
-                );
-              },
+                ),
+
+                // Bottom Action Buttons (rebuild on form changes)
+                AnimatedBuilder(
+                  animation: _formController,
+                  builder: (context, _) {
+                    return Container(
+                      padding: EdgeInsets.only(
+                        left: 16.w,
+                        right: 16.w,
+                        top: 16.w,
+                        bottom: 16.w + MediaQuery.of(context).padding.bottom,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, -2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          // Cancel/Previous Button
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: _currentTabIndex == 0
+                                  ? () => Navigator.pop(context)
+                                  : () => _goToPreviousTab(),
+                              style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(vertical: 16.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                                side: BorderSide(
+                                  color: AppColors.grey.withOpacity(0.3),
+                                ),
+                              ),
+                              child: Text(
+                                _currentTabIndex == 0 ? s.cancel : s.previous,
+                                style: TextStyle(
+                                  color: AppColors.greyDark,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 12.w),
+                          // Next/Save Button
+                          Expanded(
+                            flex: 2,
+                            child: FilledButton(
+                              onPressed: _currentTabIndex == 3
+                                  ? _handleSubmit
+                                  : () => _goToNextTab(),
+                              style: FilledButton.styleFrom(
+                                backgroundColor: _isCurrentTabValid()
+                                    ? AppColors.primary
+                                    : AppColors.grey.withOpacity(0.3),
+                                foregroundColor: _isCurrentTabValid()
+                                    ? AppColors.white
+                                    : AppColors.greyDark,
+                                padding: EdgeInsets.symmetric(vertical: 16.h),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.r),
+                                ),
+                              ),
+                              child: Text(
+                                _currentTabIndex == 3
+                                    ? s.createInvoice
+                                    : s.next,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
         );
       },
     );
@@ -298,11 +309,7 @@ class _InvoiceCreationStepperScreenState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.lock_outline,
-                  size: 64.sp,
-                  color: AppColors.error,
-                ),
+                Icon(Icons.lock_outline, size: 64.sp, color: AppColors.error),
                 SizedBox(height: 24.h),
                 Text(
                   s.taxIntegrationNotActive,
@@ -386,7 +393,6 @@ class _InvoiceCreationStepperScreenState
       discount: _formController.discountController.text,
       total: _formController.totalController.text,
       issueDate: _formController.issueDateController.text,
-      status: _formController.selectedStatus,
       description: _formController.descriptionController.text.isEmpty
           ? null
           : _formController.descriptionController.text,
@@ -456,8 +462,7 @@ class _InvoiceCreationStepperScreenState
     switch (_currentTabIndex) {
       case 0: // Basic Info Tab
         return _formController.selectedAction.isNotEmpty &&
-            _formController.selectedPaymentMethod.isNotEmpty &&
-            _formController.selectedStatus.isNotEmpty;
+            _formController.selectedPaymentMethod.isNotEmpty;
       case 1: // Customer Tab
         return (_formController.selectedCustomerId != null) ||
             (_formController.selectedCustomerName != null &&
@@ -482,11 +487,6 @@ class _InvoiceCreationStepperScreenState
 
     if (_formController.selectedPaymentMethod.isEmpty) {
       _validationErrors['paymentMethod'] = s.paymentMethodRequired;
-      isValid = false;
-    }
-
-    if (_formController.selectedStatus.isEmpty) {
-      _validationErrors['status'] = s.statusRequired;
       isValid = false;
     }
 
@@ -584,22 +584,20 @@ class _InvoiceCreationStepperScreenState
 
   Widget _buildTabs(S s) {
     final visibleTabs = <Widget>[];
-    
+
     for (int i = 0; i < 4; i++) {
       // إخفاء التبويبات التي تأتي بعد التبويب الحالي
       if (i > _currentTabIndex) {
         continue;
       }
-      
+
       final isCurrentTab = i == _currentTabIndex;
-      
+
       // تحديد اللون بناءً على الحالة
       // التبويب الحالي: primary color
       // التبويبات السابقة: gray color
-      final tabColor = isCurrentTab
-          ? AppColors.primary
-          : AppColors.greyDark;
-      
+      final tabColor = isCurrentTab ? AppColors.primary : AppColors.greyDark;
+
       // تحديد النص
       String tabText;
       switch (i) {
@@ -618,7 +616,7 @@ class _InvoiceCreationStepperScreenState
         default:
           tabText = '';
       }
-      
+
       visibleTabs.add(
         Expanded(
           child: GestureDetector(
@@ -645,9 +643,7 @@ class _InvoiceCreationStepperScreenState
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: tabColor,
-                  fontWeight: isCurrentTab
-                      ? FontWeight.w600
-                      : FontWeight.w500,
+                  fontWeight: isCurrentTab ? FontWeight.w600 : FontWeight.w500,
                   fontSize: 14.sp,
                 ),
               ),
@@ -656,9 +652,7 @@ class _InvoiceCreationStepperScreenState
         ),
       );
     }
-    
-    return Row(
-      children: visibleTabs,
-    );
+
+    return Row(children: visibleTabs);
   }
 }

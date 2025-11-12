@@ -8,6 +8,7 @@ import 'package:invotek/core/widgets/common_extended_fab.dart';
 import 'package:invotek/core/widgets/common_filter_row.dart';
 import 'package:invotek/core/widgets/common_search_bar.dart';
 import 'package:invotek/features/home/cubit/navigation_cubit.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/widgets/cards/enhanced_product_card.dart';
@@ -213,7 +214,7 @@ class _EnhancedProductsListScreenState
           ElevatedButton.icon(
             onPressed: _addProduct,
             icon: Icon(Icons.add),
-            label: Text('Add Product'),
+            label: Text(S.of(context).addProduct),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
@@ -236,7 +237,7 @@ class _EnhancedProductsListScreenState
           Icon(Icons.error_outline, size: 80.sp, color: AppColors.error),
           SizedBox(height: 16.h),
           Text(
-            'Error loading products',
+            S.of(context).errorLoadingProducts,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.w600,
@@ -253,7 +254,7 @@ class _EnhancedProductsListScreenState
           ElevatedButton.icon(
             onPressed: () => context.read<ProductsCubit>().loadFirstPage(),
             icon: Icon(Icons.refresh),
-            label: Text('Retry'),
+            label: Text(S.of(context).retry),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white,
@@ -322,7 +323,7 @@ class _EnhancedProductsListScreenState
       if (result == 'deleted') {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Product deleted successfully'),
+            content: Text(S.of(context).productDeletedSuccessfully),
             backgroundColor: AppColors.success,
           ),
         );

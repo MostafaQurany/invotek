@@ -6,7 +6,6 @@ part 'update_invoice_request.g.dart';
 class UpdateInvoiceRequest {
   @JsonKey(name: 'id')
   final String? id;
-  final String? status;
   @JsonKey(name: 'customer_id')
   final String? customerId;
   @JsonKey(name: 'customer_name')
@@ -32,7 +31,6 @@ class UpdateInvoiceRequest {
 
   UpdateInvoiceRequest({
     this.id,
-    this.status,
     this.customerId,
     this.customerName,
     this.customerEmail,

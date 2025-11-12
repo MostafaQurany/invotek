@@ -144,15 +144,15 @@ class AppRoutes {
     verifyOtp: (context) {
       final email = ModalRoute.of(context)?.settings.arguments as String?;
       if (email == null) {
-        return const Scaffold(body: Center(child: Text('Email is required')));
+        return Scaffold(body: Center(child: Text(S.of(context).emailIsRequired)));
       }
       return VerifyOtpScreen(email: email);
     },
     resetPassword: (context) {
       final verifyToken = ModalRoute.of(context)?.settings.arguments as String?;
       if (verifyToken == null) {
-        return const Scaffold(
-          body: Center(child: Text('Verify token is required')),
+        return Scaffold(
+          body: Center(child: Text(S.of(context).verifyTokenIsRequired)),
         );
       }
       return ResetPasswordScreen(verifyToken: verifyToken);
@@ -324,7 +324,7 @@ class AppRoutes {
       case subscriptionPackagesRoute:
         return MaterialPageRoute(
           builder: (context) => Scaffold(
-            appBar: AppBar(title: Text('اختيار الباقة')),
+            appBar: AppBar(title: Text(S.of(context).subscriptionRequiredAction)),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -336,12 +336,12 @@ class AppRoutes {
                   ),
                   SizedBox(height: 16),
                   Text(
-                    'صفحة اختيار الباقات',
+                    S.of(context).subscriptionPackageSelectionPage,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'سيتم تطوير هذه الصفحة قريباً',
+                    S.of(context).comingSoon,
                     style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
                 ],

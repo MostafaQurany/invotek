@@ -372,6 +372,8 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
   void _showExpenseOptions(BuildContext context, ExpenseModel expense) {
     showModalBottomSheet(
       context: context,
+       useSafeArea: false, // إضافة
+      isScrollControlled: true, // إضافة
       backgroundColor: Colors.transparent,
       builder: (context) => ExpenseOptionsBottomSheet(
         expense: expense,

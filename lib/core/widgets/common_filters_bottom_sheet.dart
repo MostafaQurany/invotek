@@ -46,9 +46,14 @@ class _CommonFiltersBottomSheetState extends State<CommonFiltersBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      padding: EdgeInsets.fromLTRB(24.w, 5.h, 24.w, 32.h),
+     padding: EdgeInsets.fromLTRB(
+        24.w,
+        5.h,
+        24.w,
+        bottomPadding > 0 ? bottomPadding + 32.h : 32.h,
+      ),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),

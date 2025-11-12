@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'preview_widget.dart';
 
 class TestSectionWidget extends StatelessWidget {
@@ -39,7 +40,7 @@ class TestSectionWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'معاينة وطباعة تجريبية',
+            S.of(context).previewAndTestPrint,
             style: TextStyle(
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
@@ -53,7 +54,7 @@ class TestSectionWidget extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: isGeneratingPreview ? null : onGeneratePreview,
                   icon: const Icon(Icons.visibility),
-                  label: const Text('معاينة'),
+                  label: Text(S.of(context).preview),
                 ),
               ),
               SizedBox(width: 8.w),
@@ -61,7 +62,7 @@ class TestSectionWidget extends StatelessWidget {
                 child: ElevatedButton.icon(
                   onPressed: isConnected ? onPrintTest : null,
                   icon: const Icon(Icons.print),
-                  label: const Text('طباعة تجريبية'),
+                  label: Text(S.of(context).testPrint),
                 ),
               ),
             ],

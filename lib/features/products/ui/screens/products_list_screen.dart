@@ -386,7 +386,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   void _showProductOptions(BuildContext context, ProductModel product) {
     showModalBottomSheet(
       context: context,
-      useSafeArea: true,
+      useSafeArea: false,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28.r)),

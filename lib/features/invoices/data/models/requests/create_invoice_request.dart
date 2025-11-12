@@ -21,7 +21,7 @@ class CreateInvoiceRequest {
   final String total;
   @JsonKey(name: 'issue_date')
   final String issueDate;
-  final String status;
+
   final String? description;
   @JsonKey(name: 'payment_method_code')
   final String paymentMethodCode;
@@ -39,7 +39,6 @@ class CreateInvoiceRequest {
     required this.discount,
     required this.total,
     required this.issueDate,
-    required this.status,
     this.description,
     required this.paymentMethodCode,
     required this.action,
@@ -66,20 +65,20 @@ class CreateInvoiceItemRequest {
   @JsonKey(name: 'product_name')
   final String? productName;
   @JsonKey(name: 'product_description')
-  final String?  productDescription;
+  final String? productDescription;
   @JsonKey(name: 'product_category')
   final String? productCategory;
   @JsonKey(name: 'product_id')
   final String? productId;
 
   CreateInvoiceItemRequest({
-     this.name,
-     this.quantity,
-     this.price,
-     this.discount,
-     this.taxPercent,
-     this.taxAmount,
-     this.total,
+    this.name,
+    this.quantity,
+    this.price,
+    this.discount,
+    this.taxPercent,
+    this.taxAmount,
+    this.total,
     this.productName,
     this.productDescription,
     this.productCategory,

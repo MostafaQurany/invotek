@@ -1,32 +1,17 @@
-# Keep bluetooth_print_plus classes
--keep class com.example.bluetooth_print_plus.** { *; }
--dontwarn com.example.bluetooth_print_plus.**
+# android/app/proguard-rules.pro
 
-# Keep Bluetooth classes
--keep class android.bluetooth.** { *; }
--dontwarn android.bluetooth.**
-
-# Keep Flutter classes
+# Flutter method channels & generated code
 -keep class io.flutter.** { *; }
--dontwarn io.flutter.**
+-keep class io.flutter.plugins.** { *; }
 
-# Keep native method implementations
--keepclasseswithmembernames class * {
-    native <methods>;
-}
+# bluetooth_print_plus (غيّر الباكدج لو مختلف في البلجن عندك)
+-keep class com.*.bluetooth_print_plus.** { *; }
+-keep class vn.com.*.bluetooth_print_plus.** { *; }
+-keep class dev.*.bluetooth_print_plus.** { *; }
 
-# Keep Parcelable implementations
--keep class * implements android.os.Parcelable {
-    public static final android.os.Parcelable$Creator *;
-}
-
-# Keep Serializable classes
--keepclassmembers class * implements java.io.Serializable {
-    static final long serialVersionUID;
-    private static final java.io.ObjectStreamField[] serialPersistentFields;
-    private void writeObject(java.io.ObjectOutputStream);
-    private void readObject(java.io.ObjectInputStream);
-    java.lang.Object writeReplace();
-    java.lang.Object readResolve();
-}
-
+# لو البلجن مبني فوق Bluetooth LE/Classic libs
+-keep class com.polidea.** { *; }        # RxAndroidBle إن وُجد
+-keep class no.nordicsemi.android.** { *; }  # Nordic
+-keep class com.github.ivbaranov.rxbluetooth.** { *; }  # Classic
+-dontwarn com.polidea.**
+-dontwarn no.nordicsemi.android.**

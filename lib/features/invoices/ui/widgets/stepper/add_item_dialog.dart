@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class AddItemDialog extends StatefulWidget {
   final InvoiceItemData? initialItem;
@@ -120,8 +121,8 @@ class _AddItemDialogState extends State<AddItemDialog> {
                 Expanded(
                   child: Text(
                     widget.initialItem != null
-                        ? 'تعديل العنصر'
-                        : 'إضافة عنصر جديد',
+                        ? S.of(context).editItem
+                        : S.of(context).addNewItem,
                     style: TextStyle(
                       fontSize: 18.sp,
                       fontWeight: FontWeight.w600,
@@ -149,7 +150,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                       TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          labelText: 'اسم العنصر',
+                          labelText: S.of(context).itemName,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.r),
                           ),
@@ -160,7 +161,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'اسم العنصر مطلوب';
+                            return S.of(context).itemNameRequired;
                           }
                           return null;
                         },
@@ -174,9 +175,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
                             child: TextFormField(
                               controller: _quantityController,
                               decoration: InputDecoration(
-                                labelText: 'الكمية',
+                                labelText: S.of(context).quantity,
                                 helperText: _maxQuantity != null
-                                    ? 'المتاح: $_maxQuantity'
+                                    ? S.of(context).available(_maxQuantity!)
                                     : null,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
@@ -190,15 +191,15 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               onChanged: (_) => _calculateTotals(),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'الكمية مطلوبة';
+                                  return S.of(context).quantityRequired;
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) <= 0) {
-                                  return 'الكمية يجب أن تكون أكبر من صفر';
+                                  return S.of(context).quantityMustBeGreaterThanZero;
                                 }
                                 if (_maxQuantity != null &&
                                     double.parse(value) > _maxQuantity!) {
-                                  return 'الكمية تتجاوز المخزون المتاح ($_maxQuantity)';
+                                  return S.of(context).quantityExceedsAvailableStock(_maxQuantity!);
                                 }
                                 return null;
                               },
@@ -209,7 +210,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                             child: TextFormField(
                               controller: _priceController,
                               decoration: InputDecoration(
-                                labelText: 'السعر',
+                                labelText: S.of(context).price,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
@@ -222,11 +223,11 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               onChanged: (_) => _calculateTotals(),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'السعر مطلوب';
+                                  return S.of(context).priceRequired;
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) < 0) {
-                                  return 'السعر يجب أن يكون أكبر من أو يساوي صفر';
+                                  return S.of(context).priceMustBeGreaterThanOrEqualZero;
                                 }
                                 return null;
                               },
@@ -243,7 +244,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                             child: TextFormField(
                               controller: _discountController,
                               decoration: InputDecoration(
-                                labelText: 'الخصم (%)',
+                                labelText: S.of(context).discountPercent,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
@@ -256,11 +257,11 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               onChanged: (_) => _calculateTotals(),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'الخصم مطلوب';
+                                  return S.of(context).discountRequired;
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) < 0) {
-                                  return 'الخصم يجب أن يكون أكبر من أو يساوي صفر';
+                                  return S.of(context).discountMustBeGreaterThanOrEqualZero;
                                 }
                                 return null;
                               },
@@ -271,7 +272,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                             child: TextFormField(
                               controller: _taxPercentController,
                               decoration: InputDecoration(
-                                labelText: 'نسبة الضريبة (%)',
+                                labelText: S.of(context).taxPercent,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
@@ -284,11 +285,11 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               onChanged: (_) => _calculateTotals(),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'نسبة الضريبة مطلوبة';
+                                  return S.of(context).taxPercentRequired;
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) < 0) {
-                                  return 'نسبة الضريبة يجب أن تكون أكبر من أو يساوي صفر';
+                                  return S.of(context).taxPercentMustBeGreaterThanOrEqualZero;
                                 }
                                 return null;
                               },
@@ -312,7 +313,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'مبلغ الضريبة:',
+                                  S.of(context).taxAmount,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -320,7 +321,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                   ),
                                 ),
                                 Text(
-                                  '$_taxAmount ريال',
+                                  '$_taxAmount ${S.of(context).currency}',
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w600,
@@ -334,7 +335,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'المجموع:',
+                                  S.of(context).total,
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
@@ -342,7 +343,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                   ),
                                 ),
                                 Text(
-                                  '$_total ريال',
+                                  '$_total ${S.of(context).currency}',
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
@@ -374,7 +375,7 @@ class _AddItemDialogState extends State<AddItemDialog> {
                         borderRadius: BorderRadius.circular(8.r),
                       ),
                     ),
-                    child: const Text('إلغاء'),
+                    child: Text(S.of(context).cancel),
                   ),
                 ),
                 SizedBox(width: 12.w),
@@ -390,8 +391,8 @@ class _AddItemDialogState extends State<AddItemDialog> {
                     ),
                     child: Text(
                       widget.initialItem != null
-                          ? 'حفظ التعديل'
-                          : 'إضافة العنصر',
+                          ? S.of(context).saveEdit
+                          : S.of(context).addItem,
                     ),
                   ),
                 ),

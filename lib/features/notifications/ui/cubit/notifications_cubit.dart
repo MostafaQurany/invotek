@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/core/server/api_result.dart';
@@ -39,7 +40,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   String? _lastDateTo;
   String? _lastSortBy;
   String? _lastSortOrder;
-  int _pageSize = 20;
+  final int _pageSize = 20;
   bool _isLoadingPage = false;
   GetNotificationStatsResponse? _lastStats;
   Timer? _pollingTimer;
@@ -52,14 +53,14 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     required MarkAllNotificationsAsReadUseCase markAllNotificationsAsRead,
     required DeleteNotificationUseCase deleteNotification,
     required ClearReadNotificationsUseCase clearReadNotifications,
-  })  : _getAllNotifications = getAllNotifications,
-        _getNotificationStats = getNotificationStats,
-        _getSingleNotification = getSingleNotification,
-        _markNotificationAsRead = markNotificationAsRead,
-        _markAllNotificationsAsRead = markAllNotificationsAsRead,
-        _deleteNotification = deleteNotification,
-        _clearReadNotifications = clearReadNotifications,
-        super(const NotificationsState.initial()) {
+  }) : _getAllNotifications = getAllNotifications,
+       _getNotificationStats = getNotificationStats,
+       _getSingleNotification = getSingleNotification,
+       _markNotificationAsRead = markNotificationAsRead,
+       _markAllNotificationsAsRead = markAllNotificationsAsRead,
+       _deleteNotification = deleteNotification,
+       _clearReadNotifications = clearReadNotifications,
+       super(const NotificationsState.initial()) {
     _startPolling();
   }
 
@@ -74,7 +75,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   Future<void> _checkForNewNotifications() async {
     final result = await _getNotificationStats(const NoParams());
     result.when(
-      success: (stats) {
+      success: (stats) async {
         if (_lastStats != null) {
           final oldUnread = _lastStats!.unread ?? 0;
           final newUnread = stats.unread ?? 0;
@@ -82,30 +83,39 @@ class NotificationsCubit extends Cubit<NotificationsState> {
             // New notifications detected
             final newCount = newUnread - oldUnread;
             _lastStats = stats;
-            
+
             // Show local notification
             try {
               final notificationService = getIt<LocalNotificationService>();
-              notificationService.showNewNotificationsNotification(newCount);
+              final localizationCubit = getIt<LocalizationCubit>();
+              final locale = localizationCubit.state.locale;
+              await notificationService.showNewNotificationsNotification(
+                count: newCount,
+                locale: locale,
+              );
             } catch (e) {
               // Silently fail if notification service is not available
             }
-            
-            emit(NotificationsState.statsLoaded(
+
+            emit(
+              NotificationsState.statsLoaded(
+                notifications: _notifications,
+                currentPage: _currentPage,
+                totalPages: _totalPages,
+                stats: stats,
+              ),
+            );
+          }
+        } else {
+          _lastStats = stats;
+          emit(
+            NotificationsState.statsLoaded(
               notifications: _notifications,
               currentPage: _currentPage,
               totalPages: _totalPages,
               stats: stats,
-            ));
-          }
-        } else {
-          _lastStats = stats;
-          emit(NotificationsState.statsLoaded(
-            notifications: _notifications,
-            currentPage: _currentPage,
-            totalPages: _totalPages,
-            stats: stats,
-          ));
+            ),
+          );
         }
       },
       failure: (_) {
@@ -140,12 +150,14 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     _lastSortBy = sortBy ?? 'created_at';
     _lastSortOrder = sortOrder ?? 'desc';
 
-    emit(NotificationsState.loading(
-      notifications: _notifications,
-      currentPage: _currentPage,
-      totalPages: _totalPages,
-      stats: _lastStats,
-    ));
+    emit(
+      NotificationsState.loading(
+        notifications: _notifications,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        stats: _lastStats,
+      ),
+    );
 
     final result = await _getAllNotifications(
       GetAllNotificationsParams(
@@ -174,22 +186,26 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         _totalPages = paginationResult.totalPages;
         _isLoadingPage = false;
 
-        emit(NotificationsState.loaded(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-        ));
+        emit(
+          NotificationsState.loaded(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+          ),
+        );
       },
       failure: (failure) {
         _isLoadingPage = false;
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -227,21 +243,25 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     result.when(
       success: (stats) {
         _lastStats = stats;
-        emit(NotificationsState.statsLoaded(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: stats,
-        ));
+        emit(
+          NotificationsState.statsLoaded(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: stats,
+          ),
+        );
       },
       failure: (failure) {
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -253,22 +273,26 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
     result.when(
       success: (notification) {
-        emit(NotificationsState.loaded(
-          notifications: _notifications,
-          selectedNotification: notification,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-        ));
+        emit(
+          NotificationsState.loaded(
+            notifications: _notifications,
+            selectedNotification: notification,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+          ),
+        );
       },
       failure: (failure) {
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -298,22 +322,26 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           );
         }
 
-        emit(NotificationsState.markAsReadSuccess(
-          notifications: _notifications,
-          notificationId: id,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-        ));
+        emit(
+          NotificationsState.markAsReadSuccess(
+            notifications: _notifications,
+            notificationId: id,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+          ),
+        );
       },
       failure: (failure) {
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -323,7 +351,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
     result.when(
       success: (_) {
-        _notifications = _notifications.map((n) => n.copyWith(isRead: true)).toList();
+        _notifications = _notifications
+            .map((n) => n.copyWith(isRead: true))
+            .toList();
 
         // Update stats
         if (_lastStats != null) {
@@ -335,21 +365,25 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           );
         }
 
-        emit(NotificationsState.markAllAsReadSuccess(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-        ));
+        emit(
+          NotificationsState.markAllAsReadSuccess(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+          ),
+        );
       },
       failure: (failure) {
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -373,22 +407,26 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           );
         }
 
-        emit(NotificationsState.deleteSuccess(
-          notifications: _notifications,
-          deletedId: id,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-        ));
+        emit(
+          NotificationsState.deleteSuccess(
+            notifications: _notifications,
+            deletedId: id,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+          ),
+        );
       },
       failure: (failure) {
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -410,21 +448,25 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           );
         }
 
-        emit(NotificationsState.clearReadSuccess(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-        ));
+        emit(
+          NotificationsState.clearReadSuccess(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+          ),
+        );
       },
       failure: (failure) {
-        emit(NotificationsState.failure(
-          notifications: _notifications,
-          currentPage: _currentPage,
-          totalPages: _totalPages,
-          stats: _lastStats,
-          failure: failure,
-        ));
+        emit(
+          NotificationsState.failure(
+            notifications: _notifications,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            stats: _lastStats,
+            failure: failure,
+          ),
+        );
       },
     );
   }
@@ -450,4 +492,3 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     return super.close();
   }
 }
-

@@ -32,7 +32,7 @@ class EditProfileScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          "Edit Profile",
+          S.of(context).editProfile,
           style: AppTextTheme.textTheme.headlineMedium?.copyWith(
             color: AppColors.onPrimary,
             fontWeight: FontWeight.bold,

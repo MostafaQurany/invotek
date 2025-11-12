@@ -22,8 +22,14 @@ class ProductOptionsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.only(
+        left: 16.w,
+        right: 16.w,
+        top: 16.h,
+        bottom: bottomPadding > 0 ? bottomPadding : 16.h,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

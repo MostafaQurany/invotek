@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class PrinterDiscoveryWidget extends StatelessWidget {
   final Stream<List<BluetoothDevice>> scanResults$;
@@ -45,7 +46,7 @@ class PrinterDiscoveryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'الطابعات',
+                S.of(context).printers,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
@@ -56,13 +57,13 @@ class PrinterDiscoveryWidget extends StatelessWidget {
                 TextButton.icon(
                   onPressed: onStopScan,
                   icon: const Icon(Icons.stop),
-                  label: const Text('إيقاف'),
+                  label: Text(S.of(context).stop),
                 )
               else
                 TextButton.icon(
                   onPressed: onStartScan,
                   icon: const Icon(Icons.search),
-                  label: const Text('بحث'),
+                  label: Text(S.of(context).search),
                 ),
             ],
           ),
@@ -84,10 +85,10 @@ class PrinterDiscoveryWidget extends StatelessWidget {
                     padding: EdgeInsets.all(32.w),
                     child: Text(
                       isScanning
-                          ? 'جاري البحث عن الطابعات...'
+                          ? S.of(context).searchingForPrinters
                           : isConnected
-                          ? 'الطابعة المتصلة تظهر في الأعلى'
-                          : 'لا توجد طابعات. اضغط على "بحث" للبحث',
+                          ? S.of(context).connectedPrinterShownAtTop
+                          : S.of(context).noPrintersPressSearch,
                       style: TextStyle(
                         fontSize: 14.sp,
                         color: AppColors.textSecondary,
@@ -106,12 +107,12 @@ class PrinterDiscoveryWidget extends StatelessWidget {
                   return ListTile(
                     leading: Icon(Icons.bluetooth, color: AppColors.primary),
                     title: Text(
-                      device.name.isEmpty ? '(غير معروف)' : device.name,
+                      device.name.isEmpty ? S.of(context).unknown : device.name,
                     ),
                     subtitle: Text(device.address),
                     trailing: ElevatedButton(
                       onPressed: () => onConnectToDevice(device),
-                      child: const Text('اتصال'),
+                      child: Text(S.of(context).connect),
                     ),
                   );
                 },

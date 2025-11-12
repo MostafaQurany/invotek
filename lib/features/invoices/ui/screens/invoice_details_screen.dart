@@ -285,11 +285,15 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
   void _showMoreOptions() {
     showModalBottomSheet(
       context: context,
+      useSafeArea: false,
+      isScrollControlled: true,
       builder: (context) => _buildMoreOptionsBottomSheet(),
     );
   }
 
   Widget _buildMoreOptionsBottomSheet() {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+  
     final s = S.of(context);
     final hasPrintPermission = PermissionChecker.hasPermission(
       context,
@@ -301,7 +305,12 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
     );
 
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: EdgeInsets.only(
+        left: 16.w,
+        top: 16.w,
+        right: 16.w,
+        bottom: bottomPadding > 0 ? bottomPadding + 16.w : 16.w,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

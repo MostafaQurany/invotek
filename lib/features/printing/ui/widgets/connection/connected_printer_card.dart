@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 
 class ConnectedPrinterCard extends StatelessWidget {
@@ -35,7 +36,7 @@ class ConnectedPrinterCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'الطابعة المتصلة',
+                S.of(context).connectedPrinter,
                 style: TextStyle(
                   fontSize: 18.sp,
                   fontWeight: FontWeight.bold,
@@ -55,7 +56,7 @@ class ConnectedPrinterCard extends StatelessWidget {
             leading: Icon(Icons.print, color: AppColors.primary, size: 32.sp),
             title: Text(
               connectedDevice.name.isEmpty
-                  ? '(غير معروف)'
+                  ? S.of(context).unknown
                   : connectedDevice.name,
               style: TextStyle(
                 fontSize: 16.sp,
@@ -76,7 +77,7 @@ class ConnectedPrinterCard extends StatelessWidget {
             trailing: TextButton.icon(
               onPressed: onDisconnect,
               icon: const Icon(Icons.close),
-              label: const Text('قطع الاتصال'),
+              label: Text(S.of(context).disconnect),
               style: TextButton.styleFrom(foregroundColor: AppColors.error),
             ),
           ),

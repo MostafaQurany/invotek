@@ -7,6 +7,7 @@ import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/tax_integration_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/sections/tax_integration_form_section.dart';
 import 'package:invotek/features/invoices/ui/widgets/sections/tax_integration_bottom_actions.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class TaxIntegrationScreen extends StatefulWidget {
   const TaxIntegrationScreen({super.key});
@@ -98,7 +99,7 @@ class _TaxIntegrationScreenState extends State<TaxIntegrationScreen> {
   void _onTestConnection() {
     // TODO: Implement test connection
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('اختبار الاتصال')),
+      SnackBar(content: Text(S.of(context).testConnection)),
     );
   }
 

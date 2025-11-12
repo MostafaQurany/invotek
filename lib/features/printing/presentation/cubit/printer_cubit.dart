@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/models/invoice_language.dart';
 import '../../core/services/printer_service.dart';
@@ -16,9 +18,7 @@ class PrinterCubit extends Cubit<PrinterState> {
   final PrinterService _printerService;
   StreamSubscription<List<BluetoothDevice>>? _scanSubscription;
   StreamSubscription<bool>? _connectionSubscription;
-  Timer? _connectionPollingTimer;
   bool _isInitialized = false;
-  bool _isPollingActive = false; // لتتبع حالة polling
 
   PrinterCubit(this._printerService) : super(const PrinterState.initial()) {
     _init();
@@ -48,26 +48,10 @@ class PrinterCubit extends Cubit<PrinterState> {
   }
 
   /// الاستماع لتحديثات حالة الاتصال
+  /// تم تبسيطه - لا يستخدم stream الآن
   void _listenToConnection() {
+    // لا حاجة لـ stream listener - يتم التحقق من الاتصال عند الحاجة
     _connectionSubscription?.cancel();
-    _connectionSubscription = _printerService.connectionState$.listen((
-      isConnected,
-    ) {
-      if (isConnected) {
-        print(
-          "The connected device is ====================================================$isConnected",
-        );
-        final device = _printerService.connectedDevice;
-        if (device != null) {
-          print(
-            "The connected device Name is ====================================================${device.name}",
-          );
-          emit(PrinterState.connected(device));
-        }
-      } else {
-        emit(const PrinterState.disconnected());
-      }
-    });
   }
 
   /// الاستماع لنتائج البحث
@@ -99,83 +83,27 @@ class PrinterCubit extends Cubit<PrinterState> {
     }
   }
 
-  /// بدء polling ذكي للتحقق من حالة الاتصال
-  /// Polling فقط عندما يكون هناك اتصال نشط
-  void _startConnectionPolling() {
-    _connectionPollingTimer?.cancel();
-
-    // Polling كل 3 ثواني (أقل استهلاكاً للبطارية)
-    _connectionPollingTimer = Timer.periodic(
-      const Duration(seconds: 3),
-      (_) => _pollConnectionState(),
-    );
-  }
-
-  /// التحقق من حالة الاتصال بشكل دوري
-  Future<void> _pollConnectionState() async {
-    try {
-      final isConnected = await _printerService.checkConnection();
-      final device = _printerService.connectedDevice;
-
-      final currentState = state;
-
-      if (isConnected && device != null) {
-        // إذا كان متصلاً، نتحقق من أن الحالة الحالية connected
-        if (!currentState.maybeWhen(
-          connected: (_) => true,
-          orElse: () => false,
-        )) {
-          emit(PrinterState.connected(device));
-        }
-        _isPollingActive = true;
-      } else {
-        // إذا لم يكن متصلاً، نتحقق من أن الحالة الحالية disconnected
-        if (!currentState.maybeWhen(
-          disconnected: () => true,
-          orElse: () => false,
-        )) {
-          emit(const PrinterState.disconnected());
-        }
-
-        // إذا لم يكن هناك اتصال، نوقف polling مؤقتاً
-        // ونعيد تشغيله بعد 10 ثواني للتحقق مرة أخرى
-        if (_isPollingActive) {
-          _isPollingActive = false;
-          _connectionPollingTimer?.cancel();
-
-          // إعادة تشغيل polling بعد 10 ثواني
-          Future.delayed(const Duration(seconds: 10), () {
-            if (!_isPollingActive) {
-              _startConnectionPolling();
-            }
-          });
-        }
-      }
-    } catch (e) {
-      // تجاهل الأخطاء في polling
-    }
-  }
-
   /// الاتصال بجهاز
   Future<void> connect(BluetoothDevice device) async {
     try {
       final success = await _printerService.connectDevice(device);
+      
+      // التحقق من حالة الاتصال بعد محاولة الاتصال
       await Future.delayed(const Duration(milliseconds: 500));
-
       final isCurrentlyConnected = await _printerService.checkConnection();
       final currentDevice = _printerService.connectedDevice;
 
       if (isCurrentlyConnected && currentDevice != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(
+          "BlUE_DEVICE",
+          jsonEncode(currentDevice.toJson()),
+        );
         emit(PrinterState.connected(currentDevice));
-        // إعادة تشغيل polling عند الاتصال
-        if (!_isPollingActive) {
-          _startConnectionPolling();
-        }
       } else if (success) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString("BlUE_DEVICE", jsonEncode(device.toJson()));
         emit(PrinterState.connected(device));
-        if (!_isPollingActive) {
-          _startConnectionPolling();
-        }
       } else {
         emit(const PrinterState.error('فشل الاتصال بالطابعة'));
       }
@@ -321,9 +249,12 @@ class PrinterCubit extends Cubit<PrinterState> {
 
   @override
   Future<void> close() {
-    _connectionPollingTimer?.cancel();
     _scanSubscription?.cancel();
     _connectionSubscription?.cancel();
     return super.close();
   }
+
+  /*?==================================================*/
+
+  // Save the last device connected to the local
 }

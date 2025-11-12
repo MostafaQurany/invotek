@@ -6,7 +6,7 @@ import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/customer_invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_details_screen.dart';
+import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_card.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -102,7 +102,7 @@ class _CustomerInvoicesListScreenState
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.arrow_back_ios_new_outlined,
-              color: AppColors.white,
+              color: AppColors.primary,
               size: 20.sp,
             ),
           ),
@@ -286,7 +286,9 @@ class _CustomerInvoicesListScreenState
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => InvoiceDetailsScreen(invoice: invoice),
+        builder: (context) => EnhancedInvoiceDetailsScreen(
+          invoiceId: (invoice.id ?? 0).toString(),
+        ),
       ),
     );
   }

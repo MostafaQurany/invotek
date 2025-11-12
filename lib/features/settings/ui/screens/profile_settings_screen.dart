@@ -78,8 +78,8 @@ class ProfileSettingsScreen extends StatelessWidget {
                     children: [
                       // Edit Profile
                       _buildSettingTile(
-                        title: 'Edit Profile',
-                        subtitle: 'Update your profile information',
+                        title: S.of(context).editProfile,
+                        subtitle: S.of(context).updateYourProfileInformation,
                         icon: Icons.person_outline,
                         onTap: () {
                           Navigator.of(context).pushNamed('/edit-profile');

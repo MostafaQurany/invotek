@@ -43,7 +43,6 @@ class PrinterService {
 
   /// Streams
   Stream<List<BluetoothDevice>> get scanResults$ => _controller.scanResults$;
-  Stream<bool> get connectionState$ => _controller.connectionState$;
 
   /// التحقق من حالة الاتصال
   bool get isConnected => _controller.isConnected;

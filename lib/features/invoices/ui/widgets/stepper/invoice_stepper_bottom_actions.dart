@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/generated/l10n.dart';
 
 class InvoiceStepperBottomActions extends StatelessWidget {
   final int currentStep;
@@ -50,7 +51,7 @@ class InvoiceStepperBottomActions extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'السابق',
+                  S.of(context).previous,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
@@ -84,7 +85,7 @@ class InvoiceStepperBottomActions extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      currentStep == 3 ? 'إنشاء الفاتورة' : 'التالي',
+                      currentStep == 3 ? S.of(context).createInvoice : S.of(context).next,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w500,

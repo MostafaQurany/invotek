@@ -55,7 +55,7 @@ class ExpensesErrorWidget extends StatelessWidget {
       ),
       subscriptionRequired: (message, redirectUrl) => FailureWidget(
         failure: failure,
-        customTitle: 'اختيار الباقة مطلوب',
+        customTitle: S.of(context).subscriptionRequiredTitle,
         customMessage: message,
         customAction: redirectUrl != null
             ? () async {
@@ -77,7 +77,7 @@ class ExpensesErrorWidget extends StatelessWidget {
                   AppRoutes.subscriptionPackagesRoute,
                 );
               },
-        customActionText: 'اختيار الباقة',
+        customActionText: S.of(context).subscriptionRequiredAction,
       ),
     );
   }

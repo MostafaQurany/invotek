@@ -41,19 +41,10 @@ class _ExpenseCategoriesListScreenState
   }
 
   void _navigateToAddCategory() {
-    PermissionChecker.hasPermission(
-          context,
-          ExpenseCategoriesPermissions.create,
-        )
-        ? () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddExpenseCategoryScreen(),
-              ),
-            );
-          }
-        : null;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AddExpenseCategoryScreen()),
+    );
   }
 
   void _navigateToEditCategory(ExpenseCategoryModel category) {
@@ -115,7 +106,9 @@ class _ExpenseCategoriesListScreenState
                   zoomDrawer.close();
                 }
                 // الانتقال إلى home باستخدام NavigationCubit
-                context.read<NavigationCubit>().navigateToRoute(AppRoutes.homeRoute);
+                context.read<NavigationCubit>().navigateToRoute(
+                  AppRoutes.homeRoute,
+                );
               } else {
                 // Fallback: الانتقال إلى home مباشرة
                 Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
@@ -130,107 +123,44 @@ class _ExpenseCategoriesListScreenState
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
         appBar: AppBar(
-        elevation: 1,
-        scrolledUnderElevation: 1,
-        backgroundColor: AppColors.backgroundLight,
-        title: Text(
-          S.of(context).expenseCategories,
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-        leading: IconButton.filled(
-          style: IconButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.r),
-            ),
+          elevation: 1,
+          scrolledUnderElevation: 1,
+          backgroundColor: AppColors.backgroundLight,
+          title: Text(
+            S.of(context).expenseCategories,
+            style: TextStyle(fontWeight: FontWeight.w600),
           ),
-          onPressed: _navigateToAddCategory,
-          icon: Icon(Icons.add, color: AppColors.white, size: 18.sp),
-        ),
-        actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
-        actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
-            child: IconButton(
-              onPressed: () {
-                ZoomDrawer.of(context)?.toggle();
-              },
-              icon: Icon(
-                Icons.menu_rounded,
-                color: AppColors.primary,
-                size: 24.sp,
+          leading: IconButton.filled(
+            style: IconButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
               ),
-              padding: EdgeInsets.all(8.w),
             ),
+            onPressed: _navigateToAddCategory,
+            icon: Icon(Icons.add, color: AppColors.white, size: 18.sp),
           ),
-        ],
-      ),
-      body: BlocListener<ExpenseCategoriesCubit, ExpenseCategoriesState>(
-        listener: (context, state) {
-          state.whenOrNull(
-            deleteSuccess:
-                (
-                  categories,
-                  deletedId,
-                  selectedCategory,
-                  currentPage,
-                  totalPages,
-                ) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(S.of(context).categoryDeletedSuccessfully),
-                      backgroundColor: AppColors.primary,
-                    ),
-                  );
+          actionsPadding: EdgeInsetsDirectional.only(end: 16.w),
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 3.w),
+              child: IconButton(
+                onPressed: () {
+                  ZoomDrawer.of(context)?.toggle();
                 },
-            failure:
-                (categories, selectedCategory, currentPage, totalPages, error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(S.of(context).errorMessage(error)),
-                      backgroundColor: AppColors.error,
-                    ),
-                  );
-                },
-          );
-        },
-        child: BlocBuilder<ExpenseCategoriesCubit, ExpenseCategoriesState>(
-          builder: (context, state) {
-            return state.when(
-              initial:
-                  (
-                    categories,
-                    selectedCategory,
-                    currentPage,
-                    totalPages,
-                    error,
-                  ) => _buildEmptyState(),
-              loading:
-                  (
-                    categories,
-                    selectedCategory,
-                    currentPage,
-                    totalPages,
-                    message,
-                  ) => _buildLoadingState(),
-              loaded: (categories, selectedCategory, currentPage, totalPages) =>
-                  _buildCategoriesList(categories),
-              createSuccess:
-                  (
-                    categories,
-                    created,
-                    selectedCategory,
-                    currentPage,
-                    totalPages,
-                  ) => _buildCategoriesList(categories),
-              updateSuccess:
-                  (
-                    categories,
-                    updated,
-                    selectedCategory,
-                    currentPage,
-                    totalPages,
-                  ) => _buildCategoriesList(categories),
+                icon: Icon(
+                  Icons.menu_rounded,
+                  color: AppColors.primary,
+                  size: 24.sp,
+                ),
+                padding: EdgeInsets.all(8.w),
+              ),
+            ),
+          ],
+        ),
+        body: BlocListener<ExpenseCategoriesCubit, ExpenseCategoriesState>(
+          listener: (context, state) {
+            state.whenOrNull(
               deleteSuccess:
                   (
                     categories,
@@ -238,7 +168,16 @@ class _ExpenseCategoriesListScreenState
                     selectedCategory,
                     currentPage,
                     totalPages,
-                  ) => _buildCategoriesList(categories),
+                  ) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          S.of(context).categoryDeletedSuccessfully,
+                        ),
+                        backgroundColor: AppColors.primary,
+                      ),
+                    );
+                  },
               failure:
                   (
                     categories,
@@ -246,11 +185,74 @@ class _ExpenseCategoriesListScreenState
                     currentPage,
                     totalPages,
                     error,
-                  ) => _buildErrorState(error),
+                  ) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(S.of(context).errorMessage(error)),
+                        backgroundColor: AppColors.error,
+                      ),
+                    );
+                  },
             );
           },
+          child: BlocBuilder<ExpenseCategoriesCubit, ExpenseCategoriesState>(
+            builder: (context, state) {
+              return state.when(
+                initial:
+                    (
+                      categories,
+                      selectedCategory,
+                      currentPage,
+                      totalPages,
+                      error,
+                    ) => _buildEmptyState(),
+                loading:
+                    (
+                      categories,
+                      selectedCategory,
+                      currentPage,
+                      totalPages,
+                      message,
+                    ) => _buildLoadingState(),
+                loaded:
+                    (categories, selectedCategory, currentPage, totalPages) =>
+                        _buildCategoriesList(categories),
+                createSuccess:
+                    (
+                      categories,
+                      created,
+                      selectedCategory,
+                      currentPage,
+                      totalPages,
+                    ) => _buildCategoriesList(categories),
+                updateSuccess:
+                    (
+                      categories,
+                      updated,
+                      selectedCategory,
+                      currentPage,
+                      totalPages,
+                    ) => _buildCategoriesList(categories),
+                deleteSuccess:
+                    (
+                      categories,
+                      deletedId,
+                      selectedCategory,
+                      currentPage,
+                      totalPages,
+                    ) => _buildCategoriesList(categories),
+                failure:
+                    (
+                      categories,
+                      selectedCategory,
+                      currentPage,
+                      totalPages,
+                      error,
+                    ) => _buildErrorState(error),
+              );
+            },
+          ),
         ),
-      ),
       ),
     );
   }

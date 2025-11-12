@@ -1,7 +1,6 @@
-import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
@@ -55,14 +54,14 @@ class PosPrinterController {
 
   // Streams
   Stream<List<BluetoothDevice>> get scanResults$ => _bleController.scanResults$;
-  final _connectionStateCtrl = StreamController<bool>.broadcast();
-  Stream<bool> get connectionState$ => _connectionStateCtrl.stream;
   BluetoothDevice? _connectedDevice;
-  StreamSubscription<ConnectState>? _connectStateSub;
 
   // Callbacks
   Function(BluetoothDevice)? _onConnected;
   Function()? _onDisconnected;
+
+  // حالة التهيئة
+  bool _isInitialized = false;
 
   /// تهيئة المتحكم
   /// Initialize the controller
@@ -70,158 +69,58 @@ class PosPrinterController {
     Function(BluetoothDevice)? onConnected,
     Function()? onDisconnected,
   }) async {
+    // التحقق من التهيئة السابقة - تحديث callbacks فقط إذا تم التهيئة
+    if (_isInitialized) {
+      // تحديث callbacks فقط بدون إعادة تهيئة الـ listeners
+      _onConnected = onConnected;
+      _onDisconnected = onDisconnected;
+      return;
+    }
+
     _onConnected = onConnected;
     _onDisconnected = onDisconnected;
-
-    // إلغاء الـ subscription القديمة إذا كانت موجودة
-    _connectStateSub?.cancel();
-
-    // الاستماع مباشرة من BluetoothPrintPlus.connectState
-    _connectStateSub = BluetoothPrintPlus.connectState.listen((s) async {
-      print('PosPrinterController connectState: $s');
-      switch (s) {
-        case ConnectState.connected:
-          // تحديث _connectedDevice فوراً - قبل أي شيء آخر
-          // هذا مهم جداً في Release Mode
-          if (_bleController.connectedDevice != null) {
-            _connectedDevice = _bleController.connectedDevice;
-            print('PosPrinterController: Got device from _bleController');
-          } else {
-            // إذا لم نجد في _bleController، نستخدم device من connect() method
-            // لكن هذا قد لا يكون متاحاً، لذا نحاول _updateConnectedDevice
-            await _updateConnectedDevice();
-          }
-
-          // تحديث Stream فوراً
-          if (!_connectionStateCtrl.isClosed) {
-            _connectionStateCtrl.add(true);
-          }
-
-          if (_connectedDevice != null) {
-            _onConnected?.call(_connectedDevice!);
-          } else {
-            // إذا لم نجد الطابعة، نحاول البحث مرة أخرى بعد قليل
-            Future.delayed(const Duration(seconds: 2), () async {
-              await _updateConnectedDevice();
-              if (_connectedDevice != null) {
-                if (!_connectionStateCtrl.isClosed) {
-                  _connectionStateCtrl.add(true);
-                }
-                _onConnected?.call(_connectedDevice!);
-              }
-            });
-          }
-          break;
-        case ConnectState.disconnected:
-          // التحقق من الحالة الفعلية قبل تحديث Stream
-          // هذا مهم لأن Stream قد يرسل disconnected خطأً في Release Mode
-          Future.delayed(const Duration(milliseconds: 200), () async {
-            try {
-              // التحقق من الحالة الفعلية
-              final actualState = await BluetoothPrintPlus.connectState.first
-                  .timeout(
-                    const Duration(milliseconds: 300),
-                    onTimeout: () => ConnectState.disconnected,
-                  );
-
-              // فقط إذا كانت الحالة disconnected فعلاً، نحدث Stream
-              if (actualState == ConnectState.disconnected &&
-                  _connectedDevice != null) {
-                print(
-                  'PosPrinterController: Disconnected confirmed, clearing device',
-                );
-                _connectedDevice = null;
-                if (!_connectionStateCtrl.isClosed) {
-                  _connectionStateCtrl.add(false);
-                }
-                _onDisconnected?.call();
-              } else if (actualState == ConnectState.connected) {
-                // إذا كانت الحالة connected فعلاً، نؤكد الاتصال
-                print(
-                  'PosPrinterController: Still connected, ignoring disconnected event',
-                );
-                if (!_connectionStateCtrl.isClosed &&
-                    _connectedDevice != null) {
-                  _connectionStateCtrl.add(true);
-                }
-              }
-            } catch (e) {
-              print('PosPrinterController: Error checking actual state: $e');
-              // في حالة الخطأ، نتحقق من _connectedDevice
-              if (_connectedDevice != null) {
-                // إذا كان _connectedDevice موجود، نؤكد الاتصال
-                if (!_connectionStateCtrl.isClosed) {
-                  _connectionStateCtrl.add(true);
-                }
-              }
-            }
-          });
-          break;
-      }
-    });
 
     _bleController.initListeners(
       onConnected: (device) {
         _connectedDevice = device;
-        // لا حاجة لإضافة للـ stream هنا لأن connectState listener سيفعل ذلك
+        _onConnected?.call(device);
       },
       onDisconnected: () {
         _connectedDevice = null;
-        // لا حاجة لإضافة للـ stream هنا لأن connectState listener سيفعل ذلك
+        _onDisconnected?.call();
       },
     );
+
+    _isInitialized = true;
   }
 
-  /// تحديث الجهاز المتصل
-  /// Update connected device
-  /// يستخدم MAC address المحفوظ للبحث عن الجهاز (بدون scan!)
+  /// تحديث الجهاز المتصل من الأجهزة المقترنة
+  /// Update connected device from paired devices
   Future<void> _updateConnectedDevice() async {
     if (_connectedDevice != null) {
-      return; // الجهاز موجود بالفعل
+      return;
     }
 
     try {
-      // محاولة الحصول على MAC address المحفوظ
       final prefs = await SharedPreferences.getInstance();
       final savedAddress = prefs.getString('last_connected_printer_address');
       final savedName = prefs.getString('last_connected_printer_name');
 
       if (savedAddress == null) {
-        print('_updateConnectedDevice: No saved address');
-        return; // لا يوجد MAC address محفوظ
+        return;
       }
 
-      print(
-        '_updateConnectedDevice: Looking for saved device: $savedName ($savedAddress)',
-      );
-
-      // البحث في paired devices فقط (بدون scan!)
+      final pairedDevices = await getPairedDevices(forceRefresh: false);
       try {
-        final pairedDevices = await getPairedDevices(forceRefresh: false);
-        try {
-          final foundDevice = pairedDevices.firstWhere(
-            (d) =>
-                d.address == savedAddress ||
-                (savedName != null && d.name == savedName),
-          );
-          _connectedDevice = foundDevice;
-          print(
-            '_updateConnectedDevice: Found in paired devices ${foundDevice.name} (${foundDevice.address})',
-          );
-          return; // ✅ وجدنا الجهاز، لا حاجة للبحث
-        } catch (e) {
-          print('_updateConnectedDevice: Not found in paired devices');
-          // ❌ لا نبدأ scan! لأن الاتصال موجود بالفعل
-          // فقط نترك _connectedDevice = null
-          // لكن الاتصال سيبقى active
-        }
+        final foundDevice = pairedDevices.firstWhere(
+          (d) =>
+              d.address == savedAddress ||
+              (savedName != null && d.name == savedName),
+        );
+        _connectedDevice = foundDevice;
       } catch (e) {
-        print('_updateConnectedDevice: Error getting paired devices: $e');
+        // الجهاز غير موجود في paired devices
       }
-
-      // ❌ إزالة جميع محاولات البحث (scan) من هنا!
-      // إذا لم نجد في paired devices، لا نبدأ scan
-      // لأن الاتصال موجود بالفعل، فقط الجهاز غير موجود في القائمة
     } catch (e) {
       print('_updateConnectedDevice error: $e');
     }
@@ -252,44 +151,30 @@ class PosPrinterController {
     if (invoiceLanguage != null) _invoiceLanguage = invoiceLanguage;
   }
 
-  /// التحقق من حالة الاتصال الحالية (بسيط - بدون بحث)
-  /// Check current connection status (simple - no scanning)
+  /// التحقق من حالة الاتصال الحالية
+  /// Check current connection status
   Future<void> checkCurrentConnection() async {
     try {
-      // الحصول على الحالة الحالية من Stream مباشرة
-      final currentState = await BluetoothPrintPlus.connectState.first.timeout(
-        const Duration(milliseconds: 500),
-        onTimeout: () => ConnectState.disconnected,
-      );
-
-      print('checkCurrentConnection: currentState = $currentState');
+      final currentState = await BluetoothPrintPlus.connectState
+          .firstWhere(
+            (s) =>
+                s == ConnectState.connected || s == ConnectState.disconnected,
+          )
+          .timeout(
+            const Duration(seconds: 5),
+            onTimeout: () => ConnectState.disconnected,
+          );
 
       if (currentState == ConnectState.connected) {
-        // إذا كان متصلاً ولكن _connectedDevice == null، نحاول العثور عليه من paired devices فقط (بدون scan)
         if (_connectedDevice == null) {
-          print(
-            'checkCurrentConnection: Connected but device is null, trying to find from paired devices...',
-          );
-          // محاولة بسيطة من paired devices فقط (بدون scan!)
-          await _updateConnectedDevice(); // هذا يستخدم paired devices فقط
-        } else {
-          print(
-            'checkCurrentConnection: Already have connected device: ${_connectedDevice!.name}',
-          );
+          await _updateConnectedDevice();
         }
-
-        // تحديث stream بالحالة الحالية
-        _connectionStateCtrl.add(true);
-        print('checkCurrentConnection: Connection confirmed');
       } else {
         _connectedDevice = null;
-        _connectionStateCtrl.add(false);
-        print('checkCurrentConnection: Not connected');
       }
     } catch (e) {
       print('checkCurrentConnection error: $e');
       _connectedDevice = null;
-      _connectionStateCtrl.add(false);
     }
   }
 
@@ -319,146 +204,93 @@ class PosPrinterController {
   /// Connect to a device
   Future<bool> connect(BluetoothDevice device) async {
     try {
-      print(
-        'connect: Attempting to connect to ${device.name} (${device.address})',
-      );
-
       // طلب الأذونات أولاً (Android 12+)
       final hasPermissions =
           await BluetoothPermissions.requestBluetoothPermissions();
       if (!hasPermissions) {
         print('connect: Bluetooth permissions not granted');
         _connectedDevice = null;
-        _connectionStateCtrl.add(false);
         return false;
       }
 
       // الاتصال عبر _bleController
       await _bleController.connect(device);
 
-      // في Release Mode، نحتاج وقت أطول للاتصال
-      // نستخدم polling بدلاً من stream للتحكم بشكل أفضل
-      bool connected = false;
-      const maxAttempts = 20; // 20 محاولة × 500ms = 10 ثواني
-      const delayMs = 500;
-
-      for (int i = 0; i < maxAttempts; i++) {
-        // التحقق من _connectedDevice قبل الانتظار
-        // هذا مهم جداً لأن Stream listener قد يكون قد حدثه
-        if (_connectedDevice != null) {
-          connected = true;
-          print(
-            'connect: Connected via stream listener before delay (attempt ${i + 1})',
-          );
-          break;
-        }
-
-        await Future.delayed(Duration(milliseconds: delayMs));
-
-        // التحقق مرة أخرى بعد الانتظار
-        if (_connectedDevice != null) {
-          connected = true;
-          print(
-            'connect: Connected via stream listener after delay (attempt ${i + 1})',
-          );
-          break;
-        }
-
-        try {
-          final currentState = await BluetoothPrintPlus.connectState.first
-              .timeout(
-                const Duration(milliseconds: 300),
-                onTimeout: () => ConnectState.disconnected,
-              );
-
-          if (currentState == ConnectState.connected) {
-            connected = true;
-            print('connect: Connected after ${(i + 1) * delayMs}ms');
-            break;
-          }
-        } catch (e) {
-          print('connect: Error checking state (attempt ${i + 1}): $e');
-          // نستمر في المحاولة
-        }
-      }
-
-      // التحقق النهائي - من _connectedDevice أولاً
-      if (!connected) {
-        // التحقق من _connectedDevice (Stream listener قد يكون قد حدثه)
-        if (_connectedDevice != null) {
-          connected = true;
-          print('connect: Connected via stream listener on final check');
-        } else {
-          try {
-            final finalState = await BluetoothPrintPlus.connectState.first
+      // انتظار حتى 8 ثواني إن الستريم يدي Connected
+      try {
+        final isConnected =
+            await BluetoothPrintPlus.connectState
+                .firstWhere((s) => s == ConnectState.connected)
                 .timeout(
-                  const Duration(milliseconds: 1000),
+                  const Duration(seconds: 8),
                   onTimeout: () => ConnectState.disconnected,
-                );
-            connected = finalState == ConnectState.connected;
-            if (connected) {
-              print('connect: Connected on final check');
-            }
-          } catch (e) {
-            print('connect: Final check error: $e');
+                ) ==
+            ConnectState.connected;
+
+        if (isConnected) {
+          _connectedDevice = _bleController.connectedDevice ?? device;
+
+          // حفظ MAC address في SharedPreferences
+          if (_connectedDevice != null) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString(
+              'last_connected_printer_address',
+              _connectedDevice!.address,
+            );
+            await prefs.setString(
+              'last_connected_printer_name',
+              _connectedDevice!.name,
+            );
           }
-        }
-      }
 
-      if (connected) {
-        // تحديث _connectedDevice أولاً - قبل أي شيء آخر
-        _connectedDevice = _bleController.connectedDevice ?? device;
-
-        // حفظ MAC address في SharedPreferences
-        if (_connectedDevice != null) {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString(
-            'last_connected_printer_address',
-            _connectedDevice!.address,
-          );
-          await prefs.setString(
-            'last_connected_printer_name',
-            _connectedDevice!.name,
-          );
-          print(
-            'connect: Successfully connected and saved device ${_connectedDevice!.name} (${_connectedDevice!.address})',
-          );
-        }
-
-        // انتظار قليل للتأكد من تحديث _connectedDevice
-        // هذا مهم في Release Mode
-        await Future.delayed(const Duration(milliseconds: 100));
-
-        // تحديث Stream بعد التأكد من تحديث _connectedDevice
-        if (!_connectionStateCtrl.isClosed) {
-          _connectionStateCtrl.add(true);
-        }
-
-        // استدعاء callback
-        if (_connectedDevice != null) {
           _onConnected?.call(_connectedDevice!);
+          return true;
         }
-
-        // تأكيد إضافي بعد قليل للتأكد من وصول التحديث
-        // هذا مهم في Release Mode حيث Stream listeners قد تكون أبطأ
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (!_connectionStateCtrl.isClosed && _connectedDevice != null) {
-            _connectionStateCtrl.add(true);
-            _onConnected?.call(_connectedDevice!);
-          }
-        });
-
-        return true;
-      } else {
-        print('connect: Connection failed after all attempts');
-        _connectedDevice = null;
-        _connectionStateCtrl.add(false);
-        return false;
+      } catch (e) {
+        print('connect: First attempt failed, trying retry: $e');
       }
+
+      // محاولة إعادة مرة واحدة بعد 1-2 ثانية (في حالات flip)
+      await Future.delayed(const Duration(seconds: 2));
+
+      try {
+        final retryConnected =
+            await BluetoothPrintPlus.connectState
+                .firstWhere((s) => s == ConnectState.connected)
+                .timeout(
+                  const Duration(seconds: 5),
+                  onTimeout: () => ConnectState.disconnected,
+                ) ==
+            ConnectState.connected;
+
+        if (retryConnected) {
+          _connectedDevice = _bleController.connectedDevice ?? device;
+
+          // حفظ MAC address في SharedPreferences
+          if (_connectedDevice != null) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString(
+              'last_connected_printer_address',
+              _connectedDevice!.address,
+            );
+            await prefs.setString(
+              'last_connected_printer_name',
+              _connectedDevice!.name,
+            );
+          }
+
+          _onConnected?.call(_connectedDevice!);
+          return true;
+        }
+      } catch (e) {
+        print('connect: Retry attempt failed: $e');
+      }
+
+      _connectedDevice = null;
+      return false;
     } catch (e) {
       print('connect error: $e');
       _connectedDevice = null;
-      _connectionStateCtrl.add(false);
       return false;
     }
   }
@@ -470,36 +302,37 @@ class PosPrinterController {
   }
 
   /// الاتصال التلقائي
-  /// Auto connect (يحاول الاتصال بالطابعة المحفوظة أولاً)
-  /// Auto connect (tries to connect to saved printer first)
+  /// Auto connect (يحاول الاتصال بالطابعة المحفوظة)
   Future<bool> autoConnect({String? preferredDeviceName}) async {
     try {
-      // التحقق من حالة الاتصال الحالية أولاً
-      final currentState = await BluetoothPrintPlus.connectState.first.timeout(
-        const Duration(seconds: 1),
-        onTimeout: () => ConnectState.disconnected,
-      );
+      // التحقق من حالة الاتصال الحالية
+      try {
+        final currentState = await BluetoothPrintPlus.connectState
+            .firstWhere(
+              (s) =>
+                  s == ConnectState.connected || s == ConnectState.disconnected,
+            )
+            .timeout(
+              const Duration(seconds: 5),
+              onTimeout: () => ConnectState.disconnected,
+            );
 
-      if (currentState == ConnectState.connected) {
-        print('autoConnect: Already connected');
-        // تحديث _connectedDevice إذا كان null
-        if (_connectedDevice == null) {
-          await _updateConnectedDevice();
+        if (currentState == ConnectState.connected) {
+          if (_connectedDevice == null) {
+            await _updateConnectedDevice();
+          }
+          return true;
         }
-        return true;
+      } catch (e) {
+        print('autoConnect: Error checking current state: $e');
       }
 
-      // 1. محاولة الاتصال بالطابعة المحفوظة (MAC address) أولاً
+      // محاولة الاتصال بالطابعة المحفوظة
       final prefs = await SharedPreferences.getInstance();
       final savedAddress = prefs.getString('last_connected_printer_address');
       final savedName = prefs.getString('last_connected_printer_name');
 
       if (savedAddress != null) {
-        print(
-          'autoConnect: Trying to connect to saved printer: $savedName ($savedAddress)',
-        );
-
-        // البحث في paired devices أولاً
         final pairedDevices = await getPairedDevices(forceRefresh: false);
         try {
           final savedDevice = pairedDevices.firstWhere(
@@ -507,95 +340,12 @@ class PosPrinterController {
                 d.address == savedAddress ||
                 (savedName != null && d.name == savedName),
           );
-          final connected = await connect(savedDevice);
-          if (connected) {
-            print('autoConnect: Successfully connected to saved printer');
-            return true;
-          }
+          return await connect(savedDevice);
         } catch (e) {
-          print(
-            'autoConnect: Saved printer not found in paired devices, trying scan...',
-          );
-        }
-
-        // إذا لم نجد في paired devices، نحاول البحث
-        await startScan(timeout: const Duration(seconds: 3));
-        await Future.delayed(const Duration(milliseconds: 500));
-
-        try {
-          final scanDevices = await scanResults$.first.timeout(
-            const Duration(seconds: 2),
-            onTimeout: () => <BluetoothDevice>[],
-          );
-          stopScan();
-
-          try {
-            final savedDevice = scanDevices.firstWhere(
-              (d) =>
-                  d.address == savedAddress ||
-                  (savedName != null && d.name == savedName),
-            );
-            final connected = await connect(savedDevice);
-            if (connected) {
-              print(
-                'autoConnect: Successfully connected to saved printer from scan',
-              );
-              return true;
-            }
-          } catch (e) {
-            print('autoConnect: Saved printer not found in scan results');
-          }
-        } catch (e) {
-          print('autoConnect: Scan failed: $e');
-          stopScan();
+          // الطابعة غير موجودة في paired devices
         }
       }
 
-      // 2. محاولة الاتصال بجهاز محدد إذا تم توفيره
-      if (preferredDeviceName != null) {
-        final pairedDevices = await getPairedDevices();
-        try {
-          final preferredDevice = pairedDevices.firstWhere(
-            (d) => d.name == preferredDeviceName,
-          );
-          final connected = await connect(preferredDevice);
-          if (connected) return true;
-        } catch (e) {
-          print('autoConnect: Preferred device not found');
-        }
-      }
-
-      // 3. محاولة الاتصال بأول جهاز مقترن
-      final pairedDevices = await getPairedDevices();
-      if (pairedDevices.isNotEmpty) {
-        print('autoConnect: Trying to connect to first paired device');
-        final connected = await connect(pairedDevices.first);
-        if (connected) return true;
-      }
-
-      // 4. البحث عن الأجهزة والاتصال بأول جهاز
-      print('autoConnect: Scanning for devices...');
-      await startScan(timeout: const Duration(seconds: 5));
-      await Future.delayed(const Duration(seconds: 2));
-
-      try {
-        final devices = await scanResults$.first.timeout(
-          const Duration(seconds: 3),
-          onTimeout: () => <BluetoothDevice>[],
-        );
-        stopScan();
-
-        if (devices.isNotEmpty) {
-          print('autoConnect: Trying to connect to first scanned device');
-          final connected = await connect(devices.first);
-          if (connected) return true;
-        }
-      } catch (e) {
-        print('autoConnect: Error getting scan results: $e');
-        stopScan();
-      }
-
-      print('autoConnect: Failed to connect to any device');
       return false;
     } catch (e) {
       print('autoConnect error: $e');
@@ -630,32 +380,25 @@ class PosPrinterController {
 
   /// التحقق من حالة الاتصال
   /// Check connection status
-  /// يعتمد على BluetoothPrintPlus.connectState مباشرة
   bool get isConnected {
-    // الحصول على الحالة الحالية من Stream (synchronous check)
-    try {
-      // استخدام last value من Stream إذا كان متاحاً
-      // إذا لم يكن متاحاً، نتحقق من _connectedDevice
-      // لكن الأفضل هو الاعتماد على connectState listener الذي يحدث _connectionStateCtrl
-      // لذلك نستخدم _connectedDevice كـ fallback
-      // لكن يجب أن نعتمد على connectState الحالي
-      return _connectedDevice != null;
-    } catch (e) {
-      return false;
-    }
+    return _connectedDevice != null;
   }
 
   /// التحقق من حالة الاتصال من BluetoothPrintPlus مباشرة (async)
   /// Check connection status directly from BluetoothPrintPlus (async)
   Future<bool> getIsConnectedAsync() async {
     try {
-      final currentState = await BluetoothPrintPlus.connectState.first.timeout(
-        const Duration(seconds: 1),
-        onTimeout: () => ConnectState.disconnected,
-      );
+      final currentState = await BluetoothPrintPlus.connectState
+          .firstWhere(
+            (s) =>
+                s == ConnectState.connected || s == ConnectState.disconnected,
+          )
+          .timeout(
+            const Duration(seconds: 5),
+            onTimeout: () => ConnectState.disconnected,
+          );
       return currentState == ConnectState.connected;
     } catch (e) {
-      print('getIsConnectedAsync error: $e');
       return false;
     }
   }
@@ -769,8 +512,6 @@ class PosPrinterController {
   /// تنظيف الموارد
   /// Dispose resources
   void dispose() {
-    _connectStateSub?.cancel();
-    _connectionStateCtrl.close();
     _bleController.dispose();
   }
 }

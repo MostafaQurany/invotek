@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/printing/ui/widgets/settings/paper_width_selector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,12 +51,12 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
   bool _isPrintCancelled = false;
 
   InvoiceLanguage _selectedLanguage = InvoiceLanguage.arabic;
-  int _sliceHeight = 900;
+  int _sliceHeight = 400;
   PaperPreset _paperWidth = PaperPreset.mm80;
-
   @override
   void initState() {
     super.initState();
+
     _loadSettings();
     _generatePreview();
   }
@@ -73,6 +76,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
       orElse: () => InvoiceLanguage.arabic,
     );
     _sliceHeight = savedSliceHeight;
+
     setState(() {});
   }
 
@@ -96,7 +100,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
         setState(() => _isGeneratingPreview = false);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('خطأ في المعاينة: $e'),
+            content: Text(S.of(context).previewError(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -109,9 +113,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
     if (!cubit.isConnected) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text(
-            'الطابعة غير متصلة. يرجى الاتصال بالطابعة من الإعدادات.',
-          ),
+          content: Text(S.of(context).connectPrinterFromSettings),
           backgroundColor: AppColors.error,
         ),
       );
@@ -149,14 +151,14 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
         if (_isPrintCancelled) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('تم إلغاء الطباعة'),
+              content: Text(S.of(context).printCancelled),
               backgroundColor: AppColors.primary,
             ),
           );
         } else if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('تمت الطباعة بنجاح'),
+              content: Text(S.of(context).printSuccess),
               backgroundColor: AppColors.primary,
             ),
           );
@@ -164,7 +166,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: const Text('فشلت الطباعة'),
+              content: Text(S.of(context).printFailed),
               backgroundColor: AppColors.error,
             ),
           );
@@ -175,7 +177,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
         Navigator.of(context).pop(); // إغلاق dialog
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('خطأ في الطباعة: $e'),
+            content: Text(S.of(context).printErrorWithMessage(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );
@@ -212,7 +214,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'طباعة الفاتورة',
+                    S.of(context).printInvoiceTitle,
                     style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
@@ -246,7 +248,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'الإعدادات',
+                            S.of(context).settings,
                             style: TextStyle(
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
@@ -257,7 +259,13 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
 
                           PaperWidthSelector(
                             value: _paperWidth,
-                            onChanged: (paperWidth) {
+                            onChanged: (paperWidth) async {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString(
+                                'printer_paper_width',
+                                paperWidth.name,
+                              );
                               setState(() {
                                 _paperWidth = paperWidth;
                               });
@@ -275,7 +283,10 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
                           SizedBox(height: 16.h),
                           SliceHeightSelector(
                             value: _sliceHeight,
-                            onChanged: (height) {
+                            onChanged: (height) async {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setInt('printer_slice_height', height);
                               setState(() => _sliceHeight = height);
                               _generatePreview();
                             },
@@ -301,7 +312,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
                         child: Padding(
                           padding: EdgeInsets.all(32.w),
                           child: Text(
-                            'لا توجد معاينة',
+                            S.of(context).noPreview,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: AppColors.textSecondary,
@@ -314,6 +325,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
               ),
             ),
 
+            //      _buildBluetoothStatusTile(),
             // Actions
             Container(
               padding: EdgeInsets.all(16.w),
@@ -325,7 +337,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('إلغاء'),
+                      child: Text(S.of(context).cancel),
                     ),
                   ),
                   SizedBox(width: 16.w),
@@ -346,7 +358,7 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
                                 ),
                               ),
                             )
-                          : const Text('طباعة'),
+                          : Text(S.of(context).print),
                     ),
                   ),
                 ],
@@ -354,6 +366,107 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildBluetoothStatusTile() {
+    return StreamBuilder<BlueState>(
+      stream: BluetoothPrintPlus.blueState,
+      initialData:
+          BlueState.blueOff, // optional: gives a deterministic first frame
+      builder: (context, blueSnap) {
+        final d = BluetoothPrintPlus.isConnected;
+        final d3 = BluetoothPrintPlus.isBlueOn;
+
+        print("d$d");
+        print("d3$d3");
+        final blueState = blueSnap.data;
+
+        if (blueState == null) {
+          return _StatusTile(
+            icon: Icons.info_outline,
+            text: S.of(context).checkingBluetoothStatus,
+            color: Colors.grey,
+          );
+        }
+
+        // ✅ If Bluetooth is OFF → show explicit message and stop here
+        if (blueState == BlueState.blueOff) {
+          return _StatusTile(
+            icon: Icons.bluetooth_disabled,
+            text: S.of(context).bluetoothOff,
+            color: AppColors.error,
+          );
+        }
+
+        // ✅ Bluetooth is ON → NOW listen to connection updates
+        return StreamBuilder<ConnectState>(
+          stream: BluetoothPrintPlus.connectState,
+          builder: (context, connSnap) {
+            final conn = connSnap.data;
+
+            if (conn == null) {
+              return _StatusTile(
+                icon: Icons.link,
+                text: S.of(context).checkingPrinterConnection,
+                color: Colors.grey,
+              );
+            }
+
+            if (conn == ConnectState.connected) {
+              return _StatusTile(
+                icon: Icons.check_circle,
+                text: S.of(context).printerConnected,
+                color: AppColors.primary,
+              );
+            }
+
+            // default → disconnected
+            return _StatusTile(
+              icon: Icons.link_off,
+              text: S.of(context).printerNotConnectedStatus,
+              color: AppColors.error,
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _StatusTile extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final Color color;
+
+  const _StatusTile({
+    required this.icon,
+    required this.text,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: color),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(color: color, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
       ),
     );
   }
