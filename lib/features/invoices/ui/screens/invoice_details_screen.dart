@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
@@ -16,7 +15,7 @@ import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dial
 import 'package:invotek/features/invoices/ui/widgets/dialogs/send_invoice_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/item_details_dialog.dart';
-import 'package:invotek/features/printing/ui/dialogs/invoice_print_dialog.dart';
+import 'package:invotek/features/printing/presentation/ui/dialogs/invoice_print_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
@@ -38,100 +37,65 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Modern Header with Animation
+          // Modern Header
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration.zero,
-              child: InvoiceDetailsHeaderWidget(
-                invoice: invoice,
-                onBack: () => Navigator.pop(context),
-                onEdit: () => _editInvoice(),
-              ),
+            child: InvoiceDetailsHeaderWidget(
+              invoice: invoice,
+              onBack: () => Navigator.pop(context),
+              onEdit: () => _editInvoice(),
             ),
           ),
 
-          // Space with Animation
+          // Space
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+
+          // Content Cards
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 200),
-              child: SizedBox(height: 16.h),
+            child: InvoiceSummaryCard(
+              invoice: invoice,
+              onStatusTap: () => _showStatusOptions(),
             ),
           ),
 
-          // Content Cards with Staggered Animation
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 400),
-              child: InvoiceSummaryCard(
-                invoice: invoice,
-                onStatusTap: () => _showStatusOptions(),
-              ),
+            child: InvoiceCustomerCard(
+              customer:
+                  invoice.customer ??
+                  InvoiceCustomerModel(
+                    id: 0,
+                    name: S.of(context).invoicesCustomerName,
+                    email: S.of(context).invoicesCustomerEmail,
+                    phone: S.of(context).invoicesCustomerPhone,
+                    companyId: 0,
+                    taxNumber: "0",
+                    address: "0",
+                    notes: "0",
+                    status: "0",
+                    createdAt: "0",
+                    updatedAt: "0",
+                  ),
+              onCustomerTap: () => _viewCustomerDetails(),
             ),
           ),
 
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 600),
-              child: SizedBox(height: 16.h),
+            child: InvoiceItemsCard(
+              items: invoice.items ?? [],
+              onItemTap: (item) => _viewItemDetails(item),
             ),
           ),
 
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 800),
-              child: InvoiceCustomerCard(
-                customer:
-                    invoice.customer ??
-                    InvoiceCustomerModel(
-                      id: 0,
-                      name: S.of(context).invoicesCustomerName,
-                      email: S.of(context).invoicesCustomerEmail,
-                      phone: S.of(context).invoicesCustomerPhone,
-                      companyId: 0,
-                      taxNumber: "0",
-                      address: "0",
-                      notes: "0",
-                      status: "0",
-                      createdAt: "0",
-                      updatedAt: "0",
-                    ),
-                onCustomerTap: () => _viewCustomerDetails(),
-              ),
-            ),
-          ),
+          SliverToBoxAdapter(child: SizedBox(height: 16.h)),
 
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1000),
-              child: SizedBox(height: 16.h),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1200),
-              child: InvoiceItemsCard(
-                items: invoice.items ?? [],
-                onItemTap: (item) => _viewItemDetails(item),
-              ),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1400),
-              child: SizedBox(height: 16.h),
-            ),
-          ),
-
-          SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration(milliseconds: 1600),
-              child: InvoicePaymentCard(
-                invoice: invoice,
-                onPaymentMethodTap: () => _changePaymentMethod(),
-                onMarkPaid: () => _markAsPaid(),
-              ),
+            child: InvoicePaymentCard(
+              invoice: invoice,
+              onPaymentMethodTap: () => _changePaymentMethod(),
+              onMarkPaid: () => _markAsPaid(),
             ),
           ),
 
@@ -293,7 +257,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
 
   Widget _buildMoreOptionsBottomSheet() {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
-  
+
     final s = S.of(context);
     final hasPrintPermission = PermissionChecker.hasPermission(
       context,

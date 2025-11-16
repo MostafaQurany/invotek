@@ -4,9 +4,28 @@ import 'package:invotek/generated/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SnackBarHelper {
+  /// إغلاق أي SnackBar مفتوح قبل إظهار واحد جديد
+  static void _hideCurrentSnackBar(BuildContext context) {
+    try {
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      if (scaffoldMessenger.mounted) {
+        scaffoldMessenger.hideCurrentSnackBar();
+      }
+    } catch (e) {
+      // Silently handle errors to prevent crashes
+      debugPrint('Error hiding snackbar: $e');
+    }
+  }
+
   static void showSuccessSnackBar(BuildContext context, String message) {
+    _hideCurrentSnackBar(context);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), backgroundColor: Colors.green),
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+      ),
     );
   }
 
@@ -72,10 +91,13 @@ class SnackBarHelper {
                 if (await canLaunchUrl(uri)) {
                   await launchUrl(uri, mode: LaunchMode.externalApplication);
                 } else {
+                  _hideCurrentSnackBar(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(S.of(context).cannotOpenPackageLink),
                       backgroundColor: Colors.red,
+                      behavior: SnackBarBehavior.floating,
+                      duration: const Duration(seconds: 3),
                     ),
                   );
                 }
@@ -94,6 +116,7 @@ class SnackBarHelper {
     VoidCallback? action,
     String? actionText,
   }) {
+    _hideCurrentSnackBar(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
@@ -112,7 +135,7 @@ class SnackBarHelper {
           onPressed:
               action ??
               () {
-                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                _hideCurrentSnackBar(context);
               },
         ),
       ),

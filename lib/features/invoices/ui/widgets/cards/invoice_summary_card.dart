@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
@@ -253,7 +249,7 @@ class InvoiceSummaryCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onStatusTap,
+        //   onTap: onStatusTap,
         borderRadius: BorderRadius.circular(20.r),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),

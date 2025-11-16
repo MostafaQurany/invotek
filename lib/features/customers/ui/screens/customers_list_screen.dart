@@ -50,10 +50,9 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
     super.initState();
     _initializeOptions();
     _scrollController.addListener(_onScroll);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) {
       CustomersCubit.get(context).loadFirstPage(refresh: true);
-    });
+    }
   }
 
   @override
@@ -258,48 +257,48 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
                 },
           );
         },
-        child: RefreshIndicator(
-          onRefresh: () async {
-            try {
-              final cubit = CustomersCubit.get(context);
-              if (!cubit.isClosed) {
-                await cubit.loadFirstPage(refresh: true);
-              }
-            } catch (e) {
-              print('❌ Error refreshing: $e');
-              // If cubit is closed, we can't refresh
-            }
-          },
-          child: Column(
-            children: [
-              // Header Widget - Scrolls with content
-              CustomersHeaderWidget(
-                onMenuPressed: _handleMenuPressed,
-                searchController: _searchController,
-                onSearchChanged: _onSearchChanged,
-                selectedStatus: _selectedStatus ?? 'all_status',
-                selectedCompany: _selectedCompany ?? 'all_company',
-                onStatusChanged: _onStatusChanged,
-                onCompanyChanged: _onCompanyChanged,
-                onFilterPressed: _showFiltersBottomSheet,
-              ),
+        child: Column(
+          children: [
+            // Header Widget - Scrolls with content
+            CustomersHeaderWidget(
+              onMenuPressed: _handleMenuPressed,
+              searchController: _searchController,
+              onSearchChanged: _onSearchChanged,
+              selectedStatus: _selectedStatus ?? 'all_status',
+              selectedCompany: _selectedCompany ?? 'all_company',
+              onStatusChanged: _onStatusChanged,
+              onCompanyChanged: _onCompanyChanged,
+              onFilterPressed: _showFiltersBottomSheet,
+            ),
 
-              // Customers List Content
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+            // Customers List Content
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
+                  ),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      try {
+                        final cubit = CustomersCubit.get(context);
+                        if (!cubit.isClosed) {
+                          await cubit.loadFirstPage(refresh: true);
+                        }
+                      } catch (e) {
+                        print('❌ Error refreshing: $e');
+                        // If cubit is closed, we can't refresh
+                      }
+                    },
                     child: CustomersStateBuilder(
                       onCustomerTap: (customer) =>
                           _showCustomerOptions(context, customer),
@@ -317,8 +316,8 @@ class _CustomersListScreenState extends State<CustomersListScreen> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
 

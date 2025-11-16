@@ -30,7 +30,7 @@ import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_sc
 import 'package:invotek/features/invoices/ui/screens/invoice_creation_stepper_screen.dart';
 import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
-import 'package:invotek/features/printing/ui/screens/printer_settings_screen.dart';
+import 'package:invotek/features/printing/presentation/ui/screens/printer_settings_screen.dart';
 import 'package:invotek/features/products/domain/entit/product_model.dart';
 import 'package:invotek/features/products/ui/screens/add_product_screen.dart';
 import 'package:invotek/features/products/ui/screens/categories_list_screen.dart';

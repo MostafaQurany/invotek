@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,11 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<TaxIntegrationCubit>().loadStatus();
     _loadUserPermissions();
     // Load notification stats
-    Future.microtask(() {
-      if (mounted) {
-        getIt<NotificationsCubit>().loadNotificationStats();
-      }
-    });
+    if (mounted) {
+      getIt<NotificationsCubit>().loadNotificationStats();
+    }
   }
 
   Future<void> _loadUserPermissions() async {
@@ -60,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final userData = StorageService.getUserData();
+    final companyLogo = userData?.user?.company?.logo;
 
     return PopScope(
       canPop: false,
@@ -87,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: 110.w,
           leading: Padding(
             padding: EdgeInsetsDirectional.only(start: 20.w),
-            child: Image(image: AssetImage(AppImages.logoGreen), height: 40.h),
+            child: _buildCompanyLogo(companyLogo),
           ),
           actions: [
             // Notifications Button with Badge
@@ -397,5 +398,23 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
       ],
     );
+  }
+
+  Widget _buildCompanyLogo(dynamic logoUrl) {
+    // إذا كان logo موجود وليس null وليس فارغ
+    if (logoUrl != null && logoUrl.toString().trim().isNotEmpty) {
+      return CachedNetworkImage(
+        imageUrl: logoUrl.toString(),
+        height: 40.h,
+        fit: BoxFit.contain,
+        placeholder: (context, url) =>
+            Image(image: AssetImage(AppImages.logoGreen), height: 40.h),
+        errorWidget: (context, url, error) =>
+            Image(image: AssetImage(AppImages.logoGreen), height: 40.h),
+      );
+    }
+
+    // إذا لم يكن هناك logo، استخدم الشعار الافتراضي
+    return Image(image: AssetImage(AppImages.logoGreen), height: 40.h);
   }
 }

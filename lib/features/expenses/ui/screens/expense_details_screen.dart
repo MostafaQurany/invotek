@@ -3,9 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
-import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/expenses/domain/cubit/expense_categories_cubit.dart';
 import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/features/expenses/domain/entit/expense_model.dart';
@@ -80,20 +78,16 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Modern Header with Animation
+          // Modern Header
           SliverToBoxAdapter(
-            child: AnimatedEntryWidget(
-              delay: Duration.zero,
-              child: _buildModernHeaderContent(expense),
-            ),
+            child: _buildModernHeaderContent(expense),
           ),
 
-          // Content Cards with Staggered Animation
+          // Content Cards
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: StaggeredAnimatedList(
-                staggerDelay: Duration(milliseconds: 150),
+              child: Column(
                 children: [
                   _buildBasicInfoCard(expense),
                   SizedBox(height: 16.h),
@@ -102,8 +96,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                   _buildPaymentInfoCard(expense),
                   SizedBox(height: 16.h),
                   _buildAdditionalInfoCard(expense),
-                  // SizedBox(height: 16.h),
-                  // _buildMetadataCard(expense),
                   SizedBox(height: 50.h), // Space for bottom actions
                 ],
               ),
@@ -112,11 +104,8 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
         ],
       ),
 
-      // Bottom Actions with Animation
-      bottomNavigationBar: AnimatedEntryWidget(
-        delay: Duration(milliseconds: 800),
-        child: _buildBottomActions(),
-      ),
+      // Bottom Actions
+      bottomNavigationBar: _buildBottomActions(),
     );
   }
 
@@ -209,7 +198,10 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          CurrencyFormatter.formatCurrency(expense.amount, context),
+                          CurrencyFormatter.formatCurrency(
+                            expense.amount,
+                            context,
+                          ),
                           style: TextStyle(
                             fontSize: 18.sp,
                             color: AppColors.white.withOpacity(0.8),
@@ -263,8 +255,18 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
 
   Widget _buildBasicInfoCard(ExpenseModel expense) {
     final s = S.of(context);
-    return AnimatedCard(
-      child: Column(
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(
+          color: Colors.grey.withValues(alpha: 0.1),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -328,13 +330,24 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           ),
         ],
       ),
+      ),
     );
   }
 
   Widget _buildFinancialInfoCard(ExpenseModel expense) {
     final s = S.of(context);
-    return AnimatedCard(
-      child: Column(
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(
+          color: Colors.grey.withValues(alpha: 0.1),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -378,13 +391,24 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           ],
         ],
       ),
+      ),
     );
   }
 
   Widget _buildPaymentInfoCard(ExpenseModel expense) {
     final s = S.of(context);
-    return AnimatedCard(
-      child: Column(
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(
+          color: Colors.grey.withValues(alpha: 0.1),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -410,6 +434,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
           ),
         ],
       ),
+      ),
     );
   }
 
@@ -419,8 +444,18 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
     }
 
     final s = S.of(context);
-    return AnimatedCard(
-      child: Column(
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        side: BorderSide(
+          color: Colors.grey.withValues(alpha: 0.1),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.w),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -447,6 +482,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
             actionLabel: s.copy,
           ),
         ],
+      ),
       ),
     );
   }
@@ -521,9 +557,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
       ExpensesPermissions.delete,
     );
 
-    return AnimatedEntryWidget(
-      delay: Duration(milliseconds: 1400),
-      child: Container(
+    return Container(
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: AppColors.white,
@@ -553,8 +587,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
                       ),
-                      disabledForegroundColor:
-                          AppColors.error.withOpacity(0.5),
+                      disabledForegroundColor: AppColors.error.withOpacity(0.5),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -588,9 +621,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
               Expanded(
                 flex: 2,
                 child: Tooltip(
-                  message: hasEditPermission
-                      ? ''
-                      : s.expensesNoPermissionToAct,
+                  message: hasEditPermission ? '' : s.expensesNoPermissionToAct,
                   child: FilledButton(
                     onPressed: hasEditPermission
                         ? () => _navigateToEditExpense(context)
@@ -601,8 +632,9 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.r),
                       ),
-                      disabledBackgroundColor:
-                          AppColors.primary.withOpacity(0.5),
+                      disabledBackgroundColor: AppColors.primary.withOpacity(
+                        0.5,
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -631,8 +663,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   // Helper Methods
@@ -667,10 +698,6 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
       default:
         return paymentMethod;
     }
-  }
-
-  String _formatDateTime(DateTime dateTime) {
-    return DateFormatter.toDisplayDateTimeFormat(dateTime);
   }
 
   void _navigateToEditExpense(BuildContext context) {
@@ -743,9 +770,7 @@ class _ExpenseDetailsScreenState extends State<ExpenseDetailsScreen> {
             Text(S.of(context).help),
           ],
         ),
-        content: Text(
-          S.of(context).expensesExpenseDetailsHelpDescription,
-        ),
+        content: Text(S.of(context).expensesExpenseDetailsHelpDescription),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),

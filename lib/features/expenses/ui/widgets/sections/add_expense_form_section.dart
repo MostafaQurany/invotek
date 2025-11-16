@@ -101,8 +101,11 @@ class AddExpenseFormSection extends StatelessWidget {
                       return S.of(context).amountIsRequired;
                     }
                     final amount = double.tryParse(value);
-                    if (amount == null || amount <= 0) {
+                    if (amount == null) {
                       return S.of(context).pleaseEnterValidAmount;
+                    }
+                    if (amount <= 0) {
+                      return S.of(context).priceMustBeGreaterThanZero;
                     }
                     return null;
                   },

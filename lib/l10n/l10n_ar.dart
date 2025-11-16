@@ -5327,6 +5327,9 @@ class SAr extends S {
   String get settingsIncome => 'دخل';
 
   @override
+  String get settingsGeneral => 'عام';
+
+  @override
   String get settingsVAT => 'ضريبة القيمة المضافة';
 
   @override
@@ -6298,6 +6301,9 @@ class SAr extends S {
   @override
   String get priceMustBeGreaterThanOrEqualZero =>
       'السعر يجب أن يكون أكبر من أو يساوي صفر';
+
+  @override
+  String get priceMustBeGreaterThanZero => 'السعر يجب أن يكون أكبر من صفر';
 
   @override
   String get discountPercent => 'الخصم (%)';

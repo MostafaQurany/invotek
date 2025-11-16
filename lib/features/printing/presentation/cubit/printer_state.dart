@@ -11,6 +11,8 @@ class PrinterState with _$PrinterState {
 
   const factory PrinterState.disconnected() = _Disconnected;
 
+  const factory PrinterState.connecting(BluetoothDevice device) = _Connecting;
+
   const factory PrinterState.scanning(List<BluetoothDevice> devices) =
       _Scanning;
 

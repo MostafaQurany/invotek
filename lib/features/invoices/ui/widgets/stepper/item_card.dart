@@ -10,6 +10,7 @@ class ItemCard extends StatelessWidget {
   final int index;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final String? taxInvoiceType;
 
   const ItemCard({
     super.key,
@@ -17,6 +18,7 @@ class ItemCard extends StatelessWidget {
     required this.index,
     required this.onEdit,
     required this.onDelete,
+    this.taxInvoiceType,
   });
 
   @override
@@ -84,29 +86,44 @@ class ItemCard extends StatelessWidget {
 
           SizedBox(height: 8.h),
 
-          Row(
-            children: [
-              Expanded(
-                child: _buildDetailItem(S.of(context).itemTax, '${item.taxPercent}%'),
-              ),
-              Expanded(
-                child: _buildDetailItem(
-                  S.of(context).itemTaxAmount,
-                  CurrencyFormatter.formatCurrencyString(
-                    item.taxAmount,
-                    context,
+          // Show tax fields only if taxInvoiceType is not 'income'
+          if (taxInvoiceType != 'income')
+            Row(
+              children: [
+                Expanded(
+                  child: _buildDetailItem(S.of(context).itemTax, '${item.taxPercent}%'),
+                ),
+                Expanded(
+                  child: _buildDetailItem(
+                    S.of(context).itemTaxAmount,
+                    CurrencyFormatter.formatCurrencyString(
+                      item.taxAmount,
+                      context,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: _buildDetailItem(
-                  S.of(context).itemTotal,
-                  CurrencyFormatter.formatCurrencyString(item.total, context),
-                  isTotal: true,
+                Expanded(
+                  child: _buildDetailItem(
+                    S.of(context).itemTotal,
+                    CurrencyFormatter.formatCurrencyString(item.total, context),
+                    isTotal: true,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            )
+          else
+            // For income type, show only total
+            Row(
+              children: [
+                Expanded(
+                  child: _buildDetailItem(
+                    S.of(context).itemTotal,
+                    CurrencyFormatter.formatCurrencyString(item.total, context),
+                    isTotal: true,
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

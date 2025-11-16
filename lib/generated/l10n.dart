@@ -17052,6 +17052,16 @@ class S {
     );
   }
 
+  /// `General`
+  String get settingsGeneral {
+    return Intl.message(
+      'General',
+      name: 'settingsGeneral',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `VAT`
   String get settingsVAT {
     return Intl.message(
@@ -20177,6 +20187,16 @@ class S {
     return Intl.message(
       'Price must be greater than or equal to zero',
       name: 'priceMustBeGreaterThanOrEqualZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Price must be greater than zero`
+  String get priceMustBeGreaterThanZero {
+    return Intl.message(
+      'Price must be greater than zero',
+      name: 'priceMustBeGreaterThanZero',
       desc: '',
       args: [],
     );

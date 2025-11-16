@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/di/injection.dart';
-import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/services/local_notification_service.dart';
 import 'package:invotek/core/usecase/usecase.dart';
@@ -44,6 +43,9 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   bool _isLoadingPage = false;
   GetNotificationStatsResponse? _lastStats;
   Timer? _pollingTimer;
+  bool _isLoadingStats = false;
+  DateTime? _lastStatsLoadTime;
+  static const Duration _statsCacheDuration = Duration(minutes: 1);
 
   NotificationsCubit({
     required GetAllNotificationsUseCase getAllNotifications,
@@ -67,61 +69,13 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   void _startPolling() {
     _pollingTimer?.cancel();
     _pollingTimer = Timer.periodic(
-      const Duration(seconds: 60),
+      const Duration(minutes: 2),
       (_) => _checkForNewNotifications(),
     );
   }
 
   Future<void> _checkForNewNotifications() async {
-    final result = await _getNotificationStats(const NoParams());
-    result.when(
-      success: (stats) async {
-        if (_lastStats != null) {
-          final oldUnread = _lastStats!.unread ?? 0;
-          final newUnread = stats.unread ?? 0;
-          if (newUnread > oldUnread) {
-            // New notifications detected
-            final newCount = newUnread - oldUnread;
-            _lastStats = stats;
-
-            // Show local notification
-            try {
-              final notificationService = getIt<LocalNotificationService>();
-              final localizationCubit = getIt<LocalizationCubit>();
-              final locale = localizationCubit.state.locale;
-              await notificationService.showNewNotificationsNotification(
-                count: newCount,
-                locale: locale,
-              );
-            } catch (e) {
-              // Silently fail if notification service is not available
-            }
-
-            emit(
-              NotificationsState.statsLoaded(
-                notifications: _notifications,
-                currentPage: _currentPage,
-                totalPages: _totalPages,
-                stats: stats,
-              ),
-            );
-          }
-        } else {
-          _lastStats = stats;
-          emit(
-            NotificationsState.statsLoaded(
-              notifications: _notifications,
-              currentPage: _currentPage,
-              totalPages: _totalPages,
-              stats: stats,
-            ),
-          );
-        }
-      },
-      failure: (_) {
-        // Silently fail polling
-      },
-    );
+    await loadNotificationStats(forceRefresh: false);
   }
 
   Future<void> loadNotifications({
@@ -238,11 +192,51 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
   }
 
-  Future<void> loadNotificationStats() async {
+  Future<void> loadNotificationStats({bool forceRefresh = false}) async {
+    // منع الاستدعاءات المتكررة
+    if (_isLoadingStats) return;
+
+    // استخدام cache إذا لم يمر وقت كافٍ
+    if (!forceRefresh &&
+        _lastStatsLoadTime != null &&
+        DateTime.now().difference(_lastStatsLoadTime!) < _statsCacheDuration) {
+      return;
+    }
+
+    _isLoadingStats = true;
     final result = await _getNotificationStats(const NoParams());
+    _isLoadingStats = false;
+    _lastStatsLoadTime = DateTime.now();
+
     result.when(
-      success: (stats) {
-        _lastStats = stats;
+      success: (stats) async {
+        if (_lastStats != null) {
+          final oldUnread = _lastStats!.unread ?? 0;
+          final newUnread = stats.unread ?? 0;
+          if (newUnread > oldUnread) {
+            // New notifications detected
+            final newCount = newUnread - oldUnread;
+            _lastStats = stats;
+
+            // Show local notification
+            try {
+              final notificationService = getIt<LocalNotificationService>();
+              final localizationCubit = getIt<LocalizationCubit>();
+              final locale = localizationCubit.state.locale;
+              await notificationService.showNewNotificationsNotification(
+                count: newCount,
+                locale: locale,
+              );
+            } catch (e) {
+              // Silently fail if notification service is not available
+            }
+          } else {
+            _lastStats = stats;
+          }
+        } else {
+          _lastStats = stats;
+        }
+
         emit(
           NotificationsState.statsLoaded(
             notifications: _notifications,

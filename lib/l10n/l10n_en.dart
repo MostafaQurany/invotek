@@ -5368,6 +5368,9 @@ class SEn extends S {
   String get settingsIncome => 'Income';
 
   @override
+  String get settingsGeneral => 'General';
+
+  @override
   String get settingsVAT => 'VAT';
 
   @override
@@ -6352,6 +6355,9 @@ class SEn extends S {
   @override
   String get priceMustBeGreaterThanOrEqualZero =>
       'Price must be greater than or equal to zero';
+
+  @override
+  String get priceMustBeGreaterThanZero => 'Price must be greater than zero';
 
   @override
   String get discountPercent => 'Discount (%)';

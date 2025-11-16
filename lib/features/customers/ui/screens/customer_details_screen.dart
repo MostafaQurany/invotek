@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/features/customers/domain/cubit/customers_cubit.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
@@ -118,12 +117,11 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
             ),
           ),
 
-          // Content Cards with Staggered Animation
+          // Content Cards
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: StaggeredAnimatedList(
-                staggerDelay: Duration(milliseconds: 150),
+              child: Column(
                 children: [
                   CustomerContactInfoCard(
                     customer: customer,

@@ -304,7 +304,7 @@ class _NotificationsListScreenState extends State<NotificationsListScreen>
           child: RefreshIndicator(
             onRefresh: () async {
               context.read<NotificationsCubit>().refreshNotifications();
-              context.read<NotificationsCubit>().loadNotificationStats();
+              context.read<NotificationsCubit>().loadNotificationStats(forceRefresh: true);
             },
             child: Column(
               children: [

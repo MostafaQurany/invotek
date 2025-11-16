@@ -487,10 +487,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   bool _isFormValid() {
+    final priceValue = double.tryParse(_priceController.text.trim());
     return _nameController.text.trim().isNotEmpty &&
         _selectedStatus.isNotEmpty &&
         _priceController.text.trim().isNotEmpty &&
-        double.tryParse(_priceController.text.trim()) != null &&
+        priceValue != null &&
+        priceValue > 0 &&
         _quantityController.text.trim().isNotEmpty &&
         int.tryParse(_quantityController.text.trim()) != null;
   }
@@ -567,6 +569,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
       isValid = false;
     } else if (double.tryParse(_priceController.text.trim()) == null) {
       _validationErrors['price'] = s.productsPleaseEnterValidPrice;
+      isValid = false;
+    } else if (double.parse(_priceController.text.trim()) <= 0) {
+      _validationErrors['price'] = s.priceMustBeGreaterThanZero;
       isValid = false;
     }
 

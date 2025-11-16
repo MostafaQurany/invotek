@@ -47,11 +47,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   void initState() {
     super.initState();
     _initializeOptions();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (mounted) {
       ProductsCubit.get(context).loadFirstPage(refresh: true);
       CategoriesCubit.get(context).loadFirstPage(refresh: true);
-    });
+    }
     _scrollController.addListener(_onScroll);
   }
 
@@ -187,64 +186,64 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 },
           );
         },
-        child: RefreshIndicator(
-          onRefresh: () async {
-            try {
-              final productsCubit = ProductsCubit.get(context);
-              final categoriesCubit = CategoriesCubit.get(context);
-              if (!productsCubit.isClosed) {
-                await productsCubit.loadFirstPage(refresh: true);
-              }
-              if (!categoriesCubit.isClosed) {
-                await categoriesCubit.loadFirstPage(refresh: true);
-              }
-            } catch (e) {
-              print('❌ Error refreshing: $e');
-            }
-          },
-          child: Column(
-            children: [
-              // Header Widget - Scrolls with content
-              BlocBuilder<CategoriesCubit, CategoriesState>(
-                builder: (context, categoriesState) {
-                  return categoriesState.when(
-                    initial: (categories, currentPage, totalPages, error) =>
-                        _buildProductsHeader(categories),
-                    loading: (categories, currentPage, totalPages, message) =>
-                        _buildProductsHeader(categories),
-                    loaded: (categories, currentPage, totalPages) =>
-                        _buildProductsHeader(categories),
-                    createSuccess:
-                        (categories, created, currentPage, totalPages) =>
-                            _buildProductsHeader(categories),
-                    updateSuccess:
-                        (categories, updated, currentPage, totalPages) =>
-                            _buildProductsHeader(categories),
-                    deleteSuccess:
-                        (categories, deletedId, currentPage, totalPages) =>
-                            _buildProductsHeader(categories),
-                    failure: (categories, currentPage, totalPages, error) =>
-                        _buildProductsHeader(categories),
-                  );
-                },
-              ),
+        child: Column(
+          children: [
+            // Header Widget - Scrolls with content
+            BlocBuilder<CategoriesCubit, CategoriesState>(
+              builder: (context, categoriesState) {
+                return categoriesState.when(
+                  initial: (categories, currentPage, totalPages, error) =>
+                      _buildProductsHeader(categories),
+                  loading: (categories, currentPage, totalPages, message) =>
+                      _buildProductsHeader(categories),
+                  loaded: (categories, currentPage, totalPages) =>
+                      _buildProductsHeader(categories),
+                  createSuccess:
+                      (categories, created, currentPage, totalPages) =>
+                          _buildProductsHeader(categories),
+                  updateSuccess:
+                      (categories, updated, currentPage, totalPages) =>
+                          _buildProductsHeader(categories),
+                  deleteSuccess:
+                      (categories, deletedId, currentPage, totalPages) =>
+                          _buildProductsHeader(categories),
+                  failure: (categories, currentPage, totalPages, error) =>
+                      _buildProductsHeader(categories),
+                );
+              },
+            ),
 
-              // Products List Content
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+            // Products List Content
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.r),
-                      topRight: Radius.circular(28.r),
-                    ),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(28.r),
+                    topRight: Radius.circular(28.r),
+                  ),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      try {
+                        final productsCubit = ProductsCubit.get(context);
+                        final categoriesCubit = CategoriesCubit.get(context);
+                        if (!productsCubit.isClosed) {
+                          await productsCubit.loadFirstPage(refresh: true);
+                        }
+                        if (!categoriesCubit.isClosed) {
+                          await categoriesCubit.loadFirstPage(refresh: true);
+                        }
+                      } catch (e) {
+                        print('❌ Error refreshing: $e');
+                      }
+                    },
                     child: ProductsStateBuilder(
                       onProductTap: (product) =>
                           _showProductOptions(context, product),
@@ -262,8 +261,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
 

@@ -52,9 +52,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
 
   void _initializeEmpty() {
     _quantityController.text = '1';
-    _priceController.text = '0.00';
+    _priceController.text = '1.00';
     _discountController.text = '0.00';
-    _taxPercentController.text = '15.00';
+    _taxPercentController.text = '0.00';
     _calculateTotals();
   }
 
@@ -195,11 +195,17 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) <= 0) {
-                                  return S.of(context).quantityMustBeGreaterThanZero;
+                                  return S
+                                      .of(context)
+                                      .quantityMustBeGreaterThanZero;
                                 }
                                 if (_maxQuantity != null &&
                                     double.parse(value) > _maxQuantity!) {
-                                  return S.of(context).quantityExceedsAvailableStock(_maxQuantity!);
+                                  return S
+                                      .of(context)
+                                      .quantityExceedsAvailableStock(
+                                        _maxQuantity!,
+                                      );
                                 }
                                 return null;
                               },
@@ -226,8 +232,10 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                   return S.of(context).priceRequired;
                                 }
                                 if (double.tryParse(value) == null ||
-                                    double.parse(value) < 0) {
-                                  return S.of(context).priceMustBeGreaterThanOrEqualZero;
+                                    double.parse(value) <= 0) {
+                                  return S
+                                      .of(context)
+                                      .priceMustBeGreaterThanZero;
                                 }
                                 return null;
                               },
@@ -261,7 +269,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) < 0) {
-                                  return S.of(context).discountMustBeGreaterThanOrEqualZero;
+                                  return S
+                                      .of(context)
+                                      .discountMustBeGreaterThanOrEqualZero;
                                 }
                                 return null;
                               },
@@ -289,7 +299,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
                                 }
                                 if (double.tryParse(value) == null ||
                                     double.parse(value) < 0) {
-                                  return S.of(context).taxPercentMustBeGreaterThanOrEqualZero;
+                                  return S
+                                      .of(context)
+                                      .taxPercentMustBeGreaterThanOrEqualZero;
                                 }
                                 return null;
                               },

@@ -45,9 +45,11 @@ class _UsersListScreenState extends State<UsersListScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UsersCubit>().loadUsers(isRefresh: true);
     _initializeOptions();
     _scrollController.addListener(_onScroll);
+    if (mounted) {
+      context.read<UsersCubit>().loadUsers(isRefresh: true);
+    }
   }
 
   @override
@@ -137,31 +139,31 @@ class _UsersListScreenState extends State<UsersListScreen> {
               );
             }
           },
-          child: RefreshIndicator(
-            onRefresh: () async {
-              context.read<UsersCubit>().refreshUsers();
-            },
-            child: Column(
-              children: [
-                // Header Widget - Scrolls with content
-                _buildUsersHeader(),
+          child: Column(
+            children: [
+              // Header Widget - Scrolls with content
+              _buildUsersHeader(),
 
-                // Users List Content
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(28.r),
-                        topRight: Radius.circular(28.r),
-                      ),
+              // Users List Content
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(28.r),
+                      topRight: Radius.circular(28.r),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(28.r),
-                        topRight: Radius.circular(28.r),
-                      ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(28.r),
+                      topRight: Radius.circular(28.r),
+                    ),
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        await context.read<UsersCubit>().refreshUsers();
+                      },
                       child: UsersStateBuilder(
                         onUserTap: (user) => _showUserOptions(context, user),
                         onUserView: _navigateToUserDetails,
@@ -178,8 +180,8 @@ class _UsersListScreenState extends State<UsersListScreen> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         floatingActionButton: Builder(

@@ -10302,6 +10302,12 @@ abstract class S {
   /// **'Income'**
   String get settingsIncome;
 
+  /// No description provided for @settingsGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsGeneral;
+
   /// No description provided for @settingsVAT.
   ///
   /// In en, this message translates to:
@@ -12179,6 +12185,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Price must be greater than or equal to zero'**
   String get priceMustBeGreaterThanOrEqualZero;
+
+  /// No description provided for @priceMustBeGreaterThanZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Price must be greater than zero'**
+  String get priceMustBeGreaterThanZero;
 
   /// No description provided for @discountPercent.
   ///

@@ -32,6 +32,7 @@ class ProductsList extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             controller: scrollController,
+            physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             itemCount: products.length + (isLoadingMore ? 1 : 0),
             itemBuilder: (context, index) {

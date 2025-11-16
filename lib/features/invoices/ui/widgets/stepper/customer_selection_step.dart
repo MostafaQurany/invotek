@@ -15,11 +15,16 @@ class CustomerSelectionStep extends StatefulWidget {
   State<CustomerSelectionStep> createState() => _CustomerSelectionStepState();
 }
 
-class _CustomerSelectionStepState extends State<CustomerSelectionStep> {
+class _CustomerSelectionStepState extends State<CustomerSelectionStep>
+    with AutomaticKeepAliveClientMixin {
   String _customerType = 'existing'; // 'existing' or 'new'
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     final s = S.of(context);
 
     return SingleChildScrollView(

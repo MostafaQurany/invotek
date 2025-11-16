@@ -2715,6 +2715,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "priceMustBeGreaterThanOrEqualZero":
             MessageLookupByLibrary.simpleMessage(
                 "Price must be greater than or equal to zero"),
+        "priceMustBeGreaterThanZero": MessageLookupByLibrary.simpleMessage(
+            "Price must be greater than zero"),
         "priceRequired":
             MessageLookupByLibrary.simpleMessage("Price is required"),
         "pricing": MessageLookupByLibrary.simpleMessage("Pricing"),
@@ -3094,6 +3096,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsActive": MessageLookupByLibrary.simpleMessage("Active"),
         "settingsDeactivate":
             MessageLookupByLibrary.simpleMessage("Deactivate"),
+        "settingsGeneral": MessageLookupByLibrary.simpleMessage("General"),
         "settingsInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
         "settingsIncome": MessageLookupByLibrary.simpleMessage("Income"),
         "settingsInvoiceType":

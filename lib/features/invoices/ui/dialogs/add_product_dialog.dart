@@ -102,6 +102,9 @@ class _AddProductDialogState extends State<AddProductDialog> {
                           if (double.tryParse(value) == null) {
                             return S.of(context).invalidPrice;
                           }
+                          if (double.parse(value) <= 0) {
+                            return S.of(context).priceMustBeGreaterThanZero;
+                          }
                           return null;
                         },
                       ),

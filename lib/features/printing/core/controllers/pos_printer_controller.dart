@@ -155,22 +155,44 @@ class PosPrinterController {
   /// Check current connection status
   Future<void> checkCurrentConnection() async {
     try {
-      final currentState = await BluetoothPrintPlus.connectState
-          .firstWhere(
-            (s) =>
-                s == ConnectState.connected || s == ConnectState.disconnected,
-          )
-          .timeout(
-            const Duration(seconds: 5),
-            onTimeout: () => ConnectState.disconnected,
-          );
-
-      if (currentState == ConnectState.connected) {
-        if (_connectedDevice == null) {
-          await _updateConnectedDevice();
+      // استخدام isConnected مباشرة بدلاً من stream لتجنب مشاكل EventSink
+      try {
+        final isCurrentlyConnected = BluetoothPrintPlus.isConnected;
+        if (isCurrentlyConnected) {
+          if (_connectedDevice == null) {
+            await _updateConnectedDevice();
+          }
+        } else {
+          _connectedDevice = null;
         }
-      } else {
-        _connectedDevice = null;
+      } catch (e) {
+        // محاولة استخدام stream كـ fallback
+        print(
+          'checkCurrentConnection: Error using isConnected, trying stream: $e',
+        );
+        try {
+          final currentState = await BluetoothPrintPlus.connectState
+              .firstWhere(
+                (s) =>
+                    s == ConnectState.connected ||
+                    s == ConnectState.disconnected,
+              )
+              .timeout(
+                const Duration(seconds: 2),
+                onTimeout: () => ConnectState.disconnected,
+              );
+
+          if (currentState == ConnectState.connected) {
+            if (_connectedDevice == null) {
+              await _updateConnectedDevice();
+            }
+          } else {
+            _connectedDevice = null;
+          }
+        } catch (e2) {
+          print('checkCurrentConnection: Stream check also failed: $e2');
+          _connectedDevice = null;
+        }
       }
     } catch (e) {
       print('checkCurrentConnection error: $e');
@@ -216,16 +238,13 @@ class PosPrinterController {
       // الاتصال عبر _bleController
       await _bleController.connect(device);
 
-      // انتظار حتى 8 ثواني إن الستريم يدي Connected
+      // انتظار قليلاً ثم التحقق من الاتصال باستخدام isConnected بدلاً من stream
+      // لتجنب مشاكل EventSink null
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      // استخدام isConnected مباشرة بدلاً من connectState stream
       try {
-        final isConnected =
-            await BluetoothPrintPlus.connectState
-                .firstWhere((s) => s == ConnectState.connected)
-                .timeout(
-                  const Duration(seconds: 8),
-                  onTimeout: () => ConnectState.disconnected,
-                ) ==
-            ConnectState.connected;
+        final isConnected = BluetoothPrintPlus.isConnected;
 
         if (isConnected) {
           _connectedDevice = _bleController.connectedDevice ?? device;
@@ -247,21 +266,45 @@ class PosPrinterController {
           return true;
         }
       } catch (e) {
-        print('connect: First attempt failed, trying retry: $e');
+        print('connect: Error checking connection status: $e');
+        // محاولة استخدام connectState stream كـ fallback
+        try {
+          final isConnectedFromStream =
+              await BluetoothPrintPlus.connectState
+                  .firstWhere((s) => s == ConnectState.connected)
+                  .timeout(
+                    const Duration(seconds: 2),
+                    onTimeout: () => ConnectState.disconnected,
+                  ) ==
+              ConnectState.connected;
+
+          if (isConnectedFromStream) {
+            _connectedDevice = _bleController.connectedDevice ?? device;
+            if (_connectedDevice != null) {
+              final prefs = await SharedPreferences.getInstance();
+              await prefs.setString(
+                'last_connected_printer_address',
+                _connectedDevice!.address,
+              );
+              await prefs.setString(
+                'last_connected_printer_name',
+                _connectedDevice!.name,
+              );
+            }
+            _onConnected?.call(_connectedDevice!);
+            return true;
+          }
+        } catch (e2) {
+          print('connect: Fallback attempt also failed: $e2');
+        }
       }
 
       // محاولة إعادة مرة واحدة بعد 1-2 ثانية (في حالات flip)
       await Future.delayed(const Duration(seconds: 2));
 
       try {
-        final retryConnected =
-            await BluetoothPrintPlus.connectState
-                .firstWhere((s) => s == ConnectState.connected)
-                .timeout(
-                  const Duration(seconds: 5),
-                  onTimeout: () => ConnectState.disconnected,
-                ) ==
-            ConnectState.connected;
+        // استخدام isConnected مباشرة بدلاً من stream
+        final retryConnected = BluetoothPrintPlus.isConnected;
 
         if (retryConnected) {
           _connectedDevice = _bleController.connectedDevice ?? device;
@@ -305,19 +348,10 @@ class PosPrinterController {
   /// Auto connect (يحاول الاتصال بالطابعة المحفوظة)
   Future<bool> autoConnect({String? preferredDeviceName}) async {
     try {
-      // التحقق من حالة الاتصال الحالية
+      // التحقق من حالة الاتصال الحالية باستخدام isConnected
       try {
-        final currentState = await BluetoothPrintPlus.connectState
-            .firstWhere(
-              (s) =>
-                  s == ConnectState.connected || s == ConnectState.disconnected,
-            )
-            .timeout(
-              const Duration(seconds: 5),
-              onTimeout: () => ConnectState.disconnected,
-            );
-
-        if (currentState == ConnectState.connected) {
+        final isCurrentlyConnected = BluetoothPrintPlus.isConnected;
+        if (isCurrentlyConnected) {
           if (_connectedDevice == null) {
             await _updateConnectedDevice();
           }
@@ -325,6 +359,28 @@ class PosPrinterController {
         }
       } catch (e) {
         print('autoConnect: Error checking current state: $e');
+        // محاولة استخدام stream كـ fallback
+        try {
+          final currentState = await BluetoothPrintPlus.connectState
+              .firstWhere(
+                (s) =>
+                    s == ConnectState.connected ||
+                    s == ConnectState.disconnected,
+              )
+              .timeout(
+                const Duration(seconds: 2),
+                onTimeout: () => ConnectState.disconnected,
+              );
+
+          if (currentState == ConnectState.connected) {
+            if (_connectedDevice == null) {
+              await _updateConnectedDevice();
+            }
+            return true;
+          }
+        } catch (e2) {
+          print('autoConnect: Fallback stream check also failed: $e2');
+        }
       }
 
       // محاولة الاتصال بالطابعة المحفوظة
@@ -388,18 +444,24 @@ class PosPrinterController {
   /// Check connection status directly from BluetoothPrintPlus (async)
   Future<bool> getIsConnectedAsync() async {
     try {
-      final currentState = await BluetoothPrintPlus.connectState
-          .firstWhere(
-            (s) =>
-                s == ConnectState.connected || s == ConnectState.disconnected,
-          )
-          .timeout(
-            const Duration(seconds: 5),
-            onTimeout: () => ConnectState.disconnected,
-          );
-      return currentState == ConnectState.connected;
+      // استخدام isConnected مباشرة بدلاً من stream لتجنب مشاكل EventSink
+      return BluetoothPrintPlus.isConnected;
     } catch (e) {
-      return false;
+      // محاولة استخدام stream كـ fallback
+      try {
+        final currentState = await BluetoothPrintPlus.connectState
+            .firstWhere(
+              (s) =>
+                  s == ConnectState.connected || s == ConnectState.disconnected,
+            )
+            .timeout(
+              const Duration(seconds: 2),
+              onTimeout: () => ConnectState.disconnected,
+            );
+        return currentState == ConnectState.connected;
+      } catch (e2) {
+        return false;
+      }
     }
   }
 

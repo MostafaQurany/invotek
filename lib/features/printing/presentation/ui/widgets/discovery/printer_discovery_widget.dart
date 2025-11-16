@@ -9,6 +9,7 @@ class PrinterDiscoveryWidget extends StatelessWidget {
   final bool isScanning;
   final BluetoothDevice? connectedDevice;
   final bool isConnected;
+  final bool isConnecting;
   final VoidCallback onStartScan;
   final VoidCallback onStopScan;
   final ValueChanged<BluetoothDevice> onConnectToDevice;
@@ -19,6 +20,7 @@ class PrinterDiscoveryWidget extends StatelessWidget {
     required this.isScanning,
     this.connectedDevice,
     required this.isConnected,
+    this.isConnecting = false,
     required this.onStartScan,
     required this.onStopScan,
     required this.onConnectToDevice,
@@ -75,9 +77,7 @@ class PrinterDiscoveryWidget extends StatelessWidget {
               final allDevices = snapshot.data ?? [];
 
               // تصفية الطابعة المتصلة من القائمة
-              final devices = allDevices.where((device) {
-                return connectedDevice?.address != device.address;
-              }).toList();
+              final devices = allDevices.toList();
 
               if (devices.isEmpty) {
                 return Center(
@@ -111,8 +111,16 @@ class PrinterDiscoveryWidget extends StatelessWidget {
                     ),
                     subtitle: Text(device.address),
                     trailing: ElevatedButton(
-                      onPressed: () => onConnectToDevice(device),
-                      child: Text(S.of(context).connect),
+                      onPressed: isConnecting
+                          ? null
+                          : () => onConnectToDevice(device),
+                      child: isConnecting
+                          ? SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Text(S.of(context).connect),
                     ),
                   );
                 },
@@ -124,4 +132,3 @@ class PrinterDiscoveryWidget extends StatelessWidget {
     );
   }
 }
-

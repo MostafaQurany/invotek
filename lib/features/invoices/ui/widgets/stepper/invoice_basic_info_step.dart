@@ -13,9 +13,14 @@ class InvoiceBasicInfoStep extends StatefulWidget {
   State<InvoiceBasicInfoStep> createState() => _InvoiceBasicInfoStepState();
 }
 
-class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
+class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final s = S.of(context);
 
     return SingleChildScrollView(
@@ -23,10 +28,6 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Action Selection
-          _buildActionSelection(s),
-          SizedBox(height: 20.h),
-
           // Payment Method
           _buildPaymentMethodSelection(s),
           SizedBox(height: 20.h),
@@ -43,49 +44,6 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
           _buildDescriptionField(s),
         ],
       ),
-    );
-  }
-
-  Widget _buildActionSelection(S s) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          s.action,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        DropdownButtonFormField<String>(
-          initialValue: widget.formController.selectedAction,
-          decoration: InputDecoration(
-            fillColor: AppColors.white,
-
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
-            ),
-          ),
-          items: [
-            DropdownMenuItem(value: 'save_only', child: Text(s.saveOnly)),
-            DropdownMenuItem(
-              value: 'save_and_send',
-              child: Text(s.saveAndSend),
-            ),
-          ],
-          onChanged: (value) {
-            if (value != null) {
-              widget.formController.onActionChanged(value);
-            }
-          },
-        ),
-      ],
     );
   }
 
@@ -130,47 +88,6 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep> {
             }
           },
         ),
-      ],
-    );
-  }
-
-  Widget _buildStatusSelection(S s) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          s.invoiceStatus,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        SizedBox(height: 8.h),
-        // DropdownButtonFormField<String>(
-        //   initialValue: widget.formController.selectedStatus,
-        //   decoration: InputDecoration(
-        //     border: OutlineInputBorder(
-        //       borderRadius: BorderRadius.circular(8.r),
-        //     ),
-        //     fillColor: AppColors.white,
-        //
-        //     contentPadding: EdgeInsets.symmetric(
-        //       horizontal: 12.w,
-        //       vertical: 16.h,
-        //     ),
-        //   ),
-        //   items: [
-        //     DropdownMenuItem(value: 'draft', child: Text(s.draft)),
-        //     DropdownMenuItem(value: 'sent', child: Text(s.sent)),
-        //     DropdownMenuItem(value: 'paid', child: Text(s.paid)),
-        //   ],
-        //   onChanged: (value) {
-        //     if (value != null) {
-        //       widget.formController.onStatusChanged(value);
-        //     }
-        //   },
-        // ),
       ],
     );
   }

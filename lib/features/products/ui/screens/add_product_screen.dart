@@ -191,18 +191,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 },
             failure:
                 (products, selectedProduct, currentPage, totalPages, error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        S.of(context).errorOccurredWithMessage(error.message),
+                  final messenger = ScaffoldMessenger.of(context);
+                  if (messenger.mounted) {
+                    messenger.hideCurrentSnackBar();
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          S.of(context).errorOccurredWithMessage(error.message),
+                        ),
+                        backgroundColor: AppColors.error,
+                        behavior: SnackBarBehavior.floating,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        duration: const Duration(seconds: 3),
                       ),
-                      backgroundColor: AppColors.error,
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
-                  );
+                    );
+                  }
                 },
           );
         },
@@ -485,10 +490,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
   }
 
   bool _isFormValid() {
+    final priceValue = double.tryParse(_priceController.text.trim());
     return _nameController.text.trim().isNotEmpty &&
         _selectedStatus.isNotEmpty &&
         _priceController.text.trim().isNotEmpty &&
-        double.tryParse(_priceController.text.trim()) != null &&
+        priceValue != null &&
+        priceValue > 0 &&
         _quantityController.text.trim().isNotEmpty &&
         int.tryParse(_quantityController.text.trim()) != null;
   }
@@ -564,6 +571,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
       isValid = false;
     } else if (double.tryParse(_priceController.text.trim()) == null) {
       _validationErrors['price'] = s.productsPleaseEnterValidPrice;
+      isValid = false;
+    } else if (double.parse(_priceController.text.trim()) <= 0) {
+      _validationErrors['price'] = s.priceMustBeGreaterThanZero;
       isValid = false;
     }
 

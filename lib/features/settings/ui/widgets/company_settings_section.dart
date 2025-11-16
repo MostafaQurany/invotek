@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_theme.dart';
 import '../../../../core/utils/permission_helper.dart';
+import '../../../../core/utils/snackbar_helper.dart';
+import '../../../../core/error/failures.dart';
 import '../../../../generated/l10n.dart';
 import '../../../users_and_permissions/ui/widgets/forms/custom_text_field.dart';
 import '../../constants/settings_permissions.dart';
@@ -21,6 +23,33 @@ class CompanySettingsSection extends StatefulWidget {
 class _CompanySettingsSectionState extends State<CompanySettingsSection> {
   final TextEditingController _merchantCodeController = TextEditingController();
   String _invoiceType = 'income';
+  TaxIntegrationState? _previousTaxState;
+
+  @override
+  void initState() {
+    super.initState();
+    // تحميل الحالة الحالية عند فتح الشاشة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final taxState = context.read<TaxIntegrationCubit>().state;
+      _previousTaxState = taxState;
+      if (taxState is TaxIntegrationLoaded) {
+        if (taxState.status.taxInvoiceType != null) {
+          setState(() {
+            _invoiceType = taxState.status.taxInvoiceType!;
+          });
+        }
+      } else {
+        // إذا لم تكن الحالة محملة، قم بتحميلها
+        context.read<TaxIntegrationCubit>().loadStatus();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _merchantCodeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,107 +126,166 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
   }
 
   Widget _buildTaxIntegrationCard(BuildContext context) {
-    return BlocBuilder<TaxIntegrationCubit, TaxIntegrationState>(
-      builder: (context, state) {
-        if (state is TaxIntegrationLoading ||
-            state is TaxIntegrationActionInProgress) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (state is TaxIntegrationError) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _sectionTitle(S.of(context).settingsTaxIntegration),
-              SizedBox(height: 8.h),
-              Text(
-                state.message,
-                style: AppTextTheme.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.error,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: OutlinedButton(
-                  onPressed: () =>
-                      context.read<TaxIntegrationCubit>().loadStatus(),
-                  child: Text(S.of(context).settingsRetry),
-                ),
-              ),
-            ],
+    final s = S.of(context);
+    return BlocListener<TaxIntegrationCubit, TaxIntegrationState>(
+      listenWhen: (previous, current) {
+        // الاستماع فقط عند تغيير الحالة من ActionInProgress إلى Loaded أو Error
+        return (previous is TaxIntegrationActionInProgress &&
+                (current is TaxIntegrationLoaded ||
+                    current is TaxIntegrationError)) ||
+            (previous is TaxIntegrationLoaded &&
+                current is TaxIntegrationLoaded &&
+                previous.status.taxIntegrationActive !=
+                    current.status.taxIntegrationActive);
+      },
+      listener: (context, state) {
+        final wasInProgress =
+            _previousTaxState is TaxIntegrationActionInProgress;
+        _previousTaxState = state;
+
+        if (state is TaxIntegrationLoaded) {
+          // مسح الحقول بعد التفعيل الناجح
+          if (_merchantCodeController.text.isNotEmpty) {
+            _merchantCodeController.clear();
+          }
+          // إعادة تعيين نوع الفاتورة من الحالة الحالية
+          if (state.status.taxInvoiceType != null) {
+            setState(() {
+              _invoiceType = state.status.taxInvoiceType!;
+            });
+          }
+          // إظهار رسالة نجاح عند اكتمال العملية
+          if (wasInProgress) {
+            SnackBarHelper.showSuccessSnackBar(
+              context,
+              state.status.taxIntegrationActive
+                  ? s.settingsActivateIntegration
+                  : s.settingsDeactivate,
+            );
+          }
+        } else if (state is TaxIntegrationError) {
+          // إظهار رسالة خطأ
+          SnackBarHelper.showFailureSnackBar(
+            context,
+            Failure.unknown(message: state.message),
           );
         }
-        if (state is! TaxIntegrationLoaded) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _sectionTitle(S.of(context).settingsTaxIntegration),
-              SizedBox(height: 8.h),
-              Align(
-                alignment: AlignmentDirectional.centerStart,
-                child: OutlinedButton(
-                  onPressed: () =>
-                      context.read<TaxIntegrationCubit>().loadStatus(),
-                  child: Text(S.of(context).settingsUpdateStatus),
-                ),
-              ),
-            ],
-          );
-        }
-
-        final status = state.status;
-        final isActive = status.taxIntegrationActive;
-
-        final s = S.of(context);
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _sectionTitle(s.settingsTaxIntegration),
-            SizedBox(height: 8.h),
-            _infoTile(
-              s.settingsStatus,
-              isActive ? s.settingsActive : s.settingsInactive,
-              Icons.verified,
-            ),
-            SizedBox(height: 12.h),
-            if (status.taxInvoiceType != null) ...[
-              _infoTile(
-                s.settingsTaxInvoiceType,
-                status.taxInvoiceType!,
-                Icons.receipt_long,
-              ),
-              SizedBox(height: 12.h),
-            ],
-            if (status.taxMerchantCode != null) ...[
-              PermissionWidget(
-                permission: SettingsPermissions.taxIntegrationView,
-                fallback: Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.w),
-                    child: Text(
-                      s.settingsNoPermissionToView,
-                      style: AppTextTheme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.onSurfaceVariant,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+      },
+      child: BlocBuilder<TaxIntegrationCubit, TaxIntegrationState>(
+        buildWhen: (previous, current) {
+          // إعادة البناء فقط عند تغيير الحالة بشكل فعلي
+          if (previous is TaxIntegrationLoaded &&
+              current is TaxIntegrationLoaded) {
+            return previous.status.taxIntegrationActive !=
+                    current.status.taxIntegrationActive ||
+                previous.status.taxInvoiceType !=
+                    current.status.taxInvoiceType ||
+                previous.status.taxMerchantCode !=
+                    current.status.taxMerchantCode;
+          }
+          return previous != current;
+        },
+        builder: (context, state) {
+          if (state is TaxIntegrationLoading ||
+              state is TaxIntegrationActionInProgress) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is TaxIntegrationError) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _sectionTitle(S.of(context).settingsTaxIntegration),
+                SizedBox(height: 8.h),
+                Text(
+                  state.message,
+                  style: AppTextTheme.textTheme.bodyMedium?.copyWith(
+                    color: AppColors.error,
                   ),
                 ),
-                child: _infoTile(
-                  s.settingsTaxMerchantCode,
-                  status.taxMerchantCode!,
-                  Icons.qr_code,
+                SizedBox(height: 8.h),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: OutlinedButton(
+                    onPressed: () =>
+                        context.read<TaxIntegrationCubit>().loadStatus(),
+                    child: Text(S.of(context).settingsRetry),
+                  ),
                 ),
+              ],
+            );
+          }
+          if (state is! TaxIntegrationLoaded) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _sectionTitle(S.of(context).settingsTaxIntegration),
+                SizedBox(height: 8.h),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: OutlinedButton(
+                    onPressed: () =>
+                        context.read<TaxIntegrationCubit>().loadStatus(),
+                    child: Text(S.of(context).settingsUpdateStatus),
+                  ),
+                ),
+              ],
+            );
+          }
+
+          final status = state.status;
+          final isActive = status.taxIntegrationActive;
+
+          final s = S.of(context);
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _sectionTitle(s.settingsTaxIntegration),
+              SizedBox(height: 8.h),
+              _infoTile(
+                s.settingsStatus,
+                isActive ? s.settingsActive : s.settingsInactive,
+                Icons.verified,
               ),
-              SizedBox(height: 16.h),
+              SizedBox(height: 12.h),
+              if (status.taxInvoiceType != null) ...[
+                _infoTile(
+                  s.settingsTaxInvoiceType,
+                  status.taxInvoiceType!,
+                  Icons.receipt_long,
+                ),
+                SizedBox(height: 12.h),
+              ],
+              if (status.taxMerchantCode != null) ...[
+                PermissionWidget(
+                  permission: SettingsPermissions.taxIntegrationView,
+                  fallback: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.w),
+                      child: Text(
+                        s.settingsNoPermissionToView,
+                        style: AppTextTheme.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.onSurfaceVariant,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  child: _infoTile(
+                    s.settingsTaxMerchantCode,
+                    status.taxMerchantCode!,
+                    Icons.qr_code,
+                  ),
+                ),
+                SizedBox(height: 16.h),
+              ],
+              if (!isActive)
+                _buildActivateForm(context)
+              else
+                _buildDeactivateButton(context),
             ],
-            if (!isActive)
-              _buildActivateForm(context)
-            else
-              _buildDeactivateButton(context),
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -233,7 +321,10 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
                   value: 'income',
                   child: Text(s.settingsIncome),
                 ),
-                DropdownMenuItem(value: 'vat', child: Text(s.settingsVAT)),
+                DropdownMenuItem(
+                  value: 'general',
+                  child: Text(s.settingsGeneral),
+                ),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _invoiceType = v);

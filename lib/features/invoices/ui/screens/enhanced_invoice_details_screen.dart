@@ -25,7 +25,7 @@ import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dial
 import 'package:invotek/features/invoices/ui/widgets/dialogs/mark_paid_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/qr_code_dialog.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
-import 'package:invotek/features/printing/ui/dialogs/invoice_print_dialog.dart';
+import 'package:invotek/features/printing/presentation/ui/dialogs/invoice_print_dialog.dart';
 import 'package:invotek/features/products/data/repository/products_repository.dart';
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
@@ -979,22 +979,17 @@ class _EnhancedInvoiceDetailsScreenState
               SizedBox(height: 8.h),
             ],
             // Print Button
-            Tooltip(
-              message: hasPrintPermission
-                  ? s.printInvoice
-                  : s.invoicesNoPermissionToAct,
-              child: FloatingActionButton(
-                heroTag: "print_${invoice.id}_$uniqueId",
-                onPressed: hasPrintPermission
-                    ? () => _showPrintOptions(invoice)
-                    : null,
-                backgroundColor: hasPrintPermission
-                    ? AppColors.warning
-                    : AppColors.grey.withOpacity(0.5),
-                child: Icon(
-                  hasPrintPermission ? Icons.print : Icons.lock_outline,
-                  color: Colors.white,
-                ),
+            FloatingActionButton(
+              heroTag: "print_${invoice.id}_$uniqueId",
+              onPressed: hasPrintPermission
+                  ? () => _showPrintOptions(invoice)
+                  : null,
+              backgroundColor: hasPrintPermission
+                  ? AppColors.warning
+                  : AppColors.grey.withOpacity(0.5),
+              child: Icon(
+                hasPrintPermission ? Icons.print : Icons.lock_outline,
+                color: Colors.white,
               ),
             ),
             SizedBox(height: 8.h),
@@ -1034,22 +1029,6 @@ class _EnhancedInvoiceDetailsScreenState
   }
 
   Future<void> _showPrintOptions(InvoiceModel invoice) async {
-    // التحقق من صلاحية الطباعة قبل فتح الحوار
-    final permissionsState = context.read<PermissionsCubit>().state;
-    final hasPrintPermission = permissionsState.maybeWhen(
-      loaded: (permissions) =>
-          permissions.hasPermission(InvoicesPermissions.print),
-      orElse: () => false,
-    );
-
-    if (!hasPrintPermission) {
-      PermissionChecker.showPermissionDeniedSnackBar(
-        context,
-        S.of(context).printInvoice,
-      );
-      return;
-    }
-
     if (BluetoothPrintPlus.isBlueOn) {
       if (BluetoothPrintPlus.isConnected) {
         // عرض dialog الطباعة مباشرة
@@ -1060,90 +1039,91 @@ class _EnhancedInvoiceDetailsScreenState
           );
         }
       } else {
-        // الحصول على آخر جهاز محفوظ
-        try {
-          final prefs = await SharedPreferences.getInstance();
-          final data = prefs.getString("BlUE_DEVICE");
+        // try {
+        //   final prefs = await SharedPreferences.getInstance();
+        //   final data = prefs.getString("BlUE_DEVICE");
 
-          if (data == null) {
-            // عرض dialog يطلب من المستخدم الذهاب إلى الإعدادات لإضافة جهاز
-            if (mounted) {
-              _showNoDeviceDialog();
-            }
-          } else {
-            // محاولة الاتصال بالجهاز المحفوظ
-            try {
-              final deviceJson = jsonDecode(data);
-              final BluetoothDevice device = BluetoothDevice.fromJson(
-                deviceJson,
-              );
+        //   if (data == null) {
+        //     // عرض dialog يطلب من المستخدم الذهاب إلى الإعدادات لإضافة جهاز
+        //     if (mounted) {
+        //       _showNoDeviceDialog();
+        //     }
+        //     return;
+        //   } else {
+        //     // محاولة الاتصال بالجهاز المحفوظ
+        //     try {
+        //       final deviceJson = jsonDecode(data);
+        //       final BluetoothDevice device = BluetoothDevice.fromJson(
+        //         deviceJson,
+        //       );
 
-              // إظهار مؤشر تحميل أثناء الاتصال
-              if (mounted) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => Center(
-                    child: Container(
-                      padding: EdgeInsets.all(24.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: 16.h),
-                          Text(
-                            S.of(context).connectingToPrinter,
-                            style: TextStyle(fontSize: 14.sp),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }
+        //       // إظهار مؤشر تحميل أثناء الاتصال
+        //       if (mounted) {
+        //         showDialog(
+        //           context: context,
+        //           barrierDismissible: false,
+        //           builder: (context) => Center(
+        //             child: Container(
+        //               padding: EdgeInsets.all(24.w),
+        //               decoration: BoxDecoration(
+        //                 color: Colors.white,
+        //                 borderRadius: BorderRadius.circular(16.r),
+        //               ),
+        //               child: Column(
+        //                 mainAxisSize: MainAxisSize.min,
+        //                 children: [
+        //                   CircularProgressIndicator(),
+        //                   SizedBox(height: 16.h),
+        //                   Text(
+        //                     S.of(context).connectingToPrinter,
+        //                     style: TextStyle(fontSize: 14.sp),
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           ),
+        //         );
+        //       }
 
-              final result = await BluetoothPrintPlus.connect(device);
+        //       final result = await BluetoothPrintPlus.connect(device);
 
-              // إغلاق مؤشر التحميل
-              if (mounted) {
-                Navigator.pop(context);
-              }
+        //       // إغلاق مؤشر التحميل
+        //       if (mounted) {
+        //         Navigator.pop(context);
+        //       }
 
-              if (result) {
-                // نجح الاتصال - عرض dialog الطباعة
-                if (mounted) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => InvoicePrintDialog(invoice: invoice),
-                  );
-                }
-              } else {
-                // فشل الاتصال - عرض رسالة تطلب الذهاب إلى الإعدادات
-                if (mounted) {
-                  _showConnectionFailedDialog();
-                }
-              }
-            } catch (e) {
-              // خطأ في تحليل البيانات المحفوظة
-              if (mounted) {
-                Navigator.pop(context); // إغلاق مؤشر التحميل إن وجد
-                _showNoDeviceDialog();
-              }
-            }
-          }
-        } catch (e) {
-          // خطأ في قراءة SharedPreferences
-          if (mounted) {
-            _showNoDeviceDialog();
-          }
+        //       if (result) {
+        //         // نجح الاتصال - عرض dialog الطباعة
+        //         if (mounted) {
+        //           showDialog(
+        //             context: context,
+        //             builder: (context) => InvoicePrintDialog(invoice: invoice),
+        //           );
+        //         }
+        //       } else {
+        //         // فشل الاتصال - عرض رسالة تطلب الذهاب إلى الإعدادات
+        //         if (mounted) {
+        //           _showConnectionFailedDialog();
+        //         }
+        //       }
+        //     } catch (e) {
+        //       // خطأ في تحليل البيانات المحفوظة
+        //       if (mounted) {
+        //         Navigator.pop(context); // إغلاق مؤشر التحميل إن وجد
+        //         _showNoDeviceDialog();
+        //       }
+        //     }
+        //   }
+        // } catch (e) {
+        //   // خطأ في قراءة SharedPreferences
+        //   print('Error reading SharedPreferences: $e');
+        if (mounted) {
+          _showNoDeviceDialog();
         }
+        // }
       }
     } else {
-      // البلوتوث مغلق - عرض رسالة
+      // البلوتوث مغلق - عرض رسالةs
       if (mounted) {
         _showBluetoothOffDialog();
       }

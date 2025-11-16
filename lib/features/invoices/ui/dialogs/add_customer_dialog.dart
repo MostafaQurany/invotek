@@ -211,47 +211,43 @@ class _AddCustomerDialogState extends State<AddCustomerDialog> {
   }
 
   Widget _buildBottomActions() {
-    return Row(
+    return Column(
       children: [
         // Cancel Button
-        Expanded(
-          child: OutlinedButton(
-            onPressed: _isLoading ? null : () => Navigator.pop(context),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.textSecondary,
-              side: BorderSide(color: AppColors.border),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12.h),
+        OutlinedButton(
+          onPressed: _isLoading ? null : () => Navigator.pop(context),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.textSecondary,
+            side: BorderSide(color: AppColors.border),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
             ),
-            child: Text(S.of(context).cancel),
+            padding: EdgeInsets.symmetric(vertical: 12.h),
           ),
+          child: Text(S.of(context).cancel),
         ),
-        SizedBox(width: 12.w),
+        SizedBox(height: 12.w),
         // Save Button
-        Expanded(
-          child: ElevatedButton(
-            onPressed: _isLoading ? null : _onSave,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12.h),
+        ElevatedButton(
+          onPressed: _isLoading ? null : _onSave,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
             ),
-            child: _isLoading
-                ? SizedBox(
-                    height: 20.h,
-                    width: 20.w,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
-                  )
-                : Text(S.of(context).save),
+            padding: EdgeInsets.symmetric(vertical: 12.h),
           ),
+          child: _isLoading
+              ? SizedBox(
+                  height: 20.h,
+                  width: 20.w,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  ),
+                )
+              : Text(S.of(context).save),
         ),
       ],
     );

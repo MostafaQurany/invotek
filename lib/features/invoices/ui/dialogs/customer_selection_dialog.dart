@@ -98,6 +98,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
 
             // Customers List
             Expanded(
+              flex: 2,
               child: BlocProvider.value(
                 value: context.read<CustomersCubit>(),
                 child: _buildCustomersList(),
@@ -105,7 +106,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
             ),
 
             // Bottom Actions
-            _buildBottomActions(),
+            Expanded(child: _buildBottomActions()),
           ],
         ),
       ),
@@ -467,39 +468,36 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
   }
 
   Widget _buildBottomActions() {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Add New Customer Button
-        Expanded(
-          child: OutlinedButton.icon(
-            onPressed: widget.onAddNewCustomer,
-            icon: Icon(Icons.person_add, size: 20.sp),
-            label: Text(S.of(context).addNewCustomer),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.primary,
-              side: BorderSide(color: AppColors.primary),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12.h),
+        OutlinedButton.icon(
+          onPressed: widget.onAddNewCustomer,
+          icon: Icon(Icons.person_add, size: 20.sp),
+          label: Text(S.of(context).addNewCustomer),
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.primary,
+            side: BorderSide(color: AppColors.primary),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
             ),
+            padding: EdgeInsets.symmetric(vertical: 12.h),
           ),
         ),
-        SizedBox(width: 12.w),
+        SizedBox(height: 10.h),
         // Cancel Button
-        Expanded(
-          child: ElevatedButton(
-            onPressed: () => Navigator.pop(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.textSecondary,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 12.h),
+        ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.textSecondary,
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.r),
             ),
-            child: Text(S.of(context).cancel),
+            padding: EdgeInsets.symmetric(vertical: 12.h),
           ),
+          child: Text(S.of(context).cancel),
         ),
       ],
     );

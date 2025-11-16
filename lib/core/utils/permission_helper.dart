@@ -228,11 +228,25 @@ class PermissionChecker {
     }
   }
 
+  /// إغلاق أي SnackBar مفتوح قبل إظهار واحد جديد
+  static void _hideCurrentSnackBar(BuildContext context) {
+    try {
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      if (scaffoldMessenger.mounted) {
+        scaffoldMessenger.hideCurrentSnackBar();
+      }
+    } catch (e) {
+      // Silently handle errors to prevent crashes
+      debugPrint('Error hiding snackbar: $e');
+    }
+  }
+
   /// عرض رسالة عدم وجود صلاحية
   static void showPermissionDeniedSnackBar(
     BuildContext context,
     String featureName,
   ) {
+    _hideCurrentSnackBar(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(

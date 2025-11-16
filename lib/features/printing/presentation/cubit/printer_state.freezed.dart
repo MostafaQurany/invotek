@@ -55,13 +55,14 @@ extension PrinterStatePatterns on PrinterState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Connected value)?  connected,TResult Function( _Disconnected value)?  disconnected,TResult Function( _Scanning value)?  scanning,TResult Function( _Printing value)?  printing,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Connected value)?  connected,TResult Function( _Disconnected value)?  disconnected,TResult Function( _Connecting value)?  connecting,TResult Function( _Scanning value)?  scanning,TResult Function( _Printing value)?  printing,TResult Function( _Error value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Connected() when connected != null:
 return connected(_that);case _Disconnected() when disconnected != null:
-return disconnected(_that);case _Scanning() when scanning != null:
+return disconnected(_that);case _Connecting() when connecting != null:
+return connecting(_that);case _Scanning() when scanning != null:
 return scanning(_that);case _Printing() when printing != null:
 return printing(_that);case _Error() when error != null:
 return error(_that);case _:
@@ -82,13 +83,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Connected value)  connected,required TResult Function( _Disconnected value)  disconnected,required TResult Function( _Scanning value)  scanning,required TResult Function( _Printing value)  printing,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Connected value)  connected,required TResult Function( _Disconnected value)  disconnected,required TResult Function( _Connecting value)  connecting,required TResult Function( _Scanning value)  scanning,required TResult Function( _Printing value)  printing,required TResult Function( _Error value)  error,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _Connected():
 return connected(_that);case _Disconnected():
-return disconnected(_that);case _Scanning():
+return disconnected(_that);case _Connecting():
+return connecting(_that);case _Scanning():
 return scanning(_that);case _Printing():
 return printing(_that);case _Error():
 return error(_that);case _:
@@ -108,13 +110,14 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Connected value)?  connected,TResult? Function( _Disconnected value)?  disconnected,TResult? Function( _Scanning value)?  scanning,TResult? Function( _Printing value)?  printing,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Connected value)?  connected,TResult? Function( _Disconnected value)?  disconnected,TResult? Function( _Connecting value)?  connecting,TResult? Function( _Scanning value)?  scanning,TResult? Function( _Printing value)?  printing,TResult? Function( _Error value)?  error,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Connected() when connected != null:
 return connected(_that);case _Disconnected() when disconnected != null:
-return disconnected(_that);case _Scanning() when scanning != null:
+return disconnected(_that);case _Connecting() when connecting != null:
+return connecting(_that);case _Scanning() when scanning != null:
 return scanning(_that);case _Printing() when printing != null:
 return printing(_that);case _Error() when error != null:
 return error(_that);case _:
@@ -134,14 +137,15 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( BluetoothDevice device)?  connected,TResult Function()?  disconnected,TResult Function( List<BluetoothDevice> devices)?  scanning,TResult Function()?  printing,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( BluetoothDevice device)?  connected,TResult Function()?  disconnected,TResult Function( BluetoothDevice device)?  connecting,TResult Function( List<BluetoothDevice> devices)?  scanning,TResult Function( double progress)?  printing,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Connected() when connected != null:
 return connected(_that.device);case _Disconnected() when disconnected != null:
-return disconnected();case _Scanning() when scanning != null:
+return disconnected();case _Connecting() when connecting != null:
+return connecting(_that.device);case _Scanning() when scanning != null:
 return scanning(_that.devices);case _Printing() when printing != null:
-return printing();case _Error() when error != null:
+return printing(_that.progress);case _Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -160,14 +164,15 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( BluetoothDevice device)  connected,required TResult Function()  disconnected,required TResult Function( List<BluetoothDevice> devices)  scanning,required TResult Function()  printing,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( BluetoothDevice device)  connected,required TResult Function()  disconnected,required TResult Function( BluetoothDevice device)  connecting,required TResult Function( List<BluetoothDevice> devices)  scanning,required TResult Function( double progress)  printing,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Connected():
 return connected(_that.device);case _Disconnected():
-return disconnected();case _Scanning():
+return disconnected();case _Connecting():
+return connecting(_that.device);case _Scanning():
 return scanning(_that.devices);case _Printing():
-return printing();case _Error():
+return printing(_that.progress);case _Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -185,14 +190,15 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( BluetoothDevice device)?  connected,TResult? Function()?  disconnected,TResult? Function( List<BluetoothDevice> devices)?  scanning,TResult? Function()?  printing,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( BluetoothDevice device)?  connected,TResult? Function()?  disconnected,TResult? Function( BluetoothDevice device)?  connecting,TResult? Function( List<BluetoothDevice> devices)?  scanning,TResult? Function( double progress)?  printing,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Connected() when connected != null:
 return connected(_that.device);case _Disconnected() when disconnected != null:
-return disconnected();case _Scanning() when scanning != null:
+return disconnected();case _Connecting() when connecting != null:
+return connecting(_that.device);case _Scanning() when scanning != null:
 return scanning(_that.devices);case _Printing() when printing != null:
-return printing();case _Error() when error != null:
+return printing(_that.progress);case _Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -334,6 +340,72 @@ String toString() {
 /// @nodoc
 
 
+class _Connecting implements PrinterState {
+  const _Connecting(this.device);
+  
+
+ final  BluetoothDevice device;
+
+/// Create a copy of PrinterState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ConnectingCopyWith<_Connecting> get copyWith => __$ConnectingCopyWithImpl<_Connecting>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Connecting&&(identical(other.device, device) || other.device == device));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,device);
+
+@override
+String toString() {
+  return 'PrinterState.connecting(device: $device)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ConnectingCopyWith<$Res> implements $PrinterStateCopyWith<$Res> {
+  factory _$ConnectingCopyWith(_Connecting value, $Res Function(_Connecting) _then) = __$ConnectingCopyWithImpl;
+@useResult
+$Res call({
+ BluetoothDevice device
+});
+
+
+
+
+}
+/// @nodoc
+class __$ConnectingCopyWithImpl<$Res>
+    implements _$ConnectingCopyWith<$Res> {
+  __$ConnectingCopyWithImpl(this._self, this._then);
+
+  final _Connecting _self;
+  final $Res Function(_Connecting) _then;
+
+/// Create a copy of PrinterState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? device = null,}) {
+  return _then(_Connecting(
+null == device ? _self.device : device // ignore: cast_nullable_to_non_nullable
+as BluetoothDevice,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
 class _Scanning implements PrinterState {
   const _Scanning(final  List<BluetoothDevice> devices): _devices = devices;
   
@@ -407,33 +479,67 @@ as List<BluetoothDevice>,
 
 
 class _Printing implements PrinterState {
-  const _Printing();
+  const _Printing([this.progress = 0.0]);
   
 
+@JsonKey() final  double progress;
 
-
+/// Create a copy of PrinterState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PrintingCopyWith<_Printing> get copyWith => __$PrintingCopyWithImpl<_Printing>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Printing);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Printing&&(identical(other.progress, progress) || other.progress == progress));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,progress);
 
 @override
 String toString() {
-  return 'PrinterState.printing()';
+  return 'PrinterState.printing(progress: $progress)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$PrintingCopyWith<$Res> implements $PrinterStateCopyWith<$Res> {
+  factory _$PrintingCopyWith(_Printing value, $Res Function(_Printing) _then) = __$PrintingCopyWithImpl;
+@useResult
+$Res call({
+ double progress
+});
 
 
+
+
+}
+/// @nodoc
+class __$PrintingCopyWithImpl<$Res>
+    implements _$PrintingCopyWith<$Res> {
+  __$PrintingCopyWithImpl(this._self, this._then);
+
+  final _Printing _self;
+  final $Res Function(_Printing) _then;
+
+/// Create a copy of PrinterState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? progress = null,}) {
+  return _then(_Printing(
+null == progress ? _self.progress : progress // ignore: cast_nullable_to_non_nullable
+as double,
+  ));
+}
+
+
+}
 
 /// @nodoc
 

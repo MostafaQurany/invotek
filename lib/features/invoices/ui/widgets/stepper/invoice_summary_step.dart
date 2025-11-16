@@ -14,9 +14,14 @@ class InvoiceSummaryStep extends StatefulWidget {
   State<InvoiceSummaryStep> createState() => _InvoiceSummaryStepState();
 }
 
-class _InvoiceSummaryStepState extends State<InvoiceSummaryStep> {
+class _InvoiceSummaryStepState extends State<InvoiceSummaryStep>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final s = S.of(context);
 
     return SingleChildScrollView(

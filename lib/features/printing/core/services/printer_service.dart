@@ -17,7 +17,7 @@ class PrinterService {
   /// تهيئة الخدمة
   Future<void> initialize() async {
     if (_isInitialized) {
-      print('PrinterService: Already initialized');
+      // لا حاجة لطباعة رسالة - التهيئة قد تمت بالفعل
       return;
     }
 
@@ -32,12 +32,16 @@ class PrinterService {
         },
       );
 
+      // انتظار قليلاً للتأكد من تسجيل الـ listeners في native side
+      // هذا يساعد على تجنب مشاكل EventSink null
+      await Future.delayed(const Duration(milliseconds: 300));
+
       _isInitialized = true;
       print('PrinterService: Initialization complete');
     } catch (e) {
       print('PrinterService: Initialization error: $e');
       _isInitialized = true; // نضع true حتى لا نحاول مرة أخرى
-      rethrow;
+      // لا نرمي الخطأ - نتركه للـ Cubit للتعامل معه بشكل آمن
     }
   }
 
@@ -53,12 +57,23 @@ class PrinterService {
   /// التحقق من حالة الاتصال الحالية (بسيط - بدون بحث)
   Future<bool> checkConnection() async {
     try {
-      final currentState = await BluetoothPrintPlus.connectState.first.timeout(
-        const Duration(milliseconds: 500),
-        onTimeout: () => ConnectState.disconnected,
-      );
-      return currentState == ConnectState.connected;
+      // التحقق من أن الخدمة مهيأة قبل محاولة التحقق من الاتصال
+      if (!_isInitialized) {
+        print('PrinterService: Not initialized yet, skipping connection check');
+        return false;
+      }
+
+      // استخدام isConnected مباشرة بدلاً من connectState stream لتجنب مشاكل EventSink
+      // هذا أكثر أماناً ولا يتطلب listener مسجل
+      try {
+        final isConnected = BluetoothPrintPlus.isConnected;
+        return isConnected;
+      } catch (e) {
+        print('checkConnection: Error checking isConnected: $e');
+        return false;
+      }
     } catch (e) {
+      // معالجة الأخطاء بشكل آمن لتجنب إغلاق التطبيق
       print('checkConnection error: $e');
       return false;
     }

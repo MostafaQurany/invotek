@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/printing/core/models/invoice_language.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -20,6 +22,7 @@ class TaxInvoiceItem {
   final int qty;
   final double unitPrice;
   final double taxPercent;
+
 
   TaxInvoiceItem({
     this.nameAr,
@@ -54,7 +57,6 @@ class TaxInvoiceData {
   final String invoiceNumber;
   final String issueDateTimeIso;
   final String customerName;
-  final String paymentMethod;
 
   final String sellerNameAr;
   final String sellerNameEn;
@@ -73,11 +75,17 @@ class TaxInvoiceData {
 
   final ZatcaQrFields? zatcaQr;
 
+  // New fields
+  final String companyName;
+  final String? qrCode;
+  final String invoiceType; // 'income' or 'general'
+  final String currencySymbolAr;
+  final String currencySymbolEn;
+
   TaxInvoiceData({
     required this.invoiceNumber,
     required this.issueDateTimeIso,
     required this.customerName,
-    required this.paymentMethod,
     required this.sellerNameAr,
     required this.sellerNameEn,
     required this.sellerVat,
@@ -91,21 +99,33 @@ class TaxInvoiceData {
     this.footerAr,
     this.footerEn,
     this.zatcaQr,
+    required this.companyName,
+    this.qrCode,
+    required this.invoiceType,
+    required this.currencySymbolAr,
+    required this.currencySymbolEn,
   });
 
-  static TaxInvoiceData fromInvoice(InvoiceModel invoice) {
+  static TaxInvoiceData fromInvoice(
+    InvoiceModel invoice, {
+    String currencySymbolAr = 'د.ع',
+    String currencySymbolEn = 'JOD',
+  }) {
     return TaxInvoiceData(
       invoiceNumber: invoice.invoiceNumber.toString(),
       issueDateTimeIso: invoice.issueDate.toString(),
       customerName: invoice.customerName.toString(),
-      paymentMethod: invoice.paymentMethodCode.toString(),
       sellerNameAr: invoice.customer?.name ?? '',
       sellerNameEn: invoice.customer?.name ?? '',
       sellerVat: invoice.customer?.taxNumber ?? '0',
       sellerAddress: invoice.customer?.address ?? '',
       items:
           invoice.items
-              ?.map(
+              ?.where((e) {
+                final qty = int.tryParse(e.quantity ?? '0') ?? 0;
+                return qty > 0; // فلترة العناصر التي كميةها أكبر من 0
+              })
+              .map(
                 (e) => TaxInvoiceItem(
                   nameAr: e.name,
                   nameEn: e.name,
@@ -121,6 +141,11 @@ class TaxInvoiceData {
       discount: double.tryParse(invoice.discount ?? '0') ?? 0,
       grandTotal: double.tryParse(invoice.total ?? '0') ?? 0,
       notes: invoice.description,
+      companyName: 'Invotek',
+      qrCode: invoice.qrCode,
+      invoiceType: invoice.invoiceType ?? 'general',
+      currencySymbolAr: currencySymbolAr,
+      currencySymbolEn: currencySymbolEn,
     );
   }
 }
@@ -142,7 +167,7 @@ class TaxInvoiceStyleConfig {
 class _ColSpec {
   final double frac;
   final TextAlign align;
-  final TextDirection dir;
+  final ui.TextDirection dir;
   _ColSpec(this.frac, this.align, this.dir);
 }
 
@@ -162,6 +187,60 @@ class _TableStyles {
 // ---------------- MAIN RENDERER ----------------
 
 class TaxInvoiceRenderer {
+  /// Format price with currency symbol, removing trailing zeros
+  static String _formatPriceWithCurrency(double amount, String currencySymbol) {
+    // Format number without currency symbol
+    final formatted = NumberFormat.currency(
+      symbol: '',
+      decimalDigits: 2,
+      locale: 'en_US', // تحديد locale لضمان التنسيق الصحيح
+    ).format(amount);
+
+    // Remove trailing zeros after decimal point
+    String cleaned = formatted;
+    if (cleaned.contains('.')) {
+      // إزالة الأصفار الزائدة بعد الفاصلة العشرية
+      cleaned = cleaned.replaceAll(RegExp(r'0+$'), '');
+      // إزالة الفاصلة العشرية إذا لم يبق شيء بعدها
+      cleaned = cleaned.replaceAll(RegExp(r'\.$'), '');
+    }
+
+    // Add currency symbol
+    return '$cleaned $currencySymbol';
+  }
+
+  /// Load logo image from assets
+  static Future<ui.Image?> _loadLogoImage() async {
+    try {
+      final ByteData data = await rootBundle.load(
+        'assets/images/Invotek-Logo-Final-01.png',
+      );
+      final Uint8List bytes = data.buffer.asUint8List();
+      final codec = await ui.instantiateImageCodec(bytes);
+      final frame = await codec.getNextFrame();
+      return frame.image;
+    } catch (e) {
+      // Return null if logo cannot be loaded
+      return null;
+    }
+  }
+
+  /// Format date and time from ISO string
+  static Map<String, String> _formatDateAndTime(String isoString) {
+    try {
+      final dateTime = DateTime.parse(isoString);
+      final dateFormat = DateFormat('dd/MM/yyyy', 'en_US'); // تحديد locale
+      final timeFormat = DateFormat('hh:mm a', 'en_US'); // تحديد locale
+      return {
+        'date': dateFormat.format(dateTime),
+        'time': timeFormat.format(dateTime),
+      };
+    } catch (e) {
+      // Return original string if parsing fails
+      return {'date': isoString, 'time': ''};
+    }
+  }
+
   static List<double> _xStops(double x, double w, List<_ColSpec> cols) {
     final stops = <double>[x];
     double run = x;
@@ -193,76 +272,54 @@ class TaxInvoiceRenderer {
       color: Colors.black,
       height: 1.15,
     );
-    final h1 = base.copyWith(
-      fontSize: style.headerSize,
-      fontWeight: FontWeight.bold,
-    );
 
     canvas.drawRect(
       Rect.fromLTWH(0, 0, paperWidthPx.toDouble(), 30000),
       Paint()..color = Colors.white,
     );
-    if (language == InvoiceLanguage.arabic)
-      y = _text(
-        canvas,
-        'فاتورة ضريبية',
-        margin,
-        y,
-        contentWidth,
-        h1,
-        TextAlign.center,
-        TextDirection.rtl,
-      );
-    if (language == InvoiceLanguage.english)
-      y = _text(
-        canvas,
-        'Tax Invoice',
-        margin,
-        y,
-        contentWidth,
-        h1,
-        TextAlign.center,
-        TextDirection.ltr,
-      );
-    y += 8;
 
+    // Load and draw logo
+    final logoImage = await _loadLogoImage();
+    if (logoImage != null) {
+      final logoSize = math.min(120.0, contentWidth * 0.4);
+      final logoOffset = Offset(margin + (contentWidth - logoSize) / 2, y);
+      canvas.drawImageRect(
+        logoImage,
+        Rect.fromLTWH(
+          0,
+          0,
+          logoImage.width.toDouble(),
+          logoImage.height.toDouble(),
+        ),
+        Rect.fromLTWH(logoOffset.dx, logoOffset.dy, logoSize, logoSize),
+        Paint(),
+      );
+      y += logoSize + 8;
+    }
+
+    // Draw company name
     final bold = base.copyWith(fontWeight: FontWeight.bold);
     y = _text(
       canvas,
-      data.sellerNameAr,
+      data.companyName,
       margin,
       y,
       contentWidth,
       bold,
       TextAlign.center,
-      TextDirection.rtl,
-    );
-
-    y = _text(
-      canvas,
-      'VAT: ${data.sellerVat}',
-      margin,
-      y,
-      contentWidth,
-      base,
-      TextAlign.center,
-      TextDirection.ltr,
-    );
-    y = _text(
-      canvas,
-      data.sellerAddress,
-      margin,
-      y,
-      contentWidth,
-      base,
-      TextAlign.center,
-      TextDirection.rtl,
+      ui.TextDirection.ltr,
     );
     y += 8;
 
     _rule(canvas, margin, y, margin + contentWidth, y, 1);
     y += 8;
 
+    // Format date and time
+    final dateTimeMap = _formatDateAndTime(data.issueDateTimeIso);
+    final formattedDate = dateTimeMap['date'] ?? data.issueDateTimeIso;
+    final formattedTime = dateTimeMap['time'] ?? '';
+
+    // Invoice details
     y = (language == InvoiceLanguage.english)
         ? _labelValue(
             canvas,
@@ -281,7 +338,6 @@ class TaxInvoiceRenderer {
             y,
             contentWidth,
             data.invoiceNumber,
-
             (language == InvoiceLanguage.english)
                 ? 'Invoice No'
                 : 'رقم الفاتورة',
@@ -294,7 +350,7 @@ class TaxInvoiceRenderer {
             y,
             contentWidth,
             (language == InvoiceLanguage.english) ? 'Date' : 'التاريخ',
-            data.issueDateTimeIso,
+            formattedDate,
             base,
           )
         : _labelValue(
@@ -302,11 +358,31 @@ class TaxInvoiceRenderer {
             margin,
             y,
             contentWidth,
-            data.issueDateTimeIso,
-
+            formattedDate,
             (language == InvoiceLanguage.english) ? 'Date' : 'التاريخ',
             base,
           );
+    if (formattedTime.isNotEmpty) {
+      y = (language == InvoiceLanguage.english)
+          ? _labelValue(
+              canvas,
+              margin,
+              y,
+              contentWidth,
+              (language == InvoiceLanguage.english) ? 'Time' : 'الوقت',
+              formattedTime,
+              base,
+            )
+          : _labelValue(
+              canvas,
+              margin,
+              y,
+              contentWidth,
+              formattedTime,
+              (language == InvoiceLanguage.english) ? 'Time' : 'الوقت',
+              base,
+            );
+    }
     y = (language == InvoiceLanguage.english)
         ? _labelValue(
             canvas,
@@ -323,28 +399,7 @@ class TaxInvoiceRenderer {
             y,
             contentWidth,
             data.customerName,
-
             (language == InvoiceLanguage.english) ? 'Customer' : 'العميل',
-            base,
-          );
-    y = (language == InvoiceLanguage.english)
-        ? _labelValue(
-            canvas,
-            margin,
-            y,
-            contentWidth,
-            (language == InvoiceLanguage.english) ? 'Payment' : 'طريقة الدفع',
-            data.paymentMethod,
-            base,
-          )
-        : _labelValue(
-            canvas,
-            margin,
-            y,
-            contentWidth,
-            data.paymentMethod,
-
-            (language == InvoiceLanguage.english) ? 'Payment' : 'طريقة الدفع',
             base,
           );
     y += 8;
@@ -360,28 +415,49 @@ class TaxInvoiceRenderer {
       height: 1.3, // زيادة الارتفاع
     );
 
+    // Determine columns and headers based on invoice type
+    final isIncome = data.invoiceType == 'income';
+    final currencySymbol = language == InvoiceLanguage.arabic
+        ? data.currencySymbolAr
+        : data.currencySymbolEn;
+
     final cols = (language == InvoiceLanguage.english)
+        ? isIncome
+              ? <_ColSpec>[
+                  _ColSpec(0.40, TextAlign.center, ui.TextDirection.rtl),
+                  _ColSpec(0.12, TextAlign.center, ui.TextDirection.ltr),
+                  _ColSpec(0.24, TextAlign.center, ui.TextDirection.ltr),
+                  _ColSpec(0.24, TextAlign.center, ui.TextDirection.ltr),
+                ]
+              : <_ColSpec>[
+                  _ColSpec(0.36, TextAlign.center, ui.TextDirection.rtl),
+                  _ColSpec(0.10, TextAlign.center, ui.TextDirection.ltr),
+                  _ColSpec(0.22, TextAlign.center, ui.TextDirection.ltr),
+                  _ColSpec(0.15, TextAlign.center, ui.TextDirection.ltr),
+                  _ColSpec(0.23, TextAlign.center, ui.TextDirection.ltr),
+                ]
+        : isIncome
         ? <_ColSpec>[
-            _ColSpec(0.36, TextAlign.center, TextDirection.rtl),
-            _ColSpec(0.10, TextAlign.center, TextDirection.ltr),
-            _ColSpec(0.22, TextAlign.center, TextDirection.ltr),
-            _ColSpec(0.15, TextAlign.center, TextDirection.ltr),
-            //_ColSpec(0.10, TextAlign.center, TextDirection.ltr),
-            _ColSpec(0.23, TextAlign.center, TextDirection.ltr),
+            _ColSpec(0.24, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.24, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.12, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.40, TextAlign.center, ui.TextDirection.rtl),
           ]
         : <_ColSpec>[
-            _ColSpec(0.23, TextAlign.center, TextDirection.ltr),
-            _ColSpec(0.15, TextAlign.center, TextDirection.ltr),
-            _ColSpec(0.22, TextAlign.center, TextDirection.ltr),
-            _ColSpec(0.10, TextAlign.center, TextDirection.ltr),
-
-            _ColSpec(0.36, TextAlign.center, TextDirection.rtl),
-            //_ColSpec(0.10, TextAlign.center, TextDirection.ltr),
+            _ColSpec(0.23, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.15, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.22, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.10, TextAlign.center, ui.TextDirection.ltr),
+            _ColSpec(0.36, TextAlign.center, ui.TextDirection.rtl),
           ];
 
     final headers = (language == InvoiceLanguage.english)
-        ? ['Item', 'Qty', 'Price', '%Tax', /* 'VAT',*/ 'Total']
-        : ['المجموع', '%Tax', 'السعر', 'الكم', 'العنصر' /* 'VAT',*/];
+        ? isIncome
+              ? ['Item', 'Qty', 'Price', 'Total']
+              : ['Item', 'Qty', 'Price', '%Tax', 'Total']
+        : isIncome
+        ? ['المجموع', 'السعر', 'الكم', 'العنصر']
+        : ['المجموع', '%Tax', 'السعر', 'الكم', 'العنصر'];
 
     y = _drawGridTable(
       c: canvas,
@@ -392,6 +468,8 @@ class TaxInvoiceRenderer {
       headers: headers,
       items: data.items,
       language: language,
+      invoiceType: data.invoiceType,
+      currencySymbol: currencySymbol,
       styles: _TableStyles(
         header: headerStyle,
         cell: base,
@@ -410,7 +488,7 @@ class TaxInvoiceRenderer {
             (language == InvoiceLanguage.english)
                 ? 'Subtotal'
                 : 'الإجمالي قبل الضريبة',
-            data.subtotal.toStringAsFixed(2),
+            _formatPriceWithCurrency(data.subtotal, currencySymbol),
             base,
           )
         : _labelValue(
@@ -418,37 +496,38 @@ class TaxInvoiceRenderer {
             margin,
             y,
             contentWidth,
-            data.subtotal.toStringAsFixed(2),
-
+            _formatPriceWithCurrency(data.subtotal, currencySymbol),
             (language == InvoiceLanguage.english)
                 ? 'Subtotal'
                 : 'الإجمالي قبل الضريبة',
             base,
           );
-    y = (language == InvoiceLanguage.english)
-        ? _labelValue(
-            canvas,
-            margin,
-            y,
-            contentWidth,
-            (language == InvoiceLanguage.english)
-                ? 'VAT Total'
-                : 'إجمالي الضريبة',
-            data.vatTotal.toStringAsFixed(2),
-            base,
-          )
-        : _labelValue(
-            canvas,
-            margin,
-            y,
-            contentWidth,
-            data.vatTotal.toStringAsFixed(2),
-
-            (language == InvoiceLanguage.english)
-                ? 'VAT Total'
-                : 'إجمالي الضريبة',
-            base,
-          );
+    // Only show VAT Total if not income type
+    if (!isIncome) {
+      y = (language == InvoiceLanguage.english)
+          ? _labelValue(
+              canvas,
+              margin,
+              y,
+              contentWidth,
+              (language == InvoiceLanguage.english)
+                  ? 'VAT Total'
+                  : 'إجمالي الضريبة',
+              _formatPriceWithCurrency(data.vatTotal, currencySymbol),
+              base,
+            )
+          : _labelValue(
+              canvas,
+              margin,
+              y,
+              contentWidth,
+              _formatPriceWithCurrency(data.vatTotal, currencySymbol),
+              (language == InvoiceLanguage.english)
+                  ? 'VAT Total'
+                  : 'إجمالي الضريبة',
+              base,
+            );
+    }
     y = (language == InvoiceLanguage.english)
         ? _labelValue(
             canvas,
@@ -456,7 +535,7 @@ class TaxInvoiceRenderer {
             y,
             contentWidth,
             (language == InvoiceLanguage.english) ? 'Discount' : 'الخصم',
-            data.discount.toStringAsFixed(2),
+            _formatPriceWithCurrency(data.discount, currencySymbol),
             base,
           )
         : _labelValue(
@@ -464,8 +543,7 @@ class TaxInvoiceRenderer {
             margin,
             y,
             contentWidth,
-            data.discount.toStringAsFixed(2),
-
+            _formatPriceWithCurrency(data.discount, currencySymbol),
             (language == InvoiceLanguage.english) ? 'Discount' : 'الخصم',
             base,
           );
@@ -479,7 +557,7 @@ class TaxInvoiceRenderer {
             (language == InvoiceLanguage.english)
                 ? 'Grand Total'
                 : 'الإجمالي شامل الضريبة',
-            data.grandTotal.toStringAsFixed(2),
+            _formatPriceWithCurrency(data.grandTotal, currencySymbol),
             grand,
           )
         : _labelValue(
@@ -487,8 +565,7 @@ class TaxInvoiceRenderer {
             margin,
             y,
             contentWidth,
-            data.grandTotal.toStringAsFixed(2),
-
+            _formatPriceWithCurrency(data.grandTotal, currencySymbol),
             (language == InvoiceLanguage.english)
                 ? 'Grand Total'
                 : 'الإجمالي شامل الضريبة',
@@ -507,7 +584,7 @@ class TaxInvoiceRenderer {
         contentWidth,
         grand,
         TextAlign.center,
-        TextDirection.ltr,
+        ui.TextDirection.ltr,
       );
       y = _text(
         canvas,
@@ -517,7 +594,7 @@ class TaxInvoiceRenderer {
         contentWidth,
         base,
         TextAlign.center,
-        TextDirection.rtl,
+        ui.TextDirection.rtl,
       );
       y += 8;
     }
@@ -534,7 +611,7 @@ class TaxInvoiceRenderer {
           contentWidth,
           base,
           TextAlign.center,
-          TextDirection.rtl,
+          ui.TextDirection.rtl,
         );
       }
       if ((data.footerEn ?? '').isNotEmpty) {
@@ -546,41 +623,77 @@ class TaxInvoiceRenderer {
           contentWidth,
           base,
           TextAlign.center,
-          TextDirection.ltr,
+          ui.TextDirection.ltr,
         );
       }
       y += 8;
     }
 
-    // ✅ FIXED QR CODE SECTION
-    if (data.zatcaQr != null) {
-      final qrData = _zatcaTLV(
-        seller: data.zatcaQr!.sellerName,
-        vatNo: data.zatcaQr!.vatNumber,
-        timestamp: data.zatcaQr!.timestampIso8601,
-        total: data.zatcaQr!.totalWithVat,
-        vat: data.zatcaQr!.vatTotal,
-      );
-      final qrSize = math.min(220.0, contentWidth);
-      final offset = Offset(margin + (contentWidth - qrSize) / 2, y);
+    // QR Code section
+    if (data.qrCode != null && data.qrCode!.isNotEmpty) {
+      y += 8;
 
+      // حساب حجم QR Code بشكل نسبي لحجم الورق
+      // للورق الصغير (58mm/384px): استخدام 90% من عرض المحتوى لضمان حجم كافٍ
+      // للورق الكبير (80mm/576px): استخدام 70% من عرض المحتوى
+      // مع حد أدنى 300px لضمان قابلية المسح في الورق الصغير
+      final paperWidth = paperWidthPx.toDouble();
+      final qrSizeRatio = paperWidth <= 400
+          ? 0.90
+          : 0.7; // نسبة أكبر للورق الصغير
+      final minQrSize = 300.0; // حد أدنى لضمان قابلية المسح
+      final calculatedQrSize = contentWidth * qrSizeRatio;
+      // للورق الصغير: استخدام الحجم المحسوب أو الحد الأدنى (أيهما أكبر)
+      // للورق الكبير: استخدام الحد الأقصى 350px
+      final qrSize = paperWidth <= 400
+          ? math.max(minQrSize, calculatedQrSize) // للورق الصغير: لا حد أقصى
+          : math.min(350.0, calculatedQrSize); // للورق الكبير: حد أقصى 350px
+
+      final qrOffsetX = margin + (contentWidth - qrSize) / 2;
+      final qrOffsetY = y;
+
+      // استخدام QrPainter مباشرة على Canvas للحصول على أفضل جودة
+      // بدون تحويل إلى صورة مما يحافظ على الحواف الحادة
       final qrPainter = QrPainter(
-        data: qrData,
+        data: data.qrCode!,
         version: QrVersions.auto,
         gapless: true,
         color: Colors.black,
         emptyColor: Colors.white,
+        errorCorrectionLevel: QrErrorCorrectLevel.H,
       );
-      final qrPic = await qrPainter.toImageData(qrSize);
-      if (qrPic != null) {
-        final codec = await ui.instantiateImageCodec(
-          qrPic.buffer.asUint8List(),
-        );
-        final frame = await codec.getNextFrame();
-        canvas.drawImage(frame.image, offset, Paint());
-      }
-      y += qrSize + 4; // تقليل المسافة بعد QR Code
+
+      // حفظ حالة Canvas
+      canvas.save();
+
+      // نقل Canvas إلى موضع QR Code
+      canvas.translate(qrOffsetX, qrOffsetY);
+
+      // رسم QR Code مباشرة على Canvas بحجم محدد
+      // استخدام Size لتحديد الحجم بدقة
+      qrPainter.paint(canvas, Size(qrSize, qrSize));
+
+      // استعادة حالة Canvas
+      canvas.restore();
+
+      // إضافة مسافة أكبر بعد QR Code لتجنب القطع
+      y += qrSize + 20;
     }
+
+    // Thank you section
+    y += 8;
+    y = _text(
+      canvas,
+      language == InvoiceLanguage.arabic ? 'شكراً لكم' : 'Thank you',
+      margin,
+      y,
+      contentWidth,
+      bold,
+      TextAlign.center,
+      language == InvoiceLanguage.arabic
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
+    );
 
     final image = await recorder.endRecording().toImage(
       paperWidthPx,
@@ -599,6 +712,8 @@ class TaxInvoiceRenderer {
     required List<String> headers,
     required List<TaxInvoiceItem> items,
     required _TableStyles styles,
+    required String invoiceType,
+    required String currencySymbol,
   }) {
     final xs = _xStops(x, contentW, cols);
     final hPainters = <TextPainter>[];
@@ -616,9 +731,15 @@ class TaxInvoiceRenderer {
     for (var i = 0; i < hPainters.length; i++) {
       final tp = hPainters[i];
       final colWidth = xs[i + 1] - xs[i];
-      final dx = xs[i] + (colWidth - tp.width) / 2; // حساب المنتصف يدوياً
+      // التأكد من أن النص لا يخرج خارج حدود العمود
+      final textWidth = math.min(tp.width, colWidth);
+      // حساب الموضع مع التأكد من أنه داخل الحدود
+      final dx = xs[i] + math.max(0, (colWidth - textWidth) / 2);
       final dy = y + (headerH - tp.height) / 2;
-      tp.paint(c, Offset(dx, dy));
+      // التأكد من أن الموضع داخل حدود العمود
+      final safeDx = math.max(xs[i], math.min(dx, xs[i + 1] - textWidth));
+      final safeDy = math.max(y, dy);
+      tp.paint(c, Offset(safeDx, safeDy));
     }
     y += headerH;
     _rule(c, x, y, x + contentW, y, styles.ruleWidth);
@@ -626,27 +747,25 @@ class TaxInvoiceRenderer {
       _rule(c, stop, y - headerH, stop, y, styles.ruleWidth);
     }
 
+    final isIncome = invoiceType == 'income';
     for (final it in items) {
+      // التأكد من أن القيم ليست فارغة
+      final itemName = (it.nameAr ?? it.nameEn ?? '').trim();
+      final qtyStr = it.qty > 0 ? it.qty.toString() : '0';
+      final priceStr = _formatPriceWithCurrency(it.unitPrice, currencySymbol);
+      final totalStr = _formatPriceWithCurrency(
+        it.totalWithVat,
+        currencySymbol,
+      );
+      final taxPercentStr = '${it.taxPercent.toStringAsFixed(0)}%';
+
       final values = (language == InvoiceLanguage.english)
-          ? [
-              (it.nameAr ?? it.nameEn ?? '').trim(),
-              it.qty.toString(),
-              it.unitPrice.toStringAsFixed(2),
-              '${it.taxPercent.toStringAsFixed(0)}%',
-              //   it.vatAmount.toStringAsFixed(2),
-              it.totalWithVat.toStringAsFixed(2),
-            ]
-          : [
-              //   it.vatAmount.toStringAsFixed(2),
-              it.totalWithVat.toStringAsFixed(2),
-              '${it.taxPercent.toStringAsFixed(0)}%',
-
-              it.unitPrice.toStringAsFixed(2),
-
-              it.qty.toString(),
-
-              (it.nameAr ?? it.nameEn ?? '').trim(),
-            ];
+          ? isIncome
+                ? [itemName, qtyStr, priceStr, totalStr]
+                : [itemName, qtyStr, priceStr, taxPercentStr, totalStr]
+          : isIncome
+          ? [totalStr, priceStr, qtyStr, itemName]
+          : [totalStr, taxPercentStr, priceStr, qtyStr, itemName];
       final tps = <TextPainter>[];
       for (var i = 0; i < cols.length; i++) {
         final w = xs[i + 1] - xs[i];
@@ -659,9 +778,15 @@ class TaxInvoiceRenderer {
       for (var i = 0; i < tps.length; i++) {
         final tp = tps[i];
         final colWidth = xs[i + 1] - xs[i];
-        final dx = xs[i] + (colWidth - tp.width) / 2; // حساب المنتصف يدوياً
+        // التأكد من أن النص لا يخرج خارج حدود العمود
+        final textWidth = math.min(tp.width, colWidth);
+        // حساب الموضع مع التأكد من أنه داخل الحدود
+        final dx = xs[i] + math.max(0, (colWidth - textWidth) / 2);
         final dy = y + (rowH - tp.height) / 2;
-        tp.paint(c, Offset(dx, dy));
+        // التأكد من أن الموضع داخل حدود العمود
+        final safeDx = math.max(xs[i], math.min(dx, xs[i + 1] - textWidth));
+        final safeDy = math.max(y, dy);
+        tp.paint(c, Offset(safeDx, safeDy));
       }
       y += rowH;
       _rule(c, x, y, x + contentW, y, 0.6);
@@ -682,7 +807,7 @@ class TaxInvoiceRenderer {
     double w,
     TextStyle s,
     TextAlign a,
-    TextDirection d,
+    ui.TextDirection d,
   ) {
     final tp = _tp(t, s, d, a, w);
     // حساب موضع المنتصف يدوياً عندما يكون TextAlign.center
@@ -694,16 +819,19 @@ class TaxInvoiceRenderer {
   static TextPainter _tp(
     String t,
     TextStyle s,
-    TextDirection d,
+    ui.TextDirection d,
     TextAlign a,
     double maxW,
   ) {
+    // التأكد من أن النص ليس فارغاً
+    final text = t.isEmpty ? ' ' : t;
     final tp = TextPainter(
-      text: TextSpan(text: t, style: s),
+      text: TextSpan(text: text, style: s),
       textAlign: a,
       textDirection: d,
       maxLines: null,
-    )..layout(maxWidth: maxW);
+      ellipsis: null, // عدم قص النص
+    )..layout(maxWidth: maxW > 0 ? maxW : double.infinity);
     return tp;
   }
 
@@ -738,8 +866,14 @@ class TaxInvoiceRenderer {
     final valueWidth = w * 0.45;
     final spacing = w * 0.10;
 
-    final tpL = _tp(label, s, TextDirection.rtl, TextAlign.center, labelWidth);
-    final tpV = _tp(val, s, TextDirection.ltr, TextAlign.center, valueWidth);
+    final tpL = _tp(
+      label,
+      s,
+      ui.TextDirection.rtl,
+      TextAlign.center,
+      labelWidth,
+    );
+    final tpV = _tp(val, s, ui.TextDirection.ltr, TextAlign.center, valueWidth);
 
     // حساب موضع المنتصف لكل جزء
     final labelX = x + (labelWidth - tpL.width) / 2;
@@ -776,28 +910,6 @@ class TaxInvoiceRenderer {
       y += h;
     }
     return list;
-  }
-
-  static String _zatcaTLV({
-    required String seller,
-    required String vatNo,
-    required String timestamp,
-    required String total,
-    required String vat,
-  }) {
-    Uint8List enc(int tag, String value) {
-      final v = Uint8List.fromList(value.codeUnits);
-      return Uint8List.fromList([tag, v.length, ...v]);
-    }
-
-    final tlv = Uint8List.fromList([
-      ...enc(1, seller),
-      ...enc(2, vatNo),
-      ...enc(3, timestamp),
-      ...enc(4, total),
-      ...enc(5, vat),
-    ]);
-    return String.fromCharCodes(tlv);
   }
 }
 

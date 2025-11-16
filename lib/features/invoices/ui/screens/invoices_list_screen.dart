@@ -49,19 +49,21 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<InvoicesCubit>().loadFirstPage(
-      refresh: true,
-      search: _searchController.text.isEmpty ? null : _searchController.text,
-      status: _selectedStatus == 'all' ? null : _selectedStatus,
-      paymentMethod: _selectedPaymentMethod == 'all'
-          ? null
-          : _selectedPaymentMethod,
-      customerId: _selectedCustomer == 'all' ? null : _selectedCustomer,
-      sortBy: 'created_at',
-      sortOrder: _sortOrder,
-    );
     _initializeOptions();
     _setupScrollListener();
+    if (mounted) {
+      context.read<InvoicesCubit>().loadFirstPage(
+        refresh: true,
+        search: _searchController.text.isEmpty ? null : _searchController.text,
+        status: _selectedStatus == 'all' ? null : _selectedStatus,
+        paymentMethod: _selectedPaymentMethod == 'all'
+            ? null
+            : _selectedPaymentMethod,
+        customerId: _selectedCustomer == 'all' ? null : _selectedCustomer,
+        sortBy: 'created_at',
+        sortOrder: _sortOrder,
+      );
+    }
   }
 
   void _setupScrollListener() {
@@ -335,9 +337,14 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       },
       child: Scaffold(
         body: SafeArea(
-          child: CustomScrollView(
-            controller: _scrollController,
-            slivers: [
+          child: RefreshIndicator(
+            onRefresh: () async {
+              _onRefresh();
+            },
+            child: CustomScrollView(
+              controller: _scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
               // Header with Search and Filters
               SliverPersistentHeader(
                 pinned: true,
@@ -376,6 +383,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
                 onCustomerChanged: _onCustomerChanged,
               ),
             ],
+            ),
           ),
         ),
         floatingActionButton: PermissionWidget(

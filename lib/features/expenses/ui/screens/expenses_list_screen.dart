@@ -54,8 +54,10 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
     super.initState();
     _initializeOptions();
     _setupScrollListener();
-    ExpensesCubit.get(context).loadFirstPage();
-    ExpenseCategoriesCubit.get(context).loadFirstPage();
+    if (mounted) {
+      ExpensesCubit.get(context).loadFirstPage();
+      ExpenseCategoriesCubit.get(context).loadFirstPage();
+    }
   }
 
   void _setupScrollListener() {
@@ -175,7 +177,7 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      ExpensesCubit.get(context).loadFirstPage(
+                      await ExpensesCubit.get(context).loadFirstPage(
                         refresh: true,
                         search: _searchController.text.isEmpty
                             ? null
@@ -189,7 +191,7 @@ class _ExpensesListScreenState extends State<ExpensesListScreen> {
                         sortBy: _selectedSortBy,
                         sortOrder: _selectedSortOrder,
                       );
-                      ExpenseCategoriesCubit.get(
+                      await ExpenseCategoriesCubit.get(
                         context,
                       ).loadFirstPage(refresh: true);
                     },

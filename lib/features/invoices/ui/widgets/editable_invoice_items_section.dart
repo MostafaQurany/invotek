@@ -326,6 +326,17 @@ class _EditableInvoiceItemsSectionState
                   value: item.price.toString(),
                   onChanged: (value) {
                     final price = double.tryParse(value) ?? 0;
+                    if (price <= 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(S.of(context).priceMustBeGreaterThanZero),
+                          backgroundColor: AppColors.error,
+                          behavior: SnackBarBehavior.floating,
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      return;
+                    }
                     final updatedItem = item.copyWith(
                       price: price,
                       total: (item.quantity * price) - item.discount,

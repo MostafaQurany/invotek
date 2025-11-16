@@ -21,29 +21,51 @@ class PrinterCubit extends Cubit<PrinterState> {
   bool _isInitialized = false;
 
   PrinterCubit(this._printerService) : super(const PrinterState.initial()) {
-    _init();
+    // لا نبدأ التهيئة تلقائياً - ننتظر حتى نحتاجها فعلاً
+    // هذا يمنع مشاكل EventSink null عند إغلاق الشاشة
   }
 
-  /// تهيئة الـ Cubit
+  /// تهيئة الـ Cubit (يتم استدعاؤها عند الحاجة فقط)
   Future<void> _init() async {
     if (_isInitialized) {
-      // إذا تم التهيئة بالفعل، فقط نتحقق من الاتصال
-      await checkConnection();
+      // إذا تم التهيئة بالفعل، لا حاجة لفعل شيء
+      return;
+    }
+
+    // التحقق من أن الـ Cubit لم يتم إغلاقه
+    if (isClosed) {
+      print('PrinterCubit: Cannot initialize, cubit is closed');
       return;
     }
 
     try {
       await _printerService.initialize();
+
+      // التحقق مرة أخرى من أن الـ Cubit لم يتم إغلاقه
+      if (isClosed) {
+        print('PrinterCubit: Cubit closed during initialization');
+        return;
+      }
+
       _listenToConnection();
       _listenToScanResults();
 
-      // التحقق من حالة الاتصال الحالية
-      await checkConnection();
+      // لا حاجة للتحقق من الاتصال هنا - سيتم التحقق عند الحاجة
+      // checkConnection() نفسها تستدعي _ensureInitialized() إذا لزم الأمر
 
       _isInitialized = true; // وضع علامة التهيئة
     } catch (e) {
-      emit(PrinterState.error('خطأ في التهيئة: $e'));
+      if (!isClosed) {
+        emit(PrinterState.error('خطأ في التهيئة: $e'));
+      }
       _isInitialized = true; // حتى في حالة الخطأ
+    }
+  }
+
+  /// التأكد من التهيئة قبل استخدام الخدمة
+  Future<void> _ensureInitialized() async {
+    if (!_isInitialized) {
+      await _init();
     }
   }
 
@@ -66,7 +88,20 @@ class PrinterCubit extends Cubit<PrinterState> {
 
   /// التحقق من حالة الاتصال الحالية
   Future<void> checkConnection() async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه
+    if (isClosed) {
+      return;
+    }
+
     try {
+      // التأكد من التهيئة قبل التحقق من الاتصال
+      await _ensureInitialized();
+
+      // التحقق مرة أخرى من أن الـ Cubit لم يتم إغلاقه
+      if (isClosed) {
+        return;
+      }
+
       final isConnected = await _printerService.checkConnection();
       if (isConnected) {
         final device = _printerService.connectedDevice;
@@ -79,17 +114,51 @@ class PrinterCubit extends Cubit<PrinterState> {
         emit(const PrinterState.disconnected());
       }
     } catch (e) {
-      emit(PrinterState.error('خطأ في التحقق من الاتصال: $e'));
+      // معالجة الأخطاء بشكل آمن - لا نريد إغلاق التطبيق
+      print('PrinterCubit.checkConnection error: $e');
+      if (!isClosed) {
+        emit(const PrinterState.disconnected());
+      }
     }
   }
 
   /// الاتصال بجهاز
   Future<void> connect(BluetoothDevice device) async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه
+    if (isClosed) {
+      print('PrinterCubit: Cannot connect, cubit is closed');
+      return;
+    }
+
     try {
+      // التأكد من التهيئة قبل الاتصال
+      await _ensureInitialized();
+
+      // التحقق مرة أخرى من أن الـ Cubit لم يتم إغلاقه
+      if (isClosed) {
+        return;
+      }
+
+      // إرسال حالة connecting لمنع إغلاق الشاشة
+      emit(PrinterState.connecting(device));
+
       final success = await _printerService.connectDevice(device);
-      
+
+      // التحقق مرة أخرى من أن الـ Cubit لم يتم إغلاقه
+      if (isClosed) {
+        print('PrinterCubit: Cubit closed during connection, aborting');
+        return;
+      }
+
       // التحقق من حالة الاتصال بعد محاولة الاتصال
       await Future.delayed(const Duration(milliseconds: 500));
+
+      // التحقق مرة أخرى من أن الـ Cubit لم يتم إغلاقه
+      if (isClosed) {
+        print('PrinterCubit: Cubit closed after delay, aborting');
+        return;
+      }
+
       final isCurrentlyConnected = await _printerService.checkConnection();
       final currentDevice = _printerService.connectedDevice;
 
@@ -108,50 +177,88 @@ class PrinterCubit extends Cubit<PrinterState> {
         emit(const PrinterState.error('فشل الاتصال بالطابعة'));
       }
     } catch (e) {
-      emit(PrinterState.error('خطأ في الاتصال: $e'));
+      // التحقق من أن الـ Cubit لم يتم إغلاقه قبل emit
+      if (!isClosed) {
+        emit(PrinterState.error('خطأ في الاتصال: $e'));
+      } else {
+        print('PrinterCubit: Error during connection but cubit is closed: $e');
+      }
     }
   }
 
   /// قطع الاتصال
   Future<void> disconnect() async {
+    if (isClosed) {
+      return;
+    }
+
     try {
       await _printerService.disconnectDevice();
-      emit(const PrinterState.disconnected());
+      if (!isClosed) {
+        emit(const PrinterState.disconnected());
+      }
     } catch (e) {
-      emit(PrinterState.error('خطأ في قطع الاتصال: $e'));
+      if (!isClosed) {
+        emit(PrinterState.error('خطأ في قطع الاتصال: $e'));
+      }
     }
   }
 
   /// بدء البحث عن الأجهزة
   Future<void> startScan({Duration? timeout}) async {
+    // التحقق من أن الـ Cubit لم يتم إغلاقه
+    if (isClosed) {
+      return;
+    }
+
     try {
+      // التأكد من التهيئة قبل البحث
+      await _ensureInitialized();
+
+      // التحقق مرة أخرى من أن الـ Cubit لم يتم إغلاقه
+      if (isClosed) {
+        return;
+      }
+
       emit(const PrinterState.scanning([]));
       await _printerService.startScan(timeout: timeout);
     } catch (e) {
-      emit(PrinterState.error('خطأ في البحث: $e'));
+      if (!isClosed) {
+        emit(PrinterState.error('خطأ في البحث: $e'));
+      }
     }
   }
 
   /// إيقاف البحث
   void stopScan() {
-    _printerService.stopScan();
-    // إذا كان في حالة scanning، نعود للحالة السابقة
-    state.maybeWhen(
-      scanning: (_) {
-        final isConnected = _printerService.isConnected;
-        if (isConnected) {
-          final device = _printerService.connectedDevice;
-          if (device != null) {
-            emit(PrinterState.connected(device));
-          } else {
-            emit(const PrinterState.disconnected());
-          }
-        } else {
-          emit(const PrinterState.disconnected());
-        }
-      },
-      orElse: () {},
-    );
+    if (isClosed) {
+      return;
+    }
+
+    try {
+      _printerService.stopScan();
+      // إذا كان في حالة scanning، نعود للحالة السابقة
+      if (!isClosed) {
+        state.maybeWhen(
+          scanning: (_) {
+            final isConnected = _printerService.isConnected;
+            if (isConnected) {
+              final device = _printerService.connectedDevice;
+              if (device != null) {
+                emit(PrinterState.connected(device));
+              } else {
+                emit(const PrinterState.disconnected());
+              }
+            } else {
+              emit(const PrinterState.disconnected());
+            }
+          },
+          orElse: () {},
+        );
+      }
+    } catch (e) {
+      print('PrinterCubit.stopScan error: $e');
+    }
   }
 
   /// طباعة فاتورة

@@ -13,6 +13,6 @@ export 'core/services/printer_service.dart';
 export 'core/templates/tax_invoice_template.dart';
 export 'core/utils/paper_preset.dart';
 // Dialogs
-export 'ui/dialogs/invoice_print_dialog.dart';
+export 'presentation/ui/dialogs/invoice_print_dialog.dart';
 // Screens
-export 'ui/screens/printer_settings_screen.dart';
+export 'presentation/ui/screens/printer_settings_screen.dart';

@@ -2639,6 +2639,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "priceMustBeGreaterThanOrEqualZero":
             MessageLookupByLibrary.simpleMessage(
                 "السعر يجب أن يكون أكبر من أو يساوي صفر"),
+        "priceMustBeGreaterThanZero": MessageLookupByLibrary.simpleMessage(
+            "السعر يجب أن يكون أكبر من صفر"),
         "priceRequired": MessageLookupByLibrary.simpleMessage("السعر مطلوب"),
         "pricing": MessageLookupByLibrary.simpleMessage("التسعير"),
         "pricingInformation":
@@ -3011,6 +3013,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settingsActive": MessageLookupByLibrary.simpleMessage("مفعّل"),
         "settingsDeactivate":
             MessageLookupByLibrary.simpleMessage("إلغاء التفعيل"),
+        "settingsGeneral": MessageLookupByLibrary.simpleMessage("عام"),
         "settingsInactive": MessageLookupByLibrary.simpleMessage("غير مفعّل"),
         "settingsIncome": MessageLookupByLibrary.simpleMessage("دخل"),
         "settingsInvoiceType":

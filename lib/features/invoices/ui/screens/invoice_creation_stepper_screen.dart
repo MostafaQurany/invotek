@@ -31,10 +31,11 @@ class _InvoiceCreationStepperScreenState
   late TabController _tabController;
   int _currentTabIndex = 0;
   final Map<String, String> _validationErrors = {};
-  List<bool> _completedTabs = [false, false, false, false];
+  final List<bool> _completedTabs = [false, false, false, false];
 
   late InvoiceFormController _formController;
   late InvoicesCubit _cubit;
+  bool _loading = false;
 
   @override
   void initState() {
@@ -48,6 +49,15 @@ class _InvoiceCreationStepperScreenState
 
     _formController = InvoiceFormController();
     _cubit = getIt<InvoicesCubit>();
+
+    // تحميل حالة tax integration عند فتح الشاشة
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final taxState = context.read<TaxIntegrationCubit>().state;
+      if (taxState is! TaxIntegrationLoaded &&
+          taxState is! TaxIntegrationLoading) {
+        context.read<TaxIntegrationCubit>().loadStatus();
+      }
+    });
   }
 
   @override
@@ -108,184 +118,194 @@ class _InvoiceCreationStepperScreenState
       );
     }
 
-    return BlocBuilder<TaxIntegrationCubit, TaxIntegrationState>(
-      builder: (context, taxState) {
-        // التحقق من التكامل الضريبي
-        if (taxState is TaxIntegrationLoaded) {
-          if (!taxState.status.taxIntegrationActive) {
-            return _buildTaxIntegrationRequiredWidget(s);
-          }
+    return BlocListener<TaxIntegrationCubit, TaxIntegrationState>(
+      listenWhen: (previous, current) {
+        // الاستماع عند تغيير الحالة من ActionInProgress إلى Loaded
+        return previous is TaxIntegrationActionInProgress &&
+            current is TaxIntegrationLoaded;
+      },
+      listener: (context, state) {
+        // إعادة تحميل الحالة عند اكتمال العملية
+        if (state is TaxIntegrationLoaded) {
+          // الحالة تم تحديثها بالفعل، لا حاجة لإعادة التحميل
         }
+      },
+      child: BlocBuilder<TaxIntegrationCubit, TaxIntegrationState>(
+        buildWhen: (previous, current) =>
+            previous is TaxIntegrationLoaded && current is TaxIntegrationLoaded
+            ? previous.status.taxInvoiceType != current.status.taxInvoiceType ||
+                  previous.status.taxIntegrationActive !=
+                      current.status.taxIntegrationActive
+            : previous != current,
+        builder: (context, taxState) {
+          // التحقق من التكامل الضريبي
+          final taxInvoiceType = taxState is TaxIntegrationLoaded
+              ? taxState.status.taxInvoiceType
+              : null;
 
-        return Scaffold(
-          backgroundColor: AppColors.whiteGray,
-          appBar: AppBar(
-            title: Text(s.createNewInvoiceStepper),
-            backgroundColor: AppColors.white,
-            foregroundColor: AppColors.textPrimary,
-            elevation: 0,
-            scrolledUnderElevation: 1,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
-              onPressed: () => Navigator.pop(context),
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
-                onPressed: () => _showHelpDialog(),
+          if (taxState is TaxIntegrationLoaded) {
+            if (!taxState.status.taxIntegrationActive) {
+              return _buildTaxIntegrationRequiredWidget(s);
+            }
+          }
+
+          return Scaffold(
+            backgroundColor: AppColors.whiteGray,
+            appBar: AppBar(
+              title: Text(s.createNewInvoiceStepper),
+              backgroundColor: AppColors.white,
+              foregroundColor: AppColors.textPrimary,
+              elevation: 0,
+              scrolledUnderElevation: 1,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back, color: AppColors.textPrimary),
+                onPressed: () => Navigator.pop(context),
               ),
-              SizedBox(width: 8.w),
-            ],
-          ),
-          body: BlocListener<InvoicesCubit, InvoicesState>(
-            bloc: _cubit,
-            listener: (context, state) {
-              state.maybeWhen(
-                createSuccess:
-                    (
-                      invoices,
-                      created,
-                      selectedInvoice,
-                      currentPage,
-                      totalPages,
-                    ) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(s.invoiceCreatedSuccessfully),
-                          backgroundColor: AppColors.primary,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                      );
-                      Navigator.pushReplacementNamed(
-                        context,
-                        AppRoutes.enhancedInvoiceDetailsRoute,
-                        arguments: created.id.toString(),
-                      );
-                    },
-                failure:
-                    (
-                      invoices,
-                      selectedInvoice,
-                      currentPage,
-                      totalPages,
-                      error,
-                    ) {
-                      SnackBarHelper.showFailureSnackBar(context, error);
-                    },
-                orElse: () {},
-              );
-            },
-            child: Column(
-              children: [
-                // Tab Bar
-                Container(color: AppColors.white, child: _buildTabs(s)),
-
-                // Form Content
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      InvoiceBasicInfoStep(formController: _formController),
-                      CustomerSelectionStep(formController: _formController),
-                      ItemsSelectionStep(formController: _formController),
-                      InvoiceSummaryStep(formController: _formController),
-                    ],
-                  ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.help_outline, color: AppColors.textPrimary),
+                  onPressed: () => _showHelpDialog(),
                 ),
-
-                // Bottom Action Buttons (rebuild on form changes)
-                AnimatedBuilder(
-                  animation: _formController,
-                  builder: (context, _) {
-                    return Container(
-                      padding: EdgeInsets.only(
-                        left: 16.w,
-                        right: 16.w,
-                        top: 16.w,
-                        bottom: 16.w + MediaQuery.of(context).padding.bottom,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 10,
-                            offset: const Offset(0, -2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          // Cancel/Previous Button
-                          Expanded(
-                            child: OutlinedButton(
-                              onPressed: _currentTabIndex == 0
-                                  ? () => Navigator.pop(context)
-                                  : () => _goToPreviousTab(),
-                              style: OutlinedButton.styleFrom(
-                                padding: EdgeInsets.symmetric(vertical: 16.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                ),
-                                side: BorderSide(
-                                  color: AppColors.grey.withOpacity(0.3),
-                                ),
-                              ),
-                              child: Text(
-                                _currentTabIndex == 0 ? s.cancel : s.previous,
-                                style: TextStyle(
-                                  color: AppColors.greyDark,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 12.w),
-                          // Next/Save Button
-                          Expanded(
-                            flex: 2,
-                            child: FilledButton(
-                              onPressed: _currentTabIndex == 3
-                                  ? _handleSubmit
-                                  : () => _goToNextTab(),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: _isCurrentTabValid()
-                                    ? AppColors.primary
-                                    : AppColors.grey.withOpacity(0.3),
-                                foregroundColor: _isCurrentTabValid()
-                                    ? AppColors.white
-                                    : AppColors.greyDark,
-                                padding: EdgeInsets.symmetric(vertical: 16.h),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
-                                ),
-                              ),
-                              child: Text(
-                                _currentTabIndex == 3
-                                    ? s.createInvoice
-                                    : s.next,
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                SizedBox(width: 8.w),
               ],
             ),
-          ),
-        );
-      },
+            body: BlocListener<InvoicesCubit, InvoicesState>(
+              bloc: _cubit,
+              listener: (context, state) {
+                state.maybeWhen(
+                  loading:
+                      (
+                        invoices,
+                        selectedInvoice,
+                        currentPage,
+                        totalPages,
+                        message,
+                      ) {
+                        setState(() {
+                          _loading = true;
+                        });
+                      },
+                  createSuccess:
+                      (
+                        invoices,
+                        created,
+                        selectedInvoice,
+                        currentPage,
+                        totalPages,
+                      ) {
+                        _loading = false;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(s.invoiceCreatedSuccessfully),
+                            backgroundColor: AppColors.primary,
+                            behavior: SnackBarBehavior.floating,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.r),
+                            ),
+                          ),
+                        );
+                        Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.enhancedInvoiceDetailsRoute,
+                          arguments: created.id.toString(),
+                        );
+                      },
+                  failure:
+                      (
+                        invoices,
+                        selectedInvoice,
+                        currentPage,
+                        totalPages,
+                        error,
+                      ) {
+                        _loading = false;
+                        SnackBarHelper.showFailureSnackBar(context, error);
+                      },
+                  orElse: () {},
+                );
+              },
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Column(
+                    children: [
+                      // Tab Bar
+                      Container(color: AppColors.white, child: _buildTabs(s)),
+
+                      // Form Content
+                      Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            InvoiceBasicInfoStep(
+                              formController: _formController,
+                            ),
+                            CustomerSelectionStep(
+                              formController: _formController,
+                            ),
+                            ItemsSelectionStep(
+                              formController: _formController,
+                              taxInvoiceType: taxInvoiceType,
+                            ),
+                            InvoiceSummaryStep(formController: _formController),
+                          ],
+                        ),
+                      ),
+
+                      // Bottom Action Buttons (rebuild on form changes)
+                      AnimatedBuilder(
+                        animation: _formController,
+                        builder: (context, _) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                              left: 16.w,
+                              right: 16.w,
+                              top: 16.w,
+                              bottom:
+                                  16.w + MediaQuery.of(context).padding.bottom,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, -2),
+                                ),
+                              ],
+                            ),
+                            child: _currentTabIndex == 3
+                                ? _buildFinalStepButtons(s)
+                                : _buildNavigationButtons(s),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  if (_loading)
+                    Positioned(
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: AppColors.grey.withValues(alpha: 0.5),
+                        child: SizedBox(
+                          width: 120.w,
+                          height: 120.h,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -381,7 +401,120 @@ class _InvoiceCreationStepperScreenState
     }
   }
 
+  Widget _buildNavigationButtons(S s) {
+    return Row(
+      children: [
+        // Cancel/Previous Button
+        Expanded(
+          child: OutlinedButton(
+            onPressed: _currentTabIndex == 0
+                ? () => Navigator.pop(context)
+                : () => _goToPreviousTab(),
+            style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              side: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+            ),
+            child: Text(
+              _currentTabIndex == 0 ? s.cancel : s.previous,
+              style: TextStyle(
+                color: AppColors.greyDark,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        // Next Button
+        Expanded(
+          flex: 2,
+          child: FilledButton(
+            onPressed: _isCurrentTabValid() ? () => _goToNextTab() : null,
+            style: FilledButton.styleFrom(
+              backgroundColor: _isCurrentTabValid()
+                  ? AppColors.primary
+                  : AppColors.grey.withOpacity(0.3),
+              foregroundColor: _isCurrentTabValid()
+                  ? AppColors.white
+                  : AppColors.greyDark,
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            child: Text(
+              s.next,
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFinalStepButtons(S s) {
+    return Row(
+      children: [
+        // Save Only Button
+        Expanded(
+          child: OutlinedButton(
+            onPressed: () {
+              _formController.onActionChanged('save_only');
+              _handleSubmit();
+            },
+            style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              side: BorderSide(color: AppColors.primary, width: 2),
+            ),
+            child: Text(
+              s.save,
+              style: TextStyle(
+                color: AppColors.primary,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+        SizedBox(width: 12.w),
+        // Save and Send Button
+        Expanded(
+          child: FilledButton(
+            onPressed: () {
+              _formController.onActionChanged('save_and_send');
+              _handleSubmit();
+            },
+            style: FilledButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: AppColors.white,
+              padding: EdgeInsets.symmetric(vertical: 16.h),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+            ),
+            child: Text(
+              s.send,
+              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   void _createInvoice() {
+    final taxInvoiceType = _getTaxInvoiceType();
+    final paymentMethodCode = _getPaymentMethodCode(
+      _formController.selectedPaymentMethod,
+      taxInvoiceType,
+    );
+
     _cubit.createInvoice(
       customerId: _formController.selectedCustomerId?.toString(),
       customerName: _formController.selectedCustomerName,
@@ -396,7 +529,7 @@ class _InvoiceCreationStepperScreenState
       description: _formController.descriptionController.text.isEmpty
           ? null
           : _formController.descriptionController.text,
-      paymentMethodCode: _formController.selectedPaymentMethod,
+      paymentMethodCode: paymentMethodCode,
       action: _formController.selectedAction,
       items: _formController.items
           .map(
@@ -458,11 +591,38 @@ class _InvoiceCreationStepperScreenState
     return isValid;
   }
 
+  String? _getTaxInvoiceType() {
+    final taxState = context.read<TaxIntegrationCubit>().state;
+    if (taxState is TaxIntegrationLoaded) {
+      return taxState.status.taxInvoiceType;
+    }
+    return null;
+  }
+
+  String _getPaymentMethodCode(String paymentMethod, String? taxInvoiceType) {
+    if (taxInvoiceType == 'income') {
+      if (paymentMethod == 'cash') {
+        return '011';
+      } else {
+        // card, bank_transfer, check
+        return '021';
+      }
+    } else if (taxInvoiceType == 'general') {
+      if (paymentMethod == 'cash') {
+        return '012';
+      } else {
+        // card, bank_transfer, check
+        return '022';
+      }
+    }
+    // Default: return original payment method if taxInvoiceType is null
+    return paymentMethod;
+  }
+
   bool _isCurrentTabValid() {
     switch (_currentTabIndex) {
       case 0: // Basic Info Tab
-        return _formController.selectedAction.isNotEmpty &&
-            _formController.selectedPaymentMethod.isNotEmpty;
+        return _formController.selectedPaymentMethod.isNotEmpty;
       case 1: // Customer Tab
         return (_formController.selectedCustomerId != null) ||
             (_formController.selectedCustomerName != null &&
@@ -479,11 +639,6 @@ class _InvoiceCreationStepperScreenState
   bool _validateBasicInfoTab() {
     final s = S.of(context);
     bool isValid = true;
-
-    if (_formController.selectedAction.isEmpty) {
-      _validationErrors['action'] = s.actionRequired;
-      isValid = false;
-    }
 
     if (_formController.selectedPaymentMethod.isEmpty) {
       _validationErrors['paymentMethod'] = s.paymentMethodRequired;
@@ -583,51 +738,47 @@ class _InvoiceCreationStepperScreenState
   }
 
   Widget _buildTabs(S s) {
-    final visibleTabs = <Widget>[];
+    final screenWidth = MediaQuery.of(context).size.width;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(_currentTabIndex + 1, (i) {
+          final isCurrentTab = i == _currentTabIndex;
+          final tabColor = isCurrentTab
+              ? AppColors.primary
+              : AppColors.greyDark;
 
-    for (int i = 0; i < 4; i++) {
-      // إخفاء التبويبات التي تأتي بعد التبويب الحالي
-      if (i > _currentTabIndex) {
-        continue;
-      }
+          // تحديد النص
+          String tabText;
+          switch (i) {
+            case 0:
+              tabText = s.invoiceBasicInfo;
+              break;
+            case 1:
+              tabText = s.selectCustomer;
+              break;
+            case 2:
+              tabText = s.invoiceItems;
+              break;
+            case 3:
+              tabText = s.reviewCalculations;
+              break;
+            default:
+              tabText = '';
+          }
 
-      final isCurrentTab = i == _currentTabIndex;
-
-      // تحديد اللون بناءً على الحالة
-      // التبويب الحالي: primary color
-      // التبويبات السابقة: gray color
-      final tabColor = isCurrentTab ? AppColors.primary : AppColors.greyDark;
-
-      // تحديد النص
-      String tabText;
-      switch (i) {
-        case 0:
-          tabText = s.invoiceBasicInfo;
-          break;
-        case 1:
-          tabText = s.selectCustomer;
-          break;
-        case 2:
-          tabText = s.invoiceItems;
-          break;
-        case 3:
-          tabText = s.reviewCalculations;
-          break;
-        default:
-          tabText = '';
-      }
-
-      visibleTabs.add(
-        Expanded(
-          child: GestureDetector(
+          return GestureDetector(
             onTap: () {
               // السماح بالانتقال للتبويبات السابقة فقط
-              if (i < _currentTabIndex) {
+              if (i <= _currentTabIndex) {
                 _tabController.animateTo(i);
               }
             },
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
+              width: (_currentTabIndex == 0) ? screenWidth : 250.w,
+              padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 8.w),
               decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
@@ -641,6 +792,8 @@ class _InvoiceCreationStepperScreenState
               child: Text(
                 tabText,
                 textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: tabColor,
                   fontWeight: isCurrentTab ? FontWeight.w600 : FontWeight.w500,
@@ -648,11 +801,9 @@ class _InvoiceCreationStepperScreenState
                 ),
               ),
             ),
-          ),
-        ),
-      );
-    }
-
-    return Row(children: visibleTabs);
+          );
+        }),
+      ),
+    );
   }
 }

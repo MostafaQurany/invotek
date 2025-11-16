@@ -8,13 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/printing/presentation/ui/widgets/settings/paper_width_selector.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'package:invotek/features/printing/ui/widgets/settings/paper_width_selector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../core/models/invoice_language.dart';
-import '../../core/utils/paper_preset.dart';
-import '../../presentation/cubit/printer_cubit.dart';
+import '../../../core/models/invoice_language.dart';
+import '../../../core/utils/paper_preset.dart';
+import '../../cubit/printer_cubit.dart';
 import '../widgets/dialogs/printing_dialog.dart';
 import '../widgets/settings/language_selector.dart';
 import '../widgets/settings/slice_height_selector.dart';

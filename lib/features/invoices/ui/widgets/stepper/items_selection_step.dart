@@ -9,16 +9,26 @@ import 'package:invotek/generated/l10n.dart';
 
 class ItemsSelectionStep extends StatefulWidget {
   final InvoiceFormController formController;
+  final String? taxInvoiceType;
 
-  const ItemsSelectionStep({super.key, required this.formController});
+  const ItemsSelectionStep({
+    super.key,
+    required this.formController,
+    this.taxInvoiceType,
+  });
 
   @override
   State<ItemsSelectionStep> createState() => _ItemsSelectionStepState();
 }
 
-class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
+class _ItemsSelectionStepState extends State<ItemsSelectionStep>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final s = S.of(context);
 
     return SingleChildScrollView(
@@ -54,23 +64,22 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
         ),
         SizedBox(height: 16.h),
         // زر اختيار من المنتجات
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () => _openProductPicker(),
-                icon: const Icon(Icons.inventory_2_outlined),
-                label: Text(s.addFromProducts),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.primary,
-                  side: BorderSide(color: AppColors.primary),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
+            OutlinedButton.icon(
+              onPressed: () => _openProductPicker(),
+              icon: const Icon(Icons.inventory_2_outlined),
+              label: Text(s.addFromProducts),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
+                side: BorderSide(color: AppColors.primary),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
               ),
             ),
-            SizedBox(width: 8.w),
+            SizedBox(height: 8.h),
             ElevatedButton.icon(
               onPressed: () => _showAddItemDialog(),
               icon: const Icon(Icons.add),
@@ -140,6 +149,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
                 index: index,
                 onEdit: () => _showEditItemDialog(index),
                 onDelete: () => _deleteItem(index),
+                taxInvoiceType: widget.taxInvoiceType,
               ),
             );
           },
@@ -200,6 +210,28 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep> {
                 '${widget.formController.subtotalController.text} ${S.of(context).currency}',
                 style: TextStyle(
                   fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                S.of(context).totalAmount,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primary,
+                ),
+              ),
+              Text(
+                '${widget.formController.totalController.text} ${S.of(context).currency}',
+                style: TextStyle(
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.primary,
                 ),

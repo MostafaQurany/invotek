@@ -210,52 +210,77 @@ class _UsersPermissionsScreenState extends State<UsersPermissionsScreen> {
           SnackBarHelper.showFailureSnackBar(context, state.failure);
         } else if (state is UserCreated) {
           final s = S.of(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(s.userCreatedSuccessfullyMessage),
-              backgroundColor: colorScheme.primary,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final messenger = ScaffoldMessenger.of(context);
+          if (messenger.mounted) {
+            messenger.hideCurrentSnackBar();
+            messenger.showSnackBar(
+              SnackBar(
+                content: Text(s.userCreatedSuccessfullyMessage),
+                backgroundColor: colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
           // Refresh the users list to show the new user
           context.read<UsersCubit>().refreshUsers();
         } else if (state is UserUpdated) {
           final s = S.of(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(s.userUpdatedSuccessfullyMessage),
-              backgroundColor: colorScheme.primary,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final messenger = ScaffoldMessenger.of(context);
+          if (messenger.mounted) {
+            messenger.hideCurrentSnackBar();
+            messenger.showSnackBar(
+              SnackBar(
+                content: Text(s.userUpdatedSuccessfullyMessage),
+                backgroundColor: colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
         } else if (state is UserDeleted) {
           final s = S.of(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(s.userDeletedSuccessfullyMessage),
-              backgroundColor: colorScheme.primary,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final messenger = ScaffoldMessenger.of(context);
+          if (messenger.mounted) {
+            messenger.hideCurrentSnackBar();
+            messenger.showSnackBar(
+              SnackBar(
+                content: Text(s.userDeletedSuccessfullyMessage),
+                backgroundColor: colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
         } else if (state is PasswordChanged) {
           final s = S.of(context);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(s.passwordChangedSuccessfully),
-              backgroundColor: colorScheme.primary,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final messenger = ScaffoldMessenger.of(context);
+          if (messenger.mounted) {
+            messenger.hideCurrentSnackBar();
+            messenger.showSnackBar(
+              SnackBar(
+                content: Text(s.passwordChangedSuccessfully),
+                backgroundColor: colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
         } else if (state is BulkOperationCompleted) {
           final s = S.of(context);
           final operationText = _getLocalizedOperation(context, state.operation);
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('$operationText ${s.completedSuccessfully}'),
-              backgroundColor: colorScheme.primary,
-              behavior: SnackBarBehavior.floating,
-            ),
-          );
+          final messenger = ScaffoldMessenger.of(context);
+          if (messenger.mounted) {
+            messenger.hideCurrentSnackBar();
+            messenger.showSnackBar(
+              SnackBar(
+                content: Text('$operationText ${s.completedSuccessfully}'),
+                backgroundColor: colorScheme.primary,
+                behavior: SnackBarBehavior.floating,
+                duration: const Duration(seconds: 3),
+              ),
+            );
+          }
         }
       },
       child: BlocBuilder<UsersCubit, UsersState>(

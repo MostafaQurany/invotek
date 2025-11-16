@@ -26,6 +26,10 @@ class BlePrinterController {
   // حالة التهيئة
   bool _isInitialized = false;
 
+  // تتبع حالة الاتصال الجارية لمنع dispose أثناء الاتصال
+  bool _isConnecting = false;
+  Completer<bool>? _connectionCompleter;
+
   void initListeners({
     OnConnected? onConnected,
     OnDisconnected? onDisconnected,
@@ -37,33 +41,66 @@ class BlePrinterController {
       return;
     }
 
-    // إلغاء الـ subscriptions القديمة إذا كانت موجودة
-    _scanSub?.cancel();
-    _connectSub?.cancel();
+    try {
+      // إلغاء الـ subscriptions القديمة إذا كانت موجودة
+      _scanSub?.cancel();
+      _connectSub?.cancel();
 
-    _onConnected = onConnected;
-    _onDisconnected = onDisconnected;
+      _onConnected = onConnected;
+      _onDisconnected = onDisconnected;
 
-    _scanSub = BluetoothPrintPlus.scanResults.listen(_scanResultsCtrl.add);
-
-    _connectSub = BluetoothPrintPlus.connectState.listen((s) {
-      switch (s) {
-        case ConnectState.connected:
-          if (_connected == null) {
-            _getConnectedDevice();
-          }
-          if (_connected != null) {
-            _onConnected?.call(_connected!);
-          }
-          break;
-        case ConnectState.disconnected:
-          _connected = null;
-          _onDisconnected?.call();
-          break;
+      // تسجيل listeners مع معالجة الأخطاء
+      try {
+        _scanSub = BluetoothPrintPlus.scanResults.listen(
+          _scanResultsCtrl.add,
+          onError: (error) {
+            print('BlePrinterController: scanResults stream error: $error');
+          },
+        );
+      } catch (e) {
+        print(
+          'BlePrinterController: Error registering scanResults listener: $e',
+        );
       }
-    });
 
-    _isInitialized = true;
+      try {
+        _connectSub = BluetoothPrintPlus.connectState.listen(
+          (s) {
+            try {
+              switch (s) {
+                case ConnectState.connected:
+                  if (_connected == null) {
+                    _getConnectedDevice();
+                  }
+                  if (_connected != null) {
+                    _onConnected?.call(_connected!);
+                  }
+                  break;
+                case ConnectState.disconnected:
+                  _connected = null;
+                  _onDisconnected?.call();
+                  break;
+              }
+            } catch (e) {
+              print('BlePrinterController: Error in connectState listener: $e');
+            }
+          },
+          onError: (error) {
+            print('BlePrinterController: connectState stream error: $error');
+          },
+        );
+      } catch (e) {
+        print(
+          'BlePrinterController: Error registering connectState listener: $e',
+        );
+      }
+
+      _isInitialized = true;
+    } catch (e) {
+      print('BlePrinterController: Error in initListeners: $e');
+      // حتى في حالة الخطأ، نضع _isInitialized = true لتجنب محاولات متكررة
+      _isInitialized = true;
+    }
   }
 
   Future<void> startScan(Duration timeout) async {
@@ -83,10 +120,65 @@ class BlePrinterController {
   }
 
   Future<void> connect(BluetoothDevice device) async {
+    // منع محاولات اتصال متعددة في نفس الوقت
+    if (_isConnecting) {
+      print('BlePrinterController: Connection already in progress');
+      if (_connectionCompleter != null) {
+        await _connectionCompleter!.future;
+      }
+      return;
+    }
+
     try {
+      // التأكد من أن الـ listeners مسجلة قبل محاولة الاتصال
+      if (!_isInitialized) {
+        print('BlePrinterController: Not initialized, cannot connect');
+        return;
+      }
+
+      // التأكد من أن الـ connectState listener مسجل
+      if (_connectSub == null) {
+        print('BlePrinterController: connectState listener not registered');
+        return;
+      }
+
+      _isConnecting = true;
+      _connectionCompleter = Completer<bool>();
+
+      // حفظ الجهاز قبل محاولة الاتصال
       _connected = device;
-      await BluetoothPrintPlus.connect(device);
+
+      // محاولة الاتصال مع timeout لتجنب انتظار طويل
+      try {
+        await BluetoothPrintPlus.connect(device).timeout(
+          const Duration(seconds: 10),
+          onTimeout: () {
+            print('BlePrinterController: Connection timeout');
+            throw TimeoutException(
+              'Connection timeout',
+              const Duration(seconds: 10),
+            );
+          },
+        );
+
+        // انتظار قليلاً للتأكد من أن الاتصال تم بنجاح
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        _connectionCompleter?.complete(true);
+      } catch (e) {
+        print('connect error: $e');
+        _connected = null;
+        _connectionCompleter?.complete(false);
+        rethrow;
+      } finally {
+        _isConnecting = false;
+        _connectionCompleter = null;
+      }
     } catch (e) {
+      _isConnecting = false;
+      _connectionCompleter?.complete(false);
+      _connectionCompleter = null;
+      _connected = null;
       print('connect error: $e');
     }
   }
@@ -191,17 +283,46 @@ class BlePrinterController {
   /// Check current connection status
   Future<void> checkCurrentConnection() async {
     try {
-      final currentState = await BluetoothPrintPlus.connectState.first.timeout(
-        const Duration(seconds: 1),
-        onTimeout: () => ConnectState.disconnected,
-      );
-
-      if (currentState == ConnectState.connected) {
-        if (_connected == null) {
-          await _getConnectedDevice();
-        }
-      } else {
+      // التأكد من أن الـ listeners مسجلة قبل محاولة التحقق من الاتصال
+      if (!_isInitialized || _connectSub == null) {
+        print('BlePrinterController: Not initialized, cannot check connection');
         _connected = null;
+        return;
+      }
+
+      // استخدام isConnected مباشرة بدلاً من connectState.first لتجنب مشاكل EventSink
+      try {
+        final isConnected = BluetoothPrintPlus.isConnected;
+        if (isConnected) {
+          if (_connected == null) {
+            await _getConnectedDevice();
+          }
+        } else {
+          _connected = null;
+        }
+      } catch (e) {
+        // إذا فشل isConnected، نحاول استخدام connectState stream مع timeout قصير
+        print(
+          'BlePrinterController: Error using isConnected, trying connectState: $e',
+        );
+        try {
+          final currentState = await BluetoothPrintPlus.connectState.first
+              .timeout(
+                const Duration(milliseconds: 500),
+                onTimeout: () => ConnectState.disconnected,
+              );
+
+          if (currentState == ConnectState.connected) {
+            if (_connected == null) {
+              await _getConnectedDevice();
+            }
+          } else {
+            _connected = null;
+          }
+        } catch (e2) {
+          print('BlePrinterController: Error using connectState: $e2');
+          _connected = null;
+        }
       }
     } catch (e) {
       print('checkCurrentConnection error: $e');
@@ -218,8 +339,45 @@ class BlePrinterController {
   BluetoothDevice? get connectedDevice => _connected;
 
   void dispose() {
-    _scanSub?.cancel();
-    _connectSub?.cancel();
-    _scanResultsCtrl.close();
+    print('BlePrinterController: dispose() called');
+
+    // إلغاء الاتصال الجاري قبل dispose لتجنب مشاكل EventSink
+    if (_isConnecting) {
+      print(
+        'BlePrinterController: Disposing while connection in progress - cancelling connection',
+      );
+      try {
+        // محاولة إلغاء الاتصال بشكل آمن
+        BluetoothPrintPlus.disconnect().catchError((e) {
+          print('BlePrinterController: Error disconnecting during dispose: $e');
+        });
+      } catch (e) {
+        print(
+          'BlePrinterController: Exception during disconnect in dispose: $e',
+        );
+      }
+
+      // إلغاء الـ completer
+      _isConnecting = false;
+      if (_connectionCompleter != null && !_connectionCompleter!.isCompleted) {
+        _connectionCompleter?.complete(false);
+      }
+      _connectionCompleter = null;
+
+      // انتظار قليلاً للتأكد من أن الـ plugin انتهى من العملية
+      // لكن لا نستطيع استخدام await في dispose، لذا نستخدم Future.microtask
+      Future.microtask(() async {
+        await Future.delayed(const Duration(milliseconds: 200));
+      });
+    }
+
+    // إلغاء الـ subscriptions بعد التأكد من عدم وجود اتصال جاري
+    try {
+      _scanSub?.cancel();
+      _connectSub?.cancel();
+      _scanResultsCtrl.close();
+    } catch (e) {
+      print('BlePrinterController: Error cancelling subscriptions: $e');
+    }
   }
 }
