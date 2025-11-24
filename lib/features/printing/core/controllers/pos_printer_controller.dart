@@ -480,6 +480,7 @@ class PosPrinterController {
     PaperPreset? paperWidth,
     String? fontFamily,
     int? sliceHeight,
+    Function(String message, bool isError)? onLogoStatusUpdate,
     // Seller information (optional)
     String? sellerNameAr,
     String? sellerNameEn,
@@ -501,6 +502,7 @@ class PosPrinterController {
       invoiceLanguage: invoiceLanguage,
       fontFamily: fontFamily ?? _fontFamily,
       sliceHeight: sliceHeight ?? _sliceHeight,
+      onLogoStatusUpdate: onLogoStatusUpdate,
       sellerNameAr: sellerNameAr,
       sellerNameEn: sellerNameEn,
       sellerVat: sellerVat,
@@ -524,6 +526,10 @@ class PosPrinterController {
     String? fontFamily,
     int? sliceHeight,
     int feedLines = 2, // قطع مباشر بعد QR Code
+    Function(double progress)? onRenderingProgress,
+    Function(double progress)? onSendingProgress,
+    Function(String message, bool isError)? onLogoStatusUpdate,
+    bool Function()? shouldCancel,
     // Seller information (optional)
     String? sellerNameAr,
     String? sellerNameEn,
@@ -552,6 +558,10 @@ class PosPrinterController {
         fontFamily: fontFamily ?? _fontFamily,
         sliceHeight: sliceHeight ?? _sliceHeight,
         feedLines: feedLines,
+        onRenderingProgress: onRenderingProgress,
+        onProgress: onSendingProgress,
+        onLogoStatusUpdate: onLogoStatusUpdate,
+        shouldCancel: shouldCancel,
         sellerNameAr: sellerNameAr,
         sellerNameEn: sellerNameEn,
         sellerVat: sellerVat,

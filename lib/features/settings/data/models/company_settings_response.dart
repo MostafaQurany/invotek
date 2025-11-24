@@ -24,6 +24,9 @@ class CompanySettingsResponse {
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
 
+  @JsonKey(name: 'logo_url')
+  final String? logoUrl;
+
   CompanySettingsResponse({
     required this.id,
     this.name,
@@ -36,6 +39,7 @@ class CompanySettingsResponse {
     this.taxInvoiceType,
     this.taxIntegrationActive,
     this.logo,
+    this.logoUrl,
     this.createdAt,
     this.updatedAt,
   });

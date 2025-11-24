@@ -73,25 +73,38 @@ class ItemCard extends StatelessWidget {
           // Item details
           Row(
             children: [
-              Expanded(child: _buildDetailItem(S.of(context).itemQuantity, item.quantity)),
+              Expanded(
+                child: _buildDetailItem(
+                  S.of(context).itemQuantity,
+                  item.quantity,
+                ),
+              ),
               Expanded(
                 child: _buildDetailItem(
                   S.of(context).itemPrice,
                   CurrencyFormatter.formatCurrencyString(item.price, context),
                 ),
               ),
-              Expanded(child: _buildDetailItem(S.of(context).itemDiscount, '${item.discount}%')),
+              Expanded(
+                child: _buildDetailItem(
+                  S.of(context).itemDiscount,
+                  '${item.discount}%',
+                ),
+              ),
             ],
           ),
 
           SizedBox(height: 8.h),
 
-          // Show tax fields only if taxInvoiceType is not 'income'
-          if (taxInvoiceType != 'income')
+          // Show tax fields only if taxInvoiceType is 'general'
+          if (taxInvoiceType == 'general')
             Row(
               children: [
                 Expanded(
-                  child: _buildDetailItem(S.of(context).itemTax, '${item.taxPercent}%'),
+                  child: _buildDetailItem(
+                    S.of(context).itemTax,
+                    '${item.taxPercent}%',
+                  ),
                 ),
                 Expanded(
                   child: _buildDetailItem(
@@ -102,28 +115,9 @@ class ItemCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: _buildDetailItem(
-                    S.of(context).itemTotal,
-                    CurrencyFormatter.formatCurrencyString(item.total, context),
-                    isTotal: true,
-                  ),
-                ),
-              ],
-            )
-          else
-            // For income type, show only total
-            Row(
-              children: [
-                Expanded(
-                  child: _buildDetailItem(
-                    S.of(context).itemTotal,
-                    CurrencyFormatter.formatCurrencyString(item.total, context),
-                    isTotal: true,
-                  ),
-                ),
               ],
             ),
+          // For income type, don't show any additional row (only qty, price, discount shown above)
         ],
       ),
     );
@@ -150,5 +144,3 @@ class ItemCard extends StatelessWidget {
     );
   }
 }
-
-

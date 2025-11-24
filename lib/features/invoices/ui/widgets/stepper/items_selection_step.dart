@@ -247,6 +247,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep>
     showDialog(
       context: context,
       builder: (context) => AddItemDialog(
+        taxInvoiceType: widget.taxInvoiceType,
         onItemAdded: (item) {
           widget.formController.addItem(item);
           setState(() {});
@@ -261,6 +262,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep>
       context: context,
       builder: (context) => AddItemDialog(
         initialItem: item,
+        taxInvoiceType: widget.taxInvoiceType,
         onItemAdded: (updatedItem) {
           widget.formController.updateItem(index, updatedItem);
           setState(() {});

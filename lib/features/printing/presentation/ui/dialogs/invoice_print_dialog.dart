@@ -129,11 +129,15 @@ class _InvoicePrintDialogState extends State<_InvoicePrintDialogContent> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => PrintingDialog(
-        onCancel: () {
-          _isPrintCancelled = true;
-          Navigator.of(context).pop();
-        },
+      builder: (context) => BlocProvider.value(
+        value: cubit,
+        child: PrintingDialog(
+          onCancel: () {
+            _isPrintCancelled = true;
+            cubit.cancelPrint();
+            Navigator.of(context).pop();
+          },
+        ),
       ),
     );
 

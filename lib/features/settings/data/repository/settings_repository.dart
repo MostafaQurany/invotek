@@ -9,6 +9,7 @@ import 'package:invotek/features/settings/data/models/delete_account_response.da
 import 'package:invotek/features/settings/data/models/profile_models.dart';
 import 'package:invotek/features/settings/data/models/update_profile_request.dart';
 import 'package:invotek/features/settings/data/models/company_settings_response.dart';
+import 'package:invotek/features/settings/data/models/update_company_settings_request.dart';
 
 import 'package:invotek/features/settings/domain/repositories/settings_repository.dart';
 
@@ -77,6 +78,18 @@ class SettingsRepository implements ISettingsRepository {
   Future<ApiResult<CompanySettingsResponse>> getCompanySettings() async {
     try {
       final response = await dataSource.getCompanySettings();
+      return response;
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  @override
+  Future<ApiResult<CompanySettingsResponse>> updateCompanySettings(
+    UpdateCompanySettingsRequest request,
+  ) async {
+    try {
+      final response = await dataSource.updateCompanySettings(request);
       return response;
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));

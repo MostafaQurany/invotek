@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/theme/app_text_theme.dart';
-import 'package:invotek/core/utils/screen_utils.dart';
-import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/auth/domain/cubit/auth_cubit.dart';
 import 'package:invotek/features/settings/cubit/settings_cubit.dart';
 import 'package:invotek/features/settings/cubit/settings_state.dart';
+import 'package:invotek/features/settings/ui/widgets/shared/shared_widgets.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class DeleteAccountScreen extends StatefulWidget {
@@ -40,7 +39,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
         return AlertDialog(
           title: Row(
             children: [
-              Icon(Icons.warning, color: Colors.red),
+              Icon(Icons.warning, color: AppColors.error),
               SizedBox(width: 8.w),
               Text(S.of(context).deleteAccount),
             ],
@@ -58,7 +57,7 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                   password: _passwordController.text,
                 );
               },
-              style: TextButton.styleFrom(foregroundColor: Colors.red),
+              style: TextButton.styleFrom(foregroundColor: AppColors.error),
               child: Text(S.of(context).yesDeleteAccount),
             ),
           ],
@@ -69,37 +68,32 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        scrolledUnderElevation: 1,
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => Navigator.of(context).pop(),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.primary,
+            color: AppColors.onPrimary,
             size: 24.sp,
           ),
         ),
         title: Text(
           S.of(context).deleteAccount,
           style: AppTextTheme.textTheme.headlineMedium?.copyWith(
-            color: AppColors.primary,
+            color: AppColors.onPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
+        backgroundColor: AppColors.primary,
+        elevation: 0,
       ),
       body: SafeArea(
         child: BlocListener<SettingsCubit, SettingsState>(
           listener: (context, state) {
             if (state is DeleteAccountSuccess) {
-              // تنفيذ logout
               context.read<AuthCubit>().logout();
 
               ScaffoldMessenger.of(context).showSnackBar(
@@ -110,7 +104,6 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
                 ),
               );
 
-              // التنقل إلى شاشة تسجيل الدخول
               if (mounted) {
                 Navigator.of(
                   context,
@@ -126,108 +119,135 @@ class _DeleteAccountScreenState extends State<DeleteAccountScreen> {
               );
             }
           },
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(16.w),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: ScreenUtils.paddingLarge),
-
-                  // Warning Section
-                  Container(
-                    padding: EdgeInsets.all(16.w),
-                    decoration: BoxDecoration(
-                      color: Colors.red.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12.r),
-                      border: Border.all(
-                        color: Colors.red.withValues(alpha: 0.3),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: EdgeInsets.all(16.w),
+              children: [
+                // Warning Card
+                Container(
+                  padding: EdgeInsets.all(20.w),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(16.r),
+                    border: Border.all(
+                      color: AppColors.error.withOpacity(0.3),
+                      width: 2,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.warning_amber_rounded,
+                        color: AppColors.error,
+                        size: 64.sp,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.warning_amber_rounded,
-                          color: Colors.red,
-                          size: 48.sp,
+                      SizedBox(height: 16.h),
+                      Text(
+                        S.of(context).deleteAccountWarning,
+                        style: AppTextTheme.textTheme.titleLarge?.copyWith(
+                          color: AppColors.error,
+                          fontWeight: FontWeight.bold,
                         ),
-                        SizedBox(height: 16.h),
-                        Text(
-                          S.of(context).deleteAccountWarning,
-                          style: textTheme.titleMedium?.copyWith(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 12.h),
+                      Text(
+                        S.of(context).deleteAccountConfirmation,
+                        style: AppTextTheme.textTheme.bodyMedium?.copyWith(
+                          color: AppColors.textSecondary,
                         ),
-                        SizedBox(height: 8.h),
-                        Text(
-                          S.of(context).deleteAccountConfirmation,
-                          style: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
+                ),
 
-                  SizedBox(height: ScreenUtils.paddingXLarge),
+                SizedBox(height: 24.h),
 
-                  // Password Field
-                  Text(
-                    S.of(context).enterPasswordToConfirm,
-                    style: textTheme.titleSmall!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                // Consequences Card
+                SettingsCard(
+                  title: S.of(context).settingsWhatHappens,
+                  showDivider: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildConsequenceItem(
+                        icon: Icons.person_off,
+                        text: S.of(context).settingsAccountDeleted,
+                      ),
+                      SizedBox(height: 12.h),
+                      _buildConsequenceItem(
+                        icon: Icons.delete_forever,
+                        text: S.of(context).settingsDataDeleted,
+                      ),
+                      SizedBox(height: 12.h),
+                      _buildConsequenceItem(
+                        icon: Icons.block,
+                        text: S.of(context).settingsCannotUndo,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: ScreenUtils.paddingSmall),
-                  TextFormField(
+                ),
+
+                SizedBox(height: 24.h),
+
+                // Password Confirmation Card
+                SettingsCard(
+                  title: S.of(context).enterPasswordToConfirm,
+                  showDivider: true,
+                  child: PasswordField(
+                    label: S.of(context).password,
                     controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: S.of(context).password,
-                      prefixIcon: Icon(
-                        Icons.lock_outline,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return S.of(context).passwordRequired;
                       }
                       return null;
                     },
+                    hintText: S.of(context).enterPasswordToConfirm,
                   ),
+                ),
 
-                  SizedBox(height: 60.h),
+                SizedBox(height: 24.h),
 
-                  // Delete Account Button
-                  SizedBox(
-                    width: ScreenUtils.screenWidth,
-                    child: BlocBuilder<SettingsCubit, SettingsState>(
-                      builder: (context, state) {
-                        return LoadingButton(
-                          text: S.of(context).deleteAccountButton,
-                          onPressed: _handleDeleteAccount,
-                          isLoading: state is SettingsLoading,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          indicatorColor: Colors.white,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                // Delete Button
+                BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, state) {
+                    return ActionButton(
+                      text: S.of(context).deleteAccountButton,
+                      variant: ActionButtonVariant.danger,
+                      icon: Icons.delete_forever,
+                      onPressed: _handleDeleteAccount,
+                      isLoading: state is SettingsLoading,
+                      fullWidth: true,
+                    );
+                  },
+                ),
+
+                SizedBox(height: 32.h),
+              ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildConsequenceItem({required IconData icon, required String text}) {
+    return Row(
+      children: [
+        Icon(icon, size: 24.sp, color: AppColors.error),
+        SizedBox(width: 12.w),
+        Expanded(
+          child: Text(
+            text,
+            style: AppTextTheme.textTheme.bodyMedium?.copyWith(
+              color: AppColors.textPrimary,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -7,8 +7,14 @@ import 'package:invotek/generated/l10n.dart';
 class AddItemDialog extends StatefulWidget {
   final InvoiceItemData? initialItem;
   final Function(InvoiceItemData) onItemAdded;
+  final String? taxInvoiceType;
 
-  const AddItemDialog({super.key, this.initialItem, required this.onItemAdded});
+  const AddItemDialog({
+    super.key,
+    this.initialItem,
+    required this.onItemAdded,
+    this.taxInvoiceType,
+  });
 
   @override
   State<AddItemDialog> createState() => _AddItemDialogState();
@@ -55,6 +61,10 @@ class _AddItemDialogState extends State<AddItemDialog> {
     _priceController.text = '1.00';
     _discountController.text = '0.00';
     _taxPercentController.text = '0.00';
+    // For income type, ensure tax is 0
+    if (widget.taxInvoiceType == 'income') {
+      _taxPercentController.text = '0.00';
+    }
     _calculateTotals();
   }
 
@@ -72,7 +82,9 @@ class _AddItemDialogState extends State<AddItemDialog> {
     final quantity = double.tryParse(_quantityController.text) ?? 0.0;
     final price = double.tryParse(_priceController.text) ?? 0.0;
     final discount = double.tryParse(_discountController.text) ?? 0.0;
-    final taxPercent = double.tryParse(_taxPercentController.text) ?? 0.0;
+    final taxPercent = widget.taxInvoiceType == 'income'
+        ? 0.0
+        : (double.tryParse(_taxPercentController.text) ?? 0.0);
 
     final subtotal = quantity * price;
     final discountAmount = subtotal * (discount / 100);
@@ -88,12 +100,17 @@ class _AddItemDialogState extends State<AddItemDialog> {
 
   void _onSave() {
     if (_formKey.currentState!.validate()) {
+      // For income type, set tax percent to 0
+      final taxPercent = widget.taxInvoiceType == 'income'
+          ? '0.00'
+          : _taxPercentController.text;
+
       final item = InvoiceItemData(
         name: _nameController.text,
         quantity: _quantityController.text,
         price: _priceController.text,
         discount: _discountController.text,
-        taxPercent: _taxPercentController.text,
+        taxPercent: taxPercent,
         taxAmount: _taxAmount,
         total: _total,
       );
@@ -277,36 +294,39 @@ class _AddItemDialogState extends State<AddItemDialog> {
                               },
                             ),
                           ),
-                          SizedBox(width: 12.w),
-                          Expanded(
-                            child: TextFormField(
-                              controller: _taxPercentController,
-                              decoration: InputDecoration(
-                                labelText: S.of(context).taxPercent,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.r),
+                          // Show tax percent field only if taxInvoiceType is not 'income'
+                          if (widget.taxInvoiceType != 'income') ...[
+                            SizedBox(width: 12.w),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _taxPercentController,
+                                decoration: InputDecoration(
+                                  labelText: S.of(context).taxPercent,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12.w,
+                                    vertical: 16.h,
+                                  ),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12.w,
-                                  vertical: 16.h,
-                                ),
+                                keyboardType: TextInputType.number,
+                                onChanged: (_) => _calculateTotals(),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return S.of(context).taxPercentRequired;
+                                  }
+                                  if (double.tryParse(value) == null ||
+                                      double.parse(value) < 0) {
+                                    return S
+                                        .of(context)
+                                        .taxPercentMustBeGreaterThanOrEqualZero;
+                                  }
+                                  return null;
+                                },
                               ),
-                              keyboardType: TextInputType.number,
-                              onChanged: (_) => _calculateTotals(),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return S.of(context).taxPercentRequired;
-                                }
-                                if (double.tryParse(value) == null ||
-                                    double.parse(value) < 0) {
-                                  return S
-                                      .of(context)
-                                      .taxPercentMustBeGreaterThanOrEqualZero;
-                                }
-                                return null;
-                              },
                             ),
-                          ),
+                          ],
                         ],
                       ),
                       SizedBox(height: 20.h),

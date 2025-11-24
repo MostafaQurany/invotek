@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,8 @@ class PrinterCubit extends Cubit<PrinterState> {
   StreamSubscription<List<BluetoothDevice>>? _scanSubscription;
   StreamSubscription<bool>? _connectionSubscription;
   bool _isInitialized = false;
+  bool _isPrintCancelled = false;
+  Completer<void>? _cancelCompleter;
 
   PrinterCubit(this._printerService) : super(const PrinterState.initial()) {
     // لا نبدأ التهيئة تلقائياً - ننتظر حتى نحتاجها فعلاً
@@ -268,20 +271,71 @@ class PrinterCubit extends Cubit<PrinterState> {
     int? sliceHeight,
     InvoiceLanguage? language,
   }) async {
+    _isPrintCancelled = false;
+    _cancelCompleter = Completer<void>();
+
     try {
       if (!_printerService.isConnected) {
         emit(const PrinterState.error('الطابعة غير متصلة'));
         return false;
       }
 
-      emit(const PrinterState.printing());
+      // التحقق من الإلغاء
+      if (_isPrintCancelled) {
+        emit(const PrinterState.cancelling());
+        return false;
+      }
 
-      final success = await _printerService.printInvoice(
-        invoice: invoice,
-        paperWidth: paperWidth,
-        sliceHeight: sliceHeight,
-        language: language,
-      );
+      // المرحلة 1: تجهيز القالب
+      emit(const PrinterState.processingTemplate());
+      await _yieldToUI();
+
+      if (_isPrintCancelled) {
+        emit(const PrinterState.cancelling());
+        return false;
+      }
+
+      // المرحلة 2: الرسم مع التقدم
+      emit(const PrinterState.renderingProgress(0.0));
+      await _yieldToUI();
+
+      // المرحلة 3: الإرسال مع التقدم
+      emit(const PrinterState.sendingToPrinter());
+      await _yieldToUI();
+
+      // Timeout للرسم: 30 ثانية، للإرسال: 60 ثانية
+      final success = await _printerService
+          .printInvoice(
+            invoice: invoice,
+            paperWidth: paperWidth,
+            sliceHeight: sliceHeight,
+            language: language,
+            onRenderingProgress: (progress) {
+              if (!isClosed && !_isPrintCancelled) {
+                emit(PrinterState.renderingProgress(progress));
+              }
+            },
+            onSendingProgress: (progress) {
+              if (!isClosed && !_isPrintCancelled) {
+                emit(PrinterState.sendingProgress(progress));
+              }
+            },
+            shouldCancel: () => _isPrintCancelled,
+          )
+          .timeout(
+            const Duration(seconds: 90), // إجمالي 90 ثانية للرسم والإرسال
+            onTimeout: () {
+              throw TimeoutException(
+                'انتهت مهلة العملية',
+                const Duration(seconds: 90),
+              );
+            },
+          );
+
+      if (_isPrintCancelled) {
+        emit(const PrinterState.cancelling());
+        return false;
+      }
 
       if (success) {
         // العودة للحالة السابقة بعد الطباعة
@@ -296,8 +350,23 @@ class PrinterCubit extends Cubit<PrinterState> {
         emit(const PrinterState.error('فشلت عملية الطباعة'));
         return false;
       }
+    } on TimeoutException catch (e) {
+      if (!isClosed) {
+        if (_isPrintCancelled) {
+          emit(const PrinterState.cancelling());
+        } else {
+          emit(PrinterState.error('انتهت مهلة العملية: ${e.message}'));
+        }
+      }
+      return false;
     } catch (e) {
-      emit(PrinterState.error('خطأ في الطباعة: $e'));
+      if (!isClosed) {
+        if (_isPrintCancelled) {
+          emit(const PrinterState.cancelling());
+        } else {
+          emit(PrinterState.error('خطأ في الطباعة: $e'));
+        }
+      }
       return false;
     }
   }
@@ -354,10 +423,26 @@ class PrinterCubit extends Cubit<PrinterState> {
   /// الحصول على الجهاز المتصل
   BluetoothDevice? get connectedDevice => _printerService.connectedDevice;
 
+  /// إلغاء عملية الطباعة
+  void cancelPrint() {
+    _isPrintCancelled = true;
+    _cancelCompleter?.complete();
+    if (!isClosed) {
+      emit(const PrinterState.cancelling());
+    }
+  }
+
+  /// إعطاء UI فرصة للتنفس
+  Future<void> _yieldToUI() async {
+    await Future.microtask(() {});
+    await SchedulerBinding.instance.endOfFrame;
+  }
+
   @override
   Future<void> close() {
     _scanSubscription?.cancel();
     _connectionSubscription?.cancel();
+    _cancelCompleter?.complete();
     return super.close();
   }
 

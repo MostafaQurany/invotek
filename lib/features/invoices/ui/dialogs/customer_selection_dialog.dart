@@ -106,7 +106,7 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
             ),
 
             // Bottom Actions
-            Expanded(child: _buildBottomActions()),
+            _buildBottomActions(),
           ],
         ),
       ),
@@ -471,21 +471,21 @@ class _CustomerSelectionDialogState extends State<CustomerSelectionDialog> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Add New Customer Button
-        OutlinedButton.icon(
-          onPressed: widget.onAddNewCustomer,
-          icon: Icon(Icons.person_add, size: 20.sp),
-          label: Text(S.of(context).addNewCustomer),
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.primary,
-            side: BorderSide(color: AppColors.primary),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-          ),
-        ),
-        SizedBox(height: 10.h),
+        // // Add New Customer Button
+        // OutlinedButton.icon(
+        //   onPressed: widget.onAddNewCustomer,
+        //   icon: Icon(Icons.person_add, size: 20.sp),
+        //   label: Text(S.of(context).addNewCustomer),
+        //   style: OutlinedButton.styleFrom(
+        //     foregroundColor: AppColors.primary,
+        //     side: BorderSide(color: AppColors.primary),
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(8.r),
+        //     ),
+        //     padding: EdgeInsets.symmetric(vertical: 12.h),
+        //   ),
+        // ),
+        // SizedBox(height: 10.h),
         // Cancel Button
         ElevatedButton(
           onPressed: () => Navigator.pop(context),

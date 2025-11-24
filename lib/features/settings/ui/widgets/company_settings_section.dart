@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:invotek/core/cubits/permissions_cubit.dart';
+import 'package:invotek/core/utils/app_api_constants.dart';
+import 'package:invotek/features/settings/data/models/update_company_settings_request.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_theme.dart';
@@ -22,6 +25,11 @@ class CompanySettingsSection extends StatefulWidget {
 
 class _CompanySettingsSectionState extends State<CompanySettingsSection> {
   final TextEditingController _merchantCodeController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
   String _invoiceType = 'income';
   TaxIntegrationState? _previousTaxState;
 
@@ -34,9 +42,13 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
       _previousTaxState = taxState;
       if (taxState is TaxIntegrationLoaded) {
         if (taxState.status.taxInvoiceType != null) {
-          setState(() {
-            _invoiceType = taxState.status.taxInvoiceType!;
-          });
+          final loadedType = taxState.status.taxInvoiceType!;
+          // التأكد من أن القيمة المحملة موجودة في القائمة
+          if (loadedType == 'income' || loadedType == 'general') {
+            setState(() {
+              _invoiceType = loadedType;
+            });
+          }
         }
       } else {
         // إذا لم تكن الحالة محملة، قم بتحميلها
@@ -48,60 +60,161 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
   @override
   void dispose() {
     _merchantCodeController.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CompanyCubit, CompanyState>(
-      builder: (context, state) {
-        if (state is CompanyLoading) {
-          return const Center(child: CircularProgressIndicator());
+    return BlocListener<CompanyCubit, CompanyState>(
+      listener: (context, state) {
+        if (state is CompanyLoaded) {
+          if (state.updateError != null) {
+            SnackBarHelper.showFailureSnackBar(
+              context,
+              Failure.unknown(message: state.updateError!),
+            );
+          } else if (!state.isUpdating) {
+            _nameController.text = state.company.name ?? '';
+            _emailController.text = state.company.email ?? '';
+            _phoneController.text = state.company.phone ?? '';
+            _addressController.text = state.company.address ?? '';
+          }
+        } else if (state is CompanyError) {
+          SnackBarHelper.showFailureSnackBar(
+            context,
+            Failure.unknown(message: state.message),
+          );
         }
-        if (state is CompanyError) {
-          return Center(child: Text(state.message));
-        }
-        if (state is! CompanyLoaded) {
-          return const SizedBox.shrink();
-        }
-        final c = state.company;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _infoTile(
-              S.of(context).companyName,
-              c.name ?? S.of(context).noName,
-              Icons.business,
-            ),
-            SizedBox(height: 12.h),
-            _infoTile(
-              S.of(context).companyEmail,
-              c.email ?? S.of(context).noEmail,
-              Icons.email,
-            ),
-            SizedBox(height: 12.h),
-            _infoTile(
-              S.of(context).companyPhone,
-              c.phone ?? S.of(context).noPhone,
-              Icons.phone,
-            ),
-            SizedBox(height: 12.h),
-            _infoTile(
-              S.of(context).companyAddress,
-              c.address ?? '-',
-              Icons.location_on,
-            ),
-            SizedBox(height: 12.h),
-            _infoTile(
-              S.of(context).status,
-              c.status ?? S.of(context).noStatus,
-              Icons.verified_user,
-            ),
-            SizedBox(height: 24.h),
-            _buildTaxIntegrationCard(context),
-          ],
-        );
       },
+      child: BlocBuilder<CompanyCubit, CompanyState>(
+        builder: (context, state) {
+          if (state is CompanyLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is CompanyError) {
+            return Center(child: Text(state.message));
+          }
+          if (state is! CompanyLoaded) {
+            return const SizedBox.shrink();
+          }
+          final c = state.company;
+          final isUpdating = state.isUpdating;
+
+          return BlocBuilder<PermissionsCubit, PermissionsState>(
+            builder: (context, permState) {
+              final canEdit = permState.maybeWhen(
+                loaded: (permissions) =>
+                    permissions.hasPermission(SettingsPermissions.settings),
+                orElse: () => false,
+              );
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Logo
+                  Center(
+                    child: Container(
+                      width: 100.w,
+                      height: 100.w,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.surface,
+                        border: Border.all(color: AppColors.primary, width: 2),
+                        image: c.logoUrl != null
+                            ? DecorationImage(
+                                image: NetworkImage('${c.logoUrl}'),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                      ),
+                      child: c.logoUrl == null
+                          ? Icon(
+                              Icons.business,
+                              size: 50.sp,
+                              color: AppColors.primary,
+                            )
+                          : null,
+                    ),
+                  ),
+                  SizedBox(height: 24.h),
+
+                  CustomTextField(
+                    label: S.of(context).companyName,
+                    controller: _nameController,
+                    enabled: canEdit && !isUpdating,
+                    prefixIcon: Icons.business,
+                  ),
+                  SizedBox(height: 12.h),
+                  CustomTextField(
+                    label: S.of(context).companyEmail,
+                    controller: _emailController,
+                    enabled: canEdit && !isUpdating,
+                    prefixIcon: Icons.email,
+                  ),
+                  SizedBox(height: 12.h),
+                  CustomTextField(
+                    label: S.of(context).companyPhone,
+                    controller: _phoneController,
+                    enabled: canEdit && !isUpdating,
+                    prefixIcon: Icons.phone,
+                  ),
+                  SizedBox(height: 12.h),
+                  CustomTextField(
+                    label: S.of(context).companyAddress,
+                    controller: _addressController,
+                    enabled: canEdit && !isUpdating,
+                    prefixIcon: Icons.location_on,
+                  ),
+                  SizedBox(height: 12.h),
+                  _infoTile(
+                    S.of(context).status,
+                    c.status ?? S.of(context).noStatus,
+                    Icons.verified_user,
+                  ),
+
+                  if (canEdit) ...[
+                    SizedBox(height: 24.h),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: isUpdating
+                            ? null
+                            : () {
+                                context.read<CompanyCubit>().updateCompany(
+                                  UpdateCompanySettingsRequest(
+                                    name: _nameController.text,
+                                    email: _emailController.text,
+                                    phone: _phoneController.text,
+                                    address: _addressController.text,
+                                  ),
+                                );
+                              },
+                        child: isUpdating
+                            ? SizedBox(
+                                width: 20.w,
+                                height: 20.w,
+                                child: const CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Text(S.of(context).save),
+                      ),
+                    ),
+                  ],
+
+                  SizedBox(height: 24.h),
+                  _buildTaxIntegrationCard(context),
+                ],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -150,9 +263,13 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
           }
           // إعادة تعيين نوع الفاتورة من الحالة الحالية
           if (state.status.taxInvoiceType != null) {
-            setState(() {
-              _invoiceType = state.status.taxInvoiceType!;
-            });
+            final loadedType = state.status.taxInvoiceType!;
+            // التأكد من أن القيمة المحملة موجودة في القائمة
+            if (loadedType == 'income' || loadedType == 'general') {
+              setState(() {
+                _invoiceType = loadedType;
+              });
+            }
           }
           // إظهار رسالة نجاح عند اكتمال العملية
           if (wasInProgress) {
@@ -315,7 +432,9 @@ class _CompanySettingsSectionState extends State<CompanySettingsSection> {
             ),
             SizedBox(width: 8.w),
             DropdownButton<String>(
-              value: _invoiceType,
+              value: _invoiceType == 'income' || _invoiceType == 'general'
+                  ? _invoiceType
+                  : 'income',
               items: [
                 DropdownMenuItem(
                   value: 'income',

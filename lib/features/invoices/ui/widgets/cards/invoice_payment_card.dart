@@ -80,10 +80,10 @@ class InvoicePaymentCard extends StatelessWidget {
 
           SizedBox(height: 20.h),
 
-          // Payment Method
-          _buildPaymentMethodSection(),
+          // // Payment Method
+          // _buildPaymentMethodSection(),
 
-          SizedBox(height: 16.h),
+          // SizedBox(height: 16.h),
 
           // Amount Breakdown
           _buildAmountBreakdown(),

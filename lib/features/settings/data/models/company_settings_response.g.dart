@@ -20,6 +20,7 @@ CompanySettingsResponse _$CompanySettingsResponseFromJson(
   taxInvoiceType: json['tax_invoice_type'] as String?,
   taxIntegrationActive: json['tax_integration_active'] as bool?,
   logo: json['logo'] as String?,
+  logoUrl: json['logo_url'] as String?,
   createdAt: json['created_at'] as String?,
   updatedAt: json['updated_at'] as String?,
 );
@@ -40,4 +41,5 @@ Map<String, dynamic> _$CompanySettingsResponseToJson(
   'admin_id': instance.adminId,
   'created_at': instance.createdAt,
   'updated_at': instance.updatedAt,
+  'logo_url': instance.logoUrl,
 };

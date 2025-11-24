@@ -5220,6 +5220,12 @@ abstract class S {
   /// **'Draft'**
   String get statusDraft;
 
+  /// No description provided for @statusSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get statusSent;
+
   /// No description provided for @itemDetails.
   ///
   /// In en, this message translates to:
@@ -12252,16 +12258,328 @@ abstract class S {
   /// **'Bank Transfer'**
   String get paymentMethodBankTransfer;
 
-  /// No description provided for @statusSent.
+  /// No description provided for @logoLoadError.
   ///
   /// In en, this message translates to:
-  /// **'Sent'**
-  String get statusSent;
+  /// **'Failed to load company logo'**
+  String get logoLoadError;
+
+  /// No description provided for @usingDefaultLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Using default logo'**
+  String get usingDefaultLogo;
+
+  /// No description provided for @preparingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing invoice...'**
+  String get preparingInvoice;
+
+  /// No description provided for @renderingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Rendering invoice...'**
+  String get renderingInvoice;
+
+  /// No description provided for @loadingCompanyLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading company logo...'**
+  String get loadingCompanyLogo;
+
+  /// No description provided for @companyLogoLoaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Company logo loaded successfully'**
+  String get companyLogoLoaded;
+
+  /// No description provided for @companyLogoFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load company logo'**
+  String get companyLogoFailed;
+
+  /// No description provided for @loadingDefaultLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading default logo'**
+  String get loadingDefaultLogo;
+
+  /// No description provided for @logoLoadedFromCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo loaded from cache'**
+  String get logoLoadedFromCache;
+
+  /// No description provided for @retryingLogoLoad.
+  ///
+  /// In en, this message translates to:
+  /// **'Retrying logo load...'**
+  String get retryingLogoLoad;
+
+  /// No description provided for @failedToLoadCompanyLogoUsingDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load company logo, using default logo'**
+  String get failedToLoadCompanyLogoUsingDefault;
+
+  /// No description provided for @settingsRegionalSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Regional Settings'**
+  String get settingsRegionalSettings;
+
+  /// No description provided for @settingsNotificationsEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications enabled'**
+  String get settingsNotificationsEnabled;
+
+  /// No description provided for @settingsNotificationsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications disabled'**
+  String get settingsNotificationsDisabled;
+
+  /// No description provided for @enterCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter current password'**
+  String get enterCurrentPassword;
+
+  /// No description provided for @enterNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get enterNewPassword;
+
+  /// No description provided for @settingsPasswordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get settingsPasswordMinLength;
+
+  /// No description provided for @settingsPasswordRequirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Password Requirements'**
+  String get settingsPasswordRequirements;
+
+  /// No description provided for @settingsPasswordUppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one uppercase letter'**
+  String get settingsPasswordUppercase;
+
+  /// No description provided for @settingsPasswordNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one number'**
+  String get settingsPasswordNumber;
+
+  /// No description provided for @settingsPasswordSpecial.
+  ///
+  /// In en, this message translates to:
+  /// **'At least one special character'**
+  String get settingsPasswordSpecial;
+
+  /// No description provided for @settingsPasswordWeak.
+  ///
+  /// In en, this message translates to:
+  /// **'Weak'**
+  String get settingsPasswordWeak;
+
+  /// No description provided for @settingsPasswordMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get settingsPasswordMedium;
+
+  /// No description provided for @settingsPasswordStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get settingsPasswordStrong;
+
+  /// No description provided for @settingsSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved successfully'**
+  String get settingsSaveChanges;
+
+  /// No description provided for @settingsBasicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get settingsBasicInfo;
+
+  /// No description provided for @settingsCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Name'**
+  String get settingsCompanyName;
+
+  /// No description provided for @pleaseEnterCompanyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter company name'**
+  String get pleaseEnterCompanyName;
+
+  /// No description provided for @settingsPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get settingsPhone;
+
+  /// No description provided for @settingsAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get settingsAddress;
+
+  /// No description provided for @settingsUserActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get settingsUserActive;
+
+  /// No description provided for @settingsUserInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get settingsUserInactive;
+
+  /// No description provided for @settingsMerchantCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant Code'**
+  String get settingsMerchantCode;
+
+  /// No description provided for @settingsInvoiceTypeStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get settingsInvoiceTypeStandard;
+
+  /// No description provided for @settingsInvoiceTypeSimplified.
+  ///
+  /// In en, this message translates to:
+  /// **'Simplified'**
+  String get settingsInvoiceTypeSimplified;
+
+  /// No description provided for @settingsCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get settingsCancel;
+
+  /// No description provided for @settingsAccountSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Security'**
+  String get settingsAccountSecurity;
+
+  /// No description provided for @settingsProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get settingsProfile;
+
+  /// No description provided for @settingsChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get settingsChangePassword;
+
+  /// No description provided for @settingsChangePasswordDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Update your password to keep your account secure'**
+  String get settingsChangePasswordDesc;
+
+  /// No description provided for @settingsUsersManagement.
+  ///
+  /// In en, this message translates to:
+  /// **'Users Management'**
+  String get settingsUsersManagement;
+
+  /// No description provided for @settingsPersonalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal Information'**
+  String get settingsPersonalInfo;
+
+  /// No description provided for @settingsWhatHappens.
+  ///
+  /// In en, this message translates to:
+  /// **'What happens when you delete your account?'**
+  String get settingsWhatHappens;
+
+  /// No description provided for @settingsAccountDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account will be permanently deleted'**
+  String get settingsAccountDeleted;
+
+  /// No description provided for @settingsDataDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'All your data will be permanently deleted'**
+  String get settingsDataDeleted;
+
+  /// No description provided for @settingsCannotUndo.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone'**
+  String get settingsCannotUndo;
+
+  /// No description provided for @settingsTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get settingsTakePhoto;
+
+  /// No description provided for @settingsChooseFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from Gallery'**
+  String get settingsChooseFromGallery;
+
+  /// No description provided for @settingsRemovePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Photo'**
+  String get settingsRemovePhoto;
+
+  /// No description provided for @companyLogo.
+  ///
+  /// In en, this message translates to:
+  /// **'Company Logo'**
+  String get companyLogo;
+
+  /// No description provided for @settingsHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get settingsHardware;
+
+  /// No description provided for @settingsPrinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer'**
+  String get settingsPrinter;
+
+  /// No description provided for @settingsManage.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get settingsManage;
 
   /// No description provided for @notSpecified.
   ///
   /// In en, this message translates to:
-  /// **'Not Specified'**
+  /// **'Not specified'**
   String get notSpecified;
 }
 

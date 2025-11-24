@@ -104,13 +104,13 @@ class _PrinterSettingsScreenState extends State<_PrinterSettingsScreenContent> {
                   const PrinterDiscoverySection(),
                   SizedBox(height: 24.h),
 
-                  // معاينة وطباعة تجريبية - يدير حالته الخاصة
-                  TestSection(
-                    isGeneratingPreview: false,
-                    testPreview: [],
-                    onGeneratePreview: () {},
-                    onPrintTest: () {},
-                  ),
+                  // // معاينة وطباعة تجريبية - يدير حالته الخاصة
+                  // TestSection(
+                  //   isGeneratingPreview: ,
+                  //   testPreview: [],
+                  //   onGeneratePreview: () {},
+                  //   onPrintTest: () {},
+                  // ),
                 ],
               ),
             ),

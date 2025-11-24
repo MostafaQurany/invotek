@@ -3,12 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/theme/app_text_theme.dart';
-import 'package:invotek/core/utils/screen_utils.dart';
-import 'package:invotek/core/widgets/loading_widget.dart';
-import 'package:invotek/features/auth/ui/widgets/confirm_password_text_field.dart';
-import 'package:invotek/features/auth/ui/widgets/password_auth_text_field.dart';
 import 'package:invotek/features/settings/cubit/settings_cubit.dart';
 import 'package:invotek/features/settings/cubit/settings_state.dart';
+import 'package:invotek/features/settings/ui/widgets/shared/shared_widgets.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
@@ -71,31 +68,27 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        scrolledUnderElevation: 1,
         leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => Navigator.of(context).pop(),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.primary,
+            color: AppColors.onPrimary,
             size: 24.sp,
           ),
         ),
         title: Text(
           S.of(context).changePassword,
           style: AppTextTheme.textTheme.headlineMedium?.copyWith(
-            color: AppColors.primary,
+            color: AppColors.onPrimary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
+        backgroundColor: AppColors.primary,
+        elevation: 0,
       ),
       body: SafeArea(
         child: BlocListener<SettingsCubit, SettingsState>(
@@ -119,72 +112,100 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               );
             }
           },
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(16.w),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: ScreenUtils.paddingLarge),
-
-                  // Current Password
-                  Text(
-                    S.of(context).currentPassword,
-                    style: textTheme.titleSmall!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: EdgeInsets.all(16.w),
+              children: [
+                // Current Password Card
+                SettingsCard(
+                  title: S.of(context).currentPassword,
+                  showDivider: true,
+                  child: PasswordField(
+                    label: S.of(context).currentPassword,
+                    controller: _currentPasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return S.of(context).passwordRequired;
+                      }
+                      return null;
+                    },
+                    hintText: S.of(context).enterCurrentPassword,
                   ),
-                  SizedBox(height: ScreenUtils.paddingSmall),
-                  PasswordAuthTextField(controller: _currentPasswordController),
+                ),
 
-                  SizedBox(height: ScreenUtils.paddingLarge),
+                SizedBox(height: 16.h),
 
-                  // New Password
-                  Text(
-                    S.of(context).newPassword,
-                    style: textTheme.titleSmall!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
+                // New Password Card
+                SettingsCard(
+                  title: S.of(context).newPassword,
+                  showDivider: true,
+                  child: Column(
+                    children: [
+                      PasswordField(
+                        label: S.of(context).newPassword,
+                        controller: _newPasswordController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return S.of(context).passwordRequired;
+                          }
+                          if (value.length < 8) {
+                            return S.of(context).settingsPasswordMinLength;
+                          }
+                          return null;
+                        },
+                        hintText: S.of(context).enterNewPassword,
+                      ),
+                      SizedBox(height: 16.h),
+                      PasswordStrengthIndicator(
+                        password: _newPasswordController.text,
+                      ),
+                      SizedBox(height: 16.h),
+                      PasswordRequirements(
+                        password: _newPasswordController.text,
+                      ),
+                    ],
                   ),
-                  SizedBox(height: ScreenUtils.paddingSmall),
-                  PasswordAuthTextField(controller: _newPasswordController),
+                ),
 
-                  SizedBox(height: ScreenUtils.paddingLarge),
+                SizedBox(height: 16.h),
 
-                  // Confirm New Password
-                  Text(
-                    S.of(context).confirmNewPassword,
-                    style: textTheme.titleSmall!.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  SizedBox(height: ScreenUtils.paddingSmall),
-                  ConfirmPasswordTextField(
+                // Confirm Password Card
+                SettingsCard(
+                  title: S.of(context).confirmNewPassword,
+                  showDivider: true,
+                  child: PasswordField(
+                    label: S.of(context).confirmNewPassword,
                     controller: _confirmPasswordController,
-                    passwordController: _newPasswordController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return S.of(context).passwordRequired;
+                      }
+                      if (value != _newPasswordController.text) {
+                        return S.of(context).passwordsDoNotMatch;
+                      }
+                      return null;
+                    },
+                    hintText: S.of(context).confirmNewPassword,
                   ),
+                ),
 
-                  SizedBox(height: 60.h),
+                SizedBox(height: 24.h),
 
-                  // Change Password Button
-                  SizedBox(
-                    width: ScreenUtils.screenWidth,
-                    child: BlocBuilder<SettingsCubit, SettingsState>(
-                      builder: (context, state) {
-                        return LoadingButton(
-                          text: S.of(context).changePasswordButton,
-                          onPressed: _handleChangePassword,
-                          isLoading: state is SettingsLoading,
-                          backgroundColor: colorScheme.primary,
-                          textColor: colorScheme.onPrimary,
-                          indicatorColor: colorScheme.onPrimary,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
+                // Action Button
+                BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, state) {
+                    return ActionButton(
+                      text: S.of(context).changePasswordButton,
+                      onPressed: _handleChangePassword,
+                      isLoading: state is SettingsLoading,
+                      fullWidth: true,
+                    );
+                  },
+                ),
+
+                SizedBox(height: 32.h),
+              ],
             ),
           ),
         ),

@@ -238,13 +238,17 @@ class InvoicesCubit extends Cubit<InvoicesState> {
       ),
     );
 
+    // إذا كان العميل موجوداً: إرسال customer_id فقط
+    // إذا كان عميل جديد: إرسال name, email, phone فقط
+    final isExistingCustomer = customerId != null;
+
     final result = await _repository.createInvoice(
       request: CreateInvoiceRequest(
-        customerId: customerId,
-        customerName: customerName,
-        customerEmail: customerEmail,
-        customerPhone: customerPhone,
-        customerAddress: customerAddress,
+        customerId: isExistingCustomer ? customerId : null,
+        customerName: isExistingCustomer ? null : customerName,
+        customerEmail: isExistingCustomer ? null : customerEmail,
+        customerPhone: isExistingCustomer ? null : customerPhone,
+        customerAddress: null, // لا يُرسل في أي من الحالتين
         subtotal: subtotal,
         taxAmount: taxAmount,
         discount: discount,

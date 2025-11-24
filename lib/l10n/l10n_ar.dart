@@ -2682,6 +2682,9 @@ class SAr extends S {
   String get statusDraft => 'مسودة';
 
   @override
+  String get statusSent => 'مرسلة';
+
+  @override
   String get itemDetails => 'تفاصيل العنصر';
 
   @override
@@ -6338,7 +6341,166 @@ class SAr extends S {
   String get paymentMethodBankTransfer => 'تحويل بنكي';
 
   @override
-  String get statusSent => 'مرسلة';
+  String get logoLoadError => 'Failed to load company logo';
+
+  @override
+  String get usingDefaultLogo => 'استخدام الشعار الافتراضي';
+
+  @override
+  String get preparingInvoice => 'جاري إعداد الفاتورة...';
+
+  @override
+  String get renderingInvoice => 'جاري رسم الفاتورة...';
+
+  @override
+  String get loadingCompanyLogo => 'جاري تحميل شعار الشركة...';
+
+  @override
+  String get companyLogoLoaded => 'تم تحميل شعار الشركة بنجاح';
+
+  @override
+  String get companyLogoFailed => 'فشل تحميل شعار الشركة';
+
+  @override
+  String get loadingDefaultLogo => 'جاري تحميل الشعار الافتراضي';
+
+  @override
+  String get logoLoadedFromCache => 'تم تحميل الشعار من الذاكرة المؤقتة';
+
+  @override
+  String get retryingLogoLoad => 'إعادة محاولة تحميل الشعار...';
+
+  @override
+  String get failedToLoadCompanyLogoUsingDefault =>
+      'فشل تحميل شعار الشركة، استخدام الشعار الافتراضي';
+
+  @override
+  String get settingsRegionalSettings => 'الإعدادات الإقليمية';
+
+  @override
+  String get settingsNotificationsEnabled => 'تم تفعيل الإشعارات';
+
+  @override
+  String get settingsNotificationsDisabled => 'تم تعطيل الإشعارات';
+
+  @override
+  String get enterCurrentPassword => 'أدخل كلمة المرور الحالية';
+
+  @override
+  String get enterNewPassword => 'أدخل كلمة المرور الجديدة';
+
+  @override
+  String get settingsPasswordMinLength =>
+      'يجب أن تكون كلمة المرور 8 أحرف على الأقل';
+
+  @override
+  String get settingsPasswordRequirements => 'متطلبات كلمة المرور';
+
+  @override
+  String get settingsPasswordUppercase => 'حرف كبير واحد على الأقل';
+
+  @override
+  String get settingsPasswordNumber => 'رقم واحد على الأقل';
+
+  @override
+  String get settingsPasswordSpecial => 'حرف خاص واحد على الأقل';
+
+  @override
+  String get settingsPasswordWeak => 'ضعيف';
+
+  @override
+  String get settingsPasswordMedium => 'متوسط';
+
+  @override
+  String get settingsPasswordStrong => 'قوي';
+
+  @override
+  String get settingsSaveChanges => 'تم حفظ التغييرات بنجاح';
+
+  @override
+  String get settingsBasicInfo => 'المعلومات الأساسية';
+
+  @override
+  String get settingsCompanyName => 'اسم الشركة';
+
+  @override
+  String get pleaseEnterCompanyName => 'الرجاء إدخال اسم الشركة';
+
+  @override
+  String get settingsPhone => 'الهاتف';
+
+  @override
+  String get settingsAddress => 'العنوان';
+
+  @override
+  String get settingsUserActive => 'مفعّل';
+
+  @override
+  String get settingsUserInactive => 'غير مفعّل';
+
+  @override
+  String get settingsMerchantCode => 'رمز التاجر';
+
+  @override
+  String get settingsInvoiceTypeStandard => 'قياسي';
+
+  @override
+  String get settingsInvoiceTypeSimplified => 'مبسّط';
+
+  @override
+  String get settingsCancel => 'إلغاء';
+
+  @override
+  String get settingsAccountSecurity => 'أمان الحساب';
+
+  @override
+  String get settingsProfile => 'الملف الشخصي';
+
+  @override
+  String get settingsChangePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get settingsChangePasswordDesc =>
+      'قم بتحديث كلمة المرور للحفاظ على أمان حسابك';
+
+  @override
+  String get settingsUsersManagement => 'إدارة المستخدمين';
+
+  @override
+  String get settingsPersonalInfo => 'المعلومات الشخصية';
+
+  @override
+  String get settingsWhatHappens => 'ماذا يحدث عند حذف حسابك؟';
+
+  @override
+  String get settingsAccountDeleted => 'سيتم حذف حسابك نهائياً';
+
+  @override
+  String get settingsDataDeleted => 'سيتم حذف جميع بياناتك نهائياً';
+
+  @override
+  String get settingsCannotUndo => 'لا يمكن التراجع عن هذا الإجراء';
+
+  @override
+  String get settingsTakePhoto => 'التقاط صورة';
+
+  @override
+  String get settingsChooseFromGallery => 'اختر من المعرض';
+
+  @override
+  String get settingsRemovePhoto => 'إزالة الصورة';
+
+  @override
+  String get companyLogo => 'شعار الشركة';
+
+  @override
+  String get settingsHardware => 'الأجهزة';
+
+  @override
+  String get settingsPrinter => 'الطابعة';
+
+  @override
+  String get settingsManage => 'إدارة';
 
   @override
   String get notSpecified => 'غير محدد';

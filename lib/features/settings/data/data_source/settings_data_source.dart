@@ -9,6 +9,7 @@ import 'package:invotek/features/settings/data/models/delete_account_response.da
 import 'package:invotek/features/settings/data/models/profile_models.dart';
 import 'package:invotek/features/settings/data/models/update_profile_request.dart';
 import 'package:invotek/features/settings/data/models/company_settings_response.dart';
+import 'package:invotek/features/settings/data/models/update_company_settings_request.dart';
 
 class SettingsDataSource {
   final ApiClient apiClient;
@@ -69,6 +70,17 @@ class SettingsDataSource {
   Future<ApiResult<CompanySettingsResponse>> getCompanySettings() async {
     try {
       final response = await apiClient.getCompanySettings();
+      return ApiResult.success(response);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  Future<ApiResult<CompanySettingsResponse>> updateCompanySettings(
+    UpdateCompanySettingsRequest request,
+  ) async {
+    try {
+      final response = await apiClient.updateCompanySettings(request);
       return ApiResult.success(response);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));

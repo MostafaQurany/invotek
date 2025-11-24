@@ -2700,6 +2700,9 @@ class SEn extends S {
   String get statusDraft => 'Draft';
 
   @override
+  String get statusSent => 'Sent';
+
+  @override
   String get itemDetails => 'Item Details';
 
   @override
@@ -6392,8 +6395,169 @@ class SEn extends S {
   String get paymentMethodBankTransfer => 'Bank Transfer';
 
   @override
-  String get statusSent => 'Sent';
+  String get logoLoadError => 'Failed to load company logo';
 
   @override
-  String get notSpecified => 'Not Specified';
+  String get usingDefaultLogo => 'Using default logo';
+
+  @override
+  String get preparingInvoice => 'Preparing invoice...';
+
+  @override
+  String get renderingInvoice => 'Rendering invoice...';
+
+  @override
+  String get loadingCompanyLogo => 'Loading company logo...';
+
+  @override
+  String get companyLogoLoaded => 'Company logo loaded successfully';
+
+  @override
+  String get companyLogoFailed => 'Failed to load company logo';
+
+  @override
+  String get loadingDefaultLogo => 'Loading default logo';
+
+  @override
+  String get logoLoadedFromCache => 'Logo loaded from cache';
+
+  @override
+  String get retryingLogoLoad => 'Retrying logo load...';
+
+  @override
+  String get failedToLoadCompanyLogoUsingDefault =>
+      'Failed to load company logo, using default logo';
+
+  @override
+  String get settingsRegionalSettings => 'Regional Settings';
+
+  @override
+  String get settingsNotificationsEnabled => 'Notifications enabled';
+
+  @override
+  String get settingsNotificationsDisabled => 'Notifications disabled';
+
+  @override
+  String get enterCurrentPassword => 'Enter current password';
+
+  @override
+  String get enterNewPassword => 'Enter new password';
+
+  @override
+  String get settingsPasswordMinLength =>
+      'Password must be at least 8 characters';
+
+  @override
+  String get settingsPasswordRequirements => 'Password Requirements';
+
+  @override
+  String get settingsPasswordUppercase => 'At least one uppercase letter';
+
+  @override
+  String get settingsPasswordNumber => 'At least one number';
+
+  @override
+  String get settingsPasswordSpecial => 'At least one special character';
+
+  @override
+  String get settingsPasswordWeak => 'Weak';
+
+  @override
+  String get settingsPasswordMedium => 'Medium';
+
+  @override
+  String get settingsPasswordStrong => 'Strong';
+
+  @override
+  String get settingsSaveChanges => 'Changes saved successfully';
+
+  @override
+  String get settingsBasicInfo => 'Basic Information';
+
+  @override
+  String get settingsCompanyName => 'Company Name';
+
+  @override
+  String get pleaseEnterCompanyName => 'Please enter company name';
+
+  @override
+  String get settingsPhone => 'Phone';
+
+  @override
+  String get settingsAddress => 'Address';
+
+  @override
+  String get settingsUserActive => 'Active';
+
+  @override
+  String get settingsUserInactive => 'Inactive';
+
+  @override
+  String get settingsMerchantCode => 'Merchant Code';
+
+  @override
+  String get settingsInvoiceTypeStandard => 'Standard';
+
+  @override
+  String get settingsInvoiceTypeSimplified => 'Simplified';
+
+  @override
+  String get settingsCancel => 'Cancel';
+
+  @override
+  String get settingsAccountSecurity => 'Account Security';
+
+  @override
+  String get settingsProfile => 'Profile';
+
+  @override
+  String get settingsChangePassword => 'Change Password';
+
+  @override
+  String get settingsChangePasswordDesc =>
+      'Update your password to keep your account secure';
+
+  @override
+  String get settingsUsersManagement => 'Users Management';
+
+  @override
+  String get settingsPersonalInfo => 'Personal Information';
+
+  @override
+  String get settingsWhatHappens =>
+      'What happens when you delete your account?';
+
+  @override
+  String get settingsAccountDeleted =>
+      'Your account will be permanently deleted';
+
+  @override
+  String get settingsDataDeleted => 'All your data will be permanently deleted';
+
+  @override
+  String get settingsCannotUndo => 'This action cannot be undone';
+
+  @override
+  String get settingsTakePhoto => 'Take Photo';
+
+  @override
+  String get settingsChooseFromGallery => 'Choose from Gallery';
+
+  @override
+  String get settingsRemovePhoto => 'Remove Photo';
+
+  @override
+  String get companyLogo => 'Company Logo';
+
+  @override
+  String get settingsHardware => 'Hardware';
+
+  @override
+  String get settingsPrinter => 'Printer';
+
+  @override
+  String get settingsManage => 'Manage';
+
+  @override
+  String get notSpecified => 'Not specified';
 }

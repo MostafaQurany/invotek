@@ -90,6 +90,7 @@ import 'package:invotek/features/settings/domain/usecases/update_photo.dart';
 import 'package:invotek/features/settings/domain/usecases/delete_account.dart'
     as SettingsDeleteAccount;
 import 'package:invotek/features/settings/domain/usecases/get_company_settings.dart';
+import 'package:invotek/features/settings/domain/usecases/update_company_settings.dart';
 import 'package:invotek/features/settings/cubit/profile_cubit.dart';
 import 'package:invotek/features/settings/cubit/update_profile_cubit.dart';
 import 'package:invotek/features/settings/cubit/photo_cubit.dart';
@@ -383,8 +384,15 @@ Future<void> configureDependencies() async {
   getIt.registerFactory<PhotoCubit>(
     () => PhotoCubit(updatePhotoUseCase: getIt<UpdatePhoto>()),
   );
+  getIt.registerLazySingleton<UpdateCompanySettings>(
+    () => UpdateCompanySettings(getIt<SettingsDomain.ISettingsRepository>()),
+  );
+
   getIt.registerFactory<CompanyCubit>(
-    () => CompanyCubit(getCompanySettingsUseCase: getIt<GetCompanySettings>()),
+    () => CompanyCubit(
+      getCompanySettingsUseCase: getIt<GetCompanySettings>(),
+      updateCompanySettingsUseCase: getIt<UpdateCompanySettings>(),
+    ),
   );
   getIt.registerFactory<TaxIntegrationCubit>(
     () => TaxIntegrationCubit(getIt<InvoiceRepository>()),

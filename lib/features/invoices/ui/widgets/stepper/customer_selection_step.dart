@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
-import 'package:invotek/features/invoices/ui/dialogs/add_customer_dialog.dart';
 import 'package:invotek/features/invoices/ui/dialogs/customer_selection_dialog.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -17,8 +16,6 @@ class CustomerSelectionStep extends StatefulWidget {
 
 class _CustomerSelectionStepState extends State<CustomerSelectionStep>
     with AutomaticKeepAliveClientMixin {
-  String _customerType = 'existing'; // 'existing' or 'new'
-
   @override
   bool get wantKeepAlive => true;
 
@@ -32,69 +29,17 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // // Customer Type Selection
-          // _buildCustomerTypeSelection(s),
-          // SizedBox(height: 20.h),
-          _buildExistingCustomerSelection(s),
-          // Customer Selection Content
-          if (_customerType == 'existing')
-            ...[]
-          else ...[
-            _buildNewCustomerForm(s),
-          ],
+          // Customer Selection Section
+          _buildCustomerSelectionSection(s),
+          SizedBox(height: 20.h),
+          // Manual Form Entry
+          _buildNewCustomerForm(s),
         ],
       ),
     );
   }
 
-  Widget _buildCustomerTypeSelection(S s) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          s.customerType,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-        ),
-        SizedBox(height: 12.h),
-        Row(
-          children: [
-            Expanded(
-              child: RadioListTile<String>(
-                title: Text(s.selectCustomer),
-                value: 'existing',
-                groupValue: _customerType,
-                onChanged: (value) {
-                  setState(() {
-                    _customerType = value!;
-                  });
-                },
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-            Expanded(
-              child: RadioListTile<String>(
-                title: Text(s.addNewCustomer),
-                value: 'new',
-                groupValue: _customerType,
-                onChanged: (value) {
-                  setState(() {
-                    _customerType = value!;
-                  });
-                },
-                contentPadding: EdgeInsets.zero,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildExistingCustomerSelection(S s) {
+  Widget _buildCustomerSelectionSection(S s) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -107,10 +52,8 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
           ),
         ),
         SizedBox(height: 12.h),
-
         // Selected Customer Display
-        if (widget.formController.selectedCustomerId != null ||
-            widget.formController.selectedCustomerName != null)
+        if (widget.formController.selectedCustomerId != null)
           _buildSelectedCustomerCard(s)
         else
           _buildSelectCustomerButton(s),
@@ -197,6 +140,29 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
     );
   }
 
+  void _showCustomerSelectionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => CustomerSelectionDialog(
+        selectedCustomer: null,
+        onCustomerSelected: (customer) {
+          widget.formController.onCustomerSelected(
+            customer.id ?? 0,
+            customer.name ?? '',
+            customer.email ?? '',
+            customer.phone ?? '',
+            customer.address ?? '',
+          );
+          setState(() {});
+        },
+      ),
+    ).then((value) {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
   Widget _buildNewCustomerForm(S s) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -214,7 +180,12 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
         // Customer Name
         TextFormField(
           controller: widget.formController.customerNameController,
+          onChanged: (_) {
+            widget.formController.notifyCustomerFieldsChanged();
+          },
           decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.white,
             labelText: s.customerName,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -230,7 +201,12 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
         // Customer Email
         TextFormField(
           controller: widget.formController.customerEmailController,
+          onChanged: (_) {
+            widget.formController.notifyCustomerFieldsChanged();
+          },
           decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.white,
             labelText: s.customerEmail,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -247,7 +223,12 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
         // Customer Phone
         TextFormField(
           controller: widget.formController.customerPhoneController,
+          onChanged: (_) {
+            widget.formController.notifyCustomerFieldsChanged();
+          },
           decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.white,
             labelText: s.customerPhone,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -260,67 +241,7 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
           keyboardType: TextInputType.phone,
         ),
         SizedBox(height: 16.h),
-
-        // Customer Address
-        TextFormField(
-          controller: widget.formController.customerAddressController,
-          decoration: InputDecoration(
-            labelText: s.customerAddress,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
-            ),
-          ),
-          maxLines: 2,
-        ),
       ],
-    );
-  }
-
-  void _showCustomerSelectionDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => CustomerSelectionDialog(
-        selectedCustomer: null,
-        onCustomerSelected: (customer) {
-          widget.formController.onCustomerSelected(
-            customer.id ?? 0,
-            customer.name ?? '',
-            customer.email ?? '',
-            customer.phone ?? '',
-            customer.address ?? '',
-          );
-          setState(() {});
-        },
-        onAddNewCustomer: () {
-          Navigator.pop(context);
-          _showAddCustomerDialog();
-        },
-      ),
-    ).then((value) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
-
-  void _showAddCustomerDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AddCustomerDialog(
-        onCustomerCreated: (customer) {
-          widget.formController.onNewCustomerAdded(
-            customer.name ?? '',
-            customer.email ?? '',
-            customer.phone ?? '',
-            customer.address ?? '',
-          );
-          setState(() {});
-        },
-      ),
     );
   }
 }

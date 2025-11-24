@@ -2,11 +2,14 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/printing/core/models/invoice_language.dart';
+import 'package:invotek/features/printing/core/services/logo_cache_service.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 /// ===============================================================
@@ -22,7 +25,6 @@ class TaxInvoiceItem {
   final int qty;
   final double unitPrice;
   final double taxPercent;
-
 
   TaxInvoiceItem({
     this.nameAr,
@@ -81,6 +83,7 @@ class TaxInvoiceData {
   final String invoiceType; // 'income' or 'general'
   final String currencySymbolAr;
   final String currencySymbolEn;
+  final String? companyLogoUrl;
 
   TaxInvoiceData({
     required this.invoiceNumber,
@@ -104,12 +107,15 @@ class TaxInvoiceData {
     required this.invoiceType,
     required this.currencySymbolAr,
     required this.currencySymbolEn,
+    this.companyLogoUrl,
   });
 
   static TaxInvoiceData fromInvoice(
     InvoiceModel invoice, {
-    String currencySymbolAr = 'د.ع',
+    String currencySymbolAr = 'د.أ',
     String currencySymbolEn = 'JOD',
+    String? companyLogoUrl,
+    String? companyName,
   }) {
     return TaxInvoiceData(
       invoiceNumber: invoice.invoiceNumber.toString(),
@@ -122,18 +128,23 @@ class TaxInvoiceData {
       items:
           invoice.items
               ?.where((e) {
-                final qty = int.tryParse(e.quantity ?? '0') ?? 0;
+                // Parse as double first to handle "1.00" format, then convert to int
+                final qtyDouble = double.tryParse(e.quantity ?? '0') ?? 0.0;
+                final qty = qtyDouble.toInt();
                 return qty > 0; // فلترة العناصر التي كميةها أكبر من 0
               })
-              .map(
-                (e) => TaxInvoiceItem(
+              .map((e) {
+                // Parse as double first to handle "1.00" format, then convert to int
+                final qtyDouble = double.tryParse(e.quantity ?? '0') ?? 0.0;
+                final qty = qtyDouble.toInt();
+                return TaxInvoiceItem(
                   nameAr: e.name,
                   nameEn: e.name,
-                  qty: int.tryParse(e.quantity ?? '0') ?? 0,
+                  qty: qty,
                   unitPrice: double.tryParse(e.price ?? '0') ?? 0,
                   taxPercent: double.tryParse(e.taxPercent ?? '0') ?? 0,
-                ),
-              )
+                );
+              })
               .toList() ??
           [],
       subtotal: double.tryParse(invoice.subtotal ?? '0') ?? 0,
@@ -141,11 +152,12 @@ class TaxInvoiceData {
       discount: double.tryParse(invoice.discount ?? '0') ?? 0,
       grandTotal: double.tryParse(invoice.total ?? '0') ?? 0,
       notes: invoice.description,
-      companyName: 'Invotek',
+      companyName: companyName ?? 'Invotek',
       qrCode: invoice.qrCode,
       invoiceType: invoice.invoiceType ?? 'general',
       currencySymbolAr: currencySymbolAr,
       currencySymbolEn: currencySymbolEn,
+      companyLogoUrl: companyLogoUrl,
     );
   }
 }
@@ -209,8 +221,139 @@ class TaxInvoiceRenderer {
     return '$cleaned $currencySymbol';
   }
 
-  /// Load logo image from assets
-  static Future<ui.Image?> _loadLogoImage() async {
+  /// Load logo image from company URL with caching and fallback to assets
+  ///
+  /// Features:
+  /// - Checks cache first for better performance
+  /// - Retries failed URL loads (configurable)
+  /// - Falls back to local asset if URL fails
+  /// - Provides status updates via callback
+  /// - Detailed logging for debugging
+  static Future<ui.Image?> loadCompanyLogo(
+    String? logoUrl, {
+    Function(String message, bool isError)? onStatusUpdate,
+    int maxRetries = 2,
+  }) async {
+    final startTime = DateTime.now();
+
+    // Check cache first
+    if (logoUrl != null && logoUrl.isNotEmpty) {
+      try {
+        // Import cache service at top of file
+        final cache = LogoCacheService();
+        final cachedLogo = cache.getCachedLogo(logoUrl);
+
+        if (cachedLogo != null) {
+          final loadTime = DateTime.now().difference(startTime);
+          print('✓ Logo loaded from cache in ${loadTime.inMilliseconds}ms');
+          onStatusUpdate?.call('Logo loaded from cache', false);
+          return cachedLogo;
+        }
+      } catch (e) {
+        print('⚠ Cache check failed: $e');
+        // Continue to URL loading
+      }
+    }
+
+    // Try to load from URL with retry mechanism
+    if (logoUrl != null && logoUrl.isNotEmpty) {
+      for (int attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          print(
+            '→ Attempting to load logo from URL (attempt $attempt/$maxRetries)',
+          );
+          print('  URL: $logoUrl');
+          onStatusUpdate?.call(
+            attempt == 1
+                ? 'Loading company logo...'
+                : 'Retrying logo load (attempt $attempt)...',
+            false,
+          );
+
+          final dio = Dio();
+          dio.options.connectTimeout = const Duration(seconds: 5);
+          dio.options.receiveTimeout = const Duration(seconds: 5);
+
+          final response = await dio.get<Uint8List>(
+            logoUrl,
+            options: Options(responseType: ResponseType.bytes),
+          );
+
+          if (response.data != null && response.data!.isNotEmpty) {
+            print('  Response size: ${response.data!.length} bytes');
+
+            // Decode image
+            final codec = await ui.instantiateImageCodec(response.data!);
+            final frame = await codec.getNextFrame();
+            final image = frame.image;
+
+            // Cache the loaded image
+            try {
+              final cache = LogoCacheService();
+              cache.cacheLogo(logoUrl, image);
+            } catch (e) {
+              print('⚠ Failed to cache logo: $e');
+              // Continue anyway, caching is not critical
+            }
+
+            final loadTime = DateTime.now().difference(startTime);
+            print(
+              '✓ Company logo loaded successfully from URL in ${loadTime.inMilliseconds}ms',
+            );
+            print('  Image size: ${image.width}x${image.height}');
+            onStatusUpdate?.call('Company logo loaded successfully', false);
+
+            return image;
+          } else {
+            print('⚠ Empty response data from URL');
+          }
+        } catch (e) {
+          print(
+            '✗ Failed to load logo from URL (attempt $attempt/$maxRetries): $e',
+          );
+
+          // If this was the last attempt, notify and fallback
+          if (attempt == maxRetries) {
+            print(
+              '→ All retry attempts exhausted, falling back to default logo',
+            );
+            onStatusUpdate?.call(
+              'Failed to load company logo, using default logo',
+              true,
+            );
+          } else {
+            // Wait before retry (exponential backoff)
+            final waitTime = Duration(milliseconds: 500 * attempt);
+            print('  Waiting ${waitTime.inMilliseconds}ms before retry...');
+            await Future.delayed(waitTime);
+          }
+        }
+      }
+    } else {
+      print('→ No logo URL provided, using default logo');
+    }
+
+    // Fallback to default logo from assets
+    print('→ Loading default logo from assets');
+    onStatusUpdate?.call('Loading default logo', false);
+    final defaultLogo = await _loadDefaultLogoImage();
+
+    if (defaultLogo != null) {
+      final loadTime = DateTime.now().difference(startTime);
+      print(
+        '✓ Default logo loaded successfully in ${loadTime.inMilliseconds}ms',
+      );
+      print('  Image size: ${defaultLogo.width}x${defaultLogo.height}');
+    } else {
+      print('✗ Failed to load default logo from assets');
+      onStatusUpdate?.call('Failed to load any logo', true);
+    }
+
+    return defaultLogo;
+  }
+
+  /// Load default logo image from assets
+  static Future<ui.Image?> _loadDefaultLogoImage() async {
     try {
       final ByteData data = await rootBundle.load(
         'assets/images/Invotek-Logo-Final-01.png',
@@ -220,6 +363,7 @@ class TaxInvoiceRenderer {
       final frame = await codec.getNextFrame();
       return frame.image;
     } catch (e) {
+      print('✗ Error loading default logo: $e');
       // Return null if logo cannot be loaded
       return null;
     }
@@ -258,6 +402,8 @@ class TaxInvoiceRenderer {
     required TaxInvoiceStyleConfig style,
     required InvoiceLanguage language,
     int maxSliceHeightPx = 900,
+    Function(double progress)? onProgress,
+    ui.Image? logoImage,
   }) async {
     final margin = 12.0;
     final contentWidth = paperWidthPx.toDouble() - margin * 2;
@@ -278,8 +424,7 @@ class TaxInvoiceRenderer {
       Paint()..color = Colors.white,
     );
 
-    // Load and draw logo
-    final logoImage = await _loadLogoImage();
+    // Draw logo (pre-loaded and passed as parameter)
     if (logoImage != null) {
       final logoSize = math.min(120.0, contentWidth * 0.4);
       final logoOffset = Offset(margin + (contentWidth - logoSize) / 2, y);
@@ -699,7 +844,12 @@ class TaxInvoiceRenderer {
       paperWidthPx,
       y.ceil() + 4, // تقليل المسافة الإضافية في النهاية
     );
-    return _sliceToChunks(image, paperWidthPx, maxSliceHeightPx);
+    return _sliceToChunksWithProgress(
+      image,
+      paperWidthPx,
+      maxSliceHeightPx,
+      onProgress,
+    );
   }
 
   static double _drawGridTable({
@@ -889,10 +1039,25 @@ class TaxInvoiceRenderer {
     int width,
     int maxH,
   ) async {
+    return _sliceToChunksWithProgress(img, width, maxH, null);
+  }
+
+  static Future<List<Uint8List>> _sliceToChunksWithProgress(
+    ui.Image img,
+    int width,
+    int maxH,
+    Function(double progress)? onProgress,
+  ) async {
     final list = <Uint8List>[];
     int y = 0;
-    while (y < img.height) {
-      final h = (y + maxH <= img.height) ? maxH : (img.height - y);
+    final totalHeight = img.height;
+
+    while (y < totalHeight) {
+      // Yield قبل كل عملية ثقيلة
+      await Future.microtask(() {});
+      await SchedulerBinding.instance.endOfFrame;
+
+      final h = (y + maxH <= totalHeight) ? maxH : (totalHeight - y);
       final rec = ui.PictureRecorder();
       final c = Canvas(rec);
       final dst = Rect.fromLTWH(0, 0, width.toDouble(), h.toDouble());
@@ -904,11 +1069,29 @@ class TaxInvoiceRenderer {
       );
       c.drawRect(dst, Paint()..color = Colors.white);
       c.drawImageRect(img, src, dst, Paint());
+
+      // Yield قبل toImage
+      await Future.microtask(() {});
+      await SchedulerBinding.instance.endOfFrame;
+
       final part = await rec.endRecording().toImage(width, h);
+
+      // Yield قبل toByteData
+      await Future.microtask(() {});
+      await SchedulerBinding.instance.endOfFrame;
+
       final png = await part.toByteData(format: ui.ImageByteFormat.png);
       list.add(png!.buffer.asUint8List());
+
       y += h;
+
+      // تحديث التقدم
+      onProgress?.call(y / totalHeight);
+
+      // Yield بعد كل شريحة
+      await Future.microtask(() {});
     }
+
     return list;
   }
 }
@@ -921,6 +1104,8 @@ Future<List<Uint8List>> renderTaxInvoiceToPngChunks({
   required TaxInvoiceStyleConfig style,
   required InvoiceLanguage language,
   int maxSliceHeightPx = 900,
+  Function(double progress)? onProgress,
+  ui.Image? logoImage,
 }) {
   return TaxInvoiceRenderer.render(
     paperWidthPx: paperWidthPx,
@@ -928,5 +1113,7 @@ Future<List<Uint8List>> renderTaxInvoiceToPngChunks({
     style: style,
     maxSliceHeightPx: maxSliceHeightPx,
     language: language,
+    onProgress: onProgress,
+    logoImage: logoImage,
   );
 }

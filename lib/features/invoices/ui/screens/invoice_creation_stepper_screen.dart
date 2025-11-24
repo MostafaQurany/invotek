@@ -193,7 +193,9 @@ class _InvoiceCreationStepperScreenState
                         currentPage,
                         totalPages,
                       ) {
-                        _loading = false;
+                        setState(() {
+                          _loading = false;
+                        });
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(s.invoiceCreatedSuccessfully),
@@ -218,7 +220,9 @@ class _InvoiceCreationStepperScreenState
                         totalPages,
                         error,
                       ) {
-                        _loading = false;
+                        setState(() {
+                          _loading = false;
+                        });
                         SnackBarHelper.showFailureSnackBar(context, error);
                       },
                   orElse: () {},
@@ -402,56 +406,65 @@ class _InvoiceCreationStepperScreenState
   }
 
   Widget _buildNavigationButtons(S s) {
-    return Row(
-      children: [
-        // Cancel/Previous Button
-        Expanded(
-          child: OutlinedButton(
-            onPressed: _currentTabIndex == 0
-                ? () => Navigator.pop(context)
-                : () => _goToPreviousTab(),
-            style: OutlinedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
-              ),
-              side: BorderSide(color: AppColors.grey.withOpacity(0.3)),
-            ),
-            child: Text(
-              _currentTabIndex == 0 ? s.cancel : s.previous,
-              style: TextStyle(
-                color: AppColors.greyDark,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 12.w),
-        // Next Button
-        Expanded(
-          flex: 2,
-          child: FilledButton(
-            onPressed: _isCurrentTabValid() ? () => _goToNextTab() : null,
-            style: FilledButton.styleFrom(
-              backgroundColor: _isCurrentTabValid()
-                  ? AppColors.primary
-                  : AppColors.grey.withOpacity(0.3),
-              foregroundColor: _isCurrentTabValid()
-                  ? AppColors.white
-                  : AppColors.greyDark,
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12.r),
+    return ListenableBuilder(
+      listenable: _formController,
+      builder: (context, _) {
+        final isValid = _isCurrentTabValid();
+        return Row(
+          children: [
+            // Cancel/Previous Button
+            Expanded(
+              child: OutlinedButton(
+                onPressed: _currentTabIndex == 0
+                    ? () => Navigator.pop(context)
+                    : () => _goToPreviousTab(),
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  side: BorderSide(color: AppColors.grey.withOpacity(0.3)),
+                ),
+                child: Text(
+                  _currentTabIndex == 0 ? s.cancel : s.previous,
+                  style: TextStyle(
+                    color: AppColors.greyDark,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
             ),
-            child: Text(
-              s.next,
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+            SizedBox(width: 12.w),
+            // Next Button
+            Expanded(
+              flex: 2,
+              child: FilledButton(
+                onPressed: isValid ? () => _goToNextTab() : null,
+                style: FilledButton.styleFrom(
+                  backgroundColor: isValid
+                      ? AppColors.primary
+                      : AppColors.grey.withOpacity(0.3),
+                  foregroundColor: isValid
+                      ? AppColors.white
+                      : AppColors.greyDark,
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
+                child: Text(
+                  s.next,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -515,12 +528,36 @@ class _InvoiceCreationStepperScreenState
       taxInvoiceType,
     );
 
+    // إذا كان العميل موجوداً: إرسال customer_id فقط
+    // إذا كان عميل جديد: إرسال name, email, phone فقط
+    final isExistingCustomer = _formController.selectedCustomerId != null;
+
     _cubit.createInvoice(
-      customerId: _formController.selectedCustomerId?.toString(),
-      customerName: _formController.selectedCustomerName,
-      customerEmail: _formController.selectedCustomerEmail,
-      customerPhone: _formController.selectedCustomerPhone,
-      customerAddress: _formController.selectedCustomerAddress,
+      customerId: isExistingCustomer
+          ? _formController.selectedCustomerId?.toString()
+          : null,
+      customerName: isExistingCustomer
+          ? null
+          : (_formController.selectedCustomerName?.isNotEmpty == true
+                ? _formController.selectedCustomerName
+                : _formController.customerNameController.text.trim().isNotEmpty
+                ? _formController.customerNameController.text.trim()
+                : null),
+      customerEmail: isExistingCustomer
+          ? null
+          : (_formController.selectedCustomerEmail?.isNotEmpty == true
+                ? _formController.selectedCustomerEmail
+                : _formController.customerEmailController.text.trim().isNotEmpty
+                ? _formController.customerEmailController.text.trim()
+                : null),
+      customerPhone: isExistingCustomer
+          ? null
+          : (_formController.selectedCustomerPhone?.isNotEmpty == true
+                ? _formController.selectedCustomerPhone
+                : _formController.customerPhoneController.text.trim().isNotEmpty
+                ? _formController.customerPhoneController.text.trim()
+                : null),
+      customerAddress: null, // لا يُرسل في أي من الحالتين
       subtotal: _formController.subtotalController.text,
       taxAmount: _formController.taxAmountController.text,
       discount: _formController.discountController.text,
@@ -624,9 +661,7 @@ class _InvoiceCreationStepperScreenState
       case 0: // Basic Info Tab
         return _formController.selectedPaymentMethod.isNotEmpty;
       case 1: // Customer Tab
-        return (_formController.selectedCustomerId != null) ||
-            (_formController.selectedCustomerName != null &&
-                _formController.selectedCustomerName!.isNotEmpty);
+        return _formController.isCustomerStepValid();
       case 2: // Items Tab
         return _formController.items.isNotEmpty;
       case 3: // Summary Tab
@@ -652,9 +687,8 @@ class _InvoiceCreationStepperScreenState
     final s = S.of(context);
     bool isValid = true;
 
-    if (_formController.selectedCustomerId == null &&
-        (_formController.selectedCustomerName == null ||
-            _formController.selectedCustomerName!.isEmpty)) {
+    // Use the same validation logic as isCustomerStepValid()
+    if (!_formController.isCustomerStepValid()) {
       _validationErrors['customer'] = s.customerRequired;
       isValid = false;
     }

@@ -61,6 +61,7 @@ import 'package:invotek/features/settings/data/models/delete_account_request.dar
 import 'package:invotek/features/settings/data/models/delete_account_response.dart';
 import 'package:invotek/features/settings/data/models/profile_models.dart';
 import 'package:invotek/features/settings/data/models/update_profile_request.dart';
+import 'package:invotek/features/settings/data/models/update_company_settings_request.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'api_client.g.dart';
@@ -118,6 +119,11 @@ abstract class ApiClient {
   // Company Settings (read-only)
   @GET(ApiConstants.companySettings)
   Future<CompanySettingsResponse> getCompanySettings();
+
+  @PUT(ApiConstants.companySettings)
+  Future<CompanySettingsResponse> updateCompanySettings(
+    @Body() UpdateCompanySettingsRequest request,
+  );
 
   // Products
   @GET(ApiConstants.products)

@@ -109,10 +109,6 @@ class InvoiceFormController extends ChangeNotifier {
     selectedCustomerPhone = phone;
     selectedCustomerAddress = address;
 
-    customerNameController.text = name;
-    customerEmailController.text = email;
-    customerPhoneController.text = phone;
-    customerAddressController.text = address;
     notifyListeners();
   }
 
@@ -134,8 +130,61 @@ class InvoiceFormController extends ChangeNotifier {
     customerAddressController.text = address;
   }
 
+  // Notify listeners when customer fields change
+  void notifyCustomerFieldsChanged() {
+    notifyListeners();
+  }
+
   // Items Handling
   void addItem(InvoiceItemData item) {
+    // إذا كان العنصر له productId، نتحقق من وجود عنصر بنفس productId
+    if (item.productId != null) {
+      final existingIndex = items.indexWhere(
+        (existingItem) => existingItem.productId == item.productId,
+      );
+
+      if (existingIndex != -1) {
+        // يوجد عنصر بنفس productId، ندمج الكميات
+        final existingItem = items[existingIndex];
+        final existingQty = double.tryParse(existingItem.quantity) ?? 0.0;
+        final newQty = double.tryParse(item.quantity) ?? 0.0;
+        final combinedQty = existingQty + newQty;
+
+        // إعادة حساب القيم بناءً على الكمية المدمجة
+        final price = double.tryParse(existingItem.price) ?? 0.0;
+        final discount = double.tryParse(existingItem.discount) ?? 0.0;
+        final taxPercent = double.tryParse(existingItem.taxPercent) ?? 0.0;
+
+        final subtotal = combinedQty * price;
+        final discountAmount = subtotal * (discount / 100);
+        final afterDiscount = subtotal - discountAmount;
+        final taxAmount = afterDiscount * (taxPercent / 100);
+        final total = afterDiscount + taxAmount;
+
+        // تحديث العنصر الموجود
+        final updatedItem = InvoiceItemData(
+          productId: existingItem.productId,
+          name: existingItem.name,
+          quantity: combinedQty.toStringAsFixed(0),
+          price: existingItem.price,
+          discount: existingItem.discount,
+          taxPercent: existingItem.taxPercent,
+          taxAmount: taxAmount.toStringAsFixed(2),
+          total: total.toStringAsFixed(2),
+          productName: existingItem.productName,
+          productDescription: existingItem.productDescription,
+          productCategory: existingItem.productCategory,
+          availableQuantity: existingItem.availableQuantity,
+        );
+
+        items[existingIndex] = updatedItem;
+        calculateTotals();
+        notifyListeners();
+        return;
+      }
+    }
+
+    // إذا لم يوجد عنصر بنفس productId أو العنصر لا يحتوي على productId، نضيفه كعنصر جديد
     items.add(item);
     calculateTotals();
     notifyListeners();
@@ -206,8 +255,7 @@ class InvoiceFormController extends ChangeNotifier {
       case 0: // Basic Info
         return selectedAction.isNotEmpty && selectedPaymentMethod.isNotEmpty;
       case 1: // Customer
-        return (selectedCustomerId != null) ||
-            (selectedCustomerName != null && selectedCustomerName!.isNotEmpty);
+        return isCustomerStepValid();
       case 2: // Items
         return items.isNotEmpty;
       case 3: // Summary
@@ -215,6 +263,18 @@ class InvoiceFormController extends ChangeNotifier {
       default:
         return false;
     }
+  }
+
+  // Check if customer step is valid
+  bool isCustomerStepValid() {
+    // If existing customer is selected
+    if (selectedCustomerId != null) {
+      return true;
+    }
+    // If new customer: check if all required fields are filled
+    return customerNameController.text.trim().isNotEmpty &&
+        customerEmailController.text.trim().isNotEmpty &&
+        customerPhoneController.text.trim().isNotEmpty;
   }
 
   // Form Data for API
