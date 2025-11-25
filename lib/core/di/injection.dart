@@ -459,7 +459,7 @@ void _notificationsLayer() {
   );
 
   // Cubit
-  getIt.registerFactory<NotificationsCubit>(
+  getIt.registerLazySingleton<NotificationsCubit>(
     () => NotificationsCubit(
       getAllNotifications: getIt<GetAllNotificationsUseCase>(),
       getNotificationStats: getIt<GetNotificationStatsUseCase>(),

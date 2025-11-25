@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +10,7 @@ import 'package:invotek/generated/l10n.dart';
 /// A card for uploading and displaying company logo
 class LogoUploadCard extends StatelessWidget {
   final String? logoUrl;
+  final String? selectedImagePath;
   final Function(String) onLogoSelected;
   final VoidCallback? onLogoRemoved;
   final bool isLoading;
@@ -15,6 +18,7 @@ class LogoUploadCard extends StatelessWidget {
   const LogoUploadCard({
     super.key,
     this.logoUrl,
+    this.selectedImagePath,
     required this.onLogoSelected,
     this.onLogoRemoved,
     this.isLoading = false,
@@ -64,7 +68,8 @@ class LogoUploadCard extends StatelessWidget {
                 }
               },
             ),
-            if (logoUrl != null && onLogoRemoved != null)
+            if ((logoUrl != null || selectedImagePath != null) &&
+                onLogoRemoved != null)
               ListTile(
                 leading: Icon(Icons.delete, color: AppColors.error),
                 title: Text(
@@ -97,20 +102,8 @@ class LogoUploadCard extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: AppColors.backgroundLight,
                   border: Border.all(color: AppColors.border, width: 2),
-                  image: logoUrl != null
-                      ? DecorationImage(
-                          image: NetworkImage(logoUrl!),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
                 ),
-                child: logoUrl == null
-                    ? Icon(
-                        Icons.business,
-                        size: 50.sp,
-                        color: AppColors.primary,
-                      )
-                    : null,
+                child: _buildLogoImage(),
               ),
               if (isLoading)
                 Positioned.fill(
@@ -162,6 +155,68 @@ class LogoUploadCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  /// بناء صورة الشعار مع أولوية للصورة المحلية
+  /// Build logo image with priority for local selected image
+  Widget _buildLogoImage() {
+    // أولوية 1: الصورة المحلية المختارة
+    if (selectedImagePath != null) {
+      final file = File(selectedImagePath!);
+      if (file.existsSync()) {
+        return ClipOval(
+          child: Image.file(
+            file,
+            fit: BoxFit.cover,
+            width: 100.w,
+            height: 100.w,
+            errorBuilder: (context, error, stackTrace) {
+              return _buildDefaultIcon();
+            },
+          ),
+        );
+      }
+    }
+
+    // أولوية 2: صورة من السيرفر
+    if (logoUrl != null && logoUrl!.isNotEmpty) {
+      return ClipOval(
+        child: Image.network(
+          logoUrl!,
+          fit: BoxFit.cover,
+          width: 100.w,
+          height: 100.w,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+              ),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return _buildDefaultIcon();
+          },
+        ),
+      );
+    }
+
+    // أولوية 3: الأيقونة الافتراضية
+    return _buildDefaultIcon();
+  }
+
+  /// بناء الأيقونة الافتراضية
+  /// Build default icon
+  Widget _buildDefaultIcon() {
+    return Icon(
+      Icons.business,
+      size: 50.sp,
+      color: AppColors.primary,
     );
   }
 }

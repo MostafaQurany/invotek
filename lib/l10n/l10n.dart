@@ -2230,7 +2230,7 @@ abstract class S {
   /// No description provided for @errorOccurred.
   ///
   /// In en, this message translates to:
-  /// **'Error Occurred'**
+  /// **'An error occurred'**
   String get errorOccurred;
 
   /// No description provided for @company.
@@ -11811,7 +11811,7 @@ abstract class S {
   /// No description provided for @comingSoon.
   ///
   /// In en, this message translates to:
-  /// **'This page will be developed soon'**
+  /// **'Coming Soon'**
   String get comingSoon;
 
   /// No description provided for @cannotOpenPackageLink.
@@ -12480,6 +12480,12 @@ abstract class S {
   /// **'Account Security'**
   String get settingsAccountSecurity;
 
+  /// No description provided for @settingsAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account Settings'**
+  String get settingsAccount;
+
   /// No description provided for @settingsProfile.
   ///
   /// In en, this message translates to:
@@ -12581,6 +12587,546 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Not specified'**
   String get notSpecified;
+
+  /// No description provided for @settingsUnsavedChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Unsaved Changes'**
+  String get settingsUnsavedChanges;
+
+  /// No description provided for @settingsDiscardChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'You have unsaved changes. Are you sure you want to discard them?'**
+  String get settingsDiscardChanges;
+
+  /// No description provided for @settingsDiscard.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get settingsDiscard;
+
+  /// No description provided for @pleaseEnterMerchantCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter merchant code'**
+  String get pleaseEnterMerchantCode;
+
+  /// No description provided for @pleaseSelectInvoiceType.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select invoice type'**
+  String get pleaseSelectInvoiceType;
+
+  /// No description provided for @aboutUs.
+  ///
+  /// In en, this message translates to:
+  /// **'About Us'**
+  String get aboutUs;
+
+  /// No description provided for @aboutUsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Invotek is a comprehensive invoice management system designed to help businesses manage their invoicing needs efficiently.'**
+  String get aboutUsDescription;
+
+  /// No description provided for @appInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'App Information'**
+  String get appInformation;
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'App Name'**
+  String get appName;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
+
+  /// No description provided for @buildNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Build Number'**
+  String get buildNumber;
+
+  /// No description provided for @packageName.
+  ///
+  /// In en, this message translates to:
+  /// **'Package Name'**
+  String get packageName;
+
+  /// No description provided for @copyright.
+  ///
+  /// In en, this message translates to:
+  /// **'Copyright'**
+  String get copyright;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Share App'**
+  String get shareApp;
+
+  /// No description provided for @contactUs.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get contactUs;
+
+  /// No description provided for @contactForm.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Form'**
+  String get contactForm;
+
+  /// No description provided for @subjectRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject is required'**
+  String get subjectRequired;
+
+  /// No description provided for @messageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Message is required'**
+  String get messageRequired;
+
+  /// No description provided for @sendMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Message'**
+  String get sendMessage;
+
+  /// No description provided for @quickContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Contact'**
+  String get quickContact;
+
+  /// No description provided for @whatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get whatsapp;
+
+  /// No description provided for @contactViaWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact us via WhatsApp'**
+  String get contactViaWhatsApp;
+
+  /// No description provided for @emailOpened.
+  ///
+  /// In en, this message translates to:
+  /// **'Email app opened'**
+  String get emailOpened;
+
+  /// No description provided for @cannotOpenEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open email app'**
+  String get cannotOpenEmail;
+
+  /// No description provided for @cannotOpenPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open phone app'**
+  String get cannotOpenPhone;
+
+  /// No description provided for @cannotOpenWhatsApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot open WhatsApp'**
+  String get cannotOpenWhatsApp;
+
+  /// No description provided for @privacyPolicyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicyTitle;
+
+  /// No description provided for @privacyPolicyLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: {date}'**
+  String privacyPolicyLastUpdated(Object date);
+
+  /// No description provided for @privacyPolicyLastUpdatedPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated: January 2024'**
+  String get privacyPolicyLastUpdatedPlaceholder;
+
+  /// No description provided for @privacyPolicyIntroductionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Introduction'**
+  String get privacyPolicyIntroductionTitle;
+
+  /// No description provided for @privacyPolicyIntroductionContent.
+  ///
+  /// In en, this message translates to:
+  /// **'This Privacy Policy describes how Invotek collects, uses, and protects your personal information when you use our application.'**
+  String get privacyPolicyIntroductionContent;
+
+  /// No description provided for @privacyPolicyDataCollectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Collection'**
+  String get privacyPolicyDataCollectionTitle;
+
+  /// No description provided for @privacyPolicyDataCollectionContent.
+  ///
+  /// In en, this message translates to:
+  /// **'We collect information that you provide directly to us, such as when you create an account, make a purchase, or contact us for support.'**
+  String get privacyPolicyDataCollectionContent;
+
+  /// No description provided for @privacyPolicyDataUsageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Usage'**
+  String get privacyPolicyDataUsageTitle;
+
+  /// No description provided for @privacyPolicyDataUsageContent.
+  ///
+  /// In en, this message translates to:
+  /// **'We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.'**
+  String get privacyPolicyDataUsageContent;
+
+  /// No description provided for @privacyPolicyDataSecurityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Security'**
+  String get privacyPolicyDataSecurityTitle;
+
+  /// No description provided for @privacyPolicyDataSecurityContent.
+  ///
+  /// In en, this message translates to:
+  /// **'We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.'**
+  String get privacyPolicyDataSecurityContent;
+
+  /// No description provided for @privacyPolicyUserRightsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rights'**
+  String get privacyPolicyUserRightsTitle;
+
+  /// No description provided for @privacyPolicyUserRightsContent.
+  ///
+  /// In en, this message translates to:
+  /// **'You have the right to access, update, or delete your personal information at any time through your account settings.'**
+  String get privacyPolicyUserRightsContent;
+
+  /// No description provided for @privacyPolicyContactTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Us'**
+  String get privacyPolicyContactTitle;
+
+  /// No description provided for @privacyPolicyContactContent.
+  ///
+  /// In en, this message translates to:
+  /// **'If you have any questions about this Privacy Policy, please contact us at support@invotik.com.'**
+  String get privacyPolicyContactContent;
+
+  /// No description provided for @faq.
+  ///
+  /// In en, this message translates to:
+  /// **'FAQ'**
+  String get faq;
+
+  /// No description provided for @searchFAQs.
+  ///
+  /// In en, this message translates to:
+  /// **'Search FAQs'**
+  String get searchFAQs;
+
+  /// No description provided for @noFAQsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No FAQs found'**
+  String get noFAQsFound;
+
+  /// No description provided for @tryDifferentSearchTerm.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search term'**
+  String get tryDifferentSearchTerm;
+
+  /// No description provided for @faqQuestion1.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I create an invoice?'**
+  String get faqQuestion1;
+
+  /// No description provided for @faqAnswer1.
+  ///
+  /// In en, this message translates to:
+  /// **'To create an invoice, go to the Invoices section and tap the \'+\' button. Fill in the required information and save.'**
+  String get faqAnswer1;
+
+  /// No description provided for @faqQuestion2.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I change my password?'**
+  String get faqQuestion2;
+
+  /// No description provided for @faqAnswer2.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Settings > Account Settings > Change Password. Enter your current password and new password.'**
+  String get faqAnswer2;
+
+  /// No description provided for @faqQuestion3.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I add a customer?'**
+  String get faqQuestion3;
+
+  /// No description provided for @faqAnswer3.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Customers section and tap the \'+\' button. Fill in the customer information and save.'**
+  String get faqAnswer3;
+
+  /// No description provided for @faqQuestion4.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I print an invoice?'**
+  String get faqQuestion4;
+
+  /// No description provided for @faqAnswer4.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoice details and tap the print button. Select your printer and print.'**
+  String get faqAnswer4;
+
+  /// No description provided for @faqQuestion5.
+  ///
+  /// In en, this message translates to:
+  /// **'How do I contact support?'**
+  String get faqQuestion5;
+
+  /// No description provided for @faqAnswer5.
+  ///
+  /// In en, this message translates to:
+  /// **'You can contact support through the Contact Us screen in Settings or email us at support@invotik.com.'**
+  String get faqAnswer5;
+
+  /// No description provided for @languageSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Settings'**
+  String get languageSettings;
+
+  /// No description provided for @selectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguage;
+
+  /// No description provided for @arabicDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'العربية'**
+  String get arabicDescription;
+
+  /// No description provided for @englishDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishDescription;
+
+  /// No description provided for @languageChangeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Changing the language will restart the app to apply the changes.'**
+  String get languageChangeNote;
+
+  /// No description provided for @notificationsSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications Settings'**
+  String get notificationsSettings;
+
+  /// No description provided for @notificationTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Types'**
+  String get notificationTypes;
+
+  /// No description provided for @generalNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'General Notifications'**
+  String get generalNotifications;
+
+  /// No description provided for @generalNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive general app notifications'**
+  String get generalNotificationsDescription;
+
+  /// No description provided for @invoiceNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Notifications'**
+  String get invoiceNotifications;
+
+  /// No description provided for @invoiceNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive notifications about invoices'**
+  String get invoiceNotificationsDescription;
+
+  /// No description provided for @paymentNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Notifications'**
+  String get paymentNotifications;
+
+  /// No description provided for @paymentNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive notifications about payments'**
+  String get paymentNotificationsDescription;
+
+  /// No description provided for @systemNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'System Notifications'**
+  String get systemNotifications;
+
+  /// No description provided for @systemNotificationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive system and update notifications'**
+  String get systemNotificationsDescription;
+
+  /// No description provided for @notificationsSettingsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'You can close and open the general notifications.'**
+  String get notificationsSettingsNote;
+
+  /// No description provided for @dataStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & Storage'**
+  String get dataStorage;
+
+  /// No description provided for @storageInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage Information'**
+  String get storageInformation;
+
+  /// No description provided for @cacheSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Size'**
+  String get cacheSize;
+
+  /// No description provided for @dataSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Data Size'**
+  String get dataSize;
+
+  /// No description provided for @refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get refresh;
+
+  /// No description provided for @clearCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Cache'**
+  String get clearCache;
+
+  /// No description provided for @clearCacheDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear temporary files and cached data to free up storage space.'**
+  String get clearCacheDescription;
+
+  /// No description provided for @clearCacheConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear the cache? This will remove temporary files but not your personal data.'**
+  String get clearCacheConfirmation;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @cacheClearedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache cleared successfully'**
+  String get cacheClearedSuccessfully;
+
+  /// No description provided for @errorClearingCache.
+  ///
+  /// In en, this message translates to:
+  /// **'Error clearing cache'**
+  String get errorClearingCache;
+
+  /// No description provided for @clearAllData.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear All Data'**
+  String get clearAllData;
+
+  /// No description provided for @clearAllDataConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to clear all data? This will remove all cached files and preferences. This action cannot be undone.'**
+  String get clearAllDataConfirmation;
+
+  /// No description provided for @clearAllDataDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning: This will delete all cached data and preferences. Your account data will remain safe.'**
+  String get clearAllDataDescription;
+
+  /// No description provided for @allDataClearedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'All data cleared successfully'**
+  String get allDataClearedSuccessfully;
+
+  /// No description provided for @errorClearingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Error clearing data'**
+  String get errorClearingData;
+
+  /// No description provided for @helpSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support'**
+  String get helpSupport;
+
+  /// No description provided for @legal.
+  ///
+  /// In en, this message translates to:
+  /// **'Legal'**
+  String get legal;
+
+  /// No description provided for @termsOfService.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

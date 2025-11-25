@@ -44,6 +44,12 @@ import 'package:invotek/features/settings/ui/screens/delete_account_screen.dart'
 import 'package:invotek/features/settings/ui/screens/edit_profile_screen.dart';
 import 'package:invotek/features/settings/ui/screens/profile_settings_screen.dart';
 import 'package:invotek/features/settings/ui/screens/settings_screen.dart';
+import 'package:invotek/features/settings/ui/screens/about_contact_screen.dart';
+import 'package:invotek/features/settings/ui/screens/privacy_policy_screen.dart';
+import 'package:invotek/features/settings/ui/screens/faq_screen.dart';
+import 'package:invotek/features/settings/ui/screens/language_settings_screen.dart';
+import 'package:invotek/features/settings/ui/screens/notifications_settings_screen.dart';
+import 'package:invotek/features/settings/ui/screens/data_storage_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/add_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/edit_user_screen.dart';
 import 'package:invotek/features/users_and_permissions/ui/screens/manage_permissions_screen.dart';
@@ -138,13 +144,24 @@ class AppRoutes {
   static const String notificationsListRoute = '/notifications/list';
   static const String notificationDetailsRoute = '/notifications/details';
 
+  // Settings routes
+  static const String aboutUsRoute = '/settings/about-us';
+  static const String contactUsRoute = '/settings/contact-us';
+  static const String privacyPolicyRoute = '/settings/privacy-policy';
+  static const String faqRoute = '/settings/faq';
+  static const String languageSettingsRoute = '/settings/language';
+  static const String notificationsSettingsRoute = '/settings/notifications';
+  static const String dataStorageRoute = '/settings/data-storage';
+
   static Map<String, WidgetBuilder> get routes => {
     authRoute: (context) => const AuthScreen(),
     forgetPassword: (context) => const ForgetPasswordScreen(),
     verifyOtp: (context) {
       final email = ModalRoute.of(context)?.settings.arguments as String?;
       if (email == null) {
-        return Scaffold(body: Center(child: Text(S.of(context).emailIsRequired)));
+        return Scaffold(
+          body: Center(child: Text(S.of(context).emailIsRequired)),
+        );
       }
       return VerifyOtpScreen(email: email);
     },
@@ -324,7 +341,9 @@ class AppRoutes {
       case subscriptionPackagesRoute:
         return MaterialPageRoute(
           builder: (context) => Scaffold(
-            appBar: AppBar(title: Text(S.of(context).subscriptionRequiredAction)),
+            appBar: AppBar(
+              title: Text(S.of(context).subscriptionRequiredAction),
+            ),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -356,10 +375,33 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => BlocProvider.value(
             value: getIt<NotificationsCubit>(),
-            child: NotificationDetailsScreen(
-              notification: notification,
-            ),
+            child: NotificationDetailsScreen(notification: notification),
           ),
+        );
+
+      // Settings routes
+      case aboutUsRoute:
+      case contactUsRoute:
+        return MaterialPageRoute(
+          builder: (context) => const AboutContactScreen(),
+        );
+      case privacyPolicyRoute:
+        return MaterialPageRoute(
+          builder: (context) => const PrivacyPolicyScreen(),
+        );
+      case faqRoute:
+        return MaterialPageRoute(builder: (context) => const FAQScreen());
+      case languageSettingsRoute:
+        return MaterialPageRoute(
+          builder: (context) => const LanguageSettingsScreen(),
+        );
+      case notificationsSettingsRoute:
+        return MaterialPageRoute(
+          builder: (context) => const NotificationsSettingsScreen(),
+        );
+      case dataStorageRoute:
+        return MaterialPageRoute(
+          builder: (context) => const DataStorageScreen(),
         );
 
       default:

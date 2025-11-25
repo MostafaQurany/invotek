@@ -17,6 +17,7 @@ import 'package:invotek/features/notifications/domain/usecases/get_single_notifi
 import 'package:invotek/features/notifications/domain/usecases/mark_all_notifications_as_read_usecase.dart';
 import 'package:invotek/features/notifications/domain/usecases/mark_notification_as_read_usecase.dart';
 import 'package:invotek/features/notifications/ui/cubit/notifications_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
   final GetAllNotificationsUseCase _getAllNotifications;
@@ -46,6 +47,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   bool _isLoadingStats = false;
   DateTime? _lastStatsLoadTime;
   static const Duration _statsCacheDuration = Duration(minutes: 1);
+  bool _isPollingEnabled = true;
 
   NotificationsCubit({
     required GetAllNotificationsUseCase getAllNotifications,
@@ -63,10 +65,26 @@ class NotificationsCubit extends Cubit<NotificationsState> {
        _deleteNotification = deleteNotification,
        _clearReadNotifications = clearReadNotifications,
        super(const NotificationsState.initial()) {
-    _startPolling();
+    _loadPollingSetting();
+  }
+
+  Future<void> _loadPollingSetting() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      _isPollingEnabled = prefs.getBool('notifications_enabled') ?? true;
+      if (_isPollingEnabled) {
+        _startPolling();
+      }
+    } catch (e) {
+      // Default to enabled if error occurs
+      _isPollingEnabled = true;
+      _startPolling();
+    }
   }
 
   void _startPolling() {
+    if (!_isPollingEnabled) return;
+    
     _pollingTimer?.cancel();
     _pollingTimer = Timer.periodic(
       const Duration(minutes: 2),
@@ -74,10 +92,29 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
   }
 
+  void startPolling() {
+    _isPollingEnabled = true;
+    _startPolling();
+  }
+
+  void stopPolling() {
+    _isPollingEnabled = false;
+    _pollingTimer?.cancel();
+    _pollingTimer = null;
+  }
+
   Future<void> _checkForNewNotifications() async {
+    if (!_isPollingEnabled) return;
     await loadNotificationStats(forceRefresh: false);
   }
 
+  void togglePolling(bool value) {
+    if (value) {
+      startPolling();
+    } else {
+      stopPolling();
+    }
+  }
   Future<void> loadNotifications({
     bool isRefresh = false,
     String? search,

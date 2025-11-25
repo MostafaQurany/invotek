@@ -3144,10 +3144,10 @@ class S {
     return Intl.message('Edit', name: 'edit', desc: '', args: []);
   }
 
-  /// `Error Occurred`
+  /// `An error occurred`
   String get errorOccurred {
     return Intl.message(
-      'Error Occurred',
+      'An error occurred',
       name: 'errorOccurred',
       desc: '',
       args: [],
@@ -7515,6 +7515,11 @@ class S {
   /// `Draft`
   String get statusDraft {
     return Intl.message('Draft', name: 'statusDraft', desc: '', args: []);
+  }
+
+  /// `Sent`
+  String get statusSent {
+    return Intl.message('Sent', name: 'statusSent', desc: '', args: []);
   }
 
   /// `Item Details`
@@ -17717,14 +17722,9 @@ class S {
     );
   }
 
-  /// `This page will be developed soon`
+  /// `Coming Soon`
   String get comingSoon {
-    return Intl.message(
-      'This page will be developed soon',
-      name: 'comingSoon',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Coming Soon', name: 'comingSoon', desc: '', args: []);
   }
 
   /// `Cannot open package link`
@@ -18679,22 +18679,12 @@ class S {
 
   /// `Phone`
   String get settingsPhone {
-    return Intl.message(
-      'Phone',
-      name: 'settingsPhone',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Phone', name: 'settingsPhone', desc: '', args: []);
   }
 
   /// `Address`
   String get settingsAddress {
-    return Intl.message(
-      'Address',
-      name: 'settingsAddress',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Address', name: 'settingsAddress', desc: '', args: []);
   }
 
   /// `Active`
@@ -18749,12 +18739,7 @@ class S {
 
   /// `Cancel`
   String get settingsCancel {
-    return Intl.message(
-      'Cancel',
-      name: 'settingsCancel',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Cancel', name: 'settingsCancel', desc: '', args: []);
   }
 
   /// `Account Security`
@@ -18767,14 +18752,19 @@ class S {
     );
   }
 
-  /// `Profile`
-  String get settingsProfile {
+  /// `Account Settings`
+  String get settingsAccount {
     return Intl.message(
-      'Profile',
-      name: 'settingsProfile',
+      'Account Settings',
+      name: 'settingsAccount',
       desc: '',
       args: [],
     );
+  }
+
+  /// `Profile`
+  String get settingsProfile {
+    return Intl.message('Profile', name: 'settingsProfile', desc: '', args: []);
   }
 
   /// `Change Password`
@@ -18909,22 +18899,12 @@ class S {
 
   /// `Printer`
   String get settingsPrinter {
-    return Intl.message(
-      'Printer',
-      name: 'settingsPrinter',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Printer', name: 'settingsPrinter', desc: '', args: []);
   }
 
   /// `Manage`
   String get settingsManage {
-    return Intl.message(
-      'Manage',
-      name: 'settingsManage',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Manage', name: 'settingsManage', desc: '', args: []);
   }
 
   /// `Not specified`
@@ -18937,11 +18917,821 @@ class S {
     );
   }
 
-  /// `Sent`
-  String get statusSent {
+  /// `Unsaved Changes`
+  String get settingsUnsavedChanges {
     return Intl.message(
-      'Sent',
-      name: 'statusSent',
+      'Unsaved Changes',
+      name: 'settingsUnsavedChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have unsaved changes. Are you sure you want to discard them?`
+  String get settingsDiscardChanges {
+    return Intl.message(
+      'You have unsaved changes. Are you sure you want to discard them?',
+      name: 'settingsDiscardChanges',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Discard`
+  String get settingsDiscard {
+    return Intl.message('Discard', name: 'settingsDiscard', desc: '', args: []);
+  }
+
+  /// `Please enter merchant code`
+  String get pleaseEnterMerchantCode {
+    return Intl.message(
+      'Please enter merchant code',
+      name: 'pleaseEnterMerchantCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select invoice type`
+  String get pleaseSelectInvoiceType {
+    return Intl.message(
+      'Please select invoice type',
+      name: 'pleaseSelectInvoiceType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About Us`
+  String get aboutUs {
+    return Intl.message('About Us', name: 'aboutUs', desc: '', args: []);
+  }
+
+  /// `Invotek is a comprehensive invoice management system designed to help businesses manage their invoicing needs efficiently.`
+  String get aboutUsDescription {
+    return Intl.message(
+      'Invotek is a comprehensive invoice management system designed to help businesses manage their invoicing needs efficiently.',
+      name: 'aboutUsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Information`
+  String get appInformation {
+    return Intl.message(
+      'App Information',
+      name: 'appInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Name`
+  String get appName {
+    return Intl.message('App Name', name: 'appName', desc: '', args: []);
+  }
+
+  /// `Version`
+  String get version {
+    return Intl.message('Version', name: 'version', desc: '', args: []);
+  }
+
+  /// `Build Number`
+  String get buildNumber {
+    return Intl.message(
+      'Build Number',
+      name: 'buildNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package Name`
+  String get packageName {
+    return Intl.message(
+      'Package Name',
+      name: 'packageName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copyright`
+  String get copyright {
+    return Intl.message('Copyright', name: 'copyright', desc: '', args: []);
+  }
+
+  /// `Share App`
+  String get shareApp {
+    return Intl.message('Share App', name: 'shareApp', desc: '', args: []);
+  }
+
+  /// `Contact Us`
+  String get contactUs {
+    return Intl.message('Contact Us', name: 'contactUs', desc: '', args: []);
+  }
+
+  /// `Contact Form`
+  String get contactForm {
+    return Intl.message(
+      'Contact Form',
+      name: 'contactForm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subject is required`
+  String get subjectRequired {
+    return Intl.message(
+      'Subject is required',
+      name: 'subjectRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Message is required`
+  String get messageRequired {
+    return Intl.message(
+      'Message is required',
+      name: 'messageRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Message`
+  String get sendMessage {
+    return Intl.message(
+      'Send Message',
+      name: 'sendMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Contact`
+  String get quickContact {
+    return Intl.message(
+      'Quick Contact',
+      name: 'quickContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `WhatsApp`
+  String get whatsapp {
+    return Intl.message('WhatsApp', name: 'whatsapp', desc: '', args: []);
+  }
+
+  /// `Contact us via WhatsApp`
+  String get contactViaWhatsApp {
+    return Intl.message(
+      'Contact us via WhatsApp',
+      name: 'contactViaWhatsApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email app opened`
+  String get emailOpened {
+    return Intl.message(
+      'Email app opened',
+      name: 'emailOpened',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open email app`
+  String get cannotOpenEmail {
+    return Intl.message(
+      'Cannot open email app',
+      name: 'cannotOpenEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open phone app`
+  String get cannotOpenPhone {
+    return Intl.message(
+      'Cannot open phone app',
+      name: 'cannotOpenPhone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cannot open WhatsApp`
+  String get cannotOpenWhatsApp {
+    return Intl.message(
+      'Cannot open WhatsApp',
+      name: 'cannotOpenWhatsApp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Privacy Policy`
+  String get privacyPolicyTitle {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacyPolicyTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last updated: {date}`
+  String privacyPolicyLastUpdated(Object date) {
+    return Intl.message(
+      'Last updated: $date',
+      name: 'privacyPolicyLastUpdated',
+      desc: '',
+      args: [date],
+    );
+  }
+
+  /// `Last updated: January 2024`
+  String get privacyPolicyLastUpdatedPlaceholder {
+    return Intl.message(
+      'Last updated: January 2024',
+      name: 'privacyPolicyLastUpdatedPlaceholder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Introduction`
+  String get privacyPolicyIntroductionTitle {
+    return Intl.message(
+      'Introduction',
+      name: 'privacyPolicyIntroductionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Privacy Policy describes how Invotek collects, uses, and protects your personal information when you use our application.`
+  String get privacyPolicyIntroductionContent {
+    return Intl.message(
+      'This Privacy Policy describes how Invotek collects, uses, and protects your personal information when you use our application.',
+      name: 'privacyPolicyIntroductionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data Collection`
+  String get privacyPolicyDataCollectionTitle {
+    return Intl.message(
+      'Data Collection',
+      name: 'privacyPolicyDataCollectionTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We collect information that you provide directly to us, such as when you create an account, make a purchase, or contact us for support.`
+  String get privacyPolicyDataCollectionContent {
+    return Intl.message(
+      'We collect information that you provide directly to us, such as when you create an account, make a purchase, or contact us for support.',
+      name: 'privacyPolicyDataCollectionContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data Usage`
+  String get privacyPolicyDataUsageTitle {
+    return Intl.message(
+      'Data Usage',
+      name: 'privacyPolicyDataUsageTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.`
+  String get privacyPolicyDataUsageContent {
+    return Intl.message(
+      'We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.',
+      name: 'privacyPolicyDataUsageContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data Security`
+  String get privacyPolicyDataSecurityTitle {
+    return Intl.message(
+      'Data Security',
+      name: 'privacyPolicyDataSecurityTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.`
+  String get privacyPolicyDataSecurityContent {
+    return Intl.message(
+      'We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.',
+      name: 'privacyPolicyDataSecurityContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your Rights`
+  String get privacyPolicyUserRightsTitle {
+    return Intl.message(
+      'Your Rights',
+      name: 'privacyPolicyUserRightsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have the right to access, update, or delete your personal information at any time through your account settings.`
+  String get privacyPolicyUserRightsContent {
+    return Intl.message(
+      'You have the right to access, update, or delete your personal information at any time through your account settings.',
+      name: 'privacyPolicyUserRightsContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Contact Us`
+  String get privacyPolicyContactTitle {
+    return Intl.message(
+      'Contact Us',
+      name: 'privacyPolicyContactTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have any questions about this Privacy Policy, please contact us at support@invotik.com.`
+  String get privacyPolicyContactContent {
+    return Intl.message(
+      'If you have any questions about this Privacy Policy, please contact us at support@invotik.com.',
+      name: 'privacyPolicyContactContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FAQ`
+  String get faq {
+    return Intl.message('FAQ', name: 'faq', desc: '', args: []);
+  }
+
+  /// `Search FAQs`
+  String get searchFAQs {
+    return Intl.message('Search FAQs', name: 'searchFAQs', desc: '', args: []);
+  }
+
+  /// `No FAQs found`
+  String get noFAQsFound {
+    return Intl.message(
+      'No FAQs found',
+      name: 'noFAQsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try a different search term`
+  String get tryDifferentSearchTerm {
+    return Intl.message(
+      'Try a different search term',
+      name: 'tryDifferentSearchTerm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do I create an invoice?`
+  String get faqQuestion1 {
+    return Intl.message(
+      'How do I create an invoice?',
+      name: 'faqQuestion1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To create an invoice, go to the Invoices section and tap the '+' button. Fill in the required information and save.`
+  String get faqAnswer1 {
+    return Intl.message(
+      'To create an invoice, go to the Invoices section and tap the \'+\' button. Fill in the required information and save.',
+      name: 'faqAnswer1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do I change my password?`
+  String get faqQuestion2 {
+    return Intl.message(
+      'How do I change my password?',
+      name: 'faqQuestion2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go to Settings > Account Settings > Change Password. Enter your current password and new password.`
+  String get faqAnswer2 {
+    return Intl.message(
+      'Go to Settings > Account Settings > Change Password. Enter your current password and new password.',
+      name: 'faqAnswer2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do I add a customer?`
+  String get faqQuestion3 {
+    return Intl.message(
+      'How do I add a customer?',
+      name: 'faqQuestion3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go to the Customers section and tap the '+' button. Fill in the customer information and save.`
+  String get faqAnswer3 {
+    return Intl.message(
+      'Go to the Customers section and tap the \'+\' button. Fill in the customer information and save.',
+      name: 'faqAnswer3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do I print an invoice?`
+  String get faqQuestion4 {
+    return Intl.message(
+      'How do I print an invoice?',
+      name: 'faqQuestion4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open the invoice details and tap the print button. Select your printer and print.`
+  String get faqAnswer4 {
+    return Intl.message(
+      'Open the invoice details and tap the print button. Select your printer and print.',
+      name: 'faqAnswer4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How do I contact support?`
+  String get faqQuestion5 {
+    return Intl.message(
+      'How do I contact support?',
+      name: 'faqQuestion5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can contact support through the Contact Us screen in Settings or email us at support@invotik.com.`
+  String get faqAnswer5 {
+    return Intl.message(
+      'You can contact support through the Contact Us screen in Settings or email us at support@invotik.com.',
+      name: 'faqAnswer5',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language Settings`
+  String get languageSettings {
+    return Intl.message(
+      'Language Settings',
+      name: 'languageSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Language`
+  String get selectLanguage {
+    return Intl.message(
+      'Select Language',
+      name: 'selectLanguage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `العربية`
+  String get arabicDescription {
+    return Intl.message(
+      'العربية',
+      name: 'arabicDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get englishDescription {
+    return Intl.message(
+      'English',
+      name: 'englishDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changing the language will restart the app to apply the changes.`
+  String get languageChangeNote {
+    return Intl.message(
+      'Changing the language will restart the app to apply the changes.',
+      name: 'languageChangeNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications Settings`
+  String get notificationsSettings {
+    return Intl.message(
+      'Notifications Settings',
+      name: 'notificationsSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification Types`
+  String get notificationTypes {
+    return Intl.message(
+      'Notification Types',
+      name: 'notificationTypes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `General Notifications`
+  String get generalNotifications {
+    return Intl.message(
+      'General Notifications',
+      name: 'generalNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receive general app notifications`
+  String get generalNotificationsDescription {
+    return Intl.message(
+      'Receive general app notifications',
+      name: 'generalNotificationsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invoice Notifications`
+  String get invoiceNotifications {
+    return Intl.message(
+      'Invoice Notifications',
+      name: 'invoiceNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receive notifications about invoices`
+  String get invoiceNotificationsDescription {
+    return Intl.message(
+      'Receive notifications about invoices',
+      name: 'invoiceNotificationsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Notifications`
+  String get paymentNotifications {
+    return Intl.message(
+      'Payment Notifications',
+      name: 'paymentNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receive notifications about payments`
+  String get paymentNotificationsDescription {
+    return Intl.message(
+      'Receive notifications about payments',
+      name: 'paymentNotificationsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System Notifications`
+  String get systemNotifications {
+    return Intl.message(
+      'System Notifications',
+      name: 'systemNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receive system and update notifications`
+  String get systemNotificationsDescription {
+    return Intl.message(
+      'Receive system and update notifications',
+      name: 'systemNotificationsDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can close and open the general notifications.`
+  String get notificationsSettingsNote {
+    return Intl.message(
+      'You can close and open the general notifications.',
+      name: 'notificationsSettingsNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data & Storage`
+  String get dataStorage {
+    return Intl.message(
+      'Data & Storage',
+      name: 'dataStorage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Storage Information`
+  String get storageInformation {
+    return Intl.message(
+      'Storage Information',
+      name: 'storageInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cache Size`
+  String get cacheSize {
+    return Intl.message('Cache Size', name: 'cacheSize', desc: '', args: []);
+  }
+
+  /// `Data Size`
+  String get dataSize {
+    return Intl.message('Data Size', name: 'dataSize', desc: '', args: []);
+  }
+
+  /// `Refresh`
+  String get refresh {
+    return Intl.message('Refresh', name: 'refresh', desc: '', args: []);
+  }
+
+  /// `Clear Cache`
+  String get clearCache {
+    return Intl.message('Clear Cache', name: 'clearCache', desc: '', args: []);
+  }
+
+  /// `Clear temporary files and cached data to free up storage space.`
+  String get clearCacheDescription {
+    return Intl.message(
+      'Clear temporary files and cached data to free up storage space.',
+      name: 'clearCacheDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to clear the cache? This will remove temporary files but not your personal data.`
+  String get clearCacheConfirmation {
+    return Intl.message(
+      'Are you sure you want to clear the cache? This will remove temporary files but not your personal data.',
+      name: 'clearCacheConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear`
+  String get clear {
+    return Intl.message('Clear', name: 'clear', desc: '', args: []);
+  }
+
+  /// `Cache cleared successfully`
+  String get cacheClearedSuccessfully {
+    return Intl.message(
+      'Cache cleared successfully',
+      name: 'cacheClearedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error clearing cache`
+  String get errorClearingCache {
+    return Intl.message(
+      'Error clearing cache',
+      name: 'errorClearingCache',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear All Data`
+  String get clearAllData {
+    return Intl.message(
+      'Clear All Data',
+      name: 'clearAllData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to clear all data? This will remove all cached files and preferences. This action cannot be undone.`
+  String get clearAllDataConfirmation {
+    return Intl.message(
+      'Are you sure you want to clear all data? This will remove all cached files and preferences. This action cannot be undone.',
+      name: 'clearAllDataConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Warning: This will delete all cached data and preferences. Your account data will remain safe.`
+  String get clearAllDataDescription {
+    return Intl.message(
+      'Warning: This will delete all cached data and preferences. Your account data will remain safe.',
+      name: 'clearAllDataDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All data cleared successfully`
+  String get allDataClearedSuccessfully {
+    return Intl.message(
+      'All data cleared successfully',
+      name: 'allDataClearedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error clearing data`
+  String get errorClearingData {
+    return Intl.message(
+      'Error clearing data',
+      name: 'errorClearingData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Help & Support`
+  String get helpSupport {
+    return Intl.message(
+      'Help & Support',
+      name: 'helpSupport',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Legal`
+  String get legal {
+    return Intl.message('Legal', name: 'legal', desc: '', args: []);
+  }
+
+  /// `Terms of Service`
+  String get termsOfService {
+    return Intl.message(
+      'Terms of Service',
+      name: 'termsOfService',
       desc: '',
       args: [],
     );

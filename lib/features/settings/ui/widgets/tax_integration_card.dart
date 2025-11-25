@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/theme/app_text_theme.dart';
 import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
-import 'package:invotek/features/settings/ui/screens/company_settings_screen.dart';
+import 'package:invotek/features/settings/ui/screens/tac_integration_settings_screen.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class TaxIntegrationCard extends StatelessWidget {
@@ -58,8 +58,38 @@ class TaxIntegrationCard extends StatelessWidget {
                         activeThumbColor: AppColors.success,
                         onChanged: (value) {
                           if (value) {
-                            _showActivationDialog(context);
+                            // التحقق من وجود البيانات قبل التفعيل
+                            if (state is TaxIntegrationLoaded) {
+                              final status = state.status;
+                              final hasMerchantCode = status.taxMerchantCode != null &&
+                                  status.taxMerchantCode!.isNotEmpty;
+                              final hasInvoiceType = status.taxInvoiceType != null &&
+                                  status.taxInvoiceType!.isNotEmpty;
+
+                              if (hasMerchantCode && hasInvoiceType) {
+                                // تفعيل التكامل تلقائياً باستخدام البيانات الموجودة
+                                context.read<TaxIntegrationCubit>().activate(
+                                  taxMerchantCode: status.taxMerchantCode!,
+                                  taxInvoiceType: status.taxInvoiceType!,
+                                );
+                              } else {
+                                // البيانات غير موجودة، التنقل إلى شاشة الإعدادات
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => const TacIntegrationSettingsScreen(),
+                                  ),
+                                );
+                              }
+                            } else {
+                              // الحالة غير محملة، التنقل إلى شاشة الإعدادات
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => const TacIntegrationSettingsScreen(),
+                                ),
+                              );
+                            }
                           } else {
+                            // تعطيل التكامل
                             context.read<TaxIntegrationCubit>().deactivate();
                           }
                         },
@@ -73,7 +103,7 @@ class TaxIntegrationCard extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => const CompanySettingsScreen(),
+                          builder: (_) => const TacIntegrationSettingsScreen(),
                         ),
                       );
                     },
@@ -94,68 +124,4 @@ class TaxIntegrationCard extends StatelessWidget {
     );
   }
 
-  void _showActivationDialog(BuildContext context) {
-    final merchantCodeController = TextEditingController();
-    // Assuming invoice type is a simple text input for now, or use a dropdown if values are known
-    String selectedInvoiceType = 'income'; // Default or from a list
-
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(S.of(context).settingsTaxIntegration),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: merchantCodeController,
-              decoration: const InputDecoration(
-                labelText: 'Merchant Code', // TODO: Add localization key
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16.h),
-            // Simple dropdown for invoice type example
-            DropdownButtonFormField<String>(
-              initialValue: selectedInvoiceType,
-              items: [
-                DropdownMenuItem<String>(
-                  value: 'general',
-                  child: Text(S.of(context).settingsGeneral),
-                ),
-                DropdownMenuItem<String>(
-                  value: 'income',
-                  child: Text(S.of(context).settingsIncome),
-                ),
-              ],
-              onChanged: (newValue) {
-                selectedInvoiceType = newValue!;
-              },
-              decoration: const InputDecoration(
-                labelText: 'Invoice Type', // TODO: Add localization key
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              if (merchantCodeController.text.isNotEmpty) {
-                context.read<TaxIntegrationCubit>().activate(
-                  taxMerchantCode: merchantCodeController.text,
-                  taxInvoiceType: selectedInvoiceType,
-                );
-                Navigator.pop(dialogContext);
-              }
-            },
-            child: Text(MaterialLocalizations.of(context).saveButtonLabel),
-          ),
-        ],
-      ),
-    );
-  }
 }

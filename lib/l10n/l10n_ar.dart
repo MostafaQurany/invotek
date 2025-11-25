@@ -6104,7 +6104,7 @@ class SAr extends S {
   String get subscriptionPackageSelectionPage => 'صفحة اختيار الباقات';
 
   @override
-  String get comingSoon => 'سيتم تطوير هذه الصفحة قريباً';
+  String get comingSoon => 'قريباً';
 
   @override
   String get cannotOpenPackageLink => 'لا يمكن فتح رابط الباقة';
@@ -6341,7 +6341,7 @@ class SAr extends S {
   String get paymentMethodBankTransfer => 'تحويل بنكي';
 
   @override
-  String get logoLoadError => 'Failed to load company logo';
+  String get logoLoadError => 'فشل تحميل شعار الشركة';
 
   @override
   String get usingDefaultLogo => 'استخدام الشعار الافتراضي';
@@ -6454,6 +6454,9 @@ class SAr extends S {
   String get settingsAccountSecurity => 'أمان الحساب';
 
   @override
+  String get settingsAccount => 'إعدادات الحساب';
+
+  @override
   String get settingsProfile => 'الملف الشخصي';
 
   @override
@@ -6504,4 +6507,294 @@ class SAr extends S {
 
   @override
   String get notSpecified => 'غير محدد';
+
+  @override
+  String get settingsUnsavedChanges => 'تغييرات غير محفوظة';
+
+  @override
+  String get settingsDiscardChanges =>
+      'لديك تغييرات غير محفوظة. هل أنت متأكد أنك تريد تجاهلها؟';
+
+  @override
+  String get settingsDiscard => 'تجاهل';
+
+  @override
+  String get pleaseEnterMerchantCode => 'الرجاء إدخال رمز التاجر';
+
+  @override
+  String get pleaseSelectInvoiceType => 'الرجاء اختيار نوع الفاتورة';
+
+  @override
+  String get aboutUs => 'من نحن';
+
+  @override
+  String get aboutUsDescription =>
+      'إنفوتيك هو نظام شامل لإدارة الفواتير مصمم لمساعدة الشركات على إدارة احتياجاتها من الفواتير بكفاءة.';
+
+  @override
+  String get appInformation => 'معلومات التطبيق';
+
+  @override
+  String get appName => 'اسم التطبيق';
+
+  @override
+  String get version => 'الإصدار';
+
+  @override
+  String get buildNumber => 'رقم البناء';
+
+  @override
+  String get packageName => 'اسم الحزمة';
+
+  @override
+  String get copyright => 'حقوق النشر';
+
+  @override
+  String get shareApp => 'مشاركة التطبيق';
+
+  @override
+  String get contactUs => 'اتصل بنا';
+
+  @override
+  String get contactForm => 'نموذج الاتصال';
+
+  @override
+  String get subjectRequired => 'الموضوع مطلوب';
+
+  @override
+  String get messageRequired => 'الرسالة مطلوبة';
+
+  @override
+  String get sendMessage => 'إرسال الرسالة';
+
+  @override
+  String get quickContact => 'اتصال سريع';
+
+  @override
+  String get whatsapp => 'واتساب';
+
+  @override
+  String get contactViaWhatsApp => 'اتصل بنا عبر واتساب';
+
+  @override
+  String get emailOpened => 'تم فتح تطبيق البريد';
+
+  @override
+  String get cannotOpenEmail => 'لا يمكن فتح تطبيق البريد';
+
+  @override
+  String get cannotOpenPhone => 'لا يمكن فتح تطبيق الهاتف';
+
+  @override
+  String get cannotOpenWhatsApp => 'لا يمكن فتح واتساب';
+
+  @override
+  String get privacyPolicyTitle => 'سياسة الخصوصية';
+
+  @override
+  String privacyPolicyLastUpdated(Object date) {
+    return 'آخر تحديث: $date';
+  }
+
+  @override
+  String get privacyPolicyLastUpdatedPlaceholder => 'آخر تحديث: يناير 2024';
+
+  @override
+  String get privacyPolicyIntroductionTitle => 'مقدمة';
+
+  @override
+  String get privacyPolicyIntroductionContent =>
+      'تصف سياسة الخصوصية هذه كيفية جمع إنفوتيك واستخدامه وحماية معلوماتك الشخصية عند استخدام تطبيقنا.';
+
+  @override
+  String get privacyPolicyDataCollectionTitle => 'جمع البيانات';
+
+  @override
+  String get privacyPolicyDataCollectionContent =>
+      'نجمع المعلومات التي تقدمها لنا مباشرة، مثل عند إنشاء حساب أو إجراء عملية شراء أو الاتصال بنا للحصول على الدعم.';
+
+  @override
+  String get privacyPolicyDataUsageTitle => 'استخدام البيانات';
+
+  @override
+  String get privacyPolicyDataUsageContent =>
+      'نستخدم المعلومات التي نجمعها لتوفير خدماتنا وصيانتها وتحسينها ومعالجة المعاملات والتواصل معك.';
+
+  @override
+  String get privacyPolicyDataSecurityTitle => 'أمان البيانات';
+
+  @override
+  String get privacyPolicyDataSecurityContent =>
+      'ننفذ تدابير أمنية مناسبة لحماية معلوماتك الشخصية من الوصول غير المصرح به أو التعديل أو الكشف أو التدمير.';
+
+  @override
+  String get privacyPolicyUserRightsTitle => 'حقوقك';
+
+  @override
+  String get privacyPolicyUserRightsContent =>
+      'لديك الحق في الوصول إلى معلوماتك الشخصية أو تحديثها أو حذفها في أي وقت من خلال إعدادات حسابك.';
+
+  @override
+  String get privacyPolicyContactTitle => 'اتصل بنا';
+
+  @override
+  String get privacyPolicyContactContent =>
+      'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على support@invotik.com.';
+
+  @override
+  String get faq => 'الأسئلة الشائعة';
+
+  @override
+  String get searchFAQs => 'البحث في الأسئلة الشائعة';
+
+  @override
+  String get noFAQsFound => 'لم يتم العثور على أسئلة';
+
+  @override
+  String get tryDifferentSearchTerm => 'جرب مصطلح بحث مختلف';
+
+  @override
+  String get faqQuestion1 => 'كيف أقوم بإنشاء فاتورة؟';
+
+  @override
+  String get faqAnswer1 =>
+      'لإنشاء فاتورة، انتقل إلى قسم الفواتير واضغط على زر \'+\'. املأ المعلومات المطلوبة واحفظ.';
+
+  @override
+  String get faqQuestion2 => 'كيف أغير كلمة المرور؟';
+
+  @override
+  String get faqAnswer2 =>
+      'انتقل إلى الإعدادات > إعدادات الحساب > تغيير كلمة المرور. أدخل كلمة المرور الحالية وكلمة المرور الجديدة.';
+
+  @override
+  String get faqQuestion3 => 'كيف أضيف عميلاً؟';
+
+  @override
+  String get faqAnswer3 =>
+      'انتقل إلى قسم العملاء واضغط على زر \'+\'. املأ معلومات العميل واحفظ.';
+
+  @override
+  String get faqQuestion4 => 'كيف أطبع فاتورة؟';
+
+  @override
+  String get faqAnswer4 =>
+      'افتح تفاصيل الفاتورة واضغط على زر الطباعة. اختر طابعتك واطبع.';
+
+  @override
+  String get faqQuestion5 => 'كيف أتواصل مع الدعم؟';
+
+  @override
+  String get faqAnswer5 =>
+      'يمكنك التواصل مع الدعم من خلال شاشة اتصل بنا في الإعدادات أو راسلنا على support@invotik.com.';
+
+  @override
+  String get languageSettings => 'إعدادات اللغة';
+
+  @override
+  String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String get arabicDescription => 'العربية';
+
+  @override
+  String get englishDescription => 'English';
+
+  @override
+  String get languageChangeNote =>
+      'سيتم إعادة تشغيل التطبيق لتطبيق تغييرات اللغة.';
+
+  @override
+  String get notificationsSettings => 'إعدادات الإشعارات';
+
+  @override
+  String get notificationTypes => 'أنواع الإشعارات';
+
+  @override
+  String get generalNotifications => 'الإشعارات العامة';
+
+  @override
+  String get generalNotificationsDescription => 'تلقي إشعارات التطبيق العامة';
+
+  @override
+  String get invoiceNotifications => 'إشعارات الفواتير';
+
+  @override
+  String get invoiceNotificationsDescription => 'تلقي إشعارات حول الفواتير';
+
+  @override
+  String get paymentNotifications => 'إشعارات المدفوعات';
+
+  @override
+  String get paymentNotificationsDescription => 'تلقي إشعارات حول المدفوعات';
+
+  @override
+  String get systemNotifications => 'إشعارات النظام';
+
+  @override
+  String get systemNotificationsDescription => 'تلقي إشعارات النظام والتحديثات';
+
+  @override
+  String get notificationsSettingsNote => 'يمكنك قفل و فتح الإشعارات العامة.';
+
+  @override
+  String get dataStorage => 'البيانات والتخزين';
+
+  @override
+  String get storageInformation => 'معلومات التخزين';
+
+  @override
+  String get cacheSize => 'حجم الذاكرة المؤقتة';
+
+  @override
+  String get dataSize => 'حجم البيانات';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get clearCache => 'مسح الذاكرة المؤقتة';
+
+  @override
+  String get clearCacheDescription =>
+      'مسح الملفات المؤقتة والبيانات المخزنة مؤقتاً لتحرير مساحة التخزين.';
+
+  @override
+  String get clearCacheConfirmation =>
+      'هل أنت متأكد أنك تريد مسح الذاكرة المؤقتة؟ سيؤدي هذا إلى إزالة الملفات المؤقتة ولكن ليس بياناتك الشخصية.';
+
+  @override
+  String get clear => 'مسح';
+
+  @override
+  String get cacheClearedSuccessfully => 'تم مسح الذاكرة المؤقتة بنجاح';
+
+  @override
+  String get errorClearingCache => 'خطأ في مسح الذاكرة المؤقتة';
+
+  @override
+  String get clearAllData => 'مسح جميع البيانات';
+
+  @override
+  String get clearAllDataConfirmation =>
+      'هل أنت متأكد أنك تريد مسح جميع البيانات؟ سيؤدي هذا إلى إزالة جميع الملفات المؤقتة والتفضيلات. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get clearAllDataDescription =>
+      'تحذير: سيؤدي هذا إلى حذف جميع البيانات المؤقتة والتفضيلات. ستظل بيانات حسابك آمنة.';
+
+  @override
+  String get allDataClearedSuccessfully => 'تم مسح جميع البيانات بنجاح';
+
+  @override
+  String get errorClearingData => 'خطأ في مسح البيانات';
+
+  @override
+  String get helpSupport => 'المساعدة والدعم';
+
+  @override
+  String get legal => 'قانوني';
+
+  @override
+  String get termsOfService => 'شروط الخدمة';
 }

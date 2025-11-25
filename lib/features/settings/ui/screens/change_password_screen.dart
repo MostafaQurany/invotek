@@ -75,19 +75,19 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.onPrimary,
+            color: AppColors.primary,
             size: 24.sp,
           ),
         ),
         title: Text(
           S.of(context).changePassword,
           style: AppTextTheme.textTheme.headlineMedium?.copyWith(
-            color: AppColors.onPrimary,
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.white,
         elevation: 0,
       ),
       body: SafeArea(
@@ -157,12 +157,20 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         hintText: S.of(context).enterNewPassword,
                       ),
                       SizedBox(height: 16.h),
-                      PasswordStrengthIndicator(
-                        password: _newPasswordController.text,
+                      ValueListenableBuilder<TextEditingValue>(
+                        valueListenable: _newPasswordController,
+                        builder: (context, value, child) {
+                          return PasswordStrengthIndicator(
+                            password: value.text,
+                          );
+                        },
                       ),
                       SizedBox(height: 16.h),
-                      PasswordRequirements(
-                        password: _newPasswordController.text,
+                      ValueListenableBuilder<TextEditingValue>(
+                        valueListenable: _newPasswordController,
+                        builder: (context, value, child) {
+                          return PasswordRequirements(password: value.text);
+                        },
                       ),
                     ],
                   ),

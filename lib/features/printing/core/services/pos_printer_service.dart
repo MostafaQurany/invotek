@@ -108,6 +108,72 @@ class PosPrinterService {
     return _CompanyData();
   }
 
+  /// الحصول على logoUrl الشركة من CompanyCubit مع fallback إلى GetCompanySettings ثم StorageService
+  /// Get company logoUrl from CompanyCubit with fallback to GetCompanySettings then StorageService
+  Future<String?> _getCompanyLogoUrl() async {
+    // محاولة 1: الحصول على logoUrl من CompanyCubit إذا كان محملاً
+    try {
+      final companyCubit = getIt<CompanyCubit>();
+      final companyState = companyCubit.state;
+
+      if (companyState is CompanyLoaded) {
+        final company = companyState.company;
+        final logoUrl = company.logoUrl;
+        if (logoUrl != null && logoUrl.isNotEmpty) {
+          print('Company logoUrl obtained from CompanyCubit: $logoUrl');
+          return logoUrl;
+        }
+      }
+    } catch (e) {
+      print('Error getting company logoUrl from CompanyCubit: $e');
+      // Continue to next attempt
+    }
+
+    // محاولة 2: تحميل البيانات من API مباشرة باستخدام GetCompanySettings
+    try {
+      final getCompanySettings = getIt<GetCompanySettings>();
+      final result = await getCompanySettings(const NoParams());
+
+      String? logoUrlFromApi;
+      result.when(
+        success: (companyData) {
+          logoUrlFromApi = companyData.logoUrl;
+          print(
+            'Company logoUrl obtained from GetCompanySettings: $logoUrlFromApi',
+          );
+        },
+        failure: (error) {
+          print('Error getting company settings from API: ${error.message}');
+        },
+      );
+
+      if (logoUrlFromApi?.isNotEmpty ?? false) {
+        return logoUrlFromApi;
+      }
+    } catch (e) {
+      print('Error calling GetCompanySettings: $e');
+      // Continue to fallback
+    }
+
+    // محاولة 3: Fallback إلى StorageService
+    try {
+      final userData = StorageService.getUserData();
+      final company = userData?.user?.company;
+      final logoUrl = company?.logo?.toString();
+      if (logoUrl != null && logoUrl.isNotEmpty) {
+        print('Company logoUrl obtained from StorageService: $logoUrl');
+        return logoUrl;
+      }
+    } catch (e) {
+      print('Error getting company logoUrl from StorageService: $e');
+    }
+
+    print(
+      'No company logoUrl found in CompanyCubit, GetCompanySettings, or StorageService',
+    );
+    return null;
+  }
+
   // --------- ZATCA ----------
   Future<List<Uint8List>> previewZatca({
     required PaperPreset paper,
@@ -134,13 +200,16 @@ class PosPrinterService {
   }) async {
     final width = paper.width;
 
-    // Get company data (name and logoUrl) from CompanyCubit with fallback to GetCompanySettings then StorageService
+    // Get company logoUrl with fallback mechanism
+    final logoUrl = await _getCompanyLogoUrl();
+
+    // Get company name from CompanyCubit with fallback
     final companyData = await _getCompanyData();
 
     // Pre-load company logo before rendering to prevent thread blocking
     final invoiceData = TaxInvoiceData.fromInvoice(
       invoice,
-      companyLogoUrl: companyData.logoUrl,
+      companyLogoUrl: logoUrl,
       companyName: companyData.name ?? 'Invotek',
     );
     final logoImage = await TaxInvoiceRenderer.loadCompanyLogo(

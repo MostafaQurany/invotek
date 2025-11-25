@@ -174,49 +174,55 @@ class MessageLookup extends MessageLookupByLibrary {
   ) =>
       "Invoice\n${separator}\nInvoice Number: ${number}\nDate: ${date}\nStatus: ${status}\n\nCustomer Information:\nName: ${customer}\n${contact}\n\nInvoice Items:\n${items}\n\nTotals:\nSubtotal: ${subtotal} SAR\n${tax}\nTotal: ${total} SAR\n\n${separator}\nThank you for your business\nThis invoice was created by Invotek App\n${separator}";
 
-  static String m66(name) =>
+  static String m66(date) => "Last updated: ${date}";
+
+  static String m67(name) =>
       "Are you sure you want to delete category \"${name}\"?";
 
-  static String m67(count) => "Quantity exceeds available stock (${count})";
+  static String m68(count) => "Quantity exceeds available stock (${count})";
 
-  static String m68(seconds) => "Resend in ${seconds} seconds";
+  static String m69(seconds) => "Resend in ${seconds} seconds";
 
-  static String m69(number, customer, date, amount, status) =>
+  static String m70(number, customer, date, amount, status) =>
       "Invoice Number: ${number}\nCustomer: ${customer}\nDate: ${date}\nAmount: ${amount} SAR\nStatus: ${status}\n\nCreated by Invotek App";
 
-  static String m70(count) => "Show All Items (${count})";
+  static String m71(count) => "Show All Items (${count})";
 
-  static String m71(status) => "Status: ${status}";
+  static String m72(status) => "Status: ${status}";
 
-  static String m72(code) => "Status Code: ${code}";
+  static String m73(code) => "Status Code: ${code}";
 
-  static String m73(amount) => "Subtotal: ${amount} SAR";
+  static String m74(amount) => "Subtotal: ${amount} SAR";
 
-  static String m74(amount) => "Tax: ${amount} SAR";
+  static String m75(amount) => "Tax: ${amount} SAR";
 
-  static String m75(number) => "Tax UID for invoice ${number}:";
+  static String m76(number) => "Tax UID for invoice ${number}:";
 
-  static String m76(amount) => "Total: ${amount} SAR";
+  static String m77(amount) => "Total: ${amount} SAR";
 
-  static String m77(name) =>
+  static String m78(name) =>
       "Are you sure you want to delete the role \"${name}\"?";
 
-  static String m78(email) => "Enter the code sent to ${email}";
+  static String m79(email) => "Enter the code sent to ${email}";
 
-  static String m79(name) => "View customer details: ${name}";
+  static String m80(name) => "View customer details: ${name}";
 
-  static String m80(name) => "View item details: ${name}";
+  static String m81(name) => "View item details: ${name}";
 
-  static String m81(name) => "Viewing invoices for ${name}";
+  static String m82(name) => "Viewing invoices for ${name}";
 
-  static String m82(name) => "Viewing orders for ${name}";
+  static String m83(name) => "Viewing orders for ${name}";
 
-  static String m83(name) => "Welcome ${name}, 👋";
+  static String m84(name) => "Welcome ${name}, 👋";
 
-  static String m84(count) => "You have ${count} new notification";
+  static String m85(count) => "You have ${count} new notification";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "aboutUs": MessageLookupByLibrary.simpleMessage("About Us"),
+    "aboutUsDescription": MessageLookupByLibrary.simpleMessage(
+      "Invotek is a comprehensive invoice management system designed to help businesses manage their invoicing needs efficiently.",
+    ),
     "accessDenied": MessageLookupByLibrary.simpleMessage("Access Denied"),
     "accountDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "Account deleted successfully",
@@ -329,6 +335,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "All categories deleted successfully",
     ),
     "allCustomers": MessageLookupByLibrary.simpleMessage("All Customers"),
+    "allDataClearedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "All data cleared successfully",
+    ),
     "allInvoices": MessageLookupByLibrary.simpleMessage("All Invoices"),
     "allPaymentMethods": MessageLookupByLibrary.simpleMessage(
       "All Payment Methods",
@@ -352,6 +361,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "andMoreInvoices": m0,
     "appInfo": MessageLookupByLibrary.simpleMessage("App Information"),
+    "appInformation": MessageLookupByLibrary.simpleMessage("App Information"),
+    "appName": MessageLookupByLibrary.simpleMessage("App Name"),
     "appVersionWithBuild": m1,
     "apply": MessageLookupByLibrary.simpleMessage("Apply"),
     "applyFilters": MessageLookupByLibrary.simpleMessage("Apply Filters"),
@@ -359,6 +370,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Apply Tax to Product",
     ),
     "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
+    "arabicDescription": MessageLookupByLibrary.simpleMessage("العربية"),
     "areYouSureDelete": m2,
     "areYouSureDeleteClient": m3,
     "ascending": MessageLookupByLibrary.simpleMessage("Ascending"),
@@ -413,11 +425,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "boughtThis": MessageLookupByLibrary.simpleMessage("Bought This"),
     "brand": MessageLookupByLibrary.simpleMessage("Brand"),
+    "buildNumber": MessageLookupByLibrary.simpleMessage("Build Number"),
     "buttonPressed": MessageLookupByLibrary.simpleMessage(
       "Normal button pressed",
     ),
     "buttons": MessageLookupByLibrary.simpleMessage("Buttons"),
+    "cacheClearedSuccessfully": MessageLookupByLibrary.simpleMessage(
+      "Cache cleared successfully",
+    ),
     "cacheError": MessageLookupByLibrary.simpleMessage("Local storage error"),
+    "cacheSize": MessageLookupByLibrary.simpleMessage("Cache Size"),
     "calling": m5,
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "cannotEditInvoice": MessageLookupByLibrary.simpleMessage(
@@ -426,17 +443,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "cannotEditSentInvoice": MessageLookupByLibrary.simpleMessage(
       "Cannot edit sent invoices",
     ),
+    "cannotOpenEmail": MessageLookupByLibrary.simpleMessage(
+      "Cannot open email app",
+    ),
     "cannotOpenEmailApp": MessageLookupByLibrary.simpleMessage(
       "Cannot open email application",
     ),
     "cannotOpenPackageLink": MessageLookupByLibrary.simpleMessage(
       "Cannot open package link",
     ),
+    "cannotOpenPhone": MessageLookupByLibrary.simpleMessage(
+      "Cannot open phone app",
+    ),
     "cannotOpenSubscriptionLink": MessageLookupByLibrary.simpleMessage(
       "Cannot open subscription link",
     ),
     "cannotOpenWebsite": MessageLookupByLibrary.simpleMessage(
       "Cannot open website",
+    ),
+    "cannotOpenWhatsApp": MessageLookupByLibrary.simpleMessage(
+      "Cannot open WhatsApp",
     ),
     "card": MessageLookupByLibrary.simpleMessage("Card"),
     "cardPressed": MessageLookupByLibrary.simpleMessage("Card pressed"),
@@ -499,6 +525,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "Choose Subscription",
     ),
     "city": MessageLookupByLibrary.simpleMessage("City"),
+    "clear": MessageLookupByLibrary.simpleMessage("Clear"),
+    "clearAllData": MessageLookupByLibrary.simpleMessage("Clear All Data"),
+    "clearAllDataConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to clear all data? This will remove all cached files and preferences. This action cannot be undone.",
+    ),
+    "clearAllDataDescription": MessageLookupByLibrary.simpleMessage(
+      "Warning: This will delete all cached data and preferences. Your account data will remain safe.",
+    ),
+    "clearCache": MessageLookupByLibrary.simpleMessage("Clear Cache"),
+    "clearCacheConfirmation": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to clear the cache? This will remove temporary files but not your personal data.",
+    ),
+    "clearCacheDescription": MessageLookupByLibrary.simpleMessage(
+      "Clear temporary files and cached data to free up storage space.",
+    ),
     "clearFilters": MessageLookupByLibrary.simpleMessage("Clear Filters"),
     "clearSearch": MessageLookupByLibrary.simpleMessage("Clear Search"),
     "clientAddedSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -645,9 +686,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Code resent successfully",
     ),
     "color": MessageLookupByLibrary.simpleMessage("Color"),
-    "comingSoon": MessageLookupByLibrary.simpleMessage(
-      "This page will be developed soon",
-    ),
+    "comingSoon": MessageLookupByLibrary.simpleMessage("Coming Soon"),
     "company": MessageLookupByLibrary.simpleMessage("Company"),
     "companyAddress": MessageLookupByLibrary.simpleMessage("Company Address"),
     "companyAddressRequired": MessageLookupByLibrary.simpleMessage(
@@ -663,6 +702,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "companyInformation": MessageLookupByLibrary.simpleMessage(
       "Company Information",
     ),
+    "companyLogo": MessageLookupByLibrary.simpleMessage("Company Logo"),
     "companyLogoFailed": MessageLookupByLibrary.simpleMessage(
       "Failed to load company logo",
     ),
@@ -733,6 +773,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "contactAdminForAccess": MessageLookupByLibrary.simpleMessage(
       "Please contact the system administrator for access",
     ),
+    "contactForm": MessageLookupByLibrary.simpleMessage("Contact Form"),
     "contactInfo": MessageLookupByLibrary.simpleMessage("Contact Info"),
     "contactInformation": MessageLookupByLibrary.simpleMessage(
       "Contact Information",
@@ -749,8 +790,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "contactPersonPhone": MessageLookupByLibrary.simpleMessage(
       "Contact Person Phone",
     ),
+    "contactUs": MessageLookupByLibrary.simpleMessage("Contact Us"),
     "contactUsForSupport": MessageLookupByLibrary.simpleMessage(
       "Contact us for support",
+    ),
+    "contactViaWhatsApp": MessageLookupByLibrary.simpleMessage(
+      "Contact us via WhatsApp",
     ),
     "copiedToClipboard": MessageLookupByLibrary.simpleMessage(
       "Copied to clipboard",
@@ -759,6 +804,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "copyCodeFromEmail": MessageLookupByLibrary.simpleMessage(
       "Copy the code from email and paste here",
     ),
+    "copyright": MessageLookupByLibrary.simpleMessage("Copyright"),
     "costPrice": MessageLookupByLibrary.simpleMessage("Cost Price"),
     "country": MessageLookupByLibrary.simpleMessage("Country"),
     "create": MessageLookupByLibrary.simpleMessage("Create"),
@@ -1878,6 +1924,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "An error occurred while loading dashboard data",
     ),
     "dataConversionError": m15,
+    "dataSize": MessageLookupByLibrary.simpleMessage("Data Size"),
+    "dataStorage": MessageLookupByLibrary.simpleMessage("Data & Storage"),
     "date": MessageLookupByLibrary.simpleMessage("Date"),
     "deactivate": MessageLookupByLibrary.simpleMessage("Deactivate"),
     "debitCard": MessageLookupByLibrary.simpleMessage("Debit Card"),
@@ -2030,6 +2078,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "emailIsRequired": MessageLookupByLibrary.simpleMessage(
       "Email is required",
     ),
+    "emailOpened": MessageLookupByLibrary.simpleMessage("Email app opened"),
     "emailRequired": MessageLookupByLibrary.simpleMessage("Email is required"),
     "employee": MessageLookupByLibrary.simpleMessage("Employee"),
     "enableDarkMode": MessageLookupByLibrary.simpleMessage("Enable Dark Mode"),
@@ -2043,6 +2092,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enable Tax Integration",
     ),
     "english": MessageLookupByLibrary.simpleMessage("English"),
+    "englishDescription": MessageLookupByLibrary.simpleMessage("English"),
     "enterAdditionalNotes": MessageLookupByLibrary.simpleMessage(
       "Enter additional notes",
     ),
@@ -2094,6 +2144,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter contact person phone",
     ),
     "enterCostPrice": MessageLookupByLibrary.simpleMessage("Enter cost price"),
+    "enterCurrentPassword": MessageLookupByLibrary.simpleMessage(
+      "Enter current password",
+    ),
     "enterCustomerAddress": MessageLookupByLibrary.simpleMessage(
       "Enter address",
     ),
@@ -2149,6 +2202,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "enterItemName": MessageLookupByLibrary.simpleMessage("Enter item name"),
     "enterMessage": MessageLookupByLibrary.simpleMessage("Enter message"),
+    "enterNewPassword": MessageLookupByLibrary.simpleMessage(
+      "Enter new password",
+    ),
     "enterNotes": MessageLookupByLibrary.simpleMessage("Enter notes"),
     "enterPassword": MessageLookupByLibrary.simpleMessage("Enter password"),
     "enterPasswordToConfirm": MessageLookupByLibrary.simpleMessage(
@@ -2206,6 +2262,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorAddingProduct": MessageLookupByLibrary.simpleMessage(
       "Error adding product",
+    ),
+    "errorClearingCache": MessageLookupByLibrary.simpleMessage(
+      "Error clearing cache",
+    ),
+    "errorClearingData": MessageLookupByLibrary.simpleMessage(
+      "Error clearing data",
     ),
     "errorCreatingClient": m22,
     "errorCreatingCustomer": MessageLookupByLibrary.simpleMessage(
@@ -2265,7 +2327,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorMessage": m30,
     "errorMessageLabel": MessageLookupByLibrary.simpleMessage("Error Message"),
-    "errorOccurred": MessageLookupByLibrary.simpleMessage("Error Occurred"),
+    "errorOccurred": MessageLookupByLibrary.simpleMessage("An error occurred"),
     "errorOccurredWithMessage": m31,
     "errorParsingUserData": MessageLookupByLibrary.simpleMessage(
       "Error parsing user data",
@@ -2486,6 +2548,37 @@ class MessageLookup extends MessageLookupByLibrary {
       "Failed to update user",
     ),
     "failedToUpdateUserPermissions": m46,
+    "faq": MessageLookupByLibrary.simpleMessage("FAQ"),
+    "faqAnswer1": MessageLookupByLibrary.simpleMessage(
+      "To create an invoice, go to the Invoices section and tap the \'+\' button. Fill in the required information and save.",
+    ),
+    "faqAnswer2": MessageLookupByLibrary.simpleMessage(
+      "Go to Settings > Account Settings > Change Password. Enter your current password and new password.",
+    ),
+    "faqAnswer3": MessageLookupByLibrary.simpleMessage(
+      "Go to the Customers section and tap the \'+\' button. Fill in the customer information and save.",
+    ),
+    "faqAnswer4": MessageLookupByLibrary.simpleMessage(
+      "Open the invoice details and tap the print button. Select your printer and print.",
+    ),
+    "faqAnswer5": MessageLookupByLibrary.simpleMessage(
+      "You can contact support through the Contact Us screen in Settings or email us at support@invotik.com.",
+    ),
+    "faqQuestion1": MessageLookupByLibrary.simpleMessage(
+      "How do I create an invoice?",
+    ),
+    "faqQuestion2": MessageLookupByLibrary.simpleMessage(
+      "How do I change my password?",
+    ),
+    "faqQuestion3": MessageLookupByLibrary.simpleMessage(
+      "How do I add a customer?",
+    ),
+    "faqQuestion4": MessageLookupByLibrary.simpleMessage(
+      "How do I print an invoice?",
+    ),
+    "faqQuestion5": MessageLookupByLibrary.simpleMessage(
+      "How do I contact support?",
+    ),
     "fieldIsRequired": m47,
     "fileName": m48,
     "fileSavedSuccessfully": m49,
@@ -2528,6 +2621,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "formHelpTitle": MessageLookupByLibrary.simpleMessage("Edit Customer Form"),
     "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
+    "generalNotifications": MessageLookupByLibrary.simpleMessage(
+      "General Notifications",
+    ),
+    "generalNotificationsDescription": MessageLookupByLibrary.simpleMessage(
+      "Receive general app notifications",
+    ),
     "generatingPDF": MessageLookupByLibrary.simpleMessage("Generating PDF..."),
     "goToSettings": MessageLookupByLibrary.simpleMessage("Go to Settings"),
     "googleSignInError": MessageLookupByLibrary.simpleMessage(
@@ -2543,6 +2642,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Healthcare Institution",
     ),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
+    "helpSupport": MessageLookupByLibrary.simpleMessage("Help & Support"),
     "high": MessageLookupByLibrary.simpleMessage("High"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "homeAccessDenied": MessageLookupByLibrary.simpleMessage("Access Denied"),
@@ -2635,6 +2735,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "invoiceLanguage": MessageLookupByLibrary.simpleMessage("Invoice Language"),
     "invoiceManagement": MessageLookupByLibrary.simpleMessage(
       "Invoice Management",
+    ),
+    "invoiceNotifications": MessageLookupByLibrary.simpleMessage(
+      "Invoice Notifications",
+    ),
+    "invoiceNotificationsDescription": MessageLookupByLibrary.simpleMessage(
+      "Receive notifications about invoices",
     ),
     "invoiceNumber": MessageLookupByLibrary.simpleMessage("Invoice Number"),
     "invoiceNumberLabel": m56,
@@ -2815,11 +2921,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "kilogram": MessageLookupByLibrary.simpleMessage("kg"),
     "kuwait": MessageLookupByLibrary.simpleMessage("Kuwait"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
+    "languageChangeNote": MessageLookupByLibrary.simpleMessage(
+      "Changing the language will restart the app to apply the changes.",
+    ),
     "languageChangedToArabic": MessageLookupByLibrary.simpleMessage(
       "Language changed to Arabic",
     ),
     "languageChangedToEnglish": MessageLookupByLibrary.simpleMessage(
       "Language changed to English",
+    ),
+    "languageSettings": MessageLookupByLibrary.simpleMessage(
+      "Language Settings",
     ),
     "largeResponsiveText": MessageLookupByLibrary.simpleMessage(
       "Large Responsive Text",
@@ -2828,6 +2940,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "lastInvoices": MessageLookupByLibrary.simpleMessage("Last Invoices"),
     "lastLogin": MessageLookupByLibrary.simpleMessage("Last Login"),
     "lastUpdated": MessageLookupByLibrary.simpleMessage("Last Updated"),
+    "legal": MessageLookupByLibrary.simpleMessage("Legal"),
     "light": MessageLookupByLibrary.simpleMessage("Light"),
     "link": MessageLookupByLibrary.simpleMessage("Link"),
     "loadMore": MessageLookupByLibrary.simpleMessage("Load More"),
@@ -2924,6 +3037,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Medium Responsive Text",
     ),
     "message": MessageLookupByLibrary.simpleMessage("Message"),
+    "messageRequired": MessageLookupByLibrary.simpleMessage(
+      "Message is required",
+    ),
     "metadata": MessageLookupByLibrary.simpleMessage("Metadata"),
     "meter": MessageLookupByLibrary.simpleMessage("m"),
     "minimumQuantity": MessageLookupByLibrary.simpleMessage("Minimum Quantity"),
@@ -2996,6 +3112,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "No data received from server",
     ),
     "noEmail": MessageLookupByLibrary.simpleMessage("No email"),
+    "noFAQsFound": MessageLookupByLibrary.simpleMessage("No FAQs found"),
     "noHaveAccountRejester": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account? Create new account",
     ),
@@ -3052,9 +3169,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "notAssigned": MessageLookupByLibrary.simpleMessage("Not assigned"),
     "notAvailable": MessageLookupByLibrary.simpleMessage("Not available"),
     "notProvided": MessageLookupByLibrary.simpleMessage("Not provided"),
+    "notSpecified": MessageLookupByLibrary.simpleMessage("Not specified"),
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
     "notesHint": MessageLookupByLibrary.simpleMessage(
       "Any additional information or context",
+    ),
+    "notificationTypes": MessageLookupByLibrary.simpleMessage(
+      "Notification Types",
     ),
     "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "notificationsAdditionalData": MessageLookupByLibrary.simpleMessage(
@@ -3106,6 +3227,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "notificationsRead": MessageLookupByLibrary.simpleMessage("Read"),
     "notificationsSearchHint": MessageLookupByLibrary.simpleMessage(
       "Search notifications...",
+    ),
+    "notificationsSettings": MessageLookupByLibrary.simpleMessage(
+      "Notifications Settings",
+    ),
+    "notificationsSettingsNote": MessageLookupByLibrary.simpleMessage(
+      "You can close and open the general notifications.",
     ),
     "notificationsTotal": MessageLookupByLibrary.simpleMessage("Total"),
     "notificationsTypeInvoice": MessageLookupByLibrary.simpleMessage("Invoice"),
@@ -3187,6 +3314,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Outlined button pressed",
     ),
     "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
+    "packageName": MessageLookupByLibrary.simpleMessage("Package Name"),
     "pageNotFound": MessageLookupByLibrary.simpleMessage("Page Not Found"),
     "paid": MessageLookupByLibrary.simpleMessage("Paid"),
     "paidInvoices": MessageLookupByLibrary.simpleMessage("8 Paid"),
@@ -3250,6 +3378,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Payment Method Type",
     ),
     "paymentMethods": MessageLookupByLibrary.simpleMessage("Payment Methods"),
+    "paymentNotifications": MessageLookupByLibrary.simpleMessage(
+      "Payment Notifications",
+    ),
+    "paymentNotificationsDescription": MessageLookupByLibrary.simpleMessage(
+      "Receive notifications about payments",
+    ),
     "pdfError": MessageLookupByLibrary.simpleMessage("PDF generation error"),
     "pdfGenerated": MessageLookupByLibrary.simpleMessage(
       "PDF generated successfully",
@@ -3296,11 +3430,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "pleaseEnableBluetooth": MessageLookupByLibrary.simpleMessage(
       "Please Enable Bluetooth",
     ),
+    "pleaseEnterCompanyName": MessageLookupByLibrary.simpleMessage(
+      "Please enter company name",
+    ),
+    "pleaseEnterMerchantCode": MessageLookupByLibrary.simpleMessage(
+      "Please enter merchant code",
+    ),
     "pleaseEnterValidAmount": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid amount",
     ),
     "pleaseSelectCategory": MessageLookupByLibrary.simpleMessage(
       "Please select a category",
+    ),
+    "pleaseSelectInvoiceType": MessageLookupByLibrary.simpleMessage(
+      "Please select invoice type",
     ),
     "position": MessageLookupByLibrary.simpleMessage("Position"),
     "postalCode": MessageLookupByLibrary.simpleMessage("Postal Code"),
@@ -3368,6 +3511,49 @@ class MessageLookup extends MessageLookupByLibrary {
     "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
     "privacyPolicyComingSoon": MessageLookupByLibrary.simpleMessage(
       "Privacy Policy Coming Soon",
+    ),
+    "privacyPolicyContactContent": MessageLookupByLibrary.simpleMessage(
+      "If you have any questions about this Privacy Policy, please contact us at support@invotik.com.",
+    ),
+    "privacyPolicyContactTitle": MessageLookupByLibrary.simpleMessage(
+      "Contact Us",
+    ),
+    "privacyPolicyDataCollectionContent": MessageLookupByLibrary.simpleMessage(
+      "We collect information that you provide directly to us, such as when you create an account, make a purchase, or contact us for support.",
+    ),
+    "privacyPolicyDataCollectionTitle": MessageLookupByLibrary.simpleMessage(
+      "Data Collection",
+    ),
+    "privacyPolicyDataSecurityContent": MessageLookupByLibrary.simpleMessage(
+      "We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.",
+    ),
+    "privacyPolicyDataSecurityTitle": MessageLookupByLibrary.simpleMessage(
+      "Data Security",
+    ),
+    "privacyPolicyDataUsageContent": MessageLookupByLibrary.simpleMessage(
+      "We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.",
+    ),
+    "privacyPolicyDataUsageTitle": MessageLookupByLibrary.simpleMessage(
+      "Data Usage",
+    ),
+    "privacyPolicyIntroductionContent": MessageLookupByLibrary.simpleMessage(
+      "This Privacy Policy describes how Invotek collects, uses, and protects your personal information when you use our application.",
+    ),
+    "privacyPolicyIntroductionTitle": MessageLookupByLibrary.simpleMessage(
+      "Introduction",
+    ),
+    "privacyPolicyLastUpdated": m66,
+    "privacyPolicyLastUpdatedPlaceholder": MessageLookupByLibrary.simpleMessage(
+      "Last updated: January 2024",
+    ),
+    "privacyPolicyTitle": MessageLookupByLibrary.simpleMessage(
+      "Privacy Policy",
+    ),
+    "privacyPolicyUserRightsContent": MessageLookupByLibrary.simpleMessage(
+      "You have the right to access, update, or delete your personal information at any time through your account settings.",
+    ),
+    "privacyPolicyUserRightsTitle": MessageLookupByLibrary.simpleMessage(
+      "Your Rights",
     ),
     "product": MessageLookupByLibrary.simpleMessage("Product"),
     "productAddedSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -3448,7 +3634,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "productsDeleteCategory": MessageLookupByLibrary.simpleMessage(
       "Delete Category",
     ),
-    "productsDeleteCategoryConfirmation": m66,
+    "productsDeleteCategoryConfirmation": m67,
     "productsDescription": MessageLookupByLibrary.simpleMessage("Description"),
     "productsEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "productsEditProduct": MessageLookupByLibrary.simpleMessage("Edit Product"),
@@ -3613,7 +3799,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "qrCodeLabel": MessageLookupByLibrary.simpleMessage("QR Code"),
     "qty": MessageLookupByLibrary.simpleMessage("Qty"),
     "quantity": MessageLookupByLibrary.simpleMessage("Quantity"),
-    "quantityExceedsAvailableStock": m67,
+    "quantityExceedsAvailableStock": m68,
     "quantityMustBeAPositiveInteger": MessageLookupByLibrary.simpleMessage(
       "Quantity must be a positive integer",
     ),
@@ -3625,6 +3811,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "quickActions": MessageLookupByLibrary.simpleMessage("Quick Actions"),
     "quickActionsTitle": MessageLookupByLibrary.simpleMessage("Quick Actions"),
+    "quickContact": MessageLookupByLibrary.simpleMessage("Quick Contact"),
     "receiveNotifications": MessageLookupByLibrary.simpleMessage(
       "Receive Notifications",
     ),
@@ -3632,6 +3819,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "referenceNumberHint": MessageLookupByLibrary.simpleMessage(
       "Invoice number, receipt ID, etc.",
     ),
+    "refresh": MessageLookupByLibrary.simpleMessage("Refresh"),
     "refreshData": MessageLookupByLibrary.simpleMessage("Refresh Data"),
     "refreshPrinters": MessageLookupByLibrary.simpleMessage("Refresh Printers"),
     "register": MessageLookupByLibrary.simpleMessage("Register"),
@@ -3654,7 +3842,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "The requested page was not found",
     ),
     "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
-    "resendCodeIn": m68,
+    "resendCodeIn": m69,
     "resetFilters": MessageLookupByLibrary.simpleMessage("Reset"),
     "resetPassword": MessageLookupByLibrary.simpleMessage("Reset Password"),
     "resetPasswordDesc": MessageLookupByLibrary.simpleMessage(
@@ -3716,6 +3904,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "searchExpenses": MessageLookupByLibrary.simpleMessage(
       ".... Search expenses",
     ),
+    "searchFAQs": MessageLookupByLibrary.simpleMessage("Search FAQs"),
     "searchForUser": MessageLookupByLibrary.simpleMessage("Search for user..."),
     "searchInClients": MessageLookupByLibrary.simpleMessage(
       "Search in clients...",
@@ -3749,6 +3938,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Select customer status",
     ),
     "selectDate": MessageLookupByLibrary.simpleMessage("Select Date"),
+    "selectLanguage": MessageLookupByLibrary.simpleMessage("Select Language"),
     "selectOrAddCustomer": MessageLookupByLibrary.simpleMessage(
       "Please select a customer or enter customer data",
     ),
@@ -3765,6 +3955,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "sendInvoiceDescription": MessageLookupByLibrary.simpleMessage(
       "Ability to send invoice to client",
     ),
+    "sendMessage": MessageLookupByLibrary.simpleMessage("Send Message"),
     "sendMethod": MessageLookupByLibrary.simpleMessage("Send Method"),
     "sendVerificationCode": MessageLookupByLibrary.simpleMessage(
       "Send Verification Code",
@@ -3782,23 +3973,103 @@ class MessageLookup extends MessageLookupByLibrary {
       "Set amount, date, and payment method",
     ),
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "settingsAccount": MessageLookupByLibrary.simpleMessage("Account Settings"),
+    "settingsAccountDeleted": MessageLookupByLibrary.simpleMessage(
+      "Your account will be permanently deleted",
+    ),
+    "settingsAccountSecurity": MessageLookupByLibrary.simpleMessage(
+      "Account Security",
+    ),
     "settingsActivate": MessageLookupByLibrary.simpleMessage("Activate"),
     "settingsActivateIntegration": MessageLookupByLibrary.simpleMessage(
       "Activate Integration",
     ),
     "settingsActive": MessageLookupByLibrary.simpleMessage("Active"),
+    "settingsAddress": MessageLookupByLibrary.simpleMessage("Address"),
+    "settingsBasicInfo": MessageLookupByLibrary.simpleMessage(
+      "Basic Information",
+    ),
+    "settingsCancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "settingsCannotUndo": MessageLookupByLibrary.simpleMessage(
+      "This action cannot be undone",
+    ),
+    "settingsChangePassword": MessageLookupByLibrary.simpleMessage(
+      "Change Password",
+    ),
+    "settingsChangePasswordDesc": MessageLookupByLibrary.simpleMessage(
+      "Update your password to keep your account secure",
+    ),
+    "settingsChooseFromGallery": MessageLookupByLibrary.simpleMessage(
+      "Choose from Gallery",
+    ),
+    "settingsCompanyName": MessageLookupByLibrary.simpleMessage("Company Name"),
+    "settingsDataDeleted": MessageLookupByLibrary.simpleMessage(
+      "All your data will be permanently deleted",
+    ),
     "settingsDeactivate": MessageLookupByLibrary.simpleMessage("Deactivate"),
+    "settingsDiscard": MessageLookupByLibrary.simpleMessage("Discard"),
+    "settingsDiscardChanges": MessageLookupByLibrary.simpleMessage(
+      "You have unsaved changes. Are you sure you want to discard them?",
+    ),
     "settingsGeneral": MessageLookupByLibrary.simpleMessage("General"),
+    "settingsHardware": MessageLookupByLibrary.simpleMessage("Hardware"),
     "settingsInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
     "settingsIncome": MessageLookupByLibrary.simpleMessage("Income"),
     "settingsInvoiceType": MessageLookupByLibrary.simpleMessage("Invoice Type"),
+    "settingsInvoiceTypeSimplified": MessageLookupByLibrary.simpleMessage(
+      "Simplified",
+    ),
+    "settingsInvoiceTypeStandard": MessageLookupByLibrary.simpleMessage(
+      "Standard",
+    ),
+    "settingsManage": MessageLookupByLibrary.simpleMessage("Manage"),
+    "settingsMerchantCode": MessageLookupByLibrary.simpleMessage(
+      "Merchant Code",
+    ),
     "settingsNoPermissionToAct": MessageLookupByLibrary.simpleMessage(
       "You don\'t have permission to perform this action",
     ),
     "settingsNoPermissionToView": MessageLookupByLibrary.simpleMessage(
       "You don\'t have permission to view settings",
     ),
+    "settingsNotificationsDisabled": MessageLookupByLibrary.simpleMessage(
+      "Notifications disabled",
+    ),
+    "settingsNotificationsEnabled": MessageLookupByLibrary.simpleMessage(
+      "Notifications enabled",
+    ),
+    "settingsPasswordMedium": MessageLookupByLibrary.simpleMessage("Medium"),
+    "settingsPasswordMinLength": MessageLookupByLibrary.simpleMessage(
+      "Password must be at least 8 characters",
+    ),
+    "settingsPasswordNumber": MessageLookupByLibrary.simpleMessage(
+      "At least one number",
+    ),
+    "settingsPasswordRequirements": MessageLookupByLibrary.simpleMessage(
+      "Password Requirements",
+    ),
+    "settingsPasswordSpecial": MessageLookupByLibrary.simpleMessage(
+      "At least one special character",
+    ),
+    "settingsPasswordStrong": MessageLookupByLibrary.simpleMessage("Strong"),
+    "settingsPasswordUppercase": MessageLookupByLibrary.simpleMessage(
+      "At least one uppercase letter",
+    ),
+    "settingsPasswordWeak": MessageLookupByLibrary.simpleMessage("Weak"),
+    "settingsPersonalInfo": MessageLookupByLibrary.simpleMessage(
+      "Personal Information",
+    ),
+    "settingsPhone": MessageLookupByLibrary.simpleMessage("Phone"),
+    "settingsPrinter": MessageLookupByLibrary.simpleMessage("Printer"),
+    "settingsProfile": MessageLookupByLibrary.simpleMessage("Profile"),
+    "settingsRegionalSettings": MessageLookupByLibrary.simpleMessage(
+      "Regional Settings",
+    ),
+    "settingsRemovePhoto": MessageLookupByLibrary.simpleMessage("Remove Photo"),
     "settingsRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "settingsSaveChanges": MessageLookupByLibrary.simpleMessage(
+      "Changes saved successfully",
+    ),
     "settingsSavedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "Settings saved successfully",
     ),
@@ -3806,6 +4077,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsSupportEmailSubject": MessageLookupByLibrary.simpleMessage(
       "Technical Support - Invotek App",
     ),
+    "settingsTakePhoto": MessageLookupByLibrary.simpleMessage("Take Photo"),
     "settingsTaxIntegration": MessageLookupByLibrary.simpleMessage(
       "Tax Integration",
     ),
@@ -3815,13 +4087,25 @@ class MessageLookup extends MessageLookupByLibrary {
     "settingsTaxMerchantCode": MessageLookupByLibrary.simpleMessage(
       "Tax Merchant Code",
     ),
+    "settingsUnsavedChanges": MessageLookupByLibrary.simpleMessage(
+      "Unsaved Changes",
+    ),
     "settingsUpdateStatus": MessageLookupByLibrary.simpleMessage(
       "Update Status",
     ),
+    "settingsUserActive": MessageLookupByLibrary.simpleMessage("Active"),
+    "settingsUserInactive": MessageLookupByLibrary.simpleMessage("Inactive"),
+    "settingsUsersManagement": MessageLookupByLibrary.simpleMessage(
+      "Users Management",
+    ),
     "settingsVAT": MessageLookupByLibrary.simpleMessage("VAT"),
+    "settingsWhatHappens": MessageLookupByLibrary.simpleMessage(
+      "What happens when you delete your account?",
+    ),
+    "shareApp": MessageLookupByLibrary.simpleMessage("Share App"),
     "shareInvoice": MessageLookupByLibrary.simpleMessage("Share Invoice"),
-    "shareInvoiceText": m69,
-    "showAllItems": m70,
+    "shareInvoiceText": m70,
+    "showAllItems": m71,
     "showLess": MessageLookupByLibrary.simpleMessage("Show Less"),
     "signIn": MessageLookupByLibrary.simpleMessage("Sign in"),
     "signInFailed": MessageLookupByLibrary.simpleMessage("Sign in failed"),
@@ -3853,8 +4137,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "state": MessageLookupByLibrary.simpleMessage("Status"),
     "statistics": MessageLookupByLibrary.simpleMessage("Statistics"),
     "status": MessageLookupByLibrary.simpleMessage("Status"),
-    "statusCategory": m71,
-    "statusCode": m72,
+    "statusCategory": m72,
+    "statusCode": m73,
     "statusDraft": MessageLookupByLibrary.simpleMessage("Draft"),
     "statusInfo": MessageLookupByLibrary.simpleMessage("Status Info"),
     "statusOverdue": MessageLookupByLibrary.simpleMessage("Overdue"),
@@ -3863,10 +4147,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "statusRequired": MessageLookupByLibrary.simpleMessage(
       "Invoice status is required",
     ),
+    "statusSent": MessageLookupByLibrary.simpleMessage("Sent"),
     "statusType": MessageLookupByLibrary.simpleMessage("Status Type"),
     "stop": MessageLookupByLibrary.simpleMessage("Stop"),
+    "storageInformation": MessageLookupByLibrary.simpleMessage(
+      "Storage Information",
+    ),
     "subTitle": MessageLookupByLibrary.simpleMessage("Sub Title"),
     "subject": MessageLookupByLibrary.simpleMessage("Subject"),
+    "subjectRequired": MessageLookupByLibrary.simpleMessage(
+      "Subject is required",
+    ),
     "subscriptionPackageSelectionPage": MessageLookupByLibrary.simpleMessage(
       "Subscription Packages Page",
     ),
@@ -3883,7 +4174,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Subscription Required",
     ),
     "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal:"),
-    "subtotalLine": m73,
+    "subtotalLine": m74,
     "successText": MessageLookupByLibrary.simpleMessage("Success Text"),
     "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
     "supervisorDescription": MessageLookupByLibrary.simpleMessage(
@@ -3897,6 +4188,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "systemAdministratorDescription": MessageLookupByLibrary.simpleMessage(
       "Has all permissions in the system",
+    ),
+    "systemNotifications": MessageLookupByLibrary.simpleMessage(
+      "System Notifications",
+    ),
+    "systemNotificationsDescription": MessageLookupByLibrary.simpleMessage(
+      "Receive system and update notifications",
     ),
     "systemSettings": MessageLookupByLibrary.simpleMessage("System Settings"),
     "systemSettingsDescription": MessageLookupByLibrary.simpleMessage(
@@ -3930,7 +4227,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Unposted invoices & Postpaid invoices & Returned invoices & Create a new invoice",
     ),
     "taxInvoicesTitle": MessageLookupByLibrary.simpleMessage("Tax Invoices"),
-    "taxLine": m74,
+    "taxLine": m75,
     "taxMerchantCode": MessageLookupByLibrary.simpleMessage(
       "Tax Merchant Code",
     ),
@@ -3948,8 +4245,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "taxType": MessageLookupByLibrary.simpleMessage("Tax Type"),
     "taxUID": MessageLookupByLibrary.simpleMessage("Tax UID"),
     "taxUIDCopied": MessageLookupByLibrary.simpleMessage("Tax UID copied"),
-    "taxUIDForInvoice": m75,
+    "taxUIDForInvoice": m76,
     "tekpart": MessageLookupByLibrary.simpleMessage("TekPart"),
+    "termsOfService": MessageLookupByLibrary.simpleMessage("Terms of Service"),
     "termsOfUse": MessageLookupByLibrary.simpleMessage("Terms of Use"),
     "termsOfUseComingSoon": MessageLookupByLibrary.simpleMessage(
       "Terms of Use Coming Soon",
@@ -3994,7 +4292,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "totalCustomers": MessageLookupByLibrary.simpleMessage("Total Customers"),
     "totalExpenses": MessageLookupByLibrary.simpleMessage("Total Expenses"),
     "totalInvoices": MessageLookupByLibrary.simpleMessage("Total Invoices"),
-    "totalLine": m76,
+    "totalLine": m77,
     "totalProducts": MessageLookupByLibrary.simpleMessage("Total Products"),
     "totalSales": MessageLookupByLibrary.simpleMessage("Total Sales"),
     "tourismEntertainmentCompany": MessageLookupByLibrary.simpleMessage(
@@ -4013,6 +4311,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "tryAgain": MessageLookupByLibrary.simpleMessage("Try Again"),
     "tryDifferentSearch": MessageLookupByLibrary.simpleMessage(
       "Try a different search",
+    ),
+    "tryDifferentSearchTerm": MessageLookupByLibrary.simpleMessage(
+      "Try a different search term",
     ),
     "type": MessageLookupByLibrary.simpleMessage("Type"),
     "uae": MessageLookupByLibrary.simpleMessage("United Arab Emirates"),
@@ -4088,7 +4389,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "usersAndPermissionsManagement": MessageLookupByLibrary.simpleMessage(
       "Users and Permissions Management",
     ),
-    "usersAreYouSureYouWantToDeleteRole": m77,
+    "usersAreYouSureYouWantToDeleteRole": m78,
     "usersAreYouSureYouWantToDeleteUser": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete user",
     ),
@@ -4219,11 +4520,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "vat": MessageLookupByLibrary.simpleMessage("VAT"),
     "vatNumber": MessageLookupByLibrary.simpleMessage("VAT Number"),
     "verifyCode": MessageLookupByLibrary.simpleMessage("Verify Code"),
-    "verifyCodeDesc": m78,
+    "verifyCodeDesc": m79,
     "verifyCodeTitle": MessageLookupByLibrary.simpleMessage("Verify Code"),
     "verifyTokenIsRequired": MessageLookupByLibrary.simpleMessage(
       "Verify token is required",
     ),
+    "version": MessageLookupByLibrary.simpleMessage("Version"),
     "view": MessageLookupByLibrary.simpleMessage("View"),
     "viewAllInvoices": MessageLookupByLibrary.simpleMessage(
       "View All Invoices",
@@ -4233,7 +4535,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ability to view clients list",
     ),
     "viewCustomer": MessageLookupByLibrary.simpleMessage("View Customer"),
-    "viewCustomerDetails": m79,
+    "viewCustomerDetails": m80,
     "viewCustomers": MessageLookupByLibrary.simpleMessage("View Customers"),
     "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
     "viewExpenses": MessageLookupByLibrary.simpleMessage("View Expenses"),
@@ -4244,7 +4546,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "viewInvoicesDescription": MessageLookupByLibrary.simpleMessage(
       "Ability to view invoices list",
     ),
-    "viewItemDetails": m80,
+    "viewItemDetails": m81,
     "viewPrivacyPolicy": MessageLookupByLibrary.simpleMessage(
       "View privacy policy",
     ),
@@ -4273,8 +4575,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Ability to view users list",
     ),
     "viewer": MessageLookupByLibrary.simpleMessage("Viewer"),
-    "viewingInvoices": m81,
-    "viewingOrders": m82,
+    "viewingInvoices": m82,
+    "viewingOrders": m83,
     "visitInvotekWebsite": MessageLookupByLibrary.simpleMessage(
       "Visit Invotek website",
     ),
@@ -4282,17 +4584,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "weight": MessageLookupByLibrary.simpleMessage("Weight"),
     "welcome": MessageLookupByLibrary.simpleMessage("WELCOME!"),
     "welcomeBack": MessageLookupByLibrary.simpleMessage("Welcome back, 👋"),
-    "welcomeBackWithName": m83,
+    "welcomeBackWithName": m84,
     "welcomeToInvotek": MessageLookupByLibrary.simpleMessage(
       "Welcome to Invotek App",
     ),
     "welcomeToInvotekApp": MessageLookupByLibrary.simpleMessage(
       "Welcome to Invotek app",
     ),
+    "whatsapp": MessageLookupByLibrary.simpleMessage("WhatsApp"),
     "yes": MessageLookupByLibrary.simpleMessage("Yes"),
     "yesDeleteAccount": MessageLookupByLibrary.simpleMessage(
       "Yes, delete my account",
     ),
-    "youHaveNewNotification": m84,
+    "youHaveNewNotification": m85,
   };
 }

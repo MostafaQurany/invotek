@@ -40,7 +40,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.dispose();
   }
 
-  void _submit() {
+  void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
     final request = UpdateProfileRequest(
       name: _nameController.text.trim(),
@@ -62,19 +62,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           onPressed: () => Navigator.of(context).pop(),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.onPrimary,
+            color: AppColors.primary,
             size: 24.sp,
           ),
         ),
         title: Text(
           S.of(context).editProfile,
           style: AppTextTheme.textTheme.headlineMedium?.copyWith(
-            color: AppColors.onPrimary,
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.white,
         elevation: 0,
       ),
       body: PermissionWidget(
@@ -158,11 +158,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 }
 
                 if (state is ProfileLoaded) {
-                  _nameController.text = state.user.name ?? '';
-                  _emailController.text = state.user.email ?? '';
-                  _phoneController.text = (state.user.phone ?? '').toString();
-                  _positionController.text = (state.user.position ?? '')
-                      .toString();
+                  // Initialize controllers only once
+                  if (_nameController.text.isEmpty) {
+                    _nameController.text = state.user.name ?? '';
+                    _emailController.text = state.user.email ?? '';
+                    _phoneController.text = (state.user.phone ?? '').toString();
+                    _positionController.text = (state.user.position ?? '')
+                        .toString();
+                  }
 
                   return Form(
                     key: _formKey,
@@ -259,7 +262,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         variant: ActionButtonVariant.primary,
                                         isLoading:
                                             updateState is UpdateProfileLoading,
-                                        onPressed: _submit,
+                                        onPressed: () => _submit(context),
                                       );
                                     },
                                   ),

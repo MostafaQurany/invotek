@@ -31,8 +31,8 @@ class NotificationsListScreenWithProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<NotificationsCubit>(),
+    return BlocProvider.value(
+      value: getIt<NotificationsCubit>(),
       child: const NotificationsListScreen(),
     );
   }

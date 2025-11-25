@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_menu_button.dart';
@@ -10,6 +9,9 @@ import 'package:invotek/features/settings/ui/widgets/account_settings_card.dart'
 import 'package:invotek/features/settings/ui/widgets/company_profile_card.dart';
 import 'package:invotek/features/settings/ui/widgets/hardware_settings_card.dart';
 import 'package:invotek/features/settings/ui/widgets/tax_integration_card.dart';
+import 'package:invotek/features/settings/ui/widgets/about_contact_card.dart';
+import 'package:invotek/features/settings/ui/widgets/others_card.dart';
+import 'package:invotek/features/settings/ui/widgets/system_settings_card.dart';
 import 'package:invotek/core/cubits/permissions_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
@@ -29,6 +31,7 @@ class SettingsScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
         appBar: AppBar(
+          leading: SizedBox.shrink(),
           actions: [Center(child: CommonMenuButton(color: AppColors.primary))],
           title: Text(S.of(context).systemSettings),
           centerTitle: false,
@@ -48,15 +51,13 @@ class SettingsScreen extends StatelessWidget {
               const AccountSettingsCard(),
               const SizedBox(height: 16),
               const HardwareSettingsCard(),
+              const SizedBox(height: 16),
+              const SystemSettingsCard(),
+              // const SizedBox(height: 16),
+              // const AboutContactCard(),
+              const SizedBox(height: 16),
+              const OthersCard(),
               const SizedBox(height: 32),
-              Center(
-                child: Text(
-                  'Version 1.0.0',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-                ),
-              ),
             ],
           ),
         ),

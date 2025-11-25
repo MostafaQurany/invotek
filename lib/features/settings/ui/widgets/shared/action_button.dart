@@ -57,7 +57,9 @@ class ActionButton extends StatelessWidget {
       return OutlinedButton(
         onPressed: isLoading ? null : onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.primary,
+          foregroundColor: variant == ActionButtonVariant.danger
+              ? AppColors.error
+              : AppColors.primary,
           side: BorderSide(color: AppColors.primary),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.r),
@@ -79,6 +81,8 @@ class ActionButton extends StatelessWidget {
           valueColor: AlwaysStoppedAnimation<Color>(
             variant == ActionButtonVariant.secondary
                 ? AppColors.primary
+                : variant == ActionButtonVariant.danger
+                ? AppColors.error
                 : AppColors.white,
           ),
         ),
@@ -95,6 +99,9 @@ class ActionButton extends StatelessWidget {
             text,
             style: AppTextTheme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
+              color: variant == ActionButtonVariant.danger
+                  ? AppColors.white
+                  : AppColors.primary,
             ),
           ),
         ],
@@ -105,6 +112,9 @@ class ActionButton extends StatelessWidget {
       text,
       style: AppTextTheme.textTheme.bodyMedium?.copyWith(
         fontWeight: FontWeight.w600,
+        color: variant == ActionButtonVariant.secondary
+            ? AppColors.primary
+            : AppColors.white,
       ),
     );
   }

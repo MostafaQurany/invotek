@@ -1102,7 +1102,7 @@ class SEn extends S {
   String get edit => 'Edit';
 
   @override
-  String get errorOccurred => 'Error Occurred';
+  String get errorOccurred => 'An error occurred';
 
   @override
   String get company => 'Company';
@@ -6154,7 +6154,7 @@ class SEn extends S {
   String get subscriptionPackageSelectionPage => 'Subscription Packages Page';
 
   @override
-  String get comingSoon => 'This page will be developed soon';
+  String get comingSoon => 'Coming Soon';
 
   @override
   String get cannotOpenPackageLink => 'Cannot open package link';
@@ -6508,6 +6508,9 @@ class SEn extends S {
   String get settingsAccountSecurity => 'Account Security';
 
   @override
+  String get settingsAccount => 'Account Settings';
+
+  @override
   String get settingsProfile => 'Profile';
 
   @override
@@ -6560,4 +6563,300 @@ class SEn extends S {
 
   @override
   String get notSpecified => 'Not specified';
+
+  @override
+  String get settingsUnsavedChanges => 'Unsaved Changes';
+
+  @override
+  String get settingsDiscardChanges =>
+      'You have unsaved changes. Are you sure you want to discard them?';
+
+  @override
+  String get settingsDiscard => 'Discard';
+
+  @override
+  String get pleaseEnterMerchantCode => 'Please enter merchant code';
+
+  @override
+  String get pleaseSelectInvoiceType => 'Please select invoice type';
+
+  @override
+  String get aboutUs => 'About Us';
+
+  @override
+  String get aboutUsDescription =>
+      'Invotek is a comprehensive invoice management system designed to help businesses manage their invoicing needs efficiently.';
+
+  @override
+  String get appInformation => 'App Information';
+
+  @override
+  String get appName => 'App Name';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get buildNumber => 'Build Number';
+
+  @override
+  String get packageName => 'Package Name';
+
+  @override
+  String get copyright => 'Copyright';
+
+  @override
+  String get shareApp => 'Share App';
+
+  @override
+  String get contactUs => 'Contact Us';
+
+  @override
+  String get contactForm => 'Contact Form';
+
+  @override
+  String get subjectRequired => 'Subject is required';
+
+  @override
+  String get messageRequired => 'Message is required';
+
+  @override
+  String get sendMessage => 'Send Message';
+
+  @override
+  String get quickContact => 'Quick Contact';
+
+  @override
+  String get whatsapp => 'WhatsApp';
+
+  @override
+  String get contactViaWhatsApp => 'Contact us via WhatsApp';
+
+  @override
+  String get emailOpened => 'Email app opened';
+
+  @override
+  String get cannotOpenEmail => 'Cannot open email app';
+
+  @override
+  String get cannotOpenPhone => 'Cannot open phone app';
+
+  @override
+  String get cannotOpenWhatsApp => 'Cannot open WhatsApp';
+
+  @override
+  String get privacyPolicyTitle => 'Privacy Policy';
+
+  @override
+  String privacyPolicyLastUpdated(Object date) {
+    return 'Last updated: $date';
+  }
+
+  @override
+  String get privacyPolicyLastUpdatedPlaceholder =>
+      'Last updated: January 2024';
+
+  @override
+  String get privacyPolicyIntroductionTitle => 'Introduction';
+
+  @override
+  String get privacyPolicyIntroductionContent =>
+      'This Privacy Policy describes how Invotek collects, uses, and protects your personal information when you use our application.';
+
+  @override
+  String get privacyPolicyDataCollectionTitle => 'Data Collection';
+
+  @override
+  String get privacyPolicyDataCollectionContent =>
+      'We collect information that you provide directly to us, such as when you create an account, make a purchase, or contact us for support.';
+
+  @override
+  String get privacyPolicyDataUsageTitle => 'Data Usage';
+
+  @override
+  String get privacyPolicyDataUsageContent =>
+      'We use the information we collect to provide, maintain, and improve our services, process transactions, and communicate with you.';
+
+  @override
+  String get privacyPolicyDataSecurityTitle => 'Data Security';
+
+  @override
+  String get privacyPolicyDataSecurityContent =>
+      'We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.';
+
+  @override
+  String get privacyPolicyUserRightsTitle => 'Your Rights';
+
+  @override
+  String get privacyPolicyUserRightsContent =>
+      'You have the right to access, update, or delete your personal information at any time through your account settings.';
+
+  @override
+  String get privacyPolicyContactTitle => 'Contact Us';
+
+  @override
+  String get privacyPolicyContactContent =>
+      'If you have any questions about this Privacy Policy, please contact us at support@invotik.com.';
+
+  @override
+  String get faq => 'FAQ';
+
+  @override
+  String get searchFAQs => 'Search FAQs';
+
+  @override
+  String get noFAQsFound => 'No FAQs found';
+
+  @override
+  String get tryDifferentSearchTerm => 'Try a different search term';
+
+  @override
+  String get faqQuestion1 => 'How do I create an invoice?';
+
+  @override
+  String get faqAnswer1 =>
+      'To create an invoice, go to the Invoices section and tap the \'+\' button. Fill in the required information and save.';
+
+  @override
+  String get faqQuestion2 => 'How do I change my password?';
+
+  @override
+  String get faqAnswer2 =>
+      'Go to Settings > Account Settings > Change Password. Enter your current password and new password.';
+
+  @override
+  String get faqQuestion3 => 'How do I add a customer?';
+
+  @override
+  String get faqAnswer3 =>
+      'Go to the Customers section and tap the \'+\' button. Fill in the customer information and save.';
+
+  @override
+  String get faqQuestion4 => 'How do I print an invoice?';
+
+  @override
+  String get faqAnswer4 =>
+      'Open the invoice details and tap the print button. Select your printer and print.';
+
+  @override
+  String get faqQuestion5 => 'How do I contact support?';
+
+  @override
+  String get faqAnswer5 =>
+      'You can contact support through the Contact Us screen in Settings or email us at support@invotik.com.';
+
+  @override
+  String get languageSettings => 'Language Settings';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String get arabicDescription => 'العربية';
+
+  @override
+  String get englishDescription => 'English';
+
+  @override
+  String get languageChangeNote =>
+      'Changing the language will restart the app to apply the changes.';
+
+  @override
+  String get notificationsSettings => 'Notifications Settings';
+
+  @override
+  String get notificationTypes => 'Notification Types';
+
+  @override
+  String get generalNotifications => 'General Notifications';
+
+  @override
+  String get generalNotificationsDescription =>
+      'Receive general app notifications';
+
+  @override
+  String get invoiceNotifications => 'Invoice Notifications';
+
+  @override
+  String get invoiceNotificationsDescription =>
+      'Receive notifications about invoices';
+
+  @override
+  String get paymentNotifications => 'Payment Notifications';
+
+  @override
+  String get paymentNotificationsDescription =>
+      'Receive notifications about payments';
+
+  @override
+  String get systemNotifications => 'System Notifications';
+
+  @override
+  String get systemNotificationsDescription =>
+      'Receive system and update notifications';
+
+  @override
+  String get notificationsSettingsNote =>
+      'You can close and open the general notifications.';
+
+  @override
+  String get dataStorage => 'Data & Storage';
+
+  @override
+  String get storageInformation => 'Storage Information';
+
+  @override
+  String get cacheSize => 'Cache Size';
+
+  @override
+  String get dataSize => 'Data Size';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get clearCache => 'Clear Cache';
+
+  @override
+  String get clearCacheDescription =>
+      'Clear temporary files and cached data to free up storage space.';
+
+  @override
+  String get clearCacheConfirmation =>
+      'Are you sure you want to clear the cache? This will remove temporary files but not your personal data.';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get cacheClearedSuccessfully => 'Cache cleared successfully';
+
+  @override
+  String get errorClearingCache => 'Error clearing cache';
+
+  @override
+  String get clearAllData => 'Clear All Data';
+
+  @override
+  String get clearAllDataConfirmation =>
+      'Are you sure you want to clear all data? This will remove all cached files and preferences. This action cannot be undone.';
+
+  @override
+  String get clearAllDataDescription =>
+      'Warning: This will delete all cached data and preferences. Your account data will remain safe.';
+
+  @override
+  String get allDataClearedSuccessfully => 'All data cleared successfully';
+
+  @override
+  String get errorClearingData => 'Error clearing data';
+
+  @override
+  String get helpSupport => 'Help & Support';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get termsOfService => 'Terms of Service';
 }

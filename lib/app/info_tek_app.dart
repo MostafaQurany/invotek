@@ -54,6 +54,7 @@ class InfoTekApp extends StatelessWidget {
             builder: (context, localizationState) {
               return AppExitHandler(
                 child: MaterialApp(
+                  key: ValueKey(localizationState.locale),
                   debugShowCheckedModeBanner: false,
                   title: 'Invotek',
                   theme: AppTheme.lightTheme,
