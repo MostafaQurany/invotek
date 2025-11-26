@@ -172,20 +172,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     child: ListView(
                       padding: EdgeInsets.all(16.w),
                       children: [
-                        // Profile Photo Card
-                        SettingsCard(
-                          child: ProfilePhotoCard(
-                            photoUrl: state.user.profilePhotoUrl,
-                            userName: state.user.name ?? '',
-                            onPhotoSelected: (path) {
-                              context.read<PhotoCubit>().upload(File(path));
-                            },
-                            onPhotoRemoved: () {
-                              // TODO: Implement photo removal
-                            },
-                          ),
-                        ),
-
+                        // // Profile Photo Card
+                        // SettingsCard(
+                        //   child: ProfilePhotoCard(
+                        //     photoUrl: state.user.profilePhotoUrl,
+                        //     userName: state.user.name ?? '',
+                        //     onPhotoSelected: (path) {
+                        //       context.read<PhotoCubit>().upload(File(path));
+                        //     },
+                        //     onPhotoRemoved: () {
+                        //       // TODO: Implement photo removal
+                        //     },
+                        //   ),
+                        // ),
                         SizedBox(height: 16.h),
 
                         // Personal Information Card

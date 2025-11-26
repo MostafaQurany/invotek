@@ -65,9 +65,10 @@ class _AboutContactScreenState extends State<AboutContactScreen>
     setState(() => _isSubmitting = true);
 
     try {
-      final email = 'support@invotik.com';
+      final email = 'info@invotek.com';
       final subject = _subjectController.text.trim();
-      final body = '''
+      final body =
+          '''
 Name: ${_nameController.text.trim()}
 Email: ${_emailController.text.trim()}
 
@@ -78,10 +79,7 @@ ${_messageController.text.trim()}
       final uri = Uri(
         scheme: 'mailto',
         path: email,
-        queryParameters: {
-          'subject': subject,
-          'body': body,
-        },
+        queryParameters: {'subject': subject, 'body': body},
       );
 
       if (await canLaunchUrl(uri)) {
@@ -126,7 +124,7 @@ ${_messageController.text.trim()}
 
   Future<void> _openPhone() async {
     try {
-      final phone = 'tel:+962XXXXXXXXX';
+      final phone = 'tel:+962798934845';
       final uri = Uri.parse(phone);
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri);
@@ -154,7 +152,7 @@ ${_messageController.text.trim()}
 
   Future<void> _openWhatsApp() async {
     try {
-      final phone = '962XXXXXXXXX';
+      final phone = '+962798934845';
       final uri = Uri.parse('https://wa.me/$phone');
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -216,10 +214,7 @@ ${_messageController.text.trim()}
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
-          _buildAboutTab(),
-          _buildContactTab(),
-        ],
+        children: [_buildAboutTab(), _buildContactTab()],
       ),
     );
   }
@@ -242,10 +237,7 @@ ${_messageController.text.trim()}
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.primary,
-                    width: 2,
-                  ),
+                  border: Border.all(color: AppColors.primary, width: 2),
                 ),
                 padding: EdgeInsets.all(16.w),
                 child: CircleAvatar(
@@ -404,9 +396,9 @@ ${_messageController.text.trim()}
                 SettingsTile(
                   icon: Icons.email,
                   title: S.of(context).email,
-                  subtitle: 'support@invotik.com',
+                  subtitle: 'info@invotek.com',
                   onTap: () async {
-                    final uri = Uri.parse('mailto:support@invotik.com');
+                    final uri = Uri.parse('mailto:info@invotek.com');
                     if (await canLaunchUrl(uri)) {
                       await launchUrl(uri);
                     }
@@ -416,7 +408,7 @@ ${_messageController.text.trim()}
                 SettingsTile(
                   icon: Icons.phone,
                   title: S.of(context).phone,
-                  subtitle: '+962 XXXXXXXXX',
+                  subtitle: '+962 798934845',
                   onTap: _openPhone,
                 ),
                 Divider(height: 1, color: AppColors.border, indent: 56.w),
@@ -465,4 +457,3 @@ ${_messageController.text.trim()}
     );
   }
 }
-
