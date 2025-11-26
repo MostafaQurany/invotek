@@ -6,8 +6,13 @@ import 'package:invotek/generated/l10n.dart';
 
 class InvoiceBasicInfoStep extends StatefulWidget {
   final InvoiceFormController formController;
+  final bool isReadOnly;
 
-  const InvoiceBasicInfoStep({super.key, required this.formController});
+  const InvoiceBasicInfoStep({
+    super.key,
+    required this.formController,
+    this.isReadOnly = false,
+  });
 
   @override
   State<InvoiceBasicInfoStep> createState() => _InvoiceBasicInfoStepState();
@@ -105,19 +110,23 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
     required IconData icon,
   }) {
     return InkWell(
-      onTap: onTap,
+      onTap: widget.isReadOnly ? null : onTap,
       borderRadius: BorderRadius.circular(12.r),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.primary.withOpacity(0.1)
-              : AppColors.white,
+          color: widget.isReadOnly
+              ? AppColors.grey.withOpacity(0.1)
+              : (isSelected
+                    ? AppColors.primary.withOpacity(0.1)
+                    : AppColors.white),
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: isSelected
-                ? AppColors.primary
-                : AppColors.grey.withOpacity(0.3),
+            color: widget.isReadOnly
+                ? AppColors.grey.withOpacity(0.3)
+                : (isSelected
+                      ? AppColors.primary
+                      : AppColors.grey.withOpacity(0.3)),
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -159,8 +168,12 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
         SizedBox(height: 8.h),
         TextFormField(
           controller: widget.formController.issueDateController,
+          enabled: !widget.isReadOnly,
+          readOnly: true,
           decoration: InputDecoration(
-            fillColor: AppColors.white,
+            fillColor: widget.isReadOnly
+                ? AppColors.grey.withOpacity(0.1)
+                : AppColors.white,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -169,12 +182,13 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
               horizontal: 12.w,
               vertical: 16.h,
             ),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.calendar_today),
-              onPressed: () => _selectDate(),
-            ),
+            suffixIcon: widget.isReadOnly
+                ? null
+                : IconButton(
+                    icon: const Icon(Icons.calendar_today),
+                    onPressed: () => _selectDate(),
+                  ),
           ),
-          readOnly: true,
         ),
       ],
     );
@@ -195,10 +209,12 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
         SizedBox(height: 8.h),
         TextFormField(
           controller: widget.formController.descriptionController,
+          readOnly: widget.isReadOnly,
           decoration: InputDecoration(
             filled: true,
-            fillColor: AppColors.white,
-
+            fillColor: widget.isReadOnly
+                ? AppColors.grey.withOpacity(0.1)
+                : AppColors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),

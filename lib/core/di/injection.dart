@@ -49,6 +49,7 @@ import 'package:invotek/features/invoices/domain/repositories/invoice_repository
     as domain;
 import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/domain/usecases/create_credit_invoice.dart';
+import 'package:invotek/features/invoices/domain/usecases/send_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/create_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/delete_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/get_invoice_by_id.dart';
@@ -288,6 +289,9 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<CreateCreditInvoice>(
     () => CreateCreditInvoice(getIt<domain.InvoiceRepository>()),
   );
+  getIt.registerLazySingleton<SendInvoice>(
+    () => SendInvoice(getIt<domain.InvoiceRepository>()),
+  );
 
   // Settings Use Cases
   getIt.registerLazySingleton<GetProfile>(
@@ -389,6 +393,7 @@ Future<void> configureDependencies() async {
       deleteInvoice: getIt<DeleteInvoice>(),
       getInvoiceById: getIt<GetInvoiceById>(),
       createCreditInvoice: getIt<CreateCreditInvoice>(),
+      sendInvoice: getIt<SendInvoice>(),
       repository: getIt<domain.InvoiceRepository>(),
     ),
   );

@@ -385,6 +385,10 @@ abstract class ApiClient {
     @Body() CreateCreditInvoiceRequest request,
   );
 
+  // إرسال فاتورة | Send Invoice
+  @POST(ApiConstants.sendInvoice)
+  Future<CreateInvoiceResponse> sendInvoice(@Path('id') int id);
+
   // ===== TAX INTEGRATION APIs =====
   // تفعيل التكامل الضريبي | Activating tax integration
   @POST(ApiConstants.activateTaxIntegration)

@@ -163,6 +163,7 @@ class _CustomerInvoicesListScreenState
             final invoice = invoices[index];
             return InvoiceCard(
               invoice: invoice,
+              
               onTap: () => _navigateToInvoiceDetails(context, invoice),
             );
           },

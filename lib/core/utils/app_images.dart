@@ -21,4 +21,5 @@ class AppImages {
 
   static const String iraqFlag = '$_iconPath/iraq_flag.png';
   static const String englandFlag = '$_iconPath/england_flag.png';
+  static const String whatsappIcon = '$_iconPath/whatsapp_icon.png';
 }

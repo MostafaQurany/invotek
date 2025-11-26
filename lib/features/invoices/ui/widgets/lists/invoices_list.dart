@@ -12,6 +12,7 @@ class InvoicesList extends StatelessWidget {
   final Function(InvoiceEntity)? onInvoiceEdit;
   final Function(InvoiceEntity)? onInvoiceDelete;
   final Function(InvoiceEntity)? onInvoiceReturn;
+  final Function(InvoiceEntity)? onInvoiceSend;
   final bool showLoadingIndicator;
   final String? loadingMessage;
 
@@ -23,6 +24,7 @@ class InvoicesList extends StatelessWidget {
     this.onInvoiceEdit,
     this.onInvoiceDelete,
     this.onInvoiceReturn,
+    this.onInvoiceSend,
     this.showLoadingIndicator = false,
     this.loadingMessage,
   });
@@ -34,25 +36,10 @@ class InvoicesList extends StatelessWidget {
         // Show invoices first
         if (index < invoices.length) {
           final invoice = invoices[index];
-          // البحث عن الفاتورة المرتجعة المرتبطة
-          InvoiceEntity? creditInvoice;
-          if (invoice.documentType?.toLowerCase() == 'invoice') {
-            creditInvoice = invoices.firstWhere(
-              (inv) =>
-                  inv.documentType?.toLowerCase() == 'credit' &&
-                  inv.apiRequest?.originalUid == invoice.taxUid,
-              orElse: () => invoice, // Return invoice itself if not found
-            );
-            // إذا لم نجد فاتورة مرتجعة، نتحقق من أن creditInvoice != invoice
-            if (creditInvoice == invoice) {
-              creditInvoice = null;
-            }
-          }
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 4.h),
             child: InvoiceCard(
               invoice: invoice,
-              creditInvoice: creditInvoice,
               onTap: () => onInvoiceTap(invoice),
               onEdit: onInvoiceEdit != null
                   ? () => onInvoiceEdit!(invoice)
@@ -61,7 +48,9 @@ class InvoicesList extends StatelessWidget {
                   ? () => onInvoiceDelete!(invoice)
                   : null,
               onView: () => onInvoiceView(invoice),
-              onSend: null, // TODO: Add send functionality if needed
+              onSend: onInvoiceSend != null
+                  ? () => onInvoiceSend!(invoice)
+                  : null,
               onReturn: onInvoiceReturn != null
                   ? () => onInvoiceReturn!(invoice)
                   : null,

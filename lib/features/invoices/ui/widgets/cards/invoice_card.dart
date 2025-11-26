@@ -8,7 +8,6 @@ import 'package:invotek/generated/l10n.dart';
 
 class InvoiceCard extends StatelessWidget {
   final InvoiceEntity invoice;
-  final InvoiceEntity? creditInvoice; // الفاتورة المرتجعة المرتبطة
   final VoidCallback? onTap;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
@@ -18,7 +17,6 @@ class InvoiceCard extends StatelessWidget {
   const InvoiceCard({
     super.key,
     required this.invoice,
-    this.creditInvoice,
     this.onTap,
     this.onEdit,
     this.onDelete,
@@ -83,7 +81,11 @@ class InvoiceCard extends StatelessWidget {
                     ),
 
                     // Status Badge
-                    _buildStatusBadge(invoice.status ?? "pending"),
+                    _buildStatusBadge(
+                      invoiceType:
+                          invoice.documentType?.toLowerCase() ?? "invoice",
+                      status: invoice.status ?? "pending",
+                    ),
                   ],
                 ),
 
@@ -159,8 +161,10 @@ class InvoiceCard extends StatelessWidget {
                   ],
                 ),
 
-                // عرض الفاتورة المرتجعة إذا كانت موجودة
-                if (creditInvoice != null) _buildCreditInvoiceSection(context),
+                // عرض فواتير الإرجاع إذا كانت موجودة
+                if (invoice.returnedInvoices != null &&
+                    invoice.returnedInvoices!.isNotEmpty)
+                  _buildCreditInvoiceSection(context),
               ],
             ),
           ),
@@ -170,6 +174,9 @@ class InvoiceCard extends StatelessWidget {
   }
 
   Widget _buildCreditInvoiceSection(BuildContext context) {
+    final returnedInvoices = invoice.returnedInvoices ?? [];
+    if (returnedInvoices.isEmpty) return const SizedBox.shrink();
+
     return Container(
       margin: EdgeInsets.only(top: 12.h),
       padding: EdgeInsets.all(12.w),
@@ -196,17 +203,19 @@ class InvoiceCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.h),
-          Text(
-            creditInvoice!.invoiceNumber ?? 'N/A',
-            style: TextStyle(fontSize: 12.sp, color: AppColors.textSecondary),
-          ),
-          if (creditInvoice!.apiRequest?.returnReason != null) ...[
-            SizedBox(height: 4.h),
-            Text(
-              '${S.of(context).reason}: ${creditInvoice!.apiRequest!.returnReason}',
-              style: TextStyle(fontSize: 12.sp, color: AppColors.textSecondary),
-            ),
-          ],
+          // عرض جميع فواتير الإرجاع
+          ...returnedInvoices.map((returnedInvoice) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
+              child: Text(
+                returnedInvoice.invoiceNumber ?? 'N/A',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -222,27 +231,63 @@ class InvoiceCard extends StatelessWidget {
     if (invoice.documentType?.toLowerCase() == 'invoice') {
       // إذا كان status == "pending": إظهار Edit, Delete, Send
       if (invoice.status?.toLowerCase() == 'pending') {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            if (onEdit != null)
-              IconButton(onPressed: onEdit, icon: const Icon(Icons.edit)),
-            if (onDelete != null)
-              IconButton(onPressed: onDelete, icon: const Icon(Icons.delete)),
-            if (onSend != null)
-              IconButton(onPressed: onSend, icon: const Icon(Icons.send)),
-          ],
+        return Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              if (onEdit != null)
+                IconButton.filled(
+                  style: IconButton.styleFrom(
+                    backgroundColor: AppColors.greyLight,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  onPressed: onEdit,
+                  icon: Icon(
+                    Icons.edit,
+                    color: AppColors.greyDark,
+                    size: 16.sp,
+                  ),
+                ),
+              if (onDelete != null)
+                IconButton.filled(
+                  style: IconButton.styleFrom(
+                    backgroundColor: AppColors.error,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                  ),
+                  onPressed: onDelete,
+                  icon: Icon(Icons.delete, color: AppColors.white, size: 16.sp),
+                ),
+            ],
+          ),
         );
       } else if (invoice.status?.toLowerCase() == 'sent' &&
-          creditInvoice == null) {
-        // إذا كان status == "sent" وليس لديها credit invoice: إظهار Return فقط
-        return onReturn != null
-            ? IconButton(
+          (invoice.returnedInvoices == null ||
+              invoice.returnedInvoices!.isEmpty)) {
+        // إذا كان status == "sent" وليس لديها returned invoices: إظهار Return فقط
+        return Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton.filled(
+                style: IconButton.styleFrom(
+                  backgroundColor: AppColors.warning,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                ),
                 onPressed: onReturn,
-                icon: const Icon(Icons.undo),
+                icon: Icon(Icons.undo, color: AppColors.white, size: 16.sp),
                 tooltip: S.of(context).returnInvoice,
-              )
-            : const SizedBox.shrink();
+              ),
+            ],
+          ),
+        );
       } else {
         // إذا كان status != "pending" و != "sent" أو لديها credit invoice: لا تظهر أي أزرار
         return const SizedBox.shrink();
@@ -263,38 +308,46 @@ class InvoiceCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(String status) {
+  Widget _buildStatusBadge({
+    required String invoiceType,
+    required String status,
+  }) {
     Color backgroundColor;
     Color textColor;
     String statusText;
 
-    switch (status.toLowerCase()) {
-      case 'paid':
-        backgroundColor = AppColors.success.withOpacity(0.1);
-        textColor = AppColors.success;
-        statusText = S.current.paid;
-        break;
-      case 'pending':
-        backgroundColor = AppColors.warning.withOpacity(0.1);
-        textColor = AppColors.warning;
-        statusText = S.current.pending;
-        break;
-      case 'overdue':
-        backgroundColor = AppColors.error.withOpacity(0.1);
-        textColor = AppColors.error;
-        statusText = S.current.overdue;
-        break;
-      case 'draft':
-        backgroundColor = AppColors.textSecondary.withOpacity(0.1);
-        textColor = AppColors.textSecondary;
-        statusText = S.current.draft;
-        break;
-      default:
-        backgroundColor = AppColors.textSecondary.withOpacity(0.1);
-        textColor = AppColors.textSecondary;
-        statusText = status;
+    if (invoiceType == 'invoice') {
+      switch (status.toLowerCase()) {
+        case 'paid':
+          backgroundColor = AppColors.success.withOpacity(0.1);
+          textColor = AppColors.success;
+          statusText = S.current.paid;
+          break;
+        case 'pending':
+          backgroundColor = AppColors.warning.withOpacity(0.1);
+          textColor = AppColors.warning;
+          statusText = S.current.pending;
+          break;
+        case 'overdue':
+          backgroundColor = AppColors.error.withOpacity(0.1);
+          textColor = AppColors.error;
+          statusText = S.current.overdue;
+          break;
+        case 'draft':
+          backgroundColor = AppColors.textSecondary.withOpacity(0.1);
+          textColor = AppColors.textSecondary;
+          statusText = S.current.draft;
+          break;
+        default:
+          backgroundColor = AppColors.textSecondary.withOpacity(0.1);
+          textColor = AppColors.textSecondary;
+          statusText = status;
+      }
+    } else {
+      backgroundColor = AppColors.greyDark.withOpacity(0.1);
+      textColor = AppColors.textSecondary;
+      statusText = S.current.creditInvoice;
     }
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
       decoration: BoxDecoration(

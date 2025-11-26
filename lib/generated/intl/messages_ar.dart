@@ -775,7 +775,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "إنشاء وتعديل الفواتير",
     ),
     "createCreditInvoice": MessageLookupByLibrary.simpleMessage(
-      "إنشاء فاتورة ائتمان",
+      "إنشاء فاتورة مرتجعة",
     ),
     "createCustomers": MessageLookupByLibrary.simpleMessage("إنشاء العملاء"),
     "createEditInvoices": MessageLookupByLibrary.simpleMessage(
@@ -820,9 +820,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "creatingInvoices": MessageLookupByLibrary.simpleMessage("إنشاء الفواتير"),
     "creationDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
     "creditCard": MessageLookupByLibrary.simpleMessage("بطاقة ائتمان"),
-    "creditInvoice": MessageLookupByLibrary.simpleMessage("فاتورة الائتمان"),
+    "creditInvoice": MessageLookupByLibrary.simpleMessage("فاتورة مرتجعة"),
     "creditInvoicesTitle": MessageLookupByLibrary.simpleMessage(
-      "فواتير الائتمان",
+      "فواتير مرتجعة",
     ),
     "currency": MessageLookupByLibrary.simpleMessage("دينار"),
     "currentPassword": MessageLookupByLibrary.simpleMessage(
@@ -2427,7 +2427,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "إعدادات المخزون",
     ),
     "invoiceAlreadyHasCreditInvoice": MessageLookupByLibrary.simpleMessage(
-      "هذه الفاتورة لديها بالفعل فاتورة ائتمان مرتبطة بها",
+      "هذه الفاتورة لديها بالفعل فاتورة مرتجعة مرتبطة بها",
     ),
     "invoiceAlreadySent": MessageLookupByLibrary.simpleMessage(
       "تم إرسال الفاتورة بالفعل",

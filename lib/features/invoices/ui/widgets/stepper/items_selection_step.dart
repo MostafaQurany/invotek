@@ -10,11 +10,13 @@ import 'package:invotek/generated/l10n.dart';
 class ItemsSelectionStep extends StatefulWidget {
   final InvoiceFormController formController;
   final String? taxInvoiceType;
+  final bool isCreditInvoiceMode;
 
   const ItemsSelectionStep({
     super.key,
     required this.formController,
     this.taxInvoiceType,
+    this.isCreditInvoiceMode = false,
   });
 
   @override
@@ -38,15 +40,14 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header with Add Button
-              _buildHeader(s),
-              SizedBox(height: 16.h),
+              // Header with Add Button (hidden in credit invoice mode)
+              if (!widget.isCreditInvoiceMode) ...[
+                _buildHeader(s),
+                SizedBox(height: 16.h),
+              ],
 
               // Items List
-              if (widget.formController.items.isEmpty)
-                Center(child: _buildEmptyState(s))
-              else
-                _buildItemsList(s),
+              if (widget.formController.items.isNotEmpty) _buildItemsList(s),
             ],
           ),
         );

@@ -5528,7 +5528,7 @@ class SEn extends S {
   String get usersSettings => 'Settings';
 
   @override
-  String get creditInvoicesTitle => 'Credit Invoices';
+  String get creditInvoicesTitle => 'Returned Invoices';
 
   @override
   String get dinar => 'Dinar';
@@ -6867,13 +6867,13 @@ class SEn extends S {
   String get returnInvoice => 'Return Invoice';
 
   @override
-  String get creditInvoice => 'Credit Invoice';
+  String get creditInvoice => 'Returned Invoice';
 
   @override
   String get reason => 'Reason';
 
   @override
-  String get createCreditInvoice => 'Create Credit Invoice';
+  String get createCreditInvoice => 'Create Returned Invoice';
 
   @override
   String get basicInfo => 'Basic Info';
@@ -6892,5 +6892,5 @@ class SEn extends S {
 
   @override
   String get invoiceAlreadyHasCreditInvoice =>
-      'This invoice already has a credit invoice associated with it';
+      'This invoice already has a returned invoice associated with it';
 }

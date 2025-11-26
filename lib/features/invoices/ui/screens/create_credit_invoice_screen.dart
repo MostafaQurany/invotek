@@ -267,6 +267,8 @@ class _CreateCreditInvoiceScreenState extends State<CreateCreditInvoiceScreen>
           // Return Reason Field
           TextField(
             controller: _returnReasonController,
+            enabled: true,
+            readOnly: false,
             decoration: InputDecoration(
               labelText: S.of(context).returnReason,
               hintText: S.of(context).enterReasonForReturn,

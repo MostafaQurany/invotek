@@ -1733,6 +1733,33 @@ class _ApiClient implements ApiClient {
   }
 
   @override
+  Future<CreateInvoiceResponse> sendInvoice(int id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<CreateInvoiceResponse>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'company/tax-invoices/${id}/send',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late CreateInvoiceResponse _value;
+    try {
+      _value = CreateInvoiceResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<ActivatingTaxIntegrationResponses> activateTaxIntegration(
     ActivatingTaxIntegrationRequest request,
   ) async {

@@ -49,6 +49,11 @@ abstract class InvoiceRepository {
     required DeleteInvoiceRequest request,
   });
 
+  /// إرسال فاتورة
+  Future<ApiResult<InvoiceEntity>> sendInvoice({
+    required int invoiceId,
+  });
+
   /// تفعيل التكامل الضريبي
   Future<ApiResult<ActivatingTaxIntegrationResponses>> activateTaxIntegration({
     required ActivatingTaxIntegrationRequest request,

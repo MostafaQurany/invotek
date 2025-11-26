@@ -40,6 +40,9 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
   customer: json['customer'] == null
       ? null
       : InvoiceCustomerModel.fromJson(json['customer'] as Map<String, dynamic>),
+  returnedInvoices: (json['returned_invoices'] as List<dynamic>?)
+      ?.map((e) => InvoiceModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
@@ -69,6 +72,7 @@ Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
       'api_request': instance.apiRequest,
       'items': instance.items,
       'customer': instance.customer,
+      'returned_invoices': instance.returnedInvoices,
     };
 
 ApiRequestInvoiceModel _$ApiRequestInvoiceModelFromJson(

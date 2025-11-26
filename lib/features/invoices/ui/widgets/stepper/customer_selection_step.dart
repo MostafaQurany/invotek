@@ -7,8 +7,13 @@ import 'package:invotek/generated/l10n.dart';
 
 class CustomerSelectionStep extends StatefulWidget {
   final InvoiceFormController formController;
+  final bool isReadOnly;
 
-  const CustomerSelectionStep({super.key, required this.formController});
+  const CustomerSelectionStep({
+    super.key,
+    required this.formController,
+    this.isReadOnly = false,
+  });
 
   @override
   State<CustomerSelectionStep> createState() => _CustomerSelectionStepState();
@@ -115,20 +120,21 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                widget.formController.selectedCustomerId = null;
-                widget.formController.selectedCustomerName = null;
-                widget.formController.selectedCustomerEmail = null;
-                widget.formController.selectedCustomerPhone = null;
-                widget.formController.selectedCustomerAddress = null;
-                widget.formController.customerNameController.clear();
-              });
-            },
-            icon: const Icon(Icons.close),
-            color: AppColors.textSecondary,
-          ),
+          if (!widget.isReadOnly)
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  widget.formController.selectedCustomerId = null;
+                  widget.formController.selectedCustomerName = null;
+                  widget.formController.selectedCustomerEmail = null;
+                  widget.formController.selectedCustomerPhone = null;
+                  widget.formController.selectedCustomerAddress = null;
+                  widget.formController.customerNameController.clear();
+                });
+              },
+              icon: const Icon(Icons.close),
+              color: AppColors.textSecondary,
+            ),
         ],
       ),
     );
@@ -180,21 +186,26 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
             Expanded(
               child: TextFormField(
                 controller: widget.formController.customerNameController,
-                onChanged: (value) {
-                  // When user types, clear selected customer and update name
-                  if (widget.formController.selectedCustomerId != null) {
-                    widget.formController.selectedCustomerId = null;
-                    widget.formController.selectedCustomerEmail = null;
-                    widget.formController.selectedCustomerPhone = null;
-                    widget.formController.selectedCustomerAddress = null;
-                  }
-                  widget.formController.selectedCustomerName = value.trim();
-                  widget.formController.notifyCustomerFieldsChanged();
-                  setState(() {});
-                },
+                onChanged: widget.isReadOnly
+                    ? null
+                    : (value) {
+                        // When user types, clear selected customer and update name
+                        if (widget.formController.selectedCustomerId != null) {
+                          widget.formController.selectedCustomerId = null;
+                          widget.formController.selectedCustomerEmail = null;
+                          widget.formController.selectedCustomerPhone = null;
+                          widget.formController.selectedCustomerAddress = null;
+                        }
+                        widget.formController.selectedCustomerName = value.trim();
+                        widget.formController.notifyCustomerFieldsChanged();
+                        setState(() {});
+                      },
+                readOnly: widget.isReadOnly,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: AppColors.white,
+                  fillColor: widget.isReadOnly
+                      ? AppColors.grey.withOpacity(0.1)
+                      : AppColors.white,
                   labelText: s.customerName,
                   hintText: s.enterCustomerName,
                   border: OutlineInputBorder(
@@ -210,11 +221,15 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
             SizedBox(width: 12.w),
             // Add Customer Button
             ElevatedButton.icon(
-              onPressed: () => _showCustomerSelectionDialog(),
+              onPressed: widget.isReadOnly
+                  ? null
+                  : () => _showCustomerSelectionDialog(),
               icon: const Icon(Icons.person_add),
               label: Text(s.selectCustomer),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: widget.isReadOnly
+                    ? AppColors.grey
+                    : AppColors.primary,
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.r),

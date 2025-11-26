@@ -173,6 +173,19 @@ class InvoiceRepositoryImpl implements domain.InvoiceRepository {
     }
   }
 
+  /// إرسال فاتورة
+  @override
+  Future<ApiResult<InvoiceEntity>> sendInvoice({
+    required int invoiceId,
+  }) async {
+    try {
+      final response = await _apiClient.sendInvoice(invoiceId);
+      return ApiResult.success(response.data.toEntity());
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
   /// تفعيل التكامل الضريبي
   @override
   Future<ApiResult<ActivatingTaxIntegrationResponses>> activateTaxIntegration({

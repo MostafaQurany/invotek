@@ -24,6 +24,8 @@ class InvoiceFormReturnReasonSection extends StatelessWidget {
         SizedBox(height: 12.h),
         TextField(
           controller: returnReasonController,
+          enabled: true,
+          readOnly: false,
           decoration: InputDecoration(
             labelText: s.returnReason,
             hintText: s.enterReasonForReturn,
@@ -38,4 +40,3 @@ class InvoiceFormReturnReasonSection extends StatelessWidget {
     );
   }
 }
-

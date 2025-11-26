@@ -2554,7 +2554,7 @@
   "usersExpenses": "المصروفات",
   "usersReports": "التقارير",
   "usersSettings": "الإعدادات",
-  "creditInvoicesTitle": "فواتير الائتمان",
+  "creditInvoicesTitle": "فواتير مرتجعة",
   "dinar": "د.ر",
   "manageExpensesAndBudgets": "إدارة النفقات والميزانيات",
   "emailAddress": "عنوان البريد الإلكتروني",
@@ -3284,13 +3284,13 @@
   "comingSoon": "قريباً",
   "errorOccurred": "حدث خطأ",
   "returnInvoice": "إرجاع الفاتورة",
-  "creditInvoice": "فاتورة الائتمان",
+  "creditInvoice": "فاتورة مرتجعة",
   "reason": "السبب",
-  "createCreditInvoice": "إنشاء فاتورة ائتمان",
+  "createCreditInvoice": "إنشاء فاتورة مرتجعة",
   "basicInfo": "المعلومات الأساسية",
   "summary": "الملخص",
   "returnReason": "سبب الإرجاع",
   "enterReasonForReturn": "أدخل سبب الإرجاع",
   "returnedInvoice": "فاتورة مرتجعة",
-  "invoiceAlreadyHasCreditInvoice": "هذه الفاتورة لديها بالفعل فاتورة ائتمان مرتبطة بها"
+  "invoiceAlreadyHasCreditInvoice": "هذه الفاتورة لديها بالفعل فاتورة مرتجعة مرتبطة بها"
 }

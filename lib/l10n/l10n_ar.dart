@@ -5484,7 +5484,7 @@ class SAr extends S {
   String get usersSettings => 'الإعدادات';
 
   @override
-  String get creditInvoicesTitle => 'فواتير الائتمان';
+  String get creditInvoicesTitle => 'فواتير مرتجعة';
 
   @override
   String get dinar => 'د.ر';
@@ -6805,13 +6805,13 @@ class SAr extends S {
   String get returnInvoice => 'إرجاع الفاتورة';
 
   @override
-  String get creditInvoice => 'فاتورة الائتمان';
+  String get creditInvoice => 'فاتورة مرتجعة';
 
   @override
   String get reason => 'السبب';
 
   @override
-  String get createCreditInvoice => 'إنشاء فاتورة ائتمان';
+  String get createCreditInvoice => 'إنشاء فاتورة مرتجعة';
 
   @override
   String get basicInfo => 'المعلومات الأساسية';
@@ -6830,5 +6830,5 @@ class SAr extends S {
 
   @override
   String get invoiceAlreadyHasCreditInvoice =>
-      'هذه الفاتورة لديها بالفعل فاتورة ائتمان مرتبطة بها';
+      'هذه الفاتورة لديها بالفعل فاتورة مرتجعة مرتبطة بها';
 }

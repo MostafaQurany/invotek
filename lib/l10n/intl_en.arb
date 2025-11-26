@@ -2554,7 +2554,7 @@
   "usersExpenses": "Expenses",
   "usersReports": "Reports",
   "usersSettings": "Settings",
-  "creditInvoicesTitle": "Credit Invoices",
+  "creditInvoicesTitle": "Returned Invoices",
   "dinar": "Dinar",
   "manageExpensesAndBudgets": "Manage expenses and budgets",
   "emailAddress": "Email Address",
@@ -3284,13 +3284,13 @@
   "comingSoon": "Coming Soon",
   "errorOccurred": "An error occurred",
   "returnInvoice": "Return Invoice",
-  "creditInvoice": "Credit Invoice",
+  "creditInvoice": "Returned Invoice",
   "reason": "Reason",
-  "createCreditInvoice": "Create Credit Invoice",
+  "createCreditInvoice": "Create Returned Invoice",
   "basicInfo": "Basic Info",
   "summary": "Summary",
   "returnReason": "Return Reason",
   "enterReasonForReturn": "Enter reason for return",
   "returnedInvoice": "Returned Invoice",
-  "invoiceAlreadyHasCreditInvoice": "This invoice already has a credit invoice associated with it"
+  "invoiceAlreadyHasCreditInvoice": "This invoice already has a returned invoice associated with it"
 }

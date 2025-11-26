@@ -10,6 +10,7 @@ import 'package:invotek/features/invoices/domain/usecases/update_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/delete_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/get_invoice_by_id.dart';
 import 'package:invotek/features/invoices/domain/usecases/create_credit_invoice.dart';
+import 'package:invotek/features/invoices/domain/usecases/send_invoice.dart';
 import 'package:invotek/features/invoices/data/models/requests/activating_tax_integration_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/create_credit_invoice_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
@@ -29,6 +30,7 @@ class InvoicesCubit extends Cubit<InvoicesState> {
   final DeleteInvoice _deleteInvoice;
   final GetInvoiceById _getInvoiceById;
   final CreateCreditInvoice _createCreditInvoice;
+  final SendInvoice _sendInvoice;
   final InvoiceRepository _repository; // For tax integration methods
   static InvoicesCubit get(context) => BlocProvider.of(context);
 
@@ -56,6 +58,7 @@ class InvoicesCubit extends Cubit<InvoicesState> {
     required DeleteInvoice deleteInvoice,
     required GetInvoiceById getInvoiceById,
     required CreateCreditInvoice createCreditInvoice,
+    required SendInvoice sendInvoice,
     required InvoiceRepository repository,
   }) : _getInvoices = getInvoices,
        _createInvoice = createInvoice,
@@ -63,6 +66,7 @@ class InvoicesCubit extends Cubit<InvoicesState> {
        _deleteInvoice = deleteInvoice,
        _getInvoiceById = getInvoiceById,
        _createCreditInvoice = createCreditInvoice,
+       _sendInvoice = sendInvoice,
        _repository = repository,
        super(const InvoicesState.initial());
 
@@ -687,6 +691,53 @@ class InvoicesCubit extends Cubit<InvoicesState> {
           InvoicesState.createSuccess(
             invoices: _invoices,
             created: invoice,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+          ),
+        );
+      },
+      failure: (failure) {
+        emit(
+          InvoicesState.failure(
+            invoices: _invoices,
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            failure: failure,
+          ),
+        );
+      },
+    );
+  }
+
+  /// Send invoice
+  Future<void> sendInvoice({
+    required int invoiceId,
+  }) async {
+    emit(
+      InvoicesState.loading(
+        invoices: _invoices,
+        currentPage: _currentPage,
+        totalPages: _totalPages,
+        message: 'sending_invoice',
+      ),
+    );
+
+    final result = await _sendInvoice(
+      SendInvoiceParams(
+        invoiceId: invoiceId,
+      ),
+    );
+
+    result.when(
+      success: (invoice) {
+        // Update the invoice in the list
+        final index = _invoices.indexWhere((inv) => inv.id == invoice.id);
+        if (index != -1) {
+          _invoices[index] = invoice;
+        }
+        emit(
+          InvoicesState.loaded(
+            invoices: _invoices,
             currentPage: _currentPage,
             totalPages: _totalPages,
           ),

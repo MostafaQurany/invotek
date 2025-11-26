@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invotek/core/theme/app_colors.dart';
+import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
 import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
@@ -34,10 +35,10 @@ class InvoiceFormService {
       customerName: isExistingCustomer
           ? null
           : (formController.selectedCustomerName?.isNotEmpty == true
-              ? formController.selectedCustomerName
-              : formController.customerNameController.text.trim().isNotEmpty
-              ? formController.customerNameController.text.trim()
-              : null),
+                ? formController.selectedCustomerName
+                : formController.customerNameController.text.trim().isNotEmpty
+                ? formController.customerNameController.text.trim()
+                : null),
       customerEmail: null, // Not required for new customers in create mode
       customerPhone: null, // Not required for new customers in create mode
       customerAddress: null,
@@ -45,7 +46,9 @@ class InvoiceFormService {
       taxAmount: formController.taxAmountController.text,
       discount: formController.discountController.text,
       total: formController.totalController.text,
-      issueDate: formController.issueDateController.text,
+      issueDate: _formatIssueDateForApi(
+        formController.issueDateController.text,
+      ),
       description: formController.descriptionController.text.isEmpty
           ? null
           : formController.descriptionController.text,
@@ -83,7 +86,9 @@ class InvoiceFormService {
       taxAmount: formController.taxAmountController.text,
       discount: formController.discountController.text,
       total: formController.totalController.text,
-      issueDate: formController.issueDateController.text,
+      issueDate: _formatIssueDateForApi(
+        formController.issueDateController.text,
+      ),
       description: formController.descriptionController.text.isEmpty
           ? null
           : formController.descriptionController.text,
@@ -126,7 +131,9 @@ class InvoiceFormService {
 
     cubit.createCreditInvoice(
       invoiceId: invoiceId,
-      issueDate: formController.issueDateController.text,
+      issueDate: _formatIssueDateForApi(
+        formController.issueDateController.text,
+      ),
       returnReason: returnReasonController.text.trim(),
       description: formController.descriptionController.text.isEmpty
           ? null
@@ -155,5 +162,17 @@ class InvoiceFormService {
       total: formController.totalController.text,
     );
   }
-}
 
+  /// Convert issue date from text field (may contain Arabic digits) to API format (English digits)
+  /// Ensures dates are always sent to API with English digits (0-9) instead of Arabic digits (٠-٩)
+  String _formatIssueDateForApi(String dateText) {
+    // Parse the date (handles both Arabic and English digits)
+    final date = DateFormatter.parseApiDate(dateText);
+    if (date != null) {
+      // Convert to API format with English digits
+      return DateFormatter.toApiFormat(date);
+    }
+    // Fallback: extract and convert Arabic digits to English
+    return DateFormatter.extractDateFromApiString(dateText) ?? dateText;
+  }
+}

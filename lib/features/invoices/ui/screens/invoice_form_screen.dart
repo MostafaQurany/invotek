@@ -435,18 +435,21 @@ class _InvoiceFormScreenState extends State<InvoiceFormScreen> {
                                     SizedBox(height: 12.h),
                                     InvoiceBasicInfoStep(
                                       formController: _formController,
+                                      isReadOnly: _isCreditInvoiceMode,
                                     ),
                                     SizedBox(height: 24.h),
 
                                     // Customer Section
                                     CustomerSelectionStep(
                                       formController: _formController,
+                                      isReadOnly: _isCreditInvoiceMode,
                                     ),
                                     SizedBox(height: 24.h),
 
                                     ItemsSelectionStep(
                                       formController: _formController,
                                       taxInvoiceType: taxInvoiceType,
+                                      isCreditInvoiceMode: _isCreditInvoiceMode,
                                     ),
                                     SizedBox(height: 24.h),
 

@@ -15912,10 +15912,10 @@ class S {
     return Intl.message('Settings', name: 'usersSettings', desc: '', args: []);
   }
 
-  /// `Credit Invoices`
+  /// `Returned Invoices`
   String get creditInvoicesTitle {
     return Intl.message(
-      'Credit Invoices',
+      'Returned Invoices',
       name: 'creditInvoicesTitle',
       desc: '',
       args: [],
@@ -19752,10 +19752,10 @@ class S {
     );
   }
 
-  /// `Credit Invoice`
+  /// `Returned Invoice`
   String get creditInvoice {
     return Intl.message(
-      'Credit Invoice',
+      'Returned Invoice',
       name: 'creditInvoice',
       desc: '',
       args: [],
@@ -19767,10 +19767,10 @@ class S {
     return Intl.message('Reason', name: 'reason', desc: '', args: []);
   }
 
-  /// `Create Credit Invoice`
+  /// `Create Returned Invoice`
   String get createCreditInvoice {
     return Intl.message(
-      'Create Credit Invoice',
+      'Create Returned Invoice',
       name: 'createCreditInvoice',
       desc: '',
       args: [],
@@ -19817,10 +19817,10 @@ class S {
     );
   }
 
-  /// `This invoice already has a credit invoice associated with it`
+  /// `This invoice already has a returned invoice associated with it`
   String get invoiceAlreadyHasCreditInvoice {
     return Intl.message(
-      'This invoice already has a credit invoice associated with it',
+      'This invoice already has a returned invoice associated with it',
       name: 'invoiceAlreadyHasCreditInvoice',
       desc: '',
       args: [],

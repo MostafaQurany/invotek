@@ -30,6 +30,7 @@ class InvoiceEntity {
   final List<InvoiceItemEntity>? items;
   final InvoiceCustomerEntity? customer;
   final ApiRequestEntity? apiRequest;
+  final List<InvoiceEntity>? returnedInvoices;
 
   const InvoiceEntity({
     this.id,
@@ -57,6 +58,7 @@ class InvoiceEntity {
     this.items,
     this.customer,
     this.apiRequest,
+    this.returnedInvoices,
   });
 
   InvoiceEntity copyWith({
@@ -85,6 +87,7 @@ class InvoiceEntity {
     List<InvoiceItemEntity>? items,
     InvoiceCustomerEntity? customer,
     ApiRequestEntity? apiRequest,
+    List<InvoiceEntity>? returnedInvoices,
   }) {
     return InvoiceEntity(
       id: id ?? this.id,
@@ -112,6 +115,7 @@ class InvoiceEntity {
       items: items ?? this.items,
       customer: customer ?? this.customer,
       apiRequest: apiRequest ?? this.apiRequest,
+      returnedInvoices: returnedInvoices ?? this.returnedInvoices,
     );
   }
 }

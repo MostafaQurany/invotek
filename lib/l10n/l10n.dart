@@ -10611,7 +10611,7 @@ abstract class S {
   /// No description provided for @creditInvoicesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Credit Invoices'**
+  /// **'Returned Invoices'**
   String get creditInvoicesTitle;
 
   /// No description provided for @dinar.
@@ -13143,7 +13143,7 @@ abstract class S {
   /// No description provided for @creditInvoice.
   ///
   /// In en, this message translates to:
-  /// **'Credit Invoice'**
+  /// **'Returned Invoice'**
   String get creditInvoice;
 
   /// No description provided for @reason.
@@ -13155,7 +13155,7 @@ abstract class S {
   /// No description provided for @createCreditInvoice.
   ///
   /// In en, this message translates to:
-  /// **'Create Credit Invoice'**
+  /// **'Create Returned Invoice'**
   String get createCreditInvoice;
 
   /// No description provided for @basicInfo.
@@ -13191,7 +13191,7 @@ abstract class S {
   /// No description provided for @invoiceAlreadyHasCreditInvoice.
   ///
   /// In en, this message translates to:
-  /// **'This invoice already has a credit invoice associated with it'**
+  /// **'This invoice already has a returned invoice associated with it'**
   String get invoiceAlreadyHasCreditInvoice;
 }
 

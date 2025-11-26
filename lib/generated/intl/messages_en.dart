@@ -816,7 +816,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Create and edit invoices",
     ),
     "createCreditInvoice": MessageLookupByLibrary.simpleMessage(
-      "Create Credit Invoice",
+      "Create Returned Invoice",
     ),
     "createCustomers": MessageLookupByLibrary.simpleMessage("Create Customers"),
     "createEditInvoices": MessageLookupByLibrary.simpleMessage(
@@ -863,9 +863,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "creationDate": MessageLookupByLibrary.simpleMessage("Creation Date"),
     "creditCard": MessageLookupByLibrary.simpleMessage("Credit Card"),
-    "creditInvoice": MessageLookupByLibrary.simpleMessage("Credit Invoice"),
+    "creditInvoice": MessageLookupByLibrary.simpleMessage("Returned Invoice"),
     "creditInvoicesTitle": MessageLookupByLibrary.simpleMessage(
-      "Credit Invoices",
+      "Returned Invoices",
     ),
     "currency": MessageLookupByLibrary.simpleMessage("Dinar"),
     "currentPassword": MessageLookupByLibrary.simpleMessage("Current Password"),
@@ -2710,7 +2710,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Inventory Settings",
     ),
     "invoiceAlreadyHasCreditInvoice": MessageLookupByLibrary.simpleMessage(
-      "This invoice already has a credit invoice associated with it",
+      "This invoice already has a returned invoice associated with it",
     ),
     "invoiceAlreadySent": MessageLookupByLibrary.simpleMessage(
       "Invoice Already Sent",

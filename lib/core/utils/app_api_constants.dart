@@ -79,6 +79,7 @@ class ApiConstants {
   static const String updateInvoice = "company/tax-invoices/{id}";
   static const String deleteInvoice = "company/tax-invoices/{id}";
   static const String createCreditInvoice = "company/tax-invoices/{id}/create-credit";
+  static const String sendInvoice = "company/tax-invoices/{id}/send";
   // Credit Invoices
   static const String creditInvoices = "company/credit-invoices";
 

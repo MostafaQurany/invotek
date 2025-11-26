@@ -70,6 +70,8 @@ class InvoiceModel {
   final List<InvoiceItem>? items;
   @JsonKey(name: "customer")
   final InvoiceCustomerModel? customer;
+  @JsonKey(name: "returned_invoices")
+  final List<InvoiceModel>? returnedInvoices;
 
   InvoiceModel({
     this.id,
@@ -97,6 +99,7 @@ class InvoiceModel {
     this.items,
     this.apiRequest,
     this.customer,
+    this.returnedInvoices,
   });
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) =>
@@ -130,6 +133,7 @@ class InvoiceModel {
       items: items?.map((item) => item.toEntity()).toList(),
       customer: customer?.toEntity(),
       apiRequest: apiRequest?.toEntity(),
+      returnedInvoices: returnedInvoices?.map((invoice) => invoice.toEntity()).toList(),
     );
   }
 }
