@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/core/utils/date_formatter.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoiceSummaryCard extends StatelessWidget {
-  final InvoiceModel invoice;
+  final InvoiceEntity invoice;
   final VoidCallback? onStatusTap;
 
   const InvoiceSummaryCard({
@@ -328,10 +328,21 @@ class InvoiceSummaryCard extends StatelessWidget {
     }
   }
 
-  IconData _getPaymentMethodIcon(String paymentMethod) {
-    switch (paymentMethod.toLowerCase()) {
+  IconData _getPaymentMethodIcon(String paymentMethodCode) {
+    // Cash codes: 011 (income), 012 (general)
+    if (paymentMethodCode == '011' || paymentMethodCode == '012') {
+      return Icons.money;
+    }
+    // Debts codes: 021 (income), 022 (general)
+    if (paymentMethodCode == '021' || paymentMethodCode == '022') {
+      return Icons.account_balance_wallet;
+    }
+    // Fallback for old codes
+    switch (paymentMethodCode.toLowerCase()) {
       case 'cash':
         return Icons.money;
+      case 'debts':
+        return Icons.account_balance_wallet;
       case 'card':
         return Icons.credit_card;
       case 'bank_transfer':
@@ -343,10 +354,21 @@ class InvoiceSummaryCard extends StatelessWidget {
     }
   }
 
-  String _getPaymentMethodText(String paymentMethod) {
-    switch (paymentMethod.toLowerCase()) {
+  String _getPaymentMethodText(String paymentMethodCode) {
+    // Cash codes: 011 (income), 012 (general)
+    if (paymentMethodCode == '011' || paymentMethodCode == '012') {
+      return S.current.cash;
+    }
+    // Debts codes: 021 (income), 022 (general)
+    if (paymentMethodCode == '021' || paymentMethodCode == '022') {
+      return S.current.debts;
+    }
+    // Fallback for old codes
+    switch (paymentMethodCode.toLowerCase()) {
       case 'cash':
         return S.current.cash;
+      case 'debts':
+        return S.current.debts;
       case 'card':
         return S.current.card;
       case 'bank_transfer':
@@ -354,7 +376,7 @@ class InvoiceSummaryCard extends StatelessWidget {
       case 'check':
         return S.current.check;
       default:
-        return paymentMethod;
+        return paymentMethodCode;
     }
   }
 

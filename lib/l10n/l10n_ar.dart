@@ -2873,6 +2873,9 @@ class SAr extends S {
   String get saveAndSend => 'حفظ وإرسال';
 
   @override
+  String get debts => 'ذمم';
+
+  @override
   String get invoiceStatus => 'حالة الفاتورة';
 
   @override
@@ -6797,4 +6800,35 @@ class SAr extends S {
 
   @override
   String get termsOfService => 'شروط الخدمة';
+
+  @override
+  String get returnInvoice => 'إرجاع الفاتورة';
+
+  @override
+  String get creditInvoice => 'فاتورة الائتمان';
+
+  @override
+  String get reason => 'السبب';
+
+  @override
+  String get createCreditInvoice => 'إنشاء فاتورة ائتمان';
+
+  @override
+  String get basicInfo => 'المعلومات الأساسية';
+
+  @override
+  String get summary => 'الملخص';
+
+  @override
+  String get returnReason => 'سبب الإرجاع';
+
+  @override
+  String get enterReasonForReturn => 'أدخل سبب الإرجاع';
+
+  @override
+  String get returnedInvoice => 'فاتورة مرتجعة';
+
+  @override
+  String get invoiceAlreadyHasCreditInvoice =>
+      'هذه الفاتورة لديها بالفعل فاتورة ائتمان مرتبطة بها';
 }

@@ -1361,6 +1361,7 @@
   "saveAndSend": "حفظ وإرسال",
   "paymentMethod": "طريقة الدفع",
   "cash": "نقداً",
+  "debts": "ذمم",
   "card": "بطاقة",
   "bankTransfer": "تحويل بنكي",
   "check": "شيك",
@@ -3281,5 +3282,15 @@
   "legal": "قانوني",
   "termsOfService": "شروط الخدمة",
   "comingSoon": "قريباً",
-  "errorOccurred": "حدث خطأ"
+  "errorOccurred": "حدث خطأ",
+  "returnInvoice": "إرجاع الفاتورة",
+  "creditInvoice": "فاتورة الائتمان",
+  "reason": "السبب",
+  "createCreditInvoice": "إنشاء فاتورة ائتمان",
+  "basicInfo": "المعلومات الأساسية",
+  "summary": "الملخص",
+  "returnReason": "سبب الإرجاع",
+  "enterReasonForReturn": "أدخل سبب الإرجاع",
+  "returnedInvoice": "فاتورة مرتجعة",
+  "invoiceAlreadyHasCreditInvoice": "هذه الفاتورة لديها بالفعل فاتورة ائتمان مرتبطة بها"
 }

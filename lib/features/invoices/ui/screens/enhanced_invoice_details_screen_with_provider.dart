@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/di/injection.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen.dart';
 
 /// Provider للشاشة المحسنة لتفاصيل الفاتورة

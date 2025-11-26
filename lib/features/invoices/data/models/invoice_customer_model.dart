@@ -1,3 +1,4 @@
+import 'package:invotek/features/invoices/domain/entities/invoice_customer_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'invoice_customer_model.g.dart';
@@ -41,4 +42,20 @@ class InvoiceCustomerModel {
   factory InvoiceCustomerModel.fromJson(Map<String, dynamic> json) =>
       _$InvoiceCustomerModelFromJson(json);
   Map<String, dynamic> toJson() => _$InvoiceCustomerModelToJson(this);
+
+  InvoiceCustomerEntity toEntity() {
+    return InvoiceCustomerEntity(
+      id: id,
+      companyId: companyId,
+      name: name,
+      email: email,
+      phone: phone,
+      taxNumber: taxNumber,
+      address: address,
+      notes: notes,
+      status: status,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
 }

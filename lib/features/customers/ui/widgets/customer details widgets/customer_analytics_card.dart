@@ -6,7 +6,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/customer_invoices_cubit.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class CustomerAnalyticsCard extends StatefulWidget {
@@ -93,7 +93,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
     );
   }
 
-  Widget _buildInvoicesList(List<InvoiceModel> invoices, int totalInvoices) {
+  Widget _buildInvoicesList(List<InvoiceEntity> invoices, int totalInvoices) {
     if (invoices.isEmpty) {
       return SizedBox(
         height: 120.h,
@@ -205,7 +205,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
     );
   }
 
-  Widget _buildInvoiceItem(InvoiceModel invoice) {
+  Widget _buildInvoiceItem(InvoiceEntity invoice) {
     return Container(
       margin: EdgeInsets.only(bottom: 8.h),
       padding: EdgeInsets.all(12.w),
@@ -262,7 +262,7 @@ class _CustomerAnalyticsCardState extends State<CustomerAnalyticsCard> {
     );
   }
 
-  String _calculateTotalAmount(List<InvoiceModel> invoices) {
+  String _calculateTotalAmount(List<InvoiceEntity> invoices) {
     double total = 0.0;
     for (var invoice in invoices) {
       total += double.tryParse(invoice.total ?? '0') ?? 0.0;

@@ -385,6 +385,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "backup": MessageLookupByLibrary.simpleMessage("النسخ الاحتياطي"),
     "bankTransfer": MessageLookupByLibrary.simpleMessage("تحويل بنكي"),
     "barcode": MessageLookupByLibrary.simpleMessage("الباركود"),
+    "basicInfo": MessageLookupByLibrary.simpleMessage("المعلومات الأساسية"),
     "basicInformation": MessageLookupByLibrary.simpleMessage(
       "المعلومات الأساسية",
     ),
@@ -773,6 +774,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "createAndEditInvoices": MessageLookupByLibrary.simpleMessage(
       "إنشاء وتعديل الفواتير",
     ),
+    "createCreditInvoice": MessageLookupByLibrary.simpleMessage(
+      "إنشاء فاتورة ائتمان",
+    ),
     "createCustomers": MessageLookupByLibrary.simpleMessage("إنشاء العملاء"),
     "createEditInvoices": MessageLookupByLibrary.simpleMessage(
       "إنشاء وتعديل الفواتير",
@@ -816,6 +820,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "creatingInvoices": MessageLookupByLibrary.simpleMessage("إنشاء الفواتير"),
     "creationDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
     "creditCard": MessageLookupByLibrary.simpleMessage("بطاقة ائتمان"),
+    "creditInvoice": MessageLookupByLibrary.simpleMessage("فاتورة الائتمان"),
     "creditInvoicesTitle": MessageLookupByLibrary.simpleMessage(
       "فواتير الائتمان",
     ),
@@ -1658,6 +1663,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
     "deactivate": MessageLookupByLibrary.simpleMessage("إلغاء التفعيل"),
     "debitCard": MessageLookupByLibrary.simpleMessage("بطاقة ائتمان"),
+    "debts": MessageLookupByLibrary.simpleMessage("ذمم"),
     "decrease": MessageLookupByLibrary.simpleMessage("انخفاض"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
@@ -1952,6 +1958,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "enterProductName": MessageLookupByLibrary.simpleMessage("أدخل اسم المنتج"),
     "enterProductSku": MessageLookupByLibrary.simpleMessage("أدخل رمز المنتج"),
     "enterQuantity": MessageLookupByLibrary.simpleMessage("أدخل الكمية"),
+    "enterReasonForReturn": MessageLookupByLibrary.simpleMessage(
+      "أدخل سبب الإرجاع",
+    ),
     "enterRegion": MessageLookupByLibrary.simpleMessage("أدخل المنطقة"),
     "enterResponsiblePerson": MessageLookupByLibrary.simpleMessage(
       "أدخل الشخص المسؤول",
@@ -2416,6 +2425,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "inventory": MessageLookupByLibrary.simpleMessage("المخزون"),
     "inventorySettings": MessageLookupByLibrary.simpleMessage(
       "إعدادات المخزون",
+    ),
+    "invoiceAlreadyHasCreditInvoice": MessageLookupByLibrary.simpleMessage(
+      "هذه الفاتورة لديها بالفعل فاتورة ائتمان مرتبطة بها",
     ),
     "invoiceAlreadySent": MessageLookupByLibrary.simpleMessage(
       "تم إرسال الفاتورة بالفعل",
@@ -3485,6 +3497,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "quickActions": MessageLookupByLibrary.simpleMessage("الإجراءات السريعة"),
     "quickActionsTitle": MessageLookupByLibrary.simpleMessage("إجراءات سريعة"),
     "quickContact": MessageLookupByLibrary.simpleMessage("اتصال سريع"),
+    "reason": MessageLookupByLibrary.simpleMessage("السبب"),
     "receiveNotifications": MessageLookupByLibrary.simpleMessage(
       "تلقي الإشعارات",
     ),
@@ -3533,6 +3546,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "retryingLogoLoad": MessageLookupByLibrary.simpleMessage(
       "إعادة محاولة تحميل الشعار...",
     ),
+    "returnInvoice": MessageLookupByLibrary.simpleMessage("إرجاع الفاتورة"),
+    "returnReason": MessageLookupByLibrary.simpleMessage("سبب الإرجاع"),
+    "returnedInvoice": MessageLookupByLibrary.simpleMessage("فاتورة مرتجعة"),
     "returnedInvoices": MessageLookupByLibrary.simpleMessage(
       "الفواتير المرتجعة",
     ),
@@ -3843,6 +3859,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subtotal": MessageLookupByLibrary.simpleMessage("المجموع الفرعي:"),
     "subtotalLine": m74,
     "successText": MessageLookupByLibrary.simpleMessage("نص نجاح"),
+    "summary": MessageLookupByLibrary.simpleMessage("الملخص"),
     "supervisor": MessageLookupByLibrary.simpleMessage("مشرف"),
     "supervisorDescription": MessageLookupByLibrary.simpleMessage(
       "يدير المستخدمين والصلاحيات",

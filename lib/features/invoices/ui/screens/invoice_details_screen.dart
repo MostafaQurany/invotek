@@ -3,9 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/data/models/invoice_item.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_customer_entity.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_item_entity.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_form_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/widgets/headers/invoice_details_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_summary_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
@@ -21,7 +25,7 @@ import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 
 class InvoiceDetailsScreen extends StatefulWidget {
-  final InvoiceModel invoice;
+  final InvoiceEntity invoice;
 
   const InvoiceDetailsScreen({super.key, required this.invoice});
 
@@ -62,7 +66,7 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
           SliverToBoxAdapter(
             child: InvoiceCustomerCard(
               customer:
-                  invoice.customer ??
+                  _convertCustomerEntityToModel(invoice.customer) ??
                   InvoiceCustomerModel(
                     id: 0,
                     name: S.of(context).invoicesCustomerName,
@@ -84,7 +88,9 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
 
           SliverToBoxAdapter(
             child: InvoiceItemsCard(
-              items: invoice.items ?? [],
+              items: (invoice.items ?? [])
+                  .map((e) => _convertItemEntityToModel(e))
+                  .toList(),
               onItemTap: (item) => _viewItemDetails(item),
             ),
           ),
@@ -196,7 +202,8 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditInvoiceScreen(invoice: widget.invoice),
+        builder: (context) =>
+            InvoiceFormScreenWithProvider(invoice: widget.invoice),
       ),
     );
   }
@@ -383,7 +390,79 @@ class _InvoiceDetailsScreenState extends State<InvoiceDetailsScreen> {
     // عرض dialog الطباعة مباشرة
     showDialog(
       context: context,
-      builder: (context) => InvoicePrintDialog(invoice: widget.invoice),
+      builder: (context) => InvoicePrintDialog(
+        invoice: _convertInvoiceEntityToModel(widget.invoice),
+      ),
+    );
+  }
+
+  /// Convert InvoiceCustomerEntity to InvoiceCustomerModel
+  InvoiceCustomerModel? _convertCustomerEntityToModel(
+    InvoiceCustomerEntity? entity,
+  ) {
+    if (entity == null) return null;
+    return InvoiceCustomerModel(
+      id: entity.id,
+      companyId: entity.companyId,
+      name: entity.name,
+      email: entity.email,
+      phone: entity.phone,
+      taxNumber: entity.taxNumber,
+      address: entity.address,
+      notes: entity.notes,
+      status: entity.status,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+    );
+  }
+
+  /// Convert InvoiceItemEntity to InvoiceItem
+  InvoiceItem _convertItemEntityToModel(InvoiceItemEntity entity) {
+    return InvoiceItem(
+      id: entity.id ?? 0,
+      taxInvoiceId: entity.taxInvoiceId ?? 0,
+      name: entity.name ?? '',
+      description: entity.description ?? '',
+      quantity: entity.quantity ?? '0',
+      price: entity.price ?? '0.00',
+      discount: entity.discount ?? '0.00',
+      taxPercent: entity.taxPercent ?? '0.00',
+      taxAmount: entity.taxAmount ?? '0.00',
+      total: entity.total ?? '0.00',
+      createdAt: entity.createdAt ?? '',
+      updatedAt: entity.updatedAt ?? '',
+      productId: entity.productId ?? 0,
+    );
+  }
+
+  /// Convert InvoiceEntity to InvoiceModel
+  InvoiceModel _convertInvoiceEntityToModel(InvoiceEntity entity) {
+    return InvoiceModel(
+      id: entity.id,
+      invoiceId: entity.invoiceId,
+      invoiceNumber: entity.invoiceNumber,
+      taxUid: entity.taxUid,
+      qrCode: entity.qrCode,
+      invoiceType: entity.invoiceType,
+      documentType: entity.documentType,
+      status: entity.status,
+      errorMessage: entity.errorMessage,
+      issueDate: entity.issueDate,
+      customerName: entity.customerName,
+      paymentMethodCode: entity.paymentMethodCode,
+      subtotal: entity.subtotal,
+      taxAmount: entity.taxAmount,
+      discount: entity.discount,
+      total: entity.total,
+      description: entity.description,
+      sentAt: entity.sentAt,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      companyId: entity.companyId,
+      customerId: entity.customerId,
+      items: entity.items?.map((e) => _convertItemEntityToModel(e)).toList(),
+      customer: _convertCustomerEntityToModel(entity.customer),
+      apiRequest: null, // Not needed for print dialog
     );
   }
 }

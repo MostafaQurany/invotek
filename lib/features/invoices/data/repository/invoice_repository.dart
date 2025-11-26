@@ -2,29 +2,31 @@
 import 'package:invotek/core/server/api_error_handler.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/server/api_client.dart';
+import 'package:invotek/features/invoices/domain/repositories/invoice_repository.dart'
+    as domain;
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/entities/invoices_pagination_result.dart';
 
 import '../models/requests/create_invoice_request.dart';
+import '../models/requests/create_credit_invoice_request.dart';
 import '../models/requests/update_invoice_request.dart';
 import '../models/requests/delete_invoice_request.dart';
 import '../models/requests/get_invoice_request.dart';
 import '../models/requests/get_all_invoices_request.dart';
 import '../models/requests/activating_tax_integration_request.dart';
-import '../models/responses/get_all_invoices_response.dart';
-import '../models/responses/get_invoice_response.dart';
-import '../models/responses/create_invoice_response.dart';
-import '../models/responses/update_invoice_response.dart';
-import '../models/responses/delete_invoice_response.dart';
 import '../models/responses/activating_tax_integration_responses.dart';
 import '../models/responses/deactivating_tax_integration_responses.dart';
 import '../models/responses/get_tax_integration_status.dart';
 
-class InvoiceRepository {
+class InvoiceRepositoryImpl implements domain.InvoiceRepository {
   final ApiClient _apiClient;
 
-  InvoiceRepository({required ApiClient apiClient}) : _apiClient = apiClient;
+  InvoiceRepositoryImpl({required ApiClient apiClient})
+    : _apiClient = apiClient;
 
   /// الحصول على جميع الفواتير
-  Future<ApiResult<GetAllInvoicesResponse>> getAllInvoices({
+  @override
+  Future<ApiResult<InvoicesPaginationResult>> getAllInvoices({
     required GetAllInvoicesRequest request,
   }) async {
     try {
@@ -48,14 +50,23 @@ class InvoiceRepository {
             ? null
             : double.parse(request.maxAmount!),
       );
-      return ApiResult.success(response);
+      final invoices =
+          response.data.data?.map((e) => e.toEntity()).toList() ?? [];
+      final paginationResult = InvoicesPaginationResult(
+        invoices: invoices,
+        total: response.data.total?.toInt(),
+        lastPage: response.data.lastPage?.toInt(),
+        currentPage: response.data.currentPage?.toInt(),
+      );
+      return ApiResult.success(paginationResult);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   /// الحصول على الفواتير الآجلة
-  Future<ApiResult<GetAllInvoicesResponse>> getCreditInvoices({
+  @override
+  Future<ApiResult<InvoicesPaginationResult>> getCreditInvoices({
     required GetAllInvoicesRequest request,
   }) async {
     try {
@@ -79,38 +90,63 @@ class InvoiceRepository {
             ? null
             : double.parse(request.maxAmount!),
       );
-      return ApiResult.success(response);
+      final invoices =
+          response.data.data?.map((e) => e.toEntity()).toList() ?? [];
+      final paginationResult = InvoicesPaginationResult(
+        invoices: invoices,
+        total: response.data.total?.toInt(),
+        lastPage: response.data.lastPage?.toInt(),
+        currentPage: response.data.currentPage?.toInt(),
+      );
+      return ApiResult.success(paginationResult);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   /// الحصول على فاتورة واحدة
-  Future<ApiResult<GetInvoiceResponse>> getInvoice({
+  @override
+  Future<ApiResult<InvoiceEntity>> getInvoice({
     required GetInvoiceRequest request,
   }) async {
     try {
       final response = await _apiClient.getInvoiceById(int.parse(request.id));
-      return ApiResult.success(response);
+      return ApiResult.success(response.data.toEntity());
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   /// إنشاء فاتورة جديدة
-  Future<ApiResult<CreateInvoiceResponse>> createInvoice({
+  @override
+  Future<ApiResult<InvoiceEntity>> createInvoice({
     required CreateInvoiceRequest request,
   }) async {
     try {
       final response = await _apiClient.createInvoice(request);
-      return ApiResult.success(response);
+      return ApiResult.success(response.data.toEntity());
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handleError(e));
+    }
+  }
+
+  /// إنشاء فاتورة مرتجعة
+  @override
+  Future<ApiResult<InvoiceEntity>> createCreditInvoice({
+    required int invoiceId,
+    required CreateCreditInvoiceRequest request,
+  }) async {
+    try {
+      final response = await _apiClient.createCreditInvoice(invoiceId, request);
+      return ApiResult.success(response.data.toEntity());
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   /// تحديث فاتورة موجودة
-  Future<ApiResult<UpdateInvoiceResponse>> updateInvoice({
+  @override
+  Future<ApiResult<InvoiceEntity>> updateInvoice({
     required UpdateInvoiceRequest request,
   }) async {
     try {
@@ -118,25 +154,27 @@ class InvoiceRepository {
         int.parse(request.id ?? '0'),
         request,
       );
-      return ApiResult.success(response);
+      return ApiResult.success(response.data.toEntity());
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   /// حذف فاتورة
-  Future<ApiResult<DeleteInvoiceResponse>> deleteInvoice({
+  @override
+  Future<ApiResult<bool>> deleteInvoice({
     required DeleteInvoiceRequest request,
   }) async {
     try {
       final response = await _apiClient.deleteInvoice(request.id);
-      return ApiResult.success(response);
+      return ApiResult.success(response.success);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handleError(e));
     }
   }
 
   /// تفعيل التكامل الضريبي
+  @override
   Future<ApiResult<ActivatingTaxIntegrationResponses>> activateTaxIntegration({
     required ActivatingTaxIntegrationRequest request,
   }) async {
@@ -149,6 +187,7 @@ class InvoiceRepository {
   }
 
   /// إلغاء التكامل الضريبي
+  @override
   Future<ApiResult<DeactivatingTaxIntegrationResponses>>
   deactivateTaxIntegration() async {
     try {
@@ -160,6 +199,7 @@ class InvoiceRepository {
   }
 
   /// الحصول على حالة التكامل الضريبي
+  @override
   Future<ApiResult<GetTaxIntegrationStatus>> getTaxIntegrationStatus() async {
     try {
       final response = await _apiClient.getTaxIntegrationStatus();

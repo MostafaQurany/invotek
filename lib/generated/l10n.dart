@@ -7977,6 +7977,11 @@ class S {
     );
   }
 
+  /// `Debts`
+  String get debts {
+    return Intl.message('Debts', name: 'debts', desc: '', args: []);
+  }
+
   /// `Invoice Status`
   String get invoiceStatus {
     return Intl.message(
@@ -19732,6 +19737,91 @@ class S {
     return Intl.message(
       'Terms of Service',
       name: 'termsOfService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Return Invoice`
+  String get returnInvoice {
+    return Intl.message(
+      'Return Invoice',
+      name: 'returnInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Credit Invoice`
+  String get creditInvoice {
+    return Intl.message(
+      'Credit Invoice',
+      name: 'creditInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason`
+  String get reason {
+    return Intl.message('Reason', name: 'reason', desc: '', args: []);
+  }
+
+  /// `Create Credit Invoice`
+  String get createCreditInvoice {
+    return Intl.message(
+      'Create Credit Invoice',
+      name: 'createCreditInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Basic Info`
+  String get basicInfo {
+    return Intl.message('Basic Info', name: 'basicInfo', desc: '', args: []);
+  }
+
+  /// `Summary`
+  String get summary {
+    return Intl.message('Summary', name: 'summary', desc: '', args: []);
+  }
+
+  /// `Return Reason`
+  String get returnReason {
+    return Intl.message(
+      'Return Reason',
+      name: 'returnReason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter reason for return`
+  String get enterReasonForReturn {
+    return Intl.message(
+      'Enter reason for return',
+      name: 'enterReasonForReturn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Returned Invoice`
+  String get returnedInvoice {
+    return Intl.message(
+      'Returned Invoice',
+      name: 'returnedInvoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This invoice already has a credit invoice associated with it`
+  String get invoiceAlreadyHasCreditInvoice {
+    return Intl.message(
+      'This invoice already has a credit invoice associated with it',
+      name: 'invoiceAlreadyHasCreditInvoice',
       desc: '',
       args: [],
     );

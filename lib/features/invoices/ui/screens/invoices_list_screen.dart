@@ -9,9 +9,9 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
-import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_form_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/widgets/bottomsheets/invoices_filters_bottom_sheet.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoices_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
@@ -183,7 +183,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     );
   }
 
-  void _onInvoiceTap(InvoiceModel invoice) {
+  void _onInvoiceTap(InvoiceEntity invoice) {
     if (!_isNavigating && mounted) {
       setState(() {
         _isNavigating = true;
@@ -202,11 +202,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     }
   }
 
-  void _onInvoiceView(InvoiceModel invoice) {
+  void _onInvoiceView(InvoiceEntity invoice) {
     _onInvoiceTap(invoice);
   }
 
-  void _onInvoiceEdit(InvoiceModel invoice) {
+  void _onInvoiceEdit(InvoiceEntity invoice) {
     if (!_isNavigating && mounted) {
       // التحقق من التكامل الضريبي قبل الانتقال
       final taxState = context.read<TaxIntegrationCubit>().state;
@@ -223,7 +223,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => EditInvoiceScreen(invoice: invoice),
+          builder: (context) => InvoiceFormScreenWithProvider(invoice: invoice),
         ),
       ).then((_) {
         if (mounted) {
@@ -235,16 +235,58 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     }
   }
 
-  void _onInvoiceDelete(InvoiceModel invoice) {
+  void _onInvoiceDelete(InvoiceEntity invoice) {
     showDialog(
       context: context,
       builder: (context) => DeleteInvoiceDialog(
         invoice: invoice,
-        onDelete: () {
-          context.read<InvoicesCubit>().deleteInvoice(invoice.id ?? 0);
+        onDelete: () async {
+          Navigator.pop(context); // Close dialog first
+          await context.read<InvoicesCubit>().deleteInvoice(invoice.id ?? 0);
         },
       ),
     );
+  }
+
+  void _onInvoiceReturn(InvoiceEntity invoice) {
+    if (!_isNavigating && mounted) {
+      // التحقق من وجود فاتورة ائتمان مرتبطة بالفاتورة
+      final cubit = context.read<InvoicesCubit>();
+      final allInvoices = cubit.invoices;
+      final hasCreditInvoice = allInvoices.any(
+        (inv) =>
+            inv.documentType?.toLowerCase() == 'credit' &&
+            inv.apiRequest?.originalUid == invoice.taxUid,
+      );
+
+      if (hasCreditInvoice) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(S.of(context).invoiceAlreadyHasCreditInvoice),
+            backgroundColor: AppColors.warning,
+          ),
+        );
+        return;
+      }
+
+      setState(() {
+        _isNavigating = true;
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              InvoiceFormScreenWithProvider(originalInvoice: invoice),
+        ),
+      ).then((_) {
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+          context.read<InvoicesCubit>().refreshCurrentFilters();
+        }
+      });
+    }
   }
 
   void _onAddInvoice() {
@@ -261,9 +303,12 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       setState(() {
         _isNavigating = true;
       });
-      Navigator.pushNamed(context, AppRoutes.invoiceCreationStepperRoute).then((
-        _,
-      ) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => InvoiceFormScreenWithProvider(),
+        ),
+      ).then((_) {
         if (mounted) {
           setState(() {
             _isNavigating = false;
@@ -345,44 +390,45 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
               controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
-              // Header with Search and Filters
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _HeaderDelegate(
-                  min: 150.h, // collapsed height
-                  max: 150.h, // same as min => no collapse, always fixed size
-                  child: InvoicesHeaderWidget(
-                    title: S.of(context).invoices,
-                    searchController: _searchController,
-                    onSearchChanged: _onSearchChanged,
-                    selectedStatus: _selectedStatus,
-                    selectedPaymentMethod: _selectedPaymentMethod,
-                    selectedCustomer: _selectedCustomer,
-                    onStatusChanged: _onStatusChanged,
-                    onPaymentMethodChanged: _onPaymentMethodChanged,
-                    onCustomerChanged: _onCustomerChanged,
-                    onRefresh: _onRefresh,
-                    onOpenFilters: _openFilters,
+                // Header with Search and Filters
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _HeaderDelegate(
+                    min: 150.h, // collapsed height
+                    max: 150.h, // same as min => no collapse, always fixed size
+                    child: InvoicesHeaderWidget(
+                      title: S.of(context).invoices,
+                      searchController: _searchController,
+                      onSearchChanged: _onSearchChanged,
+                      selectedStatus: _selectedStatus,
+                      selectedPaymentMethod: _selectedPaymentMethod,
+                      selectedCustomer: _selectedCustomer,
+                      onStatusChanged: _onStatusChanged,
+                      onPaymentMethodChanged: _onPaymentMethodChanged,
+                      onCustomerChanged: _onCustomerChanged,
+                      onRefresh: _onRefresh,
+                      onOpenFilters: _openFilters,
+                    ),
                   ),
                 ),
-              ),
 
-              // Invoices List with State Management
-              InvoicesStateBuilder(
-                onInvoiceTap: _onInvoiceTap,
-                onInvoiceView: _onInvoiceView,
-                onInvoiceEdit: _onInvoiceEdit,
-                onInvoiceDelete: _onInvoiceDelete,
-                onAddInvoice: _onAddInvoice,
-                onRetry: _onRetry,
-                selectedStatus: _selectedStatus ?? 'all',
-                selectedPaymentMethod: _selectedPaymentMethod ?? 'all',
-                selectedCustomer: _selectedCustomer ?? 'all',
-                onStatusChanged: _onStatusChanged,
-                onPaymentMethodChanged: _onPaymentMethodChanged,
-                onCustomerChanged: _onCustomerChanged,
-              ),
-            ],
+                // Invoices List with State Management
+                InvoicesStateBuilder(
+                  onInvoiceTap: _onInvoiceTap,
+                  onInvoiceView: _onInvoiceView,
+                  onInvoiceEdit: _onInvoiceEdit,
+                  onInvoiceDelete: _onInvoiceDelete,
+                  onInvoiceReturn: _onInvoiceReturn,
+                  onAddInvoice: _onAddInvoice,
+                  onRetry: _onRetry,
+                  selectedStatus: _selectedStatus ?? 'all',
+                  selectedPaymentMethod: _selectedPaymentMethod ?? 'all',
+                  selectedCustomer: _selectedCustomer ?? 'all',
+                  onStatusChanged: _onStatusChanged,
+                  onPaymentMethodChanged: _onPaymentMethodChanged,
+                  onCustomerChanged: _onCustomerChanged,
+                ),
+              ],
             ),
           ),
         ),

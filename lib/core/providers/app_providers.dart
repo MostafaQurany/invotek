@@ -14,7 +14,7 @@ import 'package:invotek/features/expenses/domain/cubit/expenses_cubit.dart';
 import 'package:invotek/features/home/cubit/dashboard_cubit.dart';
 import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/home/data/repository/dashboard_repository.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 import 'package:invotek/features/printing/presentation/cubit/printer_cubit.dart';
 import 'package:invotek/features/products/domain/cubit/categories_cubit.dart';

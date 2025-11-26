@@ -45,13 +45,17 @@ import 'package:invotek/features/expenses/domain/usecases/get_expenses.dart';
 import 'package:invotek/features/expenses/domain/usecases/update_expense.dart';
 import 'package:invotek/features/expenses/domain/usecases/update_expense_category.dart';
 import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/repositories/invoice_repository.dart'
+    as domain;
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/usecases/create_credit_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/create_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/delete_invoice.dart';
 import 'package:invotek/features/invoices/domain/usecases/get_invoice_by_id.dart';
 import 'package:invotek/features/invoices/domain/usecases/get_invoices.dart';
+import 'package:invotek/features/invoices/domain/usecases/get_credit_invoices.dart';
 import 'package:invotek/features/invoices/domain/usecases/update_invoice.dart';
-import 'package:invotek/features/invoices/demo/cubit/credit_invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/cubit/credit_invoices_cubit.dart';
 import 'package:invotek/features/onboarding/demo/cubit/onboarding_cubit.dart';
 // Removed: old ProductsDataSource (now centralized in ApiClient)
 import 'package:invotek/features/products/data/repository/products_repository.dart';
@@ -171,8 +175,13 @@ Future<void> configureDependencies() async {
   getIt.registerLazySingleton<ExpenseCategoriesRepository>(
     () => ExpenseCategoriesRepository(getIt<ApiClient>()),
   );
-  getIt.registerLazySingleton<InvoiceRepository>(
-    () => InvoiceRepository(apiClient: getIt<ApiClient>()),
+  // Invoices Repository - Register interface and implementation
+  getIt.registerLazySingleton<domain.InvoiceRepository>(
+    () => InvoiceRepositoryImpl(apiClient: getIt<ApiClient>()),
+  );
+  // Keep the implementation registered for backward compatibility if needed
+  getIt.registerLazySingleton<InvoiceRepositoryImpl>(
+    () => InvoiceRepositoryImpl(apiClient: getIt<ApiClient>()),
   );
   getIt.registerLazySingleton<SettingsDomain.ISettingsRepository>(
     () => SettingsRepository(getIt<SettingsDataSource>()),
@@ -196,7 +205,7 @@ Future<void> configureDependencies() async {
     () => DeleteCustomer(getIt<CustomersRepository>()),
   );
   getIt.registerLazySingleton<GetCustomerInvoices>(
-    () => GetCustomerInvoices(getIt<InvoiceRepository>()),
+    () => GetCustomerInvoices(getIt<domain.InvoiceRepository>()),
   );
 
   // Products Use Cases
@@ -259,19 +268,25 @@ Future<void> configureDependencies() async {
 
   // Invoices Use Cases
   getIt.registerLazySingleton<GetInvoices>(
-    () => GetInvoices(getIt<InvoiceRepository>()),
+    () => GetInvoices(getIt<domain.InvoiceRepository>()),
+  );
+  getIt.registerLazySingleton<GetCreditInvoices>(
+    () => GetCreditInvoices(getIt<domain.InvoiceRepository>()),
   );
   getIt.registerLazySingleton<GetInvoiceById>(
-    () => GetInvoiceById(getIt<InvoiceRepository>()),
+    () => GetInvoiceById(getIt<domain.InvoiceRepository>()),
   );
   getIt.registerLazySingleton<CreateInvoice>(
-    () => CreateInvoice(getIt<InvoiceRepository>()),
+    () => CreateInvoice(getIt<domain.InvoiceRepository>()),
   );
   getIt.registerLazySingleton<UpdateInvoice>(
-    () => UpdateInvoice(getIt<InvoiceRepository>()),
+    () => UpdateInvoice(getIt<domain.InvoiceRepository>()),
   );
   getIt.registerLazySingleton<DeleteInvoice>(
-    () => DeleteInvoice(getIt<InvoiceRepository>()),
+    () => DeleteInvoice(getIt<domain.InvoiceRepository>()),
+  );
+  getIt.registerLazySingleton<CreateCreditInvoice>(
+    () => CreateCreditInvoice(getIt<domain.InvoiceRepository>()),
   );
 
   // Settings Use Cases
@@ -367,10 +382,18 @@ Future<void> configureDependencies() async {
     () => ExpenseCategoriesCubit(getIt<ExpenseCategoriesRepository>()),
   );
   getIt.registerLazySingleton<InvoicesCubit>(
-    () => InvoicesCubit(getIt<InvoiceRepository>()),
+    () => InvoicesCubit(
+      getInvoices: getIt<GetInvoices>(),
+      createInvoice: getIt<CreateInvoice>(),
+      updateInvoice: getIt<UpdateInvoice>(),
+      deleteInvoice: getIt<DeleteInvoice>(),
+      getInvoiceById: getIt<GetInvoiceById>(),
+      createCreditInvoice: getIt<CreateCreditInvoice>(),
+      repository: getIt<domain.InvoiceRepository>(),
+    ),
   );
   getIt.registerLazySingleton<CreditInvoicesCubit>(
-    () => CreditInvoicesCubit(getIt<InvoiceRepository>()),
+    () => CreditInvoicesCubit(getCreditInvoices: getIt<GetCreditInvoices>()),
   );
   // Settings cubits
   getIt.registerFactory<ProfileCubit>(
@@ -395,7 +418,7 @@ Future<void> configureDependencies() async {
     ),
   );
   getIt.registerFactory<TaxIntegrationCubit>(
-    () => TaxIntegrationCubit(getIt<InvoiceRepository>()),
+    () => TaxIntegrationCubit(getIt<domain.InvoiceRepository>()),
   );
 
   // Printing dependencies

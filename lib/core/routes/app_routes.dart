@@ -27,7 +27,7 @@ import 'package:invotek/features/invoices/ui/screens/add_invoice_screen_with_pro
 import 'package:invotek/features/invoices/ui/screens/credit_invoices_list_screen.dart';
 import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen_with_provider.dart';
-import 'package:invotek/features/invoices/ui/screens/invoice_creation_stepper_screen.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_form_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/screens/invoices_list_screen.dart';
 import 'package:invotek/features/onboarding/ui/onboarding_screen.dart';
 import 'package:invotek/features/printing/presentation/ui/screens/printer_settings_screen.dart';
@@ -196,7 +196,7 @@ class AppRoutes {
         const CreditInvoicesListScreenWithProvider(),
     addInvoiceRoute: (context) => const AddInvoiceScreenWithProvider(),
     invoiceCreationStepperRoute: (context) =>
-        const InvoiceCreationStepperScreen(),
+        const InvoiceFormScreenWithProvider(),
     settingsRoute: (context) => const SettingsScreen(),
     appSettingsRoute: (context) => const AppSettingsScreen(),
     companySettingsRoute: (context) => const CompanySettingsScreen(),

@@ -32,6 +32,11 @@ InvoiceModel _$InvoiceModelFromJson(Map<String, dynamic> json) => InvoiceModel(
   items: (json['items'] as List<dynamic>?)
       ?.map((e) => InvoiceItem.fromJson(e as Map<String, dynamic>))
       .toList(),
+  apiRequest: json['api_request'] == null
+      ? null
+      : ApiRequestInvoiceModel.fromJson(
+          json['api_request'] as Map<String, dynamic>,
+        ),
   customer: json['customer'] == null
       ? null
       : InvoiceCustomerModel.fromJson(json['customer'] as Map<String, dynamic>),
@@ -61,6 +66,51 @@ Map<String, dynamic> _$InvoiceModelToJson(InvoiceModel instance) =>
       'updated_at': instance.updatedAt,
       'company_id': instance.companyId,
       'customer_id': instance.customerId,
+      'api_request': instance.apiRequest,
       'items': instance.items,
       'customer': instance.customer,
     };
+
+ApiRequestInvoiceModel _$ApiRequestInvoiceModelFromJson(
+  Map<String, dynamic> json,
+) => ApiRequestInvoiceModel(
+  invoiceNumber: json['invoice_number'] as String?,
+  invoiceDate: json['invoice_date'] as String?,
+  description: json['description'] as String?,
+  paymentMethodCode: json['payment_method_code'] as String?,
+  customerName: json['customer_name'] as String?,
+  items: (json['items'] as List<dynamic>?)
+      ?.map((e) => InvoiceItem.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  subtotal: json['subtotal'] as String?,
+  taxAmount: json['tax_amount'] as String?,
+  discount: json['discount'] as String?,
+  total: json['total'] as String?,
+  creditNumber: json['credit_number'] as String?,
+  creditDate: json['credit_date'] as String?,
+  originalInvoiceNumber: json['original_invoice_number'] as String?,
+  originalUid: json['original_uid'] as String?,
+  originalTotal: json['original_total'] as String?,
+  returnReason: json['return_reason'] as String?,
+);
+
+Map<String, dynamic> _$ApiRequestInvoiceModelToJson(
+  ApiRequestInvoiceModel instance,
+) => <String, dynamic>{
+  'invoice_number': instance.invoiceNumber,
+  'invoice_date': instance.invoiceDate,
+  'description': instance.description,
+  'payment_method_code': instance.paymentMethodCode,
+  'customer_name': instance.customerName,
+  'items': instance.items,
+  'subtotal': instance.subtotal,
+  'tax_amount': instance.taxAmount,
+  'discount': instance.discount,
+  'total': instance.total,
+  'credit_number': instance.creditNumber,
+  'credit_date': instance.creditDate,
+  'original_invoice_number': instance.originalInvoiceNumber,
+  'original_uid': instance.originalUid,
+  'original_total': instance.originalTotal,
+  'return_reason': instance.returnReason,
+};

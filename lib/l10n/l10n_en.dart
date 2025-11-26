@@ -2893,6 +2893,9 @@ class SEn extends S {
   String get saveAndSend => 'Save and Send';
 
   @override
+  String get debts => 'Debts';
+
+  @override
   String get invoiceStatus => 'Invoice Status';
 
   @override
@@ -6859,4 +6862,35 @@ class SEn extends S {
 
   @override
   String get termsOfService => 'Terms of Service';
+
+  @override
+  String get returnInvoice => 'Return Invoice';
+
+  @override
+  String get creditInvoice => 'Credit Invoice';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get createCreditInvoice => 'Create Credit Invoice';
+
+  @override
+  String get basicInfo => 'Basic Info';
+
+  @override
+  String get summary => 'Summary';
+
+  @override
+  String get returnReason => 'Return Reason';
+
+  @override
+  String get enterReasonForReturn => 'Enter reason for return';
+
+  @override
+  String get returnedInvoice => 'Returned Invoice';
+
+  @override
+  String get invoiceAlreadyHasCreditInvoice =>
+      'This invoice already has a credit invoice associated with it';
 }

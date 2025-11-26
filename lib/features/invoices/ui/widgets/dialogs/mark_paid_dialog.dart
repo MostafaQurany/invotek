@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/date_formatter.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class MarkPaidDialog extends StatefulWidget {
-  final InvoiceModel invoice;
+  final InvoiceEntity invoice;
   final VoidCallback onMarkPaid;
 
   const MarkPaidDialog({
@@ -264,10 +264,21 @@ class _MarkPaidDialogState extends State<MarkPaidDialog> {
     }
   }
 
-  String _getPaymentMethodText(String paymentMethod) {
-    switch (paymentMethod.toLowerCase()) {
+  String _getPaymentMethodText(String paymentMethodCode) {
+    // Cash codes: 011 (income), 012 (general)
+    if (paymentMethodCode == '011' || paymentMethodCode == '012') {
+      return S.current.cash;
+    }
+    // Debts codes: 021 (income), 022 (general)
+    if (paymentMethodCode == '021' || paymentMethodCode == '022') {
+      return S.current.debts;
+    }
+    // Fallback for old codes
+    switch (paymentMethodCode.toLowerCase()) {
       case 'cash':
         return S.current.cash;
+      case 'debts':
+        return S.current.debts;
       case 'card':
         return S.current.card;
       case 'bank_transfer':
@@ -275,7 +286,7 @@ class _MarkPaidDialogState extends State<MarkPaidDialog> {
       case 'check':
         return S.current.check;
       default:
-        return paymentMethod;
+        return paymentMethodCode;
     }
   }
 

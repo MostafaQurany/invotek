@@ -8,7 +8,7 @@ import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
 import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/customer_selection_step.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_basic_info_step.dart';
