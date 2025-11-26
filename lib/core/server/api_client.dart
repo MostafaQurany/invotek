@@ -41,6 +41,7 @@ import 'package:invotek/features/expenses/data/models/response/update_expense_ca
 import 'package:invotek/features/home/data/models/dashboard_models.dart';
 import 'package:invotek/features/invoices/data/models/requests/activating_tax_integration_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/create_invoice_request.dart';
+import 'package:invotek/features/invoices/data/models/requests/create_credit_invoice_request.dart';
 import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
 import 'package:invotek/features/invoices/data/models/responses/activating_tax_integration_responses.dart';
 import 'package:invotek/features/invoices/data/models/responses/create_invoice_response.dart';
@@ -376,6 +377,17 @@ abstract class ApiClient {
   // حذف فاتورة | Delete Invoice
   @DELETE(ApiConstants.deleteInvoice)
   Future<DeleteInvoiceResponse> deleteInvoice(@Path('id') int id);
+
+  // إنشاء فاتورة مرتجعة | Create Credit Invoice
+  @POST(ApiConstants.createCreditInvoice)
+  Future<CreateInvoiceResponse> createCreditInvoice(
+    @Path('id') int id,
+    @Body() CreateCreditInvoiceRequest request,
+  );
+
+  // إرسال فاتورة | Send Invoice
+  @POST(ApiConstants.sendInvoice)
+  Future<CreateInvoiceResponse> sendInvoice(@Path('id') int id);
 
   // ===== TAX INTEGRATION APIs =====
   // تفعيل التكامل الضريبي | Activating tax integration

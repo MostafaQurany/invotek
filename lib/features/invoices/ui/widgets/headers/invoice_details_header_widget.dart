@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/generated/l10n.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 
 class InvoiceDetailsHeaderWidget extends StatelessWidget {
-  final InvoiceModel invoice;
+  final InvoiceEntity invoice;
   final VoidCallback onBack;
   final VoidCallback onEdit;
 
@@ -187,10 +183,7 @@ class InvoiceDetailsHeaderWidget extends StatelessWidget {
               ),
               SizedBox(height: 2.h),
               Text(
-                CurrencyFormatter.formatCurrencyString(
-                  invoice.total,
-                  context,
-                ),
+                CurrencyFormatter.formatCurrencyString(invoice.total, context),
                 style: TextStyle(
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w700,

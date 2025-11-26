@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
-import 'package:invotek/core/cubits/localization_cubit.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/core/utils/app_api_constants.dart';
 import 'package:invotek/core/utils/currency_formatter.dart';
 import 'package:invotek/features/invoices/data/models/invoice_item.dart';
 import 'package:invotek/generated/l10n.dart';

@@ -13,6 +13,8 @@ UpdateCompanySettingsRequest _$UpdateCompanySettingsRequestFromJson(
   email: json['email'] as String?,
   phone: json['phone'] as String?,
   address: json['address'] as String?,
+  taxMerchantCode: json['taxMerchantCode'] as String?,
+  taxInvoiceType: json['taxInvoiceType'] as String?,
 );
 
 Map<String, dynamic> _$UpdateCompanySettingsRequestToJson(
@@ -22,4 +24,6 @@ Map<String, dynamic> _$UpdateCompanySettingsRequestToJson(
   'email': instance.email,
   'phone': instance.phone,
   'address': instance.address,
+  'taxMerchantCode': instance.taxMerchantCode,
+  'taxInvoiceType': instance.taxInvoiceType,
 };

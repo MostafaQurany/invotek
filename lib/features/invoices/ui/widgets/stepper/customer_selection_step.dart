@@ -7,8 +7,13 @@ import 'package:invotek/generated/l10n.dart';
 
 class CustomerSelectionStep extends StatefulWidget {
   final InvoiceFormController formController;
+  final bool isReadOnly;
 
-  const CustomerSelectionStep({super.key, required this.formController});
+  const CustomerSelectionStep({
+    super.key,
+    required this.formController,
+    this.isReadOnly = false,
+  });
 
   @override
   State<CustomerSelectionStep> createState() => _CustomerSelectionStepState();
@@ -24,44 +29,50 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
     super.build(context);
     final s = S.of(context);
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Customer Selection Section
-          _buildCustomerSelectionSection(s),
-          SizedBox(height: 20.h),
-          // Manual Form Entry
-          _buildNewCustomerForm(s),
-        ],
-      ),
+    return ListenableBuilder(
+      listenable: widget.formController,
+      builder: (context, _) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // // Customer Selection Section
+            _buildNewCustomerForm(s),
+            // Manual Form Entry
+            _buildCustomerSelectionSection(s),
+          ],
+        );
+      },
     );
   }
 
   Widget _buildCustomerSelectionSection(S s) {
+    // Show card if customer is selected OR if there's text in the name field
+    final hasSelectedCustomer =
+        widget.formController.selectedCustomerId != null;
+    final hasCustomerName =
+        widget.formController.customerNameController.text.trim().isNotEmpty ||
+        widget.formController.selectedCustomerName != null;
+
+    if (!hasSelectedCustomer && !hasCustomerName) {
+      return const SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          s.selectCustomer,
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
-        ),
         SizedBox(height: 12.h),
-        // Selected Customer Display
-        if (widget.formController.selectedCustomerId != null)
-          _buildSelectedCustomerCard(s)
-        else
-          _buildSelectCustomerButton(s),
+        _buildSelectedCustomerCard(s),
       ],
     );
   }
 
   Widget _buildSelectedCustomerCard(S s) {
+    // Get customer name from selectedCustomerName or TextField
+    final customerName =
+        widget.formController.selectedCustomerName ??
+        widget.formController.customerNameController.text.trim();
+    final isSelectedCustomer = widget.formController.selectedCustomerId != null;
+
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -78,64 +89,53 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.formController.selectedCustomerName ?? '',
+                  customerName.isNotEmpty ? customerName : s.customerName,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
                 ),
-                if (widget.formController.selectedCustomerEmail != null)
-                  Text(
-                    widget.formController.selectedCustomerEmail!,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.textSecondary,
+                // Show email and phone only if customer is selected (not manual entry)
+                if (isSelectedCustomer) ...[
+                  if (widget.formController.selectedCustomerEmail != null &&
+                      widget.formController.selectedCustomerEmail!.isNotEmpty)
+                    Text(
+                      widget.formController.selectedCustomerEmail!,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
-                  ),
-                if (widget.formController.selectedCustomerPhone != null)
-                  Text(
-                    widget.formController.selectedCustomerPhone!,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: AppColors.textSecondary,
+                  if (widget.formController.selectedCustomerPhone != null &&
+                      widget.formController.selectedCustomerPhone!.isNotEmpty)
+                    Text(
+                      widget.formController.selectedCustomerPhone!,
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
-                  ),
+                ],
               ],
             ),
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                widget.formController.selectedCustomerId = null;
-                widget.formController.selectedCustomerName = null;
-                widget.formController.selectedCustomerEmail = null;
-                widget.formController.selectedCustomerPhone = null;
-                widget.formController.selectedCustomerAddress = null;
-              });
-            },
-            icon: const Icon(Icons.close),
-            color: AppColors.textSecondary,
-          ),
+          if (!widget.isReadOnly)
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  widget.formController.selectedCustomerId = null;
+                  widget.formController.selectedCustomerName = null;
+                  widget.formController.selectedCustomerEmail = null;
+                  widget.formController.selectedCustomerPhone = null;
+                  widget.formController.selectedCustomerAddress = null;
+                  widget.formController.customerNameController.clear();
+                });
+              },
+              icon: const Icon(Icons.close),
+              color: AppColors.textSecondary,
+            ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSelectCustomerButton(S s) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton.icon(
-        onPressed: () => _showCustomerSelectionDialog(),
-        icon: const Icon(Icons.search),
-        label: Text(s.selectCustomer),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          padding: EdgeInsets.symmetric(vertical: 12.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-        ),
       ),
     );
   }
@@ -146,10 +146,12 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
       builder: (context) => CustomerSelectionDialog(
         selectedCustomer: null,
         onCustomerSelected: (customer) {
+          // Clear the TextField and use selected customer data
+          widget.formController.customerNameController.clear();
           widget.formController.onCustomerSelected(
-            customer.id ?? 0,
-            customer.name ?? '',
-            customer.email ?? '',
+            customer.id,
+            customer.name,
+            customer.email,
             customer.phone ?? '',
             customer.address ?? '',
           );
@@ -177,70 +179,65 @@ class _CustomerSelectionStepState extends State<CustomerSelectionStep>
         ),
         SizedBox(height: 12.h),
 
-        // Customer Name
-        TextFormField(
-          controller: widget.formController.customerNameController,
-          onChanged: (_) {
-            widget.formController.notifyCustomerFieldsChanged();
-          },
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.white,
-            labelText: s.customerName,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
+        // Customer Name Field with Add Customer Button
+        Row(
+          children: [
+            // Customer Name TextField
+            Expanded(
+              child: TextFormField(
+                controller: widget.formController.customerNameController,
+                onChanged: widget.isReadOnly
+                    ? null
+                    : (value) {
+                        // When user types, clear selected customer and update name
+                        if (widget.formController.selectedCustomerId != null) {
+                          widget.formController.selectedCustomerId = null;
+                          widget.formController.selectedCustomerEmail = null;
+                          widget.formController.selectedCustomerPhone = null;
+                          widget.formController.selectedCustomerAddress = null;
+                        }
+                        widget.formController.selectedCustomerName = value.trim();
+                        widget.formController.notifyCustomerFieldsChanged();
+                        setState(() {});
+                      },
+                readOnly: widget.isReadOnly,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: widget.isReadOnly
+                      ? AppColors.grey.withOpacity(0.1)
+                      : AppColors.white,
+                  labelText: s.customerName,
+                  hintText: s.enterCustomerName,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 12.w,
+                    vertical: 16.h,
+                  ),
+                ),
+              ),
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
+            SizedBox(width: 12.w),
+            // Add Customer Button
+            ElevatedButton.icon(
+              onPressed: widget.isReadOnly
+                  ? null
+                  : () => _showCustomerSelectionDialog(),
+              icon: const Icon(Icons.person_add),
+              label: Text(s.selectCustomer),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: widget.isReadOnly
+                    ? AppColors.grey
+                    : AppColors.primary,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-        SizedBox(height: 16.h),
-
-        // Customer Email
-        TextFormField(
-          controller: widget.formController.customerEmailController,
-          onChanged: (_) {
-            widget.formController.notifyCustomerFieldsChanged();
-          },
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.white,
-            labelText: s.customerEmail,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
-            ),
-          ),
-          keyboardType: TextInputType.emailAddress,
-        ),
-        SizedBox(height: 16.h),
-
-        // Customer Phone
-        TextFormField(
-          controller: widget.formController.customerPhoneController,
-          onChanged: (_) {
-            widget.formController.notifyCustomerFieldsChanged();
-          },
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.white,
-            labelText: s.customerPhone,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
-            ),
-          ),
-          keyboardType: TextInputType.phone,
-        ),
-        SizedBox(height: 16.h),
       ],
     );
   }

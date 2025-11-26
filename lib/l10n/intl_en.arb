@@ -1361,6 +1361,7 @@
   "saveAndSend": "Save and Send",
   "paymentMethod": "Payment Method",
   "cash": "Cash",
+  "debts": "Debts",
   "card": "Card",
   "bankTransfer": "Bank Transfer",
   "check": "Check",
@@ -2553,7 +2554,7 @@
   "usersExpenses": "Expenses",
   "usersReports": "Reports",
   "usersSettings": "Settings",
-  "creditInvoicesTitle": "Credit Invoices",
+  "creditInvoicesTitle": "Returned Invoices",
   "dinar": "Dinar",
   "manageExpensesAndBudgets": "Manage expenses and budgets",
   "emailAddress": "Email Address",
@@ -3281,5 +3282,15 @@
   "legal": "Legal",
   "termsOfService": "Terms of Service",
   "comingSoon": "Coming Soon",
-  "errorOccurred": "An error occurred"
+  "errorOccurred": "An error occurred",
+  "returnInvoice": "Return Invoice",
+  "creditInvoice": "Returned Invoice",
+  "reason": "Reason",
+  "createCreditInvoice": "Create Returned Invoice",
+  "basicInfo": "Basic Info",
+  "summary": "Summary",
+  "returnReason": "Return Reason",
+  "enterReasonForReturn": "Enter reason for return",
+  "returnedInvoice": "Returned Invoice",
+  "invoiceAlreadyHasCreditInvoice": "This invoice already has a returned invoice associated with it"
 }

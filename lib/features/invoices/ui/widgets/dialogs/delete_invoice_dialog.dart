@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class DeleteInvoiceDialog extends StatelessWidget {
-  final InvoiceModel invoice;
+  final InvoiceEntity invoice;
   final VoidCallback onDelete;
 
   const DeleteInvoiceDialog({
@@ -154,7 +154,10 @@ class DeleteInvoiceDialog extends StatelessWidget {
 
         // Delete Button (only enabled for draft invoices)
         ElevatedButton(
-          onPressed: invoice.status?.toLowerCase() == 'draft'
+          onPressed:
+              invoice.status?.toLowerCase() == 'pending' ||
+                  invoice.status?.toLowerCase() == 'draft' ||
+                  invoice.status?.toLowerCase() == 'save'
               ? () {
                   onDelete();
                 }

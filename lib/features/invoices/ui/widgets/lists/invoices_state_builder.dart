@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/widgets/lists/invoices_list.dart';
 import 'package:invotek/features/invoices/ui/widgets/states/invoices_empty_state.dart';
 import 'package:invotek/features/invoices/ui/widgets/states/invoices_error_state.dart';
 import 'package:invotek/features/invoices/ui/widgets/states/invoices_loading_state.dart';
 
 class InvoicesStateBuilder extends StatelessWidget {
-  final Function(InvoiceModel) onInvoiceTap;
-  final Function(InvoiceModel) onInvoiceView;
-  final Function(InvoiceModel) onInvoiceEdit;
-  final Function(InvoiceModel) onInvoiceDelete;
+  final Function(InvoiceEntity) onInvoiceTap;
+  final Function(InvoiceEntity) onInvoiceView;
+  final Function(InvoiceEntity) onInvoiceEdit;
+  final Function(InvoiceEntity) onInvoiceDelete;
+  final Function(InvoiceEntity)? onInvoiceReturn;
+  final Function(InvoiceEntity)? onInvoiceSend;
   final VoidCallback onAddInvoice;
   final VoidCallback onRetry;
   final String selectedStatus;
@@ -27,6 +29,7 @@ class InvoicesStateBuilder extends StatelessWidget {
     required this.onInvoiceView,
     required this.onInvoiceEdit,
     required this.onInvoiceDelete,
+    this.onInvoiceReturn,
     required this.onAddInvoice,
     required this.onRetry,
     required this.selectedStatus,
@@ -35,6 +38,7 @@ class InvoicesStateBuilder extends StatelessWidget {
     required this.onStatusChanged,
     required this.onPaymentMethodChanged,
     required this.onCustomerChanged,
+    this.onInvoiceSend,
   });
 
   @override
@@ -61,6 +65,8 @@ class InvoicesStateBuilder extends StatelessWidget {
               onInvoiceView: onInvoiceView,
               onInvoiceEdit: onInvoiceEdit,
               onInvoiceDelete: onInvoiceDelete,
+              onInvoiceReturn: onInvoiceReturn,
+              onInvoiceSend: onInvoiceSend,
             );
           },
           loading: (invoices, selectedInvoice, currentPage, totalPages, message) {
@@ -76,8 +82,10 @@ class InvoicesStateBuilder extends StatelessWidget {
               onInvoiceView: onInvoiceView,
               onInvoiceEdit: onInvoiceEdit,
               onInvoiceDelete: onInvoiceDelete,
+              onInvoiceReturn: onInvoiceReturn,
               showLoadingIndicator: true,
               loadingMessage: message,
+              onInvoiceSend: onInvoiceSend,
             );
           },
           loaded: (invoices, selectedInvoice, currentPage, totalPages) {
@@ -95,7 +103,9 @@ class InvoicesStateBuilder extends StatelessWidget {
               onInvoiceView: onInvoiceView,
               onInvoiceEdit: onInvoiceEdit,
               onInvoiceDelete: onInvoiceDelete,
+              onInvoiceReturn: onInvoiceReturn,
               showLoadingIndicator: false,
+              onInvoiceSend: onInvoiceSend,
             );
           },
           createSuccess:
@@ -114,7 +124,9 @@ class InvoicesStateBuilder extends StatelessWidget {
                   onInvoiceView: onInvoiceView,
                   onInvoiceEdit: onInvoiceEdit,
                   onInvoiceDelete: onInvoiceDelete,
+                  onInvoiceReturn: onInvoiceReturn,
                   showLoadingIndicator: false,
+                  onInvoiceSend: onInvoiceSend,
                 );
               },
           updateSuccess:
@@ -133,7 +145,9 @@ class InvoicesStateBuilder extends StatelessWidget {
                   onInvoiceView: onInvoiceView,
                   onInvoiceEdit: onInvoiceEdit,
                   onInvoiceDelete: onInvoiceDelete,
+                  onInvoiceReturn: onInvoiceReturn,
                   showLoadingIndicator: false,
+                  onInvoiceSend: onInvoiceSend,
                 );
               },
           deleteSuccess:
@@ -152,7 +166,9 @@ class InvoicesStateBuilder extends StatelessWidget {
                   onInvoiceView: onInvoiceView,
                   onInvoiceEdit: onInvoiceEdit,
                   onInvoiceDelete: onInvoiceDelete,
+                  onInvoiceReturn: onInvoiceReturn,
                   showLoadingIndicator: false,
+                  onInvoiceSend: onInvoiceSend,
                 );
               },
           failure: (invoices, selectedInvoice, currentPage, totalPages, error) {
@@ -165,8 +181,10 @@ class InvoicesStateBuilder extends StatelessWidget {
               onInvoiceView: onInvoiceView,
               onInvoiceEdit: onInvoiceEdit,
               onInvoiceDelete: onInvoiceDelete,
+              onInvoiceReturn: onInvoiceReturn,
               showLoadingIndicator: false,
-            );
+              onInvoiceSend: onInvoiceSend,
+              );
           },
         );
       },

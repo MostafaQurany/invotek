@@ -8,8 +8,8 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/credit_invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/cubit/credit_invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/widgets/bottomsheets/invoices_filters_bottom_sheet.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoices_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/lists/credit_invoices_state_builder.dart';
@@ -173,7 +173,7 @@ class _CreditInvoicesListScreenState extends State<CreditInvoicesListScreen> {
     );
   }
 
-  void _onInvoiceTap(InvoiceModel invoice) {
+  void _onInvoiceTap(InvoiceEntity invoice) {
     if (!_isNavigating && mounted) {
       setState(() {
         _isNavigating = true;
@@ -192,10 +192,10 @@ class _CreditInvoicesListScreenState extends State<CreditInvoicesListScreen> {
     }
   }
 
-  void _onInvoiceView(InvoiceModel invoice) => _onInvoiceTap(invoice);
+  void _onInvoiceView(InvoiceEntity invoice) => _onInvoiceTap(invoice);
 
-  void _onInvoiceEdit(InvoiceModel invoice) {}
-  void _onInvoiceDelete(InvoiceModel invoice) {}
+  void _onInvoiceEdit(InvoiceEntity invoice) {}
+  void _onInvoiceDelete(InvoiceEntity invoice) {}
   void _onAddInvoice() {}
 
   void _onRetry() => _onRefresh();

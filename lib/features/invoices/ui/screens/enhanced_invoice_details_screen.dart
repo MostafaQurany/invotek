@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bluetooth_print_plus/bluetooth_print_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,8 +12,8 @@ import 'package:invotek/core/widgets/error_widget.dart' as custom;
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
 import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_additional_info_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
@@ -30,7 +28,10 @@ import 'package:invotek/features/products/data/repository/products_repository.da
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invotek/features/invoices/data/models/invoice_item.dart';
+import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_customer_entity.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_item_entity.dart';
 
 /// شاشة تفاصيل الفاتورة المحسنة مع دعم استدعاء API وإدارة الحالة
 class EnhancedInvoiceDetailsScreen extends StatefulWidget {
@@ -394,7 +395,7 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  Widget _buildContent(InvoiceModel? invoice) {
+  Widget _buildContent(InvoiceEntity? invoice) {
     if (invoice == null) {
       return _buildEmptyState();
     }
@@ -444,7 +445,7 @@ class _EnhancedInvoiceDetailsScreenState
           SliverToBoxAdapter(
             child: InvoiceCustomerCard(
               customer:
-                  invoice.customer ??
+                  _convertCustomerEntityToModel(invoice.customer) ??
                   InvoiceCustomerModel(
                     id: 0,
                     name:
@@ -468,7 +469,9 @@ class _EnhancedInvoiceDetailsScreenState
 
           SliverToBoxAdapter(
             child: InvoiceItemsCard(
-              items: invoice.items ?? [],
+              items: (invoice.items ?? [])
+                  .map((e) => _convertItemEntityToModel(e))
+                  .toList(),
               onItemTap: (item) {
                 _viewItemDetails(item);
               },
@@ -550,7 +553,7 @@ class _EnhancedInvoiceDetailsScreenState
   }
 
   // Action Methods
-  void _editInvoice(InvoiceModel invoice) {
+  void _editInvoice(InvoiceEntity invoice) {
     // التحقق من صلاحية التعديل قبل الانتقال
     final permissionsState = context.read<PermissionsCubit>().state;
     final hasEditPermission = permissionsState.maybeWhen(
@@ -589,7 +592,7 @@ class _EnhancedInvoiceDetailsScreenState
     }
   }
 
-  void _showStatusOptions(InvoiceModel invoice) {
+  void _showStatusOptions(InvoiceEntity invoice) {
     showModalBottomSheet(
       context: context,
       useSafeArea: false,
@@ -598,7 +601,7 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  Widget _buildStatusOptionsBottomSheet(InvoiceModel invoice) {
+  Widget _buildStatusOptionsBottomSheet(InvoiceEntity invoice) {
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
     return Container(
@@ -649,7 +652,7 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  void _viewCustomerDetails(InvoiceModel invoice) {
+  void _viewCustomerDetails(InvoiceEntity invoice) {
     // TODO: Navigate to customer details
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -700,7 +703,7 @@ class _EnhancedInvoiceDetailsScreenState
     }
   }
 
-  void _changePaymentMethod(InvoiceModel invoice) {
+  void _changePaymentMethod(InvoiceEntity invoice) {
     // TODO: Implement payment method change
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -713,7 +716,7 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  void _markAsPaid(InvoiceModel invoice) {
+  void _markAsPaid(InvoiceEntity invoice) {
     // التحقق من صلاحية التعديل قبل فتح الحوار
     final permissionsState = context.read<PermissionsCubit>().state;
     final hasEditPermission = permissionsState.maybeWhen(
@@ -743,7 +746,7 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  void _deleteInvoice(InvoiceModel invoice) {
+  void _deleteInvoice(InvoiceEntity invoice) {
     // التحقق من صلاحية الحذف قبل فتح الحوار
     final permissionsState = context.read<PermissionsCubit>().state;
     final hasDeletePermission = permissionsState.maybeWhen(
@@ -802,7 +805,7 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  void _viewQRCode(InvoiceModel invoice) {
+  void _viewQRCode(InvoiceEntity invoice) {
     if (invoice.qrCode?.isNotEmpty ?? false) {
       showDialog(
         context: context,
@@ -821,7 +824,7 @@ class _EnhancedInvoiceDetailsScreenState
     }
   }
 
-  void _viewTaxUID(InvoiceModel invoice) {
+  void _viewTaxUID(InvoiceEntity invoice) {
     if (invoice.taxUid?.isNotEmpty ?? false) {
       showDialog(
         context: context,
@@ -880,7 +883,7 @@ class _EnhancedInvoiceDetailsScreenState
     }
   }
 
-  void _updateStatus(InvoiceModel invoice, String status) async {
+  void _updateStatus(InvoiceEntity invoice, String status) async {
     // التحقق من صلاحية التعديل قبل التحديث
     final permissionsState = context.read<PermissionsCubit>().state;
     final hasEditPermission = permissionsState.maybeWhen(
@@ -932,7 +935,7 @@ class _EnhancedInvoiceDetailsScreenState
     }
   }
 
-  Widget _buildFloatingActionButton(InvoiceModel invoice) {
+  Widget _buildFloatingActionButton(InvoiceEntity invoice) {
     final s = S.of(context);
     final canDelete = invoice.status?.toLowerCase() == 'draft';
 
@@ -1028,14 +1031,16 @@ class _EnhancedInvoiceDetailsScreenState
     );
   }
 
-  Future<void> _showPrintOptions(InvoiceModel invoice) async {
+  Future<void> _showPrintOptions(InvoiceEntity invoice) async {
     if (BluetoothPrintPlus.isBlueOn) {
       if (BluetoothPrintPlus.isConnected) {
         // عرض dialog الطباعة مباشرة
         if (mounted) {
           showDialog(
             context: context,
-            builder: (context) => InvoicePrintDialog(invoice: invoice),
+            builder: (context) => InvoicePrintDialog(
+              invoice: _convertInvoiceEntityToModel(invoice),
+            ),
           );
         }
       } else {
@@ -1252,6 +1257,76 @@ class _EnhancedInvoiceDetailsScreenState
           ),
         ],
       ),
+    );
+  }
+
+  /// Convert InvoiceCustomerEntity to InvoiceCustomerModel
+  InvoiceCustomerModel? _convertCustomerEntityToModel(
+    InvoiceCustomerEntity? entity,
+  ) {
+    if (entity == null) return null;
+    return InvoiceCustomerModel(
+      id: entity.id,
+      companyId: entity.companyId,
+      name: entity.name,
+      email: entity.email,
+      phone: entity.phone,
+      taxNumber: entity.taxNumber,
+      address: entity.address,
+      notes: entity.notes,
+      status: entity.status,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+    );
+  }
+
+  /// Convert InvoiceItemEntity to InvoiceItem
+  InvoiceItem _convertItemEntityToModel(InvoiceItemEntity entity) {
+    return InvoiceItem(
+      id: entity.id ?? 0,
+      taxInvoiceId: entity.taxInvoiceId ?? 0,
+      name: entity.name ?? '',
+      description: entity.description ?? '',
+      quantity: entity.quantity ?? '0',
+      price: entity.price ?? '0.00',
+      discount: entity.discount ?? '0.00',
+      taxPercent: entity.taxPercent ?? '0.00',
+      taxAmount: entity.taxAmount ?? '0.00',
+      total: entity.total ?? '0.00',
+      createdAt: entity.createdAt ?? '',
+      updatedAt: entity.updatedAt ?? '',
+      productId: entity.productId ?? 0,
+    );
+  }
+
+  /// Convert InvoiceEntity to InvoiceModel
+  InvoiceModel _convertInvoiceEntityToModel(InvoiceEntity entity) {
+    return InvoiceModel(
+      id: entity.id,
+      invoiceId: entity.invoiceId,
+      invoiceNumber: entity.invoiceNumber,
+      taxUid: entity.taxUid,
+      qrCode: entity.qrCode,
+      invoiceType: entity.invoiceType,
+      documentType: entity.documentType,
+      status: entity.status,
+      errorMessage: entity.errorMessage,
+      issueDate: entity.issueDate,
+      customerName: entity.customerName,
+      paymentMethodCode: entity.paymentMethodCode,
+      subtotal: entity.subtotal,
+      taxAmount: entity.taxAmount,
+      discount: entity.discount,
+      total: entity.total,
+      description: entity.description,
+      sentAt: entity.sentAt,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
+      companyId: entity.companyId,
+      customerId: entity.customerId,
+      items: entity.items?.map((e) => _convertItemEntityToModel(e)).toList(),
+      customer: _convertCustomerEntityToModel(entity.customer),
+      apiRequest: null, // Not needed for print dialog
     );
   }
 }

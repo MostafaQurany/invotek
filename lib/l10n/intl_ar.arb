@@ -1361,6 +1361,7 @@
   "saveAndSend": "حفظ وإرسال",
   "paymentMethod": "طريقة الدفع",
   "cash": "نقداً",
+  "debts": "ذمم",
   "card": "بطاقة",
   "bankTransfer": "تحويل بنكي",
   "check": "شيك",
@@ -2553,7 +2554,7 @@
   "usersExpenses": "المصروفات",
   "usersReports": "التقارير",
   "usersSettings": "الإعدادات",
-  "creditInvoicesTitle": "فواتير الائتمان",
+  "creditInvoicesTitle": "فواتير مرتجعة",
   "dinar": "د.ر",
   "manageExpensesAndBudgets": "إدارة النفقات والميزانيات",
   "emailAddress": "عنوان البريد الإلكتروني",
@@ -3281,5 +3282,15 @@
   "legal": "قانوني",
   "termsOfService": "شروط الخدمة",
   "comingSoon": "قريباً",
-  "errorOccurred": "حدث خطأ"
+  "errorOccurred": "حدث خطأ",
+  "returnInvoice": "إرجاع الفاتورة",
+  "creditInvoice": "فاتورة مرتجعة",
+  "reason": "السبب",
+  "createCreditInvoice": "إنشاء فاتورة مرتجعة",
+  "basicInfo": "المعلومات الأساسية",
+  "summary": "الملخص",
+  "returnReason": "سبب الإرجاع",
+  "enterReasonForReturn": "أدخل سبب الإرجاع",
+  "returnedInvoice": "فاتورة مرتجعة",
+  "invoiceAlreadyHasCreditInvoice": "هذه الفاتورة لديها بالفعل فاتورة مرتجعة مرتبطة بها"
 }

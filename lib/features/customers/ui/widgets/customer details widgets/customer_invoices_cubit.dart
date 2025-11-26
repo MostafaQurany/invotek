@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/core/error/failures.dart';
 import 'package:invotek/features/customers/domain/usecases/get_customer_invoices.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 
 abstract class CustomerInvoicesState {}
 
@@ -12,7 +12,7 @@ class CustomerInvoicesInitial extends CustomerInvoicesState {}
 class CustomerInvoicesLoading extends CustomerInvoicesState {}
 
 class CustomerInvoicesLoaded extends CustomerInvoicesState {
-  final List<InvoiceModel> invoices;
+  final List<InvoiceEntity> invoices;
   final int totalInvoices;
 
   CustomerInvoicesLoaded({required this.invoices, required this.totalInvoices});
@@ -29,7 +29,7 @@ class CustomerInvoicesCubit extends Cubit<CustomerInvoicesState> {
 
   int _currentPage = 1;
   int _totalPages = 1;
-  List<InvoiceModel> _allInvoices = [];
+  List<InvoiceEntity> _allInvoices = [];
   bool _isLoadingMore = false;
 
   CustomerInvoicesCubit(this._getCustomerInvoices)
@@ -62,11 +62,9 @@ class CustomerInvoicesCubit extends Cubit<CustomerInvoicesState> {
     );
 
     result.when(
-      success: (response) {
-        final newInvoices = response.data.data ?? [];
-        final totalInvoices = int.parse(
-          (response.data.total ?? "0").toString(),
-        );
+      success: (paginationResult) {
+        final newInvoices = paginationResult.invoices;
+        final totalInvoices = paginationResult.total ?? 0;
 
         if (refresh) {
           _allInvoices = newInvoices;
@@ -74,7 +72,7 @@ class CustomerInvoicesCubit extends Cubit<CustomerInvoicesState> {
           _allInvoices.addAll(newInvoices);
         }
 
-        _totalPages = (totalInvoices / 10).ceil();
+        _totalPages = paginationResult.lastPage ?? 1;
 
         emit(
           CustomerInvoicesLoaded(

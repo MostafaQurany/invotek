@@ -58,7 +58,22 @@ class ApiErrorHandler {
               );
             }
             if (statusCode == 400) {
-              return Failure.validation(message: ApiErrors.badRequestError);
+              final validationErrors = _extractValidationErrors(e.response);
+              String errorMessage;
+              if (validationErrors != null && validationErrors.isNotEmpty) {
+                // إذا كان هناك أخطاء متعددة، أنشئ رسالة عامة
+                final errorCount = validationErrors.values
+                    .fold(0, (sum, list) => sum + list.length);
+                errorMessage = 'تم العثور على $errorCount خطأ في التحقق من البيانات';
+              } else {
+                // استخدم الرسالة من الـ server أو رسالة افتراضية
+                errorMessage = _extractServerMessage(e.response) ??
+                    ApiErrors.badRequestError;
+              }
+              return Failure.validation(
+                message: errorMessage,
+                errors: validationErrors,
+              );
             }
             if (statusCode == 204) {
               return Failure.server(
@@ -114,6 +129,34 @@ class ApiErrorHandler {
       final redirectUrl = data['redirect'];
       if (redirectUrl is String && redirectUrl.trim().isNotEmpty) {
         return redirectUrl;
+      }
+    }
+    return null;
+  }
+
+  /// استخراج جميع أخطاء التحقق من الـ response
+  static Map<String, List<String>>? _extractValidationErrors(
+    Response? response,
+  ) {
+    if (response == null) return null;
+    final data = response.data;
+    if (data is Map) {
+      final errors = data['errors'];
+      if (errors is Map) {
+        final Map<String, List<String>> validationErrors = {};
+        errors.forEach((key, value) {
+          if (value is List) {
+            validationErrors[key] = value
+                .map((e) => e.toString())
+                .where((e) => e.isNotEmpty)
+                .toList();
+          } else if (value is String && value.isNotEmpty) {
+            validationErrors[key] = [value];
+          }
+        });
+        if (validationErrors.isNotEmpty) {
+          return validationErrors;
+        }
       }
     }
     return null;

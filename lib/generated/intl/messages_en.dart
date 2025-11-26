@@ -412,6 +412,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "backup": MessageLookupByLibrary.simpleMessage("Backup"),
     "bankTransfer": MessageLookupByLibrary.simpleMessage("Bank Transfer"),
     "barcode": MessageLookupByLibrary.simpleMessage("Barcode"),
+    "basicInfo": MessageLookupByLibrary.simpleMessage("Basic Info"),
     "basicInformation": MessageLookupByLibrary.simpleMessage(
       "Basic Information",
     ),
@@ -814,6 +815,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "createAndEditInvoices": MessageLookupByLibrary.simpleMessage(
       "Create and edit invoices",
     ),
+    "createCreditInvoice": MessageLookupByLibrary.simpleMessage(
+      "Create Returned Invoice",
+    ),
     "createCustomers": MessageLookupByLibrary.simpleMessage("Create Customers"),
     "createEditInvoices": MessageLookupByLibrary.simpleMessage(
       "Create and edit invoices",
@@ -859,8 +863,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "creationDate": MessageLookupByLibrary.simpleMessage("Creation Date"),
     "creditCard": MessageLookupByLibrary.simpleMessage("Credit Card"),
+    "creditInvoice": MessageLookupByLibrary.simpleMessage("Returned Invoice"),
     "creditInvoicesTitle": MessageLookupByLibrary.simpleMessage(
-      "Credit Invoices",
+      "Returned Invoices",
     ),
     "currency": MessageLookupByLibrary.simpleMessage("Dinar"),
     "currentPassword": MessageLookupByLibrary.simpleMessage("Current Password"),
@@ -1929,6 +1934,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "date": MessageLookupByLibrary.simpleMessage("Date"),
     "deactivate": MessageLookupByLibrary.simpleMessage("Deactivate"),
     "debitCard": MessageLookupByLibrary.simpleMessage("Debit Card"),
+    "debts": MessageLookupByLibrary.simpleMessage("Debts"),
     "decrease": MessageLookupByLibrary.simpleMessage("Decrease"),
     "delete": MessageLookupByLibrary.simpleMessage("Delete"),
     "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
@@ -2229,6 +2235,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter product SKU",
     ),
     "enterQuantity": MessageLookupByLibrary.simpleMessage("Enter quantity"),
+    "enterReasonForReturn": MessageLookupByLibrary.simpleMessage(
+      "Enter reason for return",
+    ),
     "enterRegion": MessageLookupByLibrary.simpleMessage("Enter region"),
     "enterResponsiblePerson": MessageLookupByLibrary.simpleMessage(
       "Enter responsible person",
@@ -2699,6 +2708,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "inventory": MessageLookupByLibrary.simpleMessage("Inventory"),
     "inventorySettings": MessageLookupByLibrary.simpleMessage(
       "Inventory Settings",
+    ),
+    "invoiceAlreadyHasCreditInvoice": MessageLookupByLibrary.simpleMessage(
+      "This invoice already has a returned invoice associated with it",
     ),
     "invoiceAlreadySent": MessageLookupByLibrary.simpleMessage(
       "Invoice Already Sent",
@@ -3812,6 +3824,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "quickActions": MessageLookupByLibrary.simpleMessage("Quick Actions"),
     "quickActionsTitle": MessageLookupByLibrary.simpleMessage("Quick Actions"),
     "quickContact": MessageLookupByLibrary.simpleMessage("Quick Contact"),
+    "reason": MessageLookupByLibrary.simpleMessage("Reason"),
     "receiveNotifications": MessageLookupByLibrary.simpleMessage(
       "Receive Notifications",
     ),
@@ -3860,6 +3873,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "retryingLogoLoad": MessageLookupByLibrary.simpleMessage(
       "Retrying logo load...",
     ),
+    "returnInvoice": MessageLookupByLibrary.simpleMessage("Return Invoice"),
+    "returnReason": MessageLookupByLibrary.simpleMessage("Return Reason"),
+    "returnedInvoice": MessageLookupByLibrary.simpleMessage("Returned Invoice"),
     "returnedInvoices": MessageLookupByLibrary.simpleMessage(
       "Returned Invoices",
     ),
@@ -4176,6 +4192,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "subtotal": MessageLookupByLibrary.simpleMessage("Subtotal:"),
     "subtotalLine": m74,
     "successText": MessageLookupByLibrary.simpleMessage("Success Text"),
+    "summary": MessageLookupByLibrary.simpleMessage("Summary"),
     "supervisor": MessageLookupByLibrary.simpleMessage("Supervisor"),
     "supervisorDescription": MessageLookupByLibrary.simpleMessage(
       "Manages users and permissions",

@@ -6,8 +6,13 @@ import 'package:invotek/generated/l10n.dart';
 
 class InvoiceBasicInfoStep extends StatefulWidget {
   final InvoiceFormController formController;
+  final bool isReadOnly;
 
-  const InvoiceBasicInfoStep({super.key, required this.formController});
+  const InvoiceBasicInfoStep({
+    super.key,
+    required this.formController,
+    this.isReadOnly = false,
+  });
 
   @override
   State<InvoiceBasicInfoStep> createState() => _InvoiceBasicInfoStepState();
@@ -24,7 +29,6 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
     final s = S.of(context);
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -48,6 +52,11 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
   }
 
   Widget _buildPaymentMethodSelection(S s) {
+    final isCashSelected =
+        widget.formController.selectedPaymentMethod == 'cash';
+    final isDebtsSelected =
+        widget.formController.selectedPaymentMethod == 'debts';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -59,36 +68,88 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
             color: AppColors.textPrimary,
           ),
         ),
-        SizedBox(height: 8.h),
-        DropdownButtonFormField<String>(
-          initialValue: widget.formController.selectedPaymentMethod,
-          decoration: InputDecoration(
-            fillColor: AppColors.white,
-
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
+        SizedBox(height: 12.h),
+        Row(
+          children: [
+            // Cash Card
+            Expanded(
+              child: _buildPaymentMethodCard(
+                title: s.cash,
+                isSelected: isCashSelected,
+                onTap: () {
+                  widget.formController.onPaymentMethodChanged('cash');
+                  setState(() {});
+                },
+                icon: Icons.money,
+              ),
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 12.w,
-              vertical: 16.h,
+            SizedBox(width: 12.w),
+            // Debts Card
+            Expanded(
+              child: _buildPaymentMethodCard(
+                title: s
+                    .debts, // Will be replaced with s.debts after localization generation
+                isSelected: isDebtsSelected,
+                onTap: () {
+                  widget.formController.onPaymentMethodChanged('debts');
+                  setState(() {});
+                },
+                icon: Icons.account_balance_wallet,
+              ),
             ),
-          ),
-          items: [
-            DropdownMenuItem(value: 'cash', child: Text(s.cash)),
-            DropdownMenuItem(value: 'card', child: Text(s.card)),
-            DropdownMenuItem(
-              value: 'bank_transfer',
-              child: Text(s.bankTransfer),
-            ),
-            DropdownMenuItem(value: 'check', child: Text(s.check)),
           ],
-          onChanged: (value) {
-            if (value != null) {
-              widget.formController.onPaymentMethodChanged(value);
-            }
-          },
         ),
       ],
+    );
+  }
+
+  Widget _buildPaymentMethodCard({
+    required String title,
+    required bool isSelected,
+    required VoidCallback onTap,
+    required IconData icon,
+  }) {
+    return InkWell(
+      onTap: widget.isReadOnly ? null : onTap,
+      borderRadius: BorderRadius.circular(12.r),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
+        decoration: BoxDecoration(
+          color: widget.isReadOnly
+              ? AppColors.grey.withOpacity(0.1)
+              : (isSelected
+                    ? AppColors.primary.withOpacity(0.1)
+                    : AppColors.white),
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(
+            color: widget.isReadOnly
+                ? AppColors.grey.withOpacity(0.3)
+                : (isSelected
+                      ? AppColors.primary
+                      : AppColors.grey.withOpacity(0.3)),
+            width: isSelected ? 2 : 1,
+          ),
+        ),
+        child: Column(
+          children: [
+            Icon(
+              icon,
+              color: isSelected ? AppColors.primary : AppColors.textSecondary,
+              size: 32.sp,
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                color: isSelected ? AppColors.primary : AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -107,8 +168,12 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
         SizedBox(height: 8.h),
         TextFormField(
           controller: widget.formController.issueDateController,
+          enabled: !widget.isReadOnly,
+          readOnly: true,
           decoration: InputDecoration(
-            fillColor: AppColors.white,
+            fillColor: widget.isReadOnly
+                ? AppColors.grey.withOpacity(0.1)
+                : AppColors.white,
             filled: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
@@ -117,12 +182,13 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
               horizontal: 12.w,
               vertical: 16.h,
             ),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.calendar_today),
-              onPressed: () => _selectDate(),
-            ),
+            suffixIcon: widget.isReadOnly
+                ? null
+                : IconButton(
+                    icon: const Icon(Icons.calendar_today),
+                    onPressed: () => _selectDate(),
+                  ),
           ),
-          readOnly: true,
         ),
       ],
     );
@@ -143,10 +209,12 @@ class _InvoiceBasicInfoStepState extends State<InvoiceBasicInfoStep>
         SizedBox(height: 8.h),
         TextFormField(
           controller: widget.formController.descriptionController,
+          readOnly: widget.isReadOnly,
           decoration: InputDecoration(
             filled: true,
-            fillColor: AppColors.white,
-
+            fillColor: widget.isReadOnly
+                ? AppColors.grey.withOpacity(0.1)
+                : AppColors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
             ),

@@ -230,6 +230,8 @@ class InvoiceFormController extends ChangeNotifier {
 
     double total = subtotal + totalTax - totalDiscount;
     totalController.text = total.toStringAsFixed(2);
+
+    notifyListeners();
   }
 
   // Item quantity validation against available stock (if provided)
@@ -271,10 +273,8 @@ class InvoiceFormController extends ChangeNotifier {
     if (selectedCustomerId != null) {
       return true;
     }
-    // If new customer: check if all required fields are filled
-    return customerNameController.text.trim().isNotEmpty &&
-        customerEmailController.text.trim().isNotEmpty &&
-        customerPhoneController.text.trim().isNotEmpty;
+    // If new customer: only name is required
+    return customerNameController.text.trim().isNotEmpty;
   }
 
   // Form Data for API

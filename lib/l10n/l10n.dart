@@ -5526,6 +5526,12 @@ abstract class S {
   /// **'Save and Send'**
   String get saveAndSend;
 
+  /// No description provided for @debts.
+  ///
+  /// In en, this message translates to:
+  /// **'Debts'**
+  String get debts;
+
   /// No description provided for @invoiceStatus.
   ///
   /// In en, this message translates to:
@@ -10605,7 +10611,7 @@ abstract class S {
   /// No description provided for @creditInvoicesTitle.
   ///
   /// In en, this message translates to:
-  /// **'Credit Invoices'**
+  /// **'Returned Invoices'**
   String get creditInvoicesTitle;
 
   /// No description provided for @dinar.
@@ -13127,6 +13133,66 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Terms of Service'**
   String get termsOfService;
+
+  /// No description provided for @returnInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Invoice'**
+  String get returnInvoice;
+
+  /// No description provided for @creditInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned Invoice'**
+  String get creditInvoice;
+
+  /// No description provided for @reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reason;
+
+  /// No description provided for @createCreditInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Returned Invoice'**
+  String get createCreditInvoice;
+
+  /// No description provided for @basicInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get basicInfo;
+
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @returnReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Reason'**
+  String get returnReason;
+
+  /// No description provided for @enterReasonForReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reason for return'**
+  String get enterReasonForReturn;
+
+  /// No description provided for @returnedInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned Invoice'**
+  String get returnedInvoice;
+
+  /// No description provided for @invoiceAlreadyHasCreditInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice already has a returned invoice associated with it'**
+  String get invoiceAlreadyHasCreditInvoice;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

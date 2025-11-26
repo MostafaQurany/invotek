@@ -1,3 +1,4 @@
+import 'package:invotek/features/invoices/domain/entities/invoice_item_entity.dart';
 import 'package:invotek/features/products/data/models/product_api_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -51,4 +52,22 @@ class InvoiceItem {
   factory InvoiceItem.fromJson(Map<String, dynamic> json) =>
       _$InvoiceItemFromJson(json);
   Map<String, dynamic> toJson() => _$InvoiceItemToJson(this);
+
+  InvoiceItemEntity toEntity() {
+    return InvoiceItemEntity(
+      id: id,
+      taxInvoiceId: taxInvoiceId,
+      name: name,
+      description: description,
+      quantity: quantity,
+      price: price,
+      discount: discount,
+      taxPercent: taxPercent,
+      taxAmount: taxAmount,
+      total: total,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      productId: productId,
+    );
+  }
 }

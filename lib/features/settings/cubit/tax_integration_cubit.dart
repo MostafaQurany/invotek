@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/invoices/data/models/requests/activating_tax_integration_request.dart';
 import 'package:invotek/features/invoices/data/models/responses/get_tax_integration_status.dart';
-import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
+import 'package:invotek/features/invoices/domain/repositories/invoice_repository.dart' as domain;
 
 abstract class TaxIntegrationState {}
 
@@ -23,7 +23,7 @@ class TaxIntegrationError extends TaxIntegrationState {
 }
 
 class TaxIntegrationCubit extends Cubit<TaxIntegrationState> {
-  final InvoiceRepository _repository;
+  final domain.InvoiceRepository _repository;
 
   TaxIntegrationCubit(this._repository) : super(TaxIntegrationInitial());
 

@@ -55,12 +55,20 @@ class SnackBarHelper {
         message: customMessage ?? S.of(context).cacheError,
         backgroundColor: colorScheme.error,
       ),
-      validation: (message, errors) => _show(
-        context,
-        icon: Icons.warning_amber,
-        message: customMessage ?? message,
-        backgroundColor: Colors.amber,
-      ),
+      validation: (message, errors) {
+        if (errors != null && errors.isNotEmpty) {
+          // إذا كان هناك أخطاء متعددة، اعرضها في dialog
+          _showValidationErrorsDialog(context, message, errors);
+        } else {
+          // إذا كان هناك رسالة واحدة فقط، اعرضها في snackbar
+          _show(
+            context,
+            icon: Icons.warning_amber,
+            message: customMessage ?? message,
+            backgroundColor: Colors.amber,
+          );
+        }
+      },
       unknown: (message) => _show(
         context,
         icon: Icons.help_outline,
@@ -138,6 +146,79 @@ class SnackBarHelper {
                 _hideCurrentSnackBar(context);
               },
         ),
+      ),
+    );
+  }
+
+  /// عرض جميع أخطاء التحقق في dialog
+  static void _showValidationErrorsDialog(
+    BuildContext context,
+    String title,
+    Map<String, List<String>> errors,
+  ) {
+    _hideCurrentSnackBar(context);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.warning_amber, color: Colors.amber[700]),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ),
+          ],
+        ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: errors.entries.map((entry) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      entry.key,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    ...entry.value.map(
+                      (error) => Padding(
+                        padding: const EdgeInsets.only(left: 8, top: 4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('• ', style: TextStyle(fontSize: 16)),
+                            Expanded(
+                              child: Text(
+                                error,
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(S.of(context).ok),
+          ),
+        ],
       ),
     );
   }

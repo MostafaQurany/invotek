@@ -10,11 +10,13 @@ import 'package:invotek/generated/l10n.dart';
 class ItemsSelectionStep extends StatefulWidget {
   final InvoiceFormController formController;
   final String? taxInvoiceType;
+  final bool isCreditInvoiceMode;
 
   const ItemsSelectionStep({
     super.key,
     required this.formController,
     this.taxInvoiceType,
+    this.isCreditInvoiceMode = false,
   });
 
   @override
@@ -31,22 +33,25 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep>
     super.build(context);
     final s = S.of(context);
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with Add Button
-          _buildHeader(s),
-          SizedBox(height: 16.h),
+    return ListenableBuilder(
+      listenable: widget.formController,
+      builder: (context, _) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with Add Button (hidden in credit invoice mode)
+              if (!widget.isCreditInvoiceMode) ...[
+                _buildHeader(s),
+                SizedBox(height: 16.h),
+              ],
 
-          // Items List
-          if (widget.formController.items.isEmpty)
-            Center(child: _buildEmptyState(s))
-          else
-            _buildItemsList(s),
-        ],
-      ),
+              // Items List
+              if (widget.formController.items.isNotEmpty) _buildItemsList(s),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -57,7 +62,7 @@ class _ItemsSelectionStepState extends State<ItemsSelectionStep>
         Text(
           s.invoiceItems,
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),

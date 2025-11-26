@@ -5,7 +5,7 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/animated_entry_widget.dart';
 import 'package:invotek/features/customers/domain/entit/customer_model.dart';
 import 'package:invotek/features/customers/ui/widgets/customer details widgets/customer_invoices_cubit.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/features/invoices/ui/screens/enhanced_invoice_details_screen.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_card.dart';
 import 'package:invotek/generated/l10n.dart';
@@ -138,7 +138,7 @@ class _CustomerInvoicesListScreenState
     );
   }
 
-  Widget _buildInvoicesList(BuildContext context, List<InvoiceModel> invoices) {
+  Widget _buildInvoicesList(BuildContext context, List<InvoiceEntity> invoices) {
     if (invoices.isEmpty) {
       return _buildEmptyState(context);
     }
@@ -163,6 +163,7 @@ class _CustomerInvoicesListScreenState
             final invoice = invoices[index];
             return InvoiceCard(
               invoice: invoice,
+              
               onTap: () => _navigateToInvoiceDetails(context, invoice),
             );
           },
@@ -282,7 +283,7 @@ class _CustomerInvoicesListScreenState
     );
   }
 
-  void _navigateToInvoiceDetails(BuildContext context, InvoiceModel invoice) {
+  void _navigateToInvoiceDetails(BuildContext context, InvoiceEntity invoice) {
     Navigator.push(
       context,
       MaterialPageRoute(

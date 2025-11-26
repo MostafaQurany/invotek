@@ -2,15 +2,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:invotek/core/server/api_result.dart';
 import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/data/models/invoice_item.dart';
+import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
 import 'package:invotek/features/invoices/data/models/requests/get_all_invoices_request.dart';
-import 'package:invotek/features/invoices/data/repository/invoice_repository.dart';
+import 'package:invotek/features/invoices/domain/repositories/invoice_repository.dart' as domain;
 import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
 
 
 /// Cubit مخصص للفواتير الآجلة (Credit Invoices)
 /// يعيد استخدام نفس InvoicesState لتوحيد الواجهة
 class CreditInvoicesCubit extends Cubit<InvoicesState> {
-  final InvoiceRepository _repository;
+  final domain.InvoiceRepository _repository;
   static CreditInvoicesCubit get(context) => BlocProvider.of(context);
 
   final List<InvoiceModel> _invoices = <InvoiceModel>[];
@@ -97,10 +99,70 @@ class CreditInvoicesCubit extends Cubit<InvoicesState> {
     );
 
     result.when(
-      success: (response) {
-        _invoices.addAll(response.data.data ?? []);
-        _currentPage = response.data.currentPage?.toInt() ?? 1;
-        _totalPages = response.data.lastPage?.toInt() ?? 1;
+      success: (paginationResult) {
+        // Convert InvoiceEntity to InvoiceModel
+        final invoiceModels = paginationResult.invoices.map((entity) {
+          return InvoiceModel(
+            id: entity.id,
+            invoiceId: entity.invoiceId,
+            invoiceNumber: entity.invoiceNumber,
+            taxUid: entity.taxUid,
+            qrCode: entity.qrCode,
+            invoiceType: entity.invoiceType,
+            documentType: entity.documentType,
+            status: entity.status,
+            errorMessage: entity.errorMessage,
+            issueDate: entity.issueDate,
+            customerName: entity.customerName,
+            paymentMethodCode: entity.paymentMethodCode,
+            subtotal: entity.subtotal,
+            taxAmount: entity.taxAmount,
+            discount: entity.discount,
+            total: entity.total,
+            description: entity.description,
+            sentAt: entity.sentAt,
+            createdAt: entity.createdAt,
+            updatedAt: entity.updatedAt,
+            companyId: entity.companyId,
+            customerId: entity.customerId,
+            items: entity.items?.map((item) {
+              return InvoiceItem(
+                id: item.id ?? 0,
+                taxInvoiceId: item.taxInvoiceId ?? 0,
+                name: item.name ?? '',
+                description: item.description ?? '',
+                quantity: item.quantity ?? '0',
+                price: item.price ?? '0.00',
+                discount: item.discount ?? '0.00',
+                taxPercent: item.taxPercent ?? '0.00',
+                taxAmount: item.taxAmount ?? '0.00',
+                total: item.total ?? '0.00',
+                createdAt: item.createdAt ?? '',
+                updatedAt: item.updatedAt ?? '',
+                productId: item.productId ?? 0,
+              );
+            }).toList(),
+            customer: entity.customer != null
+                ? InvoiceCustomerModel(
+                    id: entity.customer!.id,
+                    companyId: entity.customer!.companyId,
+                    name: entity.customer!.name,
+                    email: entity.customer!.email,
+                    phone: entity.customer!.phone,
+                    taxNumber: entity.customer!.taxNumber,
+                    address: entity.customer!.address,
+                    notes: entity.customer!.notes,
+                    status: entity.customer!.status,
+                    createdAt: entity.customer!.createdAt,
+                    updatedAt: entity.customer!.updatedAt,
+                  )
+                : null,
+            apiRequest: null,
+          );
+        }).toList();
+        _invoices.addAll(invoiceModels);
+        _currentPage = paginationResult.currentPage ?? 1;
+        _totalPages = paginationResult.lastPage ?? 1;
 
         emit(
           InvoicesState.loaded(
@@ -157,10 +219,70 @@ class CreditInvoicesCubit extends Cubit<InvoicesState> {
     );
 
     result.when(
-      success: (response) {
+      success: (paginationResult) {
         _currentPage = nextPage;
-        _invoices.addAll(response.data.data ?? []);
-        _totalPages = response.data.lastPage?.toInt() ?? 1;
+        // Convert InvoiceEntity to InvoiceModel
+        final invoiceModels = paginationResult.invoices.map((entity) {
+          return InvoiceModel(
+            id: entity.id,
+            invoiceId: entity.invoiceId,
+            invoiceNumber: entity.invoiceNumber,
+            taxUid: entity.taxUid,
+            qrCode: entity.qrCode,
+            invoiceType: entity.invoiceType,
+            documentType: entity.documentType,
+            status: entity.status,
+            errorMessage: entity.errorMessage,
+            issueDate: entity.issueDate,
+            customerName: entity.customerName,
+            paymentMethodCode: entity.paymentMethodCode,
+            subtotal: entity.subtotal,
+            taxAmount: entity.taxAmount,
+            discount: entity.discount,
+            total: entity.total,
+            description: entity.description,
+            sentAt: entity.sentAt,
+            createdAt: entity.createdAt,
+            updatedAt: entity.updatedAt,
+            companyId: entity.companyId,
+            customerId: entity.customerId,
+            items: entity.items?.map((item) {
+              return InvoiceItem(
+                id: item.id ?? 0,
+                taxInvoiceId: item.taxInvoiceId ?? 0,
+                name: item.name ?? '',
+                description: item.description ?? '',
+                quantity: item.quantity ?? '0',
+                price: item.price ?? '0.00',
+                discount: item.discount ?? '0.00',
+                taxPercent: item.taxPercent ?? '0.00',
+                taxAmount: item.taxAmount ?? '0.00',
+                total: item.total ?? '0.00',
+                createdAt: item.createdAt ?? '',
+                updatedAt: item.updatedAt ?? '',
+                productId: item.productId ?? 0,
+              );
+            }).toList(),
+            customer: entity.customer != null
+                ? InvoiceCustomerModel(
+                    id: entity.customer!.id,
+                    companyId: entity.customer!.companyId,
+                    name: entity.customer!.name,
+                    email: entity.customer!.email,
+                    phone: entity.customer!.phone,
+                    taxNumber: entity.customer!.taxNumber,
+                    address: entity.customer!.address,
+                    notes: entity.customer!.notes,
+                    status: entity.customer!.status,
+                    createdAt: entity.customer!.createdAt,
+                    updatedAt: entity.customer!.updatedAt,
+                  )
+                : null,
+            apiRequest: null,
+          );
+        }).toList();
+        _invoices.addAll(invoiceModels);
+        _totalPages = paginationResult.lastPage ?? 1;
         emit(
           InvoicesState.loaded(
             invoices: _invoices,

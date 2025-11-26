@@ -9,9 +9,9 @@ import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/features/home/cubit/navigation_cubit.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
-import 'package:invotek/features/invoices/ui/screens/edit_invoice_screen.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_form_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/widgets/bottomsheets/invoices_filters_bottom_sheet.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoices_header_widget.dart';
 import 'package:invotek/features/invoices/ui/widgets/dialogs/delete_invoice_dialog.dart';
@@ -183,7 +183,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     );
   }
 
-  void _onInvoiceTap(InvoiceModel invoice) {
+  void _onInvoiceTap(InvoiceEntity invoice) {
     if (!_isNavigating && mounted) {
       setState(() {
         _isNavigating = true;
@@ -202,11 +202,11 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     }
   }
 
-  void _onInvoiceView(InvoiceModel invoice) {
+  void _onInvoiceView(InvoiceEntity invoice) {
     _onInvoiceTap(invoice);
   }
 
-  void _onInvoiceEdit(InvoiceModel invoice) {
+  void _onInvoiceEdit(InvoiceEntity invoice) {
     if (!_isNavigating && mounted) {
       // التحقق من التكامل الضريبي قبل الانتقال
       final taxState = context.read<TaxIntegrationCubit>().state;
@@ -223,7 +223,7 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => EditInvoiceScreen(invoice: invoice),
+          builder: (context) => InvoiceFormScreenWithProvider(invoice: invoice),
         ),
       ).then((_) {
         if (mounted) {
@@ -235,16 +235,63 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
     }
   }
 
-  void _onInvoiceDelete(InvoiceModel invoice) {
+  void _onInvoiceDelete(InvoiceEntity invoice) {
     showDialog(
       context: context,
       builder: (context) => DeleteInvoiceDialog(
         invoice: invoice,
-        onDelete: () {
-          context.read<InvoicesCubit>().deleteInvoice(invoice.id ?? 0);
+        onDelete: () async {
+          Navigator.pop(context); // Close dialog first
+          await context.read<InvoicesCubit>().deleteInvoice(invoice.id ?? 0);
         },
       ),
     );
+  }
+
+  void _onInvoiceReturn(InvoiceEntity invoice) {
+    if (!_isNavigating && mounted) {
+      // التحقق من وجود فواتير إرجاع مرتبطة بالفاتورة
+      final hasReturnedInvoices =
+          invoice.returnedInvoices != null &&
+          invoice.returnedInvoices!.isNotEmpty;
+
+      if (hasReturnedInvoices) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(S.of(context).invoiceAlreadyHasCreditInvoice),
+            backgroundColor: AppColors.warning,
+          ),
+        );
+        return;
+      }
+
+      setState(() {
+        _isNavigating = true;
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              InvoiceFormScreenWithProvider(originalInvoice: invoice),
+        ),
+      ).then((_) {
+        if (mounted) {
+          setState(() {
+            _isNavigating = false;
+          });
+          context.read<InvoicesCubit>().refreshCurrentFilters();
+        }
+      });
+    }
+  }
+
+  void _onInvoiceSend(InvoiceEntity invoice) {
+    if (!_isNavigating && mounted && invoice.id != null) {
+      setState(() {
+        _isNavigating = true;
+      });
+      context.read<InvoicesCubit>().sendInvoice(invoiceId: invoice.id!);
+    }
   }
 
   void _onAddInvoice() {
@@ -261,9 +308,12 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
       setState(() {
         _isNavigating = true;
       });
-      Navigator.pushNamed(context, AppRoutes.invoiceCreationStepperRoute).then((
-        _,
-      ) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => InvoiceFormScreenWithProvider(),
+        ),
+      ).then((_) {
         if (mounted) {
           setState(() {
             _isNavigating = false;
@@ -335,82 +385,122 @@ class _InvoicesListScreenState extends State<InvoicesListScreen> {
           }
         }
       },
-      child: Scaffold(
-        body: SafeArea(
-          child: RefreshIndicator(
-            onRefresh: () async {
-              _onRefresh();
+      child: BlocListener<InvoicesCubit, InvoicesState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            loaded: (invoices, selectedInvoice, currentPage, totalPages) {
+              if (_isNavigating) {
+                setState(() {
+                  _isNavigating = false;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(S.of(context).invoiceSentSuccessfully),
+                    backgroundColor: AppColors.success,
+                  ),
+                );
+              }
             },
-            child: CustomScrollView(
-              controller: _scrollController,
-              physics: const AlwaysScrollableScrollPhysics(),
-              slivers: [
-              // Header with Search and Filters
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _HeaderDelegate(
-                  min: 150.h, // collapsed height
-                  max: 150.h, // same as min => no collapse, always fixed size
-                  child: InvoicesHeaderWidget(
-                    title: S.of(context).invoices,
-                    searchController: _searchController,
-                    onSearchChanged: _onSearchChanged,
-                    selectedStatus: _selectedStatus,
-                    selectedPaymentMethod: _selectedPaymentMethod,
-                    selectedCustomer: _selectedCustomer,
+            failure:
+                (invoices, selectedInvoice, currentPage, totalPages, failure) {
+                  if (_isNavigating) {
+                    setState(() {
+                      _isNavigating = false;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(failure.message),
+                        backgroundColor: AppColors.error,
+                      ),
+                    );
+                  }
+                },
+            orElse: () {},
+          );
+        },
+        child: Scaffold(
+          body: SafeArea(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                _onRefresh();
+              },
+              child: CustomScrollView(
+                controller: _scrollController,
+                physics: const AlwaysScrollableScrollPhysics(),
+                slivers: [
+                  // Header with Search and Filters
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: _HeaderDelegate(
+                      min: 150.h, // collapsed height
+                      max: 150
+                          .h, // same as min => no collapse, always fixed size
+                      child: InvoicesHeaderWidget(
+                        title: S.of(context).invoices,
+                        searchController: _searchController,
+                        onSearchChanged: _onSearchChanged,
+                        selectedStatus: _selectedStatus,
+                        selectedPaymentMethod: _selectedPaymentMethod,
+                        selectedCustomer: _selectedCustomer,
+                        onStatusChanged: _onStatusChanged,
+                        onPaymentMethodChanged: _onPaymentMethodChanged,
+                        onCustomerChanged: _onCustomerChanged,
+                        onRefresh: _onRefresh,
+                        onOpenFilters: _openFilters,
+                      ),
+                    ),
+                  ),
+
+                  // Invoices List with State Management
+                  InvoicesStateBuilder(
+                    onInvoiceTap: _onInvoiceTap,
+                    onInvoiceView: _onInvoiceView,
+                    onInvoiceEdit: _onInvoiceEdit,
+                    onInvoiceDelete: _onInvoiceDelete,
+                    onInvoiceReturn: _onInvoiceReturn,
+                    onInvoiceSend: _onInvoiceSend,
+                    onAddInvoice: _onAddInvoice,
+                    onRetry: _onRetry,
+                    selectedStatus: _selectedStatus ?? 'all',
+                    selectedPaymentMethod: _selectedPaymentMethod ?? 'all',
+                    selectedCustomer: _selectedCustomer ?? 'all',
                     onStatusChanged: _onStatusChanged,
                     onPaymentMethodChanged: _onPaymentMethodChanged,
                     onCustomerChanged: _onCustomerChanged,
-                    onRefresh: _onRefresh,
-                    onOpenFilters: _openFilters,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          floatingActionButton: PermissionWidget(
+            permission: InvoicesPermissions.create,
+            fallback: Tooltip(
+              message: S.of(context).invoicesNoPermissionToAct,
+              child: FloatingActionButton.extended(
+                heroTag: "add_invoice",
+                onPressed: null,
+                backgroundColor: AppColors.grey.withOpacity(0.5),
+                foregroundColor: Colors.white.withOpacity(0.7),
+                icon: const Icon(Icons.lock_outline),
+                label: Text(
+                  S.of(context).addInvoice,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-
-              // Invoices List with State Management
-              InvoicesStateBuilder(
-                onInvoiceTap: _onInvoiceTap,
-                onInvoiceView: _onInvoiceView,
-                onInvoiceEdit: _onInvoiceEdit,
-                onInvoiceDelete: _onInvoiceDelete,
-                onAddInvoice: _onAddInvoice,
-                onRetry: _onRetry,
-                selectedStatus: _selectedStatus ?? 'all',
-                selectedPaymentMethod: _selectedPaymentMethod ?? 'all',
-                selectedCustomer: _selectedCustomer ?? 'all',
-                onStatusChanged: _onStatusChanged,
-                onPaymentMethodChanged: _onPaymentMethodChanged,
-                onCustomerChanged: _onCustomerChanged,
-              ),
-            ],
             ),
-          ),
-        ),
-        floatingActionButton: PermissionWidget(
-          permission: InvoicesPermissions.create,
-          fallback: Tooltip(
-            message: S.of(context).invoicesNoPermissionToAct,
             child: FloatingActionButton.extended(
               heroTag: "add_invoice",
-              onPressed: null,
-              backgroundColor: AppColors.grey.withOpacity(0.5),
-              foregroundColor: Colors.white.withOpacity(0.7),
-              icon: const Icon(Icons.lock_outline),
+              onPressed: _onAddInvoice,
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              icon: const Icon(Icons.add),
               label: Text(
                 S.of(context).addInvoice,
                 style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
               ),
-            ),
-          ),
-          child: FloatingActionButton.extended(
-            heroTag: "add_invoice",
-            onPressed: _onAddInvoice,
-            backgroundColor: AppColors.primary,
-            foregroundColor: Colors.white,
-            icon: const Icon(Icons.add),
-            label: Text(
-              S.of(context).addInvoice,
-              style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
             ),
           ),
         ),

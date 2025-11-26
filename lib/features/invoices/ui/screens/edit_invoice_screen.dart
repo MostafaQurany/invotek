@@ -9,10 +9,9 @@ import 'package:invotek/core/utils/date_formatter.dart';
 import 'package:invotek/core/utils/permission_helper.dart';
 import 'package:invotek/core/utils/snackbar_helper.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
-import 'package:invotek/features/invoices/data/models/invoice_item.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/features/invoices/data/models/requests/update_invoice_request.dart';
-import 'package:invotek/features/invoices/demo/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
 import 'package:invotek/features/invoices/ui/controllers/invoice_form_controller.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/customer_selection_step.dart';
 import 'package:invotek/features/invoices/ui/widgets/stepper/invoice_basic_info_step.dart';
@@ -22,7 +21,7 @@ import 'package:invotek/features/settings/cubit/tax_integration_cubit.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class EditInvoiceScreen extends StatefulWidget {
-  final InvoiceModel invoice;
+  final InvoiceEntity invoice;
 
   const EditInvoiceScreen({super.key, required this.invoice});
 
@@ -131,7 +130,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen>
     _formController.onDateChanged(_formController.selectedDate);
   }
 
-  InvoiceItemData _convertInvoiceItemToItemData(InvoiceItem item) {
+  InvoiceItemData _convertInvoiceItemToItemData(dynamic item) {
     return InvoiceItemData(
       productId: item.productId,
       name: item.name ?? '',
@@ -143,7 +142,7 @@ class _EditInvoiceScreenState extends State<EditInvoiceScreen>
       total: item.total ?? '0.00',
       productName: item.name,
       productDescription: item.description,
-      productCategory: null, // Not available in InvoiceItem
+      productCategory: null, // Not available in InvoiceItemEntity
       availableQuantity:
           null, // We don't have this info from invoice, could fetch if needed
     );

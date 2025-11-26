@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:invotek/core/theme/app_colors.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_card.dart';
 import 'package:invotek/generated/l10n.dart';
 
 class InvoicesList extends StatelessWidget {
-  final List<InvoiceModel> invoices;
-  final Function(InvoiceModel) onInvoiceTap;
-  final Function(InvoiceModel) onInvoiceView;
-  final Function(InvoiceModel)? onInvoiceEdit;
-  final Function(InvoiceModel)? onInvoiceDelete;
+  final List<InvoiceEntity> invoices;
+  final Function(InvoiceEntity) onInvoiceTap;
+  final Function(InvoiceEntity) onInvoiceView;
+  final Function(InvoiceEntity)? onInvoiceEdit;
+  final Function(InvoiceEntity)? onInvoiceDelete;
+  final Function(InvoiceEntity)? onInvoiceReturn;
+  final Function(InvoiceEntity)? onInvoiceSend;
   final bool showLoadingIndicator;
   final String? loadingMessage;
 
@@ -21,6 +23,8 @@ class InvoicesList extends StatelessWidget {
     required this.onInvoiceView,
     this.onInvoiceEdit,
     this.onInvoiceDelete,
+    this.onInvoiceReturn,
+    this.onInvoiceSend,
     this.showLoadingIndicator = false,
     this.loadingMessage,
   });
@@ -37,11 +41,19 @@ class InvoicesList extends StatelessWidget {
             child: InvoiceCard(
               invoice: invoice,
               onTap: () => onInvoiceTap(invoice),
+              onEdit: onInvoiceEdit != null
+                  ? () => onInvoiceEdit!(invoice)
+                  : null,
+              onDelete: onInvoiceDelete != null
+                  ? () => onInvoiceDelete!(invoice)
+                  : null,
               onView: () => onInvoiceView(invoice),
-              onEdit: () =>
-                  (onInvoiceEdit == null) ? null : onInvoiceEdit!(invoice),
-              onDelete: () =>
-                  (onInvoiceDelete == null) ? null : onInvoiceDelete!(invoice),
+              onSend: onInvoiceSend != null
+                  ? () => onInvoiceSend!(invoice)
+                  : null,
+              onReturn: onInvoiceReturn != null
+                  ? () => onInvoiceReturn!(invoice)
+                  : null,
             ),
           );
         }
