@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:invotek/core/di/injection.dart';
 import 'package:invotek/core/theme/app_colors.dart';
 import 'package:invotek/core/widgets/common_menu_button.dart';
@@ -31,8 +32,13 @@ class SettingsScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
         appBar: AppBar(
-          leading: SizedBox.shrink(),
-          actions: [Center(child: CommonMenuButton(color: AppColors.primary))],
+          leading: (ZoomDrawer.of(context) != null)
+              ? SizedBox.shrink()
+              : Center(child: CommonMenuButton(color: AppColors.primary)),
+          actions: [
+            if (ZoomDrawer.of(context) != null)
+              Center(child: CommonMenuButton(color: AppColors.primary)),
+          ],
           title: Text(S.of(context).systemSettings),
           centerTitle: false,
           elevation: 0,

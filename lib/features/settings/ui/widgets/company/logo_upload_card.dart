@@ -193,7 +193,7 @@ class LogoUploadCard extends StatelessWidget {
               child: CircularProgressIndicator(
                 value: loadingProgress.expectedTotalBytes != null
                     ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
+                          loadingProgress.expectedTotalBytes!
                     : null,
                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
               ),
@@ -213,10 +213,6 @@ class LogoUploadCard extends StatelessWidget {
   /// بناء الأيقونة الافتراضية
   /// Build default icon
   Widget _buildDefaultIcon() {
-    return Icon(
-      Icons.business,
-      size: 50.sp,
-      color: AppColors.primary,
-    );
+    return Icon(Icons.business, size: 50.sp, color: AppColors.primary);
   }
 }

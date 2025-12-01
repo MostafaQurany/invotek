@@ -14,7 +14,6 @@ import 'package:invotek/features/settings/cubit/profile_cubit.dart';
 import 'package:invotek/features/settings/cubit/update_profile_cubit.dart';
 import 'package:invotek/features/settings/data/models/update_profile_request.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ProfileForm extends StatefulWidget {
   const ProfileForm({super.key});
@@ -45,18 +44,8 @@ class _ProfileFormState extends State<ProfileForm> {
     super.dispose();
   }
 
-  Future<void> requestPermissions() async {
-    await [
-      Permission.camera,
-      Permission.photos,
-      Permission.mediaLibrary, // iOS
-      Permission.storage, // Android (older versions)
-    ].request();
-  }
-
   Future<void> _pickAndUploadPhoto() async {
     try {
-      requestPermissions();
       final picker = ImagePicker();
       final picked = await picker.pickImage(source: ImageSource.gallery);
       if (picked == null) return;

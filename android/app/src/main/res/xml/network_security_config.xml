@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Allow HTTPS connections to production API -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">invotik.com</domain>
+        <domain includeSubdomains="true">demo.invotik.com</domain>
+    </domain-config>
+    
+    <!-- Base configuration: Only allow HTTPS by default -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
+

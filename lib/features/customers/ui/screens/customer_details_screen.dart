@@ -174,44 +174,27 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
 
   void _makeCall() async {
     if (widget.customer.phone != null) {
-      // طلب إذن الاتصال
-      final permission = await Permission.phone.request();
-
-      if (permission.isGranted) {
-        final Uri phoneUri = Uri(scheme: 'tel', path: widget.customer.phone!);
-        try {
-          if (await canLaunchUrl(phoneUri)) {
-            await launchUrl(phoneUri);
-          } else {
+      // استخدام ACTION_DIAL بدلاً من CALL_PHONE (لا يحتاج إذن)
+      final Uri phoneUri = Uri(scheme: 'tel', path: widget.customer.phone!);
+      try {
+        if (await canLaunchUrl(phoneUri)) {
+          await launchUrl(phoneUri);
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(S.of(context).customersCannotMakeCall),
               backgroundColor: AppColors.error,
             ),
           );
-          }
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                S.of(context).errorOccurredWithMessage(e.toString()),
-              ),
-              backgroundColor: AppColors.error,
-            ),
-          );
         }
-      } else if (permission.isDenied) {
+      } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(S.of(context).customersCallPermissionDenied),
-            backgroundColor: AppColors.warning,
+            content: Text(
+              S.of(context).errorOccurredWithMessage(e.toString()),
+            ),
+            backgroundColor: AppColors.error,
           ),
-        );
-      } else if (permission.isPermanentlyDenied) {
-        // عرض dialog لتوجيه المستخدم لإعدادات التطبيق
-        _showPermissionDialog(
-          S.of(context).customersCallPermissionRequired,
-          S.of(context).customersCallPermissionRequiredMessage,
         );
       }
     }
@@ -272,49 +255,32 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
   void _openMap() async {
     if (widget.customer.address != null &&
         widget.customer.address!.isNotEmpty) {
-      // طلب إذن الموقع
-      final permission = await Permission.location.request();
-
-      if (permission.isGranted) {
-        final String encodedAddress = Uri.encodeComponent(
-          widget.customer.address!,
-        );
-        final Uri mapUri = Uri.parse(
-          'https://maps.google.com/maps?q=$encodedAddress',
-        );
-        try {
-          if (await canLaunchUrl(mapUri)) {
-            await launchUrl(mapUri, mode: LaunchMode.externalApplication);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(S.of(context).customersCannotOpenMap),
-                backgroundColor: AppColors.error,
-              ),
-            );
-          }
-        } catch (e) {
+      // فتح الخريطة مباشرة بدون طلب إذن (يستخدم Google Maps URL فقط)
+      final String encodedAddress = Uri.encodeComponent(
+        widget.customer.address!,
+      );
+      final Uri mapUri = Uri.parse(
+        'https://maps.google.com/maps?q=$encodedAddress',
+      );
+      try {
+        if (await canLaunchUrl(mapUri)) {
+          await launchUrl(mapUri, mode: LaunchMode.externalApplication);
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                S.of(context).errorOccurredWithMessage(e.toString()),
-              ),
+              content: Text(S.of(context).customersCannotOpenMap),
               backgroundColor: AppColors.error,
             ),
           );
         }
-      } else if (permission.isDenied) {
+      } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(S.of(context).customersLocationPermissionDenied),
-            backgroundColor: AppColors.warning,
+            content: Text(
+              S.of(context).errorOccurredWithMessage(e.toString()),
+            ),
+            backgroundColor: AppColors.error,
           ),
-        );
-      } else if (permission.isPermanentlyDenied) {
-        // عرض dialog لتوجيه المستخدم لإعدادات التطبيق
-        _showPermissionDialog(
-          S.of(context).customersLocationPermissionRequired,
-          S.of(context).customersLocationPermissionRequiredMessage,
         );
       }
     }
@@ -384,36 +350,4 @@ class _CustomerDetailsScreenState extends State<CustomerDetailsScreen> {
     );
   }
 
-  void _showPermissionDialog(String title, String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        title: Row(
-          children: [
-            Icon(Icons.warning_outlined, color: AppColors.warning),
-            SizedBox(width: 8.w),
-            Text(title),
-          ],
-        ),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(S.of(context).cancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context);
-              openAppSettings();
-            },
-            style: FilledButton.styleFrom(backgroundColor: AppColors.primary),
-            child: Text(S.of(context).customersAppSettings),
-          ),
-        ],
-      ),
-    );
-  }
 }

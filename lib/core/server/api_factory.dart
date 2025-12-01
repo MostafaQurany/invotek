@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../network/cache_module.dart';
@@ -32,8 +33,11 @@ class DioFactory {
     // request → [AuthInterceptor] → [Cache] → [Logger] → network
     _dio!
       ..interceptors.add(DioInterceptor()) // auth, localization, etc.
-      ..interceptors.add(DioCacheInterceptor(options: cache.options))
-      ..interceptors.add(
+      ..interceptors.add(DioCacheInterceptor(options: cache.options));
+    
+    // Only enable logger in debug mode
+    if (kDebugMode) {
+      _dio!.interceptors.add(
         PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
@@ -42,9 +46,9 @@ class DioFactory {
           error: true,
           compact: true,
           maxWidth: 90,
-          enabled: true,
         ),
       );
+    }
 
     return _dio!;
   }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Permission descriptions for Google Play Console -->
+
+    <!-- Bluetooth Permissions -->
+    <string name="bluetooth_permission_description">
+        نحتاج إلى إذن Bluetooth للاتصال بالطابعات اللاسلكية وطباعة الفواتير.
+    </string>
+    <string name="bluetooth_permission_description_en">
+        We need Bluetooth permission to connect to wireless printers and print invoices.
+    </string>
+
+    <!-- Camera Permission -->
+    <string name="camera_permission_description">
+        نحتاج إلى إذن الكاميرا لالتقاط صور للمنتجات أو المستندات.
+    </string>
+    <string name="camera_permission_description_en">
+        We need camera permission to capture photos of products or documents.
+    </string>
+
+    <!-- Storage Permissions -->
+    <string name="storage_permission_description">
+        نحتاج إلى إذن التخزين لحفظ الفواتير والملفات المهمة على جهازك.
+    </string>
+    <string name="storage_permission_description_en">
+        We need storage permission to save invoices and important files on your device.
+    </string>
+
+</resources>
+

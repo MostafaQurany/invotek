@@ -12,8 +12,13 @@ import 'package:invotek/core/widgets/error_widget.dart' as custom;
 import 'package:invotek/core/widgets/loading_widget.dart';
 import 'package:invotek/features/invoices/constants/invoices_permissions.dart';
 import 'package:invotek/features/invoices/data/models/invoice_customer_model.dart';
-import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/data/models/invoice_item.dart';
+import 'package:invotek/features/invoices/data/models/invoice_model.dart';
 import 'package:invotek/features/invoices/domain/cubit/invoices_cubit.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_customer_entity.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_entity.dart';
+import 'package:invotek/features/invoices/domain/entities/invoice_item_entity.dart';
+import 'package:invotek/features/invoices/ui/screens/invoice_form_screen_with_provider.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_additional_info_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_customer_card.dart';
 import 'package:invotek/features/invoices/ui/widgets/cards/invoice_items_card.dart';
@@ -28,10 +33,23 @@ import 'package:invotek/features/products/data/repository/products_repository.da
 import 'package:invotek/features/products/domain/cubit/products_cubit.dart';
 import 'package:invotek/features/products/ui/screens/product_details_screen.dart';
 import 'package:invotek/generated/l10n.dart';
-import 'package:invotek/features/invoices/data/models/invoice_item.dart';
-import 'package:invotek/features/invoices/data/models/invoice_model.dart';
-import 'package:invotek/features/invoices/domain/entities/invoice_customer_entity.dart';
-import 'package:invotek/features/invoices/domain/entities/invoice_item_entity.dart';
+
+/// Helper class for action buttons
+class _ActionButtonItem {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback? onPressed;
+  final bool enabled;
+
+  _ActionButtonItem({
+    required this.icon,
+    required this.label,
+    required this.color,
+    this.onPressed,
+    this.enabled = true,
+  });
+}
 
 /// شاشة تفاصيل الفاتورة المحسنة مع دعم استدعاء API وإدارة الحالة
 class EnhancedInvoiceDetailsScreen extends StatefulWidget {
@@ -49,6 +67,7 @@ class _EnhancedInvoiceDetailsScreenState
   // إنشاء ProductsCubit محلي
   late ProductsCubit _productsCubit;
   bool _isLoadingProduct = false;
+  bool _isSendingInvoice = false;
 
   @override
   void initState() {
@@ -124,129 +143,174 @@ class _EnhancedInvoiceDetailsScreenState
         }
 
         return Scaffold(
-          body: BlocListener<ProductsCubit, ProductsState>(
-            bloc: _productsCubit,
-            listener: (context, productsState) {
-              productsState.whenOrNull(
-                loaded: (products, selectedProduct, currentPage, totalPages) {
-                  if (selectedProduct != null && _isLoadingProduct) {
-                    // إغلاق مؤشر التحميل
-                    if (Navigator.canPop(context)) {
-                      Navigator.pop(context);
-                    }
-
-                    _isLoadingProduct = false;
-
-                    // الانتقال إلى شاشة تفاصيل المنتج
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider<ProductsCubit>.value(
-                          value: _productsCubit,
-                          child: ProductDetailsScreen(product: selectedProduct),
-                        ),
-                      ),
-                    );
-                  }
+          body: BlocListener<InvoicesCubit, InvoicesState>(
+            listener: (context, invoicesState) {
+              invoicesState.maybeWhen(
+                loaded: (invoices, selectedInvoice, currentPage, totalPages) {
+                  // // عرض رسالة النجاح فقط عند إرسال الفاتورة
+                  // if (_isSendingInvoice) {
+                  //   setState(() {
+                  //     _isSendingInvoice = false;
+                  //   });
+                  //   ScaffoldMessenger.of(context).showSnackBar(
+                  //     SnackBar(
+                  //       content: Text(S.of(context).invoiceSentSuccessfully),
+                  //       backgroundColor: AppColors.success,
+                  //     ),
+                  //   );
+                  // }
                 },
                 failure:
                     (
-                      products,
-                      selectedProduct,
+                      invoices,
+                      selectedInvoice,
                       currentPage,
                       totalPages,
-                      error,
+                      failure,
                     ) {
-                      if (_isLoadingProduct) {
-                        if (Navigator.canPop(context)) {
-                          Navigator.pop(context);
-                        }
-
-                        _isLoadingProduct = false;
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              S
-                                  .of(context)
-                                  .errorOccurredWithMessage(error.message),
-                            ),
-                            backgroundColor: AppColors.error,
-                          ),
-                        );
+                      if (_isSendingInvoice) {
+                        setState(() {
+                          _isSendingInvoice = false;
+                        });
                       }
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(failure.message),
+                          backgroundColor: AppColors.error,
+                        ),
+                      );
                     },
+                orElse: () {},
               );
             },
-            child: BlocBuilder<InvoicesCubit, InvoicesState>(
-              builder: (context, state) {
-                return state.when(
-                  initial:
-                      (
-                        invoices,
-                        selectedInvoice,
-                        currentPage,
-                        totalPages,
-                        error,
-                      ) => _buildLoadingState(),
-                  loading:
-                      (
-                        invoices,
-                        selectedInvoice,
-                        currentPage,
-                        totalPages,
-                        message,
-                      ) {
-                        if (message == 'loading_invoice') {
-                          return _buildLoadingState();
-                        }
-                        return _buildContent(selectedInvoice);
-                      },
-                  loaded: (invoices, selectedInvoice, currentPage, totalPages) {
-                    return _buildContent(selectedInvoice);
+            child: BlocListener<ProductsCubit, ProductsState>(
+              bloc: _productsCubit,
+              listener: (context, productsState) {
+                productsState.whenOrNull(
+                  loaded: (products, selectedProduct, currentPage, totalPages) {
+                    if (selectedProduct != null && _isLoadingProduct) {
+                      // إغلاق مؤشر التحميل
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);
+                      }
+
+                      _isLoadingProduct = false;
+
+                      // الانتقال إلى شاشة تفاصيل المنتج
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BlocProvider<ProductsCubit>.value(
+                                value: _productsCubit,
+                                child: ProductDetailsScreen(
+                                  product: selectedProduct,
+                                ),
+                              ),
+                        ),
+                      );
+                    }
                   },
-                  createSuccess:
-                      (
-                        invoices,
-                        created,
-                        selectedInvoice,
-                        currentPage,
-                        totalPages,
-                      ) {
-                        return _buildContent(selectedInvoice);
-                      },
-                  updateSuccess:
-                      (
-                        invoices,
-                        updated,
-                        selectedInvoice,
-                        currentPage,
-                        totalPages,
-                      ) {
-                        return _buildContent(selectedInvoice);
-                      },
-                  deleteSuccess:
-                      (
-                        invoices,
-                        deletedId,
-                        selectedInvoice,
-                        currentPage,
-                        totalPages,
-                      ) {
-                        return _buildContent(selectedInvoice);
-                      },
                   failure:
                       (
-                        invoices,
-                        selectedInvoice,
+                        products,
+                        selectedProduct,
                         currentPage,
                         totalPages,
                         error,
                       ) {
-                        return _buildErrorState(error.message);
+                        if (_isLoadingProduct) {
+                          if (Navigator.canPop(context)) {
+                            Navigator.pop(context);
+                          }
+
+                          _isLoadingProduct = false;
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                S
+                                    .of(context)
+                                    .errorOccurredWithMessage(error.message),
+                              ),
+                              backgroundColor: AppColors.error,
+                            ),
+                          );
+                        }
                       },
                 );
               },
+              child: BlocBuilder<InvoicesCubit, InvoicesState>(
+                builder: (context, state) {
+                  return state.when(
+                    initial:
+                        (
+                          invoices,
+                          selectedInvoice,
+                          currentPage,
+                          totalPages,
+                          error,
+                        ) => _buildLoadingState(),
+                    loading:
+                        (
+                          invoices,
+                          selectedInvoice,
+                          currentPage,
+                          totalPages,
+                          message,
+                        ) {
+                          if (message == 'loading_invoice') {
+                            return _buildLoadingState();
+                          }
+                          return _buildContent(selectedInvoice);
+                        },
+                    loaded:
+                        (invoices, selectedInvoice, currentPage, totalPages) {
+                          return _buildContent(selectedInvoice);
+                        },
+                    createSuccess:
+                        (
+                          invoices,
+                          created,
+                          selectedInvoice,
+                          currentPage,
+                          totalPages,
+                        ) {
+                          return _buildContent(selectedInvoice);
+                        },
+                    updateSuccess:
+                        (
+                          invoices,
+                          updated,
+                          selectedInvoice,
+                          currentPage,
+                          totalPages,
+                        ) {
+                          return _buildContent(selectedInvoice);
+                        },
+                    deleteSuccess:
+                        (
+                          invoices,
+                          deletedId,
+                          selectedInvoice,
+                          currentPage,
+                          totalPages,
+                        ) {
+                          return _buildContent(selectedInvoice);
+                        },
+                    failure:
+                        (
+                          invoices,
+                          selectedInvoice,
+                          currentPage,
+                          totalPages,
+                          error,
+                        ) {
+                          return _buildErrorState(error.message);
+                        },
+                  );
+                },
+              ),
             ),
           ),
         );
@@ -277,7 +341,7 @@ class _EnhancedInvoiceDetailsScreenState
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios_new_rounded,
                       color: AppColors.textPrimary,
                       size: 24.sp,
                     ),
@@ -345,7 +409,7 @@ class _EnhancedInvoiceDetailsScreenState
                   IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios_new_rounded,
                       color: AppColors.textPrimary,
                       size: 24.sp,
                     ),
@@ -570,10 +634,74 @@ class _EnhancedInvoiceDetailsScreenState
       return;
     }
 
-    Navigator.pushNamed(
+    Navigator.push(
       context,
-      AppRoutes.editInvoiceRoute,
-      arguments: invoice,
+      MaterialPageRoute(
+        builder: (context) => InvoiceFormScreenWithProvider(invoice: invoice),
+      ),
+    );
+  }
+
+  void _sendInvoice(InvoiceEntity invoice) {
+    // التحقق من صلاحية الإرسال
+    final permissionsState = context.read<PermissionsCubit>().state;
+    final hasSendPermission = permissionsState.maybeWhen(
+      loaded: (permissions) =>
+          permissions.hasPermission(InvoicesPermissions.send),
+      orElse: () => false,
+    );
+
+    if (!hasSendPermission) {
+      PermissionChecker.showPermissionDeniedSnackBar(
+        context,
+        S.of(context).sendInvoice,
+      );
+      return;
+    }
+
+    if (invoice.id == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            S.of(context).errorOccurredWithMessage('Invalid invoice ID'),
+          ),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
+    // تعيين flag للإرسال
+    setState(() {
+      _isSendingInvoice = true;
+    });
+
+    // إرسال الفاتورة
+    context.read<InvoicesCubit>().sendInvoice(invoiceId: invoice.id!);
+  }
+
+  void _onInvoiceReturn(InvoiceEntity invoice) {
+    // التحقق من وجود فواتير إرجاع مرتبطة بالفاتورة
+    final hasReturnedInvoices =
+        invoice.returnedInvoices != null &&
+        invoice.returnedInvoices!.isNotEmpty;
+
+    if (hasReturnedInvoices) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(S.of(context).invoiceAlreadyHasCreditInvoice),
+          backgroundColor: AppColors.warning,
+        ),
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            InvoiceFormScreenWithProvider(originalInvoice: invoice),
+      ),
     );
   }
 
@@ -937,7 +1065,11 @@ class _EnhancedInvoiceDetailsScreenState
 
   Widget _buildFloatingActionButton(InvoiceEntity invoice) {
     final s = S.of(context);
-    final canDelete = invoice.status?.toLowerCase() == 'draft';
+
+    // إذا كان document_type == "credit": إخفاء جميع الإجراءات
+    if (invoice.documentType?.toLowerCase() == 'credit') {
+      return const SizedBox.shrink();
+    }
 
     // استخدام BlocBuilder للتحقق من الصلاحيات بشكل صحيح
     return BlocBuilder<PermissionsCubit, PermissionsState>(
@@ -952,82 +1084,162 @@ class _EnhancedInvoiceDetailsScreenState
               permissions.hasPermission(InvoicesPermissions.print),
           orElse: () => false,
         );
+        final hasSendPermission = permissionsState.maybeWhen(
+          loaded: (permissions) =>
+              permissions.hasPermission(InvoicesPermissions.send),
+          orElse: () => false,
+        );
+        final hasEditPermission = permissionsState.maybeWhen(
+          loaded: (permissions) =>
+              permissions.hasPermission(InvoicesPermissions.edit),
+          orElse: () => false,
+        );
 
         // استخدام hashCode من state لضمان تفرد heroTag
         final uniqueId = hashCode;
 
+        // تحديد حالة الفاتورة
+        final isPending = invoice.status?.toLowerCase() == 'pending';
+        final isSent = invoice.status?.toLowerCase() == 'sent';
+        final hasReturnedInvoices =
+            invoice.returnedInvoices != null &&
+            invoice.returnedInvoices!.isNotEmpty;
+
+        // بناء قائمة الأزرار المتاحة
+        final actionButtons = <_ActionButtonItem>[];
+
+        // إذا كان status == "pending": إضافة Edit, Delete, Send
+        if (isPending) {
+          if (hasSendPermission) {
+            actionButtons.add(
+              _ActionButtonItem(
+                icon: Icons.send,
+                label: s.sendInvoice,
+                color: AppColors.success,
+                onPressed: () => _sendInvoice(invoice),
+                enabled: true,
+              ),
+            );
+          }
+          if (hasEditPermission) {
+            actionButtons.add(
+              _ActionButtonItem(
+                icon: Icons.edit,
+                label: s.editInvoice,
+                color: AppColors.primary,
+                onPressed: () => _editInvoice(invoice),
+                enabled: true,
+              ),
+            );
+          }
+          if (hasDeletePermission) {
+            actionButtons.add(
+              _ActionButtonItem(
+                icon: Icons.delete,
+                label: s.deleteInvoice,
+                color: AppColors.error,
+                onPressed: () => _deleteInvoice(invoice),
+                enabled: true,
+              ),
+            );
+          }
+        }
+        // إذا كان status == "sent" وليس لديها returned invoices: إضافة Return
+        else if (isSent && !hasReturnedInvoices) {
+          actionButtons.add(
+            _ActionButtonItem(
+              icon: Icons.undo,
+              label: s.returnInvoice,
+              color: AppColors.warning,
+              onPressed: () => _onInvoiceReturn(invoice),
+              enabled: true,
+            ),
+          );
+        }
+
+        // Print Button (متاح دائماً)
+        if (hasPrintPermission) {
+          actionButtons.add(
+            _ActionButtonItem(
+              icon: Icons.print,
+              label: s.printInvoice,
+              color: AppColors.warning,
+              onPressed: () => _showPrintOptions(invoice),
+              enabled: true,
+            ),
+          );
+        }
+
+        // إذا كان عدد الأزرار أكثر من 2، عرض قائمة
+        if (actionButtons.length > 2) {
+          return FloatingActionButton(
+            heroTag: "more_${invoice.id}_$uniqueId",
+            onPressed: () => _showActionMenu(context, actionButtons),
+            backgroundColor: AppColors.surface,
+            child: const Icon(Icons.more_vert, color: AppColors.white),
+          );
+        }
+
+        // إذا كان عدد الأزرار 2 أو أقل، عرض الأزرار بشكل عمودي
         return Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            // Delete Button (only for draft invoices)
-            if (canDelete) ...[
-              Tooltip(
-                message: hasDeletePermission
-                    ? s.deleteInvoice
-                    : s.invoicesNoPermissionToAct,
-                child: FloatingActionButton(
-                  heroTag: "delete_${invoice.id}_$uniqueId",
-                  onPressed: hasDeletePermission
-                      ? () => _deleteInvoice(invoice)
-                      : null,
-                  backgroundColor: hasDeletePermission
-                      ? AppColors.error
-                      : AppColors.grey.withOpacity(0.5),
-                  child: Icon(
-                    hasDeletePermission ? Icons.delete : Icons.lock_outline,
-                    color: Colors.white,
+          children: actionButtons.map((item) {
+            final index = actionButtons.indexOf(item);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Tooltip(
+                  message: item.label,
+                  child: FloatingActionButton(
+                    heroTag: "${item.icon.codePoint}_${invoice.id}_$uniqueId",
+                    onPressed: item.enabled ? item.onPressed : null,
+                    backgroundColor: item.enabled
+                        ? item.color
+                        : AppColors.grey.withOpacity(0.5),
+                    child: Icon(
+                      item.enabled ? item.icon : Icons.lock_outline,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 8.h),
-            ],
-            // Print Button
-            FloatingActionButton(
-              heroTag: "print_${invoice.id}_$uniqueId",
-              onPressed: hasPrintPermission
-                  ? () => _showPrintOptions(invoice)
-                  : null,
-              backgroundColor: hasPrintPermission
-                  ? AppColors.warning
-                  : AppColors.grey.withOpacity(0.5),
-              child: Icon(
-                hasPrintPermission ? Icons.print : Icons.lock_outline,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 8.h),
-
-            // // Send Invoice Button
-            // FloatingActionButton(
-            //   heroTag: "send_${invoice.id}",
-            //   onPressed: () => _sendInvoice(invoice),
-            //   backgroundColor: AppColors.success,
-            //   tooltip: 'إرسال الفاتورة',
-            //   child: const Icon(Icons.send, color: Colors.white),
-            // ),
-            // SizedBox(height: 8.h),
-
-            // // Edit Invoice Button
-            // FloatingActionButton(
-            //   heroTag: "edit_${invoice.id}",
-            //   onPressed: () => _editInvoice(invoice),
-            //   backgroundColor: AppColors.primary,
-            //   tooltip: 'تعديل الفاتورة',
-            //   child: const Icon(Icons.edit, color: Colors.white),
-            // ),
-            // SizedBox(height: 8.h),
-
-            // // More Options Button
-            // FloatingActionButton(
-            //   heroTag: "more_${invoice.id}",
-            //   onPressed: () => _showMoreOptions(invoice),
-            //   backgroundColor: AppColors.surface,
-            //   tooltip: 'المزيد',
-            //   child: const Icon(Icons.more_vert, color: AppColors.textPrimary),
-            // ),
-          ],
+                if (index < actionButtons.length - 1) SizedBox(height: 8.h),
+              ],
+            );
+          }).toList(),
         );
       },
+    );
+  }
+
+  void _showActionMenu(BuildContext context, List<_ActionButtonItem> buttons) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+    showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      builder: (context) => Container(
+        padding: EdgeInsets.only(
+          left: 16.w,
+          top: 16.w,
+          right: 16.w,
+          bottom: bottomPadding > 0 ? bottomPadding + 16.w : 16.w,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: buttons.map((item) {
+            return ListTile(
+              leading: Icon(item.icon, color: item.color),
+              title: Text(item.label),
+              onTap: item.enabled
+                  ? () {
+                      Navigator.pop(context);
+                      item.onPressed?.call();
+                    }
+                  : null,
+              enabled: item.enabled,
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 
